@@ -1,0 +1,15 @@
+html, body {
+  font-family: Lato, 'Helvetica Neue', Arial, sans-serif;
+  text-rendering: optimizelegibility; }
+
+html {
+  overflow-x: hidden; }
+
+body {
+  padding-top: 60px;
+  background: #f2f2f2; }
+
+.pointer {
+  cursor: pointer; }
+
+/*# sourceMappingURL=app.css.map */
