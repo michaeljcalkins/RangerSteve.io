@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@welcome');
+Route::get('game', 'HomeController@game');
 
 /*
 |--------------------------------------------------------------------------

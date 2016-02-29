@@ -4,20 +4,10 @@
 <head>
     <title>Ranger Steve: Buffalo Invasion</title>
     <meta charset="utf-8">
-    <style>
-    html, body {
-        width:  100%;
-        height: 100%;
-        margin: 0px;
-        padding: 0;
-        overflow: hidden;
-    }
-    </style>
+    <link href="/css/app.css" rel="stylesheet">
 </head>
 <body onresize="">
-    Ranger Steve
-    Buffalo Invasion
-    
-    <a href="/game">Play Now</a>
+    <canvas id="canvas"></canvas>
+    <script src="/js/app.js"></script>
 </body>
 </html>
