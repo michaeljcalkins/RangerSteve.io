@@ -86,6 +86,7 @@ function ControlHandler(main) {
     window.addEventListener('mousemove', this.mouseMoveEvent.bind(this));
     window.addEventListener('mousewheel', this.mouseWheelEvent.bind(this));
     window.addEventListener('DOMMouseScroll', this.mouseWheelEvent.bind(this));
+    // window.addEventListener('resize', this.windowResizeEvent.bind(this));
     document.getElementById('canvas').addEventListener('contextmenu', function(e) {
         if (e.button == 2) {
             e.preventDefault();
@@ -93,10 +94,18 @@ function ControlHandler(main) {
         }
     })
 }
+
 ControlHandler.prototype.init = function(main) {
     this.playerHandler = main.playerHandler
 };
+
 ControlHandler.prototype.enterFrame = function() {};
+
+// ControlHandler.prototype.windowResizeEvent = function(e) {
+//     this.canvas.width = window.innerWidth
+//     this.canvas.height = window.innerHeight
+// }
+
 ControlHandler.prototype.keyDownEvent = function(e) {
     if (e.keyCode == 32) {
         this.space = true
@@ -109,6 +118,8 @@ ControlHandler.prototype.keyDownEvent = function(e) {
     } else if ((e.keyCode >= 48 || e.keyCode <= 57) && this.main.state == 'game') {
         this.playerHandler.hotKey(e.keyCode)
     }
+
+    console.log('x, y', this.playerHandler.x, this.playerHandler.y)
     if (this.mouseX > 0 && this.mouseX < this.canvas.width && this.mouseY > 0 && this.mouseY < this.canvas.height) {
         e.preventDefault();
         return false
@@ -129,6 +140,7 @@ ControlHandler.prototype.keyUpEvent = function(e) {
         return false
     }
 };
+
 ControlHandler.prototype.mouseDownEvent = function(e) {
     if (e.button == 0) {
         this.mouseLeft = true
@@ -136,6 +148,7 @@ ControlHandler.prototype.mouseDownEvent = function(e) {
         this.mouseRight = true
     }
 };
+
 ControlHandler.prototype.mouseUpEvent = function(e) {
     if (this.mouseLeft && this.mouseX > 0 && this.mouseX < this.canvas.width && this.mouseY > 0 && this.mouseY < this.canvas.height) {
         if (this.main.state == 'menuScreen' || this.main.state == 'gameOverScreen') {
@@ -483,11 +496,10 @@ function GameOverScreen(main) {
     var dark = 'rgba(0,0,0,0.9)';
     var medium = 'rgba(0,0,0,0.5)';
     var light = 'rgba(0,0,0,0.3)';
-    new Text(main.context, 'Platformer 2', 9, 18, 'normal 21px/1 ' + main.fontFamily, light, 'left');
+    new Text(main.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + main.fontFamily, light, 'left');
     new Text(main.context, 'Game Over!', hW, hH - 70, 'normal 22px/1 ' + main.fontFamily, dark);
     new Text(main.context, 'Kills:' + main.playerHandler.kills, hW, hH - 30, 'normal 16px/1 ' + main.fontFamily, medium);
     new Text(main.context, 'Click to Restart', hW, hH + 10, 'normal 17px/1 ' + main.fontFamily, dark);
-    new Text(main.context, 'www.H3XED.com', 9, main.canvas.height - 14, 'normal 13px/1 ' + main.fontFamily, light, 'left')
 }
 
 function GridHandler(main) {}
@@ -628,13 +640,12 @@ function MenuScreen(main) {
     var dark = 'rgba(0,0,0,0.9)';
     var medium = 'rgba(0,0,0,0.5)';
     var light = 'rgba(0,0,0,0.3)';
-    new Text(main.context, 'Platformer 2', 9, 18, 'normal 21px/1 ' + main.fontFamily, light, 'left');
+    new Text(main.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + main.fontFamily, light, 'left');
     new Text(main.context, 'Click to Start', hW, hH - 70, 'normal 17px/1 ' + main.fontFamily, dark);
     new Text(main.context, 'Use "A" and "D" to move and "Space" to jump.', hW, hH - 30, 'normal 15px/1 ' + main.fontFamily, medium);
     new Text(main.context, 'Use mouse wheel to change action and left click to perform action.', hW, hH - 10, 'normal 15px/1 ' + main.fontFamily, medium);
     new Text(main.context, 'You can build and destroy terrain.', hW, hH + 10, 'normal 15px/1 ' + main.fontFamily, medium);
     new Text(main.context, 'Enemies come out at night.', hW, hH + 30, 'normal 15px/1 ' + main.fontFamily, medium);
-    new Text(main.context, 'www.H3XED.com', 9, main.canvas.height - 14, 'normal 13px/1 ' + main.fontFamily, light, 'left')
 }
 
 function PlayerHandler(main) {
@@ -651,7 +662,8 @@ function PlayerHandler(main) {
         name: 'Shotgun',
         reload: 25,
         count: 4,
-        speed: 7,
+        speed: 20,
+        // speed: 7,
         hp: 180,
         modY: 0.01,
         explode: 0,
@@ -662,7 +674,8 @@ function PlayerHandler(main) {
         name: 'Rifle',
         reload: 6,
         count: 1,
-        speed: 8,
+        speed: 20,
+        // speed: 8,
         hp: 90,
         modY: 0.01,
         explode: 0,

@@ -7,7 +7,7 @@
     <link href="/css/app.css" rel="stylesheet">
 </head>
 <body onresize="">
-    <canvas id="canvas"></canvas>
+    <canvas width="1080" height="720" id="canvas"></canvas>
     <script src="/js/app.js"></script>
 </body>
 </html>
