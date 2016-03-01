@@ -1,6 +1,11 @@
+'use strict'
+
 /**
  * http://www.h3xed.com/blogmedia/platformer2/
  */
+
+ var currentPlayerRef = new Firebase("https://incandescent-fire-1026.firebaseio.com/room/1/users/" + ENV_INFO.user_id);
+ var currentRoomRef = new Firebase("https://incandescent-fire-1026.firebaseio.com/room/1");
 
 window.onload = function() {
     new Main()
@@ -52,6 +57,7 @@ BloodHandler.prototype.enterFrame = function() {
         }
     }
 };
+
 BloodHandler.prototype.create = function(x, y, vX, vY, count) {
     for (var i = 0; i < count; i++) {
         if (this.pool.length > 0) {
@@ -97,6 +103,13 @@ function ControlHandler(main) {
 
 ControlHandler.prototype.init = function(main) {
     this.playerHandler = main.playerHandler
+
+    setInterval(function() {
+        currentPlayerRef.set({
+            x: main.playerHandler.x,
+            y: main.playerHandler.y
+        });
+    }, 10)
 };
 
 ControlHandler.prototype.enterFrame = function() {};
@@ -119,12 +132,17 @@ ControlHandler.prototype.keyDownEvent = function(e) {
         this.playerHandler.hotKey(e.keyCode)
     }
 
-    console.log('x, y', this.playerHandler.x, this.playerHandler.y)
+    currentPlayerRef.set({
+        x: this.playerHandler.x,
+        y: this.playerHandler.y
+    });
+
     if (this.mouseX > 0 && this.mouseX < this.canvas.width && this.mouseY > 0 && this.mouseY < this.canvas.height) {
         e.preventDefault();
         return false
     }
 };
+
 ControlHandler.prototype.keyUpEvent = function(e) {
     if (e.keyCode == 32) {
         this.space = false
@@ -334,6 +352,7 @@ function EnemyHandler(main) {
     this.list = [];
     this.pool = []
 }
+
 EnemyHandler.prototype.init = function(main) {
     this.list.length = 0;
     this.main = main;
@@ -345,6 +364,7 @@ EnemyHandler.prototype.init = function(main) {
     this.levelWidth = main.levelWidth;
     this.levelHeight = main.levelHeight
 };
+
 EnemyHandler.prototype.enterFrame = function() {
     var player = this.playerHandler;
     var blockSize = this.blockSize;
@@ -463,6 +483,7 @@ EnemyHandler.prototype.enterFrame = function() {
         }
     }
 };
+
 EnemyHandler.prototype.create = function() {
     if (this.pool.length > 0) {
         var enemy = this.pool.pop()
@@ -662,8 +683,7 @@ function PlayerHandler(main) {
         name: 'Shotgun',
         reload: 25,
         count: 4,
-        speed: 20,
-        // speed: 7,
+        speed: 7,
         hp: 180,
         modY: 0.01,
         explode: 0,
@@ -674,8 +694,7 @@ function PlayerHandler(main) {
         name: 'Rifle',
         reload: 6,
         count: 1,
-        speed: 20,
-        // speed: 8,
+        speed: 8,
         hp: 90,
         modY: 0.01,
         explode: 0,
@@ -756,6 +775,7 @@ function PlayerHandler(main) {
     this.actionObject;
     this.canBuild
 }
+
 PlayerHandler.prototype.init = function(main) {
     this.blockSize = main.blockSize;
     this.blockInt = main.blockInt;
@@ -783,6 +803,7 @@ PlayerHandler.prototype.init = function(main) {
     this.canBuild = false;
     this.actionObject = this.actions[this.action]
 };
+
 PlayerHandler.prototype.enterFrame = function() {
     var controlHandler = this.controlHandler;
     var accel = this.accel;
@@ -985,6 +1006,8 @@ PlayerHandler.prototype.wheel = function(delta) {
     this.reload = this.actions[this.action].reload
 };
 
+let enemyPlayers = []
+
 function RenderHandler(main) {
     this.sunMoonArcRadius = main.canvas.height - 40;
     this.main = main;
@@ -998,6 +1021,7 @@ function RenderHandler(main) {
     this.horizon = main.horizon;
     this.timeRatio = Math.PI * 2 / main.dayLength
 }
+
 RenderHandler.prototype.init = function(main) {
     this.gridHandler = main.gridHandler;
     this.controlHandler = main.controlHandler;
@@ -1007,7 +1031,8 @@ RenderHandler.prototype.init = function(main) {
     this.bloodHandler = main.bloodHandler;
     this.enemyHandler = main.enemyHandler;
     this.player = main.playerHandler
-};
+}
+
 RenderHandler.prototype.enterFrame = function() {
     var context = this.context;
     var gridList = this.gridHandler.list;
@@ -1030,6 +1055,7 @@ RenderHandler.prototype.enterFrame = function() {
     gradient.addColorStop(1, 'rgb(' + (127 + depth - dist) + ',' + (167 + depth - dist) + ',' + (228 + depth - dist) + ')');
     context.fillStyle = gradient;
     context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
     X = this.canvas.width * 0.5 + i * this.sunMoonArcRadius;
     Y = this.canvas.height + j * this.sunMoonArcRadius;
     context.shadowBlur = 40;
@@ -1082,6 +1108,9 @@ RenderHandler.prototype.enterFrame = function() {
             }
         }
     }
+
+
+    // Draw player
     X = Math.round(pX + offsetX - player.width / 2);
     Y = Math.round(pY + offsetY - player.height / 2);
     context.shadowBlur = 5;
@@ -1090,10 +1119,19 @@ RenderHandler.prototype.enterFrame = function() {
     context.shadowColor = 'rgba(0,0,0,0.1)';
     context.fillStyle = '#333333';
     context.fillRect(X, Y, player.width, player.height);
+
     context.shadowBlur = 0;
     context.shadowOffsetX = 0;
     context.shadowOffsetY = 0;
     context.fillStyle = '#774444';
+
+
+
+
+
+
+
+
     for (i = this.enemyHandler.list.length - 1; i >= 0; i--) {
         obj = this.enemyHandler.list[i];
         context.fillRect(Math.round(obj.x + offsetX - obj.width * 0.5), Math.round(obj.y + offsetY - obj.height * 0.5), obj.width, obj.height)
@@ -1141,6 +1179,7 @@ RenderHandler.prototype.enterFrame = function() {
             }
         }
     }
+
     for (i = startX; i < endX; i++) {
         depth = 0;
         for (j = 0; j < endY; j++) {
@@ -1163,6 +1202,7 @@ RenderHandler.prototype.enterFrame = function() {
             }
         }
     }
+
     depth = Math.min(Math.cos(this.main.time * this.timeRatio) + 0.3, 0.5);
     if (depth > 0) {
         context.fillStyle = 'rgba(0,0,0,' + depth + ')';
@@ -1172,6 +1212,7 @@ RenderHandler.prototype.enterFrame = function() {
         context.fillStyle = 'rgba(0,0,0,0.2)';
         context.fillRect(((this.controlHandler.mouseX - offsetX) / blockSize | 0) * blockSize + offsetX, ((this.controlHandler.mouseY - offsetY) / blockSize | 0) * blockSize + offsetY, blockSize, blockSize)
     }
+
     context.fillStyle = '#444444';
     context.fillRect(0, 0, this.canvas.width, 20);
     context.textAlign = 'left';
@@ -1185,7 +1226,27 @@ RenderHandler.prototype.enterFrame = function() {
     context.fillText(Math.round(player.kills), 95, 10);
     context.textAlign = 'right';
     context.fillText(player.actions[player.action].name, this.canvas.width - 5, 10)
-};
+
+
+
+
+
+    enemyPlayers.forEach(function(enemyPlayer, key) {
+        if (+key === +ENV_INFO.user_id) return
+
+        X = Math.round(enemyPlayer.x + offsetX - player.width / 2);
+        Y = Math.round(enemyPlayer.y + offsetY - player.height / 2);
+        context.fillStyle = '#000000';
+        context.fillRect(X, Y, player.width, player.height);
+    })
+
+}
+
+
+currentRoomRef.child("users").on("value", function(snapshot) {
+    enemyPlayers = snapshot.val()
+});
+
 
 function ShotHandler(main) {
     this.size = 5;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Input;
 use App\Http\Requests;
 
 class HomeController extends Controller
@@ -12,7 +12,11 @@ class HomeController extends Controller
         return view('welcome');
     }
 
-    public function game() {
-        return view('game');
+    public function game(Request $req) {
+        $data = [
+            'user_id' => $req->get('user_id')
+        ];
+
+        return view('game', compact('data'));
     }
 }

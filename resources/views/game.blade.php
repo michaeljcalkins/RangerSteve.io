@@ -8,6 +8,10 @@
 </head>
 <body onresize="">
     <canvas width="1080" height="720" id="canvas"></canvas>
+    <script>
+    var ENV_INFO = <?= json_encode($data) ?>
+    </script>
+    <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
     <script src="/js/app.js"></script>
 </body>
 </html>
