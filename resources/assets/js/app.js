@@ -15,6 +15,8 @@ let gameState = {
     // Instantiates these objects to interact with the gameState.
     handlers: ['control', 'grid', 'render', 'player', 'enemy', 'shot', 'dust', 'blood', 'view'],
 
+    horizon: null,
+
     // Used when rendering all text.
     fontFamily: '"Segoe UI",Arial,sans-serif',
 
@@ -41,8 +43,8 @@ let gameState = {
     // Current view of the game.
     state: 'loading',
 
-    time: null,
-    timeIncrement: null
+    // Current time of game.
+    time: 0
 }
 
 window.onload = function() {
@@ -58,16 +60,19 @@ function Main() {
     }
 
     gameState.state = 'loading';
+
+    // Create basis for level
     this.canvas = document.getElementById('canvas');
     this.context = this.canvas.getContext('2d');
-    this.horizon = gameState.levelHeight / 2 | 0;
-    this.time;
-    this.timeIncrement;
+    gameState.horizon = gameState.levelHeight / 2 | 0;
+
+    // Instatiate all behaviors
     for (i = 0; i < gameState.handlers.length; i++) {
         var handlerName = gameState.handlers[i] + 'Handler';
         var className = handlerName.charAt(0).toUpperCase() + handlerName.slice(1);
         this[handlerName] = new window[className](this)
     }
+
     setInterval(this.enterFrame.bind(this), 1000 / 60);
     new MenuScreen(this)
 }
@@ -78,7 +83,7 @@ Main.prototype.startGame = function() {
     }
     new CreateLevel(this);
     gameState.state = 'game';
-    this.time = gameState.dayLength * 0.37
+    gameState.time = gameState.dayLength * 0.37
 };
 
 Main.prototype.enterFrame = function() {
@@ -92,9 +97,9 @@ Main.prototype.enterFrame = function() {
         return
     }
 
-    this.time++;
-    if (this.time > gameState.dayLength) {
-        this.time = 0
+    gameState.time++;
+    if (gameState.time > gameState.dayLength) {
+        gameState.time = 0
     }
 
     for (var i = 0; i < gameState.handlers.length; i++) {
@@ -264,8 +269,7 @@ function CreateLevel(main) {
     var flatness = 0.75;
     var list = main.gridHandler.list;
     var waterList = main.gridHandler.waterList;
-    var horizon = main.horizon;
-    var Y = horizon;
+    var Y = gameState.horizon;
     var i, j;
     for (i = 0; i < gameState.levelWidth / 20; i++) {
         var randX = Math.random() * (gameState.levelWidth - 20) + 10 | 0;
@@ -285,8 +289,8 @@ function CreateLevel(main) {
         }
         list[i][0] = gameState.blockInt.bedrock;
         list[i][gameState.levelHeight - 1] = gameState.blockInt.bedrock;
-        if (Y > horizon) {
-            for (j = horizon; j < Y; j++) {
+        if (Y > gameState.horizon) {
+            for (j = gameState.horizon; j < Y; j++) {
                 list[i][j] = gameState.blockInt.water;
                 waterList[waterList.length] = {
                     x: i,
@@ -304,7 +308,7 @@ function CreateLevel(main) {
         if (Math.random() < flatness) {
             Y += (Math.random() * 3 | 0) - 1
         }
-        if (Y > horizon && i > gameState.levelWidth / 2 - 20 && i < gameState.levelWidth / 2) {
+        if (Y > gameState.horizon && i > gameState.levelWidth / 2 - 20 && i < gameState.levelWidth / 2) {
             Y--
         }
         if (Y > gameState.levelHeight - 1) {
@@ -315,7 +319,7 @@ function CreateLevel(main) {
     }
     for (i = 0; i < gameState.levelWidth / 25; i++) {
         var randX = Math.random() * (gameState.levelWidth - 20) + 10 | 0;
-        var randY = horizon + Math.random() * (gameState.levelHeight * 0.5 - 20) + 8 | 0;
+        var randY = gameState.horizon + Math.random() * (gameState.levelHeight * 0.5 - 20) + 8 | 0;
         for (j = 0; j < 25; j++) {
             for (var k = Math.random() * 8 | 0; k >= 0; k--) {
                 var X = randX + Math.random() * k * 2 - k | 0;
@@ -326,7 +330,7 @@ function CreateLevel(main) {
     }
     for (i = 0; i < gameState.levelWidth / 25; i++) {
         var randX = Math.random() * (gameState.levelWidth - 20) + 10 | 0;
-        var randY = horizon + Math.random() * (gameState.levelHeight * 0.5 - 20) + 8 | 0;
+        var randY = gameState.horizon + Math.random() * (gameState.levelHeight * 0.5 - 20) + 8 | 0;
         for (j = 0; j < 25; j++) {
             for (var k = Math.random() * 8 | 0; k >= 0; k--) {
                 var X = randX + Math.random() * k * 2 - k | 0;
@@ -419,7 +423,7 @@ EnemyHandler.prototype.enterFrame = function() {
     var player = this.playerHandler;
     var gridList = this.gridList;
     var enemy, i, j, startX, startY, endX, endY, newX, newY, collide;
-    i = this.main.time / gameState.dayLength;
+    i = gameState.time / gameState.dayLength;
     if ((i < 0.25 || i > 0.75) && Math.random() < this.spawnRate) {
         this.create()
     }
@@ -767,7 +771,6 @@ PlayerHandler.prototype.init = function(main) {
     this.enemyHandler = main.enemyHandler;
     this.halfWidth = main.canvas.width / 2;
     this.halfHeight = main.canvas.height / 2;
-    this.horizon = main.horizon;
     this.x = gameState.levelWidth * gameState.blockSize * 0.5;
     this.y = this.height * 10;
     this.vX = 0;
@@ -988,7 +991,6 @@ function RenderHandler(main) {
     this.main = main;
     this.canvas = main.canvas;
     this.context = main.context;
-    this.horizon = main.horizon;
     this.timeRatio = Math.PI * 2 / gameState.dayLength
 }
 
@@ -1007,12 +1009,11 @@ RenderHandler.prototype.enterFrame = function() {
     var context = this.context;
     var gridList = this.gridHandler.list;
     var blockHalf = gameState.blockSize / 2;
-    var horizon = this.horizon;
     var player = this.player;
     var pX = player.x;
     var pY = player.y;
     var obj, X, Y, i, j, depth, dist;
-    dist = this.main.time * this.timeRatio;
+    dist = gameState.time * this.timeRatio;
     i = Math.sin(dist);
     j = Math.cos(dist);
     var gradient = context.createLinearGradient(0, 0, 0, this.canvas.height);
@@ -1045,7 +1046,7 @@ RenderHandler.prototype.enterFrame = function() {
     var offsetX = this.canvas.width * 0.5 - this.viewHandler.x;
     var offsetY = this.canvas.height * 0.5 - this.viewHandler.y;
     context.fillStyle = '#776655';
-    Y = Math.round(horizon * gameState.blockSize + offsetY);
+    Y = Math.round(gameState.horizon * gameState.blockSize + offsetY);
     context.fillRect(0, Y, this.canvas.width, this.canvas.height - Y);
     var startX = Math.max(-offsetX / gameState.blockSize | 0, 0);
     var endX = Math.min(startX + Math.ceil(this.canvas.width / gameState.blockSize) + 1, gameState.levelWidth);
@@ -1065,7 +1066,7 @@ RenderHandler.prototype.enterFrame = function() {
                     context.fillRect(X, Y, gameState.blockSize, gameState.blockSize)
                 }
             }
-            if (obj === false && j == horizon && gridList[i][j - 1] === false) {
+            if (obj === false && j == gameState.horizon && gridList[i][j - 1] === false) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
                 context.fillStyle = 'rbga(0,0,0,0.2)';
@@ -1124,7 +1125,7 @@ RenderHandler.prototype.enterFrame = function() {
     for (i = startX; i < endX; i++) {
         for (j = startY; j < endY; j++) {
             obj = gridList[i][j];
-            if (obj == gameState.blockInt.dirt && j <= horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == gameState.blockInt.cloud)) {
+            if (obj == gameState.blockInt.dirt && j <= gameState.horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == gameState.blockInt.cloud)) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
                 context.fillStyle = 'rgba(45,130,45,0.75)';
@@ -1139,7 +1140,7 @@ RenderHandler.prototype.enterFrame = function() {
                 context.fillStyle = gameState.blockColor[obj];
                 context.fillRect(X, Y, gameState.blockSize, gameState.blockSize)
             }
-            if (obj == gameState.blockInt.water && j <= horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == gameState.blockInt.cloud)) {
+            if (obj == gameState.blockInt.water && j <= gameState.horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == gameState.blockInt.cloud)) {
                 context.fillStyle = 'rgba(255,255,255,0.2)';
                 context.fillRect(X, Y, gameState.blockSize, 6);
                 context.fillRect(X, Y, gameState.blockSize / 2, 3)
@@ -1151,7 +1152,7 @@ RenderHandler.prototype.enterFrame = function() {
         depth = 0;
         for (j = 0; j < endY; j++) {
             obj = gridList[i][j];
-            if (obj != gameState.blockInt.bedrock && obj != gameState.blockInt.cloud && obj != false || j >= horizon) {
+            if (obj != gameState.blockInt.bedrock && obj != gameState.blockInt.cloud && obj != false || j >= gameState.horizon) {
                 X = i * gameState.blockSize;
                 Y = j * gameState.blockSize;
                 dist = (pX - X - blockHalf) * (pX - X - blockHalf) + (pY - Y - blockHalf) * (pY - Y - blockHalf);
@@ -1170,7 +1171,7 @@ RenderHandler.prototype.enterFrame = function() {
         }
     }
 
-    depth = Math.min(Math.cos(this.main.time * this.timeRatio) + 0.3, 0.5);
+    depth = Math.min(Math.cos(gameState.time * this.timeRatio) + 0.3, 0.5);
     if (depth > 0) {
         context.fillStyle = 'rgba(0,0,0,' + depth + ')';
         context.fillRect(0, 0, this.canvas.width, this.canvas.height)
@@ -1227,7 +1228,6 @@ ShotHandler.prototype.init = function(main) {
     this.enemyHandler = main.enemyHandler;
     this.dust = main.dustHandler.create.bind(main.dustHandler);
     this.blood = main.bloodHandler.create.bind(main.bloodHandler);
-    this.horizon = main.horizon
 };
 ShotHandler.prototype.enterFrame = function() {
     var gridList = this.gridList;
