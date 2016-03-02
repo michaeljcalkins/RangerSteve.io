@@ -5,15 +5,23 @@
  */
 
 let gameState = {
+    // Block height and width
     blockSize: 16,
 
-    // A multiplier for the game level's height and width.
+    // Multiplier for the game level's height and width.
     levelWidth: 500,
     levelHeight: 100,
 
+    // Instantiates these objects to interact with the gameState.
     handlers: ['control', 'grid', 'render', 'player', 'enemy', 'shot', 'dust', 'blood', 'view'],
+
+    // Used when rendering all text.
     fontFamily: '"Segoe UI",Arial,sans-serif',
+
+    // Time until the EnemyHandlers start appearing.
     dayLength: 480 * 60,
+
+    // Types of blocks to generate the map from.
     blocks: {
         bedrock: '#363532',
         dirt: '#AE9A73',
@@ -23,11 +31,18 @@ let gameState = {
         cloud: 'rgba(255,255,255,0.7)',
         platform: '#9F763B'
     },
+
+    //
     blockInt: {},
+
+    //
     blockColor: [],
+
+    // Current view of the game.
     state: 'loading',
-    time: 0,
-    timeIncrement: 1
+
+    time: null,
+    timeIncrement: null
 }
 
 window.onload = function() {
@@ -35,34 +50,21 @@ window.onload = function() {
 };
 
 function Main() {
-    this.handlers = ['control', 'grid', 'render', 'player', 'enemy', 'shot', 'dust', 'blood', 'view'];
-    this.fontFamily = '"Segoe UI",Arial,sans-serif';
-    this.dayLength = 480 * 60;
-    this.blocks = {
-        bedrock: '#363532',
-        dirt: '#AE9A73',
-        stone: '#807E79',
-        wood: '#9F763B',
-        water: 'rgba(0,72,151,0.5)',
-        cloud: 'rgba(255,255,255,0.7)',
-        platform: '#9F763B'
-    };
-    this.blockInt = {};
-    this.blockColor = [];
     var i = 0;
-    for (var block in this.blocks) {
-        this.blockInt[block] = i;
-        this.blockColor[i] = this.blocks[block];
+    for (var block in gameState.blocks) {
+        gameState.blockInt[block] = i;
+        gameState.blockColor[i] = gameState.blocks[block];
         i++
     }
-    this.state = 'loading';
+
+    gameState.state = 'loading';
     this.canvas = document.getElementById('canvas');
     this.context = this.canvas.getContext('2d');
     this.horizon = gameState.levelHeight / 2 | 0;
     this.time;
     this.timeIncrement;
-    for (i = 0; i < this.handlers.length; i++) {
-        var handlerName = this.handlers[i] + 'Handler';
+    for (i = 0; i < gameState.handlers.length; i++) {
+        var handlerName = gameState.handlers[i] + 'Handler';
         var className = handlerName.charAt(0).toUpperCase() + handlerName.slice(1);
         this[handlerName] = new window[className](this)
     }
@@ -71,29 +73,32 @@ function Main() {
 }
 
 Main.prototype.startGame = function() {
-    for (var i = 0; i < this.handlers.length; i++) {
-        this[this.handlers[i] + 'Handler'].init(this)
+    for (var i = 0; i < gameState.handlers.length; i++) {
+        this[gameState.handlers[i] + 'Handler'].init(this)
     }
     new CreateLevel(this);
-    this.state = 'game';
-    this.time = this.dayLength * 0.37
+    gameState.state = 'game';
+    this.time = gameState.dayLength * 0.37
 };
 
 Main.prototype.enterFrame = function() {
-    if (this.state != 'game') {
+    if (gameState.state != 'game') {
         return
     }
+
     if (this.playerHandler.hp <= 0) {
-        this.state = 'gameOverScreen';
+        gameState.state = 'gameOverScreen';
         new GameOverScreen(this);
         return
     }
+
     this.time++;
-    if (this.time > this.dayLength) {
+    if (this.time > gameState.dayLength) {
         this.time = 0
     }
-    for (var i = 0; i < this.handlers.length; i++) {
-        this[this.handlers[i] + 'Handler'].enterFrame()
+
+    for (var i = 0; i < gameState.handlers.length; i++) {
+        this[gameState.handlers[i] + 'Handler'].enterFrame()
     }
 };
 
@@ -106,12 +111,10 @@ function BloodHandler(main) {
 
 BloodHandler.prototype.init = function(main) {
     this.list.length = 0;
-    this.blockInt = main.blockInt;
     this.gridList = main.gridHandler.list;
 };
 
 BloodHandler.prototype.enterFrame = function() {
-    var blockInt = this.blockInt;
     var gridList = this.gridList;
     var blood, X, Y;
     for (var i = this.list.length - 1; i >= 0; i--) {
@@ -123,10 +126,10 @@ BloodHandler.prototype.enterFrame = function() {
         X = blood.x / gameState.blockSize | 0;
         Y = blood.y / gameState.blockSize | 0;
         if (X >= 0 && X < gameState.levelWidth && Y >= 0 && Y < gameState.levelHeight) {
-            if (gridList[X][Y] == blockInt.water) {
+            if (gridList[X][Y] == gameState.blockInt.water) {
                 blood.x -= blood.vX * 0.5;
                 blood.y -= blood.vY * 0.5
-            } else if (gridList[X][Y] !== false && gridList[X][Y] != blockInt.cloud && gridList[X][Y] != blockInt.platform) {
+            } else if (gridList[X][Y] !== false && gridList[X][Y] != gameState.blockInt.cloud && gridList[X][Y] != gameState.blockInt.platform) {
                 blood.hp *= 0.75
             }
         }
@@ -196,7 +199,7 @@ ControlHandler.prototype.keyDownEvent = function(e) {
         this.d = true
     } else if (e.keyCode == 83) {
         this.s = true
-    } else if ((e.keyCode >= 48 || e.keyCode <= 57) && this.main.state == 'game') {
+    } else if ((e.keyCode >= 48 || e.keyCode <= 57) && gameState.state == 'game') {
         this.playerHandler.hotKey(e.keyCode)
     }
 
@@ -232,7 +235,7 @@ ControlHandler.prototype.mouseDownEvent = function(e) {
 
 ControlHandler.prototype.mouseUpEvent = function(e) {
     if (this.mouseLeft && this.mouseX > 0 && this.mouseX < this.canvas.width && this.mouseY > 0 && this.mouseY < this.canvas.height) {
-        if (this.main.state == 'menuScreen' || this.main.state == 'gameOverScreen') {
+        if (gameState.state == 'menuScreen' || gameState.state == 'gameOverScreen') {
             this.main.startGame()
         }
     }
@@ -248,7 +251,7 @@ ControlHandler.prototype.mouseMoveEvent = function(e) {
     this.mouseY = e.clientY - rect.top
 };
 ControlHandler.prototype.mouseWheelEvent = function(e) {
-    if (this.main.state == 'game') {
+    if (gameState.state == 'game') {
         this.playerHandler.wheel(e.wheelDelta ? e.wheelDelta : -e.detail)
     }
     if (this.mouseX > 0 && this.mouseX < this.canvas.width && this.mouseY > 0 && this.mouseY < this.canvas.height) {
@@ -259,7 +262,6 @@ ControlHandler.prototype.mouseWheelEvent = function(e) {
 
 function CreateLevel(main) {
     var flatness = 0.75;
-    var blockInt = main.blockInt;
     var list = main.gridHandler.list;
     var waterList = main.gridHandler.waterList;
     var horizon = main.horizon;
@@ -270,22 +272,22 @@ function CreateLevel(main) {
         var randY = Math.random() * (gameState.levelHeight * 0.5 - 20) + 8 | 0;
         for (j = 0; j < 25; j++) {
             for (var k = 0; k < 9; k++) {
-                list[randX + Math.random() * k * 2 - k | 0][randY + Math.random() * k - k / 2 | 0] = blockInt.cloud
+                list[randX + Math.random() * k * 2 - k | 0][randY + Math.random() * k - k / 2 | 0] = gameState.blockInt.cloud
             }
         }
     }
     for (i = 0; i < gameState.levelWidth; i++) {
         if (i == 0 || i == gameState.levelWidth - 1) {
             for (j = 0; j < gameState.levelHeight; j++) {
-                list[i][j] = blockInt.bedrock
+                list[i][j] = gameState.blockInt.bedrock
             }
             continue
         }
-        list[i][0] = blockInt.bedrock;
-        list[i][gameState.levelHeight - 1] = blockInt.bedrock;
+        list[i][0] = gameState.blockInt.bedrock;
+        list[i][gameState.levelHeight - 1] = gameState.blockInt.bedrock;
         if (Y > horizon) {
             for (j = horizon; j < Y; j++) {
-                list[i][j] = blockInt.water;
+                list[i][j] = gameState.blockInt.water;
                 waterList[waterList.length] = {
                     x: i,
                     y: j
@@ -294,9 +296,9 @@ function CreateLevel(main) {
         }
         for (j = Y; j < gameState.levelHeight - 1; j++) {
             if (j > Y + Math.random() * 8 + 4) {
-                list[i][j] = blockInt.stone
+                list[i][j] = gameState.blockInt.stone
             } else {
-                list[i][j] = blockInt.dirt
+                list[i][j] = gameState.blockInt.dirt
             }
         }
         if (Math.random() < flatness) {
@@ -329,7 +331,7 @@ function CreateLevel(main) {
             for (var k = Math.random() * 8 | 0; k >= 0; k--) {
                 var X = randX + Math.random() * k * 2 - k | 0;
                 var Y = randY + Math.random() * k - k / 2 | 0;
-                list[X][Y] = blockInt.water;
+                list[X][Y] = gameState.blockInt.water;
                 waterList[waterList.length] = {
                     x: X,
                     y: Y
@@ -347,11 +349,9 @@ function DustHandler(main) {
 }
 DustHandler.prototype.init = function(main) {
     this.list.length = 0;
-    this.blockInt = main.blockInt;
     this.gridList = main.gridHandler.list;
 };
 DustHandler.prototype.enterFrame = function() {
-    var blockInt = this.blockInt;
     var gridList = this.gridList;
     var dust, X, Y;
     for (var i = this.list.length - 1; i >= 0; i--) {
@@ -363,10 +363,10 @@ DustHandler.prototype.enterFrame = function() {
         X = dust.x / gameState.blockSize | 0;
         Y = dust.y / gameState.blockSize | 0;
         if (X >= 0 && X < gameState.levelWidth && Y >= 0 && Y < gameState.levelHeight) {
-            if (gridList[X][Y] == blockInt.water) {
+            if (gridList[X][Y] == gameState.blockInt.water) {
                 dust.x -= dust.vX * 0.5;
                 dust.y -= dust.vY * 0.5
-            } else if (gridList[X][Y] !== false && gridList[X][Y] != blockInt.cloud && gridList[X][Y] != blockInt.platform) {
+            } else if (gridList[X][Y] !== false && gridList[X][Y] != gameState.blockInt.cloud && gridList[X][Y] != gameState.blockInt.platform) {
                 dust.hp *= 0.75
             }
         }
@@ -411,17 +411,15 @@ EnemyHandler.prototype.init = function(main) {
     this.list.length = 0;
     this.main = main;
     this.playerHandler = main.playerHandler;
-    this.blockInt = main.blockInt;
     this.gridList = main.gridHandler.list;
     this.blood = main.bloodHandler.create.bind(main.bloodHandler);
 };
 
 EnemyHandler.prototype.enterFrame = function() {
     var player = this.playerHandler;
-    var blockInt = this.blockInt;
     var gridList = this.gridList;
     var enemy, i, j, startX, startY, endX, endY, newX, newY, collide;
-    i = this.main.time / this.main.dayLength;
+    i = this.main.time / gameState.dayLength;
     if ((i < 0.25 || i > 0.75) && Math.random() < this.spawnRate) {
         this.create()
     }
@@ -455,8 +453,8 @@ EnemyHandler.prototype.enterFrame = function() {
         endY = Math.min((enemy.y + enemy.height / 2) / gameState.blockSize | 0, gameState.levelHeight - 1);
         for (i = startX; i <= endX; i++) {
             for (j = startY; j <= endY; j++) {
-                if (gridList[i][j] !== false && gridList[i][j] != blockInt.cloud && gridList[i][j] != blockInt.platform) {
-                    if (gridList[i][j] == blockInt.water) {
+                if (gridList[i][j] !== false && gridList[i][j] != gameState.blockInt.cloud && gridList[i][j] != gameState.blockInt.platform) {
+                    if (gridList[i][j] == gameState.blockInt.water) {
                         enemy.inWater = true;
                         if (enemy.vX > enemy.speed / 2) {
                             enemy.vX = enemy.speed / 2
@@ -496,9 +494,9 @@ EnemyHandler.prototype.enterFrame = function() {
         endY = Math.min((newY + enemy.height / 2) / gameState.blockSize | 0, gameState.levelHeight - 1);
         for (i = startX; i <= endX; i++) {
             for (j = startY; j <= endY; j++) {
-                if (gridList[i][j] !== false && gridList[i][j] != blockInt.cloud && gridList[i][j] != blockInt.platform) {
+                if (gridList[i][j] !== false && gridList[i][j] != gameState.blockInt.cloud && gridList[i][j] != gameState.blockInt.platform) {
                     collide = true;
-                    if (gridList[i][j] == blockInt.water) {
+                    if (gridList[i][j] == gameState.blockInt.water) {
                         enemy.inWater = true;
                         enemy.canJump--
                     } else {
@@ -511,7 +509,7 @@ EnemyHandler.prototype.enterFrame = function() {
                         enemy.vY = 0
                     }
                 }
-                if (gridList[i][j] == blockInt.platform && enemy.vY > 0 && player.y < enemy.y - 1) {
+                if (gridList[i][j] == gameState.blockInt.platform && enemy.vY > 0 && player.y < enemy.y - 1) {
                     if (enemy.y + enemy.height * 0.5 < j * gameState.blockSize) {
                         newY = j * gameState.blockSize - enemy.height * 0.5 - 0.001;
                         collide = true;
@@ -561,7 +559,7 @@ EnemyHandler.prototype.create = function() {
 };
 
 function GameOverScreen(main) {
-    main.state = 'gameOverScreen';
+    gameState.state = 'gameOverScreen';
     main.controlHandler.mouseLeft = false;
     main.context.clearRect(0, 0, main.canvas.width, main.canvas.height);
     var hW = main.canvas.width * 0.5;
@@ -569,15 +567,14 @@ function GameOverScreen(main) {
     var dark = 'rgba(0,0,0,0.9)';
     var medium = 'rgba(0,0,0,0.5)';
     var light = 'rgba(0,0,0,0.3)';
-    new Text(main.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + main.fontFamily, light, 'left');
-    new Text(main.context, 'Game Over!', hW, hH - 70, 'normal 22px/1 ' + main.fontFamily, dark);
-    new Text(main.context, 'Kills:' + main.playerHandler.kills, hW, hH - 30, 'normal 16px/1 ' + main.fontFamily, medium);
-    new Text(main.context, 'Click to Restart', hW, hH + 10, 'normal 17px/1 ' + main.fontFamily, dark);
+    new Text(main.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + gameState.fontFamily, light, 'left');
+    new Text(main.context, 'Game Over!', hW, hH - 70, 'normal 22px/1 ' + gameState.fontFamily, dark);
+    new Text(main.context, 'Kills:' + main.playerHandler.kills, hW, hH - 30, 'normal 16px/1 ' + gameState.fontFamily, medium);
+    new Text(main.context, 'Click to Restart', hW, hH + 10, 'normal 17px/1 ' + gameState.fontFamily, dark);
 }
 
 function GridHandler(main) {}
 GridHandler.prototype.init = function(main) {
-    this.blockInt = main.blockInt;
     this.list = [];
     this.waterList = [];
     this.toggle = 0;
@@ -603,12 +600,12 @@ GridHandler.prototype.enterFrame = function() {
             continue
         }
         var water = this.waterList[i];
-        if (list[water.x][water.y] != this.blockInt.water) {
+        if (list[water.x][water.y] != gameState.blockInt.water) {
             this.waterList.splice(i, 1);
             continue
         }
         if (water.y < gameState.levelHeight && list[water.x][water.y + 1] === false) {
-            list[water.x][water.y + 1] = this.blockInt.water;
+            list[water.x][water.y + 1] = gameState.blockInt.water;
             this.waterList[this.waterList.length] = {
                 x: water.x,
                 y: water.y + 1
@@ -616,7 +613,7 @@ GridHandler.prototype.enterFrame = function() {
             continue
         }
         if (water.x > 0 && list[water.x - 1][water.y] === false) {
-            list[water.x - 1][water.y] = this.blockInt.water;
+            list[water.x - 1][water.y] = gameState.blockInt.water;
             this.waterList[this.waterList.length] = {
                 x: water.x - 1,
                 y: water.y
@@ -624,7 +621,7 @@ GridHandler.prototype.enterFrame = function() {
             continue
         }
         if (water.x < gameState.levelWidth - 1 && list[water.x + 1][water.y] === false) {
-            list[water.x + 1][water.y] = this.blockInt.water;
+            list[water.x + 1][water.y] = gameState.blockInt.water;
             this.waterList[this.waterList.length] = {
                 x: water.x + 1,
                 y: water.y
@@ -639,7 +636,7 @@ GridHandler.prototype.enterFrame = function() {
 };
 
 function MenuScreen(main) {
-    main.state = 'menuScreen';
+    gameState.state = 'menuScreen';
     main.controlHandler.mouseLeft = false;
     main.context.clearRect(0, 0, main.canvas.width, main.canvas.height);
     var hW = main.canvas.width * 0.5;
@@ -647,12 +644,12 @@ function MenuScreen(main) {
     var dark = 'rgba(0,0,0,0.9)';
     var medium = 'rgba(0,0,0,0.5)';
     var light = 'rgba(0,0,0,0.3)';
-    new Text(main.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + main.fontFamily, light, 'left');
-    new Text(main.context, 'Click to Start', hW, hH - 70, 'normal 17px/1 ' + main.fontFamily, dark);
-    new Text(main.context, 'Use "A" and "D" to move and "Space" to jump.', hW, hH - 30, 'normal 15px/1 ' + main.fontFamily, medium);
-    new Text(main.context, 'Use mouse wheel to change action and left click to perform action.', hW, hH - 10, 'normal 15px/1 ' + main.fontFamily, medium);
-    new Text(main.context, 'You can build and destroy terrain.', hW, hH + 10, 'normal 15px/1 ' + main.fontFamily, medium);
-    new Text(main.context, 'Enemies come out at night.', hW, hH + 30, 'normal 15px/1 ' + main.fontFamily, medium);
+    new Text(main.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + gameState.fontFamily, light, 'left');
+    new Text(main.context, 'Click to Start', hW, hH - 70, 'normal 17px/1 ' + gameState.fontFamily, dark);
+    new Text(main.context, 'Use "A" and "D" to move and "Space" to jump.', hW, hH - 30, 'normal 15px/1 ' + gameState.fontFamily, medium);
+    new Text(main.context, 'Use mouse wheel to change action and left click to perform action.', hW, hH - 10, 'normal 15px/1 ' + gameState.fontFamily, medium);
+    new Text(main.context, 'You can build and destroy terrain.', hW, hH + 10, 'normal 15px/1 ' + gameState.fontFamily, medium);
+    new Text(main.context, 'Enemies come out at night.', hW, hH + 30, 'normal 15px/1 ' + gameState.fontFamily, medium);
 }
 
 function PlayerHandler(main) {
@@ -735,22 +732,22 @@ function PlayerHandler(main) {
         name: 'Build Dirt',
         reload: 4,
         count: -1,
-        type: main.blockInt.dirt
+        type: gameState.blockInt.dirt
     }, {
         name: 'Build Stone',
         reload: 8,
         count: -1,
-        type: main.blockInt.stone
+        type: gameState.blockInt.stone
     }, {
         name: 'Build Wood',
         reload: 6,
         count: -1,
-        type: main.blockInt.wood
+        type: gameState.blockInt.wood
     }, {
         name: 'Build Platform',
         reload: 6,
         count: -1,
-        type: main.blockInt.platform
+        type: gameState.blockInt.platform
     }, {
         name: 'Remove Block',
         reload: 29,
@@ -763,7 +760,6 @@ function PlayerHandler(main) {
 }
 
 PlayerHandler.prototype.init = function(main) {
-    this.blockInt = main.blockInt;
     this.controlHandler = main.controlHandler;
     this.gridHandler = main.gridHandler;
     this.shoot = main.shotHandler.create.bind(main.shotHandler);
@@ -791,7 +787,6 @@ PlayerHandler.prototype.enterFrame = function() {
     var controlHandler = this.controlHandler;
     var accel = this.accel;
     var speed = this.speed;
-    var blockInt = this.blockInt;
     var gridList = this.gridHandler.list;
     var width = this.width;
     var height = this.height;
@@ -836,8 +831,8 @@ PlayerHandler.prototype.enterFrame = function() {
     var endY = Math.min((this.y + height * 0.5) / gameState.blockSize | 0, gameState.levelHeight - 1);
     for (i = startX; i <= endX; i++) {
         for (j = startY; j <= endY; j++) {
-            if (gridList[i][j] !== false && gridList[i][j] != blockInt.cloud && gridList[i][j] != blockInt.platform) {
-                if (gridList[i][j] == blockInt.water) {
+            if (gridList[i][j] !== false && gridList[i][j] != gameState.blockInt.cloud && gridList[i][j] != gameState.blockInt.platform) {
+                if (gridList[i][j] == gameState.blockInt.water) {
                     this.inWater = true;
                     if (this.vX > speed * 0.5) {
                         this.vX = speed * 0.5
@@ -877,9 +872,9 @@ PlayerHandler.prototype.enterFrame = function() {
     endY = Math.min((newY + height * 0.5) / gameState.blockSize | 0, gameState.levelHeight - 1);
     for (i = startX; i <= endX; i++) {
         for (j = startY; j <= endY; j++) {
-            if (gridList[i][j] !== false && gridList[i][j] != blockInt.cloud && gridList[i][j] != blockInt.platform) {
+            if (gridList[i][j] !== false && gridList[i][j] != gameState.blockInt.cloud && gridList[i][j] != gameState.blockInt.platform) {
                 collide = true;
-                if (gridList[i][j] == blockInt.water) {
+                if (gridList[i][j] == gameState.blockInt.water) {
                     this.inWater = true;
                     this.canJump--
                 } else {
@@ -892,7 +887,7 @@ PlayerHandler.prototype.enterFrame = function() {
                     this.vY = 0
                 }
             }
-            if (gridList[i][j] == blockInt.platform && this.vY > 0 && controlHandler.s == false) {
+            if (gridList[i][j] == gameState.blockInt.platform && this.vY > 0 && controlHandler.s == false) {
                 if (this.y + height * 0.5 < j * gameState.blockSize) {
                     newY = j * gameState.blockSize - height * 0.5 - 0.001;
                     collide = true;
@@ -920,7 +915,7 @@ PlayerHandler.prototype.enterFrame = function() {
                 Y = Y / gameState.blockSize | 0;
                 if (X > 0 && X < gameState.levelWidth && Y > 0 && Y < gameState.levelHeight) {
                     if (this.actionObject.count == -1) {
-                        if (gridList[X][Y] == false || gridList[X][Y] == blockInt.water || gridList[X][Y] == blockInt.cloud) {
+                        if (gridList[X][Y] == false || gridList[X][Y] == gameState.blockInt.water || gridList[X][Y] == gameState.blockInt.cloud) {
                             collide = false;
                             var enemy;
                             for (i = this.enemyHandler.list.length - 1; i >= 0; i--) {
@@ -939,7 +934,7 @@ PlayerHandler.prototype.enterFrame = function() {
                         }
                     }
                     if (this.actionObject.count == -2) {
-                        if (gridList[X][Y] != blockInt.bedrock) {
+                        if (gridList[X][Y] != gameState.blockInt.bedrock) {
                             gridList[X][Y] = false
                         }
                     }
@@ -993,10 +988,8 @@ function RenderHandler(main) {
     this.main = main;
     this.canvas = main.canvas;
     this.context = main.context;
-    this.blockColor = main.blockColor;
-    this.blockInt = main.blockInt;
     this.horizon = main.horizon;
-    this.timeRatio = Math.PI * 2 / main.dayLength
+    this.timeRatio = Math.PI * 2 / gameState.dayLength
 }
 
 RenderHandler.prototype.init = function(main) {
@@ -1014,8 +1007,6 @@ RenderHandler.prototype.enterFrame = function() {
     var context = this.context;
     var gridList = this.gridHandler.list;
     var blockHalf = gameState.blockSize / 2;
-    var blockColor = this.blockColor;
-    var blockInt = this.blockInt;
     var horizon = this.horizon;
     var player = this.player;
     var pX = player.x;
@@ -1063,11 +1054,11 @@ RenderHandler.prototype.enterFrame = function() {
     for (i = startX; i < endX; i++) {
         for (j = startY; j < endY; j++) {
             obj = gridList[i][j];
-            if (obj !== false && obj != blockInt.water && obj != blockInt.cloud) {
+            if (obj !== false && obj != gameState.blockInt.water && obj != gameState.blockInt.cloud) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
-                context.fillStyle = blockColor[obj];
-                if (obj == blockInt.platform) {
+                context.fillStyle = gameState.blockColor[obj];
+                if (obj == gameState.blockInt.platform) {
                     context.fillRect(X, Y, gameState.blockSize, gameState.blockSize * 0.25);
                     context.fillRect(X, Y + gameState.blockSize * 0.5, gameState.blockSize, gameState.blockSize * 0.25)
                 } else {
@@ -1133,7 +1124,7 @@ RenderHandler.prototype.enterFrame = function() {
     for (i = startX; i < endX; i++) {
         for (j = startY; j < endY; j++) {
             obj = gridList[i][j];
-            if (obj == blockInt.dirt && j <= horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == blockInt.cloud)) {
+            if (obj == gameState.blockInt.dirt && j <= horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == gameState.blockInt.cloud)) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
                 context.fillStyle = 'rgba(45,130,45,0.75)';
@@ -1142,13 +1133,13 @@ RenderHandler.prototype.enterFrame = function() {
                 context.fillRect(X + 5, Y - 5, 3, 2);
                 context.fillRect(X + 11, Y - 5, 2, 2)
             }
-            if (obj == blockInt.water || obj == blockInt.cloud) {
+            if (obj == gameState.blockInt.water || obj == gameState.blockInt.cloud) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
-                context.fillStyle = blockColor[obj];
+                context.fillStyle = gameState.blockColor[obj];
                 context.fillRect(X, Y, gameState.blockSize, gameState.blockSize)
             }
-            if (obj == blockInt.water && j <= horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == blockInt.cloud)) {
+            if (obj == gameState.blockInt.water && j <= horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == gameState.blockInt.cloud)) {
                 context.fillStyle = 'rgba(255,255,255,0.2)';
                 context.fillRect(X, Y, gameState.blockSize, 6);
                 context.fillRect(X, Y, gameState.blockSize / 2, 3)
@@ -1160,7 +1151,7 @@ RenderHandler.prototype.enterFrame = function() {
         depth = 0;
         for (j = 0; j < endY; j++) {
             obj = gridList[i][j];
-            if (obj != blockInt.bedrock && obj != blockInt.cloud && obj != false || j >= horizon) {
+            if (obj != gameState.blockInt.bedrock && obj != gameState.blockInt.cloud && obj != false || j >= horizon) {
                 X = i * gameState.blockSize;
                 Y = j * gameState.blockSize;
                 dist = (pX - X - blockHalf) * (pX - X - blockHalf) + (pY - Y - blockHalf) * (pY - Y - blockHalf);
@@ -1168,9 +1159,9 @@ RenderHandler.prototype.enterFrame = function() {
                 Y = Math.round(Y + offsetY);
                 context.fillStyle = 'rgba(0,0,0,' + (depth * 0.05 * Math.max(Math.min(dist / 16000, 1), 0.4)) + ')';
                 context.fillRect(X, Y, gameState.blockSize, gameState.blockSize);
-                if (obj == blockInt.platform) {
+                if (obj == gameState.blockInt.platform) {
                     depth += 0.2
-                } else if (obj == blockInt.water) {
+                } else if (obj == gameState.blockInt.water) {
                     depth += 0.5
                 } else {
                     depth += 1
@@ -1232,7 +1223,6 @@ function ShotHandler(main) {
 }
 ShotHandler.prototype.init = function(main) {
     this.list.length = 0;
-    this.blockInt = main.blockInt;
     this.gridList = main.gridHandler.list;
     this.enemyHandler = main.enemyHandler;
     this.dust = main.dustHandler.create.bind(main.dustHandler);
@@ -1240,7 +1230,6 @@ ShotHandler.prototype.init = function(main) {
     this.horizon = main.horizon
 };
 ShotHandler.prototype.enterFrame = function() {
-    var blockInt = this.blockInt;
     var gridList = this.gridList;
     var shot, enemy, j, X, Y;
     for (var i = this.list.length - 1; i >= 0; i--) {
@@ -1252,11 +1241,11 @@ ShotHandler.prototype.enterFrame = function() {
         X = shot.x / gameState.blockSize | 0;
         Y = shot.y / gameState.blockSize | 0;
         if (X >= 0 && X < gameState.levelWidth && Y >= 0 && Y < gameState.levelHeight) {
-            if (gridList[X][Y] == blockInt.water) {
+            if (gridList[X][Y] == gameState.blockInt.water) {
                 shot.x -= shot.vX * 0.5;
                 shot.y -= shot.vY * 0.5
-            } else if (gridList[X][Y] !== false && gridList[X][Y] != blockInt.cloud && gridList[X][Y] != blockInt.platform) {
-                if (shot.destroy && gridList[X][Y] != blockInt.bedrock) {
+            } else if (gridList[X][Y] !== false && gridList[X][Y] != gameState.blockInt.cloud && gridList[X][Y] != gameState.blockInt.platform) {
+                if (shot.destroy && gridList[X][Y] != gameState.blockInt.bedrock) {
                     gridList[X][Y] = false
                 }
                 shot.hp = -99;
