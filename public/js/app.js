@@ -8,6 +8,8 @@ let gameState = {
     // Block height and width
     blockSize: 16,
 
+    canvas: document.getElementById('canvas'),
+
     // Multiplier for the game level's height and width.
     levelWidth: 500,
     levelHeight: 100,
@@ -62,8 +64,7 @@ function Main() {
     gameState.state = 'loading';
 
     // Create basis for level
-    this.canvas = document.getElementById('canvas');
-    this.context = this.canvas.getContext('2d');
+    this.context = gameState.canvas.getContext('2d');
     gameState.horizon = gameState.levelHeight / 2 | 0;
 
     // Instatiate all behaviors
@@ -172,7 +173,6 @@ function ControlHandler(main) {
     this.mouseX = 0;
     this.mouseY = 0;
     this.main = main;
-    this.canvas = main.canvas;
     window.addEventListener('keydown', this.keyDownEvent.bind(this));
     window.addEventListener('keyup', this.keyUpEvent.bind(this));
     window.addEventListener('mousedown', this.mouseDownEvent.bind(this));
@@ -208,7 +208,7 @@ ControlHandler.prototype.keyDownEvent = function(e) {
         this.playerHandler.hotKey(e.keyCode)
     }
 
-    if (this.mouseX > 0 && this.mouseX < this.canvas.width && this.mouseY > 0 && this.mouseY < this.canvas.height) {
+    if (this.mouseX > 0 && this.mouseX < gameState.canvas.width && this.mouseY > 0 && this.mouseY < gameState.canvas.height) {
         e.preventDefault();
         return false
     }
@@ -224,7 +224,7 @@ ControlHandler.prototype.keyUpEvent = function(e) {
     } else if (e.keyCode == 83) {
         this.s = false
     }
-    if (this.mouseX > 0 && this.mouseX < this.canvas.width && this.mouseY > 0 && this.mouseY < this.canvas.height) {
+    if (this.mouseX > 0 && this.mouseX < gameState.canvas.width && this.mouseY > 0 && this.mouseY < gameState.canvas.height) {
         e.preventDefault();
         return false
     }
@@ -239,7 +239,7 @@ ControlHandler.prototype.mouseDownEvent = function(e) {
 };
 
 ControlHandler.prototype.mouseUpEvent = function(e) {
-    if (this.mouseLeft && this.mouseX > 0 && this.mouseX < this.canvas.width && this.mouseY > 0 && this.mouseY < this.canvas.height) {
+    if (this.mouseLeft && this.mouseX > 0 && this.mouseX < gameState.canvas.width && this.mouseY > 0 && this.mouseY < gameState.canvas.height) {
         if (gameState.state == 'menuScreen' || gameState.state == 'gameOverScreen') {
             this.main.startGame()
         }
@@ -251,7 +251,7 @@ ControlHandler.prototype.mouseUpEvent = function(e) {
     }
 };
 ControlHandler.prototype.mouseMoveEvent = function(e) {
-    var rect = this.canvas.getBoundingClientRect();
+    var rect = gameState.canvas.getBoundingClientRect();
     this.mouseX = e.clientX - rect.left;
     this.mouseY = e.clientY - rect.top
 };
@@ -259,7 +259,7 @@ ControlHandler.prototype.mouseWheelEvent = function(e) {
     if (gameState.state == 'game') {
         this.playerHandler.wheel(e.wheelDelta ? e.wheelDelta : -e.detail)
     }
-    if (this.mouseX > 0 && this.mouseX < this.canvas.width && this.mouseY > 0 && this.mouseY < this.canvas.height) {
+    if (this.mouseX > 0 && this.mouseX < gameState.canvas.width && this.mouseY > 0 && this.mouseY < gameState.canvas.height) {
         e.preventDefault();
         return false
     }
@@ -565,9 +565,9 @@ EnemyHandler.prototype.create = function() {
 function GameOverScreen(main) {
     gameState.state = 'gameOverScreen';
     main.controlHandler.mouseLeft = false;
-    main.context.clearRect(0, 0, main.canvas.width, main.canvas.height);
-    var hW = main.canvas.width * 0.5;
-    var hH = main.canvas.height * 0.5;
+    main.context.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
+    var hW = gameState.canvas.width * 0.5;
+    var hH = gameState.canvas.height * 0.5;
     var dark = 'rgba(0,0,0,0.9)';
     var medium = 'rgba(0,0,0,0.5)';
     var light = 'rgba(0,0,0,0.3)';
@@ -642,9 +642,9 @@ GridHandler.prototype.enterFrame = function() {
 function MenuScreen(main) {
     gameState.state = 'menuScreen';
     main.controlHandler.mouseLeft = false;
-    main.context.clearRect(0, 0, main.canvas.width, main.canvas.height);
-    var hW = main.canvas.width * 0.5;
-    var hH = main.canvas.height * 0.5;
+    main.context.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
+    var hW = gameState.canvas.width * 0.5;
+    var hH = gameState.canvas.height * 0.5;
     var dark = 'rgba(0,0,0,0.9)';
     var medium = 'rgba(0,0,0,0.5)';
     var light = 'rgba(0,0,0,0.3)';
@@ -769,8 +769,8 @@ PlayerHandler.prototype.init = function(main) {
     this.shoot = main.shotHandler.create.bind(main.shotHandler);
     this.viewHandler = main.viewHandler;
     this.enemyHandler = main.enemyHandler;
-    this.halfWidth = main.canvas.width / 2;
-    this.halfHeight = main.canvas.height / 2;
+    this.halfWidth = gameState.canvas.width / 2;
+    this.halfHeight = gameState.canvas.height / 2;
     this.x = gameState.levelWidth * gameState.blockSize * 0.5;
     this.y = this.height * 10;
     this.vX = 0;
@@ -987,9 +987,8 @@ PlayerHandler.prototype.wheel = function(delta) {
 };
 
 function RenderHandler(main) {
-    this.sunMoonArcRadius = main.canvas.height - 40;
+    this.sunMoonArcRadius = gameState.canvas.height - 40;
     this.main = main;
-    this.canvas = main.canvas;
     this.context = main.context;
     this.timeRatio = Math.PI * 2 / gameState.dayLength
 }
@@ -1016,16 +1015,16 @@ RenderHandler.prototype.enterFrame = function() {
     dist = gameState.time * this.timeRatio;
     i = Math.sin(dist);
     j = Math.cos(dist);
-    var gradient = context.createLinearGradient(0, 0, 0, this.canvas.height);
+    var gradient = context.createLinearGradient(0, 0, 0, gameState.canvas.height);
     depth = this.viewHandler.y / (gameState.levelHeight * gameState.blockSize) * 250 | 0;
     dist = (j + 1) * 75 | 0;
     gradient.addColorStop(0, 'rgb(' + (77 + depth) + ',' + (117 + depth) + ',' + (179 + depth) + ')');
     gradient.addColorStop(1, 'rgb(' + (127 + depth - dist) + ',' + (167 + depth - dist) + ',' + (228 + depth - dist) + ')');
     context.fillStyle = gradient;
-    context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    context.fillRect(0, 0, gameState.canvas.width, gameState.canvas.height);
 
-    X = this.canvas.width * 0.5 + i * this.sunMoonArcRadius;
-    Y = this.canvas.height + j * this.sunMoonArcRadius;
+    X = gameState.canvas.width * 0.5 + i * this.sunMoonArcRadius;
+    Y = gameState.canvas.height + j * this.sunMoonArcRadius;
     context.shadowBlur = 40;
     context.shadowColor = '#FEDB16';
     context.fillStyle = '#FEDB16';
@@ -1033,8 +1032,8 @@ RenderHandler.prototype.enterFrame = function() {
     context.arc(X, Y, 30, 0, 6.2832);
     context.fill();
     context.closePath();
-    X = this.canvas.width * 0.5 + -i * this.sunMoonArcRadius;
-    Y = this.canvas.height + -j * this.sunMoonArcRadius;
+    X = gameState.canvas.width * 0.5 + -i * this.sunMoonArcRadius;
+    Y = gameState.canvas.height + -j * this.sunMoonArcRadius;
     context.shadowBlur = 20;
     context.shadowColor = '#FFFFFF';
     context.fillStyle = '#FFFFFF';
@@ -1043,15 +1042,15 @@ RenderHandler.prototype.enterFrame = function() {
     context.fill();
     context.closePath();
     context.shadowBlur = 0;
-    var offsetX = this.canvas.width * 0.5 - this.viewHandler.x;
-    var offsetY = this.canvas.height * 0.5 - this.viewHandler.y;
+    var offsetX = gameState.canvas.width * 0.5 - this.viewHandler.x;
+    var offsetY = gameState.canvas.height * 0.5 - this.viewHandler.y;
     context.fillStyle = '#776655';
     Y = Math.round(gameState.horizon * gameState.blockSize + offsetY);
-    context.fillRect(0, Y, this.canvas.width, this.canvas.height - Y);
+    context.fillRect(0, Y, gameState.canvas.width, gameState.canvas.height - Y);
     var startX = Math.max(-offsetX / gameState.blockSize | 0, 0);
-    var endX = Math.min(startX + Math.ceil(this.canvas.width / gameState.blockSize) + 1, gameState.levelWidth);
+    var endX = Math.min(startX + Math.ceil(gameState.canvas.width / gameState.blockSize) + 1, gameState.levelWidth);
     var startY = Math.max(-offsetY / gameState.blockSize | 0, 0);
-    var endY = Math.min(startY + Math.ceil(this.canvas.height / gameState.blockSize) + 1, gameState.levelHeight);
+    var endY = Math.min(startY + Math.ceil(gameState.canvas.height / gameState.blockSize) + 1, gameState.levelHeight);
     for (i = startX; i < endX; i++) {
         for (j = startY; j < endY; j++) {
             obj = gridList[i][j];
@@ -1174,7 +1173,7 @@ RenderHandler.prototype.enterFrame = function() {
     depth = Math.min(Math.cos(gameState.time * this.timeRatio) + 0.3, 0.5);
     if (depth > 0) {
         context.fillStyle = 'rgba(0,0,0,' + depth + ')';
-        context.fillRect(0, 0, this.canvas.width, this.canvas.height)
+        context.fillRect(0, 0, gameState.canvas.width, gameState.canvas.height)
     }
     if (player.actionObject.count < 0 && player.canBuild) {
         context.fillStyle = 'rgba(0,0,0,0.2)';
@@ -1182,7 +1181,7 @@ RenderHandler.prototype.enterFrame = function() {
     }
 
     context.fillStyle = '#444444';
-    context.fillRect(0, 0, this.canvas.width, 20);
+    context.fillRect(0, 0, gameState.canvas.width, 20);
     context.textAlign = 'left';
     context.font = 'bold 11px/1 Arial';
     context.fillStyle = '#AAAAAA';
@@ -1193,7 +1192,7 @@ RenderHandler.prototype.enterFrame = function() {
     context.fillText(Math.round(player.hp), 15, 10);
     context.fillText(Math.round(player.kills), 95, 10);
     context.textAlign = 'right';
-    context.fillText(player.actions[player.action].name, this.canvas.width - 5, 10)
+    context.fillText(player.actions[player.action].name, gameState.canvas.width - 5, 10)
 }
 
 function ShotHandler(main) {
@@ -1222,13 +1221,15 @@ function ShotHandler(main) {
     this.list = [];
     this.pool = []
 }
+
 ShotHandler.prototype.init = function(main) {
     this.list.length = 0;
     this.gridList = main.gridHandler.list;
     this.enemyHandler = main.enemyHandler;
     this.dust = main.dustHandler.create.bind(main.dustHandler);
     this.blood = main.bloodHandler.create.bind(main.bloodHandler);
-};
+}
+
 ShotHandler.prototype.enterFrame = function() {
     var gridList = this.gridList;
     var shot, enemy, j, X, Y;
@@ -1252,6 +1253,7 @@ ShotHandler.prototype.enterFrame = function() {
                 this.dust(shot.x - shot.vX, shot.y - shot.vY, shot.vX * 0.2, shot.vY * 0.2, 4)
             }
         }
+
         for (j = this.enemyHandler.list.length - 1; j >= 0; j--) {
             enemy = this.enemyHandler.list[j];
             if (shot.x + 2 > enemy.x - enemy.width * 0.5 && shot.x - 2 < enemy.x + enemy.width * 0.5 && shot.y + 2 > enemy.y - enemy.height * 0.5 && shot.y - 2 < enemy.y + enemy.height * 0.5) {
@@ -1262,11 +1264,13 @@ ShotHandler.prototype.enterFrame = function() {
                 this.blood(shot.x, shot.y, shot.vX * 0.4, shot.vY * 0.4, 4)
             }
         }
+
         if (shot.hp == -99 && shot.explode > 0) {
             for (j = this.actions[shot.explode].count - 1; j >= 0; j--) {
                 this.create(shot.x, shot.y, shot.x + Math.random() * 10 - 5, shot.y + Math.random() * 10 - 5, this.actions[shot.explode])
             }
         }
+
         if (shot.hp <= 0) {
             this.pool[this.pool.length] = shot;
             this.list.splice(i, 1);
@@ -1281,6 +1285,7 @@ ShotHandler.prototype.create = function(sX, sY, eX, eY, action) {
     } else {
         var shot = new Object()
     }
+
     shot.x = sX;
     shot.y = sY;
     shot.vX = eX - sX;
@@ -1312,7 +1317,6 @@ function ViewHandler(main) {
 ViewHandler.prototype.init = function(main) {
     this.x = gameState.levelWidth * gameState.blockSize * 0.5;
     this.y = 300;
-    this.canvas = main.canvas;
     this.player = main.playerHandler;
 }
 
@@ -1321,20 +1325,23 @@ ViewHandler.prototype.enterFrame = function() {
     if (this.x < this.player.x + 1 && this.x > this.player.x - 1) {
         this.x = this.player.x
     }
+
     this.y += (this.player.y - this.y) * 0.05;
     if (this.y < this.player.y + 1 && this.y > this.player.y - 1) {
         this.y = this.player.y
     }
-    if (this.x < this.canvas.width * 0.5) {
-        this.x = this.canvas.width * 0.5
-    } else if (this.x > gameState.levelWidth * gameState.blockSize - this.canvas.width * 0.5) {
-        this.x = gameState.levelWidth * gameState.blockSize - this.canvas.width * 0.5
+
+    if (this.x < gameState.canvas.width * 0.5) {
+        this.x = gameState.canvas.width * 0.5
+    } else if (this.x > gameState.levelWidth * gameState.blockSize - gameState.canvas.width * 0.5) {
+        this.x = gameState.levelWidth * gameState.blockSize - gameState.canvas.width * 0.5
     }
-    if (this.y < this.canvas.height * 0.5) {
-        this.y = this.canvas.height * 0.5
-    } else if (this.y > gameState.levelHeight * gameState.blockSize - this.canvas.height * 0.5) {
-        this.y = gameState.levelHeight * gameState.blockSize - this.canvas.height * 0.5
+
+    if (this.y < gameState.canvas.height * 0.5) {
+        this.y = gameState.canvas.height * 0.5
+    } else if (this.y > gameState.levelHeight * gameState.blockSize - gameState.canvas.height * 0.5) {
+        this.y = gameState.levelHeight * gameState.blockSize - gameState.canvas.height * 0.5
     }
-};
+}
 
 //# sourceMappingURL=app.js.map
