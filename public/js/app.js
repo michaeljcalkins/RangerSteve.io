@@ -1,10 +1,13 @@
-'use strict'
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
 
 /**
  * http://www.h3xed.com/blogmedia/platformer2/
  */
 
-let gameState = {
+var gameStateRef = new Firebase('https://incandescent-fire-1026.firebaseio.com/rooms/' + ENV.room_id);
+
+var gameState = {
     // Block height and width
     blockSize: 16,
 
@@ -49,95 +52,127 @@ let gameState = {
     time: 0,
 
     waterList: [],
-    gridList: []
-}
+    gridList: [],
 
-gameState.context = gameState.canvas.getContext('2d')
+    useExistingLevel: false,
+    initialized: false
+};
+
+gameState.context = gameState.canvas.getContext('2d');
 gameState.horizon = gameState.levelHeight / 2 | 0;
 
-window.onload = function() {
-    new Main()
+window.onload = function () {
+    new Main();
 };
 
 function Main() {
+    var _this = this;
+
     var i = 0;
     for (var block in gameState.blocks) {
         gameState.blockInt[block] = i;
         gameState.blockColor[i] = gameState.blocks[block];
-        i++
+        i++;
     }
 
-    // Instatiate all behaviors
-    for (i = 0; i < gameState.handlers.length; i++) {
-        var handlerName = gameState.handlers[i] + 'Handler';
-        var className = handlerName.charAt(0).toUpperCase() + handlerName.slice(1);
-        this[handlerName] = new window[className](this)
-    }
+    this.controlHandler = new ControlHandler(this);
+    this.gridHandler = new GridHandler(this);
+    this.renderHandler = new RenderHandler(this);
+    this.playerHandler = new PlayerHandler(this);
+    this.enemyHandler = new EnemyHandler(this);
+    this.shotHandler = new ShotHandler(this);
+    this.dustHandler = new DustHandler(this);
+    this.bloodHandler = new BloodHandler(this);
+    this.viewHandler = new ViewHandler(this);
 
-    setInterval(this.enterFrame.bind(this), 1000 / 60);
-    new MenuScreen(this)
+    gameStateRef.on('value', function (snapshot) {
+        if (snapshot.val().gridList && !gameState.initialized) {
+            gameState.useExistingLevel = true;
+            gameState.gridList = snapshot.val().gridList;
+            gameState.waterList = snapshot.val().waterList;
+            // gameState.users = snapshot.val().users
+        }
+
+        if (!gameState.initialized) {
+            gameState.initialized = true;
+            setInterval(_this.enterFrame.bind(_this), 1000 / 60);
+            new MenuScreen(_this);
+        }
+    });
 }
 
-Main.prototype.startGame = function() {
-    for (var i = 0; i < gameState.handlers.length; i++) {
-        this[gameState.handlers[i] + 'Handler'].init(this)
+Main.prototype.startGame = function () {
+    this.controlHandler.init(this);
+    this.gridHandler.init(this);
+    this.renderHandler.init(this);
+    this.playerHandler.init(this);
+    this.enemyHandler.init(this);
+    this.shotHandler.init(this);
+    this.dustHandler.init(this);
+    this.bloodHandler.init(this);
+    this.viewHandler.init(this);
+
+    console.log('Create new level...');
+    if (!gameState.useExistingLevel) {
+        new CreateLevel(this);
     }
 
-    new CreateLevel(this);
     gameState.state = 'game';
-    gameState.time = gameState.dayLength * 0.37
-}
+    gameState.time = gameState.dayLength * 0.37;
+};
 
-Main.prototype.enterFrame = function() {
+Main.prototype.enterFrame = function () {
     if (gameState.state != 'game') {
-        return
+        return;
     }
 
     if (this.playerHandler.hp <= 0) {
         gameState.state = 'gameOverScreen';
         new GameOverScreen(this);
-        return
+        return;
     }
 
     gameState.time++;
     if (gameState.time > gameState.dayLength) {
-        gameState.time = 0
+        gameState.time = 0;
     }
 
     for (var i = 0; i < gameState.handlers.length; i++) {
-        this[gameState.handlers[i] + 'Handler'].enterFrame()
+        this[gameState.handlers[i] + 'Handler'].enterFrame();
     }
-}
+};
 
 function GridHandler(main) {}
 
-GridHandler.prototype.init = function(main) {
-    this.toggle = 0
+GridHandler.prototype.init = function (main) {
+    this.toggle = 0;
 
-    for (var i = 0; i < gameState.levelWidth; i++) {
-        gameState.gridList[i] = [];
-        for (var j = 0; j < gameState.levelHeight; j++) {
-            gameState.gridList[i][j] = false
+    if (!gameState.useExistingLevel) {
+        for (var i = 0; i < gameState.levelWidth; i++) {
+            gameState.gridList[i] = [];
+            for (var j = 0; j < gameState.levelHeight; j++) {
+                gameState.gridList[i][j] = false;
+            }
         }
     }
-}
+};
 
-GridHandler.prototype.enterFrame = function() {
+GridHandler.prototype.enterFrame = function () {
     var toggle = this.toggle;
     for (var i = gameState.waterList.length - 1; i >= 0; i--) {
         toggle++;
         if (toggle > 9) {
-            toggle = 0
+            toggle = 0;
         }
 
         if (toggle != 0) {
-            continue
+            continue;
         }
 
         var water = gameState.waterList[i];
         if (gameState.gridList[water.x][water.y] != gameState.blockInt.water) {
             gameState.waterList.splice(i, 1);
-            continue
+            continue;
         }
 
         if (water.y < gameState.levelHeight && gameState.gridList[water.x][water.y + 1] === false) {
@@ -146,7 +181,7 @@ GridHandler.prototype.enterFrame = function() {
                 x: water.x,
                 y: water.y + 1
             };
-            continue
+            continue;
         }
 
         if (water.x > 0 && gameState.gridList[water.x - 1][water.y] === false) {
@@ -155,7 +190,7 @@ GridHandler.prototype.enterFrame = function() {
                 x: water.x - 1,
                 y: water.y
             };
-            continue
+            continue;
         }
 
         if (water.x < gameState.levelWidth - 1 && gameState.gridList[water.x + 1][water.y] === false) {
@@ -164,31 +199,29 @@ GridHandler.prototype.enterFrame = function() {
                 x: water.x + 1,
                 y: water.y
             };
-            continue
+            continue;
         }
     }
 
     this.toggle++;
 
     if (this.toggle > 9) {
-        this.toggle = 0
+        this.toggle = 0;
     }
-}
+};
 
 function BloodHandler(main) {
     this.size = 8;
     this.startHp = 30;
     this.list = [];
-    this.pool = []
+    this.pool = [];
 }
 
-BloodHandler.prototype.init = function(main) {
+BloodHandler.prototype.init = function (main) {
     this.list.length = 0;
-    this.gridList = main.gridHandler.list;
 };
 
-BloodHandler.prototype.enterFrame = function() {
-    var gridList = this.gridList;
+BloodHandler.prototype.enterFrame = function () {
     var blood, X, Y;
     for (var i = this.list.length - 1; i >= 0; i--) {
         blood = this.list[i];
@@ -199,34 +232,34 @@ BloodHandler.prototype.enterFrame = function() {
         X = blood.x / gameState.blockSize | 0;
         Y = blood.y / gameState.blockSize | 0;
         if (X >= 0 && X < gameState.levelWidth && Y >= 0 && Y < gameState.levelHeight) {
-            if (gridList[X][Y] == gameState.blockInt.water) {
+            if (gameState.gridList[X][Y] == gameState.blockInt.water) {
                 blood.x -= blood.vX * 0.5;
-                blood.y -= blood.vY * 0.5
-            } else if (gridList[X][Y] !== false && gridList[X][Y] != gameState.blockInt.cloud && gridList[X][Y] != gameState.blockInt.platform) {
-                blood.hp *= 0.75
+                blood.y -= blood.vY * 0.5;
+            } else if (gameState.gridList[X][Y] !== false && gameState.gridList[X][Y] != gameState.blockInt.cloud && gameState.gridList[X][Y] != gameState.blockInt.platform) {
+                blood.hp *= 0.75;
             }
         }
         if (blood.hp <= 0) {
             this.pool[this.pool.length] = blood;
             this.list.splice(i, 1);
-            continue
+            continue;
         }
     }
 };
 
-BloodHandler.prototype.create = function(x, y, vX, vY, count) {
+BloodHandler.prototype.create = function (x, y, vX, vY, count) {
     for (var i = 0; i < count; i++) {
         if (this.pool.length > 0) {
-            var blood = this.pool.pop()
+            var blood = this.pool.pop();
         } else {
-            var blood = new Object()
+            var blood = new Object();
         }
         blood.x = x;
         blood.y = y;
         blood.vX = vX + Math.random() * 6 - 3;
         blood.vY = vY + Math.random() * 6 - 3;
         blood.hp = this.startHp;
-        this.list[this.list.length] = blood
+        this.list[this.list.length] = blood;
     }
 };
 
@@ -247,90 +280,89 @@ function ControlHandler(main) {
     window.addEventListener('mousemove', this.mouseMoveEvent.bind(this));
     window.addEventListener('mousewheel', this.mouseWheelEvent.bind(this));
     window.addEventListener('DOMMouseScroll', this.mouseWheelEvent.bind(this));
-    // window.addEventListener('resize', this.windowResizeEvent.bind(this));
-    document.getElementById('canvas').addEventListener('contextmenu', function(e) {
+    document.getElementById('canvas').addEventListener('contextmenu', function (e) {
         if (e.button == 2) {
             e.preventDefault();
-            return false
+            return false;
         }
-    })
+    });
 }
 
-ControlHandler.prototype.init = function(main) {
-    this.playerHandler = main.playerHandler
-}
+ControlHandler.prototype.init = function (main) {
+    this.playerHandler = main.playerHandler;
+};
 
-ControlHandler.prototype.enterFrame = function() {};
+ControlHandler.prototype.enterFrame = function () {};
 
-ControlHandler.prototype.keyDownEvent = function(e) {
+ControlHandler.prototype.keyDownEvent = function (e) {
     if (e.keyCode == 32) {
-        this.space = true
+        this.space = true;
     } else if (e.keyCode == 65) {
-        this.a = true
+        this.a = true;
     } else if (e.keyCode == 68) {
-        this.d = true
+        this.d = true;
     } else if (e.keyCode == 83) {
-        this.s = true
+        this.s = true;
     } else if ((e.keyCode >= 48 || e.keyCode <= 57) && gameState.state == 'game') {
-        this.playerHandler.hotKey(e.keyCode)
+        this.playerHandler.hotKey(e.keyCode);
     }
 
     if (this.mouseX > 0 && this.mouseX < gameState.canvas.width && this.mouseY > 0 && this.mouseY < gameState.canvas.height) {
         e.preventDefault();
-        return false
+        return false;
     }
 };
 
-ControlHandler.prototype.keyUpEvent = function(e) {
+ControlHandler.prototype.keyUpEvent = function (e) {
     if (e.keyCode == 32) {
-        this.space = false
+        this.space = false;
     } else if (e.keyCode == 65) {
-        this.a = false
+        this.a = false;
     } else if (e.keyCode == 68) {
-        this.d = false
+        this.d = false;
     } else if (e.keyCode == 83) {
-        this.s = false
+        this.s = false;
     }
     if (this.mouseX > 0 && this.mouseX < gameState.canvas.width && this.mouseY > 0 && this.mouseY < gameState.canvas.height) {
         e.preventDefault();
-        return false
+        return false;
     }
 };
 
-ControlHandler.prototype.mouseDownEvent = function(e) {
+ControlHandler.prototype.mouseDownEvent = function (e) {
     if (e.button == 0) {
-        this.mouseLeft = true
+        this.mouseLeft = true;
     } else if (e.button == 2) {
-        this.mouseRight = true
+        this.mouseRight = true;
     }
 };
 
-ControlHandler.prototype.mouseUpEvent = function(e) {
+ControlHandler.prototype.mouseUpEvent = function (e) {
     if (this.mouseLeft && this.mouseX > 0 && this.mouseX < gameState.canvas.width && this.mouseY > 0 && this.mouseY < gameState.canvas.height) {
         if (gameState.state == 'menuScreen' || gameState.state == 'gameOverScreen') {
-            this.main.startGame()
+            this.main.startGame();
         }
     }
     if (e.button == 0) {
-        this.mouseLeft = false
+        this.mouseLeft = false;
     } else if (e.button == 2) {
-        this.mouseRight = false
+        this.mouseRight = false;
     }
-}
+};
 
-ControlHandler.prototype.mouseMoveEvent = function(e) {
+ControlHandler.prototype.mouseMoveEvent = function (e) {
     var rect = gameState.canvas.getBoundingClientRect();
     this.mouseX = e.clientX - rect.left;
-    this.mouseY = e.clientY - rect.top
-}
+    this.mouseY = e.clientY - rect.top;
+};
 
-ControlHandler.prototype.mouseWheelEvent = function(e) {
+ControlHandler.prototype.mouseWheelEvent = function (e) {
     if (gameState.state == 'game') {
-        this.playerHandler.wheel(e.wheelDelta ? e.wheelDelta : -e.detail)
+        this.playerHandler.wheel(e.wheelDelta ? e.wheelDelta : -e.detail);
     }
     if (this.mouseX > 0 && this.mouseX < gameState.canvas.width && this.mouseY > 0 && this.mouseY < gameState.canvas.height) {
         e.preventDefault();
-        return false
+        return false;
     }
 };
 
@@ -343,7 +375,7 @@ function CreateLevel(main) {
         var randY = Math.random() * (gameState.levelHeight * 0.5 - 20) + 8 | 0;
         for (j = 0; j < 25; j++) {
             for (var k = 0; k < 9; k++) {
-                gameState.gridList[randX + Math.random() * k * 2 - k | 0][randY + Math.random() * k - k / 2 | 0] = gameState.blockInt.cloud
+                gameState.gridList[randX + Math.random() * k * 2 - k | 0][randY + Math.random() * k - k / 2 | 0] = gameState.blockInt.cloud;
             }
         }
     }
@@ -351,9 +383,9 @@ function CreateLevel(main) {
     for (i = 0; i < gameState.levelWidth; i++) {
         if (i == 0 || i == gameState.levelWidth - 1) {
             for (j = 0; j < gameState.levelHeight; j++) {
-                gameState.gridList[i][j] = gameState.blockInt.bedrock
+                gameState.gridList[i][j] = gameState.blockInt.bedrock;
             }
-            continue
+            continue;
         }
         gameState.gridList[i][0] = gameState.blockInt.bedrock;
         gameState.gridList[i][gameState.levelHeight - 1] = gameState.blockInt.bedrock;
@@ -363,30 +395,30 @@ function CreateLevel(main) {
                 gameState.waterList[gameState.waterList.length] = {
                     x: i,
                     y: j
-                }
+                };
             }
         }
 
         for (j = Y; j < gameState.levelHeight - 1; j++) {
             if (j > Y + Math.random() * 8 + 4) {
-                gameState.gridList[i][j] = gameState.blockInt.stone
+                gameState.gridList[i][j] = gameState.blockInt.stone;
             } else {
-                gameState.gridList[i][j] = gameState.blockInt.dirt
+                gameState.gridList[i][j] = gameState.blockInt.dirt;
             }
         }
 
         if (Math.random() < flatness) {
-            Y += (Math.random() * 3 | 0) - 1
+            Y += (Math.random() * 3 | 0) - 1;
         }
 
         if (Y > gameState.horizon && i > gameState.levelWidth / 2 - 20 && i < gameState.levelWidth / 2) {
-            Y--
+            Y--;
         }
 
         if (Y > gameState.levelHeight - 1) {
-            Y--
+            Y--;
         } else if (Y < 1) {
-            Y++
+            Y++;
         }
     }
 
@@ -397,7 +429,7 @@ function CreateLevel(main) {
             for (var k = Math.random() * 8 | 0; k >= 0; k--) {
                 var X = randX + Math.random() * k * 2 - k | 0;
                 var Y = randY + Math.random() * k - k / 2 | 0;
-                gameState.gridList[X][Y] = false
+                gameState.gridList[X][Y] = false;
             }
         }
     }
@@ -413,26 +445,29 @@ function CreateLevel(main) {
                 gameState.waterList[gameState.waterList.length] = {
                     x: X,
                     y: Y
-                }
+                };
             }
         }
     }
+
+    gameStateRef.set({
+        gridList: gameState.gridList,
+        waterList: gameState.waterList
+    });
 }
 
 function DustHandler(main) {
     this.size = 6;
     this.startHp = 30;
     this.list = [];
-    this.pool = []
+    this.pool = [];
 }
 
-DustHandler.prototype.init = function(main) {
+DustHandler.prototype.init = function (main) {
     this.list.length = 0;
-    this.gridList = main.gridHandler.list;
-}
+};
 
-DustHandler.prototype.enterFrame = function() {
-    var gridList = this.gridList;
+DustHandler.prototype.enterFrame = function () {
     var dust, X, Y;
     for (var i = this.list.length - 1; i >= 0; i--) {
         dust = this.list[i];
@@ -445,31 +480,32 @@ DustHandler.prototype.enterFrame = function() {
         if (X >= 0 && X < gameState.levelWidth && Y >= 0 && Y < gameState.levelHeight) {
             if (gameState.gridList[X][Y] == gameState.blockInt.water) {
                 dust.x -= dust.vX * 0.5;
-                dust.y -= dust.vY * 0.5
+                dust.y -= dust.vY * 0.5;
             } else if (gameState.gridList[X][Y] !== false && gameState.gridList[X][Y] != gameState.blockInt.cloud && gameState.gridList[X][Y] != gameState.blockInt.platform) {
-                dust.hp *= 0.75
+                dust.hp *= 0.75;
             }
         }
         if (dust.hp <= 0) {
             this.pool[this.pool.length] = dust;
             this.list.splice(i, 1);
-            continue
+            continue;
         }
     }
 };
-DustHandler.prototype.create = function(x, y, vX, vY, count) {
+
+DustHandler.prototype.create = function (x, y, vX, vY, count) {
     for (var i = 0; i < count; i++) {
         if (this.pool.length > 0) {
-            var dust = this.pool.pop()
+            var dust = this.pool.pop();
         } else {
-            var dust = new Object()
+            var dust = new Object();
         }
         dust.x = x;
         dust.y = y;
         dust.vX = vX + Math.random() * 6 - 3;
         dust.vY = vY + Math.random() * 6 - 3;
         dust.hp = this.startHp;
-        this.list[this.list.length] = dust
+        this.list[this.list.length] = dust;
     }
 };
 
@@ -484,22 +520,23 @@ function EnemyHandler(main) {
     this.startHp = 8;
     this.spawnRate = 0.01;
     this.list = [];
-    this.pool = []
+    this.pool = [];
 }
 
-EnemyHandler.prototype.init = function(main) {
+EnemyHandler.prototype.init = function (main) {
     this.list.length = 0;
     this.main = main;
     this.playerHandler = main.playerHandler;
     this.blood = main.bloodHandler.create.bind(main.bloodHandler);
 };
 
-EnemyHandler.prototype.enterFrame = function() {
+EnemyHandler.prototype.enterFrame = function () {
     var player = this.playerHandler;
     var enemy, i, j, startX, startY, endX, endY, newX, newY, collide;
     i = gameState.time / gameState.dayLength;
-    if ((i < 0.25 || i > 0.75) && Math.random() < this.spawnRate) {
-        this.create()
+    // if ((i < 0.25 || i > 0.75) && Math.random() < this.spawnRate) {
+    if (Math.random() < this.spawnRate) {
+        this.create();
     }
     for (var k = this.list.length - 1; k >= 0; k--) {
         enemy = this.list[k];
@@ -508,20 +545,20 @@ EnemyHandler.prototype.enterFrame = function() {
             this.list.splice(k, 1);
             this.blood(enemy.x, enemy.y, 0, 0, 15);
             this.playerHandler.kills++;
-            continue
+            continue;
         }
         if (enemy.canJump < 1 && (player.y < enemy.y - 1 && Math.random() < 0.03 || Math.random() < 0.01)) {
-            enemy.vY = -this.jumpHeight
+            enemy.vY = -this.jumpHeight;
         }
         if (player.x < enemy.x) {
             enemy.vX -= enemy.accel;
             if (enemy.vX < -enemy.speed) {
-                enemy.vX = -enemy.speed
+                enemy.vX = -enemy.speed;
             }
         } else {
             enemy.vX += enemy.accel;
             if (enemy.vX > enemy.speed) {
-                enemy.vX = enemy.speed
+                enemy.vX = enemy.speed;
             }
         }
         newX = enemy.x + enemy.vX;
@@ -535,17 +572,17 @@ EnemyHandler.prototype.enterFrame = function() {
                     if (gameState.gridList[i][j] == gameState.blockInt.water) {
                         enemy.inWater = true;
                         if (enemy.vX > enemy.speed / 2) {
-                            enemy.vX = enemy.speed / 2
+                            enemy.vX = enemy.speed / 2;
                         } else if (enemy.vX < -enemy.speed / 2) {
-                            enemy.vX = -enemy.speed / 2
+                            enemy.vX = -enemy.speed / 2;
                         }
                     } else {
                         if (newX < i * gameState.blockSize) {
-                            newX = i * gameState.blockSize - enemy.width / 2
+                            newX = i * gameState.blockSize - enemy.width / 2;
                         } else {
-                            newX = i * gameState.blockSize + gameState.blockSize + enemy.width / 2
+                            newX = i * gameState.blockSize + gameState.blockSize + enemy.width / 2;
                         }
-                        enemy.vX = 0
+                        enemy.vX = 0;
                     }
                 }
             }
@@ -554,15 +591,15 @@ EnemyHandler.prototype.enterFrame = function() {
         if (enemy.inWater) {
             enemy.vY += 0.25;
             if (enemy.vY > this.fallSpeed * 0.3) {
-                enemy.vY = this.fallSpeed * 0.3
+                enemy.vY = this.fallSpeed * 0.3;
             }
-            newY = enemy.y + enemy.vY * 0.6
+            newY = enemy.y + enemy.vY * 0.6;
         } else {
             enemy.vY += 0.4;
             if (enemy.vY > this.fallSpeed) {
-                enemy.vY = this.fallSpeed
+                enemy.vY = this.fallSpeed;
             }
-            newY = enemy.y + enemy.vY
+            newY = enemy.y + enemy.vY;
         }
         collide = false;
         enemy.inWater = false;
@@ -576,15 +613,15 @@ EnemyHandler.prototype.enterFrame = function() {
                     collide = true;
                     if (gameState.gridList[i][j] == gameState.blockInt.water) {
                         enemy.inWater = true;
-                        enemy.canJump--
+                        enemy.canJump--;
                     } else {
                         if (newY < j * gameState.blockSize) {
                             newY = j * gameState.blockSize - enemy.height / 2 - 0.001;
-                            enemy.canJump--
+                            enemy.canJump--;
                         } else {
-                            newY = j * gameState.blockSize + gameState.blockSize + enemy.height / 2
+                            newY = j * gameState.blockSize + gameState.blockSize + enemy.height / 2;
                         }
-                        enemy.vY = 0
+                        enemy.vY = 0;
                     }
                 }
                 if (gameState.gridList[i][j] == gameState.blockInt.platform && enemy.vY > 0 && player.y < enemy.y - 1) {
@@ -592,35 +629,35 @@ EnemyHandler.prototype.enterFrame = function() {
                         newY = j * gameState.blockSize - enemy.height * 0.5 - 0.001;
                         collide = true;
                         enemy.vY = 0;
-                        enemy.canJump--
+                        enemy.canJump--;
                     }
                 }
             }
         }
         enemy.y = newY;
         if (collide == false) {
-            enemy.canJump = this.jumpDelay
+            enemy.canJump = this.jumpDelay;
         }
         if (enemy.x - enemy.width / 2 < player.x + player.width / 2 && enemy.x + enemy.width / 2 > player.x - player.width / 2 && enemy.y - enemy.height / 2 < player.y + player.height / 2 && enemy.y + enemy.height / 2 > player.y - player.height / 2) {
             this.blood(enemy.x, enemy.y, 0, 0, 5);
             player.hp--;
             player.vX += (player.x - enemy.x) * 0.05;
-            player.vY += (player.y - enemy.y) * 0.05
+            player.vY += (player.y - enemy.y) * 0.05;
         }
     }
 };
 
-EnemyHandler.prototype.create = function() {
+EnemyHandler.prototype.create = function () {
     if (this.pool.length > 0) {
-        var enemy = this.pool.pop()
+        var enemy = this.pool.pop();
     } else {
-        var enemy = new Object()
+        var enemy = new Object();
     }
 
-    if (this.playerHandler.x < 500 || (Math.random() < 0.5 && this.playerHandler.x < gameState.levelWidth * gameState.blockSize - 800)) {
-        enemy.x = this.playerHandler.x + 500 + Math.random() * 200
+    if (this.playerHandler.x < 500 || Math.random() < 0.5 && this.playerHandler.x < gameState.levelWidth * gameState.blockSize - 800) {
+        enemy.x = this.playerHandler.x + 500 + Math.random() * 200;
     } else {
-        enemy.x = this.playerHandler.x - 500 - Math.random() * 200
+        enemy.x = this.playerHandler.x - 500 - Math.random() * 200;
     }
 
     enemy.y = 50;
@@ -633,7 +670,7 @@ EnemyHandler.prototype.create = function() {
     enemy.height = this.startHeight;
     enemy.canJump = 0;
     enemy.inWater = false;
-    this.list[this.list.length] = enemy
+    this.list[this.list.length] = enemy;
 };
 
 function GameOverScreen(main) {
@@ -688,6 +725,17 @@ function PlayerHandler(main) {
         explode: 0,
         spread: 0.5,
         damage: 1,
+        destroy: false
+    }, {
+        name: 'Sniper',
+        reload: 75,
+        count: 1,
+        speed: 25,
+        hp: 1000,
+        modY: 0.01,
+        explode: 0,
+        spread: 0.2,
+        damage: 10,
         destroy: false
     }, {
         name: 'Rifle',
@@ -769,13 +817,14 @@ function PlayerHandler(main) {
         reload: 29,
         count: -2
     }];
+
     this.kills;
     this.action;
     this.actionObject;
-    this.canBuild
+    this.canBuild;
 }
 
-PlayerHandler.prototype.init = function(main) {
+PlayerHandler.prototype.init = function (main) {
     this.controlHandler = main.controlHandler;
     this.gridHandler = main.gridHandler;
     this.shoot = main.shotHandler.create.bind(main.shotHandler);
@@ -795,49 +844,63 @@ PlayerHandler.prototype.init = function(main) {
     this.kills = 0;
     this.action = 0;
     this.canBuild = false;
-    this.actionObject = this.actions[this.action]
+    this.actionObject = this.actions[this.action];
+
+    // setInterval(() => {
+    //     gameStateRef.child(`users/${ENV.user_id}`).set({
+    //         x: this.x,
+    //         y: this.y,
+    //         vX: this.vX,
+    //         vY: this.vY
+    //     })
+    // }, 1000/60)
 };
 
-PlayerHandler.prototype.enterFrame = function() {
+PlayerHandler.prototype.enterFrame = function () {
     var controlHandler = this.controlHandler;
     var accel = this.accel;
     var speed = this.speed;
     var width = this.width;
     var height = this.height;
     var i, j;
+
     if (this.hp < this.startHp) {
         this.hp += this.regen;
         if (this.hp > this.startHp) {
-            this.hp = this.startHp
+            this.hp = this.startHp;
         }
     }
+
     if (this.canJump < 1 && controlHandler.space && this.spaceDown == false) {
         this.vY = -this.jumpHeight;
-        this.spaceDown = true
+        this.spaceDown = true;
     }
+
     if (controlHandler.space == false && this.spaceDown) {
-        this.spaceDown = false
+        this.spaceDown = false;
     }
+
     if (controlHandler.a) {
         this.vX -= accel;
         if (this.vX < -speed) {
-            this.vX = -speed
+            this.vX = -speed;
         }
     } else if (controlHandler.d) {
         this.vX += accel;
         if (this.vX > speed) {
-            this.vX = speed
+            this.vX = speed;
         }
     } else if (this.vX != 0) {
         if (this.vX > 0) {
-            this.vX -= accel
+            this.vX -= accel;
         } else if (this.vX < 0) {
-            this.vX += accel
+            this.vX += accel;
         }
         if (this.vX > -accel && this.vX < accel) {
-            this.vX = 0
+            this.vX = 0;
         }
     }
+
     var newX = this.x + this.vX;
     var startX = Math.max((newX - width * 0.5) / gameState.blockSize | 0, 0);
     var startY = Math.max((this.y - height * 0.5) / gameState.blockSize | 0, 0);
@@ -849,35 +912,37 @@ PlayerHandler.prototype.enterFrame = function() {
                 if (gameState.gridList[i][j] == gameState.blockInt.water) {
                     this.inWater = true;
                     if (this.vX > speed * 0.5) {
-                        this.vX = speed * 0.5
+                        this.vX = speed * 0.5;
                     } else if (this.vX < -speed * 0.5) {
-                        this.vX = -speed * 0.5
+                        this.vX = -speed * 0.5;
                     }
                 } else {
                     if (newX < i * gameState.blockSize) {
-                        newX = i * gameState.blockSize - width * 0.5
+                        newX = i * gameState.blockSize - width * 0.5;
                     } else {
-                        newX = i * gameState.blockSize + gameState.blockSize + width * 0.5
+                        newX = i * gameState.blockSize + gameState.blockSize + width * 0.5;
                     }
-                    this.vX = 0
+                    this.vX = 0;
                 }
             }
         }
     }
+
     this.x = newX;
     if (this.inWater) {
         this.vY += 0.25;
         if (this.vY > this.fallSpeed * 0.3) {
-            this.vY = this.fallSpeed * 0.3
+            this.vY = this.fallSpeed * 0.3;
         }
-        var newY = this.y + this.vY * 0.6
+        var newY = this.y + this.vY * 0.6;
     } else {
         this.vY += 0.4;
         if (this.vY > this.fallSpeed) {
-            this.vY = this.fallSpeed
+            this.vY = this.fallSpeed;
         }
-        var newY = this.y + this.vY
+        var newY = this.y + this.vY;
     }
+
     var collide = false;
     this.inWater = false;
     startX = Math.max((this.x - width * 0.5) / gameState.blockSize | 0, 0);
@@ -890,31 +955,34 @@ PlayerHandler.prototype.enterFrame = function() {
                 collide = true;
                 if (gameState.gridList[i][j] == gameState.blockInt.water) {
                     this.inWater = true;
-                    this.canJump--
+                    this.canJump--;
                 } else {
                     if (newY < j * gameState.blockSize) {
                         newY = j * gameState.blockSize - height * 0.5 - 0.001;
-                        this.canJump--
+                        this.canJump--;
                     } else {
-                        newY = j * gameState.blockSize + gameState.blockSize + height * 0.5
+                        newY = j * gameState.blockSize + gameState.blockSize + height * 0.5;
                     }
-                    this.vY = 0
+                    this.vY = 0;
                 }
             }
+
             if (gameState.gridList[i][j] == gameState.blockInt.platform && this.vY > 0 && controlHandler.s == false) {
                 if (this.y + height * 0.5 < j * gameState.blockSize) {
                     newY = j * gameState.blockSize - height * 0.5 - 0.001;
                     collide = true;
                     this.vY = 0;
-                    this.canJump--
+                    this.canJump--;
                 }
             }
         }
     }
+
     this.y = newY;
     if (collide == false) {
-        this.canJump = this.jumpDelay
+        this.canJump = this.jumpDelay;
     }
+
     this.reload--;
     if (this.actionObject.count < 0) {
         var offsetX = this.viewHandler.x - this.halfWidth;
@@ -936,74 +1004,82 @@ PlayerHandler.prototype.enterFrame = function() {
                                 enemy = this.enemyHandler.list[i];
                                 if (enemy.x + enemy.width * 0.5 > X * gameState.blockSize && enemy.x - enemy.width * 0.5 < X * gameState.blockSize + gameState.blockSize & enemy.y + enemy.height * 0.5 > Y * gameState.blockSize && enemy.y - enemy.height * 0.5 < Y * gameState.blockSize + gameState.blockSize) {
                                     collide = true;
-                                    break
+                                    break;
                                 }
                             }
+
                             if (this.x + this.width * 0.5 > X * gameState.blockSize && this.x - this.width * 0.5 < X * gameState.blockSize + gameState.blockSize & this.y + this.height * 0.5 > Y * gameState.blockSize && this.y - this.height * 0.5 < Y * gameState.blockSize + gameState.blockSize) {
-                                collide = true
+                                collide = true;
                             }
+
                             if (collide == false) {
-                                gameState.gridList[X][Y] = this.actionObject.type
+                                gameState.gridList[X][Y] = this.actionObject.type;
                             }
                         }
                     }
+
                     if (this.actionObject.count == -2) {
                         if (gameState.gridList[X][Y] != gameState.blockInt.bedrock) {
-                            gameState.gridList[X][Y] = false
+                            gameState.gridList[X][Y] = false;
                         }
                     }
                 }
-                this.reload = this.actionObject.reload
+                this.reload = this.actionObject.reload;
             }
         } else {
-            this.canBuild = false
+            this.canBuild = false;
         }
     } else {
         if (this.reload <= 0 && controlHandler.mouseLeft) {
             var offsetX = this.viewHandler.x - this.halfWidth;
             var offsetY = this.viewHandler.y - this.halfHeight;
             for (i = this.actionObject.count - 1; i >= 0; i--) {
-                this.shoot(this.x, this.y - 4, controlHandler.mouseX + offsetX, controlHandler.mouseY + offsetY, this.actionObject)
+                this.shoot(this.x, this.y - 4, controlHandler.mouseX + offsetX, controlHandler.mouseY + offsetY, this.actionObject);
             }
-            this.reload = this.actionObject.reload
+
+            this.reload = this.actionObject.reload;
         }
     }
 };
-PlayerHandler.prototype.hotKey = function(keyCode) {
+
+PlayerHandler.prototype.hotKey = function (keyCode) {
     if (keyCode == 48) {
-        keyCode = 58
+        keyCode = 58;
     }
+
     if (keyCode - 49 in this.actions) {
         this.action = keyCode - 49;
         this.actionObject = this.actions[this.action];
-        this.reload = this.actions[this.action].reload
+        this.reload = this.actions[this.action].reload;
     }
 };
-PlayerHandler.prototype.wheel = function(delta) {
+
+PlayerHandler.prototype.wheel = function (delta) {
     if (delta > 0) {
         if (this.action <= 0) {
-            this.action = this.actions.length - 1
+            this.action = this.actions.length - 1;
         } else {
-            this.action--
+            this.action--;
         }
     } else {
         if (this.action >= this.actions.length - 1) {
-            this.action = 0
+            this.action = 0;
         } else {
-            this.action++
+            this.action++;
         }
     }
+
     this.actionObject = this.actions[this.action];
-    this.reload = this.actions[this.action].reload
+    this.reload = this.actions[this.action].reload;
 };
 
 function RenderHandler(main) {
     this.sunMoonArcRadius = gameState.canvas.height - 40;
     this.main = main;
-    this.timeRatio = Math.PI * 2 / gameState.dayLength
+    this.timeRatio = Math.PI * 2 / gameState.dayLength;
 }
 
-RenderHandler.prototype.init = function(main) {
+RenderHandler.prototype.init = function (main) {
     this.gridHandler = main.gridHandler;
     this.controlHandler = main.controlHandler;
     this.viewHandler = main.viewHandler;
@@ -1011,16 +1087,16 @@ RenderHandler.prototype.init = function(main) {
     this.dustHandler = main.dustHandler;
     this.bloodHandler = main.bloodHandler;
     this.enemyHandler = main.enemyHandler;
-    this.player = main.playerHandler
-}
+    this.player = main.playerHandler;
+};
 
-RenderHandler.prototype.enterFrame = function() {
+RenderHandler.prototype.enterFrame = function () {
     var blockHalf = gameState.blockSize / 2;
     var player = this.player;
     var pX = player.x;
     var pY = player.y;
-    var obj, X, Y, i, j, depth, dist
-    dist = gameState.time * this.timeRatio
+    var obj, X, Y, i, j, depth, dist;
+    dist = gameState.time * this.timeRatio;
     i = Math.sin(dist);
     j = Math.cos(dist);
     var gradient = gameState.context.createLinearGradient(0, 0, 0, gameState.canvas.height);
@@ -1068,9 +1144,9 @@ RenderHandler.prototype.enterFrame = function() {
                 gameState.context.fillStyle = gameState.blockColor[obj];
                 if (obj == gameState.blockInt.platform) {
                     gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize * 0.25);
-                    gameState.context.fillRect(X, Y + gameState.blockSize * 0.5, gameState.blockSize, gameState.blockSize * 0.25)
+                    gameState.context.fillRect(X, Y + gameState.blockSize * 0.5, gameState.blockSize, gameState.blockSize * 0.25);
                 } else {
-                    gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize)
+                    gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize);
                 }
             }
             if (obj === false && j == gameState.horizon && gameState.gridList[i][j - 1] === false) {
@@ -1079,11 +1155,10 @@ RenderHandler.prototype.enterFrame = function() {
                 gameState.context.fillStyle = 'rbga(0,0,0,0.2)';
                 gameState.context.fillRect(X + 1, Y, 2, 2);
                 gameState.context.fillRect(X + 5, Y, 3, 3);
-                gameState.context.fillRect(X + 11, Y, 2, 2)
+                gameState.context.fillRect(X + 11, Y, 2, 2);
             }
         }
     }
-
 
     // Draw player
     X = Math.round(pX + offsetX - player.width / 2);
@@ -1095,40 +1170,54 @@ RenderHandler.prototype.enterFrame = function() {
     gameState.context.fillStyle = '#333333';
     gameState.context.fillRect(X, Y, player.width, player.height);
 
+    // Render other users
+    // if (_.isObject(gameState.users)) {
+    //     console.log('gameState.users', gameState.users)
+    //     gameState.users.forEach(function(user) {
+    //         if (user.id === ENV.user_id) return
+    //         X = Math.round(user.x + offsetX - player.width / 2);
+    //         Y = Math.round(user.y + offsetY - player.height / 2);
+    //         gameState.context.shadowBlur = 5;
+    //         gameState.context.shadowOffsetX = -user.vX;
+    //         gameState.context.shadowOffsetY = -user.vY;
+    //         gameState.context.shadowColor = 'rgba(0,0,0,0.1)';
+    //         gameState.context.fillStyle = '#333333';
+    //         gameState.context.fillRect(X, Y, player.width, player.height);
+    //     })
+    // }
+    //
+
     gameState.context.shadowBlur = 0;
     gameState.context.shadowOffsetX = 0;
     gameState.context.shadowOffsetY = 0;
     gameState.context.fillStyle = '#774444';
 
-
-
-
-
-
-
-
     for (i = this.enemyHandler.list.length - 1; i >= 0; i--) {
         obj = this.enemyHandler.list[i];
-        gameState.context.fillRect(Math.round(obj.x + offsetX - obj.width * 0.5), Math.round(obj.y + offsetY - obj.height * 0.5), obj.width, obj.height)
+        gameState.context.fillRect(Math.round(obj.x + offsetX - obj.width * 0.5), Math.round(obj.y + offsetY - obj.height * 0.5), obj.width, obj.height);
     }
+
     gameState.context.fillStyle = '#333333';
     for (i = this.shotHandler.list.length - 1; i >= 0; i--) {
         obj = this.shotHandler.list[i];
         dist = this.shotHandler.size;
-        gameState.context.fillRect(Math.round(obj.x + offsetX - dist / 2), Math.round(obj.y + offsetY - dist / 2), dist, dist)
+        gameState.context.fillRect(Math.round(obj.x + offsetX - dist / 2), Math.round(obj.y + offsetY - dist / 2), dist, dist);
     }
+
     gameState.context.fillStyle = '#555555';
     for (i = this.dustHandler.list.length - 1; i >= 0; i--) {
         obj = this.dustHandler.list[i];
         dist = this.dustHandler.size * (obj.hp / this.dustHandler.startHp);
-        gameState.context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist)
+        gameState.context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist);
     }
+
     gameState.context.fillStyle = '#AA4444';
     for (i = this.bloodHandler.list.length - 1; i >= 0; i--) {
         obj = this.bloodHandler.list[i];
         dist = this.bloodHandler.size * (obj.hp / this.bloodHandler.startHp);
-        gameState.context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist)
+        gameState.context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist);
     }
+
     for (i = startX; i < endX; i++) {
         for (j = startY; j < endY; j++) {
             obj = gameState.gridList[i][j];
@@ -1139,18 +1228,18 @@ RenderHandler.prototype.enterFrame = function() {
                 gameState.context.fillRect(X, Y - 3, gameState.blockSize, 3);
                 gameState.context.fillRect(X + 1, Y - 5, 2, 2);
                 gameState.context.fillRect(X + 5, Y - 5, 3, 2);
-                gameState.context.fillRect(X + 11, Y - 5, 2, 2)
+                gameState.context.fillRect(X + 11, Y - 5, 2, 2);
             }
             if (obj == gameState.blockInt.water || obj == gameState.blockInt.cloud) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
                 gameState.context.fillStyle = gameState.blockColor[obj];
-                gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize)
+                gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize);
             }
             if (obj == gameState.blockInt.water && j <= gameState.horizon && (gameState.gridList[i][j - 1] === false || gameState.gridList[i][j - 1] == gameState.blockInt.cloud)) {
                 gameState.context.fillStyle = 'rgba(255,255,255,0.2)';
                 gameState.context.fillRect(X, Y, gameState.blockSize, 6);
-                gameState.context.fillRect(X, Y, gameState.blockSize / 2, 3)
+                gameState.context.fillRect(X, Y, gameState.blockSize / 2, 3);
             }
         }
     }
@@ -1165,14 +1254,14 @@ RenderHandler.prototype.enterFrame = function() {
                 dist = (pX - X - blockHalf) * (pX - X - blockHalf) + (pY - Y - blockHalf) * (pY - Y - blockHalf);
                 X = Math.round(X + offsetX);
                 Y = Math.round(Y + offsetY);
-                gameState.context.fillStyle = 'rgba(0,0,0,' + (depth * 0.05 * Math.max(Math.min(dist / 16000, 1), 0.4)) + ')';
+                gameState.context.fillStyle = 'rgba(0,0,0,' + depth * 0.05 * Math.max(Math.min(dist / 16000, 1), 0.4) + ')';
                 gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize);
                 if (obj == gameState.blockInt.platform) {
-                    depth += 0.2
+                    depth += 0.2;
                 } else if (obj == gameState.blockInt.water) {
-                    depth += 0.5
+                    depth += 0.5;
                 } else {
-                    depth += 1
+                    depth += 1;
                 }
             }
         }
@@ -1181,11 +1270,11 @@ RenderHandler.prototype.enterFrame = function() {
     depth = Math.min(Math.cos(gameState.time * this.timeRatio) + 0.3, 0.5);
     if (depth > 0) {
         gameState.context.fillStyle = 'rgba(0,0,0,' + depth + ')';
-        gameState.context.fillRect(0, 0, gameState.canvas.width, gameState.canvas.height)
+        gameState.context.fillRect(0, 0, gameState.canvas.width, gameState.canvas.height);
     }
     if (player.actionObject.count < 0 && player.canBuild) {
         gameState.context.fillStyle = 'rgba(0,0,0,0.2)';
-        gameState.context.fillRect(((this.controlHandler.mouseX - offsetX) / gameState.blockSize | 0) * gameState.blockSize + offsetX, ((this.controlHandler.mouseY - offsetY) / gameState.blockSize | 0) * gameState.blockSize + offsetY, gameState.blockSize, gameState.blockSize)
+        gameState.context.fillRect(((this.controlHandler.mouseX - offsetX) / gameState.blockSize | 0) * gameState.blockSize + offsetX, ((this.controlHandler.mouseY - offsetY) / gameState.blockSize | 0) * gameState.blockSize + offsetY, gameState.blockSize, gameState.blockSize);
     }
 
     gameState.context.fillStyle = '#444444';
@@ -1200,8 +1289,8 @@ RenderHandler.prototype.enterFrame = function() {
     gameState.context.fillText(Math.round(player.hp), 15, 10);
     gameState.context.fillText(Math.round(player.kills), 95, 10);
     gameState.context.textAlign = 'right';
-    gameState.context.fillText(player.actions[player.action].name, gameState.canvas.width - 5, 10)
-}
+    gameState.context.fillText(player.actions[player.action].name, gameState.canvas.width - 5, 10);
+};
 
 function ShotHandler(main) {
     this.size = 5;
@@ -1227,18 +1316,19 @@ function ShotHandler(main) {
         destroy: true
     }];
     this.list = [];
-    this.pool = []
+    this.pool = [];
 }
 
-ShotHandler.prototype.init = function(main) {
+ShotHandler.prototype.init = function (main) {
     this.list.length = 0;
     this.enemyHandler = main.enemyHandler;
     this.dust = main.dustHandler.create.bind(main.dustHandler);
     this.blood = main.bloodHandler.create.bind(main.bloodHandler);
-}
+};
 
-ShotHandler.prototype.enterFrame = function() {
+ShotHandler.prototype.enterFrame = function () {
     var shot, enemy, j, X, Y;
+    var wereBlocksDestroyed = false;
     for (var i = this.list.length - 1; i >= 0; i--) {
         shot = this.list[i];
         shot.x += shot.vX;
@@ -1250,13 +1340,14 @@ ShotHandler.prototype.enterFrame = function() {
         if (X >= 0 && X < gameState.levelWidth && Y >= 0 && Y < gameState.levelHeight) {
             if (gameState.gridList[X][Y] == gameState.blockInt.water) {
                 shot.x -= shot.vX * 0.5;
-                shot.y -= shot.vY * 0.5
+                shot.y -= shot.vY * 0.5;
             } else if (gameState.gridList[X][Y] !== false && gameState.gridList[X][Y] != gameState.blockInt.cloud && gameState.gridList[X][Y] != gameState.blockInt.platform) {
                 if (shot.destroy && gameState.gridList[X][Y] != gameState.blockInt.bedrock) {
-                    gameState.gridList[X][Y] = false
+                    gameState.gridList[X][Y] = false;
                 }
+
                 shot.hp = -99;
-                this.dust(shot.x - shot.vX, shot.y - shot.vY, shot.vX * 0.2, shot.vY * 0.2, 4)
+                this.dust(shot.x - shot.vX, shot.y - shot.vY, shot.vX * 0.2, shot.vY * 0.2, 4);
             }
         }
 
@@ -1267,29 +1358,29 @@ ShotHandler.prototype.enterFrame = function() {
                 enemy.vX = shot.vX * 0.03;
                 enemy.vY = shot.vY * 0.03;
                 shot.hp = -99;
-                this.blood(shot.x, shot.y, shot.vX * 0.4, shot.vY * 0.4, 4)
+                this.blood(shot.x, shot.y, shot.vX * 0.4, shot.vY * 0.4, 4);
             }
         }
 
         if (shot.hp == -99 && shot.explode > 0) {
             for (j = this.actions[shot.explode].count - 1; j >= 0; j--) {
-                this.create(shot.x, shot.y, shot.x + Math.random() * 10 - 5, shot.y + Math.random() * 10 - 5, this.actions[shot.explode])
+                this.create(shot.x, shot.y, shot.x + Math.random() * 10 - 5, shot.y + Math.random() * 10 - 5, this.actions[shot.explode]);
             }
         }
 
         if (shot.hp <= 0) {
             this.pool[this.pool.length] = shot;
             this.list.splice(i, 1);
-            continue
+            continue;
         }
     }
-}
+};
 
-ShotHandler.prototype.create = function(sX, sY, eX, eY, action) {
+ShotHandler.prototype.create = function (sX, sY, eX, eY, action) {
     if (this.pool.length > 0) {
-        var shot = this.pool.pop()
+        var shot = this.pool.pop();
     } else {
-        var shot = new Object()
+        var shot = new Object();
     }
 
     shot.x = sX;
@@ -1304,50 +1395,52 @@ ShotHandler.prototype.create = function(sX, sY, eX, eY, action) {
     shot.explode = action.explode;
     shot.damage = action.damage;
     shot.destroy = action.destroy;
-    this.list[this.list.length] = shot
-}
+    this.list[this.list.length] = shot;
+};
 
 function Text(context, text, x, y, font, style, align, baseline) {
     context.font = typeof font === 'undefined' ? 'normal 16px/1 Arial' : font;
     context.fillStyle = typeof style === 'undefined' ? '#000000' : style;
     context.textAlign = typeof align === 'undefined' ? 'center' : align;
     context.textBaseline = typeof baseline === 'undefined' ? 'middle' : baseline;
-    context.fillText(text, x, y)
+    context.fillText(text, x, y);
 }
 
 function ViewHandler(main) {
     this.x;
-    this.y
+    this.y;
 }
 
-ViewHandler.prototype.init = function(main) {
+ViewHandler.prototype.init = function (main) {
     this.x = gameState.levelWidth * gameState.blockSize * 0.5;
     this.y = 300;
     this.player = main.playerHandler;
-}
+};
 
-ViewHandler.prototype.enterFrame = function() {
+ViewHandler.prototype.enterFrame = function () {
     this.x += (this.player.x - this.x) * 0.05;
     if (this.x < this.player.x + 1 && this.x > this.player.x - 1) {
-        this.x = this.player.x
+        this.x = this.player.x;
     }
 
     this.y += (this.player.y - this.y) * 0.05;
     if (this.y < this.player.y + 1 && this.y > this.player.y - 1) {
-        this.y = this.player.y
+        this.y = this.player.y;
     }
 
     if (this.x < gameState.canvas.width * 0.5) {
-        this.x = gameState.canvas.width * 0.5
+        this.x = gameState.canvas.width * 0.5;
     } else if (this.x > gameState.levelWidth * gameState.blockSize - gameState.canvas.width * 0.5) {
-        this.x = gameState.levelWidth * gameState.blockSize - gameState.canvas.width * 0.5
+        this.x = gameState.levelWidth * gameState.blockSize - gameState.canvas.width * 0.5;
     }
 
     if (this.y < gameState.canvas.height * 0.5) {
-        this.y = gameState.canvas.height * 0.5
+        this.y = gameState.canvas.height * 0.5;
     } else if (this.y > gameState.levelHeight * gameState.blockSize - gameState.canvas.height * 0.5) {
-        this.y = gameState.levelHeight * gameState.blockSize - gameState.canvas.height * 0.5
+        this.y = gameState.levelHeight * gameState.blockSize - gameState.canvas.height * 0.5;
     }
-}
+};
+
+},{}]},{},[1]);
 
 //# sourceMappingURL=app.js.map

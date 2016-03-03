@@ -14,7 +14,8 @@ class HomeController extends Controller
 
     public function game(Request $req) {
         $data = [
-            'user_id' => $req->get('user_id')
+            'user_id' => $req->get('user_id'),
+            'room_id' => $req->get('room_id')
         ];
 
         return view('game', compact('data'));

@@ -4,6 +4,8 @@
  * http://www.h3xed.com/blogmedia/platformer2/
  */
 
+let gameStateRef = new Firebase(`https://incandescent-fire-1026.firebaseio.com/rooms/${ENV.room_id}`)
+
 let gameState = {
     // Block height and width
     blockSize: 16,
@@ -49,7 +51,10 @@ let gameState = {
     time: 0,
 
     waterList: [],
-    gridList: []
+    gridList: [],
+
+    useExistingLevel: false,
+    initialized: false
 }
 
 gameState.context = gameState.canvas.getContext('2d')
@@ -57,7 +62,7 @@ gameState.horizon = gameState.levelHeight / 2 | 0;
 
 window.onload = function() {
     new Main()
-};
+}
 
 function Main() {
     var i = 0;
@@ -67,23 +72,48 @@ function Main() {
         i++
     }
 
-    // Instatiate all behaviors
-    for (i = 0; i < gameState.handlers.length; i++) {
-        var handlerName = gameState.handlers[i] + 'Handler';
-        var className = handlerName.charAt(0).toUpperCase() + handlerName.slice(1);
-        this[handlerName] = new window[className](this)
-    }
+    this.controlHandler = new ControlHandler(this)
+    this.gridHandler = new GridHandler(this)
+    this.renderHandler = new RenderHandler(this)
+    this.playerHandler = new PlayerHandler(this)
+    this.enemyHandler = new EnemyHandler(this)
+    this.shotHandler = new ShotHandler(this)
+    this.dustHandler = new DustHandler(this)
+    this.bloodHandler = new BloodHandler(this)
+    this.viewHandler = new ViewHandler(this)
 
-    setInterval(this.enterFrame.bind(this), 1000 / 60);
-    new MenuScreen(this)
+    gameStateRef.on('value', (snapshot) => {
+        if (snapshot.val().gridList && !gameState.initialized) {
+            gameState.useExistingLevel = true
+            gameState.gridList = snapshot.val().gridList
+            gameState.waterList = snapshot.val().waterList
+            // gameState.users = snapshot.val().users
+        }
+
+        if (!gameState.initialized) {
+            gameState.initialized = true
+            setInterval(this.enterFrame.bind(this), 1000 / 60);
+            new MenuScreen(this)
+        }
+    })
 }
 
 Main.prototype.startGame = function() {
-    for (var i = 0; i < gameState.handlers.length; i++) {
-        this[gameState.handlers[i] + 'Handler'].init(this)
+    this.controlHandler.init(this)
+    this.gridHandler.init(this)
+    this.renderHandler.init(this)
+    this.playerHandler.init(this)
+    this.enemyHandler.init(this)
+    this.shotHandler.init(this)
+    this.dustHandler.init(this)
+    this.bloodHandler.init(this)
+    this.viewHandler.init(this)
+
+    console.log('Create new level...')
+    if (!gameState.useExistingLevel) {
+        new CreateLevel(this);
     }
 
-    new CreateLevel(this);
     gameState.state = 'game';
     gameState.time = gameState.dayLength * 0.37
 }
@@ -114,10 +144,12 @@ function GridHandler(main) {}
 GridHandler.prototype.init = function(main) {
     this.toggle = 0
 
-    for (var i = 0; i < gameState.levelWidth; i++) {
-        gameState.gridList[i] = [];
-        for (var j = 0; j < gameState.levelHeight; j++) {
-            gameState.gridList[i][j] = false
+    if (!gameState.useExistingLevel) {
+        for (var i = 0; i < gameState.levelWidth; i++) {
+            gameState.gridList[i] = [];
+            for (var j = 0; j < gameState.levelHeight; j++) {
+                gameState.gridList[i][j] = false
+            }
         }
     }
 }
@@ -184,11 +216,9 @@ function BloodHandler(main) {
 
 BloodHandler.prototype.init = function(main) {
     this.list.length = 0;
-    this.gridList = main.gridHandler.list;
 };
 
 BloodHandler.prototype.enterFrame = function() {
-    var gridList = this.gridList;
     var blood, X, Y;
     for (var i = this.list.length - 1; i >= 0; i--) {
         blood = this.list[i];
@@ -199,10 +229,10 @@ BloodHandler.prototype.enterFrame = function() {
         X = blood.x / gameState.blockSize | 0;
         Y = blood.y / gameState.blockSize | 0;
         if (X >= 0 && X < gameState.levelWidth && Y >= 0 && Y < gameState.levelHeight) {
-            if (gridList[X][Y] == gameState.blockInt.water) {
+            if (gameState.gridList[X][Y] == gameState.blockInt.water) {
                 blood.x -= blood.vX * 0.5;
                 blood.y -= blood.vY * 0.5
-            } else if (gridList[X][Y] !== false && gridList[X][Y] != gameState.blockInt.cloud && gridList[X][Y] != gameState.blockInt.platform) {
+            } else if (gameState.gridList[X][Y] !== false && gameState.gridList[X][Y] != gameState.blockInt.cloud && gameState.gridList[X][Y] != gameState.blockInt.platform) {
                 blood.hp *= 0.75
             }
         }
@@ -247,7 +277,6 @@ function ControlHandler(main) {
     window.addEventListener('mousemove', this.mouseMoveEvent.bind(this));
     window.addEventListener('mousewheel', this.mouseWheelEvent.bind(this));
     window.addEventListener('DOMMouseScroll', this.mouseWheelEvent.bind(this));
-    // window.addEventListener('resize', this.windowResizeEvent.bind(this));
     document.getElementById('canvas').addEventListener('contextmenu', function(e) {
         if (e.button == 2) {
             e.preventDefault();
@@ -417,6 +446,11 @@ function CreateLevel(main) {
             }
         }
     }
+
+    gameStateRef.set({
+        gridList: gameState.gridList,
+        waterList: gameState.waterList
+    })
 }
 
 function DustHandler(main) {
@@ -428,11 +462,9 @@ function DustHandler(main) {
 
 DustHandler.prototype.init = function(main) {
     this.list.length = 0;
-    this.gridList = main.gridHandler.list;
 }
 
 DustHandler.prototype.enterFrame = function() {
-    var gridList = this.gridList;
     var dust, X, Y;
     for (var i = this.list.length - 1; i >= 0; i--) {
         dust = this.list[i];
@@ -456,7 +488,8 @@ DustHandler.prototype.enterFrame = function() {
             continue
         }
     }
-};
+}
+
 DustHandler.prototype.create = function(x, y, vX, vY, count) {
     for (var i = 0; i < count; i++) {
         if (this.pool.length > 0) {
@@ -471,7 +504,7 @@ DustHandler.prototype.create = function(x, y, vX, vY, count) {
         dust.hp = this.startHp;
         this.list[this.list.length] = dust
     }
-};
+}
 
 function EnemyHandler(main) {
     this.startAccel = 0.01;
@@ -498,7 +531,8 @@ EnemyHandler.prototype.enterFrame = function() {
     var player = this.playerHandler;
     var enemy, i, j, startX, startY, endX, endY, newX, newY, collide;
     i = gameState.time / gameState.dayLength;
-    if ((i < 0.25 || i > 0.75) && Math.random() < this.spawnRate) {
+    // if ((i < 0.25 || i > 0.75) && Math.random() < this.spawnRate) {
+    if (Math.random() < this.spawnRate) {
         this.create()
     }
     for (var k = this.list.length - 1; k >= 0; k--) {
@@ -689,7 +723,20 @@ function PlayerHandler(main) {
         spread: 0.5,
         damage: 1,
         destroy: false
-    }, {
+    },
+    {
+        name: 'Sniper',
+        reload: 75,
+        count: 1,
+        speed: 25,
+        hp: 1000,
+        modY: 0.01,
+        explode: 0,
+        spread: 0.2,
+        damage: 10,
+        destroy: false
+    },
+    {
         name: 'Rifle',
         reload: 6,
         count: 1,
@@ -700,7 +747,8 @@ function PlayerHandler(main) {
         spread: 0.2,
         damage: 1,
         destroy: false
-    }, {
+    },
+    {
         name: 'Grenade',
         reload: 50,
         count: 1,
@@ -711,7 +759,8 @@ function PlayerHandler(main) {
         spread: 0.5,
         damage: 2,
         destroy: true
-    }, {
+    },
+    {
         name: 'Flamer',
         reload: 1,
         count: 1,
@@ -722,7 +771,8 @@ function PlayerHandler(main) {
         spread: 1.5,
         damage: 0.15,
         destroy: false
-    }, {
+    },
+    {
         name: 'Bomb',
         reload: 85,
         count: 1,
@@ -733,7 +783,8 @@ function PlayerHandler(main) {
         spread: 0.3,
         damage: 3,
         destroy: true
-    }, {
+    },
+    {
         name: 'Rocket',
         reload: 90,
         count: 4,
@@ -744,31 +795,37 @@ function PlayerHandler(main) {
         spread: 0.05,
         damage: 2,
         destroy: true
-    }, {
+    },
+    {
         name: 'Build Dirt',
         reload: 4,
         count: -1,
         type: gameState.blockInt.dirt
-    }, {
+    },
+    {
         name: 'Build Stone',
         reload: 8,
         count: -1,
         type: gameState.blockInt.stone
-    }, {
+    },
+    {
         name: 'Build Wood',
         reload: 6,
         count: -1,
         type: gameState.blockInt.wood
-    }, {
+    },
+    {
         name: 'Build Platform',
         reload: 6,
         count: -1,
         type: gameState.blockInt.platform
-    }, {
+    },
+    {
         name: 'Remove Block',
         reload: 29,
         count: -2
-    }];
+    }]
+
     this.kills;
     this.action;
     this.actionObject;
@@ -796,7 +853,16 @@ PlayerHandler.prototype.init = function(main) {
     this.action = 0;
     this.canBuild = false;
     this.actionObject = this.actions[this.action]
-};
+
+    // setInterval(() => {
+    //     gameStateRef.child(`users/${ENV.user_id}`).set({
+    //         x: this.x,
+    //         y: this.y,
+    //         vX: this.vX,
+    //         vY: this.vY
+    //     })
+    // }, 1000/60)
+}
 
 PlayerHandler.prototype.enterFrame = function() {
     var controlHandler = this.controlHandler;
@@ -805,19 +871,23 @@ PlayerHandler.prototype.enterFrame = function() {
     var width = this.width;
     var height = this.height;
     var i, j;
+
     if (this.hp < this.startHp) {
         this.hp += this.regen;
         if (this.hp > this.startHp) {
             this.hp = this.startHp
         }
     }
+
     if (this.canJump < 1 && controlHandler.space && this.spaceDown == false) {
         this.vY = -this.jumpHeight;
         this.spaceDown = true
     }
+
     if (controlHandler.space == false && this.spaceDown) {
         this.spaceDown = false
     }
+
     if (controlHandler.a) {
         this.vX -= accel;
         if (this.vX < -speed) {
@@ -838,6 +908,7 @@ PlayerHandler.prototype.enterFrame = function() {
             this.vX = 0
         }
     }
+
     var newX = this.x + this.vX;
     var startX = Math.max((newX - width * 0.5) / gameState.blockSize | 0, 0);
     var startY = Math.max((this.y - height * 0.5) / gameState.blockSize | 0, 0);
@@ -864,6 +935,7 @@ PlayerHandler.prototype.enterFrame = function() {
             }
         }
     }
+
     this.x = newX;
     if (this.inWater) {
         this.vY += 0.25;
@@ -878,6 +950,7 @@ PlayerHandler.prototype.enterFrame = function() {
         }
         var newY = this.y + this.vY
     }
+
     var collide = false;
     this.inWater = false;
     startX = Math.max((this.x - width * 0.5) / gameState.blockSize | 0, 0);
@@ -901,6 +974,7 @@ PlayerHandler.prototype.enterFrame = function() {
                     this.vY = 0
                 }
             }
+
             if (gameState.gridList[i][j] == gameState.blockInt.platform && this.vY > 0 && controlHandler.s == false) {
                 if (this.y + height * 0.5 < j * gameState.blockSize) {
                     newY = j * gameState.blockSize - height * 0.5 - 0.001;
@@ -911,11 +985,13 @@ PlayerHandler.prototype.enterFrame = function() {
             }
         }
     }
+
     this.y = newY;
     if (collide == false) {
         this.canJump = this.jumpDelay
     }
-    this.reload--;
+
+    this.reload--
     if (this.actionObject.count < 0) {
         var offsetX = this.viewHandler.x - this.halfWidth;
         var offsetY = this.viewHandler.y - this.halfHeight;
@@ -939,14 +1015,17 @@ PlayerHandler.prototype.enterFrame = function() {
                                     break
                                 }
                             }
+
                             if (this.x + this.width * 0.5 > X * gameState.blockSize && this.x - this.width * 0.5 < X * gameState.blockSize + gameState.blockSize & this.y + this.height * 0.5 > Y * gameState.blockSize && this.y - this.height * 0.5 < Y * gameState.blockSize + gameState.blockSize) {
                                 collide = true
                             }
+
                             if (collide == false) {
                                 gameState.gridList[X][Y] = this.actionObject.type
                             }
                         }
                     }
+
                     if (this.actionObject.count == -2) {
                         if (gameState.gridList[X][Y] != gameState.blockInt.bedrock) {
                             gameState.gridList[X][Y] = false
@@ -965,20 +1044,24 @@ PlayerHandler.prototype.enterFrame = function() {
             for (i = this.actionObject.count - 1; i >= 0; i--) {
                 this.shoot(this.x, this.y - 4, controlHandler.mouseX + offsetX, controlHandler.mouseY + offsetY, this.actionObject)
             }
+
             this.reload = this.actionObject.reload
         }
     }
-};
+}
+
 PlayerHandler.prototype.hotKey = function(keyCode) {
     if (keyCode == 48) {
         keyCode = 58
     }
+
     if (keyCode - 49 in this.actions) {
         this.action = keyCode - 49;
         this.actionObject = this.actions[this.action];
         this.reload = this.actions[this.action].reload
     }
-};
+}
+
 PlayerHandler.prototype.wheel = function(delta) {
     if (delta > 0) {
         if (this.action <= 0) {
@@ -993,9 +1076,10 @@ PlayerHandler.prototype.wheel = function(delta) {
             this.action++
         }
     }
+
     this.actionObject = this.actions[this.action];
     this.reload = this.actions[this.action].reload
-};
+}
 
 function RenderHandler(main) {
     this.sunMoonArcRadius = gameState.canvas.height - 40;
@@ -1085,6 +1169,9 @@ RenderHandler.prototype.enterFrame = function() {
     }
 
 
+
+
+
     // Draw player
     X = Math.round(pX + offsetX - player.width / 2);
     Y = Math.round(pY + offsetY - player.height / 2);
@@ -1094,6 +1181,25 @@ RenderHandler.prototype.enterFrame = function() {
     gameState.context.shadowColor = 'rgba(0,0,0,0.1)';
     gameState.context.fillStyle = '#333333';
     gameState.context.fillRect(X, Y, player.width, player.height);
+
+    // Render other users
+    // if (_.isObject(gameState.users)) {
+    //     console.log('gameState.users', gameState.users)
+    //     gameState.users.forEach(function(user) {
+    //         if (user.id === ENV.user_id) return
+    //         X = Math.round(user.x + offsetX - player.width / 2);
+    //         Y = Math.round(user.y + offsetY - player.height / 2);
+    //         gameState.context.shadowBlur = 5;
+    //         gameState.context.shadowOffsetX = -user.vX;
+    //         gameState.context.shadowOffsetY = -user.vY;
+    //         gameState.context.shadowColor = 'rgba(0,0,0,0.1)';
+    //         gameState.context.fillStyle = '#333333';
+    //         gameState.context.fillRect(X, Y, player.width, player.height);
+    //     })
+    // }
+    //
+
+
 
     gameState.context.shadowBlur = 0;
     gameState.context.shadowOffsetX = 0;
@@ -1111,24 +1217,28 @@ RenderHandler.prototype.enterFrame = function() {
         obj = this.enemyHandler.list[i];
         gameState.context.fillRect(Math.round(obj.x + offsetX - obj.width * 0.5), Math.round(obj.y + offsetY - obj.height * 0.5), obj.width, obj.height)
     }
+
     gameState.context.fillStyle = '#333333';
     for (i = this.shotHandler.list.length - 1; i >= 0; i--) {
         obj = this.shotHandler.list[i];
         dist = this.shotHandler.size;
         gameState.context.fillRect(Math.round(obj.x + offsetX - dist / 2), Math.round(obj.y + offsetY - dist / 2), dist, dist)
     }
+
     gameState.context.fillStyle = '#555555';
     for (i = this.dustHandler.list.length - 1; i >= 0; i--) {
         obj = this.dustHandler.list[i];
         dist = this.dustHandler.size * (obj.hp / this.dustHandler.startHp);
         gameState.context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist)
     }
+
     gameState.context.fillStyle = '#AA4444';
     for (i = this.bloodHandler.list.length - 1; i >= 0; i--) {
         obj = this.bloodHandler.list[i];
         dist = this.bloodHandler.size * (obj.hp / this.bloodHandler.startHp);
         gameState.context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist)
     }
+
     for (i = startX; i < endX; i++) {
         for (j = startY; j < endY; j++) {
             obj = gameState.gridList[i][j];
@@ -1225,8 +1335,8 @@ function ShotHandler(main) {
         spread: 0,
         damage: 2,
         destroy: true
-    }];
-    this.list = [];
+    }]
+    this.list = []
     this.pool = []
 }
 
@@ -1239,6 +1349,7 @@ ShotHandler.prototype.init = function(main) {
 
 ShotHandler.prototype.enterFrame = function() {
     var shot, enemy, j, X, Y;
+    var wereBlocksDestroyed = false
     for (var i = this.list.length - 1; i >= 0; i--) {
         shot = this.list[i];
         shot.x += shot.vX;
@@ -1255,6 +1366,7 @@ ShotHandler.prototype.enterFrame = function() {
                 if (shot.destroy && gameState.gridList[X][Y] != gameState.blockInt.bedrock) {
                     gameState.gridList[X][Y] = false
                 }
+
                 shot.hp = -99;
                 this.dust(shot.x - shot.vX, shot.y - shot.vY, shot.vX * 0.2, shot.vY * 0.2, 4)
             }
