@@ -49,6 +49,9 @@ let gameState = {
     time: 0
 }
 
+gameState.context = gameState.canvas.getContext('2d')
+gameState.horizon = gameState.levelHeight / 2 | 0;
+
 window.onload = function() {
     new Main()
 };
@@ -60,12 +63,6 @@ function Main() {
         gameState.blockColor[i] = gameState.blocks[block];
         i++
     }
-
-    gameState.state = 'loading';
-
-    // Create basis for level
-    this.context = gameState.canvas.getContext('2d');
-    gameState.horizon = gameState.levelHeight / 2 | 0;
 
     // Instatiate all behaviors
     for (i = 0; i < gameState.handlers.length; i++) {
@@ -351,10 +348,12 @@ function DustHandler(main) {
     this.list = [];
     this.pool = []
 }
+
 DustHandler.prototype.init = function(main) {
     this.list.length = 0;
     this.gridList = main.gridHandler.list;
-};
+}
+
 DustHandler.prototype.enterFrame = function() {
     var gridList = this.gridList;
     var dust, X, Y;
@@ -565,16 +564,16 @@ EnemyHandler.prototype.create = function() {
 function GameOverScreen(main) {
     gameState.state = 'gameOverScreen';
     main.controlHandler.mouseLeft = false;
-    main.context.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
+    gameState.context.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
     var hW = gameState.canvas.width * 0.5;
     var hH = gameState.canvas.height * 0.5;
     var dark = 'rgba(0,0,0,0.9)';
     var medium = 'rgba(0,0,0,0.5)';
     var light = 'rgba(0,0,0,0.3)';
-    new Text(main.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + gameState.fontFamily, light, 'left');
-    new Text(main.context, 'Game Over!', hW, hH - 70, 'normal 22px/1 ' + gameState.fontFamily, dark);
-    new Text(main.context, 'Kills:' + main.playerHandler.kills, hW, hH - 30, 'normal 16px/1 ' + gameState.fontFamily, medium);
-    new Text(main.context, 'Click to Restart', hW, hH + 10, 'normal 17px/1 ' + gameState.fontFamily, dark);
+    new Text(gameState.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + gameState.fontFamily, light, 'left');
+    new Text(gameState.context, 'Game Over!', hW, hH - 70, 'normal 22px/1 ' + gameState.fontFamily, dark);
+    new Text(gameState.context, 'Kills:' + main.playerHandler.kills, hW, hH - 30, 'normal 16px/1 ' + gameState.fontFamily, medium);
+    new Text(gameState.context, 'Click to Restart', hW, hH + 10, 'normal 17px/1 ' + gameState.fontFamily, dark);
 }
 
 function GridHandler(main) {}
@@ -642,18 +641,18 @@ GridHandler.prototype.enterFrame = function() {
 function MenuScreen(main) {
     gameState.state = 'menuScreen';
     main.controlHandler.mouseLeft = false;
-    main.context.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
+    gameState.context.clearRect(0, 0, gameState.canvas.width, gameState.canvas.height);
     var hW = gameState.canvas.width * 0.5;
     var hH = gameState.canvas.height * 0.5;
     var dark = 'rgba(0,0,0,0.9)';
     var medium = 'rgba(0,0,0,0.5)';
     var light = 'rgba(0,0,0,0.3)';
-    new Text(main.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + gameState.fontFamily, light, 'left');
-    new Text(main.context, 'Click to Start', hW, hH - 70, 'normal 17px/1 ' + gameState.fontFamily, dark);
-    new Text(main.context, 'Use "A" and "D" to move and "Space" to jump.', hW, hH - 30, 'normal 15px/1 ' + gameState.fontFamily, medium);
-    new Text(main.context, 'Use mouse wheel to change action and left click to perform action.', hW, hH - 10, 'normal 15px/1 ' + gameState.fontFamily, medium);
-    new Text(main.context, 'You can build and destroy terrain.', hW, hH + 10, 'normal 15px/1 ' + gameState.fontFamily, medium);
-    new Text(main.context, 'Enemies come out at night.', hW, hH + 30, 'normal 15px/1 ' + gameState.fontFamily, medium);
+    new Text(gameState.context, 'Ranger Steve: Buffalo Invasion', 9, 18, 'normal 21px/1 ' + gameState.fontFamily, light, 'left');
+    new Text(gameState.context, 'Click to Start', hW, hH - 70, 'normal 17px/1 ' + gameState.fontFamily, dark);
+    new Text(gameState.context, 'Use "A" and "D" to move and "Space" to jump.', hW, hH - 30, 'normal 15px/1 ' + gameState.fontFamily, medium);
+    new Text(gameState.context, 'Use mouse wheel to change action and left click to perform action.', hW, hH - 10, 'normal 15px/1 ' + gameState.fontFamily, medium);
+    new Text(gameState.context, 'You can build and destroy terrain.', hW, hH + 10, 'normal 15px/1 ' + gameState.fontFamily, medium);
+    new Text(gameState.context, 'Enemies come out at night.', hW, hH + 30, 'normal 15px/1 ' + gameState.fontFamily, medium);
 }
 
 function PlayerHandler(main) {
@@ -989,7 +988,6 @@ PlayerHandler.prototype.wheel = function(delta) {
 function RenderHandler(main) {
     this.sunMoonArcRadius = gameState.canvas.height - 40;
     this.main = main;
-    this.context = main.context;
     this.timeRatio = Math.PI * 2 / gameState.dayLength
 }
 
@@ -1005,7 +1003,6 @@ RenderHandler.prototype.init = function(main) {
 }
 
 RenderHandler.prototype.enterFrame = function() {
-    var context = this.context;
     var gridList = this.gridHandler.list;
     var blockHalf = gameState.blockSize / 2;
     var player = this.player;
@@ -1015,38 +1012,38 @@ RenderHandler.prototype.enterFrame = function() {
     dist = gameState.time * this.timeRatio;
     i = Math.sin(dist);
     j = Math.cos(dist);
-    var gradient = context.createLinearGradient(0, 0, 0, gameState.canvas.height);
+    var gradient = gameState.context.createLinearGradient(0, 0, 0, gameState.canvas.height);
     depth = this.viewHandler.y / (gameState.levelHeight * gameState.blockSize) * 250 | 0;
     dist = (j + 1) * 75 | 0;
     gradient.addColorStop(0, 'rgb(' + (77 + depth) + ',' + (117 + depth) + ',' + (179 + depth) + ')');
     gradient.addColorStop(1, 'rgb(' + (127 + depth - dist) + ',' + (167 + depth - dist) + ',' + (228 + depth - dist) + ')');
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, gameState.canvas.width, gameState.canvas.height);
+    gameState.context.fillStyle = gradient;
+    gameState.context.fillRect(0, 0, gameState.canvas.width, gameState.canvas.height);
 
     X = gameState.canvas.width * 0.5 + i * this.sunMoonArcRadius;
     Y = gameState.canvas.height + j * this.sunMoonArcRadius;
-    context.shadowBlur = 40;
-    context.shadowColor = '#FEDB16';
-    context.fillStyle = '#FEDB16';
-    context.beginPath();
-    context.arc(X, Y, 30, 0, 6.2832);
-    context.fill();
-    context.closePath();
+    gameState.context.shadowBlur = 40;
+    gameState.context.shadowColor = '#FEDB16';
+    gameState.context.fillStyle = '#FEDB16';
+    gameState.context.beginPath();
+    gameState.context.arc(X, Y, 30, 0, 6.2832);
+    gameState.context.fill();
+    gameState.context.closePath();
     X = gameState.canvas.width * 0.5 + -i * this.sunMoonArcRadius;
     Y = gameState.canvas.height + -j * this.sunMoonArcRadius;
-    context.shadowBlur = 20;
-    context.shadowColor = '#FFFFFF';
-    context.fillStyle = '#FFFFFF';
-    context.beginPath();
-    context.arc(X, Y, 30, 1.2, 4.3416);
-    context.fill();
-    context.closePath();
-    context.shadowBlur = 0;
+    gameState.context.shadowBlur = 20;
+    gameState.context.shadowColor = '#FFFFFF';
+    gameState.context.fillStyle = '#FFFFFF';
+    gameState.context.beginPath();
+    gameState.context.arc(X, Y, 30, 1.2, 4.3416);
+    gameState.context.fill();
+    gameState.context.closePath();
+    gameState.context.shadowBlur = 0;
     var offsetX = gameState.canvas.width * 0.5 - this.viewHandler.x;
     var offsetY = gameState.canvas.height * 0.5 - this.viewHandler.y;
-    context.fillStyle = '#776655';
+    gameState.context.fillStyle = '#776655';
     Y = Math.round(gameState.horizon * gameState.blockSize + offsetY);
-    context.fillRect(0, Y, gameState.canvas.width, gameState.canvas.height - Y);
+    gameState.context.fillRect(0, Y, gameState.canvas.width, gameState.canvas.height - Y);
     var startX = Math.max(-offsetX / gameState.blockSize | 0, 0);
     var endX = Math.min(startX + Math.ceil(gameState.canvas.width / gameState.blockSize) + 1, gameState.levelWidth);
     var startY = Math.max(-offsetY / gameState.blockSize | 0, 0);
@@ -1057,21 +1054,21 @@ RenderHandler.prototype.enterFrame = function() {
             if (obj !== false && obj != gameState.blockInt.water && obj != gameState.blockInt.cloud) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
-                context.fillStyle = gameState.blockColor[obj];
+                gameState.context.fillStyle = gameState.blockColor[obj];
                 if (obj == gameState.blockInt.platform) {
-                    context.fillRect(X, Y, gameState.blockSize, gameState.blockSize * 0.25);
-                    context.fillRect(X, Y + gameState.blockSize * 0.5, gameState.blockSize, gameState.blockSize * 0.25)
+                    gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize * 0.25);
+                    gameState.context.fillRect(X, Y + gameState.blockSize * 0.5, gameState.blockSize, gameState.blockSize * 0.25)
                 } else {
-                    context.fillRect(X, Y, gameState.blockSize, gameState.blockSize)
+                    gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize)
                 }
             }
             if (obj === false && j == gameState.horizon && gridList[i][j - 1] === false) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
-                context.fillStyle = 'rbga(0,0,0,0.2)';
-                context.fillRect(X + 1, Y, 2, 2);
-                context.fillRect(X + 5, Y, 3, 3);
-                context.fillRect(X + 11, Y, 2, 2)
+                gameState.context.fillStyle = 'rbga(0,0,0,0.2)';
+                gameState.context.fillRect(X + 1, Y, 2, 2);
+                gameState.context.fillRect(X + 5, Y, 3, 3);
+                gameState.context.fillRect(X + 11, Y, 2, 2)
             }
         }
     }
@@ -1080,17 +1077,17 @@ RenderHandler.prototype.enterFrame = function() {
     // Draw player
     X = Math.round(pX + offsetX - player.width / 2);
     Y = Math.round(pY + offsetY - player.height / 2);
-    context.shadowBlur = 5;
-    context.shadowOffsetX = -player.vX;
-    context.shadowOffsetY = -player.vY;
-    context.shadowColor = 'rgba(0,0,0,0.1)';
-    context.fillStyle = '#333333';
-    context.fillRect(X, Y, player.width, player.height);
+    gameState.context.shadowBlur = 5;
+    gameState.context.shadowOffsetX = -player.vX;
+    gameState.context.shadowOffsetY = -player.vY;
+    gameState.context.shadowColor = 'rgba(0,0,0,0.1)';
+    gameState.context.fillStyle = '#333333';
+    gameState.context.fillRect(X, Y, player.width, player.height);
 
-    context.shadowBlur = 0;
-    context.shadowOffsetX = 0;
-    context.shadowOffsetY = 0;
-    context.fillStyle = '#774444';
+    gameState.context.shadowBlur = 0;
+    gameState.context.shadowOffsetX = 0;
+    gameState.context.shadowOffsetY = 0;
+    gameState.context.fillStyle = '#774444';
 
 
 
@@ -1101,25 +1098,25 @@ RenderHandler.prototype.enterFrame = function() {
 
     for (i = this.enemyHandler.list.length - 1; i >= 0; i--) {
         obj = this.enemyHandler.list[i];
-        context.fillRect(Math.round(obj.x + offsetX - obj.width * 0.5), Math.round(obj.y + offsetY - obj.height * 0.5), obj.width, obj.height)
+        gameState.context.fillRect(Math.round(obj.x + offsetX - obj.width * 0.5), Math.round(obj.y + offsetY - obj.height * 0.5), obj.width, obj.height)
     }
-    context.fillStyle = '#333333';
+    gameState.context.fillStyle = '#333333';
     for (i = this.shotHandler.list.length - 1; i >= 0; i--) {
         obj = this.shotHandler.list[i];
         dist = this.shotHandler.size;
-        context.fillRect(Math.round(obj.x + offsetX - dist / 2), Math.round(obj.y + offsetY - dist / 2), dist, dist)
+        gameState.context.fillRect(Math.round(obj.x + offsetX - dist / 2), Math.round(obj.y + offsetY - dist / 2), dist, dist)
     }
-    context.fillStyle = '#555555';
+    gameState.context.fillStyle = '#555555';
     for (i = this.dustHandler.list.length - 1; i >= 0; i--) {
         obj = this.dustHandler.list[i];
         dist = this.dustHandler.size * (obj.hp / this.dustHandler.startHp);
-        context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist)
+        gameState.context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist)
     }
-    context.fillStyle = '#AA4444';
+    gameState.context.fillStyle = '#AA4444';
     for (i = this.bloodHandler.list.length - 1; i >= 0; i--) {
         obj = this.bloodHandler.list[i];
         dist = this.bloodHandler.size * (obj.hp / this.bloodHandler.startHp);
-        context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist)
+        gameState.context.fillRect(Math.round(obj.x + offsetX - dist * 0.5), Math.round(obj.y + offsetY - dist * 0.5), dist, dist)
     }
     for (i = startX; i < endX; i++) {
         for (j = startY; j < endY; j++) {
@@ -1127,22 +1124,22 @@ RenderHandler.prototype.enterFrame = function() {
             if (obj == gameState.blockInt.dirt && j <= gameState.horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == gameState.blockInt.cloud)) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
-                context.fillStyle = 'rgba(45,130,45,0.75)';
-                context.fillRect(X, Y - 3, gameState.blockSize, 3);
-                context.fillRect(X + 1, Y - 5, 2, 2);
-                context.fillRect(X + 5, Y - 5, 3, 2);
-                context.fillRect(X + 11, Y - 5, 2, 2)
+                gameState.context.fillStyle = 'rgba(45,130,45,0.75)';
+                gameState.context.fillRect(X, Y - 3, gameState.blockSize, 3);
+                gameState.context.fillRect(X + 1, Y - 5, 2, 2);
+                gameState.context.fillRect(X + 5, Y - 5, 3, 2);
+                gameState.context.fillRect(X + 11, Y - 5, 2, 2)
             }
             if (obj == gameState.blockInt.water || obj == gameState.blockInt.cloud) {
                 X = Math.round(i * gameState.blockSize + offsetX);
                 Y = Math.round(j * gameState.blockSize + offsetY);
-                context.fillStyle = gameState.blockColor[obj];
-                context.fillRect(X, Y, gameState.blockSize, gameState.blockSize)
+                gameState.context.fillStyle = gameState.blockColor[obj];
+                gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize)
             }
             if (obj == gameState.blockInt.water && j <= gameState.horizon && (gridList[i][j - 1] === false || gridList[i][j - 1] == gameState.blockInt.cloud)) {
-                context.fillStyle = 'rgba(255,255,255,0.2)';
-                context.fillRect(X, Y, gameState.blockSize, 6);
-                context.fillRect(X, Y, gameState.blockSize / 2, 3)
+                gameState.context.fillStyle = 'rgba(255,255,255,0.2)';
+                gameState.context.fillRect(X, Y, gameState.blockSize, 6);
+                gameState.context.fillRect(X, Y, gameState.blockSize / 2, 3)
             }
         }
     }
@@ -1157,8 +1154,8 @@ RenderHandler.prototype.enterFrame = function() {
                 dist = (pX - X - blockHalf) * (pX - X - blockHalf) + (pY - Y - blockHalf) * (pY - Y - blockHalf);
                 X = Math.round(X + offsetX);
                 Y = Math.round(Y + offsetY);
-                context.fillStyle = 'rgba(0,0,0,' + (depth * 0.05 * Math.max(Math.min(dist / 16000, 1), 0.4)) + ')';
-                context.fillRect(X, Y, gameState.blockSize, gameState.blockSize);
+                gameState.context.fillStyle = 'rgba(0,0,0,' + (depth * 0.05 * Math.max(Math.min(dist / 16000, 1), 0.4)) + ')';
+                gameState.context.fillRect(X, Y, gameState.blockSize, gameState.blockSize);
                 if (obj == gameState.blockInt.platform) {
                     depth += 0.2
                 } else if (obj == gameState.blockInt.water) {
@@ -1172,27 +1169,27 @@ RenderHandler.prototype.enterFrame = function() {
 
     depth = Math.min(Math.cos(gameState.time * this.timeRatio) + 0.3, 0.5);
     if (depth > 0) {
-        context.fillStyle = 'rgba(0,0,0,' + depth + ')';
-        context.fillRect(0, 0, gameState.canvas.width, gameState.canvas.height)
+        gameState.context.fillStyle = 'rgba(0,0,0,' + depth + ')';
+        gameState.context.fillRect(0, 0, gameState.canvas.width, gameState.canvas.height)
     }
     if (player.actionObject.count < 0 && player.canBuild) {
-        context.fillStyle = 'rgba(0,0,0,0.2)';
-        context.fillRect(((this.controlHandler.mouseX - offsetX) / gameState.blockSize | 0) * gameState.blockSize + offsetX, ((this.controlHandler.mouseY - offsetY) / gameState.blockSize | 0) * gameState.blockSize + offsetY, gameState.blockSize, gameState.blockSize)
+        gameState.context.fillStyle = 'rgba(0,0,0,0.2)';
+        gameState.context.fillRect(((this.controlHandler.mouseX - offsetX) / gameState.blockSize | 0) * gameState.blockSize + offsetX, ((this.controlHandler.mouseY - offsetY) / gameState.blockSize | 0) * gameState.blockSize + offsetY, gameState.blockSize, gameState.blockSize)
     }
 
-    context.fillStyle = '#444444';
-    context.fillRect(0, 0, gameState.canvas.width, 20);
-    context.textAlign = 'left';
-    context.font = 'bold 11px/1 Arial';
-    context.fillStyle = '#AAAAAA';
-    context.fillText('H', 5, 10);
-    context.fillText('K', 85, 10);
-    context.font = 'bold 15px/1 Arial';
-    context.fillStyle = '#DDDDDD';
-    context.fillText(Math.round(player.hp), 15, 10);
-    context.fillText(Math.round(player.kills), 95, 10);
-    context.textAlign = 'right';
-    context.fillText(player.actions[player.action].name, gameState.canvas.width - 5, 10)
+    gameState.context.fillStyle = '#444444';
+    gameState.context.fillRect(0, 0, gameState.canvas.width, 20);
+    gameState.context.textAlign = 'left';
+    gameState.context.font = 'bold 11px/1 Arial';
+    gameState.context.fillStyle = '#AAAAAA';
+    gameState.context.fillText('H', 5, 10);
+    gameState.context.fillText('K', 85, 10);
+    gameState.context.font = 'bold 15px/1 Arial';
+    gameState.context.fillStyle = '#DDDDDD';
+    gameState.context.fillText(Math.round(player.hp), 15, 10);
+    gameState.context.fillText(Math.round(player.kills), 95, 10);
+    gameState.context.textAlign = 'right';
+    gameState.context.fillText(player.actions[player.action].name, gameState.canvas.width - 5, 10)
 }
 
 function ShotHandler(main) {
