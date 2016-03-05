@@ -1,149 +1,317 @@
-var gameWidth = window.innerWidth
-var gameHeight = window.innerHeight
+var gameWidth = 800
+var gameHeight = 600
 
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game');
 
-function preload() {
-    game.load.image('sky', '/images/sky.png');
-    game.load.image('ground', '/images/platform.png');
-    game.load.image('star', '/images/star.png');
-    game.load.spritesheet('dude', '/images/dude.png', 32, 48);
+var RangerSteveGame = function() {
+    this.player
+    this.platforms
+    this.ground
+
+    this.score = 0
+    this.scoreText
 }
 
-var player;
-var platforms;
-var cursors;
+RangerSteveGame.prototype = {
+    init: function() {
+        this.game.renderer.renderSession.roundPixels = true
+        this.physics.startSystem(Phaser.Physics.ARCADE)
+    },
 
-var stars;
-var score = 0;
-var scoreText;
+    preload: function() {
+        this.load.image('treescape', '/images/treescape.jpg');
+        this.load.image('ground', '/images/platform.png');
+        this.load.spritesheet('dude', '/images/dude.png', 32, 48);
+    },
 
-function create() {
+    create: function() {
+        this.weapon1 = new Weapon.SingleBullet(this.game);
+        this.weapon2 = new Weapon.Rockets(this.game);
+        this.weapon3 = new Weapon.ScaleBullet(this.game);
 
-    //  We're going to be using physics, so enable the Arcade Physics system
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+        this.world.setBounds(0, 0, 1920, 1920);
 
-    //  A simple background for our game
-    var skySprite = game.add.sprite(0, 0, 'sky');
-    skySprite.width = gameWidth
-    skySprite.height = gameHeight
+        this.game.canvas.style.cursor = "crosshair"
 
-    //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = game.add.group();
+        //  We're going to be using physics, so enable the Arcade Physics system
+        this.physics.startSystem(Phaser.Physics.ARCADE);
 
-    //  We will enable physics for any object that is created in this group
-    platforms.enableBody = true;
+        //  A simple background for our game
+        var skySprite = this.add.sprite(0, 1320, 'treescape');
+        skySprite.width = 800
+        skySprite.height = 600
 
-    // Here we create the ground.
-    var ground = platforms.create(0, game.world.height - 64, 'ground');
+        //  The platforms group contains the ground and the 2 ledges we can jump on
+        this.platforms = this.add.group();
 
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    ground.scale.setTo(2, 2);
+        //  We will enable physics for any object that is created in this group
+        this.platforms.enableBody = true;
 
-    //  This stops it from falling away when you jump on it
-    ground.body.immovable = true;
 
-    //  Now let's create two ledges
-    var ledge = platforms.create(400, 400, 'ground');
-    ledge.body.immovable = true;
+        /**
+         * Ground
+         */
+        this.ground = this.platforms.create(0, 1919, 'ground');
 
-    ledge = platforms.create(-150, 250, 'ground');
-    ledge.body.immovable = true;
+        //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+        this.ground.width = 1920;
 
-    // The player and its settings
-    player = game.add.sprite(32, game.world.height - 150, 'dude');
+        //  This stops it from falling away when you jump on it
+        this.ground.body.immovable = true;
 
-    //  We need to enable physics on the player
-    game.physics.arcade.enable(player);
+        /**
+         * Platforms
+         */
 
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.body.bounce.y = 0.2;
-    player.body.gravity.y = 300;
-    player.body.collideWorldBounds = true;
+        //  Now let's create two ledges
+        this.platforms.create(400, 400, 'ground');
+        this.platforms.create(-150, 250, 'ground');
+        this.platforms.setAll('body.immovable', true);
 
-    //  Our two animations, walking left and right.
-    player.animations.add('left', [0, 1, 2, 3], 10, true);
-    player.animations.add('right', [5, 6, 7, 8], 10, true);
+        /**
+         * Player Settings
+         */
+        this.player = this.add.sprite(32, this.world.height - 150, 'dude');
 
-    //  Finally some stars to collect
-    stars = game.add.group();
+        //  We need to enable physics on the player
+        this.physics.arcade.enable(this.player);
 
-    //  We will enable physics for any star that is created in this group
-    stars.enableBody = true;
+        //  Player physics properties. Give the little guy a slight bounce.
+        this.player.body.bounce.y = 0;
+        this.player.body.gravity.y = 1100;
+        this.player.body.collideWorldBounds = true;
 
-    //  Here we'll create 12 of them evenly spaced apart
-    for (var i = 0; i < 12; i++)
-    {
-        //  Create a star inside of the 'stars' group
-        var star = stars.create(i * 70, 0, 'star');
+        //  Our two animations, walking left and right.
+        this.player.animations.add('left', [0, 1, 2, 3], 10, true);
+        this.player.animations.add('right', [5, 6, 7, 8], 10, true);
 
-        //  Let gravity do its thing
-        star.body.gravity.y = 300;
+        //  The score
+        this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
-        //  This just gives each star a slightly random bounce value
-        star.body.bounce.y = 0.7 + Math.random() * 0.2;
+        /**
+         * Control Settings
+         */
+
+        //  Our controls.
+        // cursors = this.input.keyboard.createCursorKeys();
+        this.upButton = this.input.keyboard.addKey(Phaser.Keyboard.W);
+        this.downButton = this.input.keyboard.addKey(Phaser.Keyboard.S);
+        this.leftButton = this.input.keyboard.addKey(Phaser.Keyboard.A);
+        this.rightButton = this.input.keyboard.addKey(Phaser.Keyboard.D);
+
+        /**
+         * Camera Settings
+         */
+        this.camera.follow(this.player);
+    },
+
+    update: function() {
+
+        //  Collide the player and the stars with the platforms
+        this.physics.arcade.collide(this.player, this.platforms);
+
+        //  Reset the players velocity (movement)
+        this.player.body.velocity.x = 0;
+
+        if (this.leftButton.isDown)
+        {
+            //  Move to the left
+            this.player.body.velocity.x = -250;
+
+            this.player.animations.play('left');
+        }
+        else if (this.rightButton.isDown)
+        {
+            //  Move to the right
+            this.player.body.velocity.x = 250;
+
+            this.player.animations.play('right');
+        }
+        else
+        {
+            //  Stand still
+            this.player.animations.stop();
+
+            this.player.frame = 4;
+        }
+
+        //  Allow the player to jump if they are touching the ground.
+        if (this.upButton.isDown && this.player.body.touching.down)
+        {
+            this.player.body.velocity.y = -550;
+        }
+
+    },
+
+    render: function() {
+        this.game.debug.cameraInfo(this.camera, 32, 32);
+    },
+
+
+    fireBullet: function () {
+        this.weapon1.fire(this.player);
+    },
+
+    fireRocket: function () {
+        this.weapon2.fire(this.player);
+    },
+
+    fireSpreadShot: function () {
+        this.weapon3.fire(this.player);
     }
-
-    //  The score
-    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-
-    //  Our controls.
-    // cursors = game.input.keyboard.createCursorKeys();
-    upButton = game.input.keyboard.addKey(Phaser.Keyboard.W);
-    downButton = game.input.keyboard.addKey(Phaser.Keyboard.S);
-    leftButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
-    rightButton = game.input.keyboard.addKey(Phaser.Keyboard.D);
-
 }
 
-function update() {
 
-    //  Collide the player and the stars with the platforms
-    game.physics.arcade.collide(player, platforms);
-    game.physics.arcade.collide(stars, platforms);
+var Bullet = function (game, key) {
+    Phaser.Sprite.call(this, game, 0, 0, key);
 
-    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    game.physics.arcade.overlap(player, stars, collectStar, null, this);
+    this.texture.baseTexture.scaleMode = PIXI.scaleModes.NEAREST;
 
-    //  Reset the players velocity (movement)
-    player.body.velocity.x = 0;
+    this.anchor.set(0.5);
 
-    if (leftButton.isDown)
+    this.checkWorldBounds = true;
+    this.outOfBoundsKill = true;
+    this.exists = false;
+
+    this.tracking = false;
+    this.scaleSpeed = 0;
+
+};
+
+Bullet.prototype = Object.create(Phaser.Sprite.prototype);
+Bullet.prototype.constructor = Bullet;
+
+Bullet.prototype.fire = function (x, y, angle, speed, gx, gy) {
+
+    gx = gx || 0;
+    gy = gy || 0;
+
+    this.reset(x, y);
+    this.scale.set(1);
+
+    this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
+
+    this.angle = angle;
+
+    this.body.gravity.set(gx, gy);
+
+};
+
+Bullet.prototype.update = function () {
+
+    if (this.tracking)
     {
-        //  Move to the left
-        player.body.velocity.x = -150;
-
-        player.animations.play('left');
+        this.rotation = Math.atan2(this.body.velocity.y, this.body.velocity.x);
     }
-    else if (rightButton.isDown)
+
+    if (this.scaleSpeed > 0)
     {
-        //  Move to the right
-        player.body.velocity.x = 150;
-
-        player.animations.play('right');
+        this.scale.x += this.scaleSpeed;
+        this.scale.y += this.scaleSpeed;
     }
-    else
+
+};
+
+var Weapon = {};
+
+////////////////////////////////////////////////////
+//  A single bullet is fired in front of the ship //
+////////////////////////////////////////////////////
+
+Weapon.SingleBullet = function (game) {
+
+    Phaser.Group.call(this, game, game.world, 'Single Bullet', false, true, Phaser.Physics.ARCADE);
+
+    this.nextFire = 0;
+    this.bulletSpeed = 600;
+    this.fireRate = 100;
+
+    for (var i = 0; i < 64; i++)
     {
-        //  Stand still
-        player.animations.stop();
-
-        player.frame = 4;
+        this.add(new Bullet(game, 'bullet2'), true);
     }
 
-    //  Allow the player to jump if they are touching the ground.
-    if (upButton.isDown && player.body.touching.down)
+    return this;
+
+};
+
+Weapon.SingleBullet.prototype = Object.create(Phaser.Group.prototype);
+Weapon.SingleBullet.prototype.constructor = Weapon.SingleBullet;
+
+Weapon.SingleBullet.prototype.fire = function (source) {
+
+    var x = source.x + 10;
+    var y = source.y + 10;
+
+    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
+
+};
+
+///////////////////////////////////////////////////////////////////
+//  Rockets that visually track the direction they're heading in //
+///////////////////////////////////////////////////////////////////
+
+Weapon.Rockets = function (game) {
+
+    Phaser.Group.call(this, game, game.world, 'Rockets', false, true, Phaser.Physics.ARCADE);
+
+    this.bulletSpeed = 400;
+
+    for (var i = 0; i < 32; i++)
     {
-        player.body.velocity.y = -350;
+        this.add(new Bullet(game, 'bullet10'), true);
     }
 
-}
+    this.setAll('tracking', true);
 
-function collectStar (player, star) {
+    return this;
 
-    // Removes the star from the screen
-    star.kill();
+};
 
-    //  Add and update the score
-    score += 10;
-    scoreText.text = 'Score: ' + score;
-}
+Weapon.Rockets.prototype = Object.create(Phaser.Group.prototype);
+Weapon.Rockets.prototype.constructor = Weapon.Rockets;
+
+Weapon.Rockets.prototype.fire = function (source) {
+
+    var x = source.x + 10;
+    var y = source.y + 10;
+
+    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, -700);
+    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 700);
+
+};
+
+////////////////////////////////////////////////////////////////////////
+//  A single bullet that scales in size as it moves across the screen //
+////////////////////////////////////////////////////////////////////////
+
+Weapon.ScaleBullet = function (game) {
+
+    Phaser.Group.call(this, game, game.world, 'Scale Bullet', false, true, Phaser.Physics.ARCADE);
+
+    this.bulletSpeed = 800;
+
+    for (var i = 0; i < 32; i++)
+    {
+        this.add(new Bullet(game, 'bullet9'), true);
+    }
+
+    this.setAll('scaleSpeed', 0.05);
+
+    return this;
+
+};
+
+Weapon.ScaleBullet.prototype = Object.create(Phaser.Group.prototype);
+Weapon.ScaleBullet.prototype.constructor = Weapon.ScaleBullet;
+
+Weapon.ScaleBullet.prototype.fire = function (source) {
+
+    var x = source.x + 10;
+    var y = source.y + 10;
+
+    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
+
+};
+
+game.state.add('Game', RangerSteveGame, true);
