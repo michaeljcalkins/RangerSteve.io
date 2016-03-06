@@ -272,6 +272,7 @@ RangerSteveGame.prototype = {
         this.enemies.push(new RemotePlayer(data.id, this.game, this.player, data.x, data.y))
         this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
         this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
+        console.log('this.enemies', this.enemies)
     },
 
     // Move player
