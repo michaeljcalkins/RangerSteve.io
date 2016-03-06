@@ -22,6 +22,9 @@ var RangerSteveGame = function() {
 
 RangerSteveGame.prototype = {
     init: function() {
+        this.socket = io.connect();
+        this.socket.emit('new player')
+
         this.game.renderer.renderSession.roundPixels = true
         this.game.stage.disableVisibilityChange = true
         this.physics.startSystem(Phaser.Physics.ARCADE)

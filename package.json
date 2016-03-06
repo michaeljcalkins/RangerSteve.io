@@ -13,7 +13,6 @@
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
-    "ecstatic": "^1.0.1",
-    "socket.io": "^0.9.16"
+    "socket.io": "^1.4.5"
   }
 }

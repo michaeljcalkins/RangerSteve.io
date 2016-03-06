@@ -1,13 +1,16 @@
-var express = require('express');
-var router = express.Router();
+module.exports = function(io) {
+    var express = require('express');
+    var router = express.Router();
+    var controllers = require('../controllers')
+    // var SocketHandler = require('../lib/SocketHandler')
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Ranger Steve: Buffalo Invasion' });
-})
+    // SocketHandler.init(io)
 
-router.get('/game', function(req, res, next) {
-    res.render('index', { title: 'Ranger Steve: Buffalo Invasion' });
-})
+    /* GET home */
+    router.get('/', controllers.main.home)
 
-module.exports = router;
+    /* GET game */
+    router.get('/game', controllers.main.game)
+
+    return router
+}
