@@ -22,9 +22,6 @@ var RangerSteveGame = function() {
 
 RangerSteveGame.prototype = {
     init: function() {
-        this.socket = io.connect();
-        this.socket.emit('new player')
-
         this.game.renderer.renderSession.roundPixels = true
         this.game.stage.disableVisibilityChange = true
         this.physics.startSystem(Phaser.Physics.ARCADE)
@@ -46,6 +43,7 @@ RangerSteveGame.prototype = {
 
     create: function() {
         this.socket = io.connect()
+        this.enemies = []
 
         this.world.setBounds(0, 0, worldWidth, worldHeight)
 
@@ -156,6 +154,9 @@ RangerSteveGame.prototype = {
         var changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         changeKey.onDown.add(this.nextWeapon, this)
 
+        /**
+         * Start listening for events
+         */
         this.setEventHandlers()
     },
 
@@ -204,10 +205,6 @@ RangerSteveGame.prototype = {
         this.socket.emit('move player', { x: this.player.x, y: this.player.y })
     },
 
-    render: function() {
-        this.game.debug.cameraInfo(this.camera, 32, 32);
-    },
-
     nextWeapon: function () {
         //  Tidy-up the current weapon
         if (this.currentWeapon > 9)
@@ -252,11 +249,14 @@ RangerSteveGame.prototype = {
     },
 
     // Socket connected
-    onSocketConnected: function() {
+    onSocketConnected: function(data) {
         console.log('Connected to socket server')
 
         // Send local player data to the game server
-        this.socket.emit('new player', { x: this.player.x, y: this.player.y })
+        this.socket.emit('new player', {
+            x: this.player.x,
+            y: this.player.y
+        })
     },
 
     // Socket disconnected
@@ -272,7 +272,6 @@ RangerSteveGame.prototype = {
         this.enemies.push(new RemotePlayer(data.id, this.game, this.player, data.x, data.y))
         this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
         this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
-        console.log('this.enemies', this.enemies)
     },
 
     // Move player

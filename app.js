@@ -14,6 +14,8 @@ app.io = io
 
 var routes = require('./routes')(io)
 
+SocketHandler(io)
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -58,7 +60,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-SocketHandler(io)
 
 module.exports = app;
