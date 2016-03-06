@@ -7,6 +7,8 @@ var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-gam
 
 var RangerSteveGame = function() {
     this.player
+    this.enemies = []
+    this.socket
     this.platforms
     this.ground
 
@@ -21,6 +23,7 @@ var RangerSteveGame = function() {
 RangerSteveGame.prototype = {
     init: function() {
         this.game.renderer.renderSession.roundPixels = true
+        this.game.stage.disableVisibilityChange = true
         this.physics.startSystem(Phaser.Physics.ARCADE)
     },
 
@@ -35,9 +38,12 @@ RangerSteveGame.prototype = {
         this.load.image('treescape', '/images/treescape.jpg')
         this.load.image('ground', '/images/platform.png')
         this.load.spritesheet('dude', '/images/dude.png', 32, 48)
+        this.load.spritesheet('enemy', '/images/dude.png', 32, 48)
     },
 
     create: function() {
+        this.socket = io.connect()
+
         this.world.setBounds(0, 0, worldWidth, worldHeight)
 
         //  We're going to be using physics, so enable the Arcade Physics system
@@ -108,10 +114,12 @@ RangerSteveGame.prototype = {
         this.player.body.collideWorldBounds = true;
 
         //  Our two animations, walking left and right.
-        this.player.animations.add('left', [0, 1, 2, 3], 10, true);
-        this.player.animations.add('right', [5, 6, 7, 8], 10, true);
+        this.player.animations.add('left', [0, 1, 2, 3], 10, true)
+        this.player.animations.add('right', [5, 6, 7, 8], 10, true)
 
-        //  The score
+        /**
+         * Text
+         */
         this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' })
         this.weaponName = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' })
 
@@ -143,7 +151,9 @@ RangerSteveGame.prototype = {
         this.camera.follow(this.player);
 
         var changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-        changeKey.onDown.add(this.nextWeapon, this);
+        changeKey.onDown.add(this.nextWeapon, this)
+
+        this.setEventHandlers()
     },
 
     update: function() {
@@ -168,13 +178,12 @@ RangerSteveGame.prototype = {
             //  Move to the right
             this.player.body.velocity.x = 300;
 
-            this.player.animations.play('right');
+            this.player.animations.play('right')
         }
         else
         {
             //  Stand still
-            this.player.animations.stop();
-
+            this.player.animations.stop()
             this.player.frame = 4;
         }
 
@@ -188,6 +197,8 @@ RangerSteveGame.prototype = {
         {
             this.weapons[this.currentWeapon].fire(this.player);
         }
+
+        this.socket.emit('move player', { x: this.player.x, y: this.player.y })
     },
 
     render: function() {
@@ -195,7 +206,6 @@ RangerSteveGame.prototype = {
     },
 
     nextWeapon: function () {
-
         //  Tidy-up the current weapon
         if (this.currentWeapon > 9)
         {
@@ -220,6 +230,105 @@ RangerSteveGame.prototype = {
 
         this.weaponName.text = this.weapons[this.currentWeapon].name;
     },
+
+    setEventHandlers: function () {
+        // Socket connection successful
+        this.socket.on('connect', this.onSocketConnected.bind(this))
+
+        // Socket disconnection
+        this.socket.on('disconnect', this.onSocketDisconnect.bind(this))
+
+        // New player message received
+        this.socket.on('new player', this.onNewPlayer.bind(this))
+
+        // Player move message received
+        this.socket.on('move player', this.onMovePlayer.bind(this))
+
+        // Player removed message received
+        this.socket.on('remove player', this.onRemovePlayer.bind(this))
+    },
+
+    // Socket connected
+    onSocketConnected: function() {
+        console.log('Connected to socket server')
+
+        // Send local player data to the game server
+        this.socket.emit('new player', { x: this.player.x, y: this.player.y })
+    },
+
+    // Socket disconnected
+    onSocketDisconnect: function() {
+        console.log('Disconnected from socket server')
+    },
+
+    // New player
+    onNewPlayer: function(data) {
+        console.log('New player connected:', data.id)
+
+        // Add new player to the remote players array
+        this.enemies.push(new RemotePlayer(data.id, this.game, this.player, data.x, data.y))
+        this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
+        this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
+    },
+
+    // Move player
+    onMovePlayer: function(data) {
+        var movePlayer = this.playerById(data.id)
+        movePlayer.lastPosition = movePlayer.lastPosition || {}
+
+        // Player not found
+        if (! movePlayer) {
+            console.log('Player not found: ', data.id)
+            return
+        }
+
+        // Update player position
+        movePlayer.player.x = data.x
+        movePlayer.player.y = data.y
+
+        if (movePlayer.player.x > movePlayer.lastPosition.x) {
+            movePlayer.player.animations.play('right')
+        }
+        else if (movePlayer.player.x < movePlayer.lastPosition.x)
+        {
+            movePlayer.player.animations.play('left')
+        }
+        else
+        {
+            movePlayer.player.animations.stop()
+            movePlayer.player.frame = 4;
+        }
+
+        movePlayer.lastPosition.x = movePlayer.player.x
+        movePlayer.lastPosition.y = movePlayer.player.y
+    },
+
+    // Remove player
+    onRemovePlayer: function(data) {
+        var removePlayer = this.playerById(data.id)
+
+        // Player not found
+        if (!removePlayer) {
+            console.log('Player not found: ', data.id)
+            return
+        }
+
+        removePlayer.player.kill()
+
+        // Remove player from array
+        this.enemies.splice(this.enemies.indexOf(removePlayer), 1)
+    },
+
+    // Find player by ID
+    playerById: function(id) {
+        for (var i = 0; i < this.enemies.length; i++) {
+            if (this.enemies[i].player.name === id) {
+                return this.enemies[i]
+            }
+        }
+
+        return false
+    }
 }
 
 var Bullet = function (game, key) {
