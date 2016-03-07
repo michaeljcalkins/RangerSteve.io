@@ -76,14 +76,6 @@ RangerSteveGame.prototype = {
         this.GRAVITY = 2600; // pixels/second/second
         this.JUMP_SPEED = -1000; // pixels/second (negative y is up)
 
-        // Set player minimum and maximum movement speed
-        this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
-
-        // Add drag to the player that slows them down when they are not accelerating
-        this.player.body.drag.setTo(this.DRAG, 0); // x, y
-
-        // Since we're jumping we need gravity
-        this.game.physics.arcade.gravity.y = this.GRAVITY;
 
         /**
          * Player Settings
@@ -93,14 +85,54 @@ RangerSteveGame.prototype = {
         //  We need to enable physics on the player
         this.physics.arcade.enable(this.player);
 
-        //  Player physics properties. Give the little guy a slight bounce.
-        this.player.body.bounce.y = 0;
-        this.player.body.gravity.y = 1100;
+        // Enable physics on the player
+        this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+
+        // Make player collide with world boundaries so he doesn't leave the stage
         this.player.body.collideWorldBounds = true;
+
+        // Set player minimum and maximum movement speed
+        this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
+
+        // Add drag to the player that slows them down when they are not accelerating
+        this.player.body.drag.setTo(this.DRAG, 0); // x, y
+
+        // Since we're jumping we need gravity
+        game.physics.arcade.gravity.y = this.GRAVITY;
+
+        // Flag to track if the jump button is pressed
+        this.jumping = false;
+
 
         //  Our two animations, walking left and right.
         this.player.animations.add('left', [0, 1, 2, 3], 10, true)
         this.player.animations.add('right', [5, 6, 7, 8], 10, true)
+
+
+
+
+
+
+
+        /**
+         * Control Settings
+         */
+        // this.upButton = this.input.keyboard.addKey(Phaser.Keyboard.W);
+        // this.downButton = this.input.keyboard.addKey(Phaser.Keyboard.S);
+        // this.leftButton = this.input.keyboard.addKey(Phaser.Keyboard.A);
+        // this.rightButton = this.input.keyboard.addKey(Phaser.Keyboard.D);
+
+
+        // Capture certain keys to prevent their default actions in the browser.
+        // This is only necessary because this is an HTML5 game. Games on other
+        // platforms may not need code like this.
+        this.game.input.keyboard.addKeyCapture([
+            Phaser.Keyboard.W,
+            Phaser.Keyboard.S,
+            Phaser.Keyboard.A,
+            Phaser.Keyboard.D
+        ]);
+
 
 
         /**
@@ -123,24 +155,6 @@ RangerSteveGame.prototype = {
 
 
         /**
-         * Control Settings
-         */
-        this.upButton = this.input.keyboard.addKey(Phaser.Keyboard.W);
-        this.downButton = this.input.keyboard.addKey(Phaser.Keyboard.S);
-        this.leftButton = this.input.keyboard.addKey(Phaser.Keyboard.A);
-        this.rightButton = this.input.keyboard.addKey(Phaser.Keyboard.D);
-
-
-        /**
-         * Camera Settings
-         */
-        this.camera.follow(this.player);
-
-        var changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-        changeKey.onDown.add(this.nextWeapon, this)
-
-
-        /**
          * Text
          */
         let textStyles = { fontSize: '24px', fill: '#000' }
@@ -153,9 +167,14 @@ RangerSteveGame.prototype = {
 
 
         /**
-         * Start listening for events
+         * Camera Settings
          */
-        this.setEventHandlers()
+        this.camera.follow(this.player);
+
+        var changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        changeKey.onDown.add(this.nextWeapon, this)
+
+
 
         window.addEventListener('resize', () => {
             this.game.scale.refresh()
@@ -168,40 +187,39 @@ RangerSteveGame.prototype = {
             this.scoreText.cameraOffset.x = 25
             this.scoreText.cameraOffset.y = 25
         })
+
+
+
+
+
+        /**
+         * Start listening for events
+         */
+        this.setEventHandlers()
+
     },
 
     update: function() {
         //  Collide the player and the stars with the platforms
-        this.physics.arcade.collide(this.player, this.platforms);
-        this.physics.arcade.collide(this.player, this.poly);
+        this.physics.arcade.collide(this.player, this.platforms)
         this.physics.arcade.collide(this.platforms, this.weapons, function(platform, weapon) {
             weapon.kill()
         }, null, this);
 
-        //  Reset the players velocity (movement)
-        this.player.body.velocity.x = 0;
 
-        if (this.leftButton.isDown)
-        {
-            //  Move to the left
+        if (this.leftInputIsActive()) {
             // If the LEFT key is down, set the player velocity to move left
             this.player.body.acceleration.x = -this.ACCELERATION;
-
-            this.player.animations.play('left');
-        }
-        else if (this.rightButton.isDown)
-        {
-            //  Move to the right
+            this.player.animations.play('left')
+        } else if (this.rightInputIsActive()) {
             // If the RIGHT key is down, set the player velocity to move right
             this.player.body.acceleration.x = this.ACCELERATION;
-
             this.player.animations.play('right')
-        }
-        else
-        {
-            //  Stand still
+        } else {
+            // Stand still
+            this.player.body.acceleration.x = 0
             this.player.animations.stop()
-            this.player.frame = 4;
+            this.player.frame = 4
         }
 
         // Set a variable that is true when the player is touching the ground
@@ -214,7 +232,7 @@ RangerSteveGame.prototype = {
         }
 
         // Jump!
-        if (this.jumps > 0 && this.upButton.isDown) {
+        if (this.jumps > 0 && this.upInputIsActive(5)) {
             this.player.body.velocity.y = this.JUMP_SPEED;
             this.jumping = true;
         }
@@ -236,30 +254,48 @@ RangerSteveGame.prototype = {
     // This function should return true when the player activates the "go left" control
     // In this case, either holding the right arrow or tapping or clicking on the left
     // side of the screen.
-    this.leftInputIsActive = function() {
-        return !!this.upButton.isDown
+    leftInputIsActive: function() {
+        var isActive = false;
+
+        isActive = this.input.keyboard.isDown(Phaser.Keyboard.A);
+        isActive |= (this.game.input.activePointer.isDown &&
+            this.game.input.activePointer.x < this.game.width/4);
+
+        return isActive;
     },
 
     // This function should return true when the player activates the "go right" control
     // In this case, either holding the right arrow or tapping or clicking on the right
     // side of the screen.
-    this.rightInputIsActive = function() {
-        return = !!this.rightButton.isDown
+    rightInputIsActive: function() {
+        var isActive = false;
+
+        isActive = this.input.keyboard.isDown(Phaser.Keyboard.D);
+        isActive |= (this.game.input.activePointer.isDown &&
+            this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
+
+        return isActive;
     },
 
     // This function should return true when the player activates the "jump" control
     // In this case, either holding the up arrow or tapping or clicking on the center
     // part of the screen.
-    this.upInputIsActive = function(duration) {
-        return !!this.upButton.isDown
+    upInputIsActive: function(duration) {
+        var isActive = false;
+
+        isActive = this.input.keyboard.downDuration(Phaser.Keyboard.W, duration);
+        isActive |= (this.game.input.activePointer.justPressed(duration + 1000/60) &&
+            this.game.input.activePointer.x > this.game.width/4 &&
+            this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
+
+        return isActive;
     },
 
     // This function returns true when the player releases the "jump" control
-    this.upInputReleased = function() {
+    upInputReleased: function() {
         var released = false;
 
-        released = this.input.keyboard.upDuration(Phaser.Keyboard.UP);
-        released |= this.game.input.activePointer.justReleased();
+        released = this.input.keyboard.upDuration(Phaser.Keyboard.W);
 
         return released;
     },

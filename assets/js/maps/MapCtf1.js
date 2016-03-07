@@ -27,7 +27,8 @@ MapCtf1.create = function(scope) {
     // rightPlayerStartingLedge.height = 300
     // rightPlayerStartingLedge.width = 1000
 
-    this.scope.platforms.setAll('body.immovable', true);
+    this.scope.platforms.setAll('body.immovable', true)
+    this.scope.platforms.setAll('body.allowGravity', false)
 }
 
 MapCtf1.createSkySprite = function() {
