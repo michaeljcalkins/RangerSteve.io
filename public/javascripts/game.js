@@ -1,5 +1,5 @@
-var gameWidth = "100%"
-var gameHeight = "100%"
+var gameWidth = window.innerWidth
+var gameHeight = window.innerHeight
 var worldWidth = 4000
 var worldHeight = 3000
 
@@ -53,11 +53,13 @@ RangerSteveGame.prototype = {
         game.stage.backgroundColor = "#D3EBF9";
 
         // Scale game on window resize
-        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
         this.game.scale.setShowAll();
 
         window.addEventListener('resize', function () {
             this.game.scale.refresh()
+            this.game.height = window.innerHeight
+            this.game.width = window.innerWidth
         })
 
         this.game.scale.refresh()
@@ -252,6 +254,12 @@ RangerSteveGame.prototype = {
     onSocketConnected: function(data) {
         console.log('Connected to socket server')
 
+         // Reset enemies on reconnect
+        this.enemies.forEach(function (enemy) {
+            enemy.player.kill()
+        })
+        this.enemies = []
+
         // Send local player data to the game server
         this.socket.emit('new player', {
             x: this.player.x,
@@ -267,6 +275,13 @@ RangerSteveGame.prototype = {
     // New player
     onNewPlayer: function(data) {
         console.log('New player connected:', data.id)
+
+        // Avoid possible duplicate players
+        var duplicate = this.playerById(data.id)
+        if (duplicate) {
+            console.log('Duplicate player!')
+            return
+        }
 
         // Add new player to the remote players array
         this.enemies.push(new RemotePlayer(data.id, this.game, this.player, data.x, data.y))
