@@ -5,7 +5,15 @@ var worldHeight = 3000
 
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game');
 
+function guidGenerator() {
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
 var RangerSteveGame = function() {
+    this.clientId = guidGenerator()
     this.player
     this.enemies = []
     this.socket
@@ -262,6 +270,7 @@ RangerSteveGame.prototype = {
 
         // Send local player data to the game server
         this.socket.emit('new player', {
+            clientId: this.clientId,
             x: this.player.x,
             y: this.player.y
         })
@@ -278,7 +287,7 @@ RangerSteveGame.prototype = {
 
         // Avoid possible duplicate players
         var duplicate = this.playerById(data.id)
-        if (duplicate) {
+        if (duplicate || data.clientId === this.clientId) {
             console.log('Duplicate player!')
             return
         }
@@ -296,7 +305,6 @@ RangerSteveGame.prototype = {
 
         // Player not found
         if (! movePlayer) {
-            console.log('Player not found: ', data.id)
             return
         }
 
