@@ -1,24 +1,20 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+var MapCtf1 = require('./maps/MapCtf1');
 var RemotePlayer = require('./lib/RemotePlayer');
+var guid = require('./lib/Guid');
 
 var gameWidth = window.innerWidth;
 var gameHeight = window.innerHeight;
 var worldWidth = 4000;
-var worldHeight = 3000;
+var worldHeight = 1500;
 
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game');
-
-function guidGenerator() {
-    var S4 = function () {
-        return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
-    };
-    return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
-}
+var game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'ranger-steve-game');
 
 var RangerSteveGame = function () {
-    this.clientId = guidGenerator();
+    this.game = game;
+    this.clientId = guid();
     this.player;
     this.enemies = [];
     this.socket;
@@ -48,7 +44,7 @@ RangerSteveGame.prototype = {
         this.load.image('bullet7', '/images/bullet7.png');
         this.load.image('bullet5', '/images/bullet5.png');
         this.load.image('bullet4', '/images/bullet4.png');
-        this.load.image('treescape', '/images/Full.png');
+        this.load.image('treescape', '/images/map-ctf1.png');
         this.load.image('ground', '/images/platform.png');
         this.load.spritesheet('dude', '/images/dude.png', 32, 48);
         this.load.spritesheet('enemy', '/images/dude.png', 32, 48);
@@ -56,15 +52,13 @@ RangerSteveGame.prototype = {
 
     create: function () {
         this.socket = io.connect();
+        this.enemies = [];
 
         //  We're going to be using physics, so enable the Arcade Physics system
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
-        this.enemies = [];
-
         this.world.setBounds(0, 0, worldWidth, worldHeight);
-
-        game.stage.backgroundColor = "#2F91D0";
+        this.game.stage.backgroundColor = "#2F91D0";
 
         // Scale game on window resize
         this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
@@ -72,60 +66,25 @@ RangerSteveGame.prototype = {
         this.game.scale.refresh();
 
         /**
-         * Weapons
+         * Map
          */
-        this.currentWeapon = 0;
+        MapCtf1.create(this);
 
-        for (var i = 1; i < this.weapons.length; i++) {
-            this.weapons[i].visible = false;
-        }
+        // Define movement constants
+        this.MAX_SPEED = 500; // pixels/second
+        this.ACCELERATION = 1500; // pixels/second/second
+        this.DRAG = 600; // pixels/second
+        this.GRAVITY = 2600; // pixels/second/second
+        this.JUMP_SPEED = -1000; // pixels/second (negative y is up)
 
-        //  A simple background for our game
-        var skySprite = this.add.tileSprite(0, this.game.world.height - 582, worldWidth, 768, 'treescape');
+        // Set player minimum and maximum movement speed
+        this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
 
-        //  The platforms group contains the ground and the 2 ledges we can jump on
-        this.platforms = this.add.group();
+        // Add drag to the player that slows them down when they are not accelerating
+        this.player.body.drag.setTo(this.DRAG, 0); // x, y
 
-        //  We will enable physics for any object that is created in this group
-        this.platforms.enableBody = true;
-
-        /**
-         * Platforms
-         */
-
-        this.poly = new Phaser.Polygon();
-
-        //  And then populate it via setTo, using any combination of values as above
-        this.poly.setTo([new Phaser.Point(200, game.world.height - 100), new Phaser.Point(350, game.world.height - 100), new Phaser.Point(375, game.world.height - 200), new Phaser.Point(150, game.world.height - 200)]);
-
-        this.graphics = this.game.add.graphics(0, 0);
-        this.graphics.enableBody = true;
-
-        this.graphics.beginFill(0xFF33ff);
-        this.graphics.drawPolygon(this.poly.points);
-        this.graphics.endFill();
-
-        var leftPlayerStartingLedge = this.platforms.create(0, this.game.world.height - 100, 'ground');
-        leftPlayerStartingLedge.height = 300;
-        leftPlayerStartingLedge.width = 1000;
-
-        var leftPlayerBackLedge = this.platforms.create(-70, this.game.world.height - 1000, 'ground');
-        leftPlayerBackLedge.height = 1000;
-        leftPlayerBackLedge.width = 200;
-
-        var mainCenterTopLedge = this.platforms.create(700, this.game.world.height - 600, 'ground');
-        mainCenterTopLedge.height = 50;
-        mainCenterTopLedge.width = 2000;
-
-        var mainCenterLedge = this.platforms.create(1000, this.game.world.height - 200, 'ground');
-        mainCenterLedge.height = 400;
-        mainCenterLedge.width = 2000;
-
-        var rightPlayerStartingLedge = this.platforms.create(this.game.world.width - 1000, this.game.world.height - 100, 'ground');
-        rightPlayerStartingLedge.height = 300;
-        rightPlayerStartingLedge.width = 1000;
-
-        this.platforms.setAll('body.immovable', true);
+        // Since we're jumping we need gravity
+        this.game.physics.arcade.gravity.y = this.GRAVITY;
 
         /**
          * Player Settings
@@ -145,18 +104,14 @@ RangerSteveGame.prototype = {
         this.player.animations.add('right', [5, 6, 7, 8], 10, true);
 
         /**
-         * Text
-         */
-        this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
-        this.scoreText.fixedToCamera = true;
-        this.weaponName = this.add.text(this.camera.width - 100, this.camera.height - 45, 'AK-47', { fontSize: '24px', fill: '#000' });
-        this.weaponName.fixedToCamera = true;
-        this.currentHealthText = this.add.text(this.camera.x + 25, this.camera.height - 45, '100', { fontSize: '24px', fill: '#000' });
-        this.currentHealthText.fixedToCamera = true;
-
-        /**
          * Weapons
          */
+        this.currentWeapon = 0;
+
+        for (var i = 1; i < this.weapons.length; i++) {
+            this.weapons[i].visible = false;
+        }
+
         this.weapons.push(new Weapon.Ak47(this.game));
         this.weapons.push(new Weapon.ScatterShot(this.game));
         this.weapons.push(new Weapon.Beam(this.game));
@@ -168,7 +123,6 @@ RangerSteveGame.prototype = {
         /**
          * Control Settings
          */
-        // cursors = this.input.keyboard.createCursorKeys();
         this.upButton = this.input.keyboard.addKey(Phaser.Keyboard.W);
         this.downButton = this.input.keyboard.addKey(Phaser.Keyboard.S);
         this.leftButton = this.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -183,6 +137,17 @@ RangerSteveGame.prototype = {
         changeKey.onDown.add(this.nextWeapon, this);
 
         /**
+         * Text
+         */
+        let textStyles = { fontSize: '24px', fill: '#000' };
+        this.scoreText = this.add.text(25, 25, 'Score: 0', textStyles);
+        this.scoreText.fixedToCamera = true;
+        this.weaponName = this.add.text(this.camera.width - 100, this.camera.height - 45, 'AK-47', textStyles);
+        this.weaponName.fixedToCamera = true;
+        this.currentHealthText = this.add.text(this.camera.x + 25, this.camera.height - 45, '100', textStyles);
+        this.currentHealthText.fixedToCamera = true;
+
+        /**
          * Start listening for events
          */
         this.setEventHandlers();
@@ -194,6 +159,9 @@ RangerSteveGame.prototype = {
 
             this.weaponName.cameraOffset.x = this.camera.width - 100;
             this.weaponName.cameraOffset.y = this.camera.height - 45;
+
+            this.scoreText.cameraOffset.x = 25;
+            this.scoreText.cameraOffset.y = 25;
         });
     },
 
@@ -210,12 +178,14 @@ RangerSteveGame.prototype = {
 
         if (this.leftButton.isDown) {
             //  Move to the left
-            this.player.body.velocity.x = -300;
+            // If the LEFT key is down, set the player velocity to move left
+            this.player.body.acceleration.x = -this.ACCELERATION;
 
             this.player.animations.play('left');
         } else if (this.rightButton.isDown) {
             //  Move to the right
-            this.player.body.velocity.x = 300;
+            // If the RIGHT key is down, set the player velocity to move right
+            this.player.body.acceleration.x = this.ACCELERATION;
 
             this.player.animations.play('right');
         } else {
@@ -224,9 +194,25 @@ RangerSteveGame.prototype = {
             this.player.frame = 4;
         }
 
-        //  Allow the player to jump if they are touching the ground.
-        if (this.upButton.isDown && this.player.body.touching.down) {
-            this.player.body.velocity.y = -550;
+        // Set a variable that is true when the player is touching the ground
+        var onTheGround = this.player.body.touching.down;
+
+        // If the player is touching the ground, let him have 2 jumps
+        if (onTheGround) {
+            this.jumps = 2;
+            this.jumping = false;
+        }
+
+        // Jump!
+        if (this.jumps > 0 && this.upButton.isDown) {
+            this.player.body.velocity.y = this.JUMP_SPEED;
+            this.jumping = true;
+        }
+
+        // Reduce the number of available jumps if the jump input is released
+        if (this.jumping && this.upInputReleased()) {
+            this.jumps--;
+            this.jumping = false;
         }
 
         if (this.game.input.activePointer.isDown) {
@@ -707,7 +693,18 @@ Weapon.ScaleBullet.prototype.fire = function (source) {
 
 game.state.add('Game', RangerSteveGame, true);
 
-},{"./lib/RemotePlayer":2}],2:[function(require,module,exports){
+},{"./lib/Guid":2,"./lib/RemotePlayer":3,"./maps/MapCtf1":4}],2:[function(require,module,exports){
+'use strict';
+
+module.exports = function guidGenerator() {
+   var S4 = function () {
+      return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
+   };
+
+   return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
+};
+
+},{}],3:[function(require,module,exports){
 'use strict';
 
 let RemotePlayer = {
@@ -757,6 +754,71 @@ module.exports = {
         return newRemotePlayer;
     }
 };
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
+let MapCtf1 = {};
+
+MapCtf1.create = function (scope) {
+    this.scope = scope;
+
+    this.createSkySprite();
+    this.createPlatforms();
+    this.createLeftStartingLedge();
+    this.createLeftSecondLedge();
+    this.createLeftLedges();
+
+    // var leftPlayerBackLedge2 = this.scope.platforms.create(0, this.scope.game.world.height - 800, 'ground');
+    // leftPlayerBackLedge2.height = 200
+    // leftPlayerBackLedge2.width = 200
+
+    // var mainCenterTopLedge = this.scope.platforms.create(700, this.scope.game.world.height - 600, 'ground');
+    // mainCenterTopLedge.height = 50
+    // mainCenterTopLedge.width = 2000
+
+    // var mainCenterLedge = this.scope.platforms.create(1000, this.scope.game.world.height - 200, 'ground');
+    // mainCenterLedge.height = 400
+    // mainCenterLedge.width = 2000
+
+    // var rightPlayerStartingLedge = this.scope.platforms.create(this.scope.game.world.width - 1000, this.scope.game.world.height - 100, 'ground');
+    // rightPlayerStartingLedge.height = 300
+    // rightPlayerStartingLedge.width = 1000
+
+    this.scope.platforms.setAll('body.immovable', true);
+};
+
+MapCtf1.createSkySprite = function () {
+    this.scope.add.tileSprite(0, this.scope.game.world.height - 1500, this.scope.game.world.width, 1500, 'treescape');
+};
+
+MapCtf1.createPlatforms = function () {
+    this.scope.platforms = this.scope.add.group();
+    this.scope.platforms.enableBody = true;
+};
+
+MapCtf1.createLeftSecondLedge = function () {
+    var ledge = this.scope.platforms.create(474, this.scope.game.world.height - 256, 'ground');
+    ledge.height = 260;
+    ledge.width = 645;
+    ledge.alpha = 0.2;
+};
+
+MapCtf1.createLeftStartingLedge = function () {
+    var ledge = this.scope.platforms.create(0, this.scope.game.world.height - 128, 'ground');
+    ledge.height = 130;
+    ledge.width = 474;
+    ledge.alpha = 0.2;
+};
+
+MapCtf1.createLeftLedges = function () {
+    var ledge = this.scope.platforms.create(0, this.scope.game.world.height - 431, 'ground');
+    ledge.height = 92;
+    ledge.width = 128;
+    ledge.alpha = 0.2;
+};
+
+module.exports = MapCtf1;
 
 },{}]},{},[1])
 

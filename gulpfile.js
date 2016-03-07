@@ -1,13 +1,13 @@
 'use strict'
 
-var gulp = require('gulp');
-var sourcemaps = require('gulp-sourcemaps');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var babel = require('babelify');
+var gulp = require('gulp')
+var sourcemaps = require('gulp-sourcemaps')
+var source = require('vinyl-source-stream')
+var buffer = require('vinyl-buffer')
+var browserify = require('browserify')
+var babel = require('babelify')
 var sass = require('gulp-sass')
+var notify = require("gulp-notify")
 
 var sassOpts = {
     outputStyle: 'compressed',
@@ -15,13 +15,14 @@ var sassOpts = {
 }
 
 gulp.task('sass', function() {
-    gulp.src('assets/sass/**/*.scss')
+    return gulp.src('assets/sass/**/*.scss')
         .pipe(sass(sassOpts))
         .pipe(gulp.dest('public/stylesheets'))
+        .pipe(notify("Sass compiled!"))
 })
 
 gulp.task('js', function() {
-    browserify('./assets/js/app.js', { debug: true })
+    return browserify('./assets/js/app.js', { debug: true })
         .transform(babel)
         .bundle()
         .on('error', function(err) { console.error(err); this.emit('end'); })
@@ -29,7 +30,8 @@ gulp.task('js', function() {
         .pipe(buffer())
         .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./public/javascripts'));
+        .pipe(gulp.dest('./public/javascripts'))
+        .pipe(notify("JS compiled!"))
 })
 
 gulp.task('build', ['js', 'sass'])
