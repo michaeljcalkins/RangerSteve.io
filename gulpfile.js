@@ -8,28 +8,51 @@ var browserify = require('browserify')
 var babel = require('babelify')
 var sass = require('gulp-sass')
 var notify = require("gulp-notify")
+var uglify = require('gulp-uglify')
+var streamify = require('gulp-streamify')
+var minifycss = require('gulp-minify-css')
+var autoprefixer = require('gulp-autoprefixer')
+var jsObfuscator = require('gulp-js-obfuscator')
 
-var sassOpts = {
-    outputStyle: 'compressed',
-    errLogToConsole: true
-}
+var handleError = function (err) {
+    console.error(err.message);
+    notify({message: err.message});
+    this.emit('end');
+};
 
 gulp.task('sass', function() {
-    return gulp.src('assets/sass/**/*.scss')
-        .pipe(sass(sassOpts))
+    return gulp.src(SRC + 'scss/app.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass({
+            sourcemap: true,
+            debugInfo: true,
+            lineNumbers: true,
+        }))
+        .pipe(autoprefixer('last 3 version'))
+        .pipe(minifycss())
+        .pipe(sourcemaps.write('/', {
+            includeContent: false,
+            sourceMappingURLPrefix: '/css'
+        }))
         .pipe(gulp.dest('public/stylesheets'))
         .pipe(notify("Sass compiled!"))
 })
 
 gulp.task('js', function() {
-    return browserify('./assets/js/app.js', { debug: true })
-        .transform(babel)
+    return browserify({
+            entries: ['./assets/js/app.js'],
+            debug: true
+        })
+        .transform("babelify", {
+            global: true,
+            extensions: [".js"],
+            presets: ["es2015"]
+        })
         .bundle()
-        .on('error', function(err) { console.error(err); this.emit('end'); })
+        .on('error', handleError)
         .pipe(source('app.js'))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(sourcemaps.write('./'))
+        .pipe(streamify(uglify()))
+        .pipe(streamify(jsObfuscator()))
         .pipe(gulp.dest('./public/javascripts'))
         .pipe(notify("JS compiled!"))
 })
