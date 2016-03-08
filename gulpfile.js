@@ -21,7 +21,7 @@ var handleError = function (err) {
 };
 
 gulp.task('sass', function() {
-    return gulp.src(SRC + 'scss/app.scss')
+    return gulp.src('assets/scss/app.scss')
         .pipe(sourcemaps.init())
         .pipe(sass({
             sourcemap: true,
