@@ -196,7 +196,6 @@ RangerSteveGame.prototype = {
          * Start listening for events
          */
         this.setEventHandlers()
-
     },
 
     update: function() {
@@ -258,8 +257,6 @@ RangerSteveGame.prototype = {
         var isActive = false;
 
         isActive = this.input.keyboard.isDown(Phaser.Keyboard.A);
-        isActive |= (this.game.input.activePointer.isDown &&
-            this.game.input.activePointer.x < this.game.width/4);
 
         return isActive;
     },
@@ -271,8 +268,6 @@ RangerSteveGame.prototype = {
         var isActive = false;
 
         isActive = this.input.keyboard.isDown(Phaser.Keyboard.D);
-        isActive |= (this.game.input.activePointer.isDown &&
-            this.game.input.activePointer.x > this.game.width/2 + this.game.width/4);
 
         return isActive;
     },
@@ -284,9 +279,6 @@ RangerSteveGame.prototype = {
         var isActive = false;
 
         isActive = this.input.keyboard.downDuration(Phaser.Keyboard.W, duration);
-        isActive |= (this.game.input.activePointer.justPressed(duration + 1000/60) &&
-            this.game.input.activePointer.x > this.game.width/4 &&
-            this.game.input.activePointer.x < this.game.width/2 + this.game.width/4);
 
         return isActive;
     },
