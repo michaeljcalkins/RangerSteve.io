@@ -2,7 +2,8 @@
 
 var MapCtf1 = require('./maps/MapCtf1')
 var RemotePlayer = require('./lib/RemotePlayer')
-var guid = require('./lib/Guid')
+let WeaponSettings = require('./lib/WeaponSettings')
+var Guid = require('./lib/Guid')
 
 var gameWidth = window.innerWidth
 var gameHeight = window.innerHeight
@@ -13,7 +14,7 @@ var game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'ranger-steve-g
 
 var RangerSteveGame = function() {
     this.game = game
-    this.clientId = guid()
+    this.clientId = Guid()
     this.player
     this.enemies = []
     this.socket
@@ -109,32 +110,6 @@ RangerSteveGame.prototype = {
         this.player.animations.add('right', [5, 6, 7, 8], 10, true)
 
 
-
-
-
-
-
-        /**
-         * Control Settings
-         */
-        // this.upButton = this.input.keyboard.addKey(Phaser.Keyboard.W);
-        // this.downButton = this.input.keyboard.addKey(Phaser.Keyboard.S);
-        // this.leftButton = this.input.keyboard.addKey(Phaser.Keyboard.A);
-        // this.rightButton = this.input.keyboard.addKey(Phaser.Keyboard.D);
-
-
-        // Capture certain keys to prevent their default actions in the browser.
-        // This is only necessary because this is an HTML5 game. Games on other
-        // platforms may not need code like this.
-        this.game.input.keyboard.addKeyCapture([
-            Phaser.Keyboard.W,
-            Phaser.Keyboard.S,
-            Phaser.Keyboard.A,
-            Phaser.Keyboard.D
-        ]);
-
-
-
         /**
          * Weapons
          */
@@ -144,6 +119,8 @@ RangerSteveGame.prototype = {
         {
             this.weapons[i].visible = false;
         }
+
+
 
         this.weapons.push(new Weapon.Ak47(this.game));
         this.weapons.push(new Weapon.ScatterShot(this.game));
@@ -175,7 +152,9 @@ RangerSteveGame.prototype = {
         changeKey.onDown.add(this.nextWeapon, this)
 
 
-
+        /**
+         * Resizing Events
+         */
         window.addEventListener('resize', () => {
             this.game.scale.refresh()
             this.game.height = window.innerHeight
@@ -187,9 +166,6 @@ RangerSteveGame.prototype = {
             this.scoreText.cameraOffset.x = 25
             this.scoreText.cameraOffset.y = 25
         })
-
-
-
 
 
         /**
