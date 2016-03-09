@@ -1,5 +1,6 @@
 module.exports = {
     "USSOCOM": {
+        "name": "USSOCOM",
         "Damage": 190,
         "FireInterval": 12,
         "Ammo": 12,
@@ -10,7 +11,8 @@ module.exports = {
         "Bink": 4,
         "MovementAcc": 1
     },
-    "Desert Eagles": {
+    "DesertEagles": {
+        "name": "Desert Eagles",
         "Damage": 210,
         "FireInterval": 22,
         "Ammo": 7,
@@ -21,7 +23,8 @@ module.exports = {
         "Bink": 7,
         "MovementAcc": 1
     },
-    "HK MP5": {
+    "HKMP5": {
+        "name": "HK MP5",
         "Damage": 120,
         "FireInterval": 6,
         "Ammo": 30,
@@ -32,18 +35,20 @@ module.exports = {
         "Bink": 2,
         "MovementAcc": 1
     },
-    "Ak-74": {
-        "Damage": "122",
-        "FireInterval": "10",
-        "Ammo": "40",
-        "ReloadTime": "150",
-        "Speed": "240",
-        "BulletStyle": "1",
-        "StartUpTime": "0",
-        "Bink": "3",
-        "MovementAcc": "1"
+    "AK47": {
+        "name": "AK-47",
+        "damage": "122",
+        "fireInterval": "10",
+        "ammo": "40",
+        "reloadTime": "150",
+        "speed": "240",
+        "bulletStyle": "1",
+        "startUpTime": "0",
+        "bink": "3",
+        "movementAcc": "1"
     },
-    "Steyr AUG": {
+    "SteyrAUG": {
+        "name": "M16",
         "Damage": "80",
         "FireInterval": "7",
         "Ammo": "30",
@@ -54,7 +59,8 @@ module.exports = {
         "Bink": "2",
         "MovementAcc": "1"
     },
-    "Spas-12": {
+    "Spas12": {
+        "name": "Spas-12",
         "Damage": "130",
         "FireInterval": "32",
         "Ammo": "7",
@@ -65,7 +71,8 @@ module.exports = {
         "Bink": "10",
         "MovementAcc": "1"
     },
-    "Ruger 77": {
+    "Ruger77": {
+        "name": "Ruger 77",
         "Damage": "252",
         "FireInterval": "30",
         "Ammo": "4",

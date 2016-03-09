@@ -4,6 +4,8 @@ var MapCtf1 = require('./maps/MapCtf1')
 var RemotePlayer = require('./lib/RemotePlayer')
 let WeaponSettings = require('./lib/WeaponSettings')
 var Guid = require('./lib/Guid')
+let Weapons = require('./lib/Weapons')
+let Bullet = require('./lib/Bullet')
 
 var gameWidth = window.innerWidth
 var gameHeight = window.innerHeight
@@ -13,20 +15,18 @@ var worldHeight = 1500
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'ranger-steve-game');
 
 var RangerSteveGame = function() {
-    this.game = game
     this.clientId = Guid()
-    this.player
+    this.currentWeapon = 0;
     this.enemies = []
-    this.socket
-    this.platforms
+    this.game = game
     this.ground
-
+    this.platforms
+    this.player
     this.score = 0
     this.scoreText
-
-    this.weapons = [];
-    this.currentWeapon = 0;
+    this.socket
     this.weaponName = null;
+    this.weapons = [];
 }
 
 RangerSteveGame.prototype = {
@@ -65,17 +65,18 @@ RangerSteveGame.prototype = {
         this.game.scale.setShowAll();
         this.game.scale.refresh()
 
+
         /**
          * Map
          */
         MapCtf1.create(this)
 
         // Define movement constants
-        this.MAX_SPEED = 500; // pixels/second
-        this.ACCELERATION = 1500; // pixels/second/second
-        this.DRAG = 600; // pixels/second
-        this.GRAVITY = 2600; // pixels/second/second
-        this.JUMP_SPEED = -1000; // pixels/second (negative y is up)
+        this.MAX_SPEED = 400; // pixels/second
+        this.ACCELERATION = 1960; // pixels/second/second
+        this.DRAG = 1500; // pixels/second
+        this.GRAVITY = 1960; // pixels/second/second
+        this.JUMP_SPEED = -850; // pixels/second (negative y is up)
 
 
         /**
@@ -104,31 +105,37 @@ RangerSteveGame.prototype = {
         // Flag to track if the jump button is pressed
         this.jumping = false;
 
-
         //  Our two animations, walking left and right.
         this.player.animations.add('left', [0, 1, 2, 3], 10, true)
         this.player.animations.add('right', [5, 6, 7, 8], 10, true)
 
 
+
+
+        this.enemy = this.add.sprite(200, this.world.height - 400, 'dude');
+
+        //  We need to enable physics on the player
+        this.physics.arcade.enable(this.enemy);
+
+        // Enable physics on the player
+        this.game.physics.enable(this.enemy, Phaser.Physics.ARCADE);
+
+        // Make player collide with world boundaries so he doesn't leave the stage
+        this.enemy.body.collideWorldBounds = true;
+
+        // Set player minimum and maximum movement speed
+        this.enemy.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
+
+        // Add drag to the player that slows them down when they are not accelerating
+        this.enemy.body.drag.setTo(this.DRAG, 0); // x, y
+
+        this.enemy.health = 100
+
         /**
          * Weapons
          */
         this.currentWeapon = 0;
-
-        for (var i = 1; i < this.weapons.length; i++)
-        {
-            this.weapons[i].visible = false;
-        }
-
-
-
-        this.weapons.push(new Weapon.Ak47(this.game));
-        this.weapons.push(new Weapon.ScatterShot(this.game));
-        this.weapons.push(new Weapon.Beam(this.game));
-        this.weapons.push(new Weapon.SplitShot(this.game));
-        this.weapons.push(new Weapon.Pattern(this.game));
-        this.weapons.push(new Weapon.Rockets(this.game));
-        this.weapons.push(new Weapon.ScaleBullet(this.game));
+        this.weapons.push(new Weapons.AK47(this.game));
 
 
         /**
@@ -177,8 +184,26 @@ RangerSteveGame.prototype = {
     update: function() {
         //  Collide the player and the stars with the platforms
         this.physics.arcade.collide(this.player, this.platforms)
+        this.physics.arcade.collide(this.enemy, this.platforms)
         this.physics.arcade.collide(this.platforms, this.weapons, function(platform, weapon) {
             weapon.kill()
+        }, null, this);
+
+        this.physics.arcade.collide(this.player, this.weapons, function(player, weapon) {
+            weapon.kill()
+            console.log('You were hit!')
+        }, null, this);
+
+        this.physics.arcade.collide(this.enemy, this.weapons, function(enemy, weapon) {
+            enemy.health -= weapon.damage
+            weapon.kill()
+            console.log('You hit them!', enemy.health, weapon.damage)
+            if (enemy.health <= 0) {
+                console.log('They are dead!')
+                this.enemy.x = 200
+                this.enemy.y = 200
+                this.enemy.health = 100
+            }
         }, null, this);
 
 
@@ -408,353 +433,6 @@ RangerSteveGame.prototype = {
 
         return false
     }
-}
-
-var Bullet = function (game, key) {
-    Phaser.Sprite.call(this, game, 0, 0, key);
-
-    this.texture.baseTexture.scaleMode = PIXI.scaleModes.NEAREST;
-
-    this.anchor.set(0.5);
-
-    this.checkWorldBounds = true;
-    this.outOfBoundsKill = true;
-    this.exists = false;
-
-    this.tracking = false;
-    this.scaleSpeed = 0;
-
-};
-
-Bullet.prototype = Object.create(Phaser.Sprite.prototype);
-Bullet.prototype.constructor = Bullet;
-
-Bullet.prototype.fire = function (x, y, angle, speed, gx, gy) {
-
-    gx = gx || 0
-    gy = gy || 0
-    this.reset(x, y);
-    this.scale.set(1);
-
-    game.physics.arcade.moveToPointer(this, speed);
-}
-
-Bullet.prototype.update = function () {
-    if (this.tracking)
-    {
-        this.rotation = Math.atan2(this.body.velocity.y, this.body.velocity.x);
-    }
-
-    if (this.scaleSpeed > 0)
-    {
-        this.scale.x += this.scaleSpeed;
-        this.scale.y += this.scaleSpeed;
-    }
-}
-
-var Weapon = {};
-
-////////////////////////////////////////////////////
-//  A single bullet is fired in front of the ship //
-////////////////////////////////////////////////////
-
-/**
- * Primary Weapons
- * 1. Desert Eagles
- * 2. HK MP5
- * 3. AK47
- * 4. M16
- * 5. Spas-12
- * 6. Ruger 77
- * 7. M79
- * 8. Barret M82A1
- * 9. FN Minimi
- * 10. XM214 Minigun
- */
-
-/**
- * Secondary Weapons
- * 1. USSOCOM
- * 2. Combat Knife
- * 3. Chainsaw
- * 4. M72 Law
- */
-
-Weapon.Ak47 = function (game) {
-
-    Phaser.Group.call(this, game, game.world, 'AK-47', false, true, Phaser.Physics.ARCADE);
-
-    this.nextFire = 0;
-    this.bulletSpeed = 1300;
-    this.fireRate = 100;
-
-    for (var i = 0; i < 64; i++)
-    {
-        this.add(new Bullet(game, 'bullet5'), true);
-    }
-
-    return this;
-
-};
-
-Weapon.Ak47.prototype = Object.create(Phaser.Group.prototype);
-Weapon.Ak47.prototype.constructor = Weapon.Ak47;
-
-Weapon.Ak47.prototype.fire = function (source) {
-
-    if (this.game.time.time < this.nextFire)
-        return
-
-    var x = source.x + 22;
-    var y = source.y + 30;
-
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
-    this.setAll('tracking', true)
-
-    this.nextFire = this.game.time.time + this.fireRate
-}
-
-
-////////////////////////////////////////////////////
-//  Bullets are fired out scattered on the y axis //
-////////////////////////////////////////////////////
-
-Weapon.ScatterShot = function (game) {
-
-    Phaser.Group.call(this, game, game.world, 'Scatter Shot', false, true, Phaser.Physics.ARCADE);
-
-    this.nextFire = 0;
-    this.bulletSpeed = 600;
-    this.fireRate = 40;
-
-    for (var i = 0; i < 32; i++)
-    {
-        this.add(new Bullet(game, 'bullet5'), true);
-    }
-
-    return this;
-
-};
-
-Weapon.ScatterShot.prototype = Object.create(Phaser.Group.prototype);
-Weapon.ScatterShot.prototype.constructor = Weapon.ScatterShot;
-
-Weapon.ScatterShot.prototype.fire = function (source) {
-
-    if (this.game.time.time < this.nextFire) { return; }
-
-    var x = source.x + 16;
-    var y = (source.y + source.height / 2) + this.game.rnd.between(-10, 10);
-
-    var bulletInstance = this.getFirstExists(false)
-
-    if (!bulletInstance) return
-
-    bulletInstance.fire(x, y, 0, this.bulletSpeed, 0, 0);
-
-    this.nextFire = this.game.time.time + this.fireRate;
-
-};
-
-//////////////////////////////////////////////////////////////////////////
-//  Fires a streaming beam of lazers, very fast, in front of the player //
-//////////////////////////////////////////////////////////////////////////
-
-Weapon.Beam = function (game) {
-
-    Phaser.Group.call(this, game, game.world, 'Beam', false, true, Phaser.Physics.ARCADE);
-
-    this.nextFire = 0;
-    this.bulletSpeed = 1000;
-    this.fireRate = 45;
-
-    for (var i = 0; i < 64; i++)
-    {
-        this.add(new Bullet(game, 'bullet11'), true);
-    }
-
-    return this;
-
-};
-
-Weapon.Beam.prototype = Object.create(Phaser.Group.prototype);
-Weapon.Beam.prototype.constructor = Weapon.Beam;
-
-Weapon.Beam.prototype.fire = function (source) {
-
-    if (this.game.time.time < this.nextFire) { return; }
-
-    var x = source.x + 40;
-    var y = source.y + 10;
-
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
-
-    this.nextFire = this.game.time.time + this.fireRate;
-
-};
-
-///////////////////////////////////////////////////////////////////////
-//  A three-way fire where the top and bottom bullets bend on a path //
-///////////////////////////////////////////////////////////////////////
-
-Weapon.SplitShot = function (game) {
-
-    Phaser.Group.call(this, game, game.world, 'Split Shot', false, true, Phaser.Physics.ARCADE);
-
-    this.nextFire = 0;
-    this.bulletSpeed = 700;
-    this.fireRate = 40;
-
-    for (var i = 0; i < 64; i++)
-    {
-        this.add(new Bullet(game, 'bullet8'), true);
-    }
-
-    return this;
-
-};
-
-Weapon.SplitShot.prototype = Object.create(Phaser.Group.prototype);
-Weapon.SplitShot.prototype.constructor = Weapon.SplitShot;
-
-Weapon.SplitShot.prototype.fire = function (source) {
-    if (this.game.time.time < this.nextFire) { return; }
-
-    var x = source.x + 20
-    var y = source.y + 10
-
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, -500)
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0)
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 500)
-
-    this.nextFire = this.game.time.time + this.fireRate;
-}
-
-///////////////////////////////////////////////////////////////////////
-//  Bullets have Gravity.y set on a repeating pre-calculated pattern //
-///////////////////////////////////////////////////////////////////////
-
-Weapon.Pattern = function (game) {
-
-    Phaser.Group.call(this, game, game.world, 'Pattern', false, true, Phaser.Physics.ARCADE);
-
-    this.nextFire = 0;
-    this.bulletSpeed = 600;
-    this.fireRate = 40;
-
-    this.pattern = Phaser.ArrayUtils.numberArrayStep(-800, 800, 200);
-    this.pattern = this.pattern.concat(Phaser.ArrayUtils.numberArrayStep(800, -800, -200));
-
-    this.patternIndex = 0;
-
-    for (var i = 0; i < 64; i++)
-    {
-        this.add(new Bullet(game, 'bullet4'), true);
-    }
-
-    return this;
-
-};
-
-Weapon.Pattern.prototype = Object.create(Phaser.Group.prototype);
-Weapon.Pattern.prototype.constructor = Weapon.Pattern;
-
-Weapon.Pattern.prototype.fire = function (source) {
-
-    if (this.game.time.time < this.nextFire) { return; }
-
-    var x = source.x + 20;
-    var y = source.y + 10;
-
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, this.pattern[this.patternIndex]);
-
-    this.patternIndex++;
-
-    if (this.patternIndex === this.pattern.length)
-    {
-        this.patternIndex = 0;
-    }
-
-    this.nextFire = this.game.time.time + this.fireRate;
-
-};
-
-///////////////////////////////////////////////////////////////////
-//  Rockets that visually track the direction they're heading in //
-///////////////////////////////////////////////////////////////////
-
-Weapon.Rockets = function (game) {
-
-    Phaser.Group.call(this, game, game.world, 'Rockets', false, true, Phaser.Physics.ARCADE);
-
-    this.nextFire = 0;
-    this.bulletSpeed = 400;
-    this.fireRate = 250;
-
-    for (var i = 0; i < 32; i++)
-    {
-        this.add(new Bullet(game, 'bullet10'), true);
-    }
-
-    this.setAll('tracking', true)
-
-    return this;
-
-};
-
-Weapon.Rockets.prototype = Object.create(Phaser.Group.prototype);
-Weapon.Rockets.prototype.constructor = Weapon.Rockets;
-
-Weapon.Rockets.prototype.fire = function (source) {
-
-    if (this.game.time.time < this.nextFire) { return; }
-
-    var x = source.x + 10;
-    var y = source.y + 10;
-
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, -700);
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 700);
-
-    this.nextFire = this.game.time.time + this.fireRate;
-
-};
-
-////////////////////////////////////////////////////////////////////////
-//  A single bullet that scales in size as it moves across the screen //
-////////////////////////////////////////////////////////////////////////
-
-Weapon.ScaleBullet = function (game) {
-
-    Phaser.Group.call(this, game, game.world, 'Scale Bullet', false, true, Phaser.Physics.ARCADE);
-
-    this.nextFire = 0;
-    this.bulletSpeed = 800;
-    this.fireRate = 100;
-
-    for (var i = 0; i < 32; i++)
-    {
-        this.add(new Bullet(game, 'bullet9'), true);
-    }
-
-    this.setAll('scaleSpeed', 0.05);
-
-    return this;
-
-};
-
-Weapon.ScaleBullet.prototype = Object.create(Phaser.Group.prototype);
-Weapon.ScaleBullet.prototype.constructor = Weapon.ScaleBullet;
-
-Weapon.ScaleBullet.prototype.fire = function (source) {
-
-    if (this.game.time.time < this.nextFire) { return; }
-
-    var x = source.x + 10;
-    var y = source.y + 10;
-
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
-
-    this.nextFire = this.game.time.time + this.fireRate;
 }
 
 game.state.add('Game', RangerSteveGame, true);
