@@ -108,28 +108,8 @@ RangerSteveGame.prototype = {
         //  Our two animations, walking left and right.
         this.player.animations.add('left', [0, 1, 2, 3], 10, true)
         this.player.animations.add('right', [5, 6, 7, 8], 10, true)
+        this.player.score = 0
 
-
-
-
-        this.enemy = this.add.sprite(200, this.world.height - 400, 'dude');
-
-        //  We need to enable physics on the player
-        this.physics.arcade.enable(this.enemy);
-
-        // Enable physics on the player
-        this.game.physics.enable(this.enemy, Phaser.Physics.ARCADE);
-
-        // Make player collide with world boundaries so he doesn't leave the stage
-        this.enemy.body.collideWorldBounds = true;
-
-        // Set player minimum and maximum movement speed
-        this.enemy.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
-
-        // Add drag to the player that slows them down when they are not accelerating
-        this.enemy.body.drag.setTo(this.DRAG, 0); // x, y
-
-        this.enemy.health = 100
 
         /**
          * Weapons
@@ -184,17 +164,28 @@ RangerSteveGame.prototype = {
     update: function() {
         //  Collide the player and the stars with the platforms
         this.physics.arcade.collide(this.player, this.platforms)
+        this.physics.arcade.collide(this.enemies, this.platforms)
         this.physics.arcade.collide(this.enemy, this.platforms)
         this.physics.arcade.collide(this.platforms, this.weapons, function(platform, weapon) {
             weapon.kill()
         }, null, this);
 
-        this.physics.arcade.collide(this.player, this.weapons, function(player, weapon) {
-            weapon.kill()
-            console.log('You were hit!')
-        }, null, this);
+        this.enemies.forEach((enemy) => {
+            this.game.physics.arcade.overlap(enemy, this.weapons, (enemy, weapon) => {
+                enemy.health -= weapon.damage
+                this.socket.emit('damaged player', {
+                    playerId: enemy.id,
+                    clientId: this.clientId,
+                    damage: weapon.damage
+                })
+                weapon.kill()
+                console.log('You hit them!', enemy.health, weapon.damage)
+            }, null, this)
+        })
 
-        this.physics.arcade.collide(this.enemy, this.weapons, function(enemy, weapon) {
+
+        // Bullet has hit a player
+        this.game.physics.arcade.overlap(this.enemy, this.weapons, (enemy, weapon) => {
             enemy.health -= weapon.damage
             weapon.kill()
             console.log('You hit them!', enemy.health, weapon.damage)
@@ -203,9 +194,10 @@ RangerSteveGame.prototype = {
                 this.enemy.x = 200
                 this.enemy.y = 200
                 this.enemy.health = 100
+                this.player.score++
+                this.scoreText.text = this.player.score
             }
-        }, null, this);
-
+        }, null, this)
 
         if (this.leftInputIsActive()) {
             // If the LEFT key is down, set the player velocity to move left
@@ -255,42 +247,26 @@ RangerSteveGame.prototype = {
     // In this case, either holding the right arrow or tapping or clicking on the left
     // side of the screen.
     leftInputIsActive: function() {
-        var isActive = false;
-
-        isActive = this.input.keyboard.isDown(Phaser.Keyboard.A);
-
-        return isActive;
+        return this.input.keyboard.isDown(Phaser.Keyboard.A)
     },
 
     // This function should return true when the player activates the "go right" control
     // In this case, either holding the right arrow or tapping or clicking on the right
     // side of the screen.
     rightInputIsActive: function() {
-        var isActive = false;
-
-        isActive = this.input.keyboard.isDown(Phaser.Keyboard.D);
-
-        return isActive;
+        return this.input.keyboard.isDown(Phaser.Keyboard.D)
     },
 
     // This function should return true when the player activates the "jump" control
     // In this case, either holding the up arrow or tapping or clicking on the center
     // part of the screen.
     upInputIsActive: function(duration) {
-        var isActive = false;
-
-        isActive = this.input.keyboard.downDuration(Phaser.Keyboard.W, duration);
-
-        return isActive;
+        return this.input.keyboard.downDuration(Phaser.Keyboard.W, duration);
     },
 
     // This function returns true when the player releases the "jump" control
     upInputReleased: function() {
-        var released = false;
-
-        released = this.input.keyboard.upDuration(Phaser.Keyboard.W);
-
-        return released;
+        return this.input.keyboard.upDuration(Phaser.Keyboard.W);
     },
 
     nextWeapon: function() {
@@ -370,11 +346,13 @@ RangerSteveGame.prototype = {
             return
         }
 
-        // Add new player to the remote players array
-        let newRemotePlayer = RemotePlayer.create(data.id, this.game, this.player, data.x, data.y)
+        let newRemotePlayer = RemotePlayer.create.call(this, {
+            x: data.x,
+            y: data.y,
+            id: data.id
+        })
+
         this.enemies.push(newRemotePlayer)
-        this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
-        this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
     },
 
     // Move player
@@ -387,24 +365,24 @@ RangerSteveGame.prototype = {
         }
 
         // Update player position
-        movePlayer.player.x = data.x
-        movePlayer.player.y = data.y
+        movePlayer.x = data.x
+        movePlayer.y = data.y
 
-        if (movePlayer.player.x > movePlayer.lastPosition.x) {
-            movePlayer.player.animations.play('right')
+        if (movePlayer.x > movePlayer.lastPosition.x) {
+            movePlayer.animations.play('right')
         }
-        else if (movePlayer.player.x < movePlayer.lastPosition.x)
+        else if (movePlayer.x < movePlayer.lastPosition.x)
         {
-            movePlayer.player.animations.play('left')
+            movePlayer.animations.play('left')
         }
         else
         {
-            movePlayer.player.animations.stop()
-            movePlayer.player.frame = 4;
+            movePlayer.animations.stop()
+            movePlayer.frame = 4;
         }
 
-        movePlayer.lastPosition.x = movePlayer.player.x
-        movePlayer.lastPosition.y = movePlayer.player.y
+        movePlayer.lastPosition.x = movePlayer.x
+        movePlayer.lastPosition.y = movePlayer.y
     },
 
     // Remove player
@@ -417,7 +395,7 @@ RangerSteveGame.prototype = {
             return
         }
 
-        removePlayer.player.kill()
+        removePlayer.kill()
 
         // Remove player from array
         this.enemies.splice(this.enemies.indexOf(removePlayer), 1)
@@ -426,7 +404,7 @@ RangerSteveGame.prototype = {
     // Find player by ID
     playerById: function(id) {
         for (var i = 0; i < this.enemies.length; i++) {
-            if (this.enemies[i].player.name === id) {
+            if (this.enemies[i].id === id) {
                 return this.enemies[i]
             }
         }
