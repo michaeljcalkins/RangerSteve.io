@@ -13,11 +13,10 @@ RemotePlayer.create = function(config) {
     }
 
     //  We need to enable physics on the player
-    this.physics.arcade.enable(newRemotePlayer);
-    console.log('newRemotePlayer', newRemotePlayer)
+    this.physics.arcade.enable(newRemotePlayer)
 
     // Enable physics on the player
-    this.game.physics.enable(newRemotePlayer, Phaser.Physics.ARCADE);
+    this.game.physics.enable(newRemotePlayer, Phaser.Physics.ARCADE)
 
     // Make player collide with world boundaries so he doesn't leave the stage
     newRemotePlayer.body.collideWorldBounds = true;

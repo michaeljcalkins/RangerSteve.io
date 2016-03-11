@@ -7,7 +7,7 @@ let AK47 = function (game) {
 
     this.damage = 22
     this.nextFire = 0
-    this.bulletSpeed = 5000
+    this.bulletSpeed = 1000
 
     // AK47 fires about 600 bullets per second
     this.fireRate = 166.666667
@@ -16,8 +16,10 @@ let AK47 = function (game) {
     {
         let bullet = new Bullet(this.game, 'ground')
         bullet.height = 3
-        bullet.width = 84
+        bullet.width = 10
         bullet.damage = 22
+        console.log(bullet)
+
         this.add(bullet, true)
     }
 
@@ -31,13 +33,14 @@ AK47.prototype.fire = function (source) {
     if (this.game.time.time < this.nextFire)
         return
 
-    var x = source.x + 22;
+    var x = source.x - 22;
     var y = source.y + 30;
 
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0);
+    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0)
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate
+    console.log(this)
 }
 
 module.exports = AK47

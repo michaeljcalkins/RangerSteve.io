@@ -2,10 +2,8 @@
 
 var MapCtf1 = require('./maps/MapCtf1')
 var RemotePlayer = require('./lib/RemotePlayer')
-let WeaponSettings = require('./lib/WeaponSettings')
 var Guid = require('./lib/Guid')
 let Weapons = require('./lib/Weapons')
-let Bullet = require('./lib/Bullet')
 
 var gameWidth = window.innerWidth
 var gameHeight = window.innerHeight
@@ -75,7 +73,7 @@ RangerSteveGame.prototype = {
         this.MAX_SPEED = 400; // pixels/second
         this.ACCELERATION = 1960; // pixels/second/second
         this.DRAG = 1500; // pixels/second
-        this.GRAVITY = 1960; // pixels/second/second
+        this.GRAVITY = 1900; // pixels/second/second
         this.JUMP_SPEED = -850; // pixels/second (negative y is up)
 
 
@@ -109,7 +107,7 @@ RangerSteveGame.prototype = {
         this.player.animations.add('left', [0, 1, 2, 3], 10, true)
         this.player.animations.add('right', [5, 6, 7, 8], 10, true)
         this.player.score = 0
-
+        console.log(this.player)
 
         /**
          * Weapons
@@ -179,25 +177,9 @@ RangerSteveGame.prototype = {
                     damage: weapon.damage
                 })
                 weapon.kill()
-                console.log('You hit them!', enemy.health, weapon.damage)
+                console.log('You hit them!', enemy.health, weapon.damage, enemy)
             }, null, this)
         })
-
-
-        // Bullet has hit a player
-        this.game.physics.arcade.overlap(this.enemy, this.weapons, (enemy, weapon) => {
-            enemy.health -= weapon.damage
-            weapon.kill()
-            console.log('You hit them!', enemy.health, weapon.damage)
-            if (enemy.health <= 0) {
-                console.log('They are dead!')
-                this.enemy.x = 200
-                this.enemy.y = 200
-                this.enemy.health = 100
-                this.player.score++
-                this.scoreText.text = this.player.score
-            }
-        }, null, this)
 
         if (this.leftInputIsActive()) {
             // If the LEFT key is down, set the player velocity to move left
@@ -310,10 +292,12 @@ RangerSteveGame.prototype = {
 
         // Player removed message received
         this.socket.on('remove player', this.onRemovePlayer.bind(this))
+
+        this.socket.on('dead player', this.onDeadPlayer.bind(this))
     },
 
     // Socket connected
-    onSocketConnected: function(data) {
+    onSocketConnected: function() {
         console.log('Connected to socket server')
 
          // Reset enemies on reconnect
@@ -353,6 +337,12 @@ RangerSteveGame.prototype = {
         })
 
         this.enemies.push(newRemotePlayer)
+    },
+
+    onDeadPlayer: function() {
+        console.log('YOU DIED!!!')
+        this.player.x = 200
+        this.player.y = this.world.height - 400
     },
 
     // Move player
