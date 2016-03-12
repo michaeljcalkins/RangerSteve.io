@@ -14,7 +14,7 @@ module.exports = function() {
             enemy.health -= weapon.damage
             console.log(this.player)
             this.socket.emit('damaged player', {
-                attackingPlayerId: this.player.id,
+                attackingPlayerId: '/#' + this.socket.id,
                 damagedPlayerId: enemy.id,
                 damage: weapon.damage
             })

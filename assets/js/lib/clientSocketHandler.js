@@ -19,8 +19,11 @@ module.exports = {
         // Player removed message received
         this.socket.on('remove player', this.onRemovePlayer.bind(this))
 
+        // Updated player list received
+        // this.socket.on('update players', this.onUpdatePlayers.bind(this))
+
         // A player has died
-        this.socket.on('dead player', this.onDeadPlayer.bind(this))
+        // this.socket.on('dead player', this.onDeadPlayer.bind(this))
 
         console.log('Socket events initialized.')
     },
@@ -37,7 +40,6 @@ module.exports = {
 
         // Send local player data to the game server
         this.socket.emit('new player', {
-            clientId: this.clientId,
             x: this.player.x,
             y: this.player.y
         })
@@ -48,13 +50,17 @@ module.exports = {
         console.log('Disconnected from socket server')
     },
 
+    onUpdatePlayers: function(data) {
+        console.log('Updated player list received', data)
+    },
+
     // New player
     onNewPlayer: function(data) {
         console.log('New player connected:', data.id)
 
         // Avoid possible duplicate players
         var duplicate = _.find(this.enemies, { id: data.id })
-        if (duplicate || data.id === this.socket.id) {
+        if (duplicate) {
             console.log('Duplicate player!')
             return
         }
@@ -69,7 +75,7 @@ module.exports = {
     },
 
     onDeadPlayer: function(data) {
-        if (data.deadPlayerId !== this.socket.id)
+        if (data.deadPlayerId !== ('/#' + this.socket.id))
             return
 
         console.log('YOU DIED!!!')
@@ -90,22 +96,22 @@ module.exports = {
         // Update player position
         movePlayer.x = data.x
         movePlayer.y = data.y
-
-        if (movePlayer.x > movePlayer.lastPosition.x) {
-            movePlayer.animations.play('right')
-        }
-        else if (movePlayer.x < movePlayer.lastPosition.x)
-        {
-            movePlayer.animations.play('left')
-        }
-        else
-        {
-            movePlayer.animations.stop()
-            movePlayer.frame = 4;
-        }
-
-        movePlayer.lastPosition.x = movePlayer.x
-        movePlayer.lastPosition.y = movePlayer.y
+        //
+        // if (movePlayer.x > movePlayer.lastPosition.x) {
+        //     movePlayer.animations.play('right')
+        // }
+        // else if (movePlayer.x < movePlayer.lastPosition.x)
+        // {
+        //     movePlayer.animations.play('left')
+        // }
+        // else
+        // {
+        //     movePlayer.animations.stop()
+        //     movePlayer.frame = 4;
+        // }
+        //
+        // movePlayer.lastPosition.x = movePlayer.x
+        // movePlayer.lastPosition.y = movePlayer.y
     },
 
     // Remove player
@@ -114,8 +120,7 @@ module.exports = {
 
         // Player not found
         if (!removePlayer) {
-            console.log('Player not found: ', data)
-            _.remove(this.enemies, { id: data.id })
+            console.log('Disconnected player not found: ', data)
             return
         }
 
