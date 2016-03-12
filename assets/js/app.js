@@ -13,7 +13,7 @@ let clienInputHandler = require('./lib/clientInputHandler')
 
 var gameWidth = window.innerWidth
 var gameHeight = window.innerHeight
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'ranger-steve-game');
+var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game');
 
 var RangerSteveGame = function() {
     this.clientId = guid()

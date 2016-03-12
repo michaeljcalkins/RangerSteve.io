@@ -1,11 +1,8 @@
-module.exports = function(io) {
-    var express = require('express');
-    var router = express.Router();
-    var controllers = require('../controllers')
-    // var SocketHandler = require('../lib/SocketHandler')
+var express = require('express')
+var router = express.Router()
+var controllers = require('../controllers')
 
-    // SocketHandler.init(io)
-
+module.exports = function() {
     /* GET home */
     router.get('/', controllers.main.home)
 

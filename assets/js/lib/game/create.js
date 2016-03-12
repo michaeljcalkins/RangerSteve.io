@@ -53,7 +53,7 @@ module.exports = function() {
      */
     this.currentWeapon = 0;
     this.weapons.push(new weapons.aK47(this.game))
-    this.weapons.push(new weapons.aK47(this.game))
+    this.weapons.push(new weapons.barretM82A1(this.game))
 
 
     /**

@@ -22,6 +22,8 @@ module.exports = {
 
         // A player has died
         this.socket.on('dead player', this.onDeadPlayer.bind(this))
+
+        console.log('Socket events initialized.')
     },
 
     // Socket connected
@@ -52,7 +54,7 @@ module.exports = {
         console.log('New player connected:', data.id)
 
         // Avoid possible duplicate players
-        var duplicate = _.findWhere(this.enemies, { id: data.id })
+        var duplicate = _.find(this.enemies, { id: data.id })
         if (duplicate || data.clientId === this.clientId) {
             console.log('Duplicate player!')
             return
@@ -79,7 +81,7 @@ module.exports = {
 
     // Move player
     onMovePlayer: function(data) {
-        var movePlayer = _.findWhere(this.enemies, { id: data.id })
+        var movePlayer = _.find(this.enemies, { id: data.id })
 
         // Player not found
         if (! movePlayer) {
@@ -109,7 +111,7 @@ module.exports = {
 
     // Remove player
     onRemovePlayer: function(data) {
-        var removePlayer = _.findWhere(this.enemies, { id: data.id })
+        var removePlayer = _.find(this.enemies, { id: data.id })
 
         // Player not found
         if (!removePlayer) {

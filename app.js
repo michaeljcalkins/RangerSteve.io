@@ -6,7 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var server = require('http').Server(app);
-var SocketHandler = require('./lib/socketHandler')
+var socketHandler = require('./lib/socketHandler')
 
 var app = express()
 var io = socketIo()
@@ -14,7 +14,7 @@ app.io = io
 
 var routes = require('./routes')(io)
 
-SocketHandler(io)
+socketHandler(io)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

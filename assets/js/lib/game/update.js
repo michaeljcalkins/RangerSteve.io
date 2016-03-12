@@ -13,8 +13,8 @@ module.exports = function() {
         this.game.physics.arcade.overlap(enemy, this.weapons, (enemy, weapon) => {
             enemy.health -= weapon.damage
             this.socket.emit('damaged player', {
-                playerId: enemy.id,
-                clientId: this.clientId,
+                attackingPlayerId: this.player.id,
+                damagedPlayerId: enemy.id,
                 damage: weapon.damage
             })
             weapon.kill()
@@ -58,6 +58,7 @@ module.exports = function() {
         this.jumping = false;
     }
 
+    // Fire current weapon
     if (this.game.input.activePointer.isDown)
     {
         this.weapons[this.currentWeapon].fire(this.player);

@@ -5,6 +5,7 @@ let Bullet = require('../Bullet')
 let AK47 = function (game) {
     Phaser.Group.call(this, game, game.world, 'AK-47', false, true, Phaser.Physics.ARCADE);
 
+    this.name = 'AK-47'
     this.damage = 22
     this.nextFire = 0
     this.bulletSpeed = 1500

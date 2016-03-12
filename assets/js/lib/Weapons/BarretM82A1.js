@@ -2,14 +2,15 @@
 
 let Bullet = require('../Bullet')
 
-let barretM82A1.js = function (game) {
+let barretM82A1 = function (game) {
     Phaser.Group.call(this, game, game.world, 'AK-47', false, true, Phaser.Physics.ARCADE);
 
-    this.damage = 22
+    this.name = 'Barret M82A1'
+    this.damage = 88
     this.nextFire = 0
-    this.bulletSpeed = 1500
+    this.bulletSpeed = 3435
 
-    // barretM82A1.js fires about 600 bullets per second
+    // barretM82A1 fires about 600 bullets per second
     this.fireRate = 4000
 
     for (var i = 0; i < 64; i++)
@@ -17,7 +18,7 @@ let barretM82A1.js = function (game) {
         let bullet = new Bullet(this.game, 'ground')
         bullet.height = 3
         bullet.width = 10
-        bullet.damage = 22
+        bullet.damage = 88
 
         this.add(bullet, true)
     }
@@ -25,10 +26,10 @@ let barretM82A1.js = function (game) {
     return this
 }
 
-barretM82A1.js.prototype = Object.create(Phaser.Group.prototype);
-barretM82A1.js.prototype.constructor = barretM82A1.js;
+barretM82A1.prototype = Object.create(Phaser.Group.prototype);
+barretM82A1.prototype.constructor = barretM82A1;
 
-barretM82A1.js.prototype.fire = function (source) {
+barretM82A1.prototype.fire = function (source) {
     if (this.game.time.time < this.nextFire)
         return
 
@@ -41,4 +42,4 @@ barretM82A1.js.prototype.fire = function (source) {
     this.nextFire = this.game.time.time + this.fireRate
 }
 
-module.exports = barretM82A1.js
+module.exports = barretM82A1
