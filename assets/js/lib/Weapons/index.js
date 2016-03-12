@@ -23,5 +23,5 @@
  */
 
 module.exports = {
-    "AK47": require('./AK47')
+    aK47: require('./AK47')
 }

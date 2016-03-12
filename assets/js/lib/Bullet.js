@@ -25,6 +25,8 @@ Bullet.prototype.fire = function (x, y, angle, speed, gx, gy) {
     // this.scale.set(1)
 
     this.game.physics.arcade.moveToPointer(this, speed)
+    console.log()
+    this.body.gravity.y = -1800
 }
 
 Bullet.prototype.update = function () {

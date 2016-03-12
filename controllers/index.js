@@ -1,3 +1,3 @@
 module.exports = {
-    main: require('./MainController')
+    main: require('./mainController')
 }

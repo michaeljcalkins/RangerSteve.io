@@ -21,12 +21,12 @@ var handleError = function (err) {
 };
 
 gulp.task('sass', function() {
-    return gulp.src('assets/scss/app.scss')
+    return gulp.src('assets/sass/app.scss')
         .pipe(sourcemaps.init())
         .pipe(sass({
             sourcemap: true,
             debugInfo: true,
-            lineNumbers: true,
+            lineNumbers: true
         }))
         .pipe(autoprefixer('last 3 version'))
         .pipe(minifycss())

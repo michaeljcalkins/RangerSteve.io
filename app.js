@@ -6,7 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var server = require('http').Server(app);
-var SocketHandler = require('./lib/SocketHandler')
+var SocketHandler = require('./lib/socketHandler')
 
 var app = express()
 var io = socketIo()
