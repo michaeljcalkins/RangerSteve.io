@@ -6,7 +6,8 @@
   },
   "globals": {
       "Phaser": true,
-      "io": true
+      "io": true,
+      "_": true
   },
   "rules": {
     "comma-dangle": 1,

@@ -12,6 +12,7 @@ module.exports = function() {
     this.enemies.forEach((enemy) => {
         this.game.physics.arcade.overlap(enemy, this.weapons, (enemy, weapon) => {
             enemy.health -= weapon.damage
+            console.log(this.player)
             this.socket.emit('damaged player', {
                 attackingPlayerId: this.player.id,
                 damagedPlayerId: enemy.id,

@@ -1,6 +1,5 @@
 'use strict'
 
-let _ = require('lodash')
 let remotePlayer = require('./remotePlayer')
 
 module.exports = {
@@ -55,7 +54,7 @@ module.exports = {
 
         // Avoid possible duplicate players
         var duplicate = _.find(this.enemies, { id: data.id })
-        if (duplicate || data.clientId === this.clientId) {
+        if (duplicate || data.id === this.socket.id) {
             console.log('Duplicate player!')
             return
         }
@@ -70,10 +69,10 @@ module.exports = {
     },
 
     onDeadPlayer: function(data) {
-        console.log('YOU DIED!!!')
-
-        if (data.deadPlayerId !== this.player.id)
+        if (data.deadPlayerId !== this.socket.id)
             return
+
+        console.log('YOU DIED!!!')
 
         this.player.x = 200
         this.player.y = this.world.height - 400
@@ -115,7 +114,8 @@ module.exports = {
 
         // Player not found
         if (!removePlayer) {
-            console.log('Player not found: ', data.id)
+            console.log('Player not found: ', data)
+            _.remove(this.enemies, { id: data.id })
             return
         }
 
