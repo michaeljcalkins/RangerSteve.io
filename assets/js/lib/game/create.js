@@ -2,11 +2,19 @@
 
 let forestia = require('../../maps/forestia')
 let weapons = require('../weapons')
+let player = require('../player')
 
 let worldWidth = 4000
 let worldHeight = 1500
 
 module.exports = function() {
+    // Define movement constants
+    this.MAX_SPEED = 400; // pixels/second
+    this.ACCELERATION = 1960; // pixels/second/second
+    this.DRAG = 1500; // pixels/second
+    this.GRAVITY = 1900; // pixels/second/second
+    this.JUMP_SPEED = -850; // pixels/second (negative y is up)
+
     this.socket = io.connect()
     this.enemies = []
 
@@ -21,57 +29,31 @@ module.exports = function() {
     this.game.scale.setShowAll();
     this.game.scale.refresh()
 
-
-    /**
-     * Map
-     */
-    forestia.create(this)
-
-    // Define movement constants
-    this.MAX_SPEED = 400; // pixels/second
-    this.ACCELERATION = 1960; // pixels/second/second
-    this.DRAG = 1500; // pixels/second
-    this.GRAVITY = 1900; // pixels/second/second
-    this.JUMP_SPEED = -850; // pixels/second (negative y is up)
-
-
-    /**
-     * Player Settings
-     */
-    this.player = this.add.sprite(200, this.world.height - 400, 'dude');
-
-    //  We need to enable physics on the player
-    this.physics.arcade.enable(this.player);
-
-    // Enable physics on the player
-    this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
-
-    // Make player collide with world boundaries so he doesn't leave the stage
-    this.player.body.collideWorldBounds = true;
-
-    // Set player minimum and maximum movement speed
-    this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
-
-    // Add drag to the player that slows them down when they are not accelerating
-    this.player.body.drag.setTo(this.DRAG, 0); // x, y
-
     // Since we're jumping we need gravity
     this.game.physics.arcade.gravity.y = this.GRAVITY;
 
     // Flag to track if the jump button is pressed
     this.jumping = false;
 
-    //  Our two animations, walking left and right.
-    this.player.animations.add('left', [0, 1, 2, 3], 10, true)
-    this.player.animations.add('right', [5, 6, 7, 8], 10, true)
-    this.player.score = 0
+
+    /**
+     * Map
+     */
+    forestia.create(this)
+
+
+    /**
+     * Player Settings
+     */
+    this.player = player.create.call(this)
 
 
     /**
      * Weapons
      */
     this.currentWeapon = 0;
-    this.weapons.push(new weapons.aK47(this.game));
+    this.weapons.push(new weapons.aK47(this.game))
+    this.weapons.push(new weapons.aK47(this.game))
 
 
     /**

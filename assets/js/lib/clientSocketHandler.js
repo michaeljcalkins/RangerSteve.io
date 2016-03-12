@@ -20,6 +20,7 @@ module.exports = {
         // Player removed message received
         this.socket.on('remove player', this.onRemovePlayer.bind(this))
 
+        // A player has died
         this.socket.on('dead player', this.onDeadPlayer.bind(this))
     },
 

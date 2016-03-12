@@ -75,8 +75,8 @@ RangerSteveGame.prototype = {
 
         this.weapons[this.currentWeapon].visible = true;
 
-        this.weaponName.text = this.weapons[this.currentWeapon].name;
+        this.weaponName.text = this.weapons[this.currentWeapon].name
     }
 }
 
-game.state.add('Game', RangerSteveGame, true);
+game.state.add('Game', RangerSteveGame, true)
