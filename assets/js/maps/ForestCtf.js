@@ -38,21 +38,25 @@ MapCtf1.createLedges = function() {
         { id: 13, x: 1744, y: this.scope.game.world.height - 874, width: 507, height: 254 },
         { id: 14, x: 2390, y: this.scope.game.world.height - 689, width: 513, height: 92 },
         { id: 15, x: 3031, y: this.scope.game.world.height - 608, width: 641, height: 92 },
-        { id: 16, x: 2903, y: this.scope.game.world.height - 957, width: 256, height: 92 }
+        { id: 16, x: 2903, y: this.scope.game.world.height - 957, width: 256, height: 92 },
+
+        // Boxes
+        { id: 17, x: 717, y: this.scope.game.world.height - 686, width: 155, height: 77 },
+        { id: 17, x: 757, y: this.scope.game.world.height - 763, width: 77, height: 77 }
     ]
 
 
     ledges.forEach((ledge) => {
-        // var newLedge = this.scope.platforms.create(ledge.x, ledge.y, 'ground')
-        var newLedge = this.scope.platforms.create(ledge.x, ledge.y)
+        var newLedge = this.scope.platforms.create(ledge.x, ledge.y, 'ground')
+        // var newLedge = this.scope.platforms.create(ledge.x, ledge.y)
         newLedge.height = ledge.height
         newLedge.width = ledge.width
 
         // Debug stuff
-        // newLedge.alpha = 0.2
-        // let style = { font: "20px Arial", fill: "#ff0044", align: "center", backgroundColor: "#ffff00" }
-        // let text = this.scope.game.add.text(ledge.x, ledge.y, ledge.id, style)
-        // text.alpha = 0.2
+        newLedge.alpha = 0.2
+        let style = { font: "20px Arial", fill: "#ff0044", align: "center", backgroundColor: "#ffff00" }
+        let text = this.scope.game.add.text(ledge.x, ledge.y, ledge.id, style)
+        text.alpha = 0.2
     })
 }
 

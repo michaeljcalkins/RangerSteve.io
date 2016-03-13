@@ -1,6 +1,6 @@
 'use strict'
 
-let MapCtf1 = require('./maps/MapCtf1')
+let ForestCtf = require('./maps/ForestCtf')
 let RemotePlayer = require('./lib/RemotePlayer')
 let Guid = require('./lib/Guid')
 let Weapons = require('./lib/Weapons')
@@ -68,7 +68,7 @@ RangerSteveGame.prototype = {
         /**
          * Map
          */
-        MapCtf1.create(this)
+        ForestCtf.create(this)
 
         // Define movement constants
         this.MAX_SPEED = 400; // pixels/second
