@@ -4,24 +4,23 @@ module.exports = function() {
     //  Collide the player and the stars with the platforms
     this.physics.arcade.collide(this.player, this.platforms)
     this.physics.arcade.collide(this.enemies, this.platforms)
-    this.physics.arcade.collide(this.enemy, this.platforms)
     this.physics.arcade.collide(this.platforms, this.weapons, function(platform, weapon) {
         weapon.kill()
     }, null, this);
 
-    this.enemies.forEach((enemy) => {
-        this.game.physics.arcade.overlap(enemy, this.weapons, (enemy, weapon) => {
-            enemy.health -= weapon.damage
-            console.log(this.player)
-            this.socket.emit('damaged player', {
-                attackingPlayerId: '/#' + this.socket.id,
-                damagedPlayerId: enemy.id,
-                damage: weapon.damage
-            })
-            weapon.kill()
-            console.log('You hit them!', enemy.health, weapon.damage, enemy)
-        }, null, this)
-    })
+    // this.enemies.forEach((enemy) => {
+    //     this.game.physics.arcade.overlap(enemy, this.weapons, (enemy, weapon) => {
+    //         enemy.health -= weapon.damage
+    //         console.log(this.player)
+    //         this.socket.emit('damaged player', {
+    //             attackingPlayerId: '/#' + this.socket.id,
+    //             damagedPlayerId: enemy.id,
+    //             damage: weapon.damage
+    //         })
+    //         weapon.kill()
+    //         console.log('You hit them!', enemy.health, weapon.damage, enemy)
+    //     }, null, this)
+    // })
 
     if (this.leftInputIsActive()) {
         // If the LEFT key is down, set the player velocity to move left
@@ -65,5 +64,9 @@ module.exports = function() {
         this.weapons[this.currentWeapon].fire(this.player);
     }
 
-    this.socket.emit('move player', { x: this.player.x, y: this.player.y })
+    console.log('Emitting new position...', this.player.id, this.player.x, this.player.y)
+    this.socket.emit('move player', {
+        x: this.player.x,
+        y: this.player.y
+    })
 }

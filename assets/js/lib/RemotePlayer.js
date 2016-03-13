@@ -6,7 +6,6 @@ RemotePlayer.create = function(config) {
     // Add new player to the remote players array
     let newRemotePlayer = this.add.sprite(config.x, config.y, 'dude');
     newRemotePlayer.id = config.id
-
     newRemotePlayer.lastPosition = {
         x: config.x,
         y: config.y

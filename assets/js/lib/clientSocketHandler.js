@@ -30,7 +30,8 @@ module.exports = {
 
     // Socket connected
     onSocketConnected: function() {
-        console.log('Connected to socket server')
+        console.log('Connected to socket server', '/#' + this.socket.id)
+        this.player.id = '/#' + this.socket.id
 
          // Reset enemies on reconnect
         this.enemies.forEach(function (enemy) {
@@ -59,7 +60,7 @@ module.exports = {
         console.log('New player connected:', data.id)
 
         // Avoid possible duplicate players
-        var duplicate = _.find(this.enemies, { id: data.id })
+        let duplicate = this.playerById(data.id)
         if (duplicate) {
             console.log('Duplicate player!')
             return
@@ -86,7 +87,7 @@ module.exports = {
 
     // Move player
     onMovePlayer: function(data) {
-        var movePlayer = _.find(this.enemies, { id: data.id })
+        var movePlayer = this.playerById(data.id)
 
         // Player not found
         if (! movePlayer) {
@@ -96,27 +97,27 @@ module.exports = {
         // Update player position
         movePlayer.x = data.x
         movePlayer.y = data.y
-        //
-        // if (movePlayer.x > movePlayer.lastPosition.x) {
-        //     movePlayer.animations.play('right')
-        // }
-        // else if (movePlayer.x < movePlayer.lastPosition.x)
-        // {
-        //     movePlayer.animations.play('left')
-        // }
-        // else
-        // {
-        //     movePlayer.animations.stop()
-        //     movePlayer.frame = 4;
-        // }
-        //
-        // movePlayer.lastPosition.x = movePlayer.x
-        // movePlayer.lastPosition.y = movePlayer.y
+
+        if (movePlayer.x > movePlayer.lastPosition.x) {
+            movePlayer.animations.play('right')
+        }
+        else if (movePlayer.x < movePlayer.lastPosition.x)
+        {
+            movePlayer.animations.play('left')
+        }
+        else
+        {
+            movePlayer.animations.stop()
+            movePlayer.frame = 4;
+        }
+
+        movePlayer.lastPosition.x = movePlayer.x
+        movePlayer.lastPosition.y = movePlayer.y
     },
 
     // Remove player
     onRemovePlayer: function(data) {
-        var removePlayer = _.find(this.enemies, { id: data.id })
+        var removePlayer = this.playerById(data.id)
 
         // Player not found
         if (!removePlayer) {

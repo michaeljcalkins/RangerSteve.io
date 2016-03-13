@@ -14,7 +14,6 @@ module.exports = function() {
     this.DRAG = 1500; // pixels/second
     this.GRAVITY = 1900; // pixels/second/second
     this.JUMP_SPEED = -850; // pixels/second (negative y is up)
-
     this.socket = io.connect()
     this.enemies = []
 

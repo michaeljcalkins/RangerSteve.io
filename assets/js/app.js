@@ -11,9 +11,9 @@ let update = require('./lib/game/update')
 let clientSocketHandler = require('./lib/clientSocketHandler')
 let clienInputHandler = require('./lib/clientInputHandler')
 
-var gameWidth = window.innerWidth
-var gameHeight = window.innerHeight
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game');
+let gameWidth = window.innerWidth
+let gameHeight = window.innerHeight
+let game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game');
 
 var RangerSteveGame = function() {
     this.clientId = guid()
@@ -76,6 +76,16 @@ RangerSteveGame.prototype = {
         this.weapons[this.currentWeapon].visible = true;
 
         this.weaponName.text = this.weapons[this.currentWeapon].name
+    },
+
+    playerById: function(id) {
+        for (var i = 0; i < this.enemies.length; i++) {
+            if (this.enemies[i].id === id) {
+                return this.enemies[i]
+            }
+        }
+
+        return false
     }
 }
 
