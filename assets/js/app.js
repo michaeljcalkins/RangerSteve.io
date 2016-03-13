@@ -75,7 +75,7 @@ RangerSteveGame.prototype = {
         this.MAX_SPEED = 400; // pixels/second
         this.ACCELERATION = 1960; // pixels/second/second
         this.DRAG = 1500; // pixels/second
-        this.GRAVITY = 1960; // pixels/second/second
+        this.GRAVITY = 1900; // pixels/second/second
         this.JUMP_SPEED = -850; // pixels/second (negative y is up)
 
 
@@ -110,32 +110,12 @@ RangerSteveGame.prototype = {
         this.player.animations.add('right', [5, 6, 7, 8], 10, true)
 
 
-
-
-        this.enemy = this.add.sprite(200, this.world.height - 400, 'dude');
-
-        //  We need to enable physics on the player
-        this.physics.arcade.enable(this.enemy);
-
-        // Enable physics on the player
-        this.game.physics.enable(this.enemy, Phaser.Physics.ARCADE);
-
-        // Make player collide with world boundaries so he doesn't leave the stage
-        this.enemy.body.collideWorldBounds = true;
-
-        // Set player minimum and maximum movement speed
-        this.enemy.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
-
-        // Add drag to the player that slows them down when they are not accelerating
-        this.enemy.body.drag.setTo(this.DRAG, 0); // x, y
-
-        this.enemy.health = 100
-
         /**
          * Weapons
          */
         this.currentWeapon = 0;
         this.weapons.push(new Weapons.AK47(this.game));
+        this.weapons.push(new Weapons.BarretM82A1(this.game));
 
 
         /**
@@ -184,14 +164,8 @@ RangerSteveGame.prototype = {
     update: function() {
         //  Collide the player and the stars with the platforms
         this.physics.arcade.collide(this.player, this.platforms)
-        this.physics.arcade.collide(this.enemy, this.platforms)
         this.physics.arcade.collide(this.platforms, this.weapons, function(platform, weapon) {
             weapon.kill()
-        }, null, this);
-
-        this.physics.arcade.collide(this.player, this.weapons, function(player, weapon) {
-            weapon.kill()
-            console.log('You were hit!')
         }, null, this);
 
         this.physics.arcade.collide(this.enemy, this.weapons, function(enemy, weapon) {
@@ -205,7 +179,6 @@ RangerSteveGame.prototype = {
                 this.enemy.health = 100
             }
         }, null, this);
-
 
         if (this.leftInputIsActive()) {
             // If the LEFT key is down, set the player velocity to move left

@@ -23,5 +23,6 @@
  */
 
 module.exports = {
-    "AK47": require('./AK47')
+    "AK47": require('./AK47'),
+    "BarretM82A1": require('./BarretM82A1')
 }
