@@ -2,10 +2,8 @@
 
 var MapCtf1 = require('./maps/MapCtf1')
 var RemotePlayer = require('./lib/RemotePlayer')
-let WeaponSettings = require('./lib/WeaponSettings')
 var Guid = require('./lib/Guid')
 let Weapons = require('./lib/Weapons')
-let Bullet = require('./lib/Bullet')
 
 var gameWidth = window.innerWidth
 var gameHeight = window.innerHeight
