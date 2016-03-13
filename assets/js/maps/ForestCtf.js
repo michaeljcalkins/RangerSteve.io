@@ -1,8 +1,8 @@
 'use strict'
 
-let MapCtf1 = {}
+let ForestCtf = {}
 
-MapCtf1.create = function(scope) {
+ForestCtf.create = function(scope) {
     this.scope = scope
 
     this.createSkySprite()
@@ -13,7 +13,7 @@ MapCtf1.create = function(scope) {
     this.scope.platforms.setAll('body.allowGravity', false)
 }
 
-MapCtf1.createLedges = function() {
+ForestCtf.createLedges = function() {
     let ledges = [
         // {x, y, width, height}
 
@@ -64,13 +64,13 @@ MapCtf1.createLedges = function() {
     })
 }
 
-MapCtf1.createSkySprite = function() {
+ForestCtf.createSkySprite = function() {
     this.scope.add.tileSprite(0, this.scope.game.world.height - 1500, this.scope.game.world.width, 1500, 'treescape')
 }
 
-MapCtf1.createPlatforms = function() {
+ForestCtf.createPlatforms = function() {
     this.scope.platforms = this.scope.add.group()
     this.scope.platforms.enableBody = true
 }
 
-module.exports = MapCtf1
+module.exports = ForestCtf
