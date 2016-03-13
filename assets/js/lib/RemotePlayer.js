@@ -1,35 +1,30 @@
 'use strict'
 
-let RemotePlayer = {}
-
-RemotePlayer.create = function(config) {
-    // Add new player to the remote players array
-    let newRemotePlayer = this.add.sprite(config.x, config.y, 'dude');
-    newRemotePlayer.id = config.id
-    newRemotePlayer.lastPosition = {
-        x: config.x,
-        y: config.y
+let RemotePlayer = function(id, game, player, startX, startY) {
+    let newRemotePlayer = {
+        x: startX,
+        y: startY,
+        id: null,
+        game: game,
+        health: 100,
+        player: player,
+        alive: true,
+        lastPosition: {
+            x: startX,
+            y: startY
+        }
     }
 
-    //  We need to enable physics on the player
-    this.physics.arcade.enable(newRemotePlayer)
+    console.log(id)
 
-    // Enable physics on the player
-    this.game.physics.enable(newRemotePlayer, Phaser.Physics.ARCADE)
+    // Create the player's enemy sprite
+    newRemotePlayer.player = game.add.sprite(startX, startY, 'enemy')
 
-    // Make player collide with world boundaries so he doesn't leave the stage
-    newRemotePlayer.body.collideWorldBounds = true;
+    // Our two animations, walking left and right.
+    newRemotePlayer.player.animations.add('left', [0, 1, 2, 3], 10, true)
+    newRemotePlayer.player.animations.add('right', [5, 6, 7, 8], 10, true)
 
-    // Set player minimum and maximum movement speed
-    newRemotePlayer.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
-
-    // Add drag to the player that slows them down when they are not accelerating
-    newRemotePlayer.body.drag.setTo(this.DRAG, 0); // x, y
-
-    newRemotePlayer.health = 100
-
-    newRemotePlayer.animations.add('left', [0, 1, 2, 3], 10, true)
-    newRemotePlayer.animations.add('right', [5, 6, 7, 8], 10, true)
+    newRemotePlayer.player.id = id
 
     return newRemotePlayer
 }

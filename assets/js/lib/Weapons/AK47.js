@@ -16,7 +16,7 @@ let AK47 = function (game) {
     for (var i = 0; i < 64; i++)
     {
         let bullet = new Bullet(this.game, 'ground')
-        bullet.height = 3
+        bullet.height = 2
         bullet.width = 10
         bullet.damage = 22
 
