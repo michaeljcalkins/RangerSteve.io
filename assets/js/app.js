@@ -1,18 +1,19 @@
 'use strict'
 
-var MapCtf1 = require('./maps/MapCtf1')
-var RemotePlayer = require('./lib/RemotePlayer')
-var Guid = require('./lib/Guid')
+let MapCtf1 = require('./maps/MapCtf1')
+let RemotePlayer = require('./lib/RemotePlayer')
+let Guid = require('./lib/Guid')
 let Weapons = require('./lib/Weapons')
+let InputHandler = require('./lib/InputHandler')
 
-var gameWidth = window.innerWidth
-var gameHeight = window.innerHeight
-var worldWidth = 4000
-var worldHeight = 1500
+let gameWidth = window.innerWidth
+let gameHeight = window.innerHeight
+let worldWidth = 4000
+let worldHeight = 1500
 
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'ranger-steve-game');
+let game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'ranger-steve-game');
 
-var RangerSteveGame = function() {
+let RangerSteveGame = function() {
     this.clientId = Guid()
     this.currentWeapon = 0;
     this.enemies = []
@@ -133,7 +134,7 @@ RangerSteveGame.prototype = {
          */
         this.camera.follow(this.player);
 
-        var changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        let changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         changeKey.onDown.add(this.nextWeapon, this)
 
 
@@ -194,7 +195,7 @@ RangerSteveGame.prototype = {
         }
 
         // Set a variable that is true when the player is touching the ground
-        var onTheGround = this.player.body.touching.down;
+        let onTheGround = this.player.body.touching.down;
 
         // If the player is touching the ground, let him have 2 jumps
         if (onTheGround) {
@@ -222,47 +223,10 @@ RangerSteveGame.prototype = {
         this.socket.emit('move player', { x: this.player.x, y: this.player.y })
     },
 
-    // This function should return true when the player activates the "go left" control
-    // In this case, either holding the right arrow or tapping or clicking on the left
-    // side of the screen.
-    leftInputIsActive: function() {
-        var isActive = false;
-
-        isActive = this.input.keyboard.isDown(Phaser.Keyboard.A);
-
-        return isActive;
-    },
-
-    // This function should return true when the player activates the "go right" control
-    // In this case, either holding the right arrow or tapping or clicking on the right
-    // side of the screen.
-    rightInputIsActive: function() {
-        var isActive = false;
-
-        isActive = this.input.keyboard.isDown(Phaser.Keyboard.D);
-
-        return isActive;
-    },
-
-    // This function should return true when the player activates the "jump" control
-    // In this case, either holding the up arrow or tapping or clicking on the center
-    // part of the screen.
-    upInputIsActive: function(duration) {
-        var isActive = false;
-
-        isActive = this.input.keyboard.downDuration(Phaser.Keyboard.W, duration);
-
-        return isActive;
-    },
-
-    // This function returns true when the player releases the "jump" control
-    upInputReleased: function() {
-        var released = false;
-
-        released = this.input.keyboard.upDuration(Phaser.Keyboard.W);
-
-        return released;
-    },
+    leftInputIsActive: InputHandler.leftInputIsActive,
+    rightInputIsActive: InputHandler.rightInputIsActive,
+    upInputIsActive: InputHandler.upInputIsActive,
+    upInputReleased: InputHandler.upInputReleased,
 
     nextWeapon: function() {
         //  Tidy-up the current weapon
@@ -297,15 +261,13 @@ RangerSteveGame.prototype = {
         // Socket disconnection
         this.socket.on('disconnect', this.onSocketDisconnect.bind(this))
 
-        // New player message received
-        this.socket.on('new player', this.onNewPlayer.bind(this))
-
         // Player move message received
         this.socket.on('move player', this.onMovePlayer.bind(this))
 
         // Player removed message received
         this.socket.on('remove player', this.onRemovePlayer.bind(this))
 
+        // Updated list of players to sync enemies to
         this.socket.on('update players', this.onUpdatePlayers.bind(this))
     },
 
@@ -325,8 +287,6 @@ RangerSteveGame.prototype = {
             this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
             this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
         })
-
-        console.log('enemies', this.enemies)
     },
 
     // Socket connected
@@ -352,27 +312,9 @@ RangerSteveGame.prototype = {
         console.log('Disconnected from socket server')
     },
 
-    // New player
-    onNewPlayer: function(data) {
-        console.log('New player connected:', data.id)
-
-        // Avoid possible duplicate players
-        var duplicate = this.playerById(data.id)
-        if (duplicate || data.clientId === this.clientId) {
-            console.log('Duplicate player!')
-            return
-        }
-
-        // Add new player to the remote players array
-        let newRemotePlayer = RemotePlayer.create(data.id, this.game, this.player, data.x, data.y)
-        this.enemies.push(newRemotePlayer)
-        this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
-        this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
-    },
-
     // Move player
     onMovePlayer: function(data) {
-        var movePlayer = this.playerById(data.id)
+        let movePlayer = this.playerById(data.id)
 
         // console.log(data.id, movePlayer)
 
@@ -404,7 +346,7 @@ RangerSteveGame.prototype = {
 
     // Remove player
     onRemovePlayer: function(data) {
-        var removePlayer = this.playerById(data.id)
+        let removePlayer = this.playerById(data.id)
 
         // Player not found
         if (!removePlayer) {
@@ -420,7 +362,7 @@ RangerSteveGame.prototype = {
 
     // Find player by ID
     playerById: function(id) {
-        for (var i = 0; i < this.enemies.length; i++) {
+        for (let i = 0; i < this.enemies.length; i++) {
             if (this.enemies[i].player.id === id) {
                 return this.enemies[i]
             }
