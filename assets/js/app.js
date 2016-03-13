@@ -11,11 +11,11 @@ let gameHeight = window.innerHeight
 let worldWidth = 4000
 let worldHeight = 1500
 
-let game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'ranger-steve-game');
+let game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game')
 
 let RangerSteveGame = function() {
     this.clientId = Guid()
-    this.currentWeapon = 0;
+    this.currentWeapon = 0
     this.enemies = []
     this.game = game
     this.ground
@@ -24,8 +24,8 @@ let RangerSteveGame = function() {
     this.score = 0
     this.scoreText
     this.socket
-    this.weaponName = null;
-    this.weapons = [];
+    this.weaponName = null
+    this.weapons = []
 }
 
 RangerSteveGame.prototype = {
@@ -36,16 +36,9 @@ RangerSteveGame.prototype = {
     },
 
     preload: function() {
-        this.load.image('bullet11', '/images/bullet11.png')
-        this.load.image('bullet10', '/images/bullet10.png')
-        this.load.image('bullet9', '/images/bullet9.png')
-        this.load.image('bullet8', '/images/bullet8.png')
-        this.load.image('bullet7', '/images/bullet7.png')
-        this.load.image('bullet5', '/images/bullet5.png')
-        this.load.image('bullet4', '/images/bullet4.png')
         this.load.image('treescape', '/images/map-ctf1.png')
         this.load.image('ground', '/images/platform.png')
-        this.load.spritesheet('dude', '/images/dude.png', 32, 48)
+        this.load.spritesheet('dude', '/images/commando.png', 32, 48)
         this.load.spritesheet('enemy', '/images/dude.png', 32, 48)
     },
 
@@ -60,8 +53,8 @@ RangerSteveGame.prototype = {
         this.game.stage.backgroundColor = "#2F91D0"
 
         // Scale game on window resize
-        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
-        this.game.scale.setShowAll();
+        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
+        this.game.scale.setShowAll()
         this.game.scale.refresh()
 
 
@@ -71,38 +64,38 @@ RangerSteveGame.prototype = {
         ForestCtf.create(this)
 
         // Define movement constants
-        this.MAX_SPEED = 400; // pixels/second
-        this.ACCELERATION = 1960; // pixels/second/second
-        this.DRAG = 1500; // pixels/second
-        this.GRAVITY = 1900; // pixels/second/second
-        this.JUMP_SPEED = -850; // pixels/second (negative y is up)
+        this.MAX_SPEED = 400 // pixels/second
+        this.ACCELERATION = 1960 // pixels/second/second
+        this.DRAG = 1500 // pixels/second
+        this.GRAVITY = 1900 // pixels/second/second
+        this.JUMP_SPEED = -850 // pixels/second (negative y is up)
 
 
         /**
          * Player Settings
          */
-        this.player = this.add.sprite(200, this.world.height - 400, 'dude');
+        this.player = this.add.sprite(200, this.world.height - 400, 'dude')
 
         //  We need to enable physics on the player
-        this.physics.arcade.enable(this.player);
+        this.physics.arcade.enable(this.player)
 
         // Enable physics on the player
-        this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.game.physics.enable(this.player, Phaser.Physics.ARCADE)
 
         // Make player collide with world boundaries so he doesn't leave the stage
-        this.player.body.collideWorldBounds = true;
+        this.player.body.collideWorldBounds = true
 
         // Set player minimum and maximum movement speed
-        this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
+        this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10) // x, y
 
         // Add drag to the player that slows them down when they are not accelerating
-        this.player.body.drag.setTo(this.DRAG, 0); // x, y
+        this.player.body.drag.setTo(this.DRAG, 0) // x, y
 
         // Since we're jumping we need gravity
-        game.physics.arcade.gravity.y = this.GRAVITY;
+        game.physics.arcade.gravity.y = this.GRAVITY
 
         // Flag to track if the jump button is pressed
-        this.jumping = false;
+        this.jumping = false
 
         //  Our two animations, walking left and right.
         this.player.animations.add('left', [0, 1, 2, 3], 10, true)
@@ -112,9 +105,9 @@ RangerSteveGame.prototype = {
         /**
          * Weapons
          */
-        this.currentWeapon = 0;
-        this.weapons.push(new Weapons.AK47(this.game));
-        this.weapons.push(new Weapons.BarretM82A1(this.game));
+        this.currentWeapon = 0
+        this.weapons.push(new Weapons.AK47(this.game))
+        this.weapons.push(new Weapons.BarretM82A1(this.game))
 
 
         /**
@@ -132,9 +125,9 @@ RangerSteveGame.prototype = {
         /**
          * Camera Settings
          */
-        this.camera.follow(this.player);
+        this.camera.follow(this.player)
 
-        let changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        let changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER)
         changeKey.onDown.add(this.nextWeapon, this)
 
 
@@ -165,7 +158,7 @@ RangerSteveGame.prototype = {
         this.physics.arcade.collide(this.player, this.platforms)
         this.physics.arcade.collide(this.platforms, this.weapons, function(platform, weapon) {
             weapon.kill()
-        }, null, this);
+        }, null, this)
 
         this.physics.arcade.collide(this.enemy, this.weapons, function(enemy, weapon) {
             enemy.health -= weapon.damage
@@ -177,15 +170,15 @@ RangerSteveGame.prototype = {
                 this.enemy.y = 200
                 this.enemy.health = 100
             }
-        }, null, this);
+        }, null, this)
 
         if (this.leftInputIsActive()) {
             // If the LEFT key is down, set the player velocity to move left
-            this.player.body.acceleration.x = -this.ACCELERATION;
+            this.player.body.acceleration.x = -this.ACCELERATION
             this.player.animations.play('left')
         } else if (this.rightInputIsActive()) {
             // If the RIGHT key is down, set the player velocity to move right
-            this.player.body.acceleration.x = this.ACCELERATION;
+            this.player.body.acceleration.x = this.ACCELERATION
             this.player.animations.play('right')
         } else {
             // Stand still
@@ -195,29 +188,29 @@ RangerSteveGame.prototype = {
         }
 
         // Set a variable that is true when the player is touching the ground
-        let onTheGround = this.player.body.touching.down;
+        let onTheGround = this.player.body.touching.down
 
         // If the player is touching the ground, let him have 2 jumps
         if (onTheGround) {
-            this.jumps = 2;
-            this.jumping = false;
+            this.jumps = 2
+            this.jumping = false
         }
 
         // Jump!
         if (this.jumps > 0 && this.upInputIsActive(5)) {
-            this.player.body.velocity.y = this.JUMP_SPEED;
-            this.jumping = true;
+            this.player.body.velocity.y = this.JUMP_SPEED
+            this.jumping = true
         }
 
         // Reduce the number of available jumps if the jump input is released
         if (this.jumping && this.upInputReleased()) {
-            this.jumps--;
-            this.jumping = false;
+            this.jumps--
+            this.jumping = false
         }
 
         if (this.game.input.activePointer.isDown)
         {
-            this.weapons[this.currentWeapon].fire(this.player);
+            this.weapons[this.currentWeapon].fire(this.player)
         }
 
         this.socket.emit('move player', { x: this.player.x, y: this.player.y })
@@ -232,26 +225,26 @@ RangerSteveGame.prototype = {
         //  Tidy-up the current weapon
         if (this.currentWeapon > 9)
         {
-            this.weapons[this.currentWeapon].reset();
+            this.weapons[this.currentWeapon].reset()
         }
         else
         {
-            this.weapons[this.currentWeapon].visible = false;
-            this.weapons[this.currentWeapon].callAll('reset', null, 0, 0);
-            this.weapons[this.currentWeapon].setAll('exists', false);
+            this.weapons[this.currentWeapon].visible = false
+            this.weapons[this.currentWeapon].callAll('reset', null, 0, 0)
+            this.weapons[this.currentWeapon].setAll('exists', false)
         }
 
         //  Activate the new one
-        this.currentWeapon++;
+        this.currentWeapon++
 
         if (this.currentWeapon === this.weapons.length)
         {
-            this.currentWeapon = 0;
+            this.currentWeapon = 0
         }
 
-        this.weapons[this.currentWeapon].visible = true;
+        this.weapons[this.currentWeapon].visible = true
 
-        this.weaponName.text = this.weapons[this.currentWeapon].name;
+        this.weaponName.text = this.weapons[this.currentWeapon].name
     },
 
     setEventHandlers: function () {
@@ -337,7 +330,7 @@ RangerSteveGame.prototype = {
         else
         {
             movePlayer.player.animations.stop()
-            movePlayer.player.frame = 4;
+            movePlayer.player.frame = 4
         }
 
         movePlayer.lastPosition.x = movePlayer.player.x
@@ -372,4 +365,4 @@ RangerSteveGame.prototype = {
     }
 }
 
-game.state.add('Game', RangerSteveGame, true);
+game.state.add('Game', RangerSteveGame, true)
