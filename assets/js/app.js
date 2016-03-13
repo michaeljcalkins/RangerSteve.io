@@ -305,15 +305,37 @@ RangerSteveGame.prototype = {
 
         // Player removed message received
         this.socket.on('remove player', this.onRemovePlayer.bind(this))
+
+        this.socket.on('update players', this.onUpdatePlayers.bind(this))
+    },
+
+    onUpdatePlayers: function(data) {
+        this.enemies.forEach(function (enemy) {
+            enemy.player.kill()
+        })
+
+        this.enemies = []
+
+        data.players.forEach((player) => {
+            if (player.id === ('/#' + this.socket.id))
+                return
+
+            let newRemotePlayer = RemotePlayer(player.id, this.game, this.player, player.x, player.y)
+            this.enemies.push(newRemotePlayer)
+            this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
+            this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
+        })
+
+        console.log('enemies', this.enemies)
     },
 
     // Socket connected
-    onSocketConnected: function(data) {
+    onSocketConnected: function() {
         console.log('Connected to socket server')
 
          // Reset enemies on reconnect
         this.enemies.forEach(function (enemy) {
-            enemy.player.kill()
+            enemy.kill()
         })
         this.enemies = []
 
@@ -351,6 +373,8 @@ RangerSteveGame.prototype = {
     // Move player
     onMovePlayer: function(data) {
         var movePlayer = this.playerById(data.id)
+
+        // console.log(data.id, movePlayer)
 
         // Player not found
         if (! movePlayer) {
@@ -397,7 +421,7 @@ RangerSteveGame.prototype = {
     // Find player by ID
     playerById: function(id) {
         for (var i = 0; i < this.enemies.length; i++) {
-            if (this.enemies[i].player.name === id) {
+            if (this.enemies[i].player.id === id) {
                 return this.enemies[i]
             }
         }
