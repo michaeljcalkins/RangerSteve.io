@@ -24,7 +24,7 @@
 
 module.exports = {
     "AK47": require('./AK47'),
-    "BarretM82A1": require('./BarretM82A1'),
-    "Spas12": require('./Spas12'),
-    "RPG": require('./RPG')
+    "BarretM82A1": require('./BarretM82A1')
+    // "Spas12": require('./Spas12'),
+    // "RPG": require('./RPG')
 }

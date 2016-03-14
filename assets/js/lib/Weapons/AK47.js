@@ -5,17 +5,21 @@ let Bullet = require('../Bullet')
 let AK47 = function (game) {
     Phaser.Group.call(this, game, game.world, 'AK-47', false, true, Phaser.Physics.ARCADE);
 
+    //	Here we set-up our audio sprite
+    this.fx = game.add.audio('AK47-sound')
+    this.allowMultiple = true
+
     this.damage = 22
-    this.nextFire = 0;
-    this.bulletSpeed = 1000;
+    this.nextFire = 0
+    this.bulletSpeed = 1800
     // AK47 fires about 600 bullets per second
-    this.fireRate = 166.666667;
+    this.fireRate = 160;
 
     for (var i = 0; i < 64; i++)
     {
-        let bullet = new Bullet(this.game, 'ground')
-        bullet.height = 2
-        bullet.width = 10
+        let bullet = new Bullet(this.game, 'bullet12')
+        bullet.height = 3
+        bullet.width = 40
         bullet.damage = 22
         this.add(bullet, true);
     }
@@ -38,6 +42,7 @@ AK47.prototype.fire = function (source) {
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate
+    this.fx.play()
 }
 
 module.exports = AK47

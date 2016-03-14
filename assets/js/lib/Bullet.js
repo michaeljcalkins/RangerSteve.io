@@ -13,7 +13,6 @@ var Bullet = function (game, key) {
 
     this.tracking = false;
     this.scaleSpeed = 0;
-
 };
 
 Bullet.prototype = Object.create(Phaser.Sprite.prototype);

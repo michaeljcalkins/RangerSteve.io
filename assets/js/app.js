@@ -32,14 +32,19 @@ RangerSteveGame.prototype = {
     init: function() {
         this.game.renderer.renderSession.roundPixels = true
         this.game.stage.disableVisibilityChange = true
-        this.physics.startSystem(Phaser.Physics.ARCADE)
     },
 
     preload: function() {
         this.load.image('treescape', '/images/map-ctf1.png')
         this.load.image('ground', '/images/platform.png')
-        this.load.spritesheet('dude', '/images/commando.png', 32, 48)
+        this.load.image('bullet12', '/images/bullet12.png')
+
+        this.load.spritesheet('dude', '/images/dude.png', 32, 48)
         this.load.spritesheet('enemy', '/images/dude.png', 32, 48)
+
+        this.load.audio('AK47-sound', '/audio/AK47.ogg')
+        this.load.audio('BarretM82A1-sound', '/audio/BarretM82A1.ogg')
+
     },
 
     create: function() {
@@ -56,6 +61,8 @@ RangerSteveGame.prototype = {
         this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
         this.game.scale.setShowAll()
         this.game.scale.refresh()
+
+
 
 
         /**
