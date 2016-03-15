@@ -5,5 +5,6 @@ module.exports = {
     onRemovePlayer: require('./onRemovePlayer'),
     onSocketConnected: require('./onSocketConnected'),
     onSocketDisconnect: require('./onSocketDisconnect'),
-    onUpdatePlayers: require('./onUpdatePlayers')
+    onUpdatePlayers: require('./onUpdatePlayers'),
+    setEventHandlers: require('./setEventHandlers')
 }

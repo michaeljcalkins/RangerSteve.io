@@ -1,6 +1,6 @@
 'use strict'
 
-let PlayerById = require('../lib/PlayerById')
+let PlayerById = require('../PlayerById')
 
 module.exports = function(data) {
     let removePlayer = PlayerById.call(this, data.id)

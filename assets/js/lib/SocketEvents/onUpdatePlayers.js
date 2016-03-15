@@ -1,6 +1,6 @@
 'use strict'
 
-let RemotePlayer = require('../lib/RemotePlayer')
+let RemotePlayer = require('../RemotePlayer')
 
 module.exports = function(data) {
     this.enemies.forEach(function (enemy) {
