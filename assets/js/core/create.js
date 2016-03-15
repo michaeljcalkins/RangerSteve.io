@@ -25,7 +25,7 @@ module.exports = function() {
     /**
      * Map
      */
-    ForestCtf.create(this)
+    ForestCtf.create.call(this)
 
     // Define movement constants
     this.MAX_SPEED = 400 // pixels/second
@@ -38,7 +38,10 @@ module.exports = function() {
     /**
      * Player Settings
      */
-    this.player = this.add.sprite(400, this.world.height - 400, 'dude')
+    let spawnPoint = ForestCtf.getRandomSpawnPoint.call(this)
+    console.log(spawnPoint)
+
+    this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'dude')
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
