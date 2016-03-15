@@ -5,6 +5,7 @@ let Weapons = require('./lib/Weapons')
 let InputHandler = require('./lib/InputHandler')
 // let EnemyBuffalo = require('./lib/EnemyBuffalo')
 let SocketEvents = require('./socketEvents')
+let Core = require('./core')
 
 let gameWidth = window.innerWidth
 let gameHeight = window.innerHeight
@@ -28,10 +29,7 @@ let RangerSteveGame = function() {
 }
 
 RangerSteveGame.prototype = {
-    init: function() {
-        this.game.renderer.renderSession.roundPixels = true
-        this.game.stage.disableVisibilityChange = true
-    },
+    init: Core.init,
 
     preload: function() {
         this.load.image('treescape', '/images/map-ctf1.png')
