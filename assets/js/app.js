@@ -1,10 +1,10 @@
 'use strict'
 
 let ForestCtf = require('./maps/ForestCtf')
-let RemotePlayer = require('./lib/RemotePlayer')
-let Guid = require('./lib/Guid')
 let Weapons = require('./lib/Weapons')
 let InputHandler = require('./lib/InputHandler')
+// let EnemyBuffalo = require('./lib/EnemyBuffalo')
+let SocketEvents = require('./socketEvents')
 
 let gameWidth = window.innerWidth
 let gameHeight = window.innerHeight
@@ -14,7 +14,6 @@ let worldHeight = 1500
 let game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game')
 
 let RangerSteveGame = function() {
-    this.clientId = Guid()
     this.currentWeapon = 0
     this.enemies = []
     this.game = game
@@ -44,7 +43,6 @@ RangerSteveGame.prototype = {
 
         this.load.audio('AK47-sound', '/audio/AK47.ogg')
         this.load.audio('BarretM82A1-sound', '/audio/BarretM82A1.ogg')
-
     },
 
     create: function() {
@@ -63,8 +61,6 @@ RangerSteveGame.prototype = {
         this.game.scale.refresh()
 
 
-
-
         /**
          * Map
          */
@@ -81,7 +77,7 @@ RangerSteveGame.prototype = {
         /**
          * Player Settings
          */
-        this.player = this.add.sprite(200, this.world.height - 400, 'dude')
+        this.player = this.add.sprite(400, this.world.height - 400, 'dude')
 
         //  We need to enable physics on the player
         this.physics.arcade.enable(this.player)
@@ -108,6 +104,16 @@ RangerSteveGame.prototype = {
         this.player.animations.add('left', [0, 1, 2, 3], 10, true)
         this.player.animations.add('right', [5, 6, 7, 8], 10, true)
 
+        this.player.meta = {
+            health: 100
+        }
+
+
+        /**
+         * Enemy Settings
+         */
+        // EnemyBuffalo.call(this)
+
 
         /**
          * Weapons
@@ -125,8 +131,8 @@ RangerSteveGame.prototype = {
         this.scoreText.fixedToCamera = true
         this.weaponName = this.add.text(this.camera.width - 100, this.camera.height - 45, 'AK-47', textStyles)
         this.weaponName.fixedToCamera = true
-        this.currentHealthText = this.add.text(this.camera.x + 25, this.camera.height - 45, '100', textStyles)
-        this.currentHealthText.fixedToCamera = true
+        this.healthText = this.add.text(this.camera.x + 25, this.camera.height - 45, this.player.meta.health, textStyles)
+        this.healthText.fixedToCamera = true
 
 
         /**
@@ -162,22 +168,66 @@ RangerSteveGame.prototype = {
 
     update: function() {
         //  Collide the player and the stars with the platforms
-        this.physics.arcade.collide(this.player, this.platforms)
+        this.physics.arcade.collide(this.player, this.platforms, null, null, this)
+        // this.physics.arcade.collide(this.enemyBuffalo, this.platforms)
+
         this.physics.arcade.collide(this.platforms, this.weapons, function(platform, weapon) {
             weapon.kill()
         }, null, this)
 
-        this.physics.arcade.collide(this.enemy, this.weapons, function(enemy, weapon) {
-            enemy.health -= weapon.damage
-            weapon.kill()
-            console.log('You hit them!', enemy.health, weapon.damage)
-            if (enemy.health <= 0) {
-                console.log('They are dead!')
-                this.enemy.x = 200
-                this.enemy.y = 200
-                this.enemy.health = 100
-            }
-        }, null, this)
+        this.enemies.forEach((enemy) => {
+            this.physics.arcade.collide(enemy.player, this.platforms, null, null, this)
+            this.physics.arcade.collide(enemy.player, this.weapons, function(enemyPlayer, weapon) {
+                weapon.kill()
+
+
+                return false
+            }, null, this)
+
+        })
+
+        // this.physics.arcade.collide(this.enemyBuffalo, this.weapons,  null, function(enemyBuffalo, weapon) {
+        //     weapon.kill()
+        //     enemyBuffalo.meta.health -= weapon.damage
+        //
+        //     if (enemyBuffalo.meta.health <= 0) {
+        //         enemyBuffalo.meta.health = 100
+        //         enemyBuffalo.x = 200
+        //         enemyBuffalo.y = this.world.height - 400
+        //     }
+        //
+        //     return false
+        // }, this)
+
+        // this.physics.arcade.collide(this.enemyBuffalo, this.player,  null, function(enemyBuffalo, player) {
+        //     if (enemyBuffalo.meta.reloading)
+        //         return false
+        //
+        //     player.meta.health -= enemyBuffalo.meta.damage
+        //     this.healthText.text = player.meta.health
+        //     enemyBuffalo.meta.reloading = true
+        //
+        //     setTimeout(function() {
+        //         enemyBuffalo.meta.reloading = false
+        //     }, enemyBuffalo.meta.reloadTime)
+        //
+        //     if (player.meta.health <= 0) {
+        //         player.meta.health = 100
+        //         player.x = 200
+        //         player.y = this.world.height - 400
+        //         this.healthText.text = player.meta.health
+        //     }
+        //
+        //     return false
+        // }, this)
+
+        // if (this.enemyBuffalo.x < this.player.x) {
+        //     this.enemyBuffalo.body.acceleration.x = this.ACCELERATION
+        // }
+        //
+        // if (this.enemyBuffalo.x > this.player.x) {
+        //     this.enemyBuffalo.body.acceleration.x = -this.ACCELERATION
+        // }
 
         if (this.leftInputIsActive()) {
             // If the LEFT key is down, set the player velocity to move left
@@ -271,105 +321,11 @@ RangerSteveGame.prototype = {
         this.socket.on('update players', this.onUpdatePlayers.bind(this))
     },
 
-    onUpdatePlayers: function(data) {
-        this.enemies.forEach(function (enemy) {
-            enemy.player.kill()
-        })
-
-        this.enemies = []
-
-        data.players.forEach((player) => {
-            if (player.id === ('/#' + this.socket.id))
-                return
-
-            let newRemotePlayer = RemotePlayer(player.id, this.game, this.player, player.x, player.y)
-            this.enemies.push(newRemotePlayer)
-            this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
-            this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
-        })
-    },
-
-    // Socket connected
-    onSocketConnected: function() {
-        console.log('Connected to socket server')
-
-         // Reset enemies on reconnect
-        this.enemies.forEach(function (enemy) {
-            enemy.kill()
-        })
-        this.enemies = []
-
-        // Send local player data to the game server
-        this.socket.emit('new player', {
-            clientId: this.clientId,
-            x: this.player.x,
-            y: this.player.y
-        })
-    },
-
-    // Socket disconnected
-    onSocketDisconnect: function() {
-        console.log('Disconnected from socket server')
-    },
-
-    // Move player
-    onMovePlayer: function(data) {
-        let movePlayer = this.playerById(data.id)
-
-        // console.log(data.id, movePlayer)
-
-        // Player not found
-        if (! movePlayer) {
-            return
-        }
-
-        // Update player position
-        movePlayer.player.x = data.x
-        movePlayer.player.y = data.y
-
-        if (movePlayer.player.x > movePlayer.lastPosition.x) {
-            movePlayer.player.animations.play('right')
-        }
-        else if (movePlayer.player.x < movePlayer.lastPosition.x)
-        {
-            movePlayer.player.animations.play('left')
-        }
-        else
-        {
-            movePlayer.player.animations.stop()
-            movePlayer.player.frame = 4
-        }
-
-        movePlayer.lastPosition.x = movePlayer.player.x
-        movePlayer.lastPosition.y = movePlayer.player.y
-    },
-
-    // Remove player
-    onRemovePlayer: function(data) {
-        let removePlayer = this.playerById(data.id)
-
-        // Player not found
-        if (!removePlayer) {
-            console.log('Player not found: ', data.id)
-            return
-        }
-
-        removePlayer.player.kill()
-
-        // Remove player from array
-        this.enemies.splice(this.enemies.indexOf(removePlayer), 1)
-    },
-
-    // Find player by ID
-    playerById: function(id) {
-        for (let i = 0; i < this.enemies.length; i++) {
-            if (this.enemies[i].player.id === id) {
-                return this.enemies[i]
-            }
-        }
-
-        return false
-    }
+    onUpdatePlayers: SocketEvents.onUpdatePlayers,
+    onSocketConnected: SocketEvents.onSocketConnected,
+    onSocketDisconnect: SocketEvents.onSocketDisconnect,
+    onMovePlayer: SocketEvents.onMovePlayer,
+    onRemovePlayer: SocketEvents.onRemovePlayer
 }
 
 game.state.add('Game', RangerSteveGame, true)

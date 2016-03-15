@@ -20,7 +20,7 @@ let BarretM82A1 = function (game) {
     for (var i = 0; i < 64; i++)
     {
         let bullet = new Bullet(this.game, 'bullet12')
-        bullet.height = 3
+        bullet.height = 2
         bullet.width = 40
         bullet.damage = 88
 
