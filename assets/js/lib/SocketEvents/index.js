@@ -1,10 +1,17 @@
 'use strict'
 
 module.exports = {
-    onMovePlayer: require('./onMovePlayer'),
-    onRemovePlayer: require('./onRemovePlayer'),
+    setEventHandlers: require('./setEventHandlers'),
+
     onSocketConnected: require('./onSocketConnected'),
     onSocketDisconnect: require('./onSocketDisconnect'),
+
+    onMovePlayer: require('./onMovePlayer'),
+    onRemovePlayer: require('./onRemovePlayer'),
     onUpdatePlayers: require('./onUpdatePlayers'),
-    setEventHandlers: require('./setEventHandlers')
+
+    onBulletFired: require('./onBulletFired')
+    // onBulletsUpdate: require('./onBulletsUpdate'),
+    // onBulletMoved: require('./onBulletMoved'),
+    // onBulletRemoved: require('./onBulletRemoved')
 }

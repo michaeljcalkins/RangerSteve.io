@@ -38,6 +38,15 @@ ForestCtf.create = function() {
     this.platforms.setAll('body.allowGravity', false)
 }
 
+ForestCtf.createSkySprite = function() {
+    this.add.tileSprite(0, this.game.world.height - 1500, this.game.world.width, 1500, 'treescape')
+}
+
+ForestCtf.createPlatforms = function() {
+    this.platforms = this.add.group()
+    this.platforms.enableBody = true
+}
+
 ForestCtf.getRandomSpawnPoint = function() {
     return _.sample(this.spawnPoints)
 }
@@ -90,15 +99,6 @@ ForestCtf.createLedges = function() {
         // let text = this.game.add.text(ledge.x, ledge.y, ledge.id, style)
         // text.alpha = 0.2
     })
-}
-
-ForestCtf.createSkySprite = function() {
-    this.add.tileSprite(0, this.game.world.height - 1500, this.game.world.width, 1500, 'treescape')
-}
-
-ForestCtf.createPlatforms = function() {
-    this.platforms = this.add.group()
-    this.platforms.enableBody = true
 }
 
 module.exports = ForestCtf

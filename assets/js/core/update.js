@@ -5,15 +5,20 @@ module.exports = function() {
     this.physics.arcade.collide(this.player, this.platforms, null, null, this)
     // this.physics.arcade.collide(this.enemyBuffalo, this.platforms)
 
-    this.physics.arcade.collide(this.platforms, this.weapons, function(platform, weapon) {
+    this.physics.arcade.collide(this.platforms, this.weapons, (platform, weapon) => {
         weapon.kill()
+        this.socket.emit('bullet removed', {
+            bulletId: weapon.id
+        })
     }, null, this)
 
     this.enemies.forEach((enemy) => {
         this.physics.arcade.collide(enemy.player, this.platforms, null, null, this)
         this.physics.arcade.collide(enemy.player, this.weapons, function(enemyPlayer, weapon) {
             weapon.kill()
-
+            this.socket.emit('bullet removed', {
+                bulletId: weapon.id
+            })
 
             return false
         }, null, this)
@@ -101,8 +106,11 @@ module.exports = function() {
 
     if (this.game.input.activePointer.isDown)
     {
-        this.weapons[this.currentWeapon].fire(this.player)
+        this.weapons[this.currentWeapon].fire(this.player, this.socket)
     }
 
-    this.socket.emit('move player', { x: this.player.x, y: this.player.y })
+    this.socket.emit('move player', {
+        x: this.player.x,
+        y: this.player.y
+    })
 }

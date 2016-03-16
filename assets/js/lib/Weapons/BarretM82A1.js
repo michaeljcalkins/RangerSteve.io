@@ -2,11 +2,11 @@
 
 let Bullet = require('../Bullet')
 
-let BarretM82A1 = function (game) {
-    Phaser.Group.call(this, game, game.world, 'BarretM82A1', false, true, Phaser.Physics.ARCADE);
+let BarretM82A1 = function (config) {
+    Phaser.Group.call(this, config.game, config.game.world, 'Barret M82A1', false, true, Phaser.Physics.ARCADE);
 
     //	Here we set-up our audio sprite
-    this.fx = game.add.audio('BarretM82A1-sound')
+    this.fx = config.game.add.audio('BarretM82A1-sound')
     this.allowMultiple = true
 
     this.name = 'Barret M82A1'
@@ -19,7 +19,7 @@ let BarretM82A1 = function (game) {
 
     for (var i = 0; i < 64; i++)
     {
-        let bullet = new Bullet(this.game, 'bullet12')
+        let bullet = new Bullet(config.game, 'bullet12', config.socket)
         bullet.height = 2
         bullet.width = 40
         bullet.damage = 88
@@ -33,14 +33,14 @@ let BarretM82A1 = function (game) {
 BarretM82A1.prototype = Object.create(Phaser.Group.prototype);
 BarretM82A1.prototype.constructor = BarretM82A1;
 
-BarretM82A1.prototype.fire = function (source) {
+BarretM82A1.prototype.fire = function (player, socket) {
     if (this.game.time.time < this.nextFire)
         return
 
-    var x = source.x + 15;
-    var y = source.y + 30;
+    var x = player.x + 15;
+    var y = player.y + 30;
 
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0)
+    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0, socket)
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate

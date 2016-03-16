@@ -10,6 +10,7 @@ module.exports = function() {
     this.socket = io.connect()
     this.enemies = []
 
+
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)
 
@@ -39,8 +40,6 @@ module.exports = function() {
      * Player Settings
      */
     let spawnPoint = ForestCtf.getRandomSpawnPoint.call(this)
-    console.log(spawnPoint)
-
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'dude')
 
     //  We need to enable physics on the player
@@ -83,8 +82,14 @@ module.exports = function() {
      * Weapons
      */
     this.currentWeapon = 0
-    this.weapons.push(new Weapons.AK47(this.game))
-    this.weapons.push(new Weapons.BarretM82A1(this.game))
+    this.weapons = [
+        new Weapons.AK47({
+            game: this.game
+        }),
+        new Weapons.BarretM82A1({
+            game: this.game
+        })
+    ]
 
 
     /**
@@ -122,6 +127,12 @@ module.exports = function() {
         this.scoreText.cameraOffset.x = 25
         this.scoreText.cameraOffset.y = 25
     })
+
+
+    /**
+     * Enemy Bullets
+     */
+    this.enemyBullets = this.game.add.group()
 
 
     /**
