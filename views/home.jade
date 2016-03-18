@@ -1,17 +1,13 @@
 extends layout
 
 block content
-    video#bgvid(autoplay="true", preload="true", poster="https://s3.amazonaws.com/rangersteve/Screen+Shot+2016-03-06+at+7.10.48+PM.png", loop="true")
-        source(src="https://s3.amazonaws.com/rangersteve/Buffalo+Invasion.webmsd.webm", type="video/webm")
-        source(src="https://s3.amazonaws.com/rangersteve/Buffalo+Invasion.mp4.mp4", type="video/mp4")
-
-    .outer
-        .middle
-            .inner
-                .row
-                    .col-sm-12.text-center
-                        .main-header Ranger Steve
-                        .sub-header Buffalo Invasion
-                .row
-                    .col-sm-12.text-center
-                        a.btn.btn-primary.btn-lg(href="/game") Play Now
+    section.main-section
+        .main-table
+            .main-row
+                .main-cell
+                    .row
+                        .col-sm-12.text-center
+                            .main-header Ranger Steve: Buffalo Invasion
+                    .row
+                        .col-sm-12.text-center
+                            a.btn.btn-primary.btn-lg(href="/game") Play Alpha Now

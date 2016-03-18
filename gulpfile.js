@@ -28,6 +28,7 @@ gulp.task('sass', function() {
             debugInfo: true,
             lineNumbers: true,
         }))
+        .on('error', handleError)
         .pipe(autoprefixer('last 3 version'))
         .pipe(minifycss())
         .pipe(sourcemaps.write('/', {

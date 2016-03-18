@@ -1,8 +1,13 @@
-body {
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    cursor: crosshair;
+@import url(https://fonts.googleapis.com/css?family=Bangers);
+
+html, body {
     height: 100%;
     width: 100%;
+    overflow: hidden;
+}
+
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -11,55 +16,51 @@ a {
     color: #00B7FF;
 }
 
-.outer {
-    display: table;
-    position: absolute;
-    height: 100%;
+section {
+    position: relative;
     width: 100%;
 }
 
-.middle {
-    display: table-cell;
-    vertical-align: middle;
-}
+.main-section {
+    background: url(/images/BG/BG.png) #E0F9FE repeat-x bottom center;
+    position: relative;
+    text-align: center;
+    height: 100%;
+    background-size: auto 100%;
 
-.inner {
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-}
+    .btn-lg {
+        padding: 15px 35px;
+    }
 
-.btn-lg {
-    padding: 15px 35px;
-}
+    .main-table {
+        display: table;
+        width: 100%;
+        height: 100%;
 
-.main-header {
-    border-bottom: 1px solid white;
-    font-weight: 300;
-    color: #fff;
-    font-size: 60px;
-    line-height: 60px;
-    padding: 0 0 20px;
-    margin: 0 0 20px;
-}
+        .main-row {
+            display: table-row;
+            .main-cell {
+                display: table-cell;
+                vertical-align: middle;
+            }
+        }
+    }
 
-.sub-header {
-    color: #fff;
-    font-size: 30px;
-    margin: 0 0 30px;
-}
+    .main-header {
+        font-family: Bangers, "Lucida Grande", Helvetica, Arial, sans-serif;
+        letter-spacing: 2px;
+        font-weight: 300;
+        color: #EB3235;
+        font-size: 90px;
+        line-height: 60px;
+        padding: 0 0 20px;
+        margin: 0 0 20px;
+        text-shadow: 0 6px rgba(0,0,0,.1);
+    }
 
-video {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    transform: translateX(-50%) translateY(-50%);
-    background: url('https://s3.amazonaws.com/rangersteve/Screen+Shot+2016-03-06+at+7.10.48+PM.png') no-repeat;
-    background-size: cover;
-    transition: 1s opacity;
+    .sub-header {
+        color: #fff;
+        font-size: 30px;
+        margin: 0 0 30px;
+    }
 }

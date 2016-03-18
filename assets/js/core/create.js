@@ -7,6 +7,13 @@ let worldWidth = 4000
 let worldHeight = 1500
 
 module.exports = function() {
+    // Define movement constants
+    this.MAX_SPEED = 400 // pixels/second
+    this.ACCELERATION = 1960 // pixels/second/second
+    this.DRAG = 1500 // pixels/second
+    this.GRAVITY = 1900 // pixels/second/second
+    this.JUMP_SPEED = -850 // pixels/second (negative y is up)
+
     this.socket = io.connect()
     this.enemies = []
 
@@ -26,44 +33,13 @@ module.exports = function() {
     /**
      * Map
      */
-    // ForestCtf.create.call(this)
-    this.map = this.game.add.tilemap('level1')
-    this.map.addTilesetImage('1')
-    this.map.addTilesetImage('2')
-    this.map.addTilesetImage('3')
-    this.map.addTilesetImage('4')
-    this.map.addTilesetImage('5')
-    this.map.addTilesetImage('6')
-    this.map.addTilesetImage('7')
-    this.map.addTilesetImage('8')
-    this.map.addTilesetImage('9')
-    this.map.addTilesetImage('10')
-    this.map.addTilesetImage('11')
-    this.map.addTilesetImage('12')
-    this.map.addTilesetImage('13')
-    this.map.addTilesetImage('14')
-    this.map.addTilesetImage('15')
-    this.map.addTilesetImage('16')
-    this.map.addTilesetImage('17')
-    this.map.addTilesetImage('18')
-    this.map.addTilesetImage('BG')
-
-
-
-    // Define movement constants
-    this.MAX_SPEED = 400 // pixels/second
-    this.ACCELERATION = 1960 // pixels/second/second
-    this.DRAG = 1500 // pixels/second
-    this.GRAVITY = 1900 // pixels/second/second
-    this.JUMP_SPEED = -850 // pixels/second (negative y is up)
-
+    ForestCtf.create.call(this)
 
     /**
      * Player Settings
      */
     let spawnPoint = ForestCtf.getRandomSpawnPoint.call(this)
-    // this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'dude')
-    this.player = this.add.sprite(0, 0, 'dude')
+    this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'dude')
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
