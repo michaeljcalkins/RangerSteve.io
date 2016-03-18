@@ -12,9 +12,31 @@ module.exports = function() {
         })
     }, null, this)
 
+    this.physics.arcade.collide(this.platforms, this.enemyBullets, (platform, bullet) => {
+        bullet.kill()
+    }, null, this)
+
+    // this.physics.arcade.collide(this.player, this.enemyBullets, (player, bullet) => {
+    //     bullet.kill()
+    //
+    //     return true
+    // }, null, this)
+
+    this.enemyBullets.forEach((enemyBullet) => {
+        this.physics.arcade.overlap(this.player, enemyBullet, (player, bullet) => {
+            console.log('You were hit!')
+            bullet.kill()
+            this.socket.emit('bullet removed', {
+                bulletId: bullet.id
+            })
+        })
+    })
+
+
     this.enemies.forEach((enemy) => {
         this.physics.arcade.collide(enemy.player, this.platforms, null, null, this)
         this.physics.arcade.collide(enemy.player, this.weapons, function(enemyPlayer, weapon) {
+            console.log('You hit someone!')
             weapon.kill()
             this.socket.emit('bullet removed', {
                 bulletId: weapon.id

@@ -10,6 +10,12 @@ module.exports = function(data) {
     newEnemyBullet.rotation = data.pointerAngle
     newEnemyBullet.height = data.height
     newEnemyBullet.width = data.width
+    this.game.physics.enable(newEnemyBullet, Phaser.Physics.ARCADE)
+    newEnemyBullet.body.gravity.y = -1800
+
+    let newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, data.speed)
+    newEnemyBullet.body.velocity.x += newVelocity.x
+    newEnemyBullet.body.velocity.y += newVelocity.y
 
     console.log('Bullet fired by', data.id)
 }
