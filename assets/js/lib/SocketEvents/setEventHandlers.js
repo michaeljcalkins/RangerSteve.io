@@ -9,7 +9,5 @@ module.exports = function () {
     this.socket.on('remove player', this.onRemovePlayer.bind(this))
 
     this.socket.on('bullet fired', this.onBulletFired.bind(this))
-    // this.socket.on('bullets update', this.onBulletsUpdate.bind(this))
-    // this.socket.on('bullet moved', this.onBulletMoved.bind(this))
-    // this.socket.on('bullet removed', this.onBulletRemoved.bind(this))
+    this.socket.on('bullet removed', this.onBulletRemoved.bind(this))
 }

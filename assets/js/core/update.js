@@ -1,94 +1,43 @@
 'use strict'
 
 module.exports = function() {
-    //  Collide the player and the stars with the platforms
+    // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms, null, null, this)
-    // this.physics.arcade.collide(this.enemyBuffalo, this.platforms)
 
+    // Did this player's bullets hit any platforms
     this.physics.arcade.collide(this.platforms, this.weapons, (platform, weapon) => {
         weapon.kill()
-        this.socket.emit('bullet removed', {
-            bulletId: weapon.id
-        })
     }, null, this)
 
+    // Did enemy bullets hit any platforms
     this.physics.arcade.collide(this.platforms, this.enemyBullets, (platform, bullet) => {
         bullet.kill()
     }, null, this)
 
-    // this.physics.arcade.collide(this.player, this.enemyBullets, (player, bullet) => {
-    //     bullet.kill()
-    //
-    //     return true
-    // }, null, this)
+    // Did this player get hit by any enemy bullets
+    this.physics.arcade.collide(this.player, this.enemyBullets, null, (player, bullet) => {
+        bullet.kill()
 
-    this.enemyBullets.forEach((enemyBullet) => {
-        this.physics.arcade.overlap(this.player, enemyBullet, (player, bullet) => {
-            console.log('You were hit!')
-            bullet.kill()
-            this.socket.emit('bullet removed', {
-                bulletId: bullet.id
-            })
+        console.log('You were hit by', bullet.bulletId)
+        this.socket.emit('bullet removed', {
+            bulletId: bullet.bulletId
         })
-    })
 
+        return false
+    }, this)
 
-    this.enemies.forEach((enemy) => {
-        this.physics.arcade.collide(enemy.player, this.platforms, null, null, this)
-        this.physics.arcade.collide(enemy.player, this.weapons, function(enemyPlayer, weapon) {
-            console.log('You hit someone!')
-            weapon.kill()
-            this.socket.emit('bullet removed', {
-                bulletId: weapon.id
-            })
-
-            return false
-        }, null, this)
-
-    })
-
-    // this.physics.arcade.collide(this.enemyBuffalo, this.weapons,  null, function(enemyBuffalo, weapon) {
-    //     weapon.kill()
-    //     enemyBuffalo.meta.health -= weapon.damage
+    // Did this player hit any enemies
+    // this.enemies.forEach((enemy) => {
+    //     this.physics.arcade.collide(enemy.player, this.weapons, null, function(enemyPlayer, weapon) {
+    //         console.log('You hit someone!')
+    //         weapon.kill()
+    //         this.socket.emit('bullet removed', {
+    //             bulletId: weapon.id
+    //         })
     //
-    //     if (enemyBuffalo.meta.health <= 0) {
-    //         enemyBuffalo.meta.health = 100
-    //         enemyBuffalo.x = 200
-    //         enemyBuffalo.y = this.world.height - 400
-    //     }
-    //
-    //     return false
-    // }, this)
-
-    // this.physics.arcade.collide(this.enemyBuffalo, this.player,  null, function(enemyBuffalo, player) {
-    //     if (enemyBuffalo.meta.reloading)
     //         return false
-    //
-    //     player.meta.health -= enemyBuffalo.meta.damage
-    //     this.healthText.text = player.meta.health
-    //     enemyBuffalo.meta.reloading = true
-    //
-    //     setTimeout(function() {
-    //         enemyBuffalo.meta.reloading = false
-    //     }, enemyBuffalo.meta.reloadTime)
-    //
-    //     if (player.meta.health <= 0) {
-    //         player.meta.health = 100
-    //         player.x = 200
-    //         player.y = this.world.height - 400
-    //         this.healthText.text = player.meta.health
-    //     }
-    //
-    //     return false
-    // }, this)
-
-    // if (this.enemyBuffalo.x < this.player.x) {
-    //     this.enemyBuffalo.body.acceleration.x = this.ACCELERATION
-    // }
-    //
-    // if (this.enemyBuffalo.x > this.player.x) {
-    //     this.enemyBuffalo.body.acceleration.x = -this.ACCELERATION
-    // }
+    //     }, this)
+    // })
 
     if (this.leftInputIsActive()) {
         // If the LEFT key is down, set the player velocity to move left

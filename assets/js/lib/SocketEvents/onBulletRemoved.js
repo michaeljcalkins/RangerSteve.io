@@ -1,18 +1,19 @@
 'use strict'
 
 module.exports = function(data) {
-    let removeBullet = BulletById.call(this, data.bulletId)
+    if (data.id === ('/#' + this.socket.id))
+        return
 
-    // Player not found
+    console.log('Removing bullet', data.bulletId)
+
+    let removeBullet = _.find(this.weapons[this.currentWeapon].children, {
+        bulletId: data.bulletId
+    })
+
     if (!removeBullet) {
-        console.log('Player not found: ', data.id)
+        console.log('Bullet not found: ', data.bulletId)
         return
     }
 
-    removeBullet.bullet.kill()
-
-    // Remove player from array
-    this.enemyBullets.splice(this.enemyBullets.indexOf(removeBullet), 1)
-
-    console.log('bullet removed')
+    removeBullet.kill()
 }

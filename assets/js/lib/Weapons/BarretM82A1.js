@@ -1,6 +1,7 @@
 'use strict'
 
 let Bullet = require('../Bullet')
+let Guid = require('../Guid')
 
 let BarretM82A1 = function (config) {
     Phaser.Group.call(this, config.game, config.game.world, 'Barret M82A1', false, true, Phaser.Physics.ARCADE);
@@ -20,6 +21,7 @@ let BarretM82A1 = function (config) {
     for (var i = 0; i < 64; i++)
     {
         let bullet = new Bullet(config.game, 'bullet12', config.socket)
+        bullet.bulletId = Guid()
         bullet.height = 2
         bullet.width = 40
         bullet.damage = 88

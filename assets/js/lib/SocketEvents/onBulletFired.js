@@ -6,7 +6,10 @@ module.exports = function(data) {
     if (data.id === ('/#' + this.socket.id))
         return
 
+    console.log('Firing bullet remotely', data.bulletId)
+
     let newEnemyBullet = this.enemyBullets.create(data.x, data.y, 'bullet12')
+    newEnemyBullet.bulletId = data.bulletId
     newEnemyBullet.rotation = data.pointerAngle
     newEnemyBullet.height = data.height
     newEnemyBullet.width = data.width
@@ -16,6 +19,4 @@ module.exports = function(data) {
     let newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, data.speed)
     newEnemyBullet.body.velocity.x += newVelocity.x
     newEnemyBullet.body.velocity.y += newVelocity.y
-
-    console.log('Bullet fired by', data.id)
 }

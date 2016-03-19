@@ -10,8 +10,6 @@ module.exports = {
     onRemovePlayer: require('./onRemovePlayer'),
     onUpdatePlayers: require('./onUpdatePlayers'),
 
-    onBulletFired: require('./onBulletFired')
-    // onBulletsUpdate: require('./onBulletsUpdate'),
-    // onBulletMoved: require('./onBulletMoved'),
-    // onBulletRemoved: require('./onBulletRemoved')
+    onBulletFired: require('./onBulletFired'),
+    onBulletRemoved: require('./onBulletRemoved')
 }

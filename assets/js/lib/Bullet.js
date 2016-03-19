@@ -22,8 +22,10 @@ Bullet.prototype.fire = function (x, y, angle, speed, gx, gy, socket) {
     let pointerAngle = this.game.physics.arcade.moveToPointer(this, speed)
     this.body.gravity.y = -1800
 
+    console.log('Firing bullet locally', this.bulletId)
+
     socket.emit('bullet fired', {
-        bulletId: Guid(),
+        bulletId: this.bulletId,
         x,
         y,
         angle,
