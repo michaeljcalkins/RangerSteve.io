@@ -1,11 +1,11 @@
 
 ///////////////////////////////////////////////////////////////////
-//  Rockets that visually track the direction they're heading in //
+//  RPG that visually track the direction they're heading in //
 ///////////////////////////////////////////////////////////////////
 
-Weapon.Rockets = function (game) {
+Weapon.RPG = function (game) {
 
-    Phaser.Group.call(this, game, game.world, 'Rockets', false, true, Phaser.Physics.ARCADE);
+    Phaser.Group.call(this, game, game.world, 'RPG', false, true, Phaser.Physics.ARCADE);
 
     this.nextFire = 0;
     this.bulletSpeed = 400;
@@ -22,10 +22,10 @@ Weapon.Rockets = function (game) {
 
 };
 
-Weapon.Rockets.prototype = Object.create(Phaser.Group.prototype);
-Weapon.Rockets.prototype.constructor = Weapon.Rockets;
+Weapon.RPG.prototype = Object.create(Phaser.Group.prototype);
+Weapon.RPG.prototype.constructor = Weapon.RPG;
 
-Weapon.Rockets.prototype.fire = function (source) {
+Weapon.RPG.prototype.fire = function (source) {
 
     if (this.game.time.time < this.nextFire) { return; }
 

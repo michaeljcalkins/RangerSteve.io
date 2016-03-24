@@ -82,9 +82,30 @@ module.exports = function() {
         new Weapons.AK47({
             game: this.game
         }),
-        new Weapons.BarretM82A1({
+        new Weapons.BarretM90({
             game: this.game
-        })
+        }),
+        new Weapons.DesertEagle({
+            game: this.game
+        }),
+        new Weapons.M4A1({
+            game: this.game
+        }),
+        // new Weapons.M79({
+        //     game: this.game
+        // }),
+        new Weapons.M249({
+            game: this.game
+        }),
+        new Weapons.MP5({
+            game: this.game
+        }),
+        // new Weapons.RPG({
+        //     game: this.game
+        // }),
+        // new Weapons.Spas12({
+        //     game: this.game
+        // })
     ]
 
 
@@ -92,10 +113,13 @@ module.exports = function() {
      * Text
      */
     let textStyles = { fontSize: '24px', fill: '#000' }
+
     this.scoreText = this.add.text(25, 25, 'Score: 0', textStyles)
     this.scoreText.fixedToCamera = true
-    this.weaponName = this.add.text(this.camera.width - 100, this.camera.height - 45, 'AK-47', textStyles)
-    this.weaponName.fixedToCamera = true
+
+    this.weaponText = this.add.text(this.camera.x + 120, this.camera.height - 45, 'AK-47', textStyles)
+    this.weaponText.fixedToCamera = true
+
     this.healthText = this.add.text(this.camera.x + 25, this.camera.height - 45, this.player.meta.health, textStyles)
     this.healthText.fixedToCamera = true
 
@@ -117,8 +141,8 @@ module.exports = function() {
         this.game.height = window.innerHeight
         this.game.width = window.innerWidth
 
-        this.weaponName.cameraOffset.x = this.camera.width - 100
-        this.weaponName.cameraOffset.y = this.camera.height - 45
+        this.healthText.cameraOffset.y = this.camera.height - 45
+        this.weaponText.cameraOffset.y = this.camera.height - 45
 
         this.scoreText.cameraOffset.x = 25
         this.scoreText.cameraOffset.y = 25

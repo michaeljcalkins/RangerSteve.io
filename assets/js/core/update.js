@@ -31,19 +31,6 @@ module.exports = function() {
         return false
     }, this)
 
-    // Did this player hit any enemies
-    // this.enemies.forEach((enemy) => {
-    //     this.physics.arcade.collide(enemy.player, this.weapons, null, function(enemyPlayer, weapon) {
-    //         console.log('You hit someone!')
-    //         weapon.kill()
-    //         this.socket.emit('bullet removed', {
-    //             bulletId: weapon.id
-    //         })
-    //
-    //         return false
-    //     }, this)
-    // })
-
     if (this.leftInputIsActive()) {
         // If the LEFT key is down, set the player velocity to move left
         this.player.body.acceleration.x = -this.ACCELERATION

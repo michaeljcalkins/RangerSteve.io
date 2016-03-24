@@ -16,15 +16,20 @@
 
 /**
  * Secondary Weapons
- * 1. USSOCOM
+ * 1. Desert Eagle
  * 2. Combat Knife
  * 3. Chainsaw
- * 4. M72 Law
+ * 4. RPG
  */
 
 module.exports = {
     "AK47": require('./AK47'),
-    "BarretM82A1": require('./BarretM82A1')
-    // "Spas12": require('./Spas12'),
-    // "RPG": require('./RPG')
+    "BarretM90": require('./BarretM90'),
+    "DesertEagle": require('./DesertEagle'),
+    "M4A1": require('./M4A1'),
+    "M79": require('./M79'),
+    "M249": require('./M249'),
+    "MP5": require('./MP5')
+    // "RPG": require('./RPG'),
+    // "Spas12": require('./Spas12')
 }
