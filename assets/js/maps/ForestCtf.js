@@ -8,26 +8,26 @@ ForestCtf.create = function() {
             x: 500,
             y: this.world.height - 700
         },
-        // {
-        //     x: 200,
-        //     y: this.world.height - 200
-        // },
-        // {
-        //     x: 3750,
-        //     y: this.world.height - 200
-        // },
-        // {
-        //     x: 3450,
-        //     y: this.world.height - 700
-        // },
-        // {
-        //     x: 2600,
-        //     y: this.world.height - 800
-        // },
-        // {
-        //     x: 1250,
-        //     y: this.world.height - 800
-        // }
+        {
+            x: 200,
+            y: this.world.height - 200
+        },
+        {
+            x: 3750,
+            y: this.world.height - 200
+        },
+        {
+            x: 3450,
+            y: this.world.height - 700
+        },
+        {
+            x: 2600,
+            y: this.world.height - 800
+        },
+        {
+            x: 1250,
+            y: this.world.height - 800
+        }
     ]
 
     ForestCtf.createSkySprite.call(this)

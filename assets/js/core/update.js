@@ -23,6 +23,11 @@ module.exports = function() {
             bulletId: bullet.bulletId
         })
 
+        this.socket.emit('player damaged', {
+            damage: this.weapons[this.currentWeapon].damage,
+            damagedPlayerId: '/#' + this.socket.id
+        })
+
         return false
     }, this)
 

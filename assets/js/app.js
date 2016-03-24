@@ -67,7 +67,9 @@ RangerSteveGame.prototype = {
     onMovePlayer: SocketEvents.onMovePlayer,
     onRemovePlayer: SocketEvents.onRemovePlayer,
     onBulletFired: SocketEvents.onBulletFired,
-    onBulletRemoved: SocketEvents.onBulletRemoved
+    onBulletRemoved: SocketEvents.onBulletRemoved,
+    onPlayerDamaged: SocketEvents.onPlayerDamaged,
+    onPlayerRespawn: SocketEvents.onPlayerRespawn
 }
 
 game.state.add('Game', RangerSteveGame, true)

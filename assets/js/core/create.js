@@ -55,6 +55,9 @@ module.exports = function() {
 
     // Add drag to the player that slows them down when they are not accelerating
     this.player.body.drag.setTo(this.DRAG, 0) // x, y
+    this.player.meta = {
+        health: 100
+    }
 
     // Since we're jumping we need gravity
     this.game.physics.arcade.gravity.y = this.GRAVITY
@@ -69,12 +72,6 @@ module.exports = function() {
     this.player.meta = {
         health: 100
     }
-
-
-    /**
-     * Enemy Settings
-     */
-    // EnemyBuffalo.call(this)
 
 
     /**
