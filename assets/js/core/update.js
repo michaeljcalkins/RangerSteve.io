@@ -20,10 +20,12 @@ module.exports = function() {
 
         console.log('You were hit by', bullet.bulletId)
         this.socket.emit('bullet removed', {
+            roomId: this.roomId,
             bulletId: bullet.bulletId
         })
 
         this.socket.emit('player damaged', {
+            roomId: this.roomId,
             damage: this.weapons[this.currentWeapon].damage,
             damagedPlayerId: '/#' + this.socket.id
         })
@@ -69,10 +71,11 @@ module.exports = function() {
 
     if (this.game.input.activePointer.isDown)
     {
-        this.weapons[this.currentWeapon].fire(this.player, this.socket)
+        this.weapons[this.currentWeapon].fire(this.player, this.socket, this.roomId)
     }
 
     this.socket.emit('move player', {
+        roomId: this.roomId,
         x: this.player.x,
         y: this.player.y
     })

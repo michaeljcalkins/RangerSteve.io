@@ -35,14 +35,14 @@ let BarretM90 = function (config) {
 BarretM90.prototype = Object.create(Phaser.Group.prototype);
 BarretM90.prototype.constructor = BarretM90;
 
-BarretM90.prototype.fire = function (player, socket) {
+BarretM90.prototype.fire = function (player, socket, roomId) {
     if (this.game.time.time < this.nextFire)
         return
 
     var x = player.x + 15;
     var y = player.y + 30;
 
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0, socket)
+    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0, socket, roomId)
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate

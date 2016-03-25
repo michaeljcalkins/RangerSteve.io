@@ -24,7 +24,6 @@ section {
 .main-section {
     background: url(/images/BG/BG.png) #E0F9FE repeat-x bottom center;
     position: relative;
-    text-align: center;
     height: 100%;
     background-size: auto 100%;
 
@@ -50,11 +49,11 @@ section {
         font-family: Bangers, "Lucida Grande", Helvetica, Arial, sans-serif;
         letter-spacing: 2px;
         font-weight: 300;
-        color: #EB3235;
+        color: #fff;
         font-size: 90px;
         line-height: 60px;
         padding: 0 0 20px;
-        margin: 0 0 20px;
+        margin: 100px 0 60px;
         text-shadow: 0 6px rgba(0,0,0,.1);
     }
 

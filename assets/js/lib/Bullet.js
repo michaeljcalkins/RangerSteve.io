@@ -16,7 +16,7 @@ var Bullet = function (game, key) {
 Bullet.prototype = Object.create(Phaser.Sprite.prototype)
 Bullet.prototype.constructor = Bullet
 
-Bullet.prototype.fire = function (x, y, angle, speed, gx, gy, socket) {
+Bullet.prototype.fire = function (x, y, angle, speed, gx, gy, socket, roomId) {
     this.reset(x, y)
 
     let pointerAngle = this.game.physics.arcade.moveToPointer(this, speed)
@@ -25,6 +25,7 @@ Bullet.prototype.fire = function (x, y, angle, speed, gx, gy, socket) {
     console.log('Firing bullet locally', this.bulletId)
 
     socket.emit('bullet fired', {
+        roomId: roomId,
         bulletId: this.bulletId,
         x,
         y,

@@ -3,13 +3,20 @@
 let RemotePlayer = require('../RemotePlayer')
 
 module.exports = function(data) {
+    console.log('update players', data)
+
+    this.roomId = data.room.id
+
+    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?room=' + data.room.id;
+    window.history.pushState({ path: newurl }, '', newurl);
+
     this.enemies.forEach(function (enemy) {
         enemy.player.kill()
     })
 
     this.enemies = []
 
-    data.players.forEach((player) => {
+    data.room.players.forEach((player) => {
         if (player.id === ('/#' + this.socket.id))
             return
 

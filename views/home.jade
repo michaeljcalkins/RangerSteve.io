@@ -2,12 +2,39 @@ extends layout
 
 block content
     section.main-section
-        .main-table
-            .main-row
-                .main-cell
-                    .row
-                        .col-sm-12.text-center
-                            .main-header Ranger Steve: Buffalo Invasion
-                    .row
-                        .col-sm-12.text-center
-                            a.btn.btn-primary.btn-lg(href="/game") Play Alpha Now
+        .container
+            .main-table
+                .main-row
+                    .main-cell
+                        .row
+                            .col-sm-12.text-center
+                                .main-header Ranger Steve: Buffalo Invasion
+                        .row
+                            .col-sm-4.col-sm-offset-4
+                                a.btn.btn-primary.btn-block.btn-lg(href="/game") Play Now
+                                //- .well
+                                //-     form(action="/join", method="post")
+                                //-         .form-group
+                                //-             label Nickname
+                                //-             input.form-control(type="text", name="nickname")
+                                //-         .form-group
+                                //-             label Gamemode
+                                //-             select.form-control(disabled="true", name="gamemode")
+                                //-                 option(value="deathmatch") Deathmatch
+                                //-         .form-group
+                                //-             label Primary Gun
+                                //-             select.form-control(name="primary-gun")
+                                //-                 option(value="1") AK-47
+                                //-                 option(value="1") M4A1
+                                //-                 option(value="1") MP5
+                                //-                 option(value="1") Spas12
+                                //-                 option(value="1") Barret M90
+                                //-                 option(value="1") M79
+                                //-                 option(value="1") M249
+                                //-         .form-group
+                                //-             label Secondary Gun
+                                //-             select.form-control(name="secondary-gun")
+                                //-                 option(value="1") Desert Eagle
+                                //-                 option(value="1") RPG
+                                //-         .form-group
+                                //-             button.btn.btn-primary.btn-block.btn-lg Play Now
