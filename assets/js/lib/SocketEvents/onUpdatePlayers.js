@@ -7,7 +7,7 @@ module.exports = function(data) {
 
     this.roomId = data.room.id
 
-    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?room=' + data.room.id;
+    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id;
     window.history.pushState({ path: newurl }, '', newurl);
 
     this.enemies.forEach(function (enemy) {
