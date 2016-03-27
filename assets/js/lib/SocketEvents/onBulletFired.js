@@ -10,6 +10,7 @@ module.exports = function(data) {
 
     let newEnemyBullet = this.enemyBullets.create(data.x, data.y, 'bullet12')
     newEnemyBullet.bulletId = data.bulletId
+    newEnemyBullet.playerId = data.playerId
     newEnemyBullet.rotation = data.pointerAngle
     newEnemyBullet.height = data.height
     newEnemyBullet.width = data.width

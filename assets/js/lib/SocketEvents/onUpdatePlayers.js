@@ -17,8 +17,10 @@ module.exports = function(data) {
     this.enemies = []
 
     data.room.players.forEach((player) => {
-        if (player.id === ('/#' + this.socket.id))
+        if (player.id === ('/#' + this.socket.id)) {
+            this.scoreText.text = player.meta.score
             return
+        }
 
         let newRemotePlayer = RemotePlayer.call(this, player.id, this.game, this.player, player.x, player.y)
         this.enemies.push(newRemotePlayer)

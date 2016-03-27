@@ -141,11 +141,13 @@ module.exports = function() {
         this.game.height = window.innerHeight
         this.game.width = window.innerWidth
 
-        this.healthText.cameraOffset.y = this.camera.height - 45
-        this.weaponText.cameraOffset.y = this.camera.height - 45
+        setTimeout(() => {
+            this.healthText.cameraOffset.y = this.camera.height - 45
+            this.weaponText.cameraOffset.y = this.camera.height - 45
 
-        this.scoreText.cameraOffset.x = 25
-        this.scoreText.cameraOffset.y = 25
+            this.scoreText.cameraOffset.x = 25
+            this.scoreText.cameraOffset.y = 25
+        }, 200)
     })
 
 

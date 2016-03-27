@@ -27,7 +27,8 @@ module.exports = function() {
         this.socket.emit('player damaged', {
             roomId: this.roomId,
             damage: this.weapons[this.currentWeapon].damage,
-            damagedPlayerId: '/#' + this.socket.id
+            damagedPlayerId: '/#' + this.socket.id,
+            attackingPlayerId: bullet.playerId
         })
 
         return false

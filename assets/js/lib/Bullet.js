@@ -27,6 +27,7 @@ Bullet.prototype.fire = function (x, y, angle, speed, gx, gy, socket, roomId) {
     socket.emit('bullet fired', {
         roomId: roomId,
         bulletId: this.bulletId,
+        playerId: '/#' + socket.id,
         x,
         y,
         angle,
