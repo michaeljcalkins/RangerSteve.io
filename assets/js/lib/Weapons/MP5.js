@@ -12,7 +12,7 @@ let AK47 = function (config) {
 
     this.damage = 18
     this.nextFire = 0
-    this.bulletSpeed = 1800
+    this.bulletSpeed = 2350
     this.fireRate = 110
 
     for (var i = 0; i < 64; i++)
