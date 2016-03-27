@@ -42,6 +42,7 @@ AK47.prototype.fire = function(player, socket, roomId) {
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate
+    this.fx.volume = .3
     this.fx.play()
 }
 

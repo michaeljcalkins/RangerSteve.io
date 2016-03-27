@@ -12,4 +12,6 @@ module.exports = function() {
     this.load.audio('BarretM90-sound', '/audio/BarretM90.ogg')
     this.load.audio('M249-sound', '/audio/M249.ogg')
     this.load.audio('MP5-sound', '/audio/MP5.ogg')
+    this.load.audio('DesertEagle-sound', '/audio/DesertEagle.ogg')
+    this.load.audio('M4A1-sound', '/audio/M4A1.ogg')
 }

@@ -7,12 +7,12 @@ let AK47 = function (config) {
     Phaser.Group.call(this, config.game, config.game.world, 'M4A1', false, true, Phaser.Physics.ARCADE);
 
     //	Here we set-up our audio sprite
-    this.fx = config.game.add.audio('AK47-sound')
+    this.fx = config.game.add.audio('M4A1-sound')
     this.allowMultiple = true
 
     this.damage = 20
     this.nextFire = 0
-    this.bulletSpeed = 1800
+    this.bulletSpeed = 2400
     this.fireRate = 150;
 
     for (var i = 0; i < 64; i++)
@@ -42,6 +42,7 @@ AK47.prototype.fire = function(player, socket, roomId) {
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate
+    this.fx.volume = .3
     this.fx.play()
 }
 
