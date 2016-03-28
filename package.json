@@ -12,6 +12,7 @@
     "express": "~4.13.1",
     "human-readable-ids": "^1.0.1",
     "jade": "~1.11.0",
+    "lodash": "^4.6.1",
     "morgan": "~1.6.1",
     "node-sprite-generator": "^0.10.1",
     "serve-favicon": "~2.3.0",
