@@ -1,40 +1,34 @@
 extends layout
 
 block content
-    section.main-section
-        .container
-            .main-table
-                .main-row
-                    .main-cell
-                        .row
-                            .col-sm-12.text-center
-                                .main-header Ranger Steve: Buffalo Invasion
-                        .row
-                            .col-sm-4.col-sm-offset-4
-                                a.btn.btn-primary.btn-block.btn-lg(href="/game") Play Now
-                                //- .well
-                                //-     form(action="/join", method="post")
-                                //-         .form-group
-                                //-             label Nickname
-                                //-             input.form-control(type="text", name="nickname")
-                                //-         .form-group
-                                //-             label Gamemode
-                                //-             select.form-control(disabled="true", name="gamemode")
-                                //-                 option(value="deathmatch") Deathmatch
-                                //-         .form-group
-                                //-             label Primary Gun
-                                //-             select.form-control(name="primary-gun")
-                                //-                 option(value="1") AK-47
-                                //-                 option(value="1") M4A1
-                                //-                 option(value="1") MP5
-                                //-                 option(value="1") Spas12
-                                //-                 option(value="1") Barret M90
-                                //-                 option(value="1") M79
-                                //-                 option(value="1") M249
-                                //-         .form-group
-                                //-             label Secondary Gun
-                                //-             select.form-control(name="secondary-gun")
-                                //-                 option(value="1") Desert Eagle
-                                //-                 option(value="1") RPG
-                                //-         .form-group
-                                //-             button.btn.btn-primary.btn-block.btn-lg Play Now
+    section.main-section.text-center
+        .align-middle
+            div
+                .main-header Ranger Steve
+                .sub-header Buffalo Invasion
+                a.btn.btn-primary.btn-block.btn-lg(href="/game") Play Now
+
+    .container 
+        .section-wrapper
+            section.white-section
+                video.fullscreen-video(loop, muted, autoplay, poster="/images/BG/BG.png")
+                    //- source(src="", type="video/webm")
+                    source(src="/video/home-video.mp4", type="video/mp4")
+                    //- source(src="", type="video/ogg")
+
+            section.white-section
+                h1 Play With Your Friends Instantly
+            section.gray-section
+                h1 All Your Favorite Weapons 
+            section.white-section
+                h1 Fast Paced and Intense Gameplay
+            section.gray-section
+                h1 Leaderboards
+            section.white-section
+                h1 Score Stealing
+            section.gray-section
+                h1 The Wild Buffalo
+            section.white-section
+                h1 Kill Streak Bonuses
+            section.gray-section
+                h1 No Fancy Graphics Card Required

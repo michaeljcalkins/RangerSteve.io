@@ -29,7 +29,7 @@ module.exports = {
     "M4A1": require('./M4A1'),
     "M79": require('./M79'),
     "M249": require('./M249'),
-    "MP5": require('./MP5')
+    "MP5": require('./MP5'),
     // "RPG": require('./RPG'),
-    // "Spas12": require('./Spas12')
+    "Spas12": require('./Spas12')
 }

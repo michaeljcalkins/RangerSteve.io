@@ -3,7 +3,7 @@
 let Bullet = require('../Bullet')
 let Guid = require('../Guid')
 
-let AK47 = function (config) {
+let MP5 = function (config) {
     Phaser.Group.call(this, config.game, config.game.world, 'MP5', false, true, Phaser.Physics.ARCADE);
 
     //	Here we set-up our audio sprite
@@ -22,21 +22,21 @@ let AK47 = function (config) {
         bullet.height = 2
         bullet.width = 40
         bullet.damage = 22
-        this.add(bullet, true);
+        this.add(bullet, true)
     }
 
     return this
 }
 
-AK47.prototype = Object.create(Phaser.Group.prototype);
-AK47.prototype.constructor = AK47;
+MP5.prototype = Object.create(Phaser.Group.prototype)
+MP5.prototype.constructor = MP5
 
-AK47.prototype.fire = function(player, socket, roomId) {
+MP5.prototype.fire = function(player, socket, roomId) {
     if (this.game.time.time < this.nextFire)
         return
 
-    var x = player.x + 15;
-    var y = player.y + 30;
+    var x = player.x + 15
+    var y = player.y + 30
 
     this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0, socket, roomId)
     this.setAll('tracking', true)
@@ -45,4 +45,4 @@ AK47.prototype.fire = function(player, socket, roomId) {
     this.fx.play()
 }
 
-module.exports = AK47
+module.exports = MP5

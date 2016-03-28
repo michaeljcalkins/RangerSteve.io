@@ -103,9 +103,9 @@ module.exports = function() {
         // new Weapons.RPG({
         //     game: this.game
         // }),
-        // new Weapons.Spas12({
-        //     game: this.game
-        // })
+        new Weapons.Spas12({
+            game: this.game
+        })
     ]
 
 
