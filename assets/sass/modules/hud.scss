@@ -1,0 +1,87 @@
+.hud-item {
+    font-family: Righteous;
+    position: absolute;
+    background: rgba(0, 0, 0, .4) no-repeat 10px;
+    background-size: 28px;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 34px;
+    text-align: right;
+    padding: 7px 10px 0 0;
+    line-height: 34px;
+}
+
+.hud-settings {
+    background: url(/images/icons/cog-32.png);
+    background-size: 29px;
+    padding: 0;
+    right: 190px;
+    top: 20px;
+    height: 29px;
+    width: 29px;
+}
+
+.hud-score {
+    background-image: url(/images/icons/trophy-32-white.png);
+    height: 48px;
+    left: 20px;
+    top: 20px;
+    width: 117px;
+}
+
+.hud-health {
+    background-image: url(/images/icons/plus-4-32-white.png);
+    background-size: 27px;
+    bottom: 20px;
+    height: 48px;
+    left: 20px;
+    width: 117px;
+}
+
+.hud-leaderboard {
+    right: 20px;
+    top: 20px;
+    width: 160px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 10px;
+
+    h1 {
+        font-size: 18px;
+        font-family: Righteous;
+        font-weight: bold;
+        margin: 0 0 5px;
+    }
+
+    ol {
+        margin: 0 0 0 23px;
+        padding: 0;
+    }
+}
+
+.hud-ammo {
+    background-image: url(/images/icons/ammo-tin-32-white.png);
+    background-size: 26px;
+    background-position: 7px 10px;
+    bottom: 20px;
+    height: 48px;
+    font-size: 29px;
+    right: 20px;
+    width: 117px;
+    padding: 4px 10px 0 0;
+
+    .progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        border-radius: 0 0 3px 3px;
+        height: 5px;
+
+        .progress-bar {
+            background: #F5A623;
+        }
+    }
+}

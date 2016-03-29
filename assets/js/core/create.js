@@ -114,14 +114,14 @@ module.exports = function() {
      */
     let textStyles = { fontSize: '24px', fill: '#000' }
 
-    this.scoreText = this.add.text(25, 25, 'Score: 0', textStyles)
-    this.scoreText.fixedToCamera = true
-
-    this.weaponText = this.add.text(this.camera.x + 120, this.camera.height - 45, 'AK-47', textStyles)
-    this.weaponText.fixedToCamera = true
-
-    this.healthText = this.add.text(this.camera.x + 25, this.camera.height - 45, this.player.meta.health, textStyles)
-    this.healthText.fixedToCamera = true
+    // this.scoreText = this.add.text(25, 25, 'Score: 0', textStyles)
+    // this.scoreText.fixedToCamera = true
+    //
+    // this.weaponText = this.add.text(this.camera.x + 120, this.camera.height - 45, 'AK-47', textStyles)
+    // this.weaponText.fixedToCamera = true
+    //
+    // this.healthText = this.add.text(this.camera.x + 25, this.camera.height - 45, this.player.meta.health, textStyles)
+    // this.healthText.fixedToCamera = true
 
 
     /**

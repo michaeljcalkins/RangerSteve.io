@@ -1,6 +1,27 @@
 extends layout
 
 block content
+    .hud-score.hud-item 34
+    .hud-health.hud-item 100
+    .hud-leaderboard.hud-item
+        h1 Leaderboard
+        ol
+            li LavaEagle
+            li Nomad
+            li JohnnyLegend
+            li BIGDAWGROB
+            li magicmike87
+            li KIAWNATHEKID
+            li nomoretime
+            li f4tal3rr0r
+            li ImRickJames
+            li Drewpy
+    .hud-ammo.hud-item 
+        | 30
+        .progress
+            .progress-bar(style="width: 60%")
+    .hud-settings.hud-item
+
     script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js")
     script(src="/javascripts/phaser.min.js")
     script(src="/javascripts/socket.io.js")

@@ -1,0 +1,25 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    background: #F2F2F2 !important;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #00B7FF;
+}
+
+section {
+    position: relative;
+    width: 100%;
+}
