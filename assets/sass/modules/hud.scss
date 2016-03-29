@@ -3,12 +3,11 @@
     background: rgba(0, 0, 0, .4) no-repeat 10px;
     border-radius: 3px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
-    border: 3px solid white;
     color: #fff;
     font-family: Righteous;
     font-size: 34px;
     line-height: 34px;
-    padding: 7px 10px 0 0;
+    padding: 10px 10px 0 0;
     position: absolute;
     text-align: right;
 }
@@ -73,7 +72,7 @@
     font-size: 29px;
     right: 20px;
     width: 117px;
-    padding: 4px 10px 0 0;
+    padding: 7px 10px 0 0;
 
     .progress {
         position: absolute;
@@ -90,22 +89,22 @@
 }
 
 .hud-weapon-options {
-    position: absolute;
-    bottom: 20px;
-    width: 546px;
-    height: 54px;
     background: rgba(0, 0, 0, .4) no-repeat 10px;
+    border-radius: 3px;
+    bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    height: 54px;
     left: 50%;
     margin-left: -270px;
-    border-radius: 3px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
-    border: 3px solid white;
+    position: absolute;
+    width: 540px;
 
     div {
-        border-right: 3px solid white;
-        height: 48px;
-        width: 54px;
+        border-right: 1px solid rgba(0, 0, 0, .5);
         float: left;
+        height: 54px;
+        position: relative;
+        width: 54px;
 
         &:last-child {
             border: 0;
@@ -113,7 +112,10 @@
     }
 
     span {
+        position: absolute;
         color: white;
-        padding: 5px 0 0 5px;
+        font-weight: bold;
+        top: 2px;
+        left: 6px;
     }
 }
