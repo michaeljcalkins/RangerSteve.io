@@ -7,6 +7,10 @@ html, body {
     background: #F2F2F2 !important;
 }
 
+html {
+    overflow: hidden;
+}
+
 body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     margin: 0;
@@ -78,6 +82,25 @@ section {
     clear: both;
     min-height: 300px;
     float: left;
+
+    h1 {
+        padding: 50px 50px 10px 50px;
+    }
+
+    p {
+        padding: 0 50px 50px;
+        color: #5a5a61;
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
+    img {
+        padding: 40px 25px;
+    }
+}
+
+.highlight-features {
+    padding: 40px 0 30px;
 }
 
 .gray-section {
