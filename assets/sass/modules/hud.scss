@@ -81,6 +81,7 @@
         right: 0;
         margin: 0;
         height: 5px;
+        border-radius: 0 0 3px 3px;
 
         .progress-bar {
             background: #F5A623;
@@ -117,5 +118,22 @@
         font-weight: bold;
         top: 2px;
         left: 6px;
+    }
+}
+
+.hud-settings-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    .well {
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+
+    .thumbnail {
+        float: left;
+        margin-bottom: 10px;
+        margin-right: 10px;
     }
 }

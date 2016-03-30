@@ -47,7 +47,7 @@ gulp.task('js', function() {
         .transform("babelify", {
             global: true,
             extensions: [".js"],
-            presets: ["es2015"]
+            presets: ["es2015", "react"]
         })
         .bundle()
         .on('error', handleError)
