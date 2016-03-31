@@ -57,7 +57,7 @@ RangerSteveGame.prototype = {
 
         this.weapons[this.currentWeapon].visible = true
 
-        this.weaponText.text = this.weapons[this.currentWeapon].name
+        // this.weaponText.text = this.weapons[this.currentWeapon].name
     },
 
     setEventHandlers: SocketEvents.setEventHandlers,

@@ -5,5 +5,5 @@ module.exports = function(data) {
         return
 
     this.player.meta.health = data.health
-    this.healthText.text = this.player.meta.health
+    // this.healthText.text = this.player.meta.health
 }

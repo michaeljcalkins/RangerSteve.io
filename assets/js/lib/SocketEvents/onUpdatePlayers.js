@@ -18,7 +18,7 @@ module.exports = function(data) {
 
     data.room.players.forEach((player) => {
         if (player.id === ('/#' + this.socket.id)) {
-            this.scoreText.text = player.meta.score
+            // this.scoreText.text = player.meta.score
             return
         }
 
