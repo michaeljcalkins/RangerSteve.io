@@ -4,7 +4,8 @@ import EventHandler from '../../lib/EventHandler'
 import {
     HudHealth,
     HudScore,
-    HudWeaponsInventory
+    HudWeaponsInventory,
+    HudLeaderboard
 } from '../components/Hud'
 
 export default class GameUiContainer extends React.Component {
@@ -12,9 +13,10 @@ export default class GameUiContainer extends React.Component {
         super(props)
 
         this.state = {
-            health: '',
-            score: '',
-            currentWeapon: 1
+            health: '100',
+            score: '0',
+            currentWeapon: 1,
+            players: []
         }
     }
 
@@ -30,6 +32,10 @@ export default class GameUiContainer extends React.Component {
         EventHandler.on('weapon update', (currentWeapon) => {
             this.setState({ currentWeapon })
         })
+
+        EventHandler.on('players update', (players) => {
+            this.setState({ players })
+        })
     }
 
     render() {
@@ -43,6 +49,9 @@ export default class GameUiContainer extends React.Component {
                 />
                 <HudWeaponsInventory
                     currentWeapon={ this.state.currentWeapon }
+                />
+                <HudLeaderboard
+                    players={ this.state.players }
                 />
             </div>
         )

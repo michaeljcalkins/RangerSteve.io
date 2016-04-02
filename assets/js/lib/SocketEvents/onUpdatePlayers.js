@@ -17,6 +17,8 @@ module.exports = function(data) {
 
     this.enemies = []
 
+    EventHandler.emit('players update', data.room.players)
+
     data.room.players.forEach((player) => {
         if (player.id === ('/#' + this.socket.id)) {
             EventHandler.emit('score update', String(player.meta.score))

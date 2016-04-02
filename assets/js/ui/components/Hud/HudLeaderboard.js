@@ -1,26 +1,31 @@
 import React, { PropTypes } from 'react'
 
 export default function HudLeaderboard({
+    players
 }) {
+    function renderPlayersListItems() {
+        let sortedPlayers = players
+            .sort(function(a, b) {
+                return a.meta.score < b.meta.score
+            })
+            .slice(0, 9)
+        return sortedPlayers.map((player, index) => {
+            return (
+                <li key={ index }>{ player.id }</li>
+            )
+        })
+    }
+
     return (
         <div className="hud-leaderboard hud-item">
             <h1>Leaderboard</h1>
             <ol>
-                <li>LavaEagle</li>
-                <li>Nomad</li>
-                <li>JohnnyLegend</li>
-                <li>BIGDAWGROB</li>
-                <li>magicmike87</li>
-                <li>KIAWNATHEKID</li>
-                <li>nomoretime</li>
-                <li>f4tal3rr0r</li>
-                <li>ImRickJames</li>
-                <li>Drewpy</li>
+                { renderPlayersListItems() }
             </ol>
         </div>
     )
 }
 
 HudLeaderboard.propTypes = {
-
+    players: PropTypes.array.isRequired
 }
