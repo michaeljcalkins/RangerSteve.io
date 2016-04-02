@@ -1,10 +1,11 @@
 'use strict'
 
-let ForestCtf = require('../maps/ForestCtf')
+let HighRuleDesert = require('../maps/HighRuleDesert')
 let Weapons = require('../lib/Weapons')
+import EventHandler from '../lib/EventHandler'
 
-let worldWidth = 4000
-let worldHeight = 1500
+let worldWidth = 8000
+let worldHeight = 3966
 
 module.exports = function() {
     // Define movement constants
@@ -33,13 +34,15 @@ module.exports = function() {
     /**
      * Map
      */
-    ForestCtf.create.call(this)
+    HighRuleDesert.create.call(this)
+
 
     /**
      * Player Settings
      */
-    let spawnPoint = ForestCtf.getRandomSpawnPoint.call(this)
-    this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'dude')
+    let spawnPoint = HighRuleDesert.getRandomSpawnPoint.call(this)
+    this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
+    this.player.scale.setTo(.25, .25)
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
@@ -55,6 +58,7 @@ module.exports = function() {
 
     // Add drag to the player that slows them down when they are not accelerating
     this.player.body.drag.setTo(this.DRAG, 0) // x, y
+    this.player.body.setSize(300, 290, 0, -3)
     this.player.meta = {
         health: 100
     }
@@ -66,8 +70,8 @@ module.exports = function() {
     this.jumping = false
 
     //  Our two animations, walking left and right.
-    this.player.animations.add('left', [0, 1, 2, 3], 10, true)
-    this.player.animations.add('right', [5, 6, 7, 8], 10, true)
+    this.player.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true)
+    this.player.animations.add('right', [8, 9, 10, 11, 12, 13], 10, true)
 
     this.player.meta = {
         health: 100
@@ -112,16 +116,16 @@ module.exports = function() {
     /**
      * Text
      */
-    let textStyles = { fontSize: '24px', fill: '#000' }
+    let textStyles = { fontSize: '14px', fill: '#000' }
 
-    // this.scoreText = this.add.text(25, 25, 'Score: 0', textStyles)
-    // this.scoreText.fixedToCamera = true
-    //
+    EventHandler.emit('score update', '')
+    EventHandler.emit('health update', '')
+
     // this.weaponText = this.add.text(this.camera.x + 120, this.camera.height - 45, 'AK-47', textStyles)
     // this.weaponText.fixedToCamera = true
-    //
-    // this.healthText = this.add.text(this.camera.x + 25, this.camera.height - 45, this.player.meta.health, textStyles)
-    // this.healthText.fixedToCamera = true
+
+    this.positionText = this.add.text(25, 25, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
+    this.positionText.fixedToCamera = true
 
 
     /**
@@ -140,14 +144,6 @@ module.exports = function() {
         this.game.scale.refresh()
         this.game.height = window.innerHeight
         this.game.width = window.innerWidth
-
-        setTimeout(() => {
-            this.healthText.cameraOffset.y = this.camera.height - 45
-            this.weaponText.cameraOffset.y = this.camera.height - 45
-
-            this.scoreText.cameraOffset.x = 25
-            this.scoreText.cameraOffset.y = 25
-        }, 200)
     })
 
 

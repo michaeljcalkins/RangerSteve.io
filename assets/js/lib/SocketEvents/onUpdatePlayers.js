@@ -1,6 +1,7 @@
 'use strict'
 
 let RemotePlayer = require('../RemotePlayer')
+import EventHandler from '../EventHandler'
 
 module.exports = function(data) {
     console.log('update players', data)
@@ -18,7 +19,8 @@ module.exports = function(data) {
 
     data.room.players.forEach((player) => {
         if (player.id === ('/#' + this.socket.id)) {
-            // this.scoreText.text = player.meta.score
+            EventHandler.emit('score update', String(player.meta.score))
+            EventHandler.emit('health update', String(player.meta.health))
             return
         }
 

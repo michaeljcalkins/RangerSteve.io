@@ -46,7 +46,7 @@ module.exports = function() {
         // Stand still
         this.player.body.acceleration.x = 0
         this.player.animations.stop()
-        this.player.frame = 4
+        this.player.frame = 7
     }
 
     // Set a variable that is true when the player is touching the ground
@@ -74,6 +74,8 @@ module.exports = function() {
     {
         this.weapons[this.currentWeapon].fire(this.player, this.socket, this.roomId)
     }
+
+    this.positionText.text = `${this.game.input.mousePointer.x}, ${this.game.input.mousePointer.y}`
 
     this.socket.emit('move player', {
         roomId: this.roomId,
