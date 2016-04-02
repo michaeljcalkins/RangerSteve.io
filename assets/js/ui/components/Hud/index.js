@@ -1,15 +1,15 @@
-// import HudAmmo from './HudAmmo'
+import HudAmmo from './HudAmmo'
 import HudHealth from './HudHealth'
-// import HudLeaderboard from './HudLeaderboard'
+import HudLeaderboard from './HudLeaderboard'
 import HudScore from './HudScore'
-// import HudSettingsButton from './HudSettingsButton'
-// import HudWeaponsInventory from './HudWeaponsInventory'
+import HudSettingsButton from './HudSettingsButton'
+import HudWeaponsInventory from './HudWeaponsInventory'
 
 export {
-    // HudAmmo,
+    HudAmmo,
     HudHealth,
-    // HudLeaderboard,
+    HudLeaderboard,
     HudScore,
-    // HudSettingsButton,
-    // HudWeaponsInventory
+    HudSettingsButton,
+    HudWeaponsInventory
 }

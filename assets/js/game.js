@@ -34,30 +34,18 @@ RangerSteveGame.prototype = {
     upInputIsActive: InputHandler.upInputIsActive,
     upInputReleased: InputHandler.upInputReleased,
 
-    nextWeapon: function() {
-        //  Tidy-up the current weapon
-        if (this.currentWeapon > 9)
-        {
-            this.weapons[this.currentWeapon].reset()
-        }
-        else
-        {
-            this.weapons[this.currentWeapon].visible = false
-            this.weapons[this.currentWeapon].callAll('reset', null, 0, 0)
-            this.weapons[this.currentWeapon].setAll('exists', false)
-        }
+    setCurrentWeapon: function(newCurrentWeapon) {
+        if (newCurrentWeapon === this.weapons.length)
+            newCurrentWeapon = 0
+
+        //  Reset current weapon
+        this.weapons[this.currentWeapon].visible = false
+        this.weapons[this.currentWeapon].callAll('reset', null, 0, 0)
+        this.weapons[this.currentWeapon].setAll('exists', false)
 
         //  Activate the new one
-        this.currentWeapon++
-
-        if (this.currentWeapon === this.weapons.length)
-        {
-            this.currentWeapon = 0
-        }
-
+        this.currentWeapon = newCurrentWeapon
         this.weapons[this.currentWeapon].visible = true
-
-        // this.weaponText.text = this.weapons[this.currentWeapon].name
     },
 
     setEventHandlers: SocketEvents.setEventHandlers,

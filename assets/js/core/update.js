@@ -1,5 +1,7 @@
 'use strict'
 
+import EventHandler from '../lib/EventHandler'
+
 module.exports = function() {
     // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms, null, null, this)
@@ -73,6 +75,56 @@ module.exports = function() {
     if (this.game.input.activePointer.isDown)
     {
         this.weapons[this.currentWeapon].fire(this.player, this.socket, this.roomId)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.ONE)) {
+        this.setCurrentWeapon(0)
+        EventHandler.emit('weapon update', 1)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.TWO)) {
+        this.setCurrentWeapon(1)
+        EventHandler.emit('weapon update', 2)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.THREE)) {
+        this.setCurrentWeapon(2)
+        EventHandler.emit('weapon update', 3)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.FOUR)) {
+        this.setCurrentWeapon(3)
+        EventHandler.emit('weapon update', 4)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.FIVE)) {
+        this.setCurrentWeapon(4)
+        EventHandler.emit('weapon update', 5)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.SIX)) {
+        this.setCurrentWeapon(5)
+        EventHandler.emit('weapon update', 6)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.SEVEN)) {
+        this.setCurrentWeapon(6)
+        EventHandler.emit('weapon update', 7)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.EIGHT)) {
+        this.setCurrentWeapon(7)
+        EventHandler.emit('weapon update', 8)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.NINE)) {
+        this.setCurrentWeapon(8)
+        EventHandler.emit('weapon update', 9)
+    }
+
+    if (this.input.keyboard.isDown(Phaser.Keyboard.ZERO)) {
+        this.setCurrentWeapon(9)
+        EventHandler.emit('weapon update', 0)
     }
 
     this.positionText.text = `${this.game.input.mousePointer.x}, ${this.game.input.mousePointer.y}`

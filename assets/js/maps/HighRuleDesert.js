@@ -99,15 +99,6 @@ HighRuleDesert.createLedges = function() {
         let text = this.game.add.text(ledge.x, ledge.y, ledge.id, style)
         text.alpha = 0.2
     })
-
-    let poly = new Phaser.Polygon([ new Phaser.Point(200, 100), new Phaser.Point(350, 100), new Phaser.Point(375, 200), new Phaser.Point(150, 200) ]);
-
-    let graphics = this.game.add.graphics(0, 0);
-
-    graphics.beginFill(0xFF33ff);
-    graphics.drawPolygon(poly.points);
-    graphics.endFill();
-
 }
 
 module.exports = HighRuleDesert

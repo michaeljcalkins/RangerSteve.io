@@ -95,21 +95,24 @@ module.exports = function() {
         new Weapons.M4A1({
             game: this.game
         }),
-        // new Weapons.M79({
-        //     game: this.game
-        // }),
+        new Weapons.MP5({
+            game: this.game
+        }),
         new Weapons.M249({
             game: this.game
         }),
         new Weapons.MP5({
             game: this.game
         }),
-        // new Weapons.RPG({
-        //     game: this.game
-        // }),
+        new Weapons.MP5({
+            game: this.game
+        }),
         new Weapons.Spas12({
             game: this.game
-        })
+        }),
+        new Weapons.MP5({
+            game: this.game
+        }),
     ]
 
 
@@ -132,9 +135,6 @@ module.exports = function() {
      * Camera Settings
      */
     this.camera.follow(this.player)
-
-    let changeKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER)
-    changeKey.onDown.add(this.nextWeapon, this)
 
 
     /**

@@ -89,38 +89,6 @@
     }
 }
 
-.hud-weapon-options {
-    background: rgba(0, 0, 0, .4) no-repeat 10px;
-    border-radius: 3px;
-    bottom: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
-    height: 54px;
-    left: 50%;
-    margin-left: -270px;
-    position: absolute;
-    width: 540px;
-
-    div {
-        border-right: 1px solid rgba(0, 0, 0, .5);
-        float: left;
-        height: 54px;
-        position: relative;
-        width: 54px;
-
-        &:last-child {
-            border: 0;
-        }
-    }
-
-    span {
-        position: absolute;
-        color: white;
-        font-weight: bold;
-        top: 2px;
-        left: 6px;
-    }
-}
-
 .hud-settings-modal {
     position: absolute;
     top: 50%;
