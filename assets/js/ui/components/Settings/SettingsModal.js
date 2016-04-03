@@ -4,7 +4,9 @@ export default function SettingsModal({
     isOpen,
     onClose,
     onSoundEffectVolumeChange,
-    onNicknameChange
+    onNicknameChange,
+    defaultNicknameValue,
+    defaultSoundEffectValue
 }) {
     function handleNicknameChange(evt) {
         onNicknameChange(evt.target.value)
@@ -37,17 +39,19 @@ export default function SettingsModal({
                             <input
                                 className="form-control"
                                 onChange={ handleNicknameChange }
+                                defaultValue={ defaultNicknameValue }
                                 type="text"
                             />
                         </div>
                         <div className="form-group">
                             <label htmlFor="">Sound Effects Volume</label>
                             <input
+                                defaultValue={ defaultSoundEffectValue }
                                 max="1"
                                 min="0"
+                                onChange={ handleSoundEffectVolumeChange }
                                 step=".01"
                                 type="range"
-                                onChange={ handleSoundEffectVolumeChange }
                             />
                         </div>
                     </div>

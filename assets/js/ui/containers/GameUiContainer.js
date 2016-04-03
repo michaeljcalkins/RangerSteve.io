@@ -20,6 +20,7 @@ export default class GameUiContainer extends React.Component {
             currentWeapon: 1,
             players: [],
             volume: .5,
+            nickname: 'Unamed Ranger',
             settingsModalOpen: false
         }
 
@@ -52,8 +53,9 @@ export default class GameUiContainer extends React.Component {
         })
     }
 
-    handleNicknameChange(value) {
-        console.log('change nickname', value)
+    handleNicknameChange(nickname) {
+        EventHandler.emit('player update nickname', { nickname })
+        this.setState({ nickname })
     }
 
     handleSoundEffectVolumeChange(value) {
@@ -79,6 +81,8 @@ export default class GameUiContainer extends React.Component {
                     onButtonClick={ this.handleSettingsButtonClick }
                 />
                 <SettingsModal
+                    defaultNicknameValue={ this.state.nickname }
+                    defaultSoundEffectValue={ this.state.volume }
                     isOpen={ this.state.settingsModalOpen }
                     onClose={ this.handleSettingsButtonClick }
                     onNicknameChange={ this.handleNicknameChange }
