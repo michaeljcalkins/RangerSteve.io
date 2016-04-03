@@ -5,8 +5,10 @@ import {
     HudHealth,
     HudScore,
     HudWeaponsInventory,
-    HudLeaderboard
+    HudLeaderboard,
+    HudSettingsButton
 } from '../components/Hud'
+import SettingsModal from '../components/Settings/SettingsModal'
 
 export default class GameUiContainer extends React.Component {
     constructor(props) {
@@ -16,8 +18,11 @@ export default class GameUiContainer extends React.Component {
             health: '100',
             score: '0',
             currentWeapon: 1,
-            players: []
+            players: [],
+            settingsModalOpen: false
         }
+
+        this.handleSettingsButtonClick = this.handleSettingsButtonClick.bind(this)
     }
 
     componentDidMount() {
@@ -38,6 +43,12 @@ export default class GameUiContainer extends React.Component {
         })
     }
 
+    handleSettingsButtonClick() {
+        this.setState({
+            settingsModalOpen: !this.state.settingsModalOpen
+        })
+    }
+
     render() {
         return (
             <div>
@@ -52,6 +63,13 @@ export default class GameUiContainer extends React.Component {
                 />
                 <HudLeaderboard
                     players={ this.state.players }
+                />
+                <HudSettingsButton
+                    onButtonClick={ this.handleSettingsButtonClick }
+                />
+                <SettingsModal
+                    isOpen={ this.state.settingsModalOpen }
+                    onClose={ this.handleSettingsButtonClick }
                 />
             </div>
         )

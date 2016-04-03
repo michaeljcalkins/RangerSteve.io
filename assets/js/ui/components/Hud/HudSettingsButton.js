@@ -6,7 +6,7 @@ export default function HudSettingsButton({
     return (
         <div
             className="hud-settings hud-item"
-            onButtonClick={ onButtonClick }
+            onClick={ onButtonClick }
         ></div>
     )
 }

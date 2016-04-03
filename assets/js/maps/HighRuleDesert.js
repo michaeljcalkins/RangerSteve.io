@@ -63,9 +63,9 @@ HighRuleDesert.createLedges = function() {
         { id: 4, x: 3872, y: this.game.world.height - 835, width: 128, height: 92 }, // Right top ledge
 
         // Ground Ledges
-        { id: 5, x: 363, y: this.game.world.height - 2105, width: 8150, height: 300 }, // Main bottom starting left ledge
-        { id: 6, x: 474, y: this.game.world.height - 256, width: 641, height: 260 }, // Main bottom left ledge
-        { id: 7, x: 1115, y: this.game.world.height - 384, width: 1785, height: 390 }, // Main bottom center ledge
+        { id: 5, x: 363, y: this.game.world.height - 2105, width: 1150, height: 300 }, // Main bottom starting left ledge
+        { id: 6, x: 1510, y: this.game.world.height - 2185, width: 270, height: 260 }, // Main bottom left ledge
+        { id: 7, x: 1510, y: this.game.world.height - 2185, width: 270, height: 260 }, // Main bottom left ledge
         { id: 8, x: 2900, y: this.game.world.height - 256, width: 641, height: 260 }, // Main bottom right ledge
         { id: 9, x: 3540, y: this.game.world.height - 128, width: 474, height: 128 }, // Main bottom starting right ledge
 
