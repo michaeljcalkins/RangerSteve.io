@@ -17,74 +17,74 @@
 
         &:first-child {
             border-radius: 5px 0 0 0;
-
-            img {
-                width: 120px;
-                top: 10px;
-                left: -35px;
-            }
         }
 
-        &:nth-child(2) img {
+        &:last-child {
+            border-radius: 0 5px 0 0;
+        }
+
+        &.active {
+            background: #DDB400;
+        }
+
+        &.weapon-ak47 img {
+            width: 120px;
+            top: 10px;
+            left: -35px;
+        }
+
+        &.weapon-barrett img {
             width: 140px;
             top: 0px;
             left: -46px;
         }
 
-        &:nth-child(3) img {
+        &.weapon-m4a1 img {
             width: 110px;
             top: 10px;
             left: -25px;
         }
 
-        &:nth-child(4) img {
+        &.weapon-desert-eagle img {
             width: 45px;
             top: 16px;
             left: 10px;
         }
 
-        &:nth-child(5) img {
+        &.weapon-aug img {
             width: 110px;
             top: 10px;
             left: -25px;
         }
 
-        &:nth-child(6) img {
+        &.weapon-p90 img {
             width: 75px;
             top: 15px;
             left: -4px;
         }
 
-        &:nth-child(7) img {
+        &.weapon-skorpion img {
             width: 55px;
             top: 12px;
             left: 5px;
         }
 
-        &:nth-child(8) img {
+        &.weapon-m500 img {
             width: 130px;
             top: 10px;
             left: -35px;
         }
 
-        &:nth-child(9) img {
+        &.weapon-g43 img {
             width: 130px;
             top: 10px;
             left: -35px;
         }
 
-        &:last-child {
-            border-radius: 0 5px 0 0;
-
-            img {
-                width: 150px;
-                top: 30px;
-                left: -35px;
-            }
-        }
-
-        &.active {
-            background: #DDB400;
+        &.weapon-rpg img {
+            width: 150px;
+            top: 30px;
+            left: -35px;
         }
     }
 

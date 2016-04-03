@@ -89,6 +89,9 @@ module.exports = function() {
         new Weapons.M500({
             game: this.game
         }),
+        new Weapons.Skorpion({
+            game: this.game
+        }),
         new Weapons.Aug({
             game: this.game
         }),
