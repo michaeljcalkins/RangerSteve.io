@@ -11,7 +11,9 @@ export default function HudLeaderboard({
             .slice(0, 9)
         return sortedPlayers.map((player, index) => {
             return (
-                <li key={ index }>{ player.id }</li>
+                <li key={ index }>
+                    { player.meta.name ? player.meta.name : 'Unamed Ranger' }
+                </li>
             )
         })
     }

@@ -19,10 +19,13 @@ export default class GameUiContainer extends React.Component {
             score: '0',
             currentWeapon: 1,
             players: [],
+            volume: .5,
             settingsModalOpen: false
         }
 
         this.handleSettingsButtonClick = this.handleSettingsButtonClick.bind(this)
+        this.handleSoundEffectVolumeChange = this.handleSoundEffectVolumeChange.bind(this)
+        this.handleNicknameChange = this.handleNicknameChange.bind(this)
     }
 
     componentDidMount() {
@@ -49,6 +52,14 @@ export default class GameUiContainer extends React.Component {
         })
     }
 
+    handleNicknameChange(value) {
+        console.log('change nickname', value)
+    }
+
+    handleSoundEffectVolumeChange(value) {
+        console.log('sound', value)
+    }
+
     render() {
         return (
             <div>
@@ -70,6 +81,8 @@ export default class GameUiContainer extends React.Component {
                 <SettingsModal
                     isOpen={ this.state.settingsModalOpen }
                     onClose={ this.handleSettingsButtonClick }
+                    onNicknameChange={ this.handleNicknameChange }
+                    onSoundEffectVolumeChange={ this.handleSoundEffectVolumeChange }
                 />
             </div>
         )
