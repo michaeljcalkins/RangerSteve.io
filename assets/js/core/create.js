@@ -86,31 +86,28 @@ module.exports = function() {
         new Weapons.AK47({
             game: this.game
         }),
-        new Weapons.BarretM90({
+        new Weapons.M500({
+            game: this.game
+        }),
+        new Weapons.Aug({
+            game: this.game
+        }),
+        new Weapons.P90({
             game: this.game
         }),
         new Weapons.DesertEagle({
             game: this.game
         }),
+        new Weapons.G43({
+            game: this.game
+        }),
         new Weapons.M4A1({
             game: this.game
         }),
-        new Weapons.MP5({
+        new Weapons.Barrett({
             game: this.game
         }),
-        new Weapons.M249({
-            game: this.game
-        }),
-        new Weapons.MP5({
-            game: this.game
-        }),
-        new Weapons.MP5({
-            game: this.game
-        }),
-        new Weapons.Spas12({
-            game: this.game
-        }),
-        new Weapons.MP5({
+        new Weapons.RPG({
             game: this.game
         }),
     ]
