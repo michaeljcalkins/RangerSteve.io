@@ -5,21 +5,82 @@
     left: 50%;
     margin-left: -270px;
     position: absolute;
-    width: 540px;
+    width: 700px;
 
     div {
         background: #504F4D;
         float: left;
         height: 54px;
         position: relative;
-        width: 54px;
-
-        &:last-child {
-            border-radius: 0 5px 0 0;
-        }
+        width: 70px;
+        overflow: hidden;
 
         &:first-child {
             border-radius: 5px 0 0 0;
+
+            img {
+                width: 120px;
+                top: 10px;
+                left: -35px;
+            }
+        }
+
+        &:nth-child(2) img {
+            width: 140px;
+            top: 0px;
+            left: -46px;
+        }
+
+        &:nth-child(3) img {
+            width: 110px;
+            top: 10px;
+            left: -25px;
+        }
+
+        &:nth-child(4) img {
+            width: 45px;
+            top: 16px;
+            left: 10px;
+        }
+
+        &:nth-child(5) img {
+            width: 110px;
+            top: 10px;
+            left: -25px;
+        }
+
+        &:nth-child(6) img {
+            width: 75px;
+            top: 15px;
+            left: -4px;
+        }
+
+        &:nth-child(7) img {
+            width: 55px;
+            top: 12px;
+            left: 5px;
+        }
+
+        &:nth-child(8) img {
+            width: 130px;
+            top: 10px;
+            left: -35px;
+        }
+
+        &:nth-child(9) img {
+            width: 130px;
+            top: 10px;
+            left: -35px;
+        }
+
+        &:last-child {
+            border-radius: 0 5px 0 0;
+
+            img {
+                width: 150px;
+                top: 30px;
+                left: -35px;
+            }
         }
 
         &.active {
@@ -33,5 +94,14 @@
         font-weight: bold;
         top: 2px;
         left: 8px;
+        z-index: 2;
+    }
+
+    img {
+        position: absolute;
+        -ms-transform: rotate(40deg); /* IE 9 */
+        -webkit-transform: rotate(40deg); /* Chrome, Safari, Opera */
+        transform: rotate(40deg);
+        z-index: 1;
     }
 }
