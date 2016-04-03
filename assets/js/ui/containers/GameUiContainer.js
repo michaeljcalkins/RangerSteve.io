@@ -58,8 +58,9 @@ export default class GameUiContainer extends React.Component {
         this.setState({ nickname })
     }
 
-    handleSoundEffectVolumeChange(value) {
-        console.log('sound', value)
+    handleSoundEffectVolumeChange(volume) {
+        EventHandler.emit('volume update', { volume })
+        this.setState({ volume })
     }
 
     render() {

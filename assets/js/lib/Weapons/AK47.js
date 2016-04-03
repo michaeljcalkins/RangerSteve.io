@@ -31,7 +31,7 @@ let AK47 = function (config) {
 AK47.prototype = Object.create(Phaser.Group.prototype);
 AK47.prototype.constructor = AK47;
 
-AK47.prototype.fire = function(player, socket, roomId) {
+AK47.prototype.fire = function(player, socket, roomId, volume) {
     if (this.game.time.time < this.nextFire)
         return
 
@@ -42,7 +42,9 @@ AK47.prototype.fire = function(player, socket, roomId) {
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate
-    this.fx.volume = .3
+    console.log(volume)
+    console.log(.3 * volume)
+    this.fx.volume = .3 * volume
     this.fx.play()
 }
 

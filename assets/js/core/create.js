@@ -17,7 +17,7 @@ module.exports = function() {
 
     this.socket = io.connect()
     this.enemies = []
-
+    this.volume = .5
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)
@@ -123,9 +123,9 @@ module.exports = function() {
 
     EventHandler.emit('score update', '')
     EventHandler.emit('health update', '')
-
-    // this.weaponText = this.add.text(this.camera.x + 120, this.camera.height - 45, 'AK-47', textStyles)
-    // this.weaponText.fixedToCamera = true
+    EventHandler.on('volume update', (data) => {
+        this.volume = data.volume
+    })
 
     this.positionText = this.add.text(25, 25, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
     this.positionText.fixedToCamera = true

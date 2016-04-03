@@ -74,7 +74,7 @@ module.exports = function() {
 
     if (this.game.input.activePointer.isDown)
     {
-        this.weapons[this.currentWeapon].fire(this.player, this.socket, this.roomId)
+        this.weapons[this.currentWeapon].fire(this.player, this.socket, this.roomId, this.volume)
     }
 
     if (this.input.keyboard.isDown(Phaser.Keyboard.ONE)) {
