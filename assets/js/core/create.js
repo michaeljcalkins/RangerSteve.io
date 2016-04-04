@@ -77,10 +77,12 @@ module.exports = function() {
         health: 100
     }
 
-    // this.leftArmSprite = this.game.add.sprite(500, this.world.height - 2300, 'left-arm')
-    // this.leftArmSprite.anchor.set(.2, .2)
-    // this.leftArmSprite.width = this.leftArmSprite.height = 19
-    // this.leftArmSprite.visible = false
+    this.leftArmGroup = this.game.add.group()
+    this.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
+    this.leftArmSprite.anchor.setTo(.2, .2)
+    this.leftArmSprite.scale.setTo(.75)
+    this.leftArmSprite.rotation = 81.8
+    this.leftArmGroup.add(this.leftArmSprite)
 
     this.rightArmGroup = this.game.add.group()
 
@@ -101,7 +103,11 @@ module.exports = function() {
     this.rightArmGroup.x = -25
     this.rightArmGroup.y = -65
 
-    console.log(this.rightArmGroup)
+    this.player.addChild(this.leftArmGroup)
+    this.leftArmGroup.pivot.x = 0
+    this.leftArmGroup.pivot.y = 0
+    this.leftArmGroup.x = 45
+    this.leftArmGroup.y = -70
 
 
     /**

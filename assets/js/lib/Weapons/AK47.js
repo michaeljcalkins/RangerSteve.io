@@ -35,8 +35,8 @@ AK47.prototype.fire = function(player, socket, roomId, volume) {
     if (this.game.time.time < this.nextFire)
         return
 
-    var x = player.x + 15;
-    var y = player.y + 30;
+    var x = player.x + 10
+    var y = player.y + -10
 
     this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0, socket, roomId)
     this.setAll('tracking', true)

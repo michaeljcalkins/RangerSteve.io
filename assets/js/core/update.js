@@ -150,7 +150,7 @@ module.exports = function() {
         EventHandler.emit('weapon update', 0)
     }
 
-    this.positionText.text = `${this.game.input.mousePointer.x}, ${this.game.input.mousePointer.y}`
+    this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`
 
     this.socket.emit('move player', {
         roomId: this.roomId,

@@ -5,8 +5,8 @@ let HighRuleDesert = {}
 HighRuleDesert.create = function() {
     this.spawnPoints = [
         {
-            x: 500,
-            y: this.world.height - 2300
+            x: 4400,
+            y: this.world.height - 2400
         },
         // {
         //     x: 200,
@@ -39,7 +39,7 @@ HighRuleDesert.create = function() {
 }
 
 HighRuleDesert.createSkySprite = function() {
-    let skysprite = this.add.tileSprite(0, this.game.world.height - 3930, this.game.world.width, this.game.world.height, 'map-bg')
+    this.skysprite = this.add.tileSprite(0, this.game.world.height - 3930, this.game.world.width, this.game.world.height, 'map-bg')
 }
 
 HighRuleDesert.createPlatforms = function() {
@@ -53,32 +53,23 @@ HighRuleDesert.getRandomSpawnPoint = function() {
 
 HighRuleDesert.createLedges = function() {
     let ledges = [
-        // {x, y, width, height}
+        { id: 1, x: 0, y: this.game.world.height - 431, width: 128, height: 92 },
+        { id: 2, x: 0, y: this.game.world.height - 838, width: 128, height: 92 },
+        { id: 3, x: 3872, y: this.game.world.height - 427, width: 128, height: 92 },
+        { id: 4, x: 3872, y: this.game.world.height - 835, width: 128, height: 92 },
+        { id: 5, x: 422, y: this.game.world.height - 2105, width: 1150, height: 300 },
+        { id: 6, x: 1555, y: this.game.world.height - 2180, width: 270, height: 600 },
+        { id: 7, x: 1820, y: this.game.world.height - 2180, width: 470, height: 6 },
+        { id: 8, x: 2275, y: this.game.world.height - 2180, width: 320, height: 260 },
+        { id: 9, x: 2595, y: this.game.world.height - 2260, width: 1120, height: 260 },
+        { id: 10, x: 4299, y: 1658, width: 375, height: 1300 },
 
-        // Starting Ledges
-        { id: 1, x: 0, y: this.game.world.height - 431, width: 128, height: 92 }, // Left bottom ledge
-        { id: 2, x: 0, y: this.game.world.height - 838, width: 128, height: 92 }, // Left top ledge
-
-        { id: 3, x: 3872, y: this.game.world.height - 427, width: 128, height: 92 }, // Right bottom ledge
-        { id: 4, x: 3872, y: this.game.world.height - 835, width: 128, height: 92 }, // Right top ledge
-
-        // Ground Ledges
-        { id: 5, x: 363, y: this.game.world.height - 2105, width: 1150, height: 300 }, // Main bottom starting left ledge
-        { id: 6, x: 1510, y: this.game.world.height - 2185, width: 270, height: 260 }, // Main bottom left ledge
-        { id: 7, x: 1510, y: this.game.world.height - 2185, width: 270, height: 260 }, // Main bottom left ledge
-        { id: 8, x: 2900, y: this.game.world.height - 256, width: 641, height: 260 }, // Main bottom right ledge
-        { id: 9, x: 3540, y: this.game.world.height - 128, width: 474, height: 128 }, // Main bottom starting right ledge
-
-        // Air Ledges
-        { id: 10, x: 300, y: this.game.world.height - 608, width: 641, height: 92 },
         { id: 11, x: 1110, y: this.game.world.height - 701, width: 513, height: 92 },
         { id: 12, x: 870, y: this.game.world.height - 982, width: 256, height: 92 },
         { id: 13, x: 1744, y: this.game.world.height - 1474, width: 507, height: 254 },
         { id: 14, x: 2390, y: this.game.world.height - 689, width: 513, height: 92 },
         { id: 15, x: 3031, y: this.game.world.height - 608, width: 641, height: 92 },
         { id: 16, x: 2903, y: this.game.world.height - 957, width: 256, height: 92 },
-
-        // Boxes
         { id: 17, x: 717, y: this.game.world.height - 685, width: 154, height: 77 },
         { id: 18, x: 757, y: this.game.world.height - 762, width: 77, height: 77 },
         { id: 19, x: 1418, y: this.game.world.height - 778, width: 77, height: 77 },
