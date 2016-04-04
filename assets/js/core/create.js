@@ -23,7 +23,6 @@ module.exports = function() {
     this.physics.startSystem(Phaser.Physics.ARCADE)
 
     this.world.setBounds(0, 0, worldWidth, worldHeight)
-    this.game.stage.backgroundColor = "#2F91D0"
 
     // Scale game on window resize
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
@@ -42,7 +41,8 @@ module.exports = function() {
      */
     let spawnPoint = HighRuleDesert.getRandomSpawnPoint.call(this)
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
-    this.player.scale.setTo(.25, .25)
+    this.player.scale.setTo(.3)
+    this.player.anchor.setTo(.5)
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
@@ -76,6 +76,32 @@ module.exports = function() {
     this.player.meta = {
         health: 100
     }
+
+    // this.leftArmSprite = this.game.add.sprite(500, this.world.height - 2300, 'left-arm')
+    // this.leftArmSprite.anchor.set(.2, .2)
+    // this.leftArmSprite.width = this.leftArmSprite.height = 19
+    // this.leftArmSprite.visible = false
+
+    this.rightArmGroup = this.game.add.group()
+
+    this.ak47Sprite = this.game.add.sprite(-20, 30, 'ak47')
+    this.ak47Sprite.scale.setTo(1.3)
+    this.ak47Sprite.rotation = 80
+    this.rightArmGroup.add(this.ak47Sprite)
+
+    this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm')
+    this.rightArmSprite.anchor.setTo(.2, .24)
+    this.rightArmSprite.scale.setTo(1.7)
+    this.rightArmSprite.rotation = 80
+    this.rightArmGroup.add(this.rightArmSprite)
+
+    this.player.addChild(this.rightArmGroup)
+    this.rightArmGroup.pivot.x = 0
+    this.rightArmGroup.pivot.y = 0
+    this.rightArmGroup.x = -15
+    this.rightArmGroup.y = -40
+
+    console.log(this.rightArmGroup)
 
 
     /**

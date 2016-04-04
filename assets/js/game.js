@@ -28,6 +28,8 @@ RangerSteveGame.prototype = {
     preload: Core.preload,
     create: Core.create,
     update: Core.update,
+    render: function() {
+    },
 
     leftInputIsActive: InputHandler.leftInputIsActive,
     rightInputIsActive: InputHandler.rightInputIsActive,

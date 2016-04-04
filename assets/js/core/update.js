@@ -3,6 +3,9 @@
 import EventHandler from '../lib/EventHandler'
 
 module.exports = function() {
+
+
+
     // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms, null, null, this)
 
@@ -50,6 +53,26 @@ module.exports = function() {
         this.player.animations.stop()
         this.player.frame = 7
     }
+
+
+
+
+
+
+
+
+    // let leftArmRotation = this.game.physics.arcade.angleToPointer(this.leftArmSprite)
+    // this.leftArmSprite.rotation = leftArmRotation
+    // this.leftArmSprite.x = this.player.x + 49
+    // this.leftArmSprite.y = this.player.y + 22
+
+
+    let angleInDegrees = this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI;
+    this.rightArmGroup.angle = angleInDegrees + 90
+
+
+
+
 
     // Set a variable that is true when the player is touching the ground
     let onTheGround = this.player.body.touching.down
