@@ -1,2 +1,2 @@
-require('./ui')
+// require('./ui')
 require('./game')
