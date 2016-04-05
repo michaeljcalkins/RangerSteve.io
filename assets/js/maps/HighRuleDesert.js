@@ -5,29 +5,33 @@ let HighRuleDesert = {}
 HighRuleDesert.create = function() {
     this.spawnPoints = [
         {
-            x: 7000,
-            y: 1838
+            x: 815,
+            y: 1730
         },
-        // {
-        //     x: 200,
-        //     y: this.world.height - 200
-        // },
-        // {
-        //     x: 3750,
-        //     y: this.world.height - 200
-        // },
-        // {
-        //     x: 3450,
-        //     y: this.world.height - 700
-        // },
-        // {
-        //     x: 2600,
-        //     y: this.world.height - 800
-        // },
-        // {
-        //     x: 1250,
-        //     y: this.world.height - 800
-        // }
+        {
+            x: 3380,
+            y: 1030
+        },
+        {
+            x: 4437,
+            y: 1550
+        },
+        {
+            x: 6690,
+            y: 1860
+        },
+        {
+            x: 3832,
+            y: 3350
+        },
+        {
+            x: 3775,
+            y: 2400
+        },
+        {
+            x: 2420,
+            y: 2900
+        }
     ]
 
     HighRuleDesert.createSkySprite.call(this)
@@ -65,13 +69,13 @@ HighRuleDesert.createLedges = function() {
         { id: 10, x: 4299, y: 1658, width: 375, height: 1300 },
 
         { id: 11, x: 1825, y: 2335, width: 160, height: 152 },
-        { id: 12, x: 870, y: this.game.world.height - 982, width: 256, height: 92 },
+        { id: 12, x: 5644, y: 1612, width: 330, height: 20 },
         { id: 13, x: 4673, y: 2054, width: 570, height: 254 },
         { id: 14, x: 2948, y: 3174, width: 380, height: 300 },
         { id: 15, x: 3965, y: 2070, width: 341, height: 700 },
         { id: 16, x: 1909, y: 3008, width: 1040, height: 500 },
-        { id: 17, x: 717, y: this.game.world.height - 685, width: 154, height: 77 },
-        { id: 18, x: 757, y: this.game.world.height - 762, width: 77, height: 77 },
+        { id: 17, x: 6632, y: 1644, width: 385, height: 37 },
+        { id: 18, x: 6632, y: 1234, width: 385, height: 37 },
         { id: 19, x: 5590, y: 2075, width: 1570, height: 600 },
         { id: 20, x: 6981, y: 2050, width: 450, height: 167 },
         { id: 21, x: 3660, y: 2438, width: 310, height: 500 },
@@ -79,16 +83,16 @@ HighRuleDesert.createLedges = function() {
     ]
 
     ledges.forEach((ledge) => {
-        var newLedge = this.platforms.create(ledge.x, ledge.y, 'ground')
-        // var newLedge = this.platforms.create(ledge.x, ledge.y)
+        // var newLedge = this.platforms.create(ledge.x, ledge.y, 'ground')
+        var newLedge = this.platforms.create(ledge.x, ledge.y)
         newLedge.height = ledge.height
         newLedge.width = ledge.width
 
         // Debug stuff
-        newLedge.alpha = 0.2
-        let style = { font: "20px Arial", fill: "#ff0044", align: "center", backgroundColor: "#ffff00" }
-        let text = this.game.add.text(ledge.x, ledge.y, ledge.id, style)
-        text.alpha = 0.2
+        // newLedge.alpha = 0.2
+        // let style = { font: "20px Arial", fill: "#ff0044", align: "center", backgroundColor: "#ffff00" }
+        // let text = this.game.add.text(ledge.x, ledge.y, ledge.id, style)
+        // text.alpha = 0.2
     })
 }
 
