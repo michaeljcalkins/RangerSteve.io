@@ -5,8 +5,8 @@ let HighRuleDesert = {}
 HighRuleDesert.create = function() {
     this.spawnPoints = [
         {
-            x: 4400,
-            y: this.world.height - 2400
+            x: 7000,
+            y: 1838
         },
         // {
         //     x: 200,
@@ -53,29 +53,29 @@ HighRuleDesert.getRandomSpawnPoint = function() {
 
 HighRuleDesert.createLedges = function() {
     let ledges = [
-        { id: 1, x: 0, y: this.game.world.height - 431, width: 128, height: 92 },
-        { id: 2, x: 0, y: this.game.world.height - 838, width: 128, height: 92 },
-        { id: 3, x: 3872, y: this.game.world.height - 427, width: 128, height: 92 },
-        { id: 4, x: 3872, y: this.game.world.height - 835, width: 128, height: 92 },
+        { id: 1, x: 2145, y: 2102, width: 135, height: 40 },
+        { id: 2, x: 2613, y: 1134, width: 1100, height: 112 },
+        { id: 3, x: 3657, y: 3483, width: 545, height: 500 },
+        { id: 4, x: 5217, y: 1975, width: 380, height: 600 },
         { id: 5, x: 422, y: this.game.world.height - 2105, width: 1150, height: 300 },
-        { id: 6, x: 1555, y: this.game.world.height - 2180, width: 270, height: 600 },
+        { id: 6, x: 1555, y: this.game.world.height - 2180, width: 270, height: 730 },
         { id: 7, x: 1820, y: this.game.world.height - 2180, width: 470, height: 6 },
-        { id: 8, x: 2275, y: this.game.world.height - 2180, width: 320, height: 260 },
+        { id: 8, x: 2275, y: this.game.world.height - 2180, width: 320, height: 500 },
         { id: 9, x: 2595, y: this.game.world.height - 2260, width: 1120, height: 260 },
         { id: 10, x: 4299, y: 1658, width: 375, height: 1300 },
 
-        { id: 11, x: 1110, y: this.game.world.height - 701, width: 513, height: 92 },
+        { id: 11, x: 1825, y: 2335, width: 160, height: 152 },
         { id: 12, x: 870, y: this.game.world.height - 982, width: 256, height: 92 },
-        { id: 13, x: 1744, y: this.game.world.height - 1474, width: 507, height: 254 },
-        { id: 14, x: 2390, y: this.game.world.height - 689, width: 513, height: 92 },
-        { id: 15, x: 3031, y: this.game.world.height - 608, width: 641, height: 92 },
-        { id: 16, x: 2903, y: this.game.world.height - 957, width: 256, height: 92 },
+        { id: 13, x: 4673, y: 2054, width: 570, height: 254 },
+        { id: 14, x: 2948, y: 3174, width: 380, height: 300 },
+        { id: 15, x: 3965, y: 2070, width: 341, height: 700 },
+        { id: 16, x: 1909, y: 3008, width: 1040, height: 500 },
         { id: 17, x: 717, y: this.game.world.height - 685, width: 154, height: 77 },
         { id: 18, x: 757, y: this.game.world.height - 762, width: 77, height: 77 },
-        { id: 19, x: 1418, y: this.game.world.height - 778, width: 77, height: 77 },
-        { id: 20, x: 1931, y: this.game.world.height - 461, width: 154, height: 77 },
-        { id: 21, x: 3205, y: this.game.world.height - 685, width: 154, height: 77 },
-        { id: 22, x: 3245, y: this.game.world.height - 762, width: 77, height: 77 }
+        { id: 19, x: 5590, y: 2075, width: 1570, height: 600 },
+        { id: 20, x: 6981, y: 2050, width: 450, height: 167 },
+        { id: 21, x: 3660, y: 2438, width: 310, height: 500 },
+        { id: 22, x: 3290, y: 2636, width: 400, height: 300 }
     ]
 
     ledges.forEach((ledge) => {

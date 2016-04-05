@@ -9,11 +9,12 @@ let worldHeight = 3966
 
 module.exports = function() {
     // Define movement constants
-    this.MAX_SPEED = 400 // pixels/second
-    this.ACCELERATION = 1960 // pixels/second/second
-    this.DRAG = 1500 // pixels/second
-    this.GRAVITY = 1900 // pixels/second/second
-    this.JUMP_SPEED = -850 // pixels/second (negative y is up)
+    this.MAX_SPEED = 550
+    this.ACCELERATION = 1960
+    this.DRAG = 1500
+    this.GRAVITY = 1900
+    this.JUMP_SPEED = -850
+    this.JUMP_JET_SPEED = -2600
 
     this.socket = io.connect()
     this.enemies = []
@@ -41,7 +42,7 @@ module.exports = function() {
      */
     let spawnPoint = HighRuleDesert.getRandomSpawnPoint.call(this)
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
-    this.player.scale.setTo(.3)
+    this.player.scale.setTo(.27)
     this.player.anchor.setTo(.5)
 
     //  We need to enable physics on the player

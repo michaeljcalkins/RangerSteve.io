@@ -3,9 +3,6 @@
 import EventHandler from '../lib/EventHandler'
 
 module.exports = function() {
-
-
-
     // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms, null, null, this)
 
@@ -39,6 +36,10 @@ module.exports = function() {
         return false
     }, this)
 
+
+
+
+
     if (this.leftInputIsActive()) {
         // If the LEFT key is down, set the player velocity to move left
         this.player.body.acceleration.x = -this.ACCELERATION
@@ -51,7 +52,14 @@ module.exports = function() {
         // Stand still
         this.player.body.acceleration.x = 0
         this.player.animations.stop()
-        this.player.frame = 7
+
+        if (this.game.input.worldX > this.player.x) {
+            this.player.frame = 7
+        }
+
+        if (this.game.input.worldX < this.player.x) {
+            this.player.frame = 6
+        }
     }
 
 
@@ -84,14 +92,29 @@ module.exports = function() {
     }
 
     // Jump!
-    if (this.jumps > 0 && this.upInputIsActive(5)) {
+    if (this.jumps === 2 && this.upInputIsActive(5) && onTheGround) {
         this.player.body.velocity.y = this.JUMP_SPEED
         this.jumping = true
+    } else if (this.upInputIsActive(5) && !onTheGround) {
+        this.jumps = 1
+    }
+
+    // Jump Jet!
+    if (this.jumps === 1 && this.input.keyboard.isDown(Phaser.Keyboard.W)) {
+        this.player.body.acceleration.y = this.JUMP_JET_SPEED
+    } else {
+        this.player.body.acceleration.y = 0
     }
 
     // Reduce the number of available jumps if the jump input is released
     if (this.jumping && this.upInputReleased()) {
-        this.jumps--
+        this.player.body.acceleration.x = 0
+        this.player.body.acceleration.y = 0
+
+        if (this.jumps !== 1) {
+            this.jumps--
+        }
+
         this.jumping = false
     }
 
