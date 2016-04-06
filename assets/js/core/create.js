@@ -82,21 +82,27 @@ module.exports = function() {
     this.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
     this.leftArmSprite.anchor.setTo(.2, .2)
     this.leftArmSprite.scale.setTo(.75)
-    this.leftArmSprite.rotation = 81.8
+    this.leftArmSprite.rotation = 80.1
     this.leftArmGroup.add(this.leftArmSprite)
 
     this.rightArmGroup = this.game.add.group()
 
     this.ak47Sprite = this.game.add.sprite(12, 19, 'ak47')
     this.ak47Sprite.scale.setTo(1.3)
-    this.ak47Sprite.rotation = 80
+    this.ak47Sprite.rotation = 80.15
     this.rightArmGroup.add(this.ak47Sprite)
 
     this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm')
     this.rightArmSprite.anchor.setTo(.2, .24)
     this.rightArmSprite.scale.setTo(1.7)
-    this.rightArmSprite.rotation = 80
+    this.rightArmSprite.rotation = 80.1
     this.rightArmGroup.add(this.rightArmSprite)
+
+    this.player.addChild(this.leftArmGroup)
+    this.leftArmGroup.pivot.x = 0
+    this.leftArmGroup.pivot.y = 0
+    this.leftArmGroup.x = 45
+    this.leftArmGroup.y = -70
 
     this.player.addChild(this.rightArmGroup)
     this.rightArmGroup.pivot.x = 0
@@ -104,11 +110,9 @@ module.exports = function() {
     this.rightArmGroup.x = -25
     this.rightArmGroup.y = -65
 
-    this.player.addChild(this.leftArmGroup)
-    this.leftArmGroup.pivot.x = 0
-    this.leftArmGroup.pivot.y = 0
-    this.leftArmGroup.x = 45
-    this.leftArmGroup.y = -70
+
+
+    console.log('this.player', this.player)
 
 
     /**

@@ -69,14 +69,55 @@ module.exports = function() {
 
 
 
-    // let leftArmRotation = this.game.physics.arcade.angleToPointer(this.leftArmSprite)
-    // this.leftArmSprite.rotation = leftArmRotation
-    // this.leftArmSprite.x = this.player.x + 49
-    // this.leftArmSprite.y = this.player.y + 22
+    let angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90;
 
 
-    let angleInDegrees = this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI;
-    this.rightArmGroup.angle = angleInDegrees + 90
+    this.rightArmGroup.angle = angleInDegrees
+    console.log('angleInDegrees', angleInDegrees)
+
+    // User is aiming up
+    if (angleInDegrees <= 81 && angleInDegrees >= 71) {
+        angleInDegrees -= 10
+    } else if (angleInDegrees < 71 && angleInDegrees >= 61) {
+        angleInDegrees -= 20
+    } else if (angleInDegrees < 61 && angleInDegrees >= 51) {
+        angleInDegrees -= 30
+    } else if (angleInDegrees < 51 && angleInDegrees >= 41) {
+        angleInDegrees -= 40
+    } else if (angleInDegrees < 41 && angleInDegrees >= 31) {
+        angleInDegrees -= 50
+    } else if (angleInDegrees < 31 && angleInDegrees >= 21) {
+        angleInDegrees -= 60
+    } else if (angleInDegrees < 21 && angleInDegrees >= 11) {
+        angleInDegrees -= 70
+    } else if (angleInDegrees < 11 && angleInDegrees >= 0) {
+        angleInDegrees -= 80
+    }
+
+
+
+    // User is aiming down
+    if (angleInDegrees >= 99 && angleInDegrees <= 109) {
+        angleInDegrees += 10
+    } else if (angleInDegrees > 109 && angleInDegrees <= 119) {
+        angleInDegrees += 20
+    } else if (angleInDegrees > 119 && angleInDegrees <= 129) {
+        angleInDegrees += 30
+    } else if (angleInDegrees > 129 && angleInDegrees <= 139) {
+        angleInDegrees += 40
+    } else if (angleInDegrees > 139 && angleInDegrees <= 149) {
+        angleInDegrees += 50
+    } else if (angleInDegrees > 149 && angleInDegrees <= 159) {
+        angleInDegrees += 60
+    } else if (angleInDegrees > 159 && angleInDegrees <= 169) {
+        angleInDegrees += 70
+    } else if (angleInDegrees > 169 && angleInDegrees <= 180) {
+        angleInDegrees += 80
+    }
+
+    this.leftArmGroup.angle = angleInDegrees
+
+
 
 
 
