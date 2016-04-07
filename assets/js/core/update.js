@@ -44,10 +44,40 @@ module.exports = function() {
         // If the LEFT key is down, set the player velocity to move left
         this.player.body.acceleration.x = -this.ACCELERATION
         this.player.animations.play('left')
+
+        // Left facing head needs to be set only once
+        if (this.player.meta.facing !== 'left') {
+            this.player.meta.facing = 'left'
+
+            this.headSprite.scale.x *= -1
+            this.headSprite.x = 12
+
+            this.torsoSprite.scale.x *= -1
+            this.torsoSprite.x = 49
+
+            this.leftArmSprite.scale.y *= -1
+            this.rightArmSprite.scale.y *= -1
+            this.ak47Sprite.scale.y *= -1
+        }
+
     } else if (this.rightInputIsActive()) {
         // If the RIGHT key is down, set the player velocity to move right
         this.player.body.acceleration.x = this.ACCELERATION
         this.player.animations.play('right')
+
+        if (this.player.meta.facing !== 'right') {
+            this.player.meta.facing = 'right'
+
+            this.headSprite.scale.x *= -1
+            this.headSprite.x = 0
+
+            this.torsoSprite.scale.x *= -1
+            this.torsoSprite.x = -37
+
+            this.leftArmSprite.scale.y *= -1
+            this.rightArmSprite.scale.y *= -1
+            this.ak47Sprite.scale.y *= -1
+        }
     } else {
         // Stand still
         this.player.body.acceleration.x = 0
@@ -55,10 +85,46 @@ module.exports = function() {
 
         if (this.game.input.worldX > this.player.x) {
             this.player.frame = 7
+            if (this.player.meta.facing !== 'right') {
+                this.player.meta.facing = 'right'
+
+                this.headSprite.scale.x *= -1
+                this.headSprite.x = 0
+
+                this.torsoSprite.scale.x *= -1
+                this.torsoSprite.x = -37
+
+                this.leftArmSprite.scale.y *= -1
+                this.leftArmSprite.y = 0
+
+                this.rightArmSprite.scale.y *= -1
+                this.rightArmSprite.y = 0
+
+                this.ak47Sprite.scale.y *= -1
+                this.ak47Sprite.y = 19
+            }
         }
 
         if (this.game.input.worldX < this.player.x) {
             this.player.frame = 6
+            if (this.player.meta.facing !== 'left') {
+                this.player.meta.facing = 'left'
+
+                this.headSprite.scale.x *= -1
+                this.headSprite.x = 12
+
+                this.torsoSprite.scale.x *= -1
+                this.torsoSprite.x = 49
+
+                this.leftArmSprite.scale.y *= -1
+                this.leftArmSprite.y = -85
+
+                this.rightArmSprite.scale.y *= -1
+                this.rightArmSprite.y = 65
+
+                this.ak47Sprite.scale.y *= -1
+                this.ak47Sprite.y = 65
+            }
         }
     }
 
@@ -73,7 +139,7 @@ module.exports = function() {
 
 
     this.rightArmGroup.angle = angleInDegrees
-    console.log('angleInDegrees', angleInDegrees)
+    // console.log('angleInDegrees', angleInDegrees)
 
     // User is aiming up
     if (angleInDegrees <= 81 && angleInDegrees >= 71) {

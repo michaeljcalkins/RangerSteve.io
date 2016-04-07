@@ -59,7 +59,7 @@ module.exports = function() {
 
     // Add drag to the player that slows them down when they are not accelerating
     this.player.body.drag.setTo(this.DRAG, 0) // x, y
-    this.player.body.setSize(300, 290, 0, -3)
+    this.player.body.setSize(230, 290, -10, 0)
     this.player.meta = {
         health: 100
     }
@@ -79,19 +79,34 @@ module.exports = function() {
     }
 
     this.leftArmGroup = this.game.add.group()
+    this.rightArmGroup = this.game.add.group()
+    this.headGroup = this.game.add.group()
+    this.torsoGroup = this.game.add.group()
+
+    // Torso
+    this.torsoSprite = this.game.add.sprite(-37, -105, 'torso')
+    this.torsoSprite.scale.setTo(1.8)
+    this.torsoGroup.add(this.torsoSprite)
+
+    // Head
+    this.headSprite = this.game.add.sprite(0, -148, 'head')
+    this.headSprite.scale.setTo(1.8)
+    this.headGroup.add(this.headSprite)
+
+    // Left arm
     this.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
     this.leftArmSprite.anchor.setTo(.2, .2)
-    this.leftArmSprite.scale.setTo(.75)
+    this.leftArmSprite.scale.setTo(1.6)
     this.leftArmSprite.rotation = 80.1
     this.leftArmGroup.add(this.leftArmSprite)
 
-    this.rightArmGroup = this.game.add.group()
-
+    // Gun
     this.ak47Sprite = this.game.add.sprite(12, 19, 'ak47')
     this.ak47Sprite.scale.setTo(1.3)
     this.ak47Sprite.rotation = 80.15
-    this.rightArmGroup.add(this.ak47Sprite)
 
+    // Right arm
+    this.rightArmGroup.add(this.ak47Sprite)
     this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm')
     this.rightArmSprite.anchor.setTo(.2, .24)
     this.rightArmSprite.scale.setTo(1.7)
@@ -103,6 +118,9 @@ module.exports = function() {
     this.leftArmGroup.pivot.y = 0
     this.leftArmGroup.x = 45
     this.leftArmGroup.y = -70
+
+    this.player.addChild(this.torsoGroup)
+    this.player.addChild(this.headGroup)
 
     this.player.addChild(this.rightArmGroup)
     this.rightArmGroup.pivot.x = 0
