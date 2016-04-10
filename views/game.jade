@@ -1,8 +1,13 @@
-extends layout
-
-block content
-    #rangersteve-ui
-    script(src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js")
-    script(src="/javascripts/phaser.min.js")
-    script(src="/javascripts/socket.io.js")
-    script(src="/javascripts/app.js")
+doctype html
+html
+    head
+        title= title
+        meta(http-equiv="X-Frame-Options", content="deny")
+        link(rel='stylesheet', href='/stylesheets/app.css')
+        link(rel='stylesheet', href='https://bootswatch.com/cosmo/bootstrap.min.css')
+    body(oncontextmenu="return false")
+        #rangersteve-ui
+        script(src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js")
+        script(src="/javascripts/phaser.min.js")
+        script(src="/javascripts/socket.io.js")
+        script(src="/javascripts/app.js")

@@ -38,16 +38,15 @@ module.exports = function() {
 
 
 
-
-
-    if (this.leftInputIsActive()) {
-        // If the LEFT key is down, set the player velocity to move left
-        this.player.body.acceleration.x = -this.ACCELERATION
-        this.player.animations.play('left')
-
-        // Left facing head needs to be set only once
+    let playerFaceLeft = () => {
         if (this.player.meta.facing !== 'left') {
             this.player.meta.facing = 'left'
+
+            this.rightArmGroup.x = 25
+            this.rightArmGroup.y = -65
+
+            this.leftArmGroup.x = -40
+            this.leftArmGroup.y = -70
 
             this.headSprite.scale.x *= -1
             this.headSprite.x = 12
@@ -56,17 +55,26 @@ module.exports = function() {
             this.torsoSprite.x = 49
 
             this.leftArmSprite.scale.y *= -1
+            this.leftArmSprite.y = 5
+
             this.rightArmSprite.scale.y *= -1
+            this.rightArmSprite.y = 10
+
             this.ak47Sprite.scale.y *= -1
+            this.ak47Sprite.y = 30
+            this.ak47Sprite.x = -7
         }
+    }
 
-    } else if (this.rightInputIsActive()) {
-        // If the RIGHT key is down, set the player velocity to move right
-        this.player.body.acceleration.x = this.ACCELERATION
-        this.player.animations.play('right')
-
+    let playerFaceRight = () => {
         if (this.player.meta.facing !== 'right') {
             this.player.meta.facing = 'right'
+
+            this.rightArmGroup.x = -25
+            this.rightArmGroup.y = -65
+
+            this.leftArmGroup.x = 45
+            this.leftArmGroup.y = -70
 
             this.headSprite.scale.x *= -1
             this.headSprite.x = 0
@@ -75,9 +83,32 @@ module.exports = function() {
             this.torsoSprite.x = -37
 
             this.leftArmSprite.scale.y *= -1
+            this.leftArmSprite.y = 0
+
             this.rightArmSprite.scale.y *= -1
+            this.rightArmSprite.y = 0
+
             this.ak47Sprite.scale.y *= -1
+            this.ak47Sprite.y = 19
+            this.ak47Sprite.x = 3
         }
+    }
+
+
+
+    if (this.leftInputIsActive()) {
+        // If the LEFT key is down, set the player velocity to move left
+        this.player.body.acceleration.x = -this.ACCELERATION
+        this.player.animations.play('left')
+
+        // Left facing head needs to be set only once
+        playerFaceLeft()
+    } else if (this.rightInputIsActive()) {
+        // If the RIGHT key is down, set the player velocity to move right
+        this.player.body.acceleration.x = this.ACCELERATION
+        this.player.animations.play('right')
+
+        playerFaceRight()
     } else {
         // Stand still
         this.player.body.acceleration.x = 0
@@ -85,46 +116,12 @@ module.exports = function() {
 
         if (this.game.input.worldX > this.player.x) {
             this.player.frame = 7
-            if (this.player.meta.facing !== 'right') {
-                this.player.meta.facing = 'right'
-
-                this.headSprite.scale.x *= -1
-                this.headSprite.x = 0
-
-                this.torsoSprite.scale.x *= -1
-                this.torsoSprite.x = -37
-
-                this.leftArmSprite.scale.y *= -1
-                this.leftArmSprite.y = 0
-
-                this.rightArmSprite.scale.y *= -1
-                this.rightArmSprite.y = 0
-
-                this.ak47Sprite.scale.y *= -1
-                this.ak47Sprite.y = 19
-            }
+            playerFaceRight()
         }
 
         if (this.game.input.worldX < this.player.x) {
             this.player.frame = 6
-            if (this.player.meta.facing !== 'left') {
-                this.player.meta.facing = 'left'
-
-                this.headSprite.scale.x *= -1
-                this.headSprite.x = 12
-
-                this.torsoSprite.scale.x *= -1
-                this.torsoSprite.x = 49
-
-                this.leftArmSprite.scale.y *= -1
-                this.leftArmSprite.y = -85
-
-                this.rightArmSprite.scale.y *= -1
-                this.rightArmSprite.y = 65
-
-                this.ak47Sprite.scale.y *= -1
-                this.ak47Sprite.y = 65
-            }
+            playerFaceLeft()
         }
     }
 
@@ -136,49 +133,86 @@ module.exports = function() {
 
 
     let angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90;
+    this.rightArmGroup.angle = angleInDegrees + 5
 
+    if (this.player.meta.facing === 'right') {
+        // User is aiming up
+        if (angleInDegrees <= 81 && angleInDegrees >= 71) {
+            angleInDegrees -= 10
+        } else if (angleInDegrees < 71 && angleInDegrees >= 61) {
+            angleInDegrees -= 20
+        } else if (angleInDegrees < 61 && angleInDegrees >= 51) {
+            angleInDegrees -= 30
+        } else if (angleInDegrees < 51 && angleInDegrees >= 41) {
+            angleInDegrees -= 40
+        } else if (angleInDegrees < 41 && angleInDegrees >= 31) {
+            angleInDegrees -= 50
+        } else if (angleInDegrees < 31 && angleInDegrees >= 21) {
+            angleInDegrees -= 60
+        } else if (angleInDegrees < 21 && angleInDegrees >= 11) {
+            angleInDegrees -= 70
+        } else if (angleInDegrees < 11 && angleInDegrees >= 0) {
+            angleInDegrees -= 80
+        }
 
-    this.rightArmGroup.angle = angleInDegrees
-    // console.log('angleInDegrees', angleInDegrees)
-
-    // User is aiming up
-    if (angleInDegrees <= 81 && angleInDegrees >= 71) {
-        angleInDegrees -= 10
-    } else if (angleInDegrees < 71 && angleInDegrees >= 61) {
-        angleInDegrees -= 20
-    } else if (angleInDegrees < 61 && angleInDegrees >= 51) {
-        angleInDegrees -= 30
-    } else if (angleInDegrees < 51 && angleInDegrees >= 41) {
-        angleInDegrees -= 40
-    } else if (angleInDegrees < 41 && angleInDegrees >= 31) {
-        angleInDegrees -= 50
-    } else if (angleInDegrees < 31 && angleInDegrees >= 21) {
-        angleInDegrees -= 60
-    } else if (angleInDegrees < 21 && angleInDegrees >= 11) {
-        angleInDegrees -= 70
-    } else if (angleInDegrees < 11 && angleInDegrees >= 0) {
-        angleInDegrees -= 80
+        // User is aiming down
+        if (angleInDegrees >= 99 && angleInDegrees <= 109) {
+            angleInDegrees += 10
+        } else if (angleInDegrees > 109 && angleInDegrees <= 119) {
+            angleInDegrees += 20
+        } else if (angleInDegrees > 119 && angleInDegrees <= 129) {
+            angleInDegrees += 30
+        } else if (angleInDegrees > 129 && angleInDegrees <= 139) {
+            angleInDegrees += 40
+        } else if (angleInDegrees > 139 && angleInDegrees <= 149) {
+            angleInDegrees += 50
+        } else if (angleInDegrees > 149 && angleInDegrees <= 159) {
+            angleInDegrees += 60
+        } else if (angleInDegrees > 159 && angleInDegrees <= 169) {
+            angleInDegrees += 70
+        } else if (angleInDegrees > 169 && angleInDegrees <= 180) {
+            angleInDegrees += 80
+        }
     }
 
+    if (this.player.meta.facing === 'left') {
+        // User is aiming up
+        if (angleInDegrees >= -81 && angleInDegrees <= -71) {
+            angleInDegrees += 20
+        } else if (angleInDegrees > -71 && angleInDegrees <= -61) {
+            angleInDegrees += 30
+        } else if (angleInDegrees > -61 && angleInDegrees <= -51) {
+            angleInDegrees += 40
+        } else if (angleInDegrees > -51 && angleInDegrees <= -41) {
+            angleInDegrees += 50
+        } else if (angleInDegrees > -41 && angleInDegrees <= -31) {
+            angleInDegrees += 60
+        } else if (angleInDegrees > -31 && angleInDegrees <= -21) {
+            angleInDegrees += 70
+        } else if (angleInDegrees > -21 && angleInDegrees <= -11) {
+            angleInDegrees += 80
+        } else if (angleInDegrees > -11 && angleInDegrees <= 0) {
+            angleInDegrees += 90
+        }
 
-
-    // User is aiming down
-    if (angleInDegrees >= 99 && angleInDegrees <= 109) {
-        angleInDegrees += 10
-    } else if (angleInDegrees > 109 && angleInDegrees <= 119) {
-        angleInDegrees += 20
-    } else if (angleInDegrees > 119 && angleInDegrees <= 129) {
-        angleInDegrees += 30
-    } else if (angleInDegrees > 129 && angleInDegrees <= 139) {
-        angleInDegrees += 40
-    } else if (angleInDegrees > 139 && angleInDegrees <= 149) {
-        angleInDegrees += 50
-    } else if (angleInDegrees > 149 && angleInDegrees <= 159) {
-        angleInDegrees += 60
-    } else if (angleInDegrees > 159 && angleInDegrees <= 169) {
-        angleInDegrees += 70
-    } else if (angleInDegrees > 169 && angleInDegrees <= 180) {
-        angleInDegrees += 80
+        // User is aiming down
+        if (angleInDegrees <= 270 && angleInDegrees >= 260) {
+            angleInDegrees -= 10
+        } else if (angleInDegrees < 260 && angleInDegrees >= 250) {
+            angleInDegrees -= 20
+        } else if (angleInDegrees < 250 && angleInDegrees >= 240) {
+            angleInDegrees -= 30
+        } else if (angleInDegrees < 240 && angleInDegrees >= 230) {
+            angleInDegrees -= 40
+        } else if (angleInDegrees < 230 && angleInDegrees >= 220) {
+            angleInDegrees -= 50
+        } else if (angleInDegrees < 220 && angleInDegrees >= 210) {
+            angleInDegrees -= 60
+        } else if (angleInDegrees < 210 && angleInDegrees >= 200) {
+            angleInDegrees -= 70
+        } else if (angleInDegrees < 200 && angleInDegrees >= 190) {
+            angleInDegrees -= 80
+        }
     }
 
     this.leftArmGroup.angle = angleInDegrees
@@ -228,56 +262,6 @@ module.exports = function() {
     if (this.game.input.activePointer.isDown)
     {
         this.weapons[this.currentWeapon].fire(this.player, this.socket, this.roomId, this.volume)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.ONE)) {
-        this.setCurrentWeapon(0)
-        EventHandler.emit('weapon update', 1)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.TWO)) {
-        this.setCurrentWeapon(1)
-        EventHandler.emit('weapon update', 2)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.THREE)) {
-        this.setCurrentWeapon(2)
-        EventHandler.emit('weapon update', 3)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.FOUR)) {
-        this.setCurrentWeapon(3)
-        EventHandler.emit('weapon update', 4)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.FIVE)) {
-        this.setCurrentWeapon(4)
-        EventHandler.emit('weapon update', 5)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.SIX)) {
-        this.setCurrentWeapon(5)
-        EventHandler.emit('weapon update', 6)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.SEVEN)) {
-        this.setCurrentWeapon(6)
-        EventHandler.emit('weapon update', 7)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.EIGHT)) {
-        this.setCurrentWeapon(7)
-        EventHandler.emit('weapon update', 8)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.NINE)) {
-        this.setCurrentWeapon(8)
-        EventHandler.emit('weapon update', 9)
-    }
-
-    if (this.input.keyboard.isDown(Phaser.Keyboard.ZERO)) {
-        this.setCurrentWeapon(9)
-        EventHandler.emit('weapon update', 0)
     }
 
     this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`
