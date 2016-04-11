@@ -20,12 +20,16 @@ export default class GameUiContainer extends React.Component {
             players: [],
             volume: .5,
             nickname: 'Unamed Ranger',
-            settingsModalOpen: false
+            settingsModalOpen: false,
+            selectedPrimaryWeapon: 'AK47',
+            selectedSecondaryWeapon: 'DesertEagle'
         }
 
         this.handleSettingsButtonClick = this.handleSettingsButtonClick.bind(this)
         this.handleSoundEffectVolumeChange = this.handleSoundEffectVolumeChange.bind(this)
         this.handleNicknameChange = this.handleNicknameChange.bind(this)
+        this.handleSecondaryGunClick = this.handleSecondaryGunClick.bind(this)
+        this.handlePrimaryGunClick = this.handlePrimaryGunClick.bind(this)
     }
 
     componentDidMount() {
@@ -44,6 +48,12 @@ export default class GameUiContainer extends React.Component {
         EventHandler.on('players update', (players) => {
             this.setState({ players })
         })
+
+        EventHandler.on('settings open', () => {
+            this.setState({
+                settingsModalOpen: !this.state.settingsModalOpen
+            })
+        })
     }
 
     handleSettingsButtonClick() {
@@ -60,6 +70,20 @@ export default class GameUiContainer extends React.Component {
     handleSoundEffectVolumeChange(volume) {
         EventHandler.emit('volume update', { volume })
         this.setState({ volume })
+    }
+
+    handlePrimaryGunClick(weapon) {
+        EventHandler.emit('primary weapon update', weapon)
+        this.setState({
+            selectedPrimaryWeapon: weapon.id
+        })
+    }
+
+    handleSecondaryGunClick(weapon) {
+        EventHandler.emit('secondary weapon update', weapon)
+        this.setState({
+            selectedSecondaryWeapon: weapon.id
+        })
     }
 
     render() {
@@ -83,7 +107,11 @@ export default class GameUiContainer extends React.Component {
                     isOpen={ this.state.settingsModalOpen }
                     onClose={ this.handleSettingsButtonClick }
                     onNicknameChange={ this.handleNicknameChange }
+                    onPrimaryGunClick={ this.handlePrimaryGunClick }
+                    onSecondaryGunClick={ this.handleSecondaryGunClick }
                     onSoundEffectVolumeChange={ this.handleSoundEffectVolumeChange }
+                    selectedPrimaryWeapon={ this.state.selectedPrimaryWeapon }
+                    selectedSecondaryWeapon={ this.state.selectedSecondaryWeapon }
                 />
             </div>
         )

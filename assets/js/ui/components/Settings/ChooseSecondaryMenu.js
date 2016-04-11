@@ -1,21 +1,24 @@
 import React, { PropTypes } from 'react'
 
-export default function ChooseSecondaryMenu(props) {
-    const { onViewChange } = props
-
+export default function ChooseSecondaryMenu({
+    onViewChange,
+    onSecondaryGunClick
+}) {
     let primaryWeapons = [
         {
+            id: 'DesertEagle',
             name: 'Desert Eagle',
             image: '/images/guns/Spr_DesertEagle.png'
         },
         {
+            id: 'RPG',
             name: 'RPG',
             image: '/images/guns/Spr_RPG.png'
         }
     ]
 
-    function handleSelectPrimaryClick(evt) {
-        console.log(evt.target.value)
+    function handleSelectPrimaryClick(weapon) {
+        onSecondaryGunClick(weapon)
         onViewChange('main')
     }
 
@@ -24,9 +27,8 @@ export default function ChooseSecondaryMenu(props) {
             return (
                 <div
                     className="option-group option-weapon-group align-middle"
-                    onClick={ handleSelectPrimaryClick }
-                    value={ weapon.name }
                     key={ index }
+                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
                     <div>
                         <img src={ weapon.image } />
@@ -40,7 +42,7 @@ export default function ChooseSecondaryMenu(props) {
     return (
         <div className="row">
             <div className="col-sm-12">
-                <label>Select a secondary weapon</label>
+                <label>Select a Secondary Weapon</label>
                 <div className="options-menu">
                     { renderWeapons() }
                 </div>
@@ -50,5 +52,6 @@ export default function ChooseSecondaryMenu(props) {
 }
 
 ChooseSecondaryMenu.propTypes = {
-
+    onSecondaryGunClick: PropTypes.func.isRequired,
+    onViewChange: PropTypes.func.isRequired
 }

@@ -1,12 +1,17 @@
 import React, { PropTypes } from 'react'
 
+import primaryWeapons from './PrimaryWeapons'
+import secondaryWeapons from './SecondaryWeapons'
+
 export default function MainSettingsMenu(props) {
     const {
         defaultNicknameValue,
         defaultSoundEffectValue,
         onNicknameChange,
         onSoundEffectVolumeChange,
-        onViewChange
+        onViewChange,
+        selectedPrimaryWeapon,
+        selectedSecondaryWeapon
     } = props
 
     function handleNicknameChange(evt) {
@@ -29,6 +34,57 @@ export default function MainSettingsMenu(props) {
         onViewChange('chooseCharacter')
     }
 
+    function renderPrimaryWeapon() {
+        if (!selectedPrimaryWeapon)
+            return null
+
+        let weapon = _.find(primaryWeapons, { id: selectedPrimaryWeapon })
+
+        if (!weapon) {
+            console.error('Could not find primary weapon.', selectedPrimaryWeapon)
+            return null
+        }
+
+        return (
+            <div
+                className="option-group option-weapon-group align-middle"
+                onClick={ handlePrimaryViewClick }
+                style={ { marginBottom: '25px' } }
+            >
+                <div>
+                    <img src={ weapon.image } />
+                </div>
+                <span className="caret"></span>
+                <span className="option-name">{ weapon.name }</span>
+            </div>
+        )
+    }
+
+    function renderSecondaryWeapon() {
+        if (!selectedSecondaryWeapon)
+            return null
+
+        let weapon = _.find(secondaryWeapons, { id: selectedSecondaryWeapon })
+
+        if (!weapon) {
+            console.error('Could not find secondary weapon.', selectedSecondaryWeapon)
+            return null
+        }
+
+        return (
+            <div
+                className="option-group option-weapon-group align-middle"
+                onClick={ handleSecondaryViewClick }
+            >
+                <div>
+                    <img src={ weapon.image } />
+                </div>
+                <span className="caret"></span>
+                <span className="option-name">{ weapon.name }</span>
+            </div>
+        )
+    }
+
     return (
         <div>
             <div
@@ -37,29 +93,10 @@ export default function MainSettingsMenu(props) {
             >
                 <div className="col-sm-6">
                     <label>Primary</label>
-                    <div
-                        className="option-group option-weapon-group align-middle"
-                        onClick={ handlePrimaryViewClick }
-                        style={ { marginBottom: '25px' } }
-                    >
-                        <div>
-                            <img src="/images/guns/Spr_AK47.png" />
-                        </div>
-                        <span className="caret"></span>
-                        <span className="option-name">AK-47</span>
-                    </div>
+                    { renderPrimaryWeapon() }
 
                     <label>Secondary</label>
-                    <div
-                        className="option-group option-weapon-group align-middle"
-                        onClick={ handleSecondaryViewClick }
-                    >
-                        <div>
-                            <img src="/images/guns/Spr_DesertEagle.png" />
-                        </div>
-                        <span className="caret"></span>
-                        <span className="option-name">Desert Eagle</span>
-                    </div>
+                    { renderSecondaryWeapon() }
                 </div>
                 <div className="col-sm-6">
                     <label>Character</label>

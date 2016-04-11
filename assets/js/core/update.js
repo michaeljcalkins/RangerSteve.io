@@ -264,7 +264,7 @@ module.exports = function() {
 
     if (this.game.input.activePointer.isDown)
     {
-        this.weapons[this.currentWeapon].fire(this.player, this.socket, this.roomId, this.volume)
+        this.player.meta[this.currentWeapon].fire(this.player, this.socket, this.roomId, this.volume)
     }
 
     this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`

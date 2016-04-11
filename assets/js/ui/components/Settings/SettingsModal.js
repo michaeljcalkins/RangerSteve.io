@@ -17,26 +17,41 @@ export default class SettingsModal extends React.Component {
     }
 
     renderOptionsView() {
+        const {
+            defaultNicknameValue,
+            defaultSoundEffectValue,
+            onNicknameChange,
+            onPrimaryGunClick,
+            onSecondaryGunClick,
+            onSoundEffectVolumeChange,
+            selectedPrimaryWeapon,
+            selectedSecondaryWeapon
+        } = this.props
+
         switch(this.state.view) {
         case 'main':
             return (
                 <MainSettingsMenu
-                    defaultNicknameValue={ this.props.defaultNicknameValue }
-                    defaultSoundEffectValue={ this.props.defaultSoundEffectValue }
-                    onNicknameChange={ this.props.onNicknameChange }
-                    onSoundEffectVolumeChange={ this.props.onSoundEffectVolumeChange }
+                    defaultNicknameValue={ defaultNicknameValue }
+                    defaultSoundEffectValue={ defaultSoundEffectValue }
+                    onNicknameChange={ onNicknameChange }
+                    onSoundEffectVolumeChange={ onSoundEffectVolumeChange }
                     onViewChange={ this.handleViewChange }
+                    selectedPrimaryWeapon={ selectedPrimaryWeapon }
+                    selectedSecondaryWeapon={ selectedSecondaryWeapon }
                 />
             )
         case 'choosePrimary':
             return (
                 <ChoosePrimaryMenu
+                    onPrimaryGunClick={ onPrimaryGunClick }
                     onViewChange={ this.handleViewChange }
                 />
             )
         case 'chooseSecondary':
             return (
                 <ChooseSecondaryMenu
+                    onSecondaryGunClick={ onSecondaryGunClick }
                     onViewChange={ this.handleViewChange }
                 />
             )
@@ -92,5 +107,7 @@ export default class SettingsModal extends React.Component {
 }
 
 SettingsModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired
+    isOpen: PropTypes.bool.isRequired,
+    onPrimaryGunClick: PropTypes.func.isRequired,
+    onSecondaryGunClick: PropTypes.func.isRequired
 }
