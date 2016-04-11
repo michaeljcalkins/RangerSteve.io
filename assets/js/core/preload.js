@@ -3,7 +3,7 @@
 module.exports = function() {
     this.load.image('map-bg', '/images/high-rule-desert.png')
     this.load.image('ground', '/images/platform.png')
-    this.load.image('bullet12', '/images/bullet12.png')
+    this.load.image('bullet12', '/images/bullet.png')
 
     this.load.spritesheet('dude', '/images/dude.png', 32, 48)
     this.load.spritesheet('commando', '/images/commando.png', 300, 315)

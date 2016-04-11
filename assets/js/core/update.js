@@ -133,9 +133,10 @@ module.exports = function() {
 
 
     let angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90;
-    this.rightArmGroup.angle = angleInDegrees + 5
 
     if (this.player.meta.facing === 'right') {
+        this.rightArmGroup.angle = angleInDegrees + 5
+
         // User is aiming up
         if (angleInDegrees <= 81 && angleInDegrees >= 71) {
             angleInDegrees -= 10
@@ -176,6 +177,8 @@ module.exports = function() {
     }
 
     if (this.player.meta.facing === 'left') {
+        this.rightArmGroup.angle = angleInDegrees - 7
+
         // User is aiming up
         if (angleInDegrees >= -81 && angleInDegrees <= -71) {
             angleInDegrees += 20

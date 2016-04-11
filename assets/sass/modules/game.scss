@@ -1,0 +1,49 @@
+.option-heading {
+    font-size: 22px;
+    font-family: Bangers;
+    margin: 0 0 15px 0;
+}
+
+.option-group {
+    background: #D8D8D8;
+    cursor: pointer;
+    position: relative;
+    width: 270px;
+    margin-bottom: 5px;
+
+    .caret {
+        position: absolute;
+        top: 10px;
+        right: 7px;
+        border-top: 10px dashed;
+        border-right: 10px solid transparent;
+        border-left: 10px solid transparent;
+    }
+}
+
+.option-weapon-group {
+    height: 90px;
+}
+
+.option-character-group {
+    height: 230px;
+}
+
+.option-name {
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    font-size: 16px;
+    font-family: Bangers;
+}
+
+.options-menu {
+    .option-group {
+        float: left;
+        width: 281px;
+
+        &:nth-child(odd) {
+            margin-right: 5px;
+        }
+    }
+}
