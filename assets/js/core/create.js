@@ -84,6 +84,8 @@ module.exports = function() {
             game: this.game
         })
     }
+    this.player.meta.primaryWeapon.id = 'AK47'
+    this.player.meta.secondaryWeapon.id = 'DesertEagle'
 
     this.leftArmGroup = this.game.add.group()
     this.rightArmGroup = this.game.add.group()
@@ -108,7 +110,7 @@ module.exports = function() {
     this.leftArmGroup.add(this.leftArmSprite)
 
     // Gun
-    this.ak47Sprite = this.game.add.sprite(12, 19, 'ak47')
+    this.ak47Sprite = this.game.add.sprite(12, 19, 'AK47')
     this.ak47Sprite.scale.setTo(1.3)
     this.ak47Sprite.rotation = 80.15
 
@@ -140,38 +142,6 @@ module.exports = function() {
      * Weapons
      */
     this.currentWeapon = 'primaryWeapon'
-    // this.weapons = [
-    //     new Weapons.AK47({
-    //         game: this.game
-    //     }),
-    //     new Weapons.M500({
-    //         game: this.game
-    //     }),
-    //     new Weapons.Skorpion({
-    //         game: this.game
-    //     }),
-    //     new Weapons.Aug({
-    //         game: this.game
-    //     }),
-    //     new Weapons.P90({
-    //         game: this.game
-    //     }),
-    //     new Weapons.DesertEagle({
-    //         game: this.game
-    //     }),
-    //     new Weapons.G43({
-    //         game: this.game
-    //     }),
-    //     new Weapons.M4A1({
-    //         game: this.game
-    //     }),
-    //     new Weapons.Barrett({
-    //         game: this.game
-    //     }),
-    //     new Weapons.RPG({
-    //         game: this.game
-    //     })
-    // ]
 
 
     /**
@@ -184,15 +154,25 @@ module.exports = function() {
     EventHandler.on('volume update', (data) => {
         this.volume = data.volume
     })
+
     EventHandler.on('primary weapon update', (weapon) => {
         this.player.meta.primaryWeapon = new Weapons[weapon.id]({
             game: this.game
         })
+        this.player.meta.primaryWeapon.id = weapon.id
+
+        if (this.currentWeapon === 'primaryWeapon')
+            this.ak47Sprite.loadTexture(weapon.id)
     })
+
     EventHandler.on('secondary weapon update', (weapon) => {
         this.player.meta.secondaryWeapon = new Weapons[weapon.id]({
             game: this.game
         })
+        this.player.meta.secondaryWeapon.id = weapon.id
+
+        if (this.currentWeapon === 'secondaryWeapon')
+            this.ak47Sprite.loadTexture(weapon.id)
     })
 
     this.positionText = this.add.text(25, 25, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
@@ -228,6 +208,7 @@ module.exports = function() {
         this.currentWeapon = this.currentWeapon === 'primaryWeapon'
             ? 'secondaryWeapon'
             : 'primaryWeapon'
+        this.ak47Sprite.loadTexture(this.player.meta[this.currentWeapon].id)
     })
 
 

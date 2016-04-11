@@ -1,5 +1,7 @@
 'use strict'
 
+import Preload from './core/preload'
+
 let InputHandler = require('./lib/InputHandler')
 // let EnemyBuffalo = require('./lib/EnemyBuffalo')
 let SocketEvents = require('./lib/SocketEvents')

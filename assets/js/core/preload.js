@@ -1,4 +1,5 @@
-'use strict'
+import primaryWeapons from '../ui/components/Settings/PrimaryWeapons'
+import secondaryWeapons from '../ui/components/Settings/SecondaryWeapons'
 
 module.exports = function() {
     this.load.image('map-bg', '/images/high-rule-desert.png')
@@ -9,7 +10,15 @@ module.exports = function() {
     this.load.spritesheet('commando', '/images/commando.png', 300, 315)
     this.load.spritesheet('enemy', '/images/dude.png', 32, 48)
 
-    this.load.image('ak47', '/images/guns/Spr_AK47.png')
+    // Weapons
+    primaryWeapons.forEach((weapon) => {
+        this.load.image(weapon.id, weapon.image)
+    })
+
+    secondaryWeapons.forEach((weapon) => {
+        this.load.image(weapon.id, weapon.image)
+    })
+
     this.load.image('right-arm', '/images/body/right-arm.png')
     this.load.image('left-arm', '/images/body/left-arm.png')
     this.load.image('head', '/images/body/head.png')
