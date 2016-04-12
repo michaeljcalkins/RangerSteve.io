@@ -17,7 +17,7 @@ export default function ChooseCharacterMenu(props) {
             image: '/images/characters/RealEstateRob.png'
         },
         {
-            name: 'LavaEagle',
+            name: 'ImRickJames,
             image: '/images/characters/LavaEagle.png'
         }
     ]
