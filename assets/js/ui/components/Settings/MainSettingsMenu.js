@@ -138,5 +138,11 @@ export default function MainSettingsMenu(props) {
 }
 
 MainSettingsMenu.propTypes = {
-
+    defaultNicknameValue: PropTypes.string,
+    defaultSoundEffectValue: PropTypes.number,
+    onNicknameChange: PropTypes.func.isRequired,
+    onSoundEffectVolumeChange: PropTypes.func.isRequired,
+    onViewChange: PropTypes.func.isRequired,
+    selectedPrimaryWeapon: PropTypes.string.isRequired,
+    selectedSecondaryWeapon: PropTypes.string.isRequired
 }
