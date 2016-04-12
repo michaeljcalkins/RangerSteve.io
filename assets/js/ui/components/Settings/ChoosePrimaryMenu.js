@@ -4,9 +4,13 @@ import primaryWeapons from '../../../lib/PrimaryWeapons'
 
 export default function ChoosePrimaryMenu({
     onViewChange,
-    onPrimaryGunClick
+    onPrimaryGunClick,
+    player
 }) {
     function handleSelectPrimaryClick(weapon) {
+        if (player.meta.score < weapon.minScore)
+            return
+
         onPrimaryGunClick(weapon)
         onViewChange('main')
     }
@@ -16,9 +20,13 @@ export default function ChoosePrimaryMenu({
             return (
                 <div
                     className="option-group option-weapon-group align-middle"
-                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                     key={ index }
+                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
+                    { player.meta.score < weapon.minScore
+                        ? <div className="option-screen"></div>
+                        : null
+                    }
                     <div>
                         <img src={ weapon.image } />
                     </div>
@@ -27,6 +35,8 @@ export default function ChoosePrimaryMenu({
             )
         })
     }
+
+    console.log(player)
 
     return (
         <div className="row">

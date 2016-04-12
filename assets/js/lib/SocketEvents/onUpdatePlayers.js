@@ -23,6 +23,7 @@ module.exports = function(data) {
         if (player.id === ('/#' + this.socket.id)) {
             EventHandler.emit('score update', String(player.meta.score))
             EventHandler.emit('health update', String(player.meta.health))
+            EventHandler.emit('player update', { player })
             return
         }
 

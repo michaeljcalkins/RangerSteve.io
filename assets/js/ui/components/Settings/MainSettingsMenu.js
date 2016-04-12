@@ -49,7 +49,7 @@ export default function MainSettingsMenu(props) {
             <div
                 className="option-group option-weapon-group align-middle"
                 onClick={ handlePrimaryViewClick }
-                style={ { marginBottom: '25px' } }
+                style={ { marginBottom: '28px' } }
             >
                 <div>
                     <img src={ weapon.image } />

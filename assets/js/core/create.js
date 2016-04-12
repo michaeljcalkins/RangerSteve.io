@@ -191,9 +191,7 @@ module.exports = function() {
      */
     // Open settings modal
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(function() {
-        EventHandler.emit('settings open', {
-            player: this.player
-        })
+        EventHandler.emit('settings open')
     })
 
     // Switch weapons

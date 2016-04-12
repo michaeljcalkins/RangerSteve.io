@@ -18,6 +18,7 @@ export default class GameUiContainer extends React.Component {
             score: '0',
             currentWeapon: 1,
             players: [],
+            player: {},
             volume: .5,
             nickname: 'Unamed Ranger',
             settingsModalOpen: false,
@@ -30,9 +31,7 @@ export default class GameUiContainer extends React.Component {
         this.handleNicknameChange = this.handleNicknameChange.bind(this)
         this.handleSecondaryGunClick = this.handleSecondaryGunClick.bind(this)
         this.handlePrimaryGunClick = this.handlePrimaryGunClick.bind(this)
-    }
 
-    componentDidMount() {
         EventHandler.on('health update', (health) => {
             this.setState({ health })
         })
@@ -49,7 +48,13 @@ export default class GameUiContainer extends React.Component {
             this.setState({ players })
         })
 
-        EventHandler.on('settings open', () => {
+        EventHandler.on('player update', (data) => {
+            this.setState({
+                player: data.player
+            })
+        })
+
+        EventHandler.on('settings open', (data) => {
             this.setState({
                 settingsModalOpen: !this.state.settingsModalOpen
             })
@@ -112,6 +117,7 @@ export default class GameUiContainer extends React.Component {
                     onPrimaryGunClick={ this.handlePrimaryGunClick }
                     onSecondaryGunClick={ this.handleSecondaryGunClick }
                     onSoundEffectVolumeChange={ this.handleSoundEffectVolumeChange }
+                    player={ this.state.player }
                     selectedPrimaryWeapon={ this.state.selectedPrimaryWeapon }
                     selectedSecondaryWeapon={ this.state.selectedSecondaryWeapon }
                 />

@@ -4,9 +4,13 @@ import secondaryWeapons from '../../../lib/SecondaryWeapons'
 
 export default function ChooseSecondaryMenu({
     onViewChange,
-    onSecondaryGunClick
+    onSecondaryGunClick,
+    player
 }) {
     function handleSelectPrimaryClick(weapon) {
+        if (player.meta.score < weapon.minScore)
+            return
+            
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }
@@ -19,6 +23,10 @@ export default function ChooseSecondaryMenu({
                     key={ index }
                     onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
+                    { player.meta.score < weapon.minScore
+                        ? <div className="option-screen"></div>
+                        : null
+                    }
                     <div>
                         <img src={ weapon.image } />
                     </div>

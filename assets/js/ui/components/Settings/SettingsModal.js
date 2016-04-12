@@ -24,6 +24,7 @@ export default class SettingsModal extends React.Component {
             onPrimaryGunClick,
             onSecondaryGunClick,
             onSoundEffectVolumeChange,
+            player,
             selectedPrimaryWeapon,
             selectedSecondaryWeapon
         } = this.props
@@ -46,6 +47,7 @@ export default class SettingsModal extends React.Component {
                 <ChoosePrimaryMenu
                     onPrimaryGunClick={ onPrimaryGunClick }
                     onViewChange={ this.handleViewChange }
+                    player={ player }
                 />
             )
         case 'chooseSecondary':
@@ -53,12 +55,14 @@ export default class SettingsModal extends React.Component {
                 <ChooseSecondaryMenu
                     onSecondaryGunClick={ onSecondaryGunClick }
                     onViewChange={ this.handleViewChange }
+                    player={ player }
                 />
             )
         case 'chooseCharacter':
             return (
                 <ChooseCharacterMenu
                     onViewChange={ this.handleViewChange }
+                    player={ player }
                 />
             )
         }
