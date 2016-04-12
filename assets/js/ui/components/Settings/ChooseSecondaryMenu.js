@@ -1,29 +1,18 @@
 import React, { PropTypes } from 'react'
 
+import secondaryWeapons from '../../../lib/SecondaryWeapons'
+
 export default function ChooseSecondaryMenu({
     onViewChange,
     onSecondaryGunClick
 }) {
-    let primaryWeapons = [
-        {
-            id: 'DesertEagle',
-            name: 'Desert Eagle',
-            image: '/images/guns/Spr_DesertEagle.png'
-        },
-        {
-            id: 'RPG',
-            name: 'RPG',
-            image: '/images/guns/Spr_RPG.png'
-        }
-    ]
-
     function handleSelectPrimaryClick(weapon) {
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }
 
     function renderWeapons() {
-        return primaryWeapons.map((weapon, index) => {
+        return secondaryWeapons.map((weapon, index) => {
             return (
                 <div
                     className="option-group option-weapon-group align-middle"

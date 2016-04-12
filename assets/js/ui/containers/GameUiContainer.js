@@ -77,6 +77,7 @@ export default class GameUiContainer extends React.Component {
         this.setState({
             selectedPrimaryWeapon: weapon.id
         })
+        toastr.info('Your weapon will change the next time you respawn.')
     }
 
     handleSecondaryGunClick(weapon) {
@@ -84,6 +85,7 @@ export default class GameUiContainer extends React.Component {
         this.setState({
             selectedSecondaryWeapon: weapon.id
         })
+        toastr.info('Your weapon will change the next time you respawn.')
     }
 
     render() {

@@ -1,5 +1,5 @@
-import primaryWeapons from '../ui/components/Settings/PrimaryWeapons'
-import secondaryWeapons from '../ui/components/Settings/SecondaryWeapons'
+import primaryWeapons from '../lib/PrimaryWeapons'
+import secondaryWeapons from '../lib/SecondaryWeapons'
 
 module.exports = function() {
     this.load.image('map-bg', '/images/high-rule-desert.png')

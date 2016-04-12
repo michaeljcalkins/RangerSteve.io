@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
-import primaryWeapons from './PrimaryWeapons'
-import secondaryWeapons from './SecondaryWeapons'
+import primaryWeapons from '../../../lib/PrimaryWeapons'
+import secondaryWeapons from '../../../lib/SecondaryWeapons'
 
 export default function MainSettingsMenu(props) {
     const {

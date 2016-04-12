@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-import primaryWeapons from './PrimaryWeapons'
+import primaryWeapons from '../../../lib/PrimaryWeapons'
 
 export default function ChoosePrimaryMenu({
     onViewChange,

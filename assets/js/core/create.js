@@ -82,8 +82,11 @@ module.exports = function() {
         }),
         secondaryWeapon: new Weapons.DesertEagle({
             game: this.game
-        })
+        }),
+        selectedPrimaryWeaponId: 'AK47',
+        selectedSecondaryWeaponId: 'DesertEagle'
     }
+
     this.player.meta.primaryWeapon.id = 'AK47'
     this.player.meta.secondaryWeapon.id = 'DesertEagle'
 
@@ -156,23 +159,11 @@ module.exports = function() {
     })
 
     EventHandler.on('primary weapon update', (weapon) => {
-        this.player.meta.primaryWeapon = new Weapons[weapon.id]({
-            game: this.game
-        })
-        this.player.meta.primaryWeapon.id = weapon.id
-
-        if (this.currentWeapon === 'primaryWeapon')
-            this.ak47Sprite.loadTexture(weapon.id)
+        this.player.meta.selectedPrimaryWeaponId = weapon.id
     })
 
     EventHandler.on('secondary weapon update', (weapon) => {
-        this.player.meta.secondaryWeapon = new Weapons[weapon.id]({
-            game: this.game
-        })
-        this.player.meta.secondaryWeapon.id = weapon.id
-
-        if (this.currentWeapon === 'secondaryWeapon')
-            this.ak47Sprite.loadTexture(weapon.id)
+        this.player.meta.selectedSecondaryWeaponId = weapon.id
     })
 
     this.positionText = this.add.text(25, 25, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
@@ -200,7 +191,9 @@ module.exports = function() {
      */
     // Open settings modal
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(function() {
-        EventHandler.emit('settings open')
+        EventHandler.emit('settings open', {
+            player: this.player
+        })
     })
 
     // Switch weapons
