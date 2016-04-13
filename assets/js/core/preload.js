@@ -25,9 +25,14 @@ module.exports = function() {
     this.load.image('torso', '/images/body/torso.png')
 
     this.load.audio('AK47-sound', '/audio/AK47.ogg')
-    this.load.audio('BarretM90-sound', '/audio/BarretM90.ogg')
-    this.load.audio('M249-sound', '/audio/M249.ogg')
-    this.load.audio('MP5-sound', '/audio/MP5.ogg')
-    this.load.audio('DesertEagle-sound', '/audio/DesertEagle.ogg')
+    this.load.audio('M500-sound', '/audio/M500.ogg')
+    this.load.audio('Skorpion-sound', '/audio/Skorpion.ogg')
+    this.load.audio('AUG-sound', '/audio/AUG.ogg')
+    this.load.audio('G43-sound', '/audio/G43.ogg')
+    this.load.audio('P90-sound', '/audio/P90.ogg')
     this.load.audio('M4A1-sound', '/audio/M4A1.ogg')
+    this.load.audio('BarretM90-sound', '/audio/BarretM90.ogg')
+
+    this.load.audio('DesertEagle-sound', '/audio/DesertEagle.ogg')
+    this.load.audio('RPG-sound', '/audio/RPG.ogg')
 }

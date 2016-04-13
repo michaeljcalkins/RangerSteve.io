@@ -7,7 +7,11 @@ module.exports = function() {
     this.physics.arcade.collide(this.player, this.platforms, null, null, this)
 
     // Did this player's bullets hit any platforms
-    this.physics.arcade.collide(this.platforms, this.weapons, (platform, weapon) => {
+    this.physics.arcade.collide(this.platforms, this.player.meta.primaryWeapon, (platform, weapon) => {
+        weapon.kill()
+    }, null, this)
+
+    this.physics.arcade.collide(this.platforms, this.player.meta.secondaryWeapon, (platform, weapon) => {
         weapon.kill()
     }, null, this)
 
@@ -239,7 +243,7 @@ module.exports = function() {
     if (this.jumps === 2 && this.upInputIsActive(5) && onTheGround) {
         this.player.body.velocity.y = this.JUMP_SPEED
         this.jumping = true
-    } else if (this.upInputIsActive(5) && !onTheGround) {
+    } else if (this.upInputIsActive(5)) {
         this.jumps = 1
     }
 

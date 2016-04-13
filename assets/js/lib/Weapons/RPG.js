@@ -7,7 +7,7 @@ let AK47 = function (config) {
     Phaser.Group.call(this, config.game, config.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE);
 
     //	Here we set-up our audio sprite
-    this.fx = config.game.add.audio('AK47-sound')
+    this.fx = config.game.add.audio('RPG-sound')
     this.allowMultiple = true
 
     this.damage = 22

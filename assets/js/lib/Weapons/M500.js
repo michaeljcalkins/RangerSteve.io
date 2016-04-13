@@ -3,8 +3,10 @@
 let Bullet = require('../Bullet')
 let Guid = require('../Guid')
 
-let Spas12 = function (config) {
+let M500 = function (config) {
     Phaser.Group.call(this, config.game, config.game.world, 'Spas-12', false, true, Phaser.Physics.ARCADE)
+
+    this.fx = config.game.add.audio('G43-sound')
 
     this.nextFire = 0
     this.bulletSpeed = 1900
@@ -23,10 +25,10 @@ let Spas12 = function (config) {
     return this
 }
 
-Spas12.prototype = Object.create(Phaser.Group.prototype)
-Spas12.prototype.constructor = Spas12
+M500.prototype = Object.create(Phaser.Group.prototype)
+M500.prototype.constructor = M500
 
-Spas12.prototype.fire = function (player, socket, roomId) {
+M500.prototype.fire = function (player, socket, roomId) {
     if (this.game.time.time < this.nextFire)
         return
 
@@ -70,6 +72,8 @@ Spas12.prototype.fire = function (player, socket, roomId) {
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate
+    this.fx.volume = .3 * volume
+    this.fx.play()
 }
 
-module.exports = Spas12
+module.exports = M500

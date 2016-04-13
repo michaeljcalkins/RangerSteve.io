@@ -19,8 +19,8 @@ let AK47 = function (config) {
     {
         let bullet = new Bullet(config.game, 'bullet12', config.socket)
         bullet.bulletId = Guid()
-        bullet.height = 2
-        bullet.width = 40
+        bullet.height = 3
+        bullet.width = 60
         bullet.damage = 22
         this.add(bullet, true);
     }
