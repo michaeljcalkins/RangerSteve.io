@@ -13,7 +13,7 @@ let AK47 = function (config) {
     this.damage = 22
     this.nextFire = 0
     this.bulletSpeed = 2300
-    this.fireRate = 160;
+    this.fireRate = 120;
 
     for (var i = 0; i < 64; i++)
     {
@@ -42,7 +42,7 @@ AK47.prototype.fire = function(player, socket, roomId, volume) {
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate
-    this.fx.volume = .3 * volume
+    this.fx.volume = .8 * volume
     this.fx.play()
 }
 

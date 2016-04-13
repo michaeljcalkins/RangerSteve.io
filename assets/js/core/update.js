@@ -273,6 +273,25 @@ module.exports = function() {
 
     this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`
 
+
+
+
+
+    // Check for out of bounds kill
+    if (this.player.body.onFloor()) {
+        console.log('KILL ME')
+        this.socket.emit('player damaged', {
+            roomId: this.roomId,
+            damage: 1000,
+            damagedPlayerId: '/#' + this.socket.id,
+            attackingPlayerId: null
+        })
+    }
+
+
+
+
+
     this.socket.emit('move player', {
         roomId: this.roomId,
         x: this.player.x,

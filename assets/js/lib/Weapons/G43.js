@@ -10,10 +10,10 @@ let AK47 = function (config) {
     this.fx = config.game.add.audio('G43-sound')
     this.allowMultiple = true
 
-    this.damage = 22
+    this.damage = 44
     this.nextFire = 0
     this.bulletSpeed = 2300
-    this.fireRate = 160;
+    this.fireRate = 1300;
 
     for (var i = 0; i < 64; i++)
     {
@@ -42,7 +42,7 @@ AK47.prototype.fire = function(player, socket, roomId, volume) {
     this.setAll('tracking', true)
 
     this.nextFire = this.game.time.time + this.fireRate
-    this.fx.volume = .3 * volume
+    this.fx.volume = .85 * volume
     this.fx.play()
 }
 

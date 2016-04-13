@@ -6,11 +6,11 @@ let Guid = require('../Guid')
 let M500 = function (config) {
     Phaser.Group.call(this, config.game, config.game.world, 'Spas-12', false, true, Phaser.Physics.ARCADE)
 
-    this.fx = config.game.add.audio('G43-sound')
+    this.fx = config.game.add.audio('M500-sound')
 
     this.nextFire = 0
     this.bulletSpeed = 1900
-    this.fireRate = 500
+    this.fireRate = 1650
 
     for (var i = 0; i < 32; i++)
     {
@@ -28,7 +28,7 @@ let M500 = function (config) {
 M500.prototype = Object.create(Phaser.Group.prototype)
 M500.prototype.constructor = M500
 
-M500.prototype.fire = function (player, socket, roomId) {
+M500.prototype.fire = function (player, socket, roomId, volume) {
     if (this.game.time.time < this.nextFire)
         return
 
