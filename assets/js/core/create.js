@@ -77,7 +77,7 @@ module.exports = function() {
 
     this.player.meta = {
         health: 100,
-        primaryWeapon: new Weapons.Skorpion({
+        primaryWeapon: new Weapons.AK47({
             game: this.game
         }),
         secondaryWeapon: new Weapons.DesertEagle({
