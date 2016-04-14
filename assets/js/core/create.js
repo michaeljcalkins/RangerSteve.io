@@ -1,13 +1,12 @@
-'use strict'
-
+import SetEventHandlers from '../lib/SocketEvents/SetEventHandlers'
+import EventHandler from '../lib/EventHandler'
 let HighRuleDesert = require('../maps/HighRuleDesert')
 let Weapons = require('../lib/Weapons')
-import EventHandler from '../lib/EventHandler'
 
 let worldWidth = 8000
 let worldHeight = 3966
 
-module.exports = function() {
+export default function Create() {
     // Define movement constants
     this.MAX_SPEED = 550
     this.ACCELERATION = 1960
@@ -206,5 +205,5 @@ module.exports = function() {
     /**
      * Start listening for events
      */
-    this.setEventHandlers()
+    SetEventHandlers.call(this)
 }

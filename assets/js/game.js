@@ -1,10 +1,7 @@
-'use strict'
-
-import Preload from './core/preload'
-
-// let EnemyBuffalo = require('./lib/EnemyBuffalo')
-let SocketEvents = require('./lib/SocketEvents')
-let Core = require('./core')
+import init from './core/Init'
+import preload from './core/Preload'
+import update from './core/Update'
+import create from './core/Create'
 
 let gameWidth = window.innerWidth
 let gameHeight = window.innerHeight
@@ -25,35 +22,10 @@ let RangerSteveGame = function() {
 }
 
 RangerSteveGame.prototype = {
-    init: Core.init,
-    preload: Core.preload,
-    create: Core.create,
-    update: Core.update,
-
-    setCurrentWeapon: function(newCurrentWeapon) {
-        if (newCurrentWeapon === this.weapons.length)
-            newCurrentWeapon = 0
-
-        //  Reset current weapon
-        this.weapons[this.currentWeapon].visible = false
-        this.weapons[this.currentWeapon].callAll('reset', null, 0, 0)
-        this.weapons[this.currentWeapon].setAll('exists', false)
-
-        //  Activate the new one
-        this.currentWeapon = newCurrentWeapon
-        this.weapons[this.currentWeapon].visible = true
-    },
-
-    setEventHandlers: SocketEvents.setEventHandlers,
-    onUpdatePlayers: SocketEvents.onUpdatePlayers,
-    onSocketConnected: SocketEvents.onSocketConnected,
-    onSocketDisconnect: SocketEvents.onSocketDisconnect,
-    onMovePlayer: SocketEvents.onMovePlayer,
-    onRemovePlayer: SocketEvents.onRemovePlayer,
-    onBulletFired: SocketEvents.onBulletFired,
-    onBulletRemoved: SocketEvents.onBulletRemoved,
-    onPlayerDamaged: SocketEvents.onPlayerDamaged,
-    onPlayerRespawn: SocketEvents.onPlayerRespawn
+    init,
+    preload,
+    create,
+    update
 }
 
 game.state.add('Game', RangerSteveGame, true)

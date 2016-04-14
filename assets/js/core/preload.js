@@ -1,7 +1,7 @@
 import primaryWeapons from '../lib/PrimaryWeapons'
 import secondaryWeapons from '../lib/SecondaryWeapons'
 
-module.exports = function() {
+export default function Preload() {
     this.load.image('map-bg', '/images/high-rule-desert.png')
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet12', '/images/bullet.png')

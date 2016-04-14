@@ -1,18 +1,30 @@
-'use strict'
+import setEventHandlers from './setEventHandlers'
+import onSocketConnected from './onSocketConnected'
+import onSocketDisconnect from './onSocketDisconnect'
 
-module.exports = {
-    setEventHandlers: require('./setEventHandlers'),
+import onMovePlayer from './onMovePlayer'
+import onRemovePlayer from './onRemovePlayer'
+import onUpdatePlayers from './onUpdatePlayers'
 
-    onSocketConnected: require('./onSocketConnected'),
-    onSocketDisconnect: require('./onSocketDisconnect'),
+import onPlayerDamaged from './onPlayerDamaged'
+import onPlayerRespawn from './onPlayerRespawn'
 
-    onMovePlayer: require('./onMovePlayer'),
-    onRemovePlayer: require('./onRemovePlayer'),
-    onUpdatePlayers: require('./onUpdatePlayers'),
+import onBulletFired from './onBulletFired'
+import onBulletRemoved from './onBulletRemoved'
 
-    onPlayerDamaged: require('./onPlayerDamaged'),
-    onPlayerRespawn: require('./onPlayerRespawn'),
+export default {
+    setEventHandlers,
 
-    onBulletFired: require('./onBulletFired'),
-    onBulletRemoved: require('./onBulletRemoved')
+    onSocketConnected,
+    onSocketDisconnect,
+
+    onMovePlayer,
+    onRemovePlayer,
+    onUpdatePlayers,
+
+    onPlayerDamaged,
+    onPlayerRespawn,
+
+    onBulletFired,
+    onBulletRemoved
 }
