@@ -6,7 +6,7 @@ import {
 import {
     leftInputIsActive,
     rightInputIsActive
-} from './InputHandler'
+} from './InputHelpers'
 
 export default function PlayerMovementHandler() {
     if (leftInputIsActive.call(this)) {
