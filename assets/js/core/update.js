@@ -1,140 +1,15 @@
-'use strict'
-
 import EventHandler from '../lib/EventHandler'
+import CollisionHandler from '../lib/CollisionHandler'
+import PlayerMovementHandler from '../lib/PlayerMovementHandler'
+
+import {
+    upInputIsActive,
+    upInputReleased
+} from '../lib/InputHandler'
 
 module.exports = function() {
-    // Collide this player with the map
-    this.physics.arcade.collide(this.player, this.platforms, null, null, this)
-
-    // Did this player's bullets hit any platforms
-    this.physics.arcade.collide(this.platforms, this.player.meta.primaryWeapon, (platform, weapon) => {
-        weapon.kill()
-    }, null, this)
-
-    this.physics.arcade.collide(this.platforms, this.player.meta.secondaryWeapon, (platform, weapon) => {
-        weapon.kill()
-    }, null, this)
-
-    // Did enemy bullets hit any platforms
-    this.physics.arcade.collide(this.platforms, this.enemyBullets, (platform, bullet) => {
-        bullet.kill()
-    }, null, this)
-
-    // Did this player get hit by any enemy bullets
-    this.physics.arcade.collide(this.player, this.enemyBullets, null, (player, bullet) => {
-        bullet.kill()
-
-        console.log('You were hit by', bullet.bulletId)
-        this.socket.emit('bullet removed', {
-            roomId: this.roomId,
-            bulletId: bullet.bulletId
-        })
-
-        this.socket.emit('player damaged', {
-            roomId: this.roomId,
-            damage: bullet.damage,
-            damagedPlayerId: '/#' + this.socket.id,
-            attackingPlayerId: bullet.playerId
-        })
-
-        return false
-    }, this)
-
-
-
-    let playerFaceLeft = () => {
-        if (this.player.meta.facing !== 'left') {
-            this.player.meta.facing = 'left'
-
-            this.rightArmGroup.x = 25
-            this.rightArmGroup.y = -65
-
-            this.leftArmGroup.x = -40
-            this.leftArmGroup.y = -70
-
-            this.headSprite.scale.x *= -1
-            this.headSprite.x = 12
-
-            this.torsoSprite.scale.x *= -1
-            this.torsoSprite.x = 49
-
-            this.leftArmSprite.scale.y *= -1
-            this.leftArmSprite.y = 5
-
-            this.rightArmSprite.scale.y *= -1
-            this.rightArmSprite.y = 10
-
-            this.ak47Sprite.scale.y *= -1
-            this.ak47Sprite.y = 30
-            this.ak47Sprite.x = -7
-        }
-    }
-
-    let playerFaceRight = () => {
-        if (this.player.meta.facing !== 'right') {
-            this.player.meta.facing = 'right'
-
-            this.rightArmGroup.x = -25
-            this.rightArmGroup.y = -65
-
-            this.leftArmGroup.x = 45
-            this.leftArmGroup.y = -70
-
-            this.headSprite.scale.x *= -1
-            this.headSprite.x = 0
-
-            this.torsoSprite.scale.x *= -1
-            this.torsoSprite.x = -37
-
-            this.leftArmSprite.scale.y *= -1
-            this.leftArmSprite.y = 0
-
-            this.rightArmSprite.scale.y *= -1
-            this.rightArmSprite.y = 0
-
-            this.ak47Sprite.scale.y *= -1
-            this.ak47Sprite.y = 19
-            this.ak47Sprite.x = 3
-        }
-    }
-
-
-
-    if (this.leftInputIsActive()) {
-        // If the LEFT key is down, set the player velocity to move left
-        this.player.body.acceleration.x = -this.ACCELERATION
-        this.player.animations.play('left')
-
-        // Left facing head needs to be set only once
-        playerFaceLeft()
-    } else if (this.rightInputIsActive()) {
-        // If the RIGHT key is down, set the player velocity to move right
-        this.player.body.acceleration.x = this.ACCELERATION
-        this.player.animations.play('right')
-
-        playerFaceRight()
-    } else {
-        // Stand still
-        this.player.body.acceleration.x = 0
-        this.player.animations.stop()
-
-        if (this.game.input.worldX > this.player.x) {
-            this.player.frame = 7
-            playerFaceRight()
-        }
-
-        if (this.game.input.worldX < this.player.x) {
-            this.player.frame = 6
-            playerFaceLeft()
-        }
-    }
-
-
-
-
-
-
-
+    CollisionHandler.call(this)
+    PlayerMovementHandler.call(this)
 
     let angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90;
 
@@ -240,10 +115,10 @@ module.exports = function() {
     }
 
     // Jump!
-    if (this.jumps === 2 && this.upInputIsActive(5) && onTheGround) {
+    if (this.jumps === 2 && upInputIsActive.call(this, 5) && onTheGround) {
         this.player.body.velocity.y = this.JUMP_SPEED
         this.jumping = true
-    } else if (this.upInputIsActive(5)) {
+    } else if (upInputIsActive.call(this, 5)) {
         this.jumps = 1
     }
 
@@ -255,7 +130,7 @@ module.exports = function() {
     }
 
     // Reduce the number of available jumps if the jump input is released
-    if (this.jumping && this.upInputReleased()) {
+    if (this.jumping && upInputReleased.call(this)) {
         this.player.body.acceleration.x = 0
         this.player.body.acceleration.y = 0
 
@@ -279,7 +154,6 @@ module.exports = function() {
 
     // Check for out of bounds kill
     if (this.player.body.onFloor()) {
-        console.log('KILL ME')
         this.socket.emit('player damaged', {
             roomId: this.roomId,
             damage: 1000,

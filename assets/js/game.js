@@ -2,7 +2,6 @@
 
 import Preload from './core/preload'
 
-let InputHandler = require('./lib/InputHandler')
 // let EnemyBuffalo = require('./lib/EnemyBuffalo')
 let SocketEvents = require('./lib/SocketEvents')
 let Core = require('./core')
@@ -30,13 +29,6 @@ RangerSteveGame.prototype = {
     preload: Core.preload,
     create: Core.create,
     update: Core.update,
-    render: function() {
-    },
-
-    leftInputIsActive: InputHandler.leftInputIsActive,
-    rightInputIsActive: InputHandler.rightInputIsActive,
-    upInputIsActive: InputHandler.upInputIsActive,
-    upInputReleased: InputHandler.upInputReleased,
 
     setCurrentWeapon: function(newCurrentWeapon) {
         if (newCurrentWeapon === this.weapons.length)

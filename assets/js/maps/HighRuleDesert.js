@@ -43,7 +43,7 @@ HighRuleDesert.create = function() {
 }
 
 HighRuleDesert.createSkySprite = function() {
-    this.skysprite = this.add.tileSprite(0, this.game.world.height - 3930, this.game.world.width, this.game.world.height, 'map-bg')
+    this.skysprite = this.add.tileSprite(0, this.game.world.height - 3966, this.game.world.width, this.game.world.height, 'map-bg')
 }
 
 HighRuleDesert.createPlatforms = function() {

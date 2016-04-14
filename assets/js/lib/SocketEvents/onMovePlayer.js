@@ -1,6 +1,4 @@
-'use strict'
-
-let PlayerById = require('../PlayerById')
+import PlayerById from'../PlayerById'
 
 module.exports = function(data) {
     let movePlayer = PlayerById.call(this, data.id)
