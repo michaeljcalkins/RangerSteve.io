@@ -1,10 +1,10 @@
 import SetEventHandlers from '../lib/SocketEvents/SetEventHandlers'
 import EventHandler from '../lib/EventHandler'
-let HighRuleDesert = require('../maps/HighRuleDesert')
-let Weapons = require('../lib/Weapons')
+import HighRuleJungle from '../maps/HighRuleJungle'
+import Weapons from '../lib/Weapons'
 
-let worldWidth = 8000
-let worldHeight = 3966
+const worldWidth = 8000
+const worldHeight = 3966
 
 export default function Create() {
     // Define movement constants
@@ -34,13 +34,13 @@ export default function Create() {
     /**
      * Map
      */
-    HighRuleDesert.create.call(this)
+    new HighRuleJungle(this)
 
 
     /**
      * Player Settings
      */
-    let spawnPoint = HighRuleDesert.getRandomSpawnPoint.call(this)
+    let spawnPoint = HighRuleJungle.getRandomSpawnPoint.call(this)
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.scale.setTo(.27)
     this.player.anchor.setTo(.5)

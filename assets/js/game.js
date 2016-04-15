@@ -3,29 +3,27 @@ import preload from './core/Preload'
 import update from './core/Update'
 import create from './core/Create'
 
-let gameWidth = window.innerWidth
-let gameHeight = window.innerHeight
+const gameWidth = window.innerWidth
+const gameHeight = window.innerHeight
 let game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game')
 
 let RangerSteveGame = function() {
     this.currentWeapon = 0
     this.enemies = []
-    this.game = game
     this.ground
     this.platforms
     this.player
-    this.score = 0
-    this.scoreText
     this.socket
-    this.weaponName = null
-    this.weapons = []
+
+    this.game = game
+    this.init = init
+    this.preload = preload
+    this.create = create
+    this.update = update
 }
 
 RangerSteveGame.prototype = {
-    init,
-    preload,
-    create,
-    update
+
 }
 
 game.state.add('Game', RangerSteveGame, true)

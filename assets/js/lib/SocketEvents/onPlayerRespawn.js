@@ -1,7 +1,7 @@
 'use strict'
 
 import EventHandler from '../EventHandler'
-let HighRuleDesert = require('../../maps/HighRuleDesert')
+let HighRuleJungle = require('../../maps/HighRuleJungle')
 let Weapons = require('../Weapons')
 
 module.exports = function(data) {
@@ -31,7 +31,7 @@ module.exports = function(data) {
     EventHandler.emit('health update', String(this.player.meta.health))
 
     // Spawn player
-    let spawnPoint = HighRuleDesert.getRandomSpawnPoint.call(this)
+    let spawnPoint = HighRuleJungle.getRandomSpawnPoint.call(this)
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
 }
