@@ -23,12 +23,17 @@
 }
 
 .hud-jump-jet {
-    background-image: url(/images/icons/trophy-32-white.png);
+    background-image: url(/images/icons/gas-32-white.png);
     border-radius: 5px 0 0 0;
     height: 54px;
+    padding: 18px 0 0 50px;
     right: 0;
     bottom: 0;
-    width: 117px;
+    width: 185px;
+
+    .progress {
+        max-width: 120px;
+    }
 }
 
 .hud-score {
