@@ -27,7 +27,7 @@ module.exports = function(data) {
 
         let newRemotePlayer = RemotePlayer.call(this, player.id, this.game, this.player, player.x, player.y)
         this.enemies.push(newRemotePlayer)
-        this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
-        this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
+        // this.enemies[this.enemies.length - 1].player.animations.add('left', [0, 1, 2, 3], 10, true)
+        // this.enemies[this.enemies.length - 1].player.animations.add('right', [5, 6, 7, 8], 10, true)
     })
 }

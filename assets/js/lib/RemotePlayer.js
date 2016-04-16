@@ -17,6 +17,8 @@ let RemotePlayer = function(id, game, player, startX, startY) {
 
     // Create the player's enemy sprite
     newRemotePlayer.player = game.add.sprite(startX, startY, 'commando')
+    newRemotePlayer.scale.setTo(.27)
+    newRemotePlayer.anchor.setTo(.5)
 
     //  We need to enable physics on the player
     // this.physics.arcade.enable(newRemotePlayer.player)
