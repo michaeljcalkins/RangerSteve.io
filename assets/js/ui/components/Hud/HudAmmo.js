@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 
-export default function HudAmmo({
-}) {
+export default function HudAmmo() {
     return (
         <div className="hud-ammo hud-item">
             30

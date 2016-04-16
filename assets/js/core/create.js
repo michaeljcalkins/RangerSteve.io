@@ -1,29 +1,19 @@
+import GameConsts from '../lib/GameConsts'
 import SetEventHandlers from '../lib/SocketEvents/SetEventHandlers'
 import EventHandler from '../lib/EventHandler'
 import HighRuleJungle from '../maps/HighRuleJungle'
 import Weapons from '../lib/Weapons'
 
-const worldWidth = 8000
-const worldHeight = 3966
-
 export default function Create() {
-    // Define movement constants
-    this.MAX_SPEED = 600
-    this.ACCELERATION = 1960
-    this.DRAG = 1500
-    this.GRAVITY = 1900
-    this.JUMP_SPEED = -850
-    this.JUMP_JET_SPEED = -2400
-
     this.socket = io.connect()
     this.enemies = []
-    this.volume = .5
+    this.volume = GameConsts.STARTING_VOLUME
     this.enemyBullets = this.game.add.group()
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)
 
-    this.world.setBounds(0, 0, worldWidth, worldHeight)
+    this.world.setBounds(0, 0, GameConsts.WORLD_WIDTH, GameConsts.WORLD_HEIGHT)
 
     // Scale game on window resize
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
@@ -56,17 +46,17 @@ export default function Create() {
     this.player.body.collideWorldBounds = true
 
     // Set player minimum and maximum movement speed
-    this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10) // x, y
+    this.player.body.maxVelocity.setTo(GameConsts.MAX_SPEED, GameConsts.MAX_SPEED * 10) // x, y
 
     // Add drag to the player that slows them down when they are not accelerating
-    this.player.body.drag.setTo(this.DRAG, 0) // x, y
+    this.player.body.drag.setTo(GameConsts.DRAG, 0) // x, y
     this.player.body.setSize(230, 290, -10, 0)
     this.player.meta = {
         health: 100
     }
 
     // Since we're jumping we need gravity
-    this.game.physics.arcade.gravity.y = this.GRAVITY
+    this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
     // Flag to track if the jump button is pressed
     this.jumping = false

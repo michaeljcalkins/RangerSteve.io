@@ -1,3 +1,4 @@
+import GameConsts from './GameConsts'
 import {
     playerFaceLeft,
     playerFaceRight
@@ -11,14 +12,14 @@ import {
 export default function PlayerMovementHandler() {
     if (leftInputIsActive.call(this)) {
         // If the LEFT key is down, set the player velocity to move left
-        this.player.body.acceleration.x = -this.ACCELERATION
+        this.player.body.acceleration.x = -GameConsts.ACCELERATION
         this.player.animations.play('left')
 
         // Left facing head needs to be set only once
         playerFaceLeft.call(this)
     } else if (rightInputIsActive.call(this)) {
         // If the RIGHT key is down, set the player velocity to move right
-        this.player.body.acceleration.x = this.ACCELERATION
+        this.player.body.acceleration.x = GameConsts.ACCELERATION
         this.player.animations.play('right')
 
         playerFaceRight.call(this)

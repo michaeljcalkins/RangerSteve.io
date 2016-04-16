@@ -1,3 +1,4 @@
+import GameConsts from './GameConsts'
 import EventHandler from './EventHandler'
 import {
     upInputIsActive,
@@ -18,7 +19,7 @@ export default function PlayerJumpHandler() {
 
     // Jump!
     if (this.jumps === 2 && upInputIsActive.call(this, 5) && onTheGround) {
-        this.player.body.velocity.y = this.JUMP_SPEED
+        this.player.body.velocity.y = GameConsts.JUMP_SPEED
         this.jumping = true
     } else if (upInputIsActive.call(this, 5)) {
         this.jumps = 1
@@ -26,13 +27,13 @@ export default function PlayerJumpHandler() {
 
     // Jump Jet!
     if (this.jumps === 1 && this.input.keyboard.isDown(Phaser.Keyboard.W) && jumpJetCounter > -130000) {
-        this.player.body.acceleration.y = this.JUMP_JET_SPEED
-        jumpJetCounter += this.JUMP_JET_SPEED
+        this.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
+        jumpJetCounter += GameConsts.JUMP_JET_SPEED
     } else {
         this.player.body.acceleration.y = 0
 
         if (jumpJetCounter < 0) {
-            jumpJetCounter -= this.JUMP_JET_SPEED
+            jumpJetCounter -= GameConsts.JUMP_JET_SPEED
         } else {
             jumpJetCounter = 0
         }
