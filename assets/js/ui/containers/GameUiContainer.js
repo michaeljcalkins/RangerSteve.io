@@ -34,7 +34,6 @@ export default class GameUiContainer extends React.Component {
 
         EventHandler.on('health update', (health) => {
             this.setState({ health })
-            console.log('ui health update')
         })
 
         EventHandler.on('score update', (score) => {

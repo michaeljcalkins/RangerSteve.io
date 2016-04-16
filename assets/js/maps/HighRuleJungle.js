@@ -37,10 +37,9 @@ const ledges = [
 export default class HighRuleJungle {
     constructor(rootScope) {
         this.rootScope = rootScope
-        this.create()
     }
 
-    static getRandomSpawnPoint() {
+    getRandomSpawnPoint() {
         return _.sample(spawnPoints)
     }
 

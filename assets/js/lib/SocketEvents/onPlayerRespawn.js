@@ -31,7 +31,8 @@ module.exports = function(data) {
     EventHandler.emit('health update', String(this.player.meta.health))
 
     // Spawn player
-    let spawnPoint = HighRuleJungle.getRandomSpawnPoint.call(this)
+    //
+    let spawnPoint = this.mapInstance.getRandomSpawnPoint()
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
 }

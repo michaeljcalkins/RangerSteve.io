@@ -34,13 +34,13 @@ export default function Create() {
     /**
      * Map
      */
-    new HighRuleJungle(this)
-
+    this.mapInstance = new HighRuleJungle(this)
+    this.mapInstance.create()
 
     /**
      * Player Settings
      */
-    let spawnPoint = HighRuleJungle.getRandomSpawnPoint.call(this)
+    let spawnPoint = this.mapInstance.getRandomSpawnPoint()
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.scale.setTo(.27)
     this.player.anchor.setTo(.5)
