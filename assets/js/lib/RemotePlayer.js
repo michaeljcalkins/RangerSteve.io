@@ -1,4 +1,4 @@
-'use strict'
+import GameConsts from './GameConsts'
 
 let RemotePlayer = function(id, game, player, startX, startY) {
     let newRemotePlayer = {
@@ -17,21 +17,12 @@ let RemotePlayer = function(id, game, player, startX, startY) {
 
     // Create the player's enemy sprite
     newRemotePlayer.player = game.add.sprite(startX, startY, 'commando')
-    newRemotePlayer.scale.setTo(.27)
-    newRemotePlayer.anchor.setTo(.5)
-
-    //  We need to enable physics on the player
-    // this.physics.arcade.enable(newRemotePlayer.player)
-
-    // // Enable physics on the player
-    // this.game.physics.enable(newRemotePlayer.player, Phaser.Physics.ARCADE)
-
-    // Make player collide with world boundaries so he doesn't leave the stage
-    // newRemotePlayer.player.body.collideWorldBounds = true
+    newRemotePlayer.player.scale.setTo(GameConsts.PLAYER_SCALE)
+    newRemotePlayer.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
     // Our two animations, walking left and right.
-    newRemotePlayer.player.animations.add('left', [0, 1, 2, 3], 10, true)
-    newRemotePlayer.player.animations.add('right', [5, 6, 7, 8], 10, true)
+    newRemotePlayer.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
+    newRemotePlayer.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
 
     newRemotePlayer.player.id = id
 

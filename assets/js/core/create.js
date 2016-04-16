@@ -33,8 +33,8 @@ export default function Create() {
      */
     let spawnPoint = this.mapInstance.getRandomSpawnPoint()
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
-    this.player.scale.setTo(.27)
-    this.player.anchor.setTo(.5)
+    this.player.scale.setTo(GameConsts.PLAYER_SCALE)
+    this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
@@ -62,8 +62,8 @@ export default function Create() {
     this.jumping = false
 
     //  Our two animations, walking left and right.
-    this.player.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true)
-    this.player.animations.add('right', [8, 9, 10, 11, 12, 13], 10, true)
+    this.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
+    this.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
 
     this.player.meta = {
         health: 100,

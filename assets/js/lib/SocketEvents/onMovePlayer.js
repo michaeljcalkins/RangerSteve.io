@@ -22,7 +22,7 @@ module.exports = function(data) {
     else
     {
         movePlayer.player.animations.stop()
-        movePlayer.player.frame = 4
+        movePlayer.player.frame = 6
     }
 
     movePlayer.lastPosition.x = movePlayer.player.x
