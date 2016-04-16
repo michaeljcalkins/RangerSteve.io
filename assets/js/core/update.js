@@ -16,7 +16,6 @@ export default function Update() {
 
     this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`
 
-
     // Check for out of bounds kill
     if (this.player.body.onFloor()) {
         this.socket.emit('player damaged', {
@@ -26,7 +25,6 @@ export default function Update() {
             attackingPlayerId: null
         })
     }
-
 
     this.socket.emit('move player', {
         roomId: this.roomId,

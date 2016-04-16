@@ -1,7 +1,6 @@
 import EventHandler from '../EventHandler'
 
 module.exports = function(data) {
-    console.log('health update!')
     if (data.id !== ('/#' + this.socket.id))
         return
 

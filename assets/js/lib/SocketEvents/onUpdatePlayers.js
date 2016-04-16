@@ -4,8 +4,6 @@ let RemotePlayer = require('../RemotePlayer')
 import EventHandler from '../EventHandler'
 
 module.exports = function(data) {
-    console.log('update players', data)
-
     this.roomId = data.room.id
 
     let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id;

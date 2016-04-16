@@ -37,6 +37,7 @@ export default function Create() {
     this.mapInstance = new HighRuleJungle(this)
     this.mapInstance.create()
 
+
     /**
      * Player Settings
      */

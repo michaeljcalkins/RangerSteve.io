@@ -6,8 +6,6 @@ module.exports = function(data) {
     if (data.id === ('/#' + this.socket.id))
         return
 
-    console.log('Firing bullet remotely', data.bulletId)
-
     let newEnemyBullet = this.enemyBullets.create(data.x, data.y, 'bullet12')
     newEnemyBullet.bulletId = data.bulletId
     newEnemyBullet.playerId = data.playerId

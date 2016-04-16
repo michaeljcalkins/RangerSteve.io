@@ -4,8 +4,6 @@ module.exports = function(data) {
     if (data.id === ('/#' + this.socket.id))
         return
 
-    console.log('Removing bullet', data.bulletId)
-
     let removeBullet = _.find(this.weapons[this.currentWeapon].children, {
         bulletId: data.bulletId
     })

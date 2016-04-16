@@ -5,7 +5,8 @@ import {
     HudHealth,
     HudScore,
     HudLeaderboard,
-    HudSettingsButton
+    HudSettingsButton,
+    HudJumpJet
 } from '../components/Hud'
 import SettingsModal from '../components/Settings/SettingsModal'
 
@@ -14,6 +15,7 @@ export default class GameUiContainer extends React.Component {
         super(props)
 
         this.state = {
+            jumpJetCounter: 0,
             health: '100',
             score: '0',
             currentWeapon: 1,
@@ -57,6 +59,12 @@ export default class GameUiContainer extends React.Component {
         EventHandler.on('settings open', (data) => {
             this.setState({
                 settingsModalOpen: !this.state.settingsModalOpen
+            })
+        })
+
+        EventHandler.on('player jump jet update', (data) => {
+            this.setState({
+                jumpJetCounter: data.jumpJetCounter
             })
         })
     }
@@ -104,6 +112,9 @@ export default class GameUiContainer extends React.Component {
                 />
                 <HudLeaderboard
                     players={ this.state.players }
+                />
+                <HudJumpJet
+                    jumpJetCounter={ this.state.jumpJetCounter }
                 />
                 <HudSettingsButton
                     onButtonClick={ this.handleSettingsButtonClick }

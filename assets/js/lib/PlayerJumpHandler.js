@@ -1,7 +1,10 @@
+import EventHandler from './EventHandler'
 import {
     upInputIsActive,
     upInputReleased
 } from './InputHelpers'
+
+let jumpJetCounter = 0
 
 export default function PlayerJumpHandler() {
     // Set a variable that is true when the player is touching the ground
@@ -22,11 +25,20 @@ export default function PlayerJumpHandler() {
     }
 
     // Jump Jet!
-    if (this.jumps === 1 && this.input.keyboard.isDown(Phaser.Keyboard.W)) {
+    if (this.jumps === 1 && this.input.keyboard.isDown(Phaser.Keyboard.W) && jumpJetCounter > -90000) {
         this.player.body.acceleration.y = this.JUMP_JET_SPEED
+        jumpJetCounter += this.JUMP_JET_SPEED
     } else {
         this.player.body.acceleration.y = 0
+
+        if (jumpJetCounter < 0) {
+            jumpJetCounter -= this.JUMP_JET_SPEED
+        } else {
+            jumpJetCounter = 0
+        }
     }
+
+    EventHandler.emit('player jump jet update', { jumpJetCounter })
 
     // Reduce the number of available jumps if the jump input is released
     if (this.jumping && upInputReleased.call(this)) {
