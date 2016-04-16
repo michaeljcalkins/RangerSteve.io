@@ -8,12 +8,12 @@ const worldHeight = 3966
 
 export default function Create() {
     // Define movement constants
-    this.MAX_SPEED = 550
+    this.MAX_SPEED = 600
     this.ACCELERATION = 1960
     this.DRAG = 1500
     this.GRAVITY = 1900
     this.JUMP_SPEED = -850
-    this.JUMP_JET_SPEED = -2600
+    this.JUMP_JET_SPEED = -2400
 
     this.socket = io.connect()
     this.enemies = []

@@ -6,7 +6,7 @@ export default function HudJumpJet({
     let percent = 100
 
     if (jumpJetCounter < 0) {
-        percent = 100 - ((jumpJetCounter * -1) / 90000 * 100).toFixed(0)
+        percent = 100 - ((jumpJetCounter * -1) / 130000 * 100).toFixed(0)
         percent = percent < 0 ? 0 : percent
     }
 

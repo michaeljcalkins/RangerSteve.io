@@ -25,7 +25,7 @@ export default function PlayerJumpHandler() {
     }
 
     // Jump Jet!
-    if (this.jumps === 1 && this.input.keyboard.isDown(Phaser.Keyboard.W) && jumpJetCounter > -90000) {
+    if (this.jumps === 1 && this.input.keyboard.isDown(Phaser.Keyboard.W) && jumpJetCounter > -130000) {
         this.player.body.acceleration.y = this.JUMP_JET_SPEED
         jumpJetCounter += this.JUMP_JET_SPEED
     } else {
