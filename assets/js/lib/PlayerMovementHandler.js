@@ -1,13 +1,6 @@
 import GameConsts from './GameConsts'
-import {
-    playerFaceLeft,
-    playerFaceRight
-} from './PlayerFaceHandler'
-
-import {
-    leftInputIsActive,
-    rightInputIsActive
-} from './InputHelpers'
+import { playerFaceLeft, playerFaceRight } from './PlayerFaceHandler'
+import { leftInputIsActive, rightInputIsActive } from './InputHelpers'
 
 export default function PlayerMovementHandler() {
     if (leftInputIsActive.call(this)) {

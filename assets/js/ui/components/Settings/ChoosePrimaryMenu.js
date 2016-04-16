@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-import primaryWeapons from '../../../lib/PrimaryWeapons'
+import GameConsts from '../../../lib/GameConsts'
 
 export default function ChoosePrimaryMenu({
     onViewChange,
@@ -16,7 +16,7 @@ export default function ChoosePrimaryMenu({
     }
 
     function renderWeapons() {
-        return primaryWeapons.map((weapon, index) => {
+        return GameConsts.PRIMARY_WEAPONS.map((weapon, index) => {
             return (
                 <div
                     className="option-group option-weapon-group align-middle"
@@ -36,8 +36,6 @@ export default function ChoosePrimaryMenu({
         })
     }
 
-    console.log(player)
-
     return (
         <div className="row">
             <div className="col-sm-12">
@@ -51,5 +49,7 @@ export default function ChoosePrimaryMenu({
 }
 
 ChoosePrimaryMenu.propTypes = {
-
+    onPrimaryGunClick: PropTypes.func.isRequired,
+    onViewChange: PropTypes.func.isRequired,
+    player: PropTypes.object.isRequired
 }

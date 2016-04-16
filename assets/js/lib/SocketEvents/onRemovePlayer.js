@@ -1,8 +1,6 @@
-'use strict'
-
 import PlayerById from '../PlayerById'
 
-module.exports = function(data) {
+export default function onRemovePlayer(data) {
     let removePlayer = PlayerById.call(this, data.id)
 
     // Player not found

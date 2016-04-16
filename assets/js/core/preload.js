@@ -1,5 +1,4 @@
-import primaryWeapons from '../lib/PrimaryWeapons'
-import secondaryWeapons from '../lib/SecondaryWeapons'
+import GameConsts from '../lib/GameConsts'
 
 export default function Preload() {
     this.load.image('map-bg', '/images/high-rule-desert.png')
@@ -11,11 +10,11 @@ export default function Preload() {
     this.load.spritesheet('enemy', '/images/dude.png', 32, 48)
 
     // Weapons
-    primaryWeapons.forEach((weapon) => {
+    GameConsts.PRIMARY_WEAPONS.forEach((weapon) => {
         this.load.image(weapon.id, weapon.image)
     })
 
-    secondaryWeapons.forEach((weapon) => {
+    GameConsts.SECONDARY_WEAPONS.forEach((weapon) => {
         this.load.image(weapon.id, weapon.image)
     })
 

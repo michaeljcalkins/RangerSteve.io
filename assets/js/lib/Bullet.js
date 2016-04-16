@@ -1,50 +1,45 @@
-'use strict'
+export default class Bullet extends Phaser.Sprite {
+    constructor(rootScope, game, key) {
+        super()
 
-let Guid = require('./Guid')
+        Phaser.Sprite.call(rootScope, game, 0, 0, key)
+        this.texture.baseTexture.scaleMode = PIXI.scaleModes.NEAREST
+        this.anchor.set(0.5)
+        this.checkWorldBounds = true
+        this.outOfBoundsKill = true
+        this.exists = false
+        this.tracking = false
+        this.scaleSpeed = 0
+    }
 
-var Bullet = function (game, key) {
-    Phaser.Sprite.call(this, game, 0, 0, key)
-    this.texture.baseTexture.scaleMode = PIXI.scaleModes.NEAREST
-    this.anchor.set(0.5)
-    this.checkWorldBounds = true
-    this.outOfBoundsKill = true
-    this.exists = false
-    this.tracking = false
-    this.scaleSpeed = 0
-}
+    fire(x, y, angle, speed, gx, gy, socket, roomId) {
+        this.reset(x, y)
 
-Bullet.prototype = Object.create(Phaser.Sprite.prototype)
-Bullet.prototype.constructor = Bullet
+        let pointerAngle = this.game.physics.arcade.moveToPointer(this, speed)
+        this.body.gravity.y = -1800
 
-Bullet.prototype.fire = function (x, y, angle, speed, gx, gy, socket, roomId) {
-    this.reset(x, y)
+        console.log('Firing bullet locally', this.bulletId)
 
-    let pointerAngle = this.game.physics.arcade.moveToPointer(this, speed)
-    this.body.gravity.y = -1800
+        socket.emit('bullet fired', {
+            roomId: roomId,
+            bulletId: this.bulletId,
+            playerId: '/#' + socket.id,
+            x,
+            y,
+            angle,
+            speed,
+            gx,
+            gy,
+            pointerAngle,
+            height: this.height,
+            width: this.width,
+            damage: this.damage
+        })
+    }
 
-    console.log('Firing bullet locally', this.bulletId)
-
-    socket.emit('bullet fired', {
-        roomId: roomId,
-        bulletId: this.bulletId,
-        playerId: '/#' + socket.id,
-        x,
-        y,
-        angle,
-        speed,
-        gx,
-        gy,
-        pointerAngle,
-        height: this.height,
-        width: this.width,
-        damage: this.damage
-    })
-}
-
-Bullet.prototype.update = function () {
-    if (this.tracking) {
-        this.rotation = Math.atan2(this.body.velocity.y, this.body.velocity.x)
+    update() {
+        if (this.tracking) {
+            this.rotation = Math.atan2(this.body.velocity.y, this.body.velocity.x)
+        }
     }
 }
-
-module.exports = Bullet

@@ -68,10 +68,12 @@ export default function Create() {
     this.player.meta = {
         health: 100,
         primaryWeapon: new Weapons.AK47({
-            game: this.game
+            game: this.game,
+            rootScope: this
         }),
         secondaryWeapon: new Weapons.DesertEagle({
-            game: this.game
+            game: this.game,
+            rootScope: this
         }),
         selectedPrimaryWeaponId: 'AK47',
         selectedSecondaryWeaponId: 'DesertEagle'

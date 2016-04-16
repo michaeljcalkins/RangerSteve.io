@@ -1,8 +1,4 @@
-'use strict'
-
-let Bullet = require('../Bullet')
-
-module.exports = function(data) {
+export default function onBulletFired(data) {
     if (data.id === ('/#' + this.socket.id))
         return
 

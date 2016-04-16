@@ -1,49 +1,44 @@
-'use strict'
+import Guid from '../Guid'
+import Bullet from '../Bullet'
 
-let Bullet = require('../Bullet')
-let Guid = require('../Guid')
+export default class M4A1 extends Phaser.Group {
+    constructor(config) {
+        super()
 
-let AK47 = function (config) {
-    Phaser.Group.call(this, config.game, config.game.world, 'M4A1', false, true, Phaser.Physics.ARCADE);
+        Phaser.Group.call(this, config.game, config.game.world, 'M4A1', false, true, Phaser.Physics.ARCADE);
 
-    //	Here we set-up our audio sprite
-    this.fx = config.game.add.audio('M4A1-sound')
-    this.allowMultiple = true
+        //	Here we set-up our audio sprite
+        this.fx = config.game.add.audio('M4A1-sound')
+        this.allowMultiple = true
 
-    this.damage = 20
-    this.nextFire = 0
-    this.bulletSpeed = 2400
-    this.fireRate = 150;
+        this.damage = 20
+        this.nextFire = 0
+        this.bulletSpeed = 2400
+        this.fireRate = 150;
 
-    for (var i = 0; i < 64; i++)
-    {
-        let bullet = new Bullet(config.game, 'bullet12', config.socket)
-        bullet.bulletId = Guid()
-        bullet.height = 2
-        bullet.width = 40
-        bullet.damage = 22
-        this.add(bullet, true);
+        for (var i = 0; i < 64; i++)
+        {
+            let bullet = new Bullet(config.game, 'bullet12', config.socket)
+            bullet.bulletId = Guid()
+            bullet.height = 2
+            bullet.width = 40
+            bullet.damage = 22
+            this.add(bullet, true);
+        }
     }
 
-    return this
+    fire(player, socket, roomId) {
+        if (this.game.time.time < this.nextFire)
+            return
+
+        var x = player.x + 15;
+        var y = player.y + 30;
+
+        this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0, socket, roomId)
+        this.setAll('tracking', true)
+
+        this.nextFire = this.game.time.time + this.fireRate
+        this.fx.volume = .3
+        this.fx.play()
+    }
 }
-
-AK47.prototype = Object.create(Phaser.Group.prototype);
-AK47.prototype.constructor = AK47;
-
-AK47.prototype.fire = function(player, socket, roomId) {
-    if (this.game.time.time < this.nextFire)
-        return
-
-    var x = player.x + 15;
-    var y = player.y + 30;
-
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0, socket, roomId)
-    this.setAll('tracking', true)
-
-    this.nextFire = this.game.time.time + this.fireRate
-    this.fx.volume = .3
-    this.fx.play()
-}
-
-module.exports = AK47

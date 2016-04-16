@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 
-import primaryWeapons from '../../../lib/PrimaryWeapons'
-import secondaryWeapons from '../../../lib/SecondaryWeapons'
+import GameConsts from '../../../lib/GameConsts'
 
 export default function MainSettingsMenu(props) {
     const {
@@ -22,15 +21,15 @@ export default function MainSettingsMenu(props) {
         onSoundEffectVolumeChange(evt.target.value)
     }
 
-    function handlePrimaryViewClick(evt) {
+    function handlePrimaryViewClick() {
         onViewChange('choosePrimary')
     }
 
-    function handleSecondaryViewClick(evt) {
+    function handleSecondaryViewClick() {
         onViewChange('chooseSecondary')
     }
 
-    function handleCharacterViewClick(evt) {
+    function handleCharacterViewClick() {
         onViewChange('chooseCharacter')
     }
 
@@ -38,7 +37,7 @@ export default function MainSettingsMenu(props) {
         if (!selectedPrimaryWeapon)
             return null
 
-        let weapon = _.find(primaryWeapons, { id: selectedPrimaryWeapon })
+        let weapon = _.find(GameConsts.PRIMARY_WEAPONS, { id: selectedPrimaryWeapon })
 
         if (!weapon) {
             console.error('Could not find primary weapon.', selectedPrimaryWeapon)
@@ -64,7 +63,7 @@ export default function MainSettingsMenu(props) {
         if (!selectedSecondaryWeapon)
             return null
 
-        let weapon = _.find(secondaryWeapons, { id: selectedSecondaryWeapon })
+        let weapon = _.find(GameConsts.SECONDARY_WEAPONS, { id: selectedSecondaryWeapon })
 
         if (!weapon) {
             console.error('Could not find secondary weapon.', selectedSecondaryWeapon)

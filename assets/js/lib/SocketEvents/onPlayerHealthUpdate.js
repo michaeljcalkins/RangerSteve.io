@@ -1,6 +1,6 @@
 import EventHandler from '../EventHandler'
 
-module.exports = function(data) {
+export default function onPlayerHealthUpdate(data) {
     if (data.id !== ('/#' + this.socket.id))
         return
 

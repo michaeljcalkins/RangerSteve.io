@@ -7,7 +7,7 @@ const gameWidth = window.innerWidth
 const gameHeight = window.innerHeight
 let game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game')
 
-let RangerSteveGame = function() {
+game.state.add('Game', function() {
     this.currentWeapon = 0
     this.enemies = []
     this.ground
@@ -20,10 +20,4 @@ let RangerSteveGame = function() {
     this.preload = preload
     this.create = create
     this.update = update
-}
-
-RangerSteveGame.prototype = {
-
-}
-
-game.state.add('Game', RangerSteveGame, true)
+}, true)

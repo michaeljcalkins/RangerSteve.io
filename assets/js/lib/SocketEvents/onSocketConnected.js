@@ -1,13 +1,6 @@
-'use strict'
+import GetQueryString from '../GetQueryString'
 
-var getQueryString = function ( field, url ) {
-    var href = url ? url : window.location.href;
-    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
-    var string = reg.exec(href);
-    return string ? string[1] : null;
-};
-
-module.exports = function() {
+export default function onSocketConnected() {
     console.log('Connected to socket server')
 
      // Reset enemies on reconnect
@@ -19,7 +12,7 @@ module.exports = function() {
 
     // Send local player data to the game server
     this.socket.emit('new player', {
-        roomId: getQueryString('roomId'),
+        roomId: GetQueryString('roomId'),
         x: this.player.x,
         y: this.player.y
     })

@@ -1,8 +1,5 @@
-'use strict'
-
 import EventHandler from '../EventHandler'
-let HighRuleJungle = require('../../maps/HighRuleJungle')
-let Weapons = require('../Weapons')
+import Weapons from '../Weapons'
 
 module.exports = function(data) {
     if (data.damagedPlayerId !== ('/#' + this.socket.id))
@@ -31,7 +28,6 @@ module.exports = function(data) {
     EventHandler.emit('health update', String(this.player.meta.health))
 
     // Spawn player
-    //
     let spawnPoint = this.mapInstance.getRandomSpawnPoint()
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y

@@ -1,14 +1,23 @@
-'use strict'
+import AK47 from './AK47'
+import Barrett from './Barrett'
+import DesertEagle from './DesertEagle'
+import M4A1 from './M4A1'
+import M500 from './M500'
+import Skorpion from './Skorpion'
+import AUG from './AUG'
+import RPG from './RPG'
+import P90 from './P90'
+import G43 from './G43'
 
-module.exports = {
-    "AK47": require('./AK47'),
-    "Barrett": require('./Barrett'),
-    "DesertEagle": require('./DesertEagle'),
-    "M4A1": require('./M4A1'),
-    "M500": require('./M500'),
-    "Skorpion": require('./Skorpion'),
-    "AUG": require('./AUG'),
-    "RPG": require('./RPG'),
-    "P90": require('./P90'),
-    "G43": require('./G43')
+export default {
+    AK47,
+    Barrett,
+    DesertEagle,
+    M4A1,
+    M500,
+    Skorpion,
+    AUG,
+    RPG,
+    P90,
+    G43
 }

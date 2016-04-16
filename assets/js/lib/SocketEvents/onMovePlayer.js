@@ -1,6 +1,6 @@
 import PlayerById from'../PlayerById'
 
-module.exports = function(data) {
+export default function onMovePlayer(data) {
     let movePlayer = PlayerById.call(this, data.id)
 
     // Player not found

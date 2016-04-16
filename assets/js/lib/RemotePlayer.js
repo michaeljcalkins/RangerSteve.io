@@ -1,6 +1,6 @@
 import GameConsts from './GameConsts'
 
-let RemotePlayer = function(id, game, player, startX, startY) {
+export default function RemotePlayer(id, game, player, startX, startY) {
     let newRemotePlayer = {
         x: startX,
         y: startY,
@@ -28,5 +28,3 @@ let RemotePlayer = function(id, game, player, startX, startY) {
 
     return newRemotePlayer
 }
-
-module.exports = RemotePlayer

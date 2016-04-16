@@ -1,9 +1,6 @@
 import GameConsts from './GameConsts'
 import EventHandler from './EventHandler'
-import {
-    upInputIsActive,
-    upInputReleased
-} from './InputHelpers'
+import { upInputIsActive, upInputReleased } from './InputHelpers'
 
 let jumpJetCounter = 0
 

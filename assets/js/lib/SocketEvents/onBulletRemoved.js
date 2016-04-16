@@ -1,6 +1,4 @@
-'use strict'
-
-module.exports = function(data) {
+export default function onBulletRemoved(data) {
     if (data.id === ('/#' + this.socket.id))
         return
 

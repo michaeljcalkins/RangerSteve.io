@@ -1,12 +1,10 @@
-'use strict'
-
 import EventHandler from '../EventHandler'
 
 let damageTimeout = null
 let healingInterval = null
 let lastKnownHealth = null
 
-module.exports = function(data) {
+export default function onPlayerDamaged(data) {
     if (data.damagedPlayerId !== ('/#' + this.socket.id))
         return
 

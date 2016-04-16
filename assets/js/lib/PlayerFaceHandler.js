@@ -1,4 +1,4 @@
-function playerFaceLeft() {
+export function playerFaceLeft() {
     if (this.player.meta.facing !== 'left') {
         this.player.meta.facing = 'left'
 
@@ -26,7 +26,7 @@ function playerFaceLeft() {
     }
 }
 
-function playerFaceRight() {
+export function playerFaceRight() {
     if (this.player.meta.facing !== 'right') {
         this.player.meta.facing = 'right'
 
@@ -52,9 +52,4 @@ function playerFaceRight() {
         this.ak47Sprite.y = 19
         this.ak47Sprite.x = 3
     }
-}
-
-export {
-    playerFaceLeft,
-    playerFaceRight
 }
