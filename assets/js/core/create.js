@@ -8,9 +8,7 @@ export default function Create() {
     this.volume = GameConsts.STARTING_VOLUME
     this.socket = io.connect()
     this.enemies = this.game.add.group()
-    this.enemyBullets = this.game.add.group()
-    // this.enemyBullets.enableBody = true
-    // this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE
+    this.enemyBullets = []
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)

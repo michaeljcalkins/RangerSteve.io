@@ -6,7 +6,8 @@ export default function RemoteBullet(data) {
     enemyBullet.rotation = data.pointerAngle
     enemyBullet.height = data.height
     enemyBullet.width = data.width
-    enemyBullet.physicsBodyType = Phaser.Physics.ARCADE
+    // enemyBullet.enableBody = true
+    // enemyBullet.physicsBodyType = Phaser.Physics.ARCADE
     this.game.physics.enable(enemyBullet, Phaser.Physics.ARCADE)
     enemyBullet.body.gravity.y = -1800
     enemyBullet.x = data.x
