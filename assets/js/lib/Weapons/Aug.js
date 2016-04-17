@@ -1,6 +1,6 @@
 import FireStandardBullet from '../FireStandardBullet'
 
-export default class AUG extends Phaser.group {
+export default class AUG extends Phaser.Group {
     constructor(rootScope) {
         super(rootScope)
 

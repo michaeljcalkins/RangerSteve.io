@@ -1,7 +1,7 @@
 import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
 
-module.exports = function(data) {
+export default function onPlayerRespawn(data) {
     if (data.damagedPlayerId !== ('/#' + this.socket.id))
         return
 

@@ -13,7 +13,7 @@ export default function FireShotgunShell() {
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
     bullet.rotation = pointerAngle
 
-    this.fx.volume = .3 * this.rootScope.volume
+    this.fx.volume = .5 * this.rootScope.volume
     this.fx.play()
 
     this.rootScope.socket.emit('bullet fired', {

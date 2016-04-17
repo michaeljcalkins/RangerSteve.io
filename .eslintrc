@@ -9,7 +9,8 @@
         "Phaser": true,
         "io": true,
         "_": true,
-        "PIXI": true
+        "PIXI": true,
+        "toastr": true
     },
     "ecmaFeatures": {
         "jsx": true
