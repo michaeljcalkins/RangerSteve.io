@@ -30,7 +30,7 @@ export default function PlayerJumpHandler() {
         this.player.body.acceleration.y = 0
 
         if (jumpJetCounter < 0) {
-            jumpJetCounter -= GameConsts.JUMP_JET_SPEED
+            jumpJetCounter -= GameConsts.JUMP_JET_SPEED_REGENERATION
         } else {
             jumpJetCounter = 0
         }

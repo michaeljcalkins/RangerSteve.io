@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-import secondaryWeapons from '../../../lib/SecondaryWeapons'
+import GameConsts from '../../../lib/GameConsts'
 
 export default function ChooseSecondaryMenu({
     onViewChange,
@@ -10,13 +10,13 @@ export default function ChooseSecondaryMenu({
     function handleSelectPrimaryClick(weapon) {
         if (player.meta.score < weapon.minScore)
             return
-            
+
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }
 
     function renderWeapons() {
-        return secondaryWeapons.map((weapon, index) => {
+        return GameConsts.SECONDARY_WEAPONS.map((weapon, index) => {
             return (
                 <div
                     className="option-group option-weapon-group align-middle"

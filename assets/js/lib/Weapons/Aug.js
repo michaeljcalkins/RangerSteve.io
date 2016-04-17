@@ -2,9 +2,9 @@ import Guid from '../Guid'
 import Bullet from '../Bullet'
 
 export default class AUG extends Phaser.group {
-    constructor (config) {
-        super()
-
+    constructor(config) {
+        super(config)
+        
         Phaser.Group.call(config.rootScope, config.game, config.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE);
 
         //	Here we set-up our audio sprite

@@ -20,4 +20,7 @@ game.state.add('Game', function() {
     this.preload = preload
     this.create = create
     this.update = update
+    this.render = function() {
+        game.debug.text('Active Bullets: ' + this.bullets.countLiving() + ' / ' + this.bullets.total, 32, 32);
+    }
 }, true)

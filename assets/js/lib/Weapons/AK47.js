@@ -2,44 +2,47 @@ import Guid from '../Guid'
 import Bullet from '../Bullet'
 
 export default class AK47 extends Phaser.Group {
-    constructor(config) {
-        super()
-        // Object.keys(Phaser.Group.prototype).forEach((key) => {
-        //     this[key] = Phaser.Group.prototype[key]
-        // })
+    constructor(rootScope) {
+        super(rootScope)
 
-        Phaser.Group.call(config.rootScope, config.game, config.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE);
+        this.rootScope = rootScope
 
-        this.fx = config.game.add.audio('AK47-sound')
+        Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE)
+
+        this.fx = this.rootScope.game.add.audio('AK47-sound')
         this.allowMultiple = true
         this.damage = 22
         this.nextFire = 0
         this.bulletSpeed = 2300
         this.fireRate = 160
-
-        for (var i = 0; i < 64; i++)
-        {
-            let bullet = new Bullet(config.game, 'bullet12', config.socket)
-            bullet.bulletId = Guid()
-            bullet.height = 3
-            bullet.width = 60
-            bullet.damage = 22
-            this.add(bullet, true)
-        }
     }
 
     fire(player, socket, roomId, volume) {
-        if (this.game.time.time < this.nextFire)
-            return
+        if (this.rootScope.game.time.now > this.nextFire && this.rootScope.bullets.countDead() > 0) {
+            let x = player.x
+            let y = player.y
 
-        var x = player.x + 10
-        var y = player.y + -10
+            this.nextFire = this.rootScope.game.time.now + this.fireRate
+            let bullet = this.rootScope.bullets.getFirstDead()
+            bullet.body.gravity.y = -1800
+            bullet.reset(x, y)
+            let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
+            bullet.rotation = pointerAngle
+            this.fx.volume = .3 * volume
+            this.fx.play()
 
-        this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0, socket, roomId)
-        this.setAll('tracking', true)
-
-        this.nextFire = this.game.time.time + this.fireRate
-        this.fx.volume = .3 * volume
-        this.fx.play()
+            socket.emit('bullet fired', {
+                roomId: roomId,
+                bulletId: this.bulletId,
+                playerId: '/#' + socket.id,
+                x,
+                y,
+                pointerAngle,
+                bulletSpeed: this.bulletSpeed,
+                height: this.height,
+                width: this.width,
+                damage: this.damage
+            })
+        }
     }
 }

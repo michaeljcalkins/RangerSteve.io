@@ -1,8 +1,10 @@
 export default class Bullet extends Phaser.Sprite {
-    constructor(rootScope, game, key) {
-        super()
+    constructor(rootScope, game, spriteName = 'bullet12') {
+        super(rootScope, spriteName = 'bullet12')
 
-        Phaser.Sprite.call(rootScope, game, 0, 0, key)
+        this.rootScope = rootScope
+
+        Phaser.Sprite.call(this, this.rootScope.game, 0, 0, spriteName)
         this.texture.baseTexture.scaleMode = PIXI.scaleModes.NEAREST
         this.anchor.set(0.5)
         this.checkWorldBounds = true
@@ -15,10 +17,8 @@ export default class Bullet extends Phaser.Sprite {
     fire(x, y, angle, speed, gx, gy, socket, roomId) {
         this.reset(x, y)
 
-        let pointerAngle = this.game.physics.arcade.moveToPointer(this, speed)
+        let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(this, speed)
         this.body.gravity.y = -1800
-
-        console.log('Firing bullet locally', this.bulletId)
 
         socket.emit('bullet fired', {
             roomId: roomId,

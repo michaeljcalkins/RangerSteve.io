@@ -10,6 +10,7 @@ const GameConsts = {
     GRAVITY: 1900,
     JUMP_SPEED: -850,
     JUMP_JET_SPEED: -2400,
+    JUMP_JET_SPEED_REGENERATION: -2400,
 
     // Player Model
     ANIMATION_LEFT: [0, 1, 2, 3, 4, 5],

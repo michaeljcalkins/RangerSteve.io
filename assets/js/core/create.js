@@ -29,6 +29,17 @@ export default function Create() {
 
 
     /**
+     * Bullet Settings
+     */
+    this.bullets = this.game.add.group()
+    this.bullets.enableBody = true
+    this.physicsBodyType = Phaser.Physics.ARCADE
+    this.bullets.createMultiple(50, 'bullet12')
+    this.bullets.setAll('checkWorldBounds', true)
+    this.bullets.setAll('outOfBoundsKill', true)
+
+
+    /**
      * Player Settings
      */
     let spawnPoint = this.mapInstance.getRandomSpawnPoint()
@@ -67,14 +78,8 @@ export default function Create() {
 
     this.player.meta = {
         health: 100,
-        primaryWeapon: new Weapons.AK47({
-            game: this.game,
-            rootScope: this
-        }),
-        secondaryWeapon: new Weapons.DesertEagle({
-            game: this.game,
-            rootScope: this
-        }),
+        primaryWeapon: new Weapons.AK47(this),
+        secondaryWeapon: new Weapons.DesertEagle(this),
         selectedPrimaryWeaponId: 'AK47',
         selectedSecondaryWeaponId: 'DesertEagle'
     }

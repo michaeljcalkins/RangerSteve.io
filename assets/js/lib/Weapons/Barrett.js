@@ -7,7 +7,7 @@ export default class Barrett extends Phaser.Group {
 
         Phaser.Group.call(this, config.game, config.game.world, 'Barret', false, true, Phaser.Physics.ARCADE);
 
-        this.fx = config.game.add.audio('BarretM90-sound')
+        this.fx = config.game.add.audio('BarretM90-sound') 
         this.allowMultiple = true
 
         this.name = 'Barret M90'
