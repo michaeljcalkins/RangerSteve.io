@@ -23,9 +23,9 @@ export default function FireStandardBullet() {
         x,
         y,
         pointerAngle,
-        bulletSpeed: bullet.bulletSpeed,
-        height: bullet.bulletHeight,
-        width: bullet.bulletWidth,
+        bulletSpeed: this.bulletSpeed,
+        height: bullet.height,
+        width: bullet.width,
         damage: bullet.damage
     })
 }
