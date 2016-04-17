@@ -6,7 +6,8 @@ import Weapons from '../lib/Weapons'
 
 export default function Create() {
     this.socket = io.connect()
-    this.enemies = []
+    this.enemies = this.game.add.group()
+
     this.volume = GameConsts.STARTING_VOLUME
     this.enemyBullets = this.game.add.group()
 

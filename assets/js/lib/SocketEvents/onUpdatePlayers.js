@@ -8,10 +8,10 @@ export default function onUpdatePlayers(data) {
     window.history.pushState({ path: newurl }, '', newurl);
 
     this.enemies.forEach(function (enemy) {
-        enemy.player.kill()
+        enemy.kill()
     })
 
-    this.enemies = []
+    this.enemies = this.game.add.group()
 
     EventHandler.emit('players update', data.room.players)
 
@@ -23,7 +23,7 @@ export default function onUpdatePlayers(data) {
             return
         }
 
-        let newRemotePlayer = RemotePlayer.call(this, player.id, this.game, this.player, player.x, player.y)
-        this.enemies.push(newRemotePlayer)
+        let newRemotePlayer = RemotePlayer.call(this, player)
+        this.enemies.add(newRemotePlayer)
     })
 }

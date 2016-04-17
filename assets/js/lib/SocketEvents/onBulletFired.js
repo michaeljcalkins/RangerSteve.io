@@ -1,18 +1,11 @@
+import RemoteBullet from '../RemoteBullet'
+
 export default function onBulletFired(data) {
     if (data.id === ('/#' + this.socket.id))
         return
 
-    let newEnemyBullet = this.enemyBullets.create(data.x, data.y, 'bullet12')
-    newEnemyBullet.bulletId = data.bulletId
-    newEnemyBullet.playerId = data.playerId
-    newEnemyBullet.damage = data.damage
-    newEnemyBullet.rotation = data.pointerAngle
-    newEnemyBullet.height = data.height
-    newEnemyBullet.width = data.width
-    this.game.physics.enable(newEnemyBullet, Phaser.Physics.ARCADE)
-    newEnemyBullet.body.gravity.y = -1800
-
-    let newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, data.speed)
-    newEnemyBullet.body.velocity.x += newVelocity.x
-    newEnemyBullet.body.velocity.y += newVelocity.y
+    let enemyBullet = RemoteBullet.call(this, data)
+    let newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, data.bulletSpeed)
+    enemyBullet.body.velocity.x += newVelocity.x
+    enemyBullet.body.velocity.y += newVelocity.y
 }

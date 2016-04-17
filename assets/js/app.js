@@ -16,5 +16,5 @@ toastr.options = {
     hideMethod: 'fadeOut'
 }
 
-require('./ui')
+// require('./ui')
 require('./game')

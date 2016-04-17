@@ -9,22 +9,22 @@ export default function onMovePlayer(data) {
     }
 
     // Update player position
-    movePlayer.player.x = data.x
-    movePlayer.player.y = data.y
+    movePlayer.x = data.x
+    movePlayer.y = data.y
 
-    if (movePlayer.player.x > movePlayer.lastPosition.x) {
-        movePlayer.player.animations.play('right')
+    if (movePlayer.x > movePlayer.lastPosition.x) {
+        movePlayer.animations.play('right')
     }
-    else if (movePlayer.player.x < movePlayer.lastPosition.x)
+    else if (movePlayer.x < movePlayer.lastPosition.x)
     {
-        movePlayer.player.animations.play('left')
+        movePlayer.animations.play('left')
     }
     else
     {
-        movePlayer.player.animations.stop()
-        movePlayer.player.frame = 6
+        movePlayer.animations.stop()
+        movePlayer.frame = 6
     }
 
-    movePlayer.lastPosition.x = movePlayer.player.x
-    movePlayer.lastPosition.y = movePlayer.player.y
+    movePlayer.lastPosition.x = movePlayer.x
+    movePlayer.lastPosition.y = movePlayer.y
 }

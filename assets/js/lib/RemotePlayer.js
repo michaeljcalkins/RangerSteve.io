@@ -1,30 +1,17 @@
 import GameConsts from './GameConsts'
 
-export default function RemotePlayer(id, game, player, startX, startY) {
-    let newRemotePlayer = {
-        x: startX,
-        y: startY,
-        id: null,
-        game: game,
-        health: 100,
-        player: player,
-        alive: true,
-        lastPosition: {
-            x: startX,
-            y: startY
-        }
+export default function RemotePlayer(player) {
+    let newRemotePlayer = this.game.add.sprite(player.x, player.y, 'commando')
+    newRemotePlayer.scale.setTo(GameConsts.PLAYER_SCALE)
+    newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
+    newRemotePlayer.alive = true
+    newRemotePlayer.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
+    newRemotePlayer.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
+    newRemotePlayer.id = player.id
+    newRemotePlayer.lastPosition = {
+        x: player.x,
+        y: player.y
     }
-
-    // Create the player's enemy sprite
-    newRemotePlayer.player = game.add.sprite(startX, startY, 'commando')
-    newRemotePlayer.player.scale.setTo(GameConsts.PLAYER_SCALE)
-    newRemotePlayer.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
-
-    // Our two animations, walking left and right.
-    newRemotePlayer.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
-    newRemotePlayer.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
-
-    newRemotePlayer.player.id = id
 
     return newRemotePlayer
 }
