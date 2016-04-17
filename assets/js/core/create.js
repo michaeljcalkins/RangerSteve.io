@@ -10,6 +10,8 @@ export default function Create() {
 
     this.volume = GameConsts.STARTING_VOLUME
     this.enemyBullets = this.game.add.group()
+    this.enemyBullets.enableBody = true
+    this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)

@@ -2,7 +2,7 @@ export default function onBulletRemoved(data) {
     if (data.id === ('/#' + this.socket.id))
         return
 
-    let removeBullet = _.find(this.weapons[this.currentWeapon].children, {
+    let removeBullet = _.find(this.bullets.children, {
         bulletId: data.bulletId
     })
 

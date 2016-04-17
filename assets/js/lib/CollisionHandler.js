@@ -11,7 +11,7 @@ export default function CollisionHandler() {
     this.physics.arcade.collide(this.platforms, this.enemyBullets, (platform, bullet) => {
         bullet.kill()
     }, null, this)
-    
+
     // Did this player get hit by any enemy bullets
     this.physics.arcade.collide(this.player, this.enemyBullets, null, (player, bullet) => {
         bullet.kill()

@@ -18,14 +18,14 @@ export default function FireStandardBullet() {
 
     this.rootScope.socket.emit('bullet fired', {
         roomId: this.rootScope.roomId,
-        bulletId: this.bulletId,
+        bulletId: bullet.bulletId,
         playerId: '/#' + this.rootScope.socket.id,
         x,
         y,
         pointerAngle,
-        bulletSpeed: this.bulletSpeed,
-        height: this.bulletHeight,
-        width: this.bulletWidth,
-        damage: this.damage
+        bulletSpeed: bullet.bulletSpeed,
+        height: bullet.bulletHeight,
+        width: bullet.bulletWidth,
+        damage: bullet.damage
     })
 }
