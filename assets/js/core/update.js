@@ -11,7 +11,7 @@ export default function Update() {
 
     if (this.game.input.activePointer.isDown)
     {
-        this.player.meta[this.currentWeapon].fire(this.player, this.socket, this.roomId, this.volume)
+        this.player.meta[this.currentWeapon].fire()
     }
 
     this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`

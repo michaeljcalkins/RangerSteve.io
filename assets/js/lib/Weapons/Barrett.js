@@ -1,45 +1,28 @@
-import Guid from '../Guid'
-import Bullet from '../Bullet'
+import FireStandardBullet from '../FireStandardBullet'
 
 export default class Barrett extends Phaser.Group {
-    constructor(config) {
-        super()
+    constructor(rootScope) {
+        super(rootScope)
 
-        Phaser.Group.call(this, config.game, config.game.world, 'Barret', false, true, Phaser.Physics.ARCADE);
+        this.rootScope = rootScope
 
-        this.fx = config.game.add.audio('BarretM90-sound') 
-        this.allowMultiple = true
+        Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE)
 
-        this.name = 'Barret M90'
-        this.damage = 88
-        this.nextFire = 0
+        this.bulletHeight = 2
         this.bulletSpeed = 3435
+        this.bulletWidth = 40
+        this.damage = 88
         this.fireRate = 3000
-
-        for (var i = 0; i < 64; i++)
-        {
-            let bullet = new Bullet(config.game, 'bullet12', config.socket)
-            bullet.bulletId = Guid()
-            bullet.height = 2
-            bullet.width = 40
-            bullet.damage = 88
-
-            this.add(bullet, true)
-        }
+        this.fx = this.rootScope.game.add.audio('BarretM90-sound')
+        this.nextFire = 0
     }
 
-    fire(player, socket, roomId) {
-        if (this.game.time.time < this.nextFire)
+    fire() {
+        if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0)
             return
 
-        var x = player.x + 15;
-        var y = player.y + 30;
+        this.nextFire = this.rootScope.game.time.now + this.fireRate
 
-        this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed, 0, 0, socket, roomId)
-        this.setAll('tracking', true)
-
-        this.nextFire = this.game.time.time + this.fireRate
-        this.fx.volume = .6
-        this.fx.play()
+        FireStandardBullet.call(this)
     }
 }

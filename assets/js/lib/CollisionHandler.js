@@ -6,10 +6,6 @@ export default function CollisionHandler() {
     this.physics.arcade.collide(this.platforms, this.bullets, (platform, bullet) => {
         bullet.kill()
     }, null, this)
-    
-    // this.physics.arcade.collide(this.platforms, this.player.meta.secondaryWeapon, (platform, weapon) => {
-    //     weapon.kill()
-    // }, null, this)
 
     // Did enemy bullets hit any platforms
     // this.physics.arcade.collide(this.platforms, this.enemyBullets, (platform, bullet) => {
