@@ -10,7 +10,8 @@
         "io": true,
         "_": true,
         "PIXI": true,
-        "toastr": true
+        "toastr": true,
+        "check": true
     },
     "ecmaFeatures": {
         "jsx": true
