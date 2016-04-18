@@ -1,10 +1,18 @@
 import EventHandler from '../EventHandler'
+import { PropTypes } from 'react'
+
+const propTypes = {
+    damagedPlayerId: PropTypes.string.isRequired,
+    health: PropTypes.number.isRequired
+}
 
 let damageTimeout = null
 let healingInterval = null
 let lastKnownHealth = null
 
 export default function onPlayerDamaged(data) {
+    check(data, propTypes)
+
     if (data.damagedPlayerId !== ('/#' + this.socket.id))
         return
 

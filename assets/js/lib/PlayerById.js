@@ -1,11 +1,11 @@
 import { PropTypes } from 'react'
 
-const PlayerByIdInterface = {
+const propTypes = {
     id: PropTypes.string.isRequired
 }
 
 export default function PlayerById(id) {
-    check({ id }, PlayerByIdInterface)
+    check({ id }, propTypes)
 
     for (let i = 0; i < this.enemies.children.length; i++) {
         if (this.enemies.children[i].id === id) {

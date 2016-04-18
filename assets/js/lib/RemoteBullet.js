@@ -1,6 +1,6 @@
 import { PropTypes } from 'react'
 
-const RemoteBulletInterface = {
+const propTypes = {
     bulletId: PropTypes.string.isRequired,
     playerId: PropTypes.string.isRequired,
     damage: PropTypes.number.isRequired,
@@ -13,7 +13,7 @@ const RemoteBulletInterface = {
 }
 
 export default function RemoteBullet(data) {
-    check(data, RemoteBulletInterface)
+    check(data, propTypes)
 
     let enemyBullet = this.game.add.sprite(data.x, data.y, 'bullet12')
     enemyBullet.bulletId = data.bulletId

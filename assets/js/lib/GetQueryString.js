@@ -1,11 +1,11 @@
 import { PropTypes } from 'react'
 
-const GetQueryStringInterface = {
+const propTypes = {
     field: PropTypes.string.isRequired
 }
 
 export default function GetQueryString(field, url) {
-    check({ field }, GetQueryStringInterface)
+    check({ field }, propTypes)
 
     var href = url ? url : window.location.href;
     var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );

@@ -1,7 +1,15 @@
+import { PropTypes } from 'react'
 import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
 
+const propTypes = {
+    damagedPlayerId: PropTypes.string.isRequired,
+    health: PropTypes.number.isRequired
+}
+
 export default function onPlayerRespawn(data) {
+    check(data, propTypes)
+
     if (data.damagedPlayerId !== ('/#' + this.socket.id))
         return
 

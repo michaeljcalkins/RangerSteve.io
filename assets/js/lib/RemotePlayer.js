@@ -1,14 +1,14 @@
 import GameConsts from './GameConsts'
 import { PropTypes } from 'react'
 
-const RemotePlayerInterface = {
+const propTypes = {
     x: PropTypes.number.isRequired,
     y:  PropTypes.number.isRequired,
     id: PropTypes.string.isRequired
 }
 
 export default function RemotePlayer(player) {
-    check(player, RemotePlayerInterface)
+    check(player, propTypes)
 
     let newRemotePlayer = this.game.add.sprite(player.x, player.y, 'commando')
     newRemotePlayer.scale.setTo(GameConsts.PLAYER_SCALE)

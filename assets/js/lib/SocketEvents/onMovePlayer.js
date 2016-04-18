@@ -1,6 +1,15 @@
+import { PropTypes } from 'react'
 import PlayerById from'../PlayerById'
 
+const propTypes = {
+    id: PropTypes.string.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
+}
+
 export default function onMovePlayer(data) {
+    check(data, propTypes)
+
     let movePlayer = PlayerById.call(this, data.id)
 
     // Player not found

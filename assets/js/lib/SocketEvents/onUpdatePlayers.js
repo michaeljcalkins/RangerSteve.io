@@ -1,7 +1,17 @@
+import { PropTypes } from 'react'
 import RemotePlayer from '../RemotePlayer'
 import EventHandler from '../EventHandler'
 
+const propTypes = {
+    room: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        players: PropTypes.array.isRequired
+    })
+}
+
 export default function onUpdatePlayers(data) {
+    check(data, propTypes)
+
     this.roomId = data.room.id
 
     let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id;

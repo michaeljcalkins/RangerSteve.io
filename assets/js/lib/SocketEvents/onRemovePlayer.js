@@ -1,6 +1,13 @@
+import { PropTypes } from 'react'
 import PlayerById from '../PlayerById'
 
+const propTypes = {
+    id: PropTypes.string.isRequired,
+}
+
 export default function onRemovePlayer(data) {
+    check(data, propTypes)
+
     let removePlayer = PlayerById.call(this, data.id)
 
     // Player not found
