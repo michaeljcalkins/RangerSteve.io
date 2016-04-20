@@ -1,12 +1,14 @@
 import { PropTypes } from 'react'
 import PlayerById from'../PlayerById'
+import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
 
 const propTypes = {
     id: PropTypes.string.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     rightArmAngle: PropTypes.number.isRequired,
-    leftArmAngle: PropTypes.number.isRequired
+    leftArmAngle: PropTypes.number.isRequired,
+    facing: PropTypes.string.isRequired
 }
 
 export default function onMovePlayer(data) {
@@ -37,7 +39,20 @@ export default function onMovePlayer(data) {
     else
     {
         movePlayer.animations.stop()
-        movePlayer.frame = 6
+
+        if (movePlayer.facing === 'right') {
+            movePlayer.frame = 7
+        } else {
+            movePlayer.frame = 6
+        }
+
+        if (data.facing === 'left' && movePlayer.facing !== 'left') {
+            playerFaceLeft(movePlayer)
+        }
+
+        if (data.facing === 'right' && movePlayer.facing !== 'right') {
+            playerFaceRight(movePlayer)
+        }
     }
 
     movePlayer.lastPosition.x = movePlayer.x

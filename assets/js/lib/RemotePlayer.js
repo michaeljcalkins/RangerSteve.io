@@ -13,6 +13,7 @@ export default function RemotePlayer(player) {
     let newRemotePlayer = this.game.add.sprite(player.x, player.y, 'commando')
     newRemotePlayer.scale.setTo(GameConsts.PLAYER_SCALE)
     newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
+    newRemotePlayer.facing = 'right'
     newRemotePlayer.height = 91
     newRemotePlayer.width = 94
     newRemotePlayer.alive = true
@@ -60,8 +61,13 @@ export default function RemotePlayer(player) {
     // this.currentWeaponSprite.scale.setTo(this.player.meta.primaryWeapon.meta.scale)
     // this.currentWeaponSprite.rotation = this.player.meta.primaryWeapon.meta.rotation
 
+    // Current weapon
+    newRemotePlayer.currentWeaponSprite = this.game.add.sprite(0, 0, 'AK47')
+    newRemotePlayer.currentWeaponSprite.rotation = 80.20
+    newRemotePlayer.currentWeaponSprite.scale.setTo(1.3)
+
     // Right arm
-    // this.rightArmGroup.add(this.currentWeaponSprite)
+    newRemotePlayer.rightArmGroup.add(newRemotePlayer.currentWeaponSprite)
     newRemotePlayer.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm')
     newRemotePlayer.rightArmSprite.anchor.setTo(.2, .24)
     newRemotePlayer.rightArmSprite.scale.setTo(1.7)

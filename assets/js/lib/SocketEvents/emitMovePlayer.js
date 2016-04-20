@@ -5,7 +5,8 @@ const propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     rightArmAngle: PropTypes.number.isRequired,
-    leftArmAngle: PropTypes.number.isRequired
+    leftArmAngle: PropTypes.number.isRequired,
+    facing: PropTypes.string.isRequired
 }
 
 export default function(data) {

@@ -35,6 +35,7 @@ export default function PlayerSpriteHandler() {
 
     this.player.meta = {
         health: 100,
+        face: 'right',
         primaryWeapon: new Weapons[GameConsts.STARTING_PRIMARY_ID](this),
         secondaryWeapon: new Weapons[GameConsts.STARTING_SECONDARY_ID](this),
         selectedPrimaryWeaponId: GameConsts.STARTING_PRIMARY_ID,

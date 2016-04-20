@@ -1,5 +1,4 @@
 import FireStandardBullet from '../FireStandardBullet'
-import GameConsts from '../GameConsts'
 
 export default class AK47 extends Phaser.Group {
     constructor(rootScope) {
