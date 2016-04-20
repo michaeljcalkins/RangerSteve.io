@@ -10,7 +10,6 @@ export default function Create() {
     this.enemies = this.game.add.group()
     this.enemyBullets = []
 
-
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)
 

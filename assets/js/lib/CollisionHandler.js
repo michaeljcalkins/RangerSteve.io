@@ -1,3 +1,5 @@
+import emitBulletRemoved from './SocketEvents/emitBulletRemoved'
+
 export default function CollisionHandler() {
     // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms, null, null, this)
@@ -10,11 +12,22 @@ export default function CollisionHandler() {
         ricochet.animations.play('collision')
         ricochet.animations.currentAnim.killOnComplete = true
 
+        emitBulletRemoved.call(this, {
+            roomId: this.roomId,
+            bulletId: bullet.bulletId
+        })
+
         bullet.kill()
     }, null, this)
 
     // Did enemy bullets hit any platforms
     this.physics.arcade.collide(this.platforms, this.enemyBullets, (platform, bullet) => {
+        let ricochet = this.add.sprite(bullet.x, bullet.y, 'ricochet')
+        ricochet.scale.setTo(.17)
+        ricochet.animations.add('collision', [0,1,2,3,4,5], 45, false, true)
+        ricochet.animations.play('collision')
+        ricochet.animations.currentAnim.killOnComplete = true
+
         bullet.kill()
 
         this.socket.emit('bullet removed', {
@@ -27,7 +40,7 @@ export default function CollisionHandler() {
     this.physics.arcade.collide(this.player, this.enemyBullets, (player, bullet) => {
         bullet.kill()
 
-        this.socket.emit('bullet removed', {
+        emitBulletRemoved.call(this, {
             roomId: this.roomId,
             bulletId: bullet.bulletId
         })

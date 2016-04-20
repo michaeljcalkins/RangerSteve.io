@@ -1,17 +1,17 @@
 import { PropTypes } from 'react'
 
-const OnBulletFiredInterface = {
+const propTypes = {
     id: PropTypes.string.isRequired,
     bulletId: PropTypes.string.isRequired
 }
 
 export default function onBulletRemoved(data) {
-    check(data, OnBulletFiredInterface)
+    check(data, propTypes)
 
     if (data.id === ('/#' + this.socket.id))
         return
 
-    let removeBullet = _.find(this.bullets.children, {
+    let removeBullet = _.find(this.enemyBullets, {
         bulletId: data.bulletId
     })
 
