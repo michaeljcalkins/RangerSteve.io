@@ -3,6 +3,8 @@ import emitBulletRemoved from './SocketEvents/emitBulletRemoved'
 export default function CollisionHandler() {
     // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms, null, null, this)
+    this.physics.arcade.collide(this.bulletShells, this.platforms, null, null, this)
+    this.physics.arcade.collide(this.bulletShells, this.bulletShells, null, null, this)
 
     // Did this player's bullets hit any platforms
     this.physics.arcade.collide(this.platforms, this.bullets, (platform, bullet) => {

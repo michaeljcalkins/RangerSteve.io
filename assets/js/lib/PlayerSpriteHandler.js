@@ -65,7 +65,7 @@ export default function PlayerSpriteHandler() {
     this.leftArmSprite.scale.setTo(1.6)
     this.leftArmSprite.rotation = 80.1
     this.leftArmGroup.add(this.leftArmSprite)
-    
+
 
     // Gun
     this.currentWeaponSprite = this.game.add.sprite(

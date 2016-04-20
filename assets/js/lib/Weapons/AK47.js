@@ -1,4 +1,5 @@
 import FireStandardBullet from '../FireStandardBullet'
+import GameConsts from '../GameConsts'
 
 export default class AK47 extends Phaser.Group {
     constructor(rootScope) {
@@ -32,10 +33,9 @@ export default class AK47 extends Phaser.Group {
         clearTimeout(this.muzzleFlashHandler)
         this.muzzleFlashHandler = setTimeout(() => {
             this.rootScope.muzzleFlash.visible = false
-        }, 100)
+        }, 80)
 
         this.nextFire = this.rootScope.game.time.now + this.fireRate
-
         FireStandardBullet.call(this)
     }
 }

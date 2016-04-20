@@ -3,7 +3,7 @@ import GameConsts from '../lib/GameConsts'
 export default function Preload() {
     this.load.image('map-bg', '/images/high-rule-desert.png')
     this.load.image('ground', '/images/platform.png')
-    this.load.image('bullet12', '/images/bullet.png')
+    this.load.image('bullet', '/images/bullet.png')
 
     this.load.spritesheet('muzzle-flash', '/images/muzzle-flash.png', 447, 271)
     this.load.spritesheet('commando', '/images/commando.png', 300, 315)

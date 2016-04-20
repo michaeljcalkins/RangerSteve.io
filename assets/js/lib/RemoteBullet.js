@@ -15,7 +15,7 @@ const propTypes = {
 export default function RemoteBullet(data) {
     check(data, propTypes)
 
-    let enemyBullet = this.game.add.sprite(data.x, data.y, 'bullet12')
+    let enemyBullet = this.game.add.sprite(data.x, data.y, 'bullet')
     enemyBullet.bulletId = data.bulletId
     enemyBullet.playerId = data.playerId
     enemyBullet.damage = data.damage
