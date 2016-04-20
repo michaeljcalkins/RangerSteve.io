@@ -2,6 +2,7 @@ import CollisionHandler from '../lib/CollisionHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
+import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 
 export default function Update() {
     CollisionHandler.call(this)
@@ -26,9 +27,11 @@ export default function Update() {
         })
     }
 
-    this.socket.emit('move player', {
+    emitMovePlayer.call(this, {
         roomId: this.roomId,
         x: this.player.x,
-        y: this.player.y
+        y: this.player.y,
+        rightArmAngle: this.rightArmGroup.angle,
+        leftArmAngle: this.leftArmGroup.angle
     })
 }

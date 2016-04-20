@@ -4,7 +4,9 @@ import PlayerById from'../PlayerById'
 const propTypes = {
     id: PropTypes.string.isRequired,
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
+    y: PropTypes.number.isRequired,
+    rightArmAngle: PropTypes.number.isRequired,
+    leftArmAngle: PropTypes.number.isRequired
 }
 
 export default function onMovePlayer(data) {
@@ -20,6 +22,10 @@ export default function onMovePlayer(data) {
     // Update player position
     movePlayer.x = data.x
     movePlayer.y = data.y
+
+    // Update player angles
+    movePlayer.rightArmGroup.angle = data.rightArmAngle
+    movePlayer.leftArmGroup.angle = data.leftArmAngle
 
     if (movePlayer.x > movePlayer.lastPosition.x) {
         movePlayer.animations.play('right')
