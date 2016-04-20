@@ -8,6 +8,12 @@ export default class M4A1 extends Phaser.Group {
 
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'M4A1', false, true, Phaser.Physics.ARCADE)
 
+        this.meta = {
+            rotation: 80.06,
+            scale: 1.4,
+            spriteX: 120,
+            spriteY: 209
+        }
         this.bulletHeight = 2
         this.bulletSpeed = 2400
         this.bulletWidth = 40

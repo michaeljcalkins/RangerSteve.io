@@ -2,7 +2,7 @@ import Guid from './Guid'
 
 export default function FireStandardBullet() {
     let x = this.rootScope.player.x
-    let y = this.rootScope.player.y
+    let y = this.rootScope.player.y - 10
 
     let bullet = this.rootScope.bullets.getFirstDead()
     bullet.bulletId = Guid()

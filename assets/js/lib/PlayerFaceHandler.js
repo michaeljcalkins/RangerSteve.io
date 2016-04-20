@@ -20,9 +20,9 @@ export function playerFaceLeft() {
         this.rightArmSprite.scale.y *= -1
         this.rightArmSprite.y = 10
 
-        this.ak47Sprite.scale.y *= -1
-        this.ak47Sprite.y = 30
-        this.ak47Sprite.x = -7
+        this.currentWeaponSprite.scale.y *= -1
+        this.currentWeaponSprite.y = 30
+        this.currentWeaponSprite.x = -7
     }
 }
 
@@ -48,8 +48,8 @@ export function playerFaceRight() {
         this.rightArmSprite.scale.y *= -1
         this.rightArmSprite.y = 0
 
-        this.ak47Sprite.scale.y *= -1
-        this.ak47Sprite.y = 19
-        this.ak47Sprite.x = 3
+        this.currentWeaponSprite.scale.y *= -1
+        this.currentWeaponSprite.y = 19
+        this.currentWeaponSprite.x = 3
     }
 }

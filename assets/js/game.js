@@ -20,4 +20,7 @@ game.state.add('Game', function() {
     this.preload = preload
     this.create = create
     this.update = update
+    this.render = () => {
+        // this.game.debug.body(this.player)
+    }
 }, true)

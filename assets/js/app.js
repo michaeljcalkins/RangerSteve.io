@@ -34,5 +34,5 @@ function check(object, propTypes, _throw) {
 }
 window.check = check
 
-require('./ui')
+// require('./ui')
 require('./game')

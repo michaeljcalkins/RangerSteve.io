@@ -8,6 +8,12 @@ export default class AUG extends Phaser.Group {
 
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AUG', false, true, Phaser.Physics.ARCADE)
 
+        this.meta = {
+            rotation: 80.1,
+            scale: 1.23,
+            spriteX: 14,
+            spriteY: 29
+        }
         this.bulletHeight = 2
         this.bulletSpeed = 2300
         this.bulletWidth = 40

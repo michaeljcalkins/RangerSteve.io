@@ -16,8 +16,10 @@ const GameConsts = {
     ANIMATION_LEFT: [0, 1, 2, 3, 4, 5],
     ANIMATION_RIGHT: [8, 9, 10, 11, 12, 13],
     ANIMATION_FRAMERATE: 10,
-    PLAYER_SCALE: .27,
+    PLAYER_SCALE: 1,
     PLAYER_ANCHOR: .5,
+    STARTING_PRIMARY_ID: 'AK47',
+    STARTING_SECONDARY_ID: 'DesertEagle',
 
     // Weapons
     PRIMARY_WEAPONS: [
@@ -42,8 +44,8 @@ const GameConsts = {
             // minScore: 20
         },
         {
-            id: 'Aug',
-            name: 'Aug',
+            id: 'AUG',
+            name: 'AUG',
             image: '/images/guns/Spr_Aug.png',
             minScore: 0
             // minScore: 30

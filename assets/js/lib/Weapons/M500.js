@@ -8,6 +8,12 @@ export default class M500 extends Phaser.Group {
 
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'M500', false, true, Phaser.Physics.ARCADE)
 
+        this.meta = {
+            rotation: 80.15,
+            scale: 1.3,
+            spriteX: 12,
+            spriteY: 19
+        }
         this.bulletHeight = 2
         this.bulletSpeed = 1900
         this.bulletWidth = 40

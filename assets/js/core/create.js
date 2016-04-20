@@ -2,13 +2,14 @@ import GameConsts from '../lib/GameConsts'
 import SetEventHandlers from '../lib/SocketEvents/SetEventHandlers'
 import EventHandler from '../lib/EventHandler'
 import HighRuleJungle from '../maps/HighRuleJungle'
-import Weapons from '../lib/Weapons'
+import PlayerSpriteHandler from '../lib/PlayerSpriteHandler'
 
 export default function Create() {
     this.volume = GameConsts.STARTING_VOLUME
     this.socket = io.connect()
     this.enemies = this.game.add.group()
     this.enemyBullets = []
+
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)
@@ -38,105 +39,13 @@ export default function Create() {
     this.bullets.setAll('checkWorldBounds', true)
     this.bullets.setAll('outOfBoundsKill', true)
 
-
-    /**
-     * Player Settings
-     */
-    let spawnPoint = this.mapInstance.getRandomSpawnPoint()
-    this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
-    this.player.scale.setTo(GameConsts.PLAYER_SCALE)
-    this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
-
-    //  We need to enable physics on the player
-    this.physics.arcade.enable(this.player)
-
-    // Enable physics on the player
-    this.game.physics.enable(this.player, Phaser.Physics.ARCADE)
-
-    // Make player collide with world boundaries so he doesn't leave the stage
-    this.player.body.collideWorldBounds = true
-
-    // Set player minimum and maximum movement speed
-    this.player.body.maxVelocity.setTo(GameConsts.MAX_SPEED, GameConsts.MAX_SPEED * 10) // x, y
-
-    // Add drag to the player that slows them down when they are not accelerating
-    this.player.body.drag.setTo(GameConsts.DRAG, 0) // x, y
-    this.player.body.setSize(230, 290, -10, 0)
-    this.player.meta = {
-        health: 100
-    }
-
     // Since we're jumping we need gravity
     this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
     // Flag to track if the jump button is pressed
     this.jumping = false
 
-    //  Our two animations, walking left and right.
-    this.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
-    this.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
-
-    this.player.meta = {
-        health: 100,
-        primaryWeapon: new Weapons.AK47(this),
-        secondaryWeapon: new Weapons.DesertEagle(this),
-        selectedPrimaryWeaponId: 'AK47',
-        selectedSecondaryWeaponId: 'DesertEagle'
-    }
-
-    this.player.meta.primaryWeapon.id = 'AK47'
-    this.player.meta.secondaryWeapon.id = 'DesertEagle'
-
-    this.leftArmGroup = this.game.add.group()
-    this.rightArmGroup = this.game.add.group()
-    this.headGroup = this.game.add.group()
-    this.torsoGroup = this.game.add.group()
-
-    // Torso
-    this.torsoSprite = this.game.add.sprite(-37, -105, 'torso')
-    this.torsoSprite.scale.setTo(1.8)
-    this.torsoGroup.add(this.torsoSprite)
-
-    // Head
-    this.headSprite = this.game.add.sprite(0, -148, 'head')
-    this.headSprite.scale.setTo(1.8)
-    this.headGroup.add(this.headSprite)
-
-    // Left arm
-    this.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
-    this.leftArmSprite.anchor.setTo(.2, .2)
-    this.leftArmSprite.scale.setTo(1.6)
-    this.leftArmSprite.rotation = 80.1
-    this.leftArmGroup.add(this.leftArmSprite)
-
-    // Gun
-    this.ak47Sprite = this.game.add.sprite(12, 19, 'AK47')
-    this.ak47Sprite.scale.setTo(1.3)
-    this.ak47Sprite.rotation = 80.15
-
-    // Right arm
-    this.rightArmGroup.add(this.ak47Sprite)
-    this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm')
-    this.rightArmSprite.anchor.setTo(.2, .24)
-    this.rightArmSprite.scale.setTo(1.7)
-    this.rightArmSprite.rotation = 80.1
-    this.rightArmGroup.add(this.rightArmSprite)
-
-    this.player.addChild(this.leftArmGroup)
-    this.leftArmGroup.pivot.x = 0
-    this.leftArmGroup.pivot.y = 0
-    this.leftArmGroup.x = 45
-    this.leftArmGroup.y = -70
-
-    this.player.addChild(this.torsoGroup)
-    this.player.addChild(this.headGroup)
-
-    this.player.addChild(this.rightArmGroup)
-    this.rightArmGroup.pivot.x = 0
-    this.rightArmGroup.pivot.y = 0
-    this.rightArmGroup.x = -25
-    this.rightArmGroup.y = -65
-
+    PlayerSpriteHandler.call(this)
 
     /**
      * Weapons
@@ -196,7 +105,12 @@ export default function Create() {
         this.currentWeapon = this.currentWeapon === 'primaryWeapon'
             ? 'secondaryWeapon'
             : 'primaryWeapon'
-        this.ak47Sprite.loadTexture(this.player.meta[this.currentWeapon].id)
+
+        this.currentWeaponSprite.loadTexture(this.player.meta[this.currentWeapon].id)
+        this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].spriteX
+        this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].spriteY
+        this.currentWeaponSprite.scale.setTo(this.player.meta[this.currentWeapon].scale)
+        this.currentWeaponSprite.rotation = this.player.meta[this.currentWeapon].rotation
     })
 
 
