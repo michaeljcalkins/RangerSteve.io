@@ -8,7 +8,7 @@ export default function CollisionHandler() {
 
     // Did this player's bullets hit any platforms
     this.physics.arcade.collide(this.platforms, this.bullets, (platform, bullet) => {
-        let ricochet = this.add.sprite(bullet.x, bullet.y, 'ricochet')
+        let ricochet = this.add.sprite(bullet.x, bullet.y - 15, 'ricochet')
         ricochet.scale.setTo(.17)
         ricochet.animations.add('collision', [0,1,2,3,4,5], 45, false, true)
         ricochet.animations.play('collision')
@@ -24,7 +24,7 @@ export default function CollisionHandler() {
 
     // Did enemy bullets hit any platforms
     this.physics.arcade.collide(this.platforms, this.enemyBullets, (platform, bullet) => {
-        let ricochet = this.add.sprite(bullet.x, bullet.y, 'ricochet')
+        let ricochet = this.add.sprite(bullet.x, bullet.y - 15, 'ricochet')
         ricochet.scale.setTo(.17)
         ricochet.animations.add('collision', [0,1,2,3,4,5], 45, false, true)
         ricochet.animations.play('collision')
