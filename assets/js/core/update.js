@@ -27,12 +27,14 @@ export default function Update() {
         })
     }
 
-    emitMovePlayer.call(this, {
-        roomId: this.roomId,
-        x: this.player.x,
-        y: this.player.y,
-        rightArmAngle: this.rightArmGroup.angle,
-        leftArmAngle: this.leftArmGroup.angle,
-        facing: this.player.meta.facing
-    })
+    if (this.roomId) {
+        emitMovePlayer.call(this, {
+            roomId: this.roomId,
+            x: this.player.x,
+            y: this.player.y,
+            rightArmAngle: this.rightArmGroup.angle,
+            leftArmAngle: this.leftArmGroup.angle,
+            facing: this.player.meta.facing
+        })
+    }
 }

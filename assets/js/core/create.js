@@ -3,8 +3,10 @@ import SetEventHandlers from '../lib/SocketEvents/SetEventHandlers'
 import EventHandler from '../lib/EventHandler'
 import HighRuleJungle from '../maps/HighRuleJungle'
 import PlayerSpriteHandler from '../lib/PlayerSpriteHandler'
+import GetQueryString from '../lib/GetQueryString'
 
 export default function Create() {
+    this.roomId = GetQueryString('roomId')
     this.volume = GameConsts.STARTING_VOLUME
     this.socket = io.connect()
     this.enemies = this.game.add.group()
