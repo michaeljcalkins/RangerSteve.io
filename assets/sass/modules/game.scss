@@ -9,7 +9,7 @@ body.game {
 }
 
 .option-group {
-    background: #D8D8D8;
+    background: #4D4D4D;
     cursor: pointer;
     position: relative;
     width: 270px;
@@ -48,10 +48,12 @@ body.game {
 
 .option-name {
     position: absolute;
-    top: 5px;
+    top: 7px;
+    color: #E3DED3;
+    letter-spacing: 2px;
     left: 7px;
     font-size: 16px;
-    font-family: Bangers;
+    font-family: Orbitron, "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 .options-menu {

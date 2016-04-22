@@ -1,80 +1,90 @@
 .hud-item {
-    background-size: 28px;
+    background-size: 26px;
     background: #504F4D no-repeat 10px;
-    color: #fff;
+    border: 2px solid #E3DFD4;
+    border-radius: 5px;
+    box-shadow: 0 0 1px 0 #202021;
+    color: #E3DFD4;
     font-family: Righteous;
-    font-size: 34px;
-    line-height: 34px;
+    font-size: 29px;
+    line-height: 24px;
     padding: 10px 10px 0 0;
     position: absolute;
     text-align: right;
 }
 
 .hud-settings {
-    background: url(/images/icons/cog-32.png);
-    background-size: 29px;
+    background: url(/images/ui/button/64x64/197.png);
+    background-size: cover;
+    border-radius: 5px;
+    box-shadow: none;
     border: 0;
     cursor: pointer;
     padding: 0;
     right: 240px;
-    top: 20px;
-    height: 29px;
-    width: 29px;
+    top: 10px;
+    height: 48px;
+    width: 48px;
 }
 
 .hud-jump-jet {
     background-image: url(/images/icons/gas-32-white.png);
-    border-radius: 5px 0 0 0;
-    height: 54px;
-    padding: 18px 0 0 50px;
-    right: 0;
-    bottom: 0;
-    width: 185px;
+    background-size: 26px;
+    height: 48px;
+    padding: 12px 0 0 45px;
+    right: 10px;
+    bottom: 10px;
+    width: 175px;
 
     .progress {
-        max-width: 120px;
+        max-width: 115px;
+    }
+
+    .progress-bar {
+        background: #E0B302;
     }
 }
 
 .hud-score {
     background-image: url(/images/icons/trophy-32-white.png);
-    border-radius: 0 0 5px 0;
-    height: 54px;
-    left: 0;
-    top: 0;
-    width: 117px;
+    background-size: 26px;
+    height: 48px;
+    left: 10px;
+    top: 10px;
+    width: 120px;
 }
 
 .hud-health {
     background-image: url(/images/icons/plus-4-32-white.png);
-    background-size: 27px;
-    border-radius: 0 5px 0 0;
-    bottom: 0;
-    height: 54px;
-    left: 0;
-    width: 117px;
+    background-size: 26px;
+    bottom: 10px;
+    height: 48px;
+    left: 10px;
+    width: 120px;
 }
 
 .hud-leaderboard {
-    border-radius: 0 0 0 5px;
     font-size: 14px;
     line-height: 18px;
     padding: 10px;
-    right: 0;
+    right: 10px;
     text-align: left;
-    top: 0;
+    top: 10px;
     width: 220px;
 
     h1 {
-        font-size: 18px;
-        font-family: Righteous;
-        font-weight: bold;
+        font-size: 16px;
+        font-family: Orbitron;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
         margin: 0 0 5px;
     }
 
     ol {
-        margin: 0 0 0 23px;
+        margin: 0 0 0 17px;
         padding: 0;
+        font-family: Orbitron;
     }
 }
 
