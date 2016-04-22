@@ -52,9 +52,9 @@ var _GameConsts = require('../lib/GameConsts');
 
 var _GameConsts2 = _interopRequireDefault(_GameConsts);
 
-var _SetEventHandlers = require('../lib/SocketEvents/SetEventHandlers');
+var _setEventHandlers = require('../lib/SocketEvents/setEventHandlers');
 
-var _SetEventHandlers2 = _interopRequireDefault(_SetEventHandlers);
+var _setEventHandlers2 = _interopRequireDefault(_setEventHandlers);
 
 var _EventHandler = require('../lib/EventHandler');
 
@@ -180,10 +180,10 @@ function Create() {
     /**
      * Start listening for events
      */
-    _SetEventHandlers2.default.call(this);
+    _setEventHandlers2.default.call(this);
 }
 
-},{"../lib/EventHandler":8,"../lib/GameConsts":12,"../lib/GetQueryString":13,"../lib/PlayerSpriteHandler":21,"../lib/SocketEvents/SetEventHandlers":25,"../maps/HighRuleJungle":49}],3:[function(require,module,exports){
+},{"../lib/EventHandler":8,"../lib/GameConsts":12,"../lib/GetQueryString":13,"../lib/PlayerSpriteHandler":21,"../lib/SocketEvents/setEventHandlers":37,"../maps/HighRuleJungle":49}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -311,7 +311,7 @@ function Update() {
     }
 }
 
-},{"../lib/CollisionHandler":7,"../lib/PlayerAngleHandler":16,"../lib/PlayerJumpHandler":19,"../lib/PlayerMovementHandler":20,"../lib/SocketEvents/emitMovePlayer":27}],6:[function(require,module,exports){
+},{"../lib/CollisionHandler":7,"../lib/PlayerAngleHandler":16,"../lib/PlayerJumpHandler":19,"../lib/PlayerMovementHandler":20,"../lib/SocketEvents/emitMovePlayer":26}],6:[function(require,module,exports){
 'use strict';
 
 var _Init = require('./core/Init');
@@ -428,7 +428,7 @@ function CollisionHandler() {
     }, this);
 }
 
-},{"./SocketEvents/emitBulletRemoved":26}],8:[function(require,module,exports){
+},{"./SocketEvents/emitBulletRemoved":25}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1392,6 +1392,476 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+exports.default = function (data) {
+    check(data, propTypes);
+    this.socket.emit('bullet removed', data);
+};
+
+var _react = require('react');
+
+var propTypes = {
+    roomId: _react.PropTypes.string.isRequired,
+    bulletId: _react.PropTypes.string.isRequired
+};
+
+},{"react":233}],26:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (data) {
+    check(data, propTypes);
+    this.socket.emit('move player', data);
+};
+
+var _react = require('react');
+
+var propTypes = {
+    roomId: _react.PropTypes.string.isRequired,
+    x: _react.PropTypes.number.isRequired,
+    y: _react.PropTypes.number.isRequired,
+    rightArmAngle: _react.PropTypes.number.isRequired,
+    leftArmAngle: _react.PropTypes.number.isRequired,
+    facing: _react.PropTypes.string.isRequired
+};
+
+},{"react":233}],27:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onBulletFired;
+
+var _react = require('react');
+
+var _RemoteBullet = require('../RemoteBullet');
+
+var _RemoteBullet2 = _interopRequireDefault(_RemoteBullet);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var propTypes = {
+    bulletId: _react.PropTypes.string.isRequired,
+    playerId: _react.PropTypes.string.isRequired,
+    damage: _react.PropTypes.number.isRequired,
+    pointerAngle: _react.PropTypes.number.isRequired,
+    height: _react.PropTypes.number.isRequired,
+    width: _react.PropTypes.number.isRequired,
+    x: _react.PropTypes.number.isRequired,
+    y: _react.PropTypes.number.isRequired,
+    bulletSpeed: _react.PropTypes.number.isRequired
+};
+
+function onBulletFired(data) {
+    check(data, propTypes);
+
+    if (data.id === '/#' + this.socket.id) return;
+
+    var enemyBullet = _RemoteBullet2.default.call(this, data);
+    var newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, data.bulletSpeed);
+    enemyBullet.body.velocity.x += newVelocity.x;
+    enemyBullet.body.velocity.y += newVelocity.y;
+    this.enemyBullets.push(enemyBullet);
+}
+
+},{"../RemoteBullet":22,"react":233}],28:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onBulletRemoved;
+
+var _react = require('react');
+
+var propTypes = {
+    id: _react.PropTypes.string.isRequired,
+    bulletId: _react.PropTypes.string.isRequired
+};
+
+function onBulletRemoved(data) {
+    check(data, propTypes);
+
+    if (data.id === '/#' + this.socket.id) return;
+
+    var removeBullet = _.find(this.enemyBullets, {
+        bulletId: data.bulletId
+    });
+
+    if (!removeBullet) {
+        console.log('Bullet not found: ', data.bulletId);
+        return;
+    }
+
+    removeBullet.kill();
+}
+
+},{"react":233}],29:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onMovePlayer;
+
+var _react = require('react');
+
+var _PlayerById = require('../PlayerById');
+
+var _PlayerById2 = _interopRequireDefault(_PlayerById);
+
+var _RemotePlayerFaceHandler = require('../RemotePlayerFaceHandler');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var propTypes = {
+    id: _react.PropTypes.string.isRequired,
+    x: _react.PropTypes.number.isRequired,
+    y: _react.PropTypes.number.isRequired,
+    rightArmAngle: _react.PropTypes.number.isRequired,
+    leftArmAngle: _react.PropTypes.number.isRequired,
+    facing: _react.PropTypes.string.isRequired
+};
+
+function onMovePlayer(data) {
+    check(data, propTypes);
+
+    var movePlayer = _PlayerById2.default.call(this, data.id);
+
+    // Player not found
+    if (!movePlayer) {
+        return;
+    }
+
+    // Update player position
+    movePlayer.x = data.x;
+    movePlayer.y = data.y;
+
+    // Update player angles
+    movePlayer.rightArmGroup.angle = data.rightArmAngle;
+    movePlayer.leftArmGroup.angle = data.leftArmAngle;
+
+    if (movePlayer.x > movePlayer.lastPosition.x) {
+        movePlayer.animations.play('right');
+    } else if (movePlayer.x < movePlayer.lastPosition.x) {
+        movePlayer.animations.play('left');
+    } else {
+        movePlayer.animations.stop();
+
+        if (movePlayer.facing === 'right') {
+            movePlayer.frame = 7;
+        } else {
+            movePlayer.frame = 6;
+        }
+
+        if (data.facing === 'left' && movePlayer.facing !== 'left') {
+            (0, _RemotePlayerFaceHandler.playerFaceLeft)(movePlayer);
+        }
+
+        if (data.facing === 'right' && movePlayer.facing !== 'right') {
+            (0, _RemotePlayerFaceHandler.playerFaceRight)(movePlayer);
+        }
+    }
+
+    movePlayer.lastPosition.x = movePlayer.x;
+    movePlayer.lastPosition.y = movePlayer.y;
+}
+
+},{"../PlayerById":17,"../RemotePlayerFaceHandler":24,"react":233}],30:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onPlayerDamaged;
+
+var _EventHandler = require('../EventHandler');
+
+var _EventHandler2 = _interopRequireDefault(_EventHandler);
+
+var _react = require('react');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var propTypes = {
+    damagedPlayerId: _react.PropTypes.string.isRequired,
+    health: _react.PropTypes.number.isRequired
+};
+
+var damageTimeout = null;
+var healingInterval = null;
+var lastKnownHealth = null;
+
+function onPlayerDamaged(data) {
+    var _this = this;
+
+    check(data, propTypes);
+
+    if (data.damagedPlayerId !== '/#' + this.socket.id) return;
+
+    this.player.meta.health = data.health;
+    _EventHandler2.default.emit('health update', String(this.player.meta.health));
+
+    if (this.player.meta.health > 55 && this.player.meta.health < 100) {
+        clearTimeout(damageTimeout);
+        damageTimeout = setTimeout(function () {
+            // Player's health will fully regenerate
+            _this.socket.emit('player full health', {
+                roomId: _this.roomId
+            });
+        }, 5000);
+    }
+
+    if (this.player.meta.health > 0 && this.player.meta.health <= 55) {
+        // Wait 5 seconds to begin healing process
+        clearTimeout(damageTimeout);
+        clearInterval(healingInterval);
+        damageTimeout = setTimeout(function () {
+            lastKnownHealth = _this.player.meta.health;
+            healingInterval = setInterval(function () {
+                if (lastKnownHealth >= 100) {
+                    clearInterval(healingInterval);
+                }
+
+                lastKnownHealth += 10;
+
+                // Increase player health by 10 every 1/2 a second
+                _this.socket.emit('player healing', {
+                    roomId: _this.roomId
+                });
+            }, 500);
+        }, 5000);
+    }
+}
+
+},{"../EventHandler":8,"react":233}],31:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onPlayerHealthUpdate;
+
+var _EventHandler = require('../EventHandler');
+
+var _EventHandler2 = _interopRequireDefault(_EventHandler);
+
+var _react = require('react');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var propTypes = {
+    id: _react.PropTypes.string.isRequired,
+    health: _react.PropTypes.number.isRequired
+};
+
+function onPlayerHealthUpdate(data) {
+    check(data, propTypes);
+
+    if (data.id !== '/#' + this.socket.id) return;
+
+    this.player.meta.health = data.health;
+    _EventHandler2.default.emit('health update', String(this.player.meta.health));
+}
+
+},{"../EventHandler":8,"react":233}],32:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onPlayerRespawn;
+
+var _react = require('react');
+
+var _EventHandler = require('../EventHandler');
+
+var _EventHandler2 = _interopRequireDefault(_EventHandler);
+
+var _Weapons = require('../Weapons');
+
+var _Weapons2 = _interopRequireDefault(_Weapons);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var propTypes = {
+    damagedPlayerId: _react.PropTypes.string.isRequired,
+    health: _react.PropTypes.number.isRequired
+};
+
+function onPlayerRespawn(data) {
+    check(data, propTypes);
+
+    if (data.damagedPlayerId !== '/#' + this.socket.id) return;
+
+    // Set primary weapon
+    this.player.meta.primaryWeapon = new _Weapons2.default[this.player.meta.selectedPrimaryWeaponId](this);
+    this.player.meta.primaryWeapon.id = this.player.meta.selectedPrimaryWeaponId;
+
+    if (this.currentWeapon === 'primaryWeapon') this.currentWeaponSprite.loadTexture(this.player.meta.selectedPrimaryWeaponId);
+
+    // Set secondary weapon
+    this.player.meta.secondaryWeapon = new _Weapons2.default[this.player.meta.selectedSecondaryWeaponId](this);
+    this.player.meta.secondaryWeapon.id = this.player.meta.selectedSecondaryWeaponId;
+
+    if (this.currentWeapon === 'secondaryWeapon') this.currentWeaponSprite.loadTexture(this.player.meta.selectedSecondaryWeaponId);
+
+    // Reset health
+    this.player.meta.health = data.health;
+    _EventHandler2.default.emit('health update', String(this.player.meta.health));
+
+    // Spawn player
+    var spawnPoint = this.mapInstance.getRandomSpawnPoint();
+    this.player.x = spawnPoint.x;
+    this.player.y = spawnPoint.y;
+}
+
+},{"../EventHandler":8,"../Weapons":48,"react":233}],33:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onRemovePlayer;
+
+var _react = require('react');
+
+var _PlayerById = require('../PlayerById');
+
+var _PlayerById2 = _interopRequireDefault(_PlayerById);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var propTypes = {
+    id: _react.PropTypes.string.isRequired
+};
+
+function onRemovePlayer(data) {
+    check(data, propTypes);
+
+    var removePlayer = _PlayerById2.default.call(this, data.id);
+
+    // Player not found
+    if (!removePlayer) {
+        console.log('Player not found: ', data.id);
+        return;
+    }
+
+    removePlayer.player.kill();
+
+    // Remove player from array
+    this.enemies.splice(this.enemies.indexOf(removePlayer), 1);
+}
+
+},{"../PlayerById":17,"react":233}],34:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onSocketConnected;
+
+var _GetQueryString = require('../GetQueryString');
+
+var _GetQueryString2 = _interopRequireDefault(_GetQueryString);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function onSocketConnected() {
+    // Reset enemies on reconnect
+    this.enemies.forEach(function (enemy) {
+        if (enemy) enemy.kill();
+    });
+
+    this.enemies = [];
+
+    // Send local player data to the game server
+    this.socket.emit('new player', {
+        roomId: this.roomId,
+        x: this.player.x,
+        y: this.player.y
+    });
+}
+
+},{"../GetQueryString":13}],35:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onSocketDisconnect;
+function onSocketDisconnect() {
+    console.log('Disconnected from socket server');
+}
+
+},{}],36:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = onUpdatePlayers;
+
+var _react = require('react');
+
+var _RemotePlayer = require('../RemotePlayer');
+
+var _RemotePlayer2 = _interopRequireDefault(_RemotePlayer);
+
+var _EventHandler = require('../EventHandler');
+
+var _EventHandler2 = _interopRequireDefault(_EventHandler);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var propTypes = {
+    room: _react.PropTypes.shape({
+        id: _react.PropTypes.string.isRequired,
+        players: _react.PropTypes.array.isRequired
+    })
+};
+
+function onUpdatePlayers(data) {
+    var _this = this;
+
+    check(data, propTypes);
+
+    this.roomId = data.room.id;
+
+    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id;
+    window.history.pushState({ path: newurl }, '', newurl);
+
+    this.enemies.forEach(function (enemy) {
+        enemy.kill();
+    });
+
+    this.enemies = this.game.add.group();
+
+    _EventHandler2.default.emit('players update', data.room.players);
+
+    data.room.players.forEach(function (player) {
+        if (player.id === '/#' + _this.socket.id) {
+            _EventHandler2.default.emit('score update', String(player.meta.score));
+            _EventHandler2.default.emit('health update', String(player.meta.health));
+            _EventHandler2.default.emit('player update', { player: player });
+            return;
+        }
+
+        var newRemotePlayer = _RemotePlayer2.default.call(_this, player);
+        _this.enemies.add(newRemotePlayer);
+    });
+}
+
+},{"../EventHandler":8,"../RemotePlayer":23,"react":233}],37:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 exports.default = function () {
     var _this = this;
 
@@ -1463,477 +1933,7 @@ var _onPlayerHealthUpdate2 = _interopRequireDefault(_onPlayerHealthUpdate);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../EventHandler":8,"./onBulletFired":28,"./onBulletRemoved":29,"./onMovePlayer":30,"./onPlayerDamaged":31,"./onPlayerHealthUpdate":32,"./onPlayerRespawn":33,"./onRemovePlayer":34,"./onSocketConnected":35,"./onSocketDisconnect":36,"./onUpdatePlayers":37}],26:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function (data) {
-    check(data, propTypes);
-    this.socket.emit('bullet removed', data);
-};
-
-var _react = require('react');
-
-var propTypes = {
-    roomId: _react.PropTypes.string.isRequired,
-    bulletId: _react.PropTypes.string.isRequired
-};
-
-},{"react":233}],27:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function (data) {
-    check(data, propTypes);
-    this.socket.emit('move player', data);
-};
-
-var _react = require('react');
-
-var propTypes = {
-    roomId: _react.PropTypes.string.isRequired,
-    x: _react.PropTypes.number.isRequired,
-    y: _react.PropTypes.number.isRequired,
-    rightArmAngle: _react.PropTypes.number.isRequired,
-    leftArmAngle: _react.PropTypes.number.isRequired,
-    facing: _react.PropTypes.string.isRequired
-};
-
-},{"react":233}],28:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onBulletFired;
-
-var _react = require('react');
-
-var _RemoteBullet = require('../RemoteBullet');
-
-var _RemoteBullet2 = _interopRequireDefault(_RemoteBullet);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var propTypes = {
-    bulletId: _react.PropTypes.string.isRequired,
-    playerId: _react.PropTypes.string.isRequired,
-    damage: _react.PropTypes.number.isRequired,
-    pointerAngle: _react.PropTypes.number.isRequired,
-    height: _react.PropTypes.number.isRequired,
-    width: _react.PropTypes.number.isRequired,
-    x: _react.PropTypes.number.isRequired,
-    y: _react.PropTypes.number.isRequired,
-    bulletSpeed: _react.PropTypes.number.isRequired
-};
-
-function onBulletFired(data) {
-    check(data, propTypes);
-
-    if (data.id === '/#' + this.socket.id) return;
-
-    var enemyBullet = _RemoteBullet2.default.call(this, data);
-    var newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, data.bulletSpeed);
-    enemyBullet.body.velocity.x += newVelocity.x;
-    enemyBullet.body.velocity.y += newVelocity.y;
-    this.enemyBullets.push(enemyBullet);
-}
-
-},{"../RemoteBullet":22,"react":233}],29:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onBulletRemoved;
-
-var _react = require('react');
-
-var propTypes = {
-    id: _react.PropTypes.string.isRequired,
-    bulletId: _react.PropTypes.string.isRequired
-};
-
-function onBulletRemoved(data) {
-    check(data, propTypes);
-
-    if (data.id === '/#' + this.socket.id) return;
-
-    var removeBullet = _.find(this.enemyBullets, {
-        bulletId: data.bulletId
-    });
-
-    if (!removeBullet) {
-        console.log('Bullet not found: ', data.bulletId);
-        return;
-    }
-
-    removeBullet.kill();
-}
-
-},{"react":233}],30:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onMovePlayer;
-
-var _react = require('react');
-
-var _PlayerById = require('../PlayerById');
-
-var _PlayerById2 = _interopRequireDefault(_PlayerById);
-
-var _RemotePlayerFaceHandler = require('../RemotePlayerFaceHandler');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var propTypes = {
-    id: _react.PropTypes.string.isRequired,
-    x: _react.PropTypes.number.isRequired,
-    y: _react.PropTypes.number.isRequired,
-    rightArmAngle: _react.PropTypes.number.isRequired,
-    leftArmAngle: _react.PropTypes.number.isRequired,
-    facing: _react.PropTypes.string.isRequired
-};
-
-function onMovePlayer(data) {
-    check(data, propTypes);
-
-    var movePlayer = _PlayerById2.default.call(this, data.id);
-
-    // Player not found
-    if (!movePlayer) {
-        return;
-    }
-
-    // Update player position
-    movePlayer.x = data.x;
-    movePlayer.y = data.y;
-
-    // Update player angles
-    movePlayer.rightArmGroup.angle = data.rightArmAngle;
-    movePlayer.leftArmGroup.angle = data.leftArmAngle;
-
-    if (movePlayer.x > movePlayer.lastPosition.x) {
-        movePlayer.animations.play('right');
-    } else if (movePlayer.x < movePlayer.lastPosition.x) {
-        movePlayer.animations.play('left');
-    } else {
-        movePlayer.animations.stop();
-
-        if (movePlayer.facing === 'right') {
-            movePlayer.frame = 7;
-        } else {
-            movePlayer.frame = 6;
-        }
-
-        if (data.facing === 'left' && movePlayer.facing !== 'left') {
-            (0, _RemotePlayerFaceHandler.playerFaceLeft)(movePlayer);
-        }
-
-        if (data.facing === 'right' && movePlayer.facing !== 'right') {
-            (0, _RemotePlayerFaceHandler.playerFaceRight)(movePlayer);
-        }
-    }
-
-    movePlayer.lastPosition.x = movePlayer.x;
-    movePlayer.lastPosition.y = movePlayer.y;
-}
-
-},{"../PlayerById":17,"../RemotePlayerFaceHandler":24,"react":233}],31:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onPlayerDamaged;
-
-var _EventHandler = require('../EventHandler');
-
-var _EventHandler2 = _interopRequireDefault(_EventHandler);
-
-var _react = require('react');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var propTypes = {
-    damagedPlayerId: _react.PropTypes.string.isRequired,
-    health: _react.PropTypes.number.isRequired
-};
-
-var damageTimeout = null;
-var healingInterval = null;
-var lastKnownHealth = null;
-
-function onPlayerDamaged(data) {
-    var _this = this;
-
-    check(data, propTypes);
-
-    if (data.damagedPlayerId !== '/#' + this.socket.id) return;
-
-    this.player.meta.health = data.health;
-    _EventHandler2.default.emit('health update', String(this.player.meta.health));
-
-    if (this.player.meta.health > 55 && this.player.meta.health < 100) {
-        clearTimeout(damageTimeout);
-        damageTimeout = setTimeout(function () {
-            // Player's health will fully regenerate
-            _this.socket.emit('player full health', {
-                roomId: _this.roomId
-            });
-        }, 5000);
-    }
-
-    if (this.player.meta.health > 0 && this.player.meta.health <= 55) {
-        // Wait 5 seconds to begin healing process
-        clearTimeout(damageTimeout);
-        clearInterval(healingInterval);
-        damageTimeout = setTimeout(function () {
-            lastKnownHealth = _this.player.meta.health;
-            healingInterval = setInterval(function () {
-                if (lastKnownHealth >= 100) {
-                    clearInterval(healingInterval);
-                }
-
-                lastKnownHealth += 10;
-
-                // Increase player health by 10 every 1/2 a second
-                _this.socket.emit('player healing', {
-                    roomId: _this.roomId
-                });
-            }, 500);
-        }, 5000);
-    }
-}
-
-},{"../EventHandler":8,"react":233}],32:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onPlayerHealthUpdate;
-
-var _EventHandler = require('../EventHandler');
-
-var _EventHandler2 = _interopRequireDefault(_EventHandler);
-
-var _react = require('react');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var propTypes = {
-    id: _react.PropTypes.string.isRequired,
-    health: _react.PropTypes.number.isRequired
-};
-
-function onPlayerHealthUpdate(data) {
-    check(data, propTypes);
-
-    if (data.id !== '/#' + this.socket.id) return;
-
-    this.player.meta.health = data.health;
-    _EventHandler2.default.emit('health update', String(this.player.meta.health));
-}
-
-},{"../EventHandler":8,"react":233}],33:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onPlayerRespawn;
-
-var _react = require('react');
-
-var _EventHandler = require('../EventHandler');
-
-var _EventHandler2 = _interopRequireDefault(_EventHandler);
-
-var _Weapons = require('../Weapons');
-
-var _Weapons2 = _interopRequireDefault(_Weapons);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var propTypes = {
-    damagedPlayerId: _react.PropTypes.string.isRequired,
-    health: _react.PropTypes.number.isRequired
-};
-
-function onPlayerRespawn(data) {
-    check(data, propTypes);
-
-    if (data.damagedPlayerId !== '/#' + this.socket.id) return;
-
-    // Set primary weapon
-    this.player.meta.primaryWeapon = new _Weapons2.default[this.player.meta.selectedPrimaryWeaponId](this);
-    this.player.meta.primaryWeapon.id = this.player.meta.selectedPrimaryWeaponId;
-
-    if (this.currentWeapon === 'primaryWeapon') this.currentWeaponSprite.loadTexture(this.player.meta.selectedPrimaryWeaponId);
-
-    // Set secondary weapon
-    this.player.meta.secondaryWeapon = new _Weapons2.default[this.player.meta.selectedSecondaryWeaponId](this);
-    this.player.meta.secondaryWeapon.id = this.player.meta.selectedSecondaryWeaponId;
-
-    if (this.currentWeapon === 'secondaryWeapon') this.currentWeaponSprite.loadTexture(this.player.meta.selectedSecondaryWeaponId);
-
-    // Reset health
-    this.player.meta.health = data.health;
-    _EventHandler2.default.emit('health update', String(this.player.meta.health));
-
-    // Spawn player
-    var spawnPoint = this.mapInstance.getRandomSpawnPoint();
-    this.player.x = spawnPoint.x;
-    this.player.y = spawnPoint.y;
-}
-
-},{"../EventHandler":8,"../Weapons":48,"react":233}],34:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onRemovePlayer;
-
-var _react = require('react');
-
-var _PlayerById = require('../PlayerById');
-
-var _PlayerById2 = _interopRequireDefault(_PlayerById);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var propTypes = {
-    id: _react.PropTypes.string.isRequired
-};
-
-function onRemovePlayer(data) {
-    check(data, propTypes);
-
-    var removePlayer = _PlayerById2.default.call(this, data.id);
-
-    // Player not found
-    if (!removePlayer) {
-        console.log('Player not found: ', data.id);
-        return;
-    }
-
-    removePlayer.player.kill();
-
-    // Remove player from array
-    this.enemies.splice(this.enemies.indexOf(removePlayer), 1);
-}
-
-},{"../PlayerById":17,"react":233}],35:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onSocketConnected;
-
-var _GetQueryString = require('../GetQueryString');
-
-var _GetQueryString2 = _interopRequireDefault(_GetQueryString);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function onSocketConnected() {
-    // Reset enemies on reconnect
-    this.enemies.forEach(function (enemy) {
-        if (enemy) enemy.kill();
-    });
-
-    this.enemies = [];
-
-    // Send local player data to the game server
-    this.socket.emit('new player', {
-        roomId: this.roomId,
-        x: this.player.x,
-        y: this.player.y
-    });
-}
-
-},{"../GetQueryString":13}],36:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onSocketDisconnect;
-function onSocketDisconnect() {
-    console.log('Disconnected from socket server');
-}
-
-},{}],37:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = onUpdatePlayers;
-
-var _react = require('react');
-
-var _RemotePlayer = require('../RemotePlayer');
-
-var _RemotePlayer2 = _interopRequireDefault(_RemotePlayer);
-
-var _EventHandler = require('../EventHandler');
-
-var _EventHandler2 = _interopRequireDefault(_EventHandler);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var propTypes = {
-    room: _react.PropTypes.shape({
-        id: _react.PropTypes.string.isRequired,
-        players: _react.PropTypes.array.isRequired
-    })
-};
-
-function onUpdatePlayers(data) {
-    var _this = this;
-
-    check(data, propTypes);
-
-    this.roomId = data.room.id;
-
-    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id;
-    window.history.pushState({ path: newurl }, '', newurl);
-
-    this.enemies.forEach(function (enemy) {
-        enemy.kill();
-    });
-
-    this.enemies = this.game.add.group();
-
-    _EventHandler2.default.emit('players update', data.room.players);
-
-    data.room.players.forEach(function (player) {
-        if (player.id === '/#' + _this.socket.id) {
-            _EventHandler2.default.emit('score update', String(player.meta.score));
-            _EventHandler2.default.emit('health update', String(player.meta.health));
-            _EventHandler2.default.emit('player update', { player: player });
-            return;
-        }
-
-        var newRemotePlayer = _RemotePlayer2.default.call(_this, player);
-        _this.enemies.add(newRemotePlayer);
-    });
-}
-
-},{"../EventHandler":8,"../RemotePlayer":23,"react":233}],38:[function(require,module,exports){
+},{"../EventHandler":8,"./onBulletFired":27,"./onBulletRemoved":28,"./onMovePlayer":29,"./onPlayerDamaged":30,"./onPlayerHealthUpdate":31,"./onPlayerRespawn":32,"./onRemovePlayer":33,"./onSocketConnected":34,"./onSocketDisconnect":35,"./onUpdatePlayers":36}],38:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2842,16 +2842,15 @@ exports.default = {
         sortedPlayers: function sortedPlayers() {
             return this.players.sort(function (a, b) {
                 return a.meta.score < b.meta.score;
-            }).filter(function (player) {
-                return _.has(player, 'meta');
             }).slice(0, 9).map(function (player, index) {
-                return player.meta.nickname ? player.meta.nickname : 'Unamed Ranger';
+                player.meta.nickname = player.meta.nickname ? player.meta.nickname : 'Unamed Ranger';
+                return player;
             });
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"hud-leaderboard hud-item\">\n    <h1>Leaderboard</h1>\n    <ol>\n        <li track-by=\"$index\" v-for=\"player in sortedPlayers\">\n            <span>{{player.meta &amp;&amp; player.meta.nickname ? player.meta.nickname : 'Unamed Ranger'}}</span>\n        </li>\n    </ol>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"hud-leaderboard hud-item\">\n    <h1>Leaderboard</h1>\n    <ol>\n        <li track-by=\"$index\" v-for=\"player in sortedPlayers\">\n            <span>{{player.meta.nickname}}</span>\n        </li>\n    </ol>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -3110,7 +3109,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\" style=\"margin-bottom: 10px\">\n    <div class=\"col-sm-6\">\n        <label>Primary</label>\n        <div class=\"option-group option-weapon-group align-middle\" @click=\"handlePrimaryViewClick('choosePrimary')\" style=\"margin-bottom: 28px\">\n            <div>\n                <img :src=\"primaryWeapon.image\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">{{primaryWeapon.name}}</span>\n        </div>\n\n        <label>Secondary</label>\n        <div class=\"option-group option-weapon-group align-middle\" @click=\"handleSecondaryViewClick('chooseSecondary')\">\n            <div>\n                <img :src=\"secondaryWeapon.image\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">{{secondaryWeapon.name}}</span>\n        </div>\n    </div>\n    <div class=\"col-sm-6\">\n        <label>Character</label>\n        <div class=\"option-group option-character-group align-middle\" @click=\"handleCharacterViewClick('chooseCharacter')\">\n            <div>\n                <img src=\"/images/characters/Ranger-Steve.png\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">Ranger Steve</span>\n        </div>\n    </div>\n</div>\n\n<div class=\"form-group\">\n    <label>Nickname</label>\n    <input class=\"form-control\" @change=\"handleNicknameChange\" v-model=\"nickname\" type=\"text\">\n</div>\n<div class=\"form-group\">\n    <label>Sound Effects Volume</label>\n    <input max=\"1\" min=\"0\" @change=\"handleSoundEffectVolumeChange\" v-model=\"volume\" step=\".01\" type=\"range\">\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\" style=\"margin-bottom: 10px\">\n    <div class=\"col-sm-6\">\n        <label>Primary</label>\n        <div class=\"option-group option-weapon-group align-middle\" @click=\"handlePrimaryViewClick('choosePrimary')\" style=\"margin-bottom: 28px\">\n            <div>\n                <img :src=\"primaryWeapon.image\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">{{primaryWeapon.name}}</span>\n        </div>\n\n        <label>Secondary</label>\n        <div class=\"option-group option-weapon-group align-middle\" @click=\"handleSecondaryViewClick('chooseSecondary')\">\n            <div>\n                <img :src=\"secondaryWeapon.image\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">{{secondaryWeapon.name}}</span>\n        </div>\n    </div>\n    <div class=\"col-sm-6\">\n        <label>Character</label>\n        <div class=\"option-group option-character-group align-middle\" @click=\"handleCharacterViewClick('chooseCharacter')\">\n            <div>\n                <img src=\"/images/characters/Ranger-Steve.png\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">Ranger Steve</span>\n        </div>\n    </div>\n</div>\n\n<div class=\"form-group\">\n    <label>Nickname</label>\n    <input class=\"form-control\" @keyup=\"handleNicknameChange\" v-model=\"nickname\" type=\"text\">\n</div>\n<div class=\"form-group\">\n    <label>Sound Effects Volume</label>\n    <input max=\"1\" min=\"0\" @change=\"handleSoundEffectVolumeChange\" v-model=\"volume\" step=\".01\" type=\"range\">\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -3269,7 +3268,7 @@ exports.default = {
         });
 
         _EventHandler2.default.on('settings open', function (data) {
-            _this.settingsModalOpen = !_this.state.settingsModalOpen;
+            _this.settingsModalOpen = !_this.settingsModalOpen;
         });
 
         _EventHandler2.default.on('player jump jet update', function (data) {

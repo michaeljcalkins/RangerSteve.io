@@ -76,7 +76,7 @@ export default {
         })
 
         EventHandler.on('settings open', (data) => {
-            this.settingsModalOpen = !this.state.settingsModalOpen
+            this.settingsModalOpen = !this.settingsModalOpen
         })
 
         EventHandler.on('player jump jet update', (data) => {

@@ -48,7 +48,7 @@
         <label>Nickname</label>
         <input
             class="form-control"
-            @change="handleNicknameChange"
+            @keyup="handleNicknameChange"
             v-model="nickname"
             type="text"
         />

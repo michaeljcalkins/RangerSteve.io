@@ -1,5 +1,5 @@
 import GameConsts from '../lib/GameConsts'
-import SetEventHandlers from '../lib/SocketEvents/SetEventHandlers'
+import SetEventHandlers from '../lib/SocketEvents/setEventHandlers'
 import EventHandler from '../lib/EventHandler'
 import HighRuleJungle from '../maps/HighRuleJungle'
 import PlayerSpriteHandler from '../lib/PlayerSpriteHandler'
