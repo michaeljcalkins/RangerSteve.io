@@ -68,7 +68,7 @@ export default {
         })
 
         EventHandler.on('players update', (players) => {
-            this.players + players
+            this.players = players
         })
 
         EventHandler.on('player update', (data) => {

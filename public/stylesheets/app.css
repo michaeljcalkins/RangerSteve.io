@@ -232,8 +232,7 @@ body.game {
     margin: 0 0 5px; }
   .hud-leaderboard ol {
     margin: 0 0 0 17px;
-    padding: 0;
-    font-family: Orbitron; }
+    padding: 0; }
 
 .hud-ammo {
   background-image: url(/images/icons/ammo-tin-32-white.png);

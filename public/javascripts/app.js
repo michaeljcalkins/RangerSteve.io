@@ -2842,6 +2842,8 @@ exports.default = {
         sortedPlayers: function sortedPlayers() {
             return this.players.sort(function (a, b) {
                 return a.meta.score < b.meta.score;
+            }).filter(function (player) {
+                return _.has(player, 'meta');
             }).slice(0, 9).map(function (player, index) {
                 return player.meta.nickname ? player.meta.nickname : 'Unamed Ranger';
             });
@@ -2849,7 +2851,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"hud-leaderboard hud-item\">\n    <h1>Leaderboard</h1>\n    <ol>\n        <li v-for=\"player in sortedPlayers\">\n    </li></ol>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"hud-leaderboard hud-item\">\n    <h1>Leaderboard</h1>\n    <ol>\n        <li track-by=\"$index\" v-for=\"player in sortedPlayers\">\n            <span>{{player.meta &amp;&amp; player.meta.nickname ? player.meta.nickname : 'Unamed Ranger'}}</span>\n        </li>\n    </ol>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -3254,7 +3256,7 @@ exports.default = {
         });
 
         _EventHandler2.default.on('players update', function (players) {
-            _this.players + players;
+            _this.players = players;
         });
 
         _EventHandler2.default.on('player update', function (data) {
