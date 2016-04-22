@@ -11,7 +11,7 @@
                     key="index"
                 >
                     <div>
-                        <img src="character.image" height="160" />
+                        <img :src="character.image" height="160" />
                     </div>
                     <span class="option-name">{{character.name}}</span>
                 </div>
@@ -46,9 +46,8 @@ export default {
         }
     },
     methods: {
-        handleSelectPrimaryClick: function(evt) {
-            console.log(evt.target.value)
-            onViewChange('main')
+        handleSelectPrimaryClick: function() {
+            this.onViewChange('main')
         }
     }
 }

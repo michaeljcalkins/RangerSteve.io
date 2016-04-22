@@ -2933,14 +2933,13 @@ exports.default = {
         };
     },
     methods: {
-        handleSelectPrimaryClick: function handleSelectPrimaryClick(evt) {
-            console.log(evt.target.value);
-            onViewChange('main');
+        handleSelectPrimaryClick: function handleSelectPrimaryClick() {
+            this.onViewChange('main');
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <label>Select a character</label>\n        <div class=\"options-menu\">\n            <div class=\"option-group option-character-group align-middle\" v-for=\"character in characters\" @click=\"handleSelectPrimaryClick\" value=\"character.name\" key=\"index\">\n                <div>\n                    <img src=\"character.image\" height=\"160\">\n                </div>\n                <span class=\"option-name\">{{character.name}}</span>\n            </div>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <label>Select a character</label>\n        <div class=\"options-menu\">\n            <div class=\"option-group option-character-group align-middle\" v-for=\"character in characters\" @click=\"handleSelectPrimaryClick\" value=\"character.name\" key=\"index\">\n                <div>\n                    <img :src=\"character.image\" height=\"160\">\n                </div>\n                <span class=\"option-name\">{{character.name}}</span>\n            </div>\n        </div>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -2974,15 +2973,15 @@ exports.default = {
     },
     methods: {
         handleSelectPrimaryClick: function handleSelectPrimaryClick(weapon) {
-            if (player.meta.score < weapon.minScore) return;
+            if (this.player.meta.score < weapon.minScore) return;
 
-            onPrimaryGunClick(weapon);
-            onViewChange('main');
+            this.onPrimaryGunClick(weapon);
+            this.onViewChange('main');
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <label>Select a Primary Weapon</label>\n        <div class=\"options-menu\">\n            <div class=\"option-group option-weapon-group align-middle\" key=\"{\" index=\"\" }=\"\" @click=\"handleSelectPrimaryClick(weapon)\">\n                <div v-show=\"player.meta.score < weapon.minScore\" class=\"option-screen\"></div>\n                <div>\n                    <img src=\"{\" weapon.image=\"\" }=\"\">\n                </div>\n                <span class=\"option-name\">{ weapon.name }</span>\n            </div>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <label>Select a Primary Weapon</label>\n        <div class=\"options-menu\">\n            <div class=\"option-group option-weapon-group align-middle\" track-by=\"$index\" v-for=\"weapon in primaryWeapons\" @click=\"handleSelectPrimaryClick(weapon)\">\n                <div v-show=\"player.meta.score < weapon.minScore\" class=\"option-screen\"></div>\n                <div>\n                    <img :src=\"weapon.image\">\n                </div>\n                <span class=\"option-name\">{{weapon.name}}</span>\n            </div>\n        </div>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -3016,7 +3015,7 @@ exports.default = {
     },
     methods: {
         handleSelectPrimaryClick: function handleSelectPrimaryClick(weapon) {
-            if (player.meta.score < weapon.minScore) return;
+            if (this.player.meta.score < weapon.minScore) return;
 
             this.onSecondaryGunClick(weapon);
             this.onViewChange('main');
@@ -3024,7 +3023,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <label>Select a Secondary Weapon</label>\n        <div class=\"options-menu\">\n            <div class=\"option-group option-weapon-group align-middle\" key=\"index\" v-for=\"\" @click=\"handleSelectPrimaryClick(weapon)\">\n                    <div class=\"option-screen\" v-show=\"player.meta.score < weapon.minScore\"></div>\n                <div>\n                    <img src=\"{\" weapon.image=\"\" }=\"\">\n                </div>\n                <span class=\"option-name\">{ weapon.name }</span>\n            </div>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n    <div class=\"col-sm-12\">\n        <label>Select a Secondary Weapon</label>\n        <div class=\"options-menu\">\n            <div class=\"option-group option-weapon-group align-middle\" key=\"index\" v-for=\"weapon in secondaryWeapons\" @click=\"handleSelectPrimaryClick(weapon)\">\n                <div class=\"option-screen\" v-show=\"player.meta.score < weapon.minScore\"></div>\n                <div>\n                    <img :src=\"weapon.image\">\n                </div>\n                <span class=\"option-name\">{{weapon.name}}</span>\n            </div>\n        </div>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -3051,25 +3050,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     props: ['defaultNicknameValue', 'defaultSoundEffectValue', 'onNicknameChange', 'onSoundEffectVolumeChange', 'onViewChange', 'selectedPrimaryWeapon', 'selectedSecondaryWeapon'],
+    data: function data() {
+        return {
+            nickname: this.defaultNicknameValue,
+            volume: this.defaultSoundEffectValue
+        };
+    },
     methods: {
         handleNicknameChange: function handleNicknameChange(evt) {
-            onNicknameChange(evt.target.value);
+            this.onNicknameChange(this.nickname);
         },
 
         handleSoundEffectVolumeChange: function handleSoundEffectVolumeChange(evt) {
-            onSoundEffectVolumeChange(evt.target.value);
+            this.onSoundEffectVolumeChange(evt.target.value);
         },
 
         handlePrimaryViewClick: function handlePrimaryViewClick() {
-            onViewChange('choosePrimary');
+            this.onViewChange('choosePrimary');
         },
 
         handleSecondaryViewClick: function handleSecondaryViewClick() {
-            onViewChange('chooseSecondary');
+            this.onViewChange('chooseSecondary');
         },
 
         handleCharacterViewClick: function handleCharacterViewClick() {
-            onViewChange('chooseCharacter');
+            this.onViewChange('chooseCharacter');
         }
     },
     computed: {
@@ -3105,7 +3110,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\" style=\"margin-bottom: 10px\">\n    <div class=\"col-sm-6\">\n        <label>Primary</label>\n        <div class=\"option-group option-weapon-group align-middle\" @click=\"handlePrimaryViewClick\" style=\"margin-bottom: 28px\">\n            <div>\n                <img :src=\"primaryWeapon.image\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">{{primaryWeapon.name}}</span>\n        </div>\n\n        <label>Secondary</label>\n        <div class=\"option-group option-weapon-group align-middle\" @click=\"handleSecondaryViewClick\">\n            <div>\n                <img :src=\"secondaryWeapon.image\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">{{secondaryWeapon.name}}</span>\n        </div>\n    </div>\n    <div class=\"col-sm-6\">\n        <label>Character</label>\n        <div class=\"option-group option-character-group align-middle\" @click=\"handleCharacterViewClick\">\n            <div>\n                <img src=\"/images/characters/Ranger-Steve.png\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">Ranger Steve</span>\n        </div>\n    </div>\n</div>\n\n<div class=\"form-group\">\n    <label>Nickname</label>\n    <input class=\"form-control\" defaultvalue=\"{\" defaultnicknamevalue=\"\" }=\"\" onchange=\"{\" handlenicknamechange=\"\" type=\"text\">\n</div>\n<div class=\"form-group\">\n    <label htmlfor=\"\">Sound Effects Volume</label>\n    <input defaultvalue=\"{\" defaultsoundeffectvalue=\"\" }=\"\" max=\"1\" min=\"0\" onchange=\"{\" handlesoundeffectvolumechange=\"\" step=\".01\" type=\"range\">\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\" style=\"margin-bottom: 10px\">\n    <div class=\"col-sm-6\">\n        <label>Primary</label>\n        <div class=\"option-group option-weapon-group align-middle\" @click=\"handlePrimaryViewClick('choosePrimary')\" style=\"margin-bottom: 28px\">\n            <div>\n                <img :src=\"primaryWeapon.image\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">{{primaryWeapon.name}}</span>\n        </div>\n\n        <label>Secondary</label>\n        <div class=\"option-group option-weapon-group align-middle\" @click=\"handleSecondaryViewClick('chooseSecondary')\">\n            <div>\n                <img :src=\"secondaryWeapon.image\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">{{secondaryWeapon.name}}</span>\n        </div>\n    </div>\n    <div class=\"col-sm-6\">\n        <label>Character</label>\n        <div class=\"option-group option-character-group align-middle\" @click=\"handleCharacterViewClick('chooseCharacter')\">\n            <div>\n                <img src=\"/images/characters/Ranger-Steve.png\">\n            </div>\n            <span class=\"caret\"></span>\n            <span class=\"option-name\">Ranger Steve</span>\n        </div>\n    </div>\n</div>\n\n<div class=\"form-group\">\n    <label>Nickname</label>\n    <input class=\"form-control\" @change=\"handleNicknameChange\" v-model=\"nickname\" type=\"text\">\n</div>\n<div class=\"form-group\">\n    <label>Sound Effects Volume</label>\n    <input max=\"1\" min=\"0\" @change=\"handleSoundEffectVolumeChange\" v-model=\"volume\" step=\".01\" type=\"range\">\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -3163,7 +3168,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"modal hud-settings-modal\" :style=\"{ display: isOpen ? 'block' : 'none' }\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button @click=\"onClose\" type=\"button\" class=\"close\">\n                    <span>×</span>\n                </button>\n                <h4 class=\"modal-title\">Options</h4>\n            </div>\n            <div class=\"modal-body\">\n                <main-settings-menu v-if=\"view == 'main'\" :default-nickname-value=\"defaultNicknameValue\" :default-sound-effect-value=\"defaultSoundEffectValue\" :on-nickname-change=\"onNicknameChange\" :on-sound-effect-volume-change=\"onSoundEffectVolumeChange\" :on-view-change=\"handleViewChange\" :selected-primary-weapon=\"selectedPrimaryWeapon\" :selected-secondary-weapon=\"selectedSecondaryWeapon\"></main-settings-menu>\n\n                <!-- <choose-primary-menu\n                    v-if=\"view == 'choosePrimary'\"\n                    :on-primary-gun-click=\"onPrimaryGunClick\"\n                    :on-view-change=\"handleViewChange\"\n                    :player=\"player\"\n                ></choose-primary-menu>\n\n                <choose-secondary-menu\n                    v-if=\"view == 'chooseSecondary'\"\n                    :on-secondary-gun-click=\"onSecondaryGunClick\"\n                    :on-view-change=\"handleViewChange\"\n                    :player=\"player\"\n                ></choose-secondary-menu>\n\n                <choose-character-menu\n                    v-if=\"view == 'chooseCharacter'\"\n                    :on-view-change=\"handleViewChange\"\n                    :player=\"player\"\n                ></choose-character-menu> -->\n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-default\" @click=\"onClose\">\n                    Close\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"modal hud-settings-modal\" :style=\"{ display: isOpen ? 'block' : 'none' }\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button @click=\"onClose\" type=\"button\" class=\"close\">\n                    <span>×</span>\n                </button>\n                <h4 class=\"modal-title\">Options</h4>\n            </div>\n            <div class=\"modal-body\">\n                <main-settings-menu v-if=\"view == 'main'\" :default-nickname-value=\"defaultNicknameValue\" :default-sound-effect-value=\"defaultSoundEffectValue\" :on-nickname-change=\"onNicknameChange\" :on-sound-effect-volume-change=\"onSoundEffectVolumeChange\" :on-view-change=\"handleViewChange\" :selected-primary-weapon=\"selectedPrimaryWeapon\" :selected-secondary-weapon=\"selectedSecondaryWeapon\"></main-settings-menu>\n\n                <choose-primary-menu v-if=\"view == 'choosePrimary'\" :on-primary-gun-click=\"onPrimaryGunClick\" :on-view-change=\"handleViewChange\" :player=\"player\"></choose-primary-menu>\n\n                <choose-secondary-menu v-if=\"view == 'chooseSecondary'\" :on-secondary-gun-click=\"onSecondaryGunClick\" :on-view-change=\"handleViewChange\" :player=\"player\"></choose-secondary-menu>\n\n                <choose-character-menu v-if=\"view == 'chooseCharacter'\" :on-view-change=\"handleViewChange\" :player=\"player\"></choose-character-menu>\n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-default\" @click=\"onClose\">\n                    Close\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

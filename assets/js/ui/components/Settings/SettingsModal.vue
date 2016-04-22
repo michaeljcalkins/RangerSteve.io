@@ -29,7 +29,7 @@
                         :selected-secondary-weapon="selectedSecondaryWeapon"
                     ></main-settings-menu>
 
-                    <!-- <choose-primary-menu
+                    <choose-primary-menu
                         v-if="view == 'choosePrimary'"
                         :on-primary-gun-click="onPrimaryGunClick"
                         :on-view-change="handleViewChange"
@@ -47,7 +47,7 @@
                         v-if="view == 'chooseCharacter'"
                         :on-view-change="handleViewChange"
                         :player="player"
-                    ></choose-character-menu> -->
+                    ></choose-character-menu>
                 </div>
                 <div class="modal-footer">
                     <button

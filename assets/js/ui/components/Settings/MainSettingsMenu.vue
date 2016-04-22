@@ -7,7 +7,7 @@
             <label>Primary</label>
             <div
                 class="option-group option-weapon-group align-middle"
-                @click="handlePrimaryViewClick"
+                @click="handlePrimaryViewClick('choosePrimary')"
                 style="margin-bottom: 28px"
             >
                 <div>
@@ -20,7 +20,7 @@
             <label>Secondary</label>
             <div
                 class="option-group option-weapon-group align-middle"
-                @click="handleSecondaryViewClick"
+                @click="handleSecondaryViewClick('chooseSecondary')"
             >
                 <div>
                     <img :src="secondaryWeapon.image" />
@@ -33,7 +33,7 @@
             <label>Character</label>
             <div
                 class="option-group option-character-group align-middle"
-                @click="handleCharacterViewClick"
+                @click="handleCharacterViewClick('chooseCharacter')"
             >
                 <div>
                     <img src="/images/characters/Ranger-Steve.png" />
@@ -48,18 +48,18 @@
         <label>Nickname</label>
         <input
             class="form-control"
-            defaultValue={ defaultNicknameValue }
-            onChange={ handleNicknameChange }
+            @change="handleNicknameChange"
+            v-model="nickname"
             type="text"
         />
     </div>
     <div class="form-group">
-        <label htmlFor="">Sound Effects Volume</label>
+        <label>Sound Effects Volume</label>
         <input
-            defaultValue={ defaultSoundEffectValue }
             max="1"
             min="0"
-            onChange={ handleSoundEffectVolumeChange }
+            @change="handleSoundEffectVolumeChange"
+            v-model="volume"
             step=".01"
             type="range"
         />
@@ -79,25 +79,31 @@ export default {
         'selectedPrimaryWeapon',
         'selectedSecondaryWeapon'
     ],
+    data: function() {
+        return {
+            nickname: this.defaultNicknameValue,
+            volume: this.defaultSoundEffectValue
+        }
+    },
     methods: {
         handleNicknameChange: function(evt) {
-            onNicknameChange(evt.target.value)
+            this.onNicknameChange(this.nickname)
         },
 
         handleSoundEffectVolumeChange: function(evt) {
-            onSoundEffectVolumeChange(evt.target.value)
+            this.onSoundEffectVolumeChange(evt.target.value)
         },
 
         handlePrimaryViewClick: function() {
-            onViewChange('choosePrimary')
+            this.onViewChange('choosePrimary')
         },
 
         handleSecondaryViewClick: function() {
-            onViewChange('chooseSecondary')
+            this.onViewChange('chooseSecondary')
         },
 
         handleCharacterViewClick: function() {
-            onViewChange('chooseCharacter')
+            this.onViewChange('chooseCharacter')
         }
     },
     computed: {

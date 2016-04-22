@@ -5,16 +5,17 @@
             <div class="options-menu">
                 <div
                     class="option-group option-weapon-group align-middle"
-                    key={ index }
+                    track-by="$index"
+                    v-for="weapon in primaryWeapons"
                     @click="handleSelectPrimaryClick(weapon)"
                 >
                     <div
                         v-show="player.meta.score < weapon.minScore"
                         class="option-screen"></div>
                     <div>
-                        <img src={ weapon.image } />
+                        <img :src="weapon.image" />
                     </div>
-                    <span class="option-name">{ weapon.name }</span>
+                    <span class="option-name">{{weapon.name}}</span>
                 </div>
             </div>
         </div>
@@ -37,11 +38,11 @@ export default {
     },
     methods: {
         handleSelectPrimaryClick: function(weapon) {
-            if (player.meta.score < weapon.minScore)
+            if (this.player.meta.score < weapon.minScore)
                 return
 
-            onPrimaryGunClick(weapon)
-            onViewChange('main')
+            this.onPrimaryGunClick(weapon)
+            this.onViewChange('main')
         }
     }
 }
