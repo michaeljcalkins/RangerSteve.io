@@ -6,12 +6,11 @@
                 <div
                     class="option-group option-weapon-group align-middle"
                     key={ index }
-                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
+                    @click="handleSelectPrimaryClick(weapon)"
                 >
-                    { player.meta.score < weapon.minScore
-                        ? <div class="option-screen"></div>
-                        : null
-                    }
+                    <div
+                        v-show="player.meta.score < weapon.minScore"
+                        class="option-screen"></div>
                     <div>
                         <img src={ weapon.image } />
                     </div>
@@ -25,17 +24,17 @@
 <script>
 import GameConsts from '../../../lib/GameConsts'
 
-export default ({
+export default {
     props: [
         'onViewChange',
         'onPrimaryGunClick',
         'player'
     ],
-    data: {
-        primaryWeapons: function() {
-            return GameConsts.PRIMARY_WEAPONS
+    data: function() {
+        return {
+            primaryWeapons: GameConsts.PRIMARY_WEAPONS
         }
-    }
+    },
     methods: {
         handleSelectPrimaryClick: function(weapon) {
             if (player.meta.score < weapon.minScore)

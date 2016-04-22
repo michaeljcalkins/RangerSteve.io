@@ -6,14 +6,14 @@
                 <div
                     class="option-group option-character-group align-middle"
                     v-for="character in characters"
-                    onClick={ handleSelectPrimaryClick }
-                    value={ character.name }
-                    key={ index }
+                    @click="handleSelectPrimaryClick"
+                    value="character.name"
+                    key="index"
                 >
                     <div>
-                        <img src={ character.image } height="160" />
+                        <img src="character.image" height="160" />
                     </div>
-                    <span class="option-name">{ character.name }</span>
+                    <span class="option-name">{{character.name}}</span>
                 </div>
             </div>
         </div>
@@ -23,9 +23,9 @@
 <script>
 export default {
     props: ['onViewChange'],
-    data: {
-        characters: function() {
-            return [
+    data: function() {
+        return {
+            characters: [
                 {
                     name: 'Ranger Steve',
                     image: '/images/characters/Ranger-Steve.png'

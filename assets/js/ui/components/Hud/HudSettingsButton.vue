@@ -1,6 +1,12 @@
 <template>
     <div
         class="hud-settings hud-item"
-        onClick={ onButtonClick }
+        @click="onButtonClick"
     ></div>
 </template>
+
+<script>
+export default {
+    props: ['onButtonClick']
+}
+</script>

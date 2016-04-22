@@ -5,14 +5,11 @@
             <div class="options-menu">
                 <div
                     class="option-group option-weapon-group align-middle"
-                    key={ index }
+                    key="index"
                     v-for=""
-                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
+                    @click="handleSelectPrimaryClick(weapon)"
                 >
-                    { player.meta.score < weapon.minScore
-                        ? <div class="option-screen"></div>
-                        : null
-                    }
+                        <div class="option-screen" v-show="player.meta.score < weapon.minScore"></div>
                     <div>
                         <img src={ weapon.image } />
                     </div>
@@ -32,13 +29,13 @@ export default {
         'onSecondaryGunClick',
         'player'
     ],
-    data: {
-        secondaryWeapons: function() {
-            return GameConsts.SECONDARY_WEAPONS
+    data: function() {
+        return {
+            secondaryWeapons: GameConsts.SECONDARY_WEAPONS
         }
     },
     methods: {
-        function handleSelectPrimaryClick(weapon) {
+        handleSelectPrimaryClick: function(weapon) {
             if (player.meta.score < weapon.minScore)
                 return
 

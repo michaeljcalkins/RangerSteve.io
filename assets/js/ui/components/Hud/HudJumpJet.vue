@@ -3,7 +3,7 @@
         <div class="progress">
             <div
                 class="progress-bar progress-bar-success"
-                v-bind:style="{ width: percent + '%' }"
+                :style="{ width: percent + '%' }"
             ></div>
         </div>
     </div>

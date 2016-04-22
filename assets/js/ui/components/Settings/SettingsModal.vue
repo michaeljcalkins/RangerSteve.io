@@ -1,10 +1,16 @@
+<style>
+.hud-settings-modal {
+    cursor: default;
+}
+</style>
+
 <template>
-    <div class="modal hud-settings-modal" v-bind:style="modalStyles">
+    <div class="modal hud-settings-modal" :style="{ display: isOpen ? 'block' : 'none' }">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button
-                        :on-click="onClose"
+                        @click="onClose"
                         type="button"
                         class="close">
                         <span>&times;</span>
@@ -23,7 +29,7 @@
                         :selected-secondary-weapon="selectedSecondaryWeapon"
                     ></main-settings-menu>
 
-                    <choose-primary-menu
+                    <!-- <choose-primary-menu
                         v-if="view == 'choosePrimary'"
                         :on-primary-gun-click="onPrimaryGunClick"
                         :on-view-change="handleViewChange"
@@ -41,13 +47,13 @@
                         v-if="view == 'chooseCharacter'"
                         :on-view-change="handleViewChange"
                         :player="player"
-                    ></choose-character-menu>
+                    ></choose-character-menu> -->
                 </div>
                 <div class="modal-footer">
                     <button
                         type="button"
                         class="btn btn-default"
-                        :on-click="onClose">
+                        @click="onClose">
                         Close
                     </button>
                 </div>

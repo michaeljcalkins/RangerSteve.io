@@ -2,7 +2,7 @@
     <div class="hud-leaderboard hud-item">
         <h1>Leaderboard</h1>
         <ol>
-            <li v-for="player in players">
+            <li v-for="player in sortedPlayers">
         </ol>
     </div>
 </template>

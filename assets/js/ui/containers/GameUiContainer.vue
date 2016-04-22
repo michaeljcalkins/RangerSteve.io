@@ -41,17 +41,17 @@ export default {
     },
     data: function() {
         return {
-            jumpJetCounter: 0,
-            health: 100,
-            score: 0,
             currentWeapon: 1,
-            players: [],
-            player: {},
-            volume: .5,
+            health: 100,
+            jumpJetCounter: 0,
             nickname: 'Unamed Ranger',
-            settingsModalOpen: false,
+            player: {},
+            players: [],
+            score: 0,
             selectedPrimaryWeapon: 'AK47',
-            selectedSecondaryWeapon: 'DesertEagle'
+            selectedSecondaryWeapon: 'DesertEagle',
+            settingsModalOpen: false,
+            volume: .5
         }
     },
     created: function() {
