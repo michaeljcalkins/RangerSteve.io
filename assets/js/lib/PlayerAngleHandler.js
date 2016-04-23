@@ -1,7 +1,7 @@
 export default function PlayerAngleHandler() {
     let angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90
 
-    console.log('angleInDegrees', angleInDegrees)
+    // console.log('angleInDegrees', angleInDegrees)
 
     let leftAngle = angleInDegrees
     let rightAngle = angleInDegrees
@@ -125,7 +125,7 @@ export default function PlayerAngleHandler() {
     }
 
     // console.log('leftAngle', leftAngle)
-    console.log('rightAngle', rightAngle)
+    // console.log('rightAngle', rightAngle)
 
     this.leftArmGroup.angle = leftAngle
     this.rightArmGroup.angle = rightAngle
