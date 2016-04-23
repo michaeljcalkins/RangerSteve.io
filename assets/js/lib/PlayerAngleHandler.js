@@ -2,6 +2,7 @@ export default function PlayerAngleHandler() {
     let angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90
 
     let leftAngle = angleInDegrees
+    
     let rightAngle = angleInDegrees
 
     if (this.player.meta.facing === 'right') {
