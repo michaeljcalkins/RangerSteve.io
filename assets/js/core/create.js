@@ -48,6 +48,8 @@ export default function Create() {
 
     PlayerSpriteHandler.call(this)
 
+    this.mapInstance.createOverlays()
+
     /**
      * Weapons
      */
@@ -73,7 +75,7 @@ export default function Create() {
         this.player.meta.selectedSecondaryWeaponId = weapon.id
     })
 
-    this.positionText = this.add.text(25, 25, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
+    this.positionText = this.add.text(300, 300, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
     this.positionText.fixedToCamera = true
 
 

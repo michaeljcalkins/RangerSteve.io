@@ -43,6 +43,11 @@ export default class HighRuleJungle {
         return _.sample(spawnPoints)
     }
 
+    createOverlays() {
+        this.rootScope.bridge = this.rootScope.add.sprite(1751, 1655, 'bridge')
+        this.rootScope.towerRail = this.rootScope.add.sprite(5643, 1525, 'tower-rail')
+    }
+
     create() {
         this.rootScope.skysprite = this.rootScope.add.tileSprite(0, 0, this.rootScope.game.world.width, this.rootScope.game.world.height, 'map-bg')
         this.rootScope.platforms = this.rootScope.add.group()

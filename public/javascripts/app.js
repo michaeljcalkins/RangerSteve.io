@@ -117,6 +117,8 @@ function Create() {
 
     _PlayerSpriteHandler2.default.call(this);
 
+    this.mapInstance.createOverlays();
+
     /**
      * Weapons
      */
@@ -141,7 +143,7 @@ function Create() {
         _this.player.meta.selectedSecondaryWeaponId = weapon.id;
     });
 
-    this.positionText = this.add.text(25, 25, this.game.input.mousePointer.x + ',' + this.game.input.mousePointer.y, textStyles);
+    this.positionText = this.add.text(300, 300, this.game.input.mousePointer.x + ',' + this.game.input.mousePointer.y, textStyles);
     this.positionText.fixedToCamera = true;
 
     /**
@@ -212,7 +214,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function Preload() {
     var _this = this;
 
-    this.load.image('map-bg', '/images/high-rule-desert.png');
+    // Map
+    this.load.image('map-bg', '/images/maps/high-rule-jungle/background.png');
+    this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png');
+    this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png');
+
     this.load.image('ground', '/images/platform.png');
     this.load.image('bullet', '/images/bullet.png');
 
@@ -2720,6 +2726,12 @@ var HighRuleJungle = function () {
         key: 'getRandomSpawnPoint',
         value: function getRandomSpawnPoint() {
             return _.sample(spawnPoints);
+        }
+    }, {
+        key: 'createOverlays',
+        value: function createOverlays() {
+            this.rootScope.bridge = this.rootScope.add.sprite(1751, 1655, 'bridge');
+            this.rootScope.towerRail = this.rootScope.add.sprite(5643, 1525, 'tower-rail');
         }
     }, {
         key: 'create',
