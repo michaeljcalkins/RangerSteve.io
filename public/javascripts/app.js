@@ -762,8 +762,6 @@ exports.default = PlayerAngleHandler;
 function PlayerAngleHandler() {
     var angleInDegrees = this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI + 90;
 
-    console.log('angleInDegrees', angleInDegrees);
-
     var leftAngle = angleInDegrees;
     var rightAngle = angleInDegrees;
 
@@ -825,7 +823,10 @@ function PlayerAngleHandler() {
             rightAngle -= 8;
         } else if (angleInDegrees > 169 && angleInDegrees <= 180) {
             leftAngle += 100;
-            rightAngle -= 9;
+            rightAngle -= 10;
+        } else if (angleInDegrees > 180 && angleInDegrees <= 189) {
+            leftAngle += 110;
+            rightAngle -= 12;
         }
     }
 
@@ -878,15 +879,18 @@ function PlayerAngleHandler() {
             rightAngle -= 5;
         } else if (angleInDegrees < 220 && angleInDegrees >= 210) {
             leftAngle -= 50;
+            rightAngle -= 5;
         } else if (angleInDegrees < 210 && angleInDegrees >= 200) {
             leftAngle -= 60;
+            rightAngle -= 5;
         } else if (angleInDegrees < 200 && angleInDegrees >= 190) {
             leftAngle -= 70;
+            rightAngle -= 5;
+        } else if (angleInDegrees < 190 && angleInDegrees >= 180) {
+            leftAngle -= 80;
+            rightAngle += 1;
         }
     }
-
-    // console.log('leftAngle', leftAngle)
-    console.log('rightAngle', rightAngle);
 
     this.leftArmGroup.angle = leftAngle;
     this.rightArmGroup.angle = rightAngle;
