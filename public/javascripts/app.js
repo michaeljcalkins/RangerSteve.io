@@ -763,7 +763,6 @@ function PlayerAngleHandler() {
     var angleInDegrees = this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI + 90;
 
     var leftAngle = angleInDegrees;
-
     var rightAngle = angleInDegrees;
 
     if (this.player.meta.facing === 'right') {
