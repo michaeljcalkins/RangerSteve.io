@@ -11,8 +11,8 @@ export default class DesertEagle extends Phaser.Group {
         this.meta = {
             rotation: 80.15,
             scale: 1.3,
-            spriteX: 12,
-            spriteY: 19
+            spriteX: 10,
+            spriteY: -29
         }
         this.bulletHeight = 2
         this.bulletSpeed = 2300
@@ -27,8 +27,14 @@ export default class DesertEagle extends Phaser.Group {
         if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0)
             return
 
-        this.nextFire = this.rootScope.game.time.now + this.fireRate
+        this.rootScope.camera.shake(0.001, 100, true)
+        this.rootScope.muzzleFlash.visible = true
+        clearTimeout(this.muzzleFlashHandler)
+        this.muzzleFlashHandler = setTimeout(() => {
+            this.rootScope.muzzleFlash.visible = false
+        }, 80)
 
+        this.nextFire = this.rootScope.game.time.now + this.fireRate
         FireStandardBullet.call(this)
     }
 }

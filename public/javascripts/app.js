@@ -173,10 +173,10 @@ function Create() {
         _this.currentWeapon = _this.currentWeapon === 'primaryWeapon' ? 'secondaryWeapon' : 'primaryWeapon';
 
         _this.currentWeaponSprite.loadTexture(_this.player.meta[_this.currentWeapon].id);
-        _this.currentWeaponSprite.x = _this.player.meta[_this.currentWeapon].spriteX;
-        _this.currentWeaponSprite.y = _this.player.meta[_this.currentWeapon].spriteY;
-        _this.currentWeaponSprite.scale.setTo(_this.player.meta[_this.currentWeapon].scale);
-        _this.currentWeaponSprite.rotation = _this.player.meta[_this.currentWeapon].rotation;
+        _this.currentWeaponSprite.x = _this.player.meta[_this.currentWeapon].meta.spriteX;
+        _this.currentWeaponSprite.y = _this.player.meta[_this.currentWeapon].meta.spriteY;
+        _this.currentWeaponSprite.scale.setTo(_this.player.meta[_this.currentWeapon].meta.scale);
+        _this.currentWeaponSprite.rotation = _this.player.meta[_this.currentWeapon].meta.rotation;
     });
 
     /**
@@ -218,7 +218,6 @@ function Preload() {
     this.load.image('map-bg', '/images/maps/high-rule-jungle/background.png');
     this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png');
     this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png');
-    this.load.image('statue', '/images/maps/high-rule-jungle/statue.png');
 
     this.load.image('ground', '/images/platform.png');
     this.load.image('bullet', '/images/bullet.png');
@@ -2038,6 +2037,7 @@ var AK47 = function (_Phaser$Group) {
 
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
+            this.rootScope.camera.shake(0.0015, 100, true);
             this.rootScope.muzzleFlash.visible = true;
             clearTimeout(this.muzzleFlashHandler);
             this.muzzleFlashHandler = setTimeout(function () {
@@ -2220,8 +2220,8 @@ var DesertEagle = function (_Phaser$Group) {
         _this.meta = {
             rotation: 80.15,
             scale: 1.3,
-            spriteX: 12,
-            spriteY: 19
+            spriteX: 10,
+            spriteY: -29
         };
         _this.bulletHeight = 2;
         _this.bulletSpeed = 2300;
@@ -2236,10 +2236,18 @@ var DesertEagle = function (_Phaser$Group) {
     _createClass(DesertEagle, [{
         key: 'fire',
         value: function fire() {
+            var _this2 = this;
+
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
-            this.nextFire = this.rootScope.game.time.now + this.fireRate;
+            this.rootScope.camera.shake(0.001, 100, true);
+            this.rootScope.muzzleFlash.visible = true;
+            clearTimeout(this.muzzleFlashHandler);
+            this.muzzleFlashHandler = setTimeout(function () {
+                _this2.rootScope.muzzleFlash.visible = false;
+            }, 80);
 
+            this.nextFire = this.rootScope.game.time.now + this.fireRate;
             _FireStandardBullet2.default.call(this);
         }
     }]);

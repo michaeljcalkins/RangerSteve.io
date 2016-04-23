@@ -110,10 +110,10 @@ export default function Create() {
             : 'primaryWeapon'
 
         this.currentWeaponSprite.loadTexture(this.player.meta[this.currentWeapon].id)
-        this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].spriteX
-        this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].spriteY
-        this.currentWeaponSprite.scale.setTo(this.player.meta[this.currentWeapon].scale)
-        this.currentWeaponSprite.rotation = this.player.meta[this.currentWeapon].rotation
+        this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.spriteX
+        this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.spriteY
+        this.currentWeaponSprite.scale.setTo(this.player.meta[this.currentWeapon].meta.scale)
+        this.currentWeaponSprite.rotation = this.player.meta[this.currentWeapon].meta.rotation
     })
 
 
