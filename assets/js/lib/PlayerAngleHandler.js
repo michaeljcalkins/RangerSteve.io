@@ -1,95 +1,132 @@
 export default function PlayerAngleHandler() {
     let angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90
 
-    if (this.player.meta.facing === 'right') {
-        this.rightArmGroup.angle = angleInDegrees
+    console.log('angleInDegrees', angleInDegrees)
 
-        // User is aiming up
+    let leftAngle = angleInDegrees
+    let rightAngle = angleInDegrees
+
+    if (this.player.meta.facing === 'right') {
+        // User is aiming up and to the right
         if (angleInDegrees <= 81 && angleInDegrees >= 71) {
-            angleInDegrees -= 0
+            leftAngle -= 8
+            rightAngle -= 2
         } else if (angleInDegrees < 71 && angleInDegrees >= 61) {
-            angleInDegrees -= 15
+            leftAngle -= 15
+            rightAngle -= 2
         } else if (angleInDegrees < 61 && angleInDegrees >= 51) {
-            angleInDegrees -= 25
+            leftAngle -= 25
+            rightAngle -= 2
         } else if (angleInDegrees < 51 && angleInDegrees >= 41) {
-            angleInDegrees -= 35
+            leftAngle -= 35
+            rightAngle -= 2
         } else if (angleInDegrees < 41 && angleInDegrees >= 31) {
-            angleInDegrees -= 40
+            leftAngle -= 40
+            rightAngle -= 2
         } else if (angleInDegrees < 31 && angleInDegrees >= 21) {
-            angleInDegrees -= 50
+            leftAngle -= 50
+            rightAngle -= 3
         } else if (angleInDegrees < 21 && angleInDegrees >= 11) {
-            angleInDegrees -= 60
+            leftAngle -= 60
+            rightAngle -= 3
         } else if (angleInDegrees < 11 && angleInDegrees >= 0) {
-            angleInDegrees -= 70
+            leftAngle -= 70
+            rightAngle -= 3
         }
 
-        // User is aiming down
+        // User is aiming down and to the right
         if (angleInDegrees >= 82 && angleInDegrees <= 91 ) {
-            angleInDegrees += 10
+            leftAngle += 10
+            rightAngle -= 1
         } else if (angleInDegrees > 91 && angleInDegrees <= 99) {
-            angleInDegrees += 20
+            leftAngle += 20
+            rightAngle -= 1
         } else if (angleInDegrees > 99 && angleInDegrees <= 109) {
-            angleInDegrees += 30
+            leftAngle += 30
+            rightAngle -= 1
         } else if (angleInDegrees > 109 && angleInDegrees <= 119) {
-            angleInDegrees += 40
+            leftAngle += 40
+            rightAngle -= 3
         } else if (angleInDegrees > 119 && angleInDegrees <= 129) {
-            angleInDegrees += 50
+            leftAngle += 50
+            rightAngle -= 4
         } else if (angleInDegrees > 129 && angleInDegrees <= 139) {
-            angleInDegrees += 60
+            leftAngle += 60
+            rightAngle -= 5
         } else if (angleInDegrees > 139 && angleInDegrees <= 149) {
-            angleInDegrees += 70
+            leftAngle += 70
+            rightAngle -= 6
         } else if (angleInDegrees > 149 && angleInDegrees <= 159) {
-            angleInDegrees += 80
+            leftAngle += 80
+            rightAngle -= 7
         } else if (angleInDegrees > 159 && angleInDegrees <= 169) {
-            angleInDegrees += 90
+            leftAngle += 90
+            rightAngle -= 8
         } else if (angleInDegrees > 169 && angleInDegrees <= 180) {
-            angleInDegrees += 100
+            leftAngle += 100
+            rightAngle -= 9
         }
     }
 
     if (this.player.meta.facing === 'left') {
-        this.rightArmGroup.angle = angleInDegrees
-
-        // User is aiming up
+        // User is aiming up and to the left
         if (angleInDegrees >= -91 && angleInDegrees <= -81) {
-            angleInDegrees += 20
+            leftAngle += 20
+            rightAngle -= 9
         } else if (angleInDegrees > -81 && angleInDegrees <= -71) {
-            angleInDegrees += 30
+            leftAngle += 30
+            rightAngle -= 8
         } else if (angleInDegrees > -71 && angleInDegrees <= -61) {
-            angleInDegrees += 35
+            leftAngle += 35
+            rightAngle -= 8
         } else if (angleInDegrees > -61 && angleInDegrees <= -51) {
-            angleInDegrees += 50
+            leftAngle += 50
+            rightAngle -= 6
         } else if (angleInDegrees > -51 && angleInDegrees <= -41) {
-            angleInDegrees += 60
+            leftAngle += 60
+            rightAngle -= 6
         } else if (angleInDegrees > -41 && angleInDegrees <= -31) {
-            angleInDegrees += 65
+            leftAngle += 65
+            rightAngle -= 5
         } else if (angleInDegrees > -31 && angleInDegrees <= -21) {
-            angleInDegrees += 75
+            leftAngle += 75
+            rightAngle -= 5
         } else if (angleInDegrees > -21 && angleInDegrees <= -11) {
-            angleInDegrees += 80
+            leftAngle += 80
+            rightAngle -= 5
         } else if (angleInDegrees > -11 && angleInDegrees <= 0) {
-            angleInDegrees += 90
+            leftAngle += 90
+            rightAngle -= 5
         }
 
-        // User is aiming down
+        // User is aiming down and to the left
         if (angleInDegrees <= 270 && angleInDegrees >= 260) {
-            angleInDegrees -= 5
+            leftAngle -= 5
+            rightAngle -= 9
         } else if (angleInDegrees < 260 && angleInDegrees >= 250) {
-            angleInDegrees -= 15
+            leftAngle -= 15
+            rightAngle -= 8
         } else if (angleInDegrees < 250 && angleInDegrees >= 240) {
-            angleInDegrees -= 25
+            leftAngle -= 25
+            rightAngle -= 7
         } else if (angleInDegrees < 240 && angleInDegrees >= 230) {
-            angleInDegrees -= 35
+            leftAngle -= 35
+            rightAngle -= 6
         } else if (angleInDegrees < 230 && angleInDegrees >= 220) {
-            angleInDegrees -= 45
+            leftAngle -= 45
+            rightAngle -= 5
         } else if (angleInDegrees < 220 && angleInDegrees >= 210) {
-            angleInDegrees -= 50
+            leftAngle -= 50
         } else if (angleInDegrees < 210 && angleInDegrees >= 200) {
-            angleInDegrees -= 60
+            leftAngle -= 60
         } else if (angleInDegrees < 200 && angleInDegrees >= 190) {
-            angleInDegrees -= 70
+            leftAngle -= 70
         }
     }
 
-    this.leftArmGroup.angle = angleInDegrees
+    // console.log('leftAngle', leftAngle)
+    console.log('rightAngle', rightAngle)
+
+    this.leftArmGroup.angle = leftAngle
+    this.rightArmGroup.angle = rightAngle
 }
