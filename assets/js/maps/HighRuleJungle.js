@@ -55,7 +55,6 @@ export default class HighRuleJungle {
         this.createLedges()
         this.rootScope.platforms.setAll('body.immovable', true)
         this.rootScope.platforms.setAll('body.allowGravity', false)
-        this.rootScope.statue = this.rootScope.add.sprite(2300, 2781, 'statue')
     }
 
     createLedges() {
