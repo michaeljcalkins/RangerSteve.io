@@ -5,6 +5,7 @@ export default function Preload() {
     this.load.image('map-bg', '/images/maps/high-rule-jungle/background.png')
     this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png')
     this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png')
+    this.load.image('statue', '/images/maps/high-rule-jungle/statue.png')
 
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet', '/images/bullet.png')
