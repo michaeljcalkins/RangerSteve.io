@@ -343,6 +343,8 @@ var gameHeight = window.innerHeight;
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game');
 
 game.state.add('Game', function () {
+    var _this = this;
+
     this.currentWeapon = 0;
     this.enemies = [];
     this.ground;
@@ -356,7 +358,7 @@ game.state.add('Game', function () {
     this.create = _Create2.default;
     this.update = _Update2.default;
     this.render = function () {
-        // this.game.debug.body(this.player)
+        _this.game.debug.body(_this.player);
     };
 }, true);
 
@@ -379,8 +381,6 @@ function CollisionHandler() {
 
     // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms, null, null, this);
-    this.physics.arcade.collide(this.bulletShells, this.platforms, null, null, this);
-    this.physics.arcade.collide(this.bulletShells, this.bulletShells, null, null, this);
 
     // Did this player's bullets hit any platforms
     this.physics.arcade.collide(this.platforms, this.bullets, function (platform, bullet) {
@@ -390,12 +390,12 @@ function CollisionHandler() {
         ricochet.animations.play('collision');
         ricochet.animations.currentAnim.killOnComplete = true;
 
+        bullet.kill();
+
         _emitBulletRemoved2.default.call(_this, {
             roomId: _this.roomId,
             bulletId: bullet.bulletId
         });
-
-        bullet.kill();
     }, null, this);
 
     // Did enemy bullets hit any platforms
@@ -408,14 +408,19 @@ function CollisionHandler() {
 
         bullet.kill();
 
-        _this.socket.emit('bullet removed', {
+        _emitBulletRemoved2.default.call(_this, {
             roomId: _this.roomId,
             bulletId: bullet.bulletId
         });
     }, null, this);
 
+    this.physics.arcade.overlap(this.enemies, this.bullets, function (player, bullet) {
+        bullet.kill();
+        console.log('your bullet collided with an enemy');
+    });
+
     // Did this player get hit by any enemy bullets
-    this.physics.arcade.collide(this.player, this.enemyBullets, function (player, bullet) {
+    this.physics.arcade.overlap(this.player, this.enemyBullets, function (player, bullet) {
         bullet.kill();
 
         _emitBulletRemoved2.default.call(_this, {
@@ -429,9 +434,7 @@ function CollisionHandler() {
             damagedPlayerId: '/#' + _this.socket.id,
             attackingPlayerId: bullet.playerId
         });
-    }, function () {
-        return false;
-    }, this);
+    }, null, this);
 }
 
 },{"./SocketEvents/emitBulletRemoved":25}],8:[function(require,module,exports){
@@ -912,9 +915,9 @@ var propTypes = {
 function PlayerById(id) {
     check({ id: id }, propTypes);
 
-    for (var i = 0; i < this.enemies.children.length; i++) {
-        if (this.enemies.children[i].id === id) {
-            return this.enemies.children[i];
+    for (var i = 0; i < this.enemies.length; i++) {
+        if (this.enemies[i].id === id) {
+            return this.enemies[i];
         }
     }
 
@@ -1128,6 +1131,7 @@ function PlayerSpriteHandler() {
     this.player.anchor.setTo(_GameConsts2.default.PLAYER_ANCHOR);
     this.player.height = 91;
     this.player.width = 94;
+    this.player.debug = true;
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player);
@@ -1576,7 +1580,7 @@ var propTypes = {
 function onMovePlayer(data) {
     check(data, propTypes);
 
-    if (data.damagedPlayerId !== '/#' + this.socket.id) return;
+    if (data.id === '/#' + this.socket.id) return;
 
     var movePlayer = _PlayerById2.default.call(this, data.id);
 
@@ -1889,7 +1893,7 @@ function onUpdatePlayers(data) {
         enemy.kill();
     });
 
-    this.enemies = this.game.add.group();
+    this.enemies = [];
 
     _EventHandler2.default.emit('players update', data.room.players);
 
@@ -1902,7 +1906,7 @@ function onUpdatePlayers(data) {
         }
 
         var newRemotePlayer = _RemotePlayer2.default.call(_this, player);
-        _this.enemies.add(newRemotePlayer);
+        _this.enemies.push(newRemotePlayer);
     });
 }
 

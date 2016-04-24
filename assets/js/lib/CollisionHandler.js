@@ -3,8 +3,6 @@ import emitBulletRemoved from './SocketEvents/emitBulletRemoved'
 export default function CollisionHandler() {
     // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms, null, null, this)
-    this.physics.arcade.collide(this.bulletShells, this.platforms, null, null, this)
-    this.physics.arcade.collide(this.bulletShells, this.bulletShells, null, null, this)
 
     // Did this player's bullets hit any platforms
     this.physics.arcade.collide(this.platforms, this.bullets, (platform, bullet) => {
@@ -14,12 +12,12 @@ export default function CollisionHandler() {
         ricochet.animations.play('collision')
         ricochet.animations.currentAnim.killOnComplete = true
 
+        bullet.kill()
+
         emitBulletRemoved.call(this, {
             roomId: this.roomId,
             bulletId: bullet.bulletId
         })
-
-        bullet.kill()
     }, null, this)
 
     // Did enemy bullets hit any platforms
@@ -32,14 +30,19 @@ export default function CollisionHandler() {
 
         bullet.kill()
 
-        this.socket.emit('bullet removed', {
+        emitBulletRemoved.call(this, {
             roomId: this.roomId,
             bulletId: bullet.bulletId
         })
     }, null, this)
 
+    this.physics.arcade.overlap(this.enemies, this.bullets, (player, bullet) => {
+        bullet.kill()
+        console.log('your bullet collided with an enemy')
+    })
+
     // Did this player get hit by any enemy bullets
-    this.physics.arcade.collide(this.player, this.enemyBullets, (player, bullet) => {
+    this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
         bullet.kill()
 
         emitBulletRemoved.call(this, {
@@ -53,8 +56,5 @@ export default function CollisionHandler() {
             damagedPlayerId: '/#' + this.socket.id,
             attackingPlayerId: bullet.playerId
         })
-    },
-    function() {
-        return false
-    }, this)
+    }, null, this)
 }

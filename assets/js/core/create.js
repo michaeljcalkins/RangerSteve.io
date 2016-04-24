@@ -9,9 +9,8 @@ export default function Create() {
     this.roomId = GetQueryString('roomId')
     this.volume = GameConsts.STARTING_VOLUME
     this.socket = io.connect()
-    this.enemies = this.game.add.group()
+    this.enemies = []
     this.enemyBullets = []
-    this.bulletShells = []
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)

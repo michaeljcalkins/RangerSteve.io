@@ -21,6 +21,6 @@ game.state.add('Game', function() {
     this.create = create
     this.update = update
     this.render = () => {
-        // this.game.debug.body(this.player)
+        this.game.debug.body(this.player)
     }
 }, true)

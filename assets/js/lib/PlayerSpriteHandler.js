@@ -8,6 +8,7 @@ export default function PlayerSpriteHandler() {
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     this.player.height = 91
     this.player.width = 94
+    this.player.debug = true
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
