@@ -116,7 +116,6 @@ export default function Create() {
         this.currentWeaponSprite.rotation = this.player.meta[this.currentWeapon].meta.rotation
     })
 
-
     /**
      * Start listening for events
      */

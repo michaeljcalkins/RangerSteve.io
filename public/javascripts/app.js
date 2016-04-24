@@ -2083,6 +2083,7 @@ var AUG = function (_Phaser$Group) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AUG).call(this, rootScope));
 
+        _this.muzzleFlashHandler = null;
         _this.rootScope = rootScope;
 
         Phaser.Group.call(_this, _this.rootScope.game, _this.rootScope.game.world, 'AUG', false, true, Phaser.Physics.ARCADE);
@@ -2106,10 +2107,18 @@ var AUG = function (_Phaser$Group) {
     _createClass(AUG, [{
         key: 'fire',
         value: function fire() {
+            var _this2 = this;
+
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
-            this.nextFire = this.rootScope.game.time.now + this.fireRate;
+            this.rootScope.camera.shake(0.001, 100, true);
+            this.rootScope.muzzleFlash.visible = true;
+            clearTimeout(this.muzzleFlashHandler);
+            this.muzzleFlashHandler = setTimeout(function () {
+                _this2.rootScope.muzzleFlash.visible = false;
+            }, 80);
 
+            this.nextFire = this.rootScope.game.time.now + this.fireRate;
             _FireStandardBullet2.default.call(this);
         }
     }]);
@@ -2148,6 +2157,7 @@ var Barrett = function (_Phaser$Group) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Barrett).call(this, rootScope));
 
+        _this.muzzleFlashHandler = null;
         _this.rootScope = rootScope;
 
         Phaser.Group.call(_this, _this.rootScope.game, _this.rootScope.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE);
@@ -2171,10 +2181,18 @@ var Barrett = function (_Phaser$Group) {
     _createClass(Barrett, [{
         key: 'fire',
         value: function fire() {
+            var _this2 = this;
+
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
-            this.nextFire = this.rootScope.game.time.now + this.fireRate;
+            this.rootScope.camera.shake(0.001, 100, true);
+            this.rootScope.muzzleFlash.visible = true;
+            clearTimeout(this.muzzleFlashHandler);
+            this.muzzleFlashHandler = setTimeout(function () {
+                _this2.rootScope.muzzleFlash.visible = false;
+            }, 80);
 
+            this.nextFire = this.rootScope.game.time.now + this.fireRate;
             _FireStandardBullet2.default.call(this);
         }
     }]);
@@ -2213,6 +2231,7 @@ var DesertEagle = function (_Phaser$Group) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DesertEagle).call(this, rootScope));
 
+        _this.muzzleFlashHandler = null;
         _this.rootScope = rootScope;
 
         Phaser.Group.call(_this, rootScope.game, rootScope.game.world, 'Desert Eagle', false, true, Phaser.Physics.ARCADE);
@@ -2286,6 +2305,7 @@ var G43 = function (_Phaser$Group) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(G43).call(this, rootScope));
 
+        _this.muzzleFlashHandler = null;
         _this.rootScope = rootScope;
 
         Phaser.Group.call(_this, _this.rootScope.game, _this.rootScope.game.world, 'G43', false, true, Phaser.Physics.ARCADE);
@@ -2309,10 +2329,18 @@ var G43 = function (_Phaser$Group) {
     _createClass(G43, [{
         key: 'fire',
         value: function fire() {
+            var _this2 = this;
+
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
-            this.nextFire = this.rootScope.game.time.now + this.fireRate;
+            this.rootScope.camera.shake(0.001, 100, true);
+            this.rootScope.muzzleFlash.visible = true;
+            clearTimeout(this.muzzleFlashHandler);
+            this.muzzleFlashHandler = setTimeout(function () {
+                _this2.rootScope.muzzleFlash.visible = false;
+            }, 80);
 
+            this.nextFire = this.rootScope.game.time.now + this.fireRate;
             _FireStandardBullet2.default.call(this);
         }
     }]);
@@ -2351,6 +2379,7 @@ var M4A1 = function (_Phaser$Group) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(M4A1).call(this, rootScope));
 
+        _this.muzzleFlashHandler = null;
         _this.rootScope = rootScope;
 
         Phaser.Group.call(_this, _this.rootScope.game, _this.rootScope.game.world, 'M4A1', false, true, Phaser.Physics.ARCADE);
@@ -2374,10 +2403,18 @@ var M4A1 = function (_Phaser$Group) {
     _createClass(M4A1, [{
         key: 'fire',
         value: function fire() {
+            var _this2 = this;
+
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
-            this.nextFire = this.rootScope.game.time.now + this.fireRate;
+            this.rootScope.camera.shake(0.001, 100, true);
+            this.rootScope.muzzleFlash.visible = true;
+            clearTimeout(this.muzzleFlashHandler);
+            this.muzzleFlashHandler = setTimeout(function () {
+                _this2.rootScope.muzzleFlash.visible = false;
+            }, 80);
 
+            this.nextFire = this.rootScope.game.time.now + this.fireRate;
             _FireStandardBullet2.default.call(this);
         }
     }]);
@@ -2416,6 +2453,7 @@ var M500 = function (_Phaser$Group) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(M500).call(this, rootScope));
 
+        _this.muzzleFlashHandler = null;
         _this.rootScope = rootScope;
 
         Phaser.Group.call(_this, _this.rootScope.game, _this.rootScope.game.world, 'M500', false, true, Phaser.Physics.ARCADE);
@@ -2438,10 +2476,18 @@ var M500 = function (_Phaser$Group) {
     _createClass(M500, [{
         key: 'fire',
         value: function fire() {
+            var _this2 = this;
+
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
-            this.nextFire = this.rootScope.game.time.now + this.fireRate;
+            this.rootScope.camera.shake(0.001, 100, true);
+            this.rootScope.muzzleFlash.visible = true;
+            clearTimeout(this.muzzleFlashHandler);
+            this.muzzleFlashHandler = setTimeout(function () {
+                _this2.rootScope.muzzleFlash.visible = false;
+            }, 80);
 
+            this.nextFire = this.rootScope.game.time.now + this.fireRate;
             _FireShotgunShell2.default.call(this);
         }
     }]);
@@ -2480,6 +2526,7 @@ var P90 = function (_Phaser$Group) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(P90).call(this, rootScope));
 
+        _this.muzzleFlashHandler = null;
         _this.rootScope = rootScope;
 
         Phaser.Group.call(_this, _this.rootScope.game, _this.rootScope.game.world, 'P90', false, true, Phaser.Physics.ARCADE);
@@ -2503,10 +2550,18 @@ var P90 = function (_Phaser$Group) {
     _createClass(P90, [{
         key: 'fire',
         value: function fire() {
+            var _this2 = this;
+
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
-            this.nextFire = this.rootScope.game.time.now + this.fireRate;
+            this.rootScope.camera.shake(0.001, 100, true);
+            this.rootScope.muzzleFlash.visible = true;
+            clearTimeout(this.muzzleFlashHandler);
+            this.muzzleFlashHandler = setTimeout(function () {
+                _this2.rootScope.muzzleFlash.visible = false;
+            }, 80);
 
+            this.nextFire = this.rootScope.game.time.now + this.fireRate;
             _FireStandardBullet2.default.call(this);
         }
     }]);
@@ -2545,6 +2600,7 @@ var RPG = function (_Phaser$Group) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RPG).call(this, rootScope));
 
+        _this.muzzleFlashHandler = null;
         _this.rootScope = rootScope;
 
         Phaser.Group.call(_this, _this.rootScope.game, _this.rootScope.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE);
@@ -2568,10 +2624,18 @@ var RPG = function (_Phaser$Group) {
     _createClass(RPG, [{
         key: 'fire',
         value: function fire() {
+            var _this2 = this;
+
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
-            this.nextFire = this.rootScope.game.time.now + this.fireRate;
+            this.rootScope.camera.shake(0.001, 100, true);
+            this.rootScope.muzzleFlash.visible = true;
+            clearTimeout(this.muzzleFlashHandler);
+            this.muzzleFlashHandler = setTimeout(function () {
+                _this2.rootScope.muzzleFlash.visible = false;
+            }, 80);
 
+            this.nextFire = this.rootScope.game.time.now + this.fireRate;
             _FireRocket2.default.call(this);
         }
     }]);
@@ -2652,6 +2716,7 @@ var Skorpion = function (_Phaser$Group) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Skorpion).call(this, rootScope));
 
+        _this.muzzleFlashHandler = null;
         _this.rootScope = rootScope;
 
         Phaser.Group.call(_this, _this.rootScope.game, _this.rootScope.game.world, 'Skorpion', false, true, Phaser.Physics.ARCADE);
@@ -2675,10 +2740,18 @@ var Skorpion = function (_Phaser$Group) {
     _createClass(Skorpion, [{
         key: 'fire',
         value: function fire() {
+            var _this2 = this;
+
             if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0) return;
 
-            this.nextFire = this.rootScope.game.time.now + this.fireRate;
+            this.rootScope.camera.shake(0.001, 100, true);
+            this.rootScope.muzzleFlash.visible = true;
+            clearTimeout(this.muzzleFlashHandler);
+            this.muzzleFlashHandler = setTimeout(function () {
+                _this2.rootScope.muzzleFlash.visible = false;
+            }, 80);
 
+            this.nextFire = this.rootScope.game.time.now + this.fireRate;
             _FireStandardBullet2.default.call(this);
         }
     }]);

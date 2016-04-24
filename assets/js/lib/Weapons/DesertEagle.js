@@ -4,6 +4,7 @@ export default class DesertEagle extends Phaser.Group {
     constructor(rootScope) {
         super(rootScope)
 
+        this.muzzleFlashHandler = null
         this.rootScope = rootScope
 
         Phaser.Group.call(this, rootScope.game, rootScope.game.world, 'Desert Eagle', false, true, Phaser.Physics.ARCADE)
