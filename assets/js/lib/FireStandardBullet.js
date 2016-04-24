@@ -16,6 +16,7 @@ export default function FireStandardBullet() {
     this.fx.volume = .3 * this.rootScope.volume
     this.fx.play()
 
+    console.log('bullet.bulletId', bullet.bulletId)
     this.rootScope.socket.emit('bullet fired', {
         roomId: this.rootScope.roomId,
         bulletId: bullet.bulletId,

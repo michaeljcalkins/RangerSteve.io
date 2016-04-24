@@ -82,7 +82,6 @@ function Create() {
     this.socket = io.connect();
     this.enemies = this.game.add.group();
     this.enemyBullets = [];
-    this.bulletShells = [];
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE);
@@ -414,10 +413,10 @@ function CollisionHandler() {
         });
     }, null, this);
 
-    this.physics.arcade.overlap(this.enemies, this.bullets, function (player, bullet) {
+    this.physics.arcade.overlap(this.bullets, this.enemies, function (bullet, player) {
         bullet.kill();
         console.log('your bullet collided with an enemy');
-    });
+    }, null, this);
 
     // Did this player get hit by any enemy bullets
     this.physics.arcade.overlap(this.player, this.enemyBullets, function (player, bullet) {
@@ -572,6 +571,7 @@ function FireStandardBullet() {
     this.fx.volume = .3 * this.rootScope.volume;
     this.fx.play();
 
+    console.log('bullet.bulletId', bullet.bulletId);
     this.rootScope.socket.emit('bullet fired', {
         roomId: this.rootScope.roomId,
         bulletId: bullet.bulletId,
@@ -915,9 +915,9 @@ var propTypes = {
 function PlayerById(id) {
     check({ id: id }, propTypes);
 
-    for (var i = 0; i < this.enemies.length; i++) {
-        if (this.enemies[i].id === id) {
-            return this.enemies[i];
+    for (var i = 0; i < this.enemies.children.length; i++) {
+        if (this.enemies.children[i].id === id) {
+            return this.enemies.children[i];
         }
     }
 
@@ -1538,16 +1538,22 @@ function onBulletRemoved(data) {
 
     if (data.id === '/#' + this.socket.id) return;
 
-    var removeBullet = _.find(this.enemyBullets, {
+    var removeEnemyBullet = _.find(this.enemyBullets.children, {
         bulletId: data.bulletId
     });
 
-    if (!removeBullet) {
+    var removeLocalBullet = _.find(this.bullets.children, {
+        bulletId: data.bulletId
+    });
+
+    if (!removeEnemyBullet && !removeLocalBullet) {
         console.log('Bullet not found: ', data.bulletId);
         return;
     }
 
-    removeBullet.kill();
+    if (removeEnemyBullet) removeEnemyBullet.kill();
+
+    if (removeLocalBullet) removeLocalBullet.kill();
 }
 
 },{"react":233}],29:[function(require,module,exports){
@@ -1893,7 +1899,7 @@ function onUpdatePlayers(data) {
         enemy.kill();
     });
 
-    this.enemies = [];
+    this.enemies = this.game.add.group();
 
     _EventHandler2.default.emit('players update', data.room.players);
 
@@ -1906,7 +1912,7 @@ function onUpdatePlayers(data) {
         }
 
         var newRemotePlayer = _RemotePlayer2.default.call(_this, player);
-        _this.enemies.push(newRemotePlayer);
+        _this.enemies.add(newRemotePlayer);
     });
 }
 

@@ -36,10 +36,10 @@ export default function CollisionHandler() {
         })
     }, null, this)
 
-    this.physics.arcade.overlap(this.enemies, this.bullets, (player, bullet) => {
+    this.physics.arcade.overlap(this.bullets, this.enemies, (bullet, player) => {
         bullet.kill()
         console.log('your bullet collided with an enemy')
-    })
+    }, null, this)
 
     // Did this player get hit by any enemy bullets
     this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {

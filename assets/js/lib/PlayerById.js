@@ -7,9 +7,9 @@ const propTypes = {
 export default function PlayerById(id) {
     check({ id }, propTypes)
 
-    for (let i = 0; i < this.enemies.length; i++) {
-        if (this.enemies[i].id === id) {
-            return this.enemies[i]
+    for (let i = 0; i < this.enemies.children.length; i++) {
+        if (this.enemies.children[i].id === id) {
+            return this.enemies.children[i]
         }
     }
 

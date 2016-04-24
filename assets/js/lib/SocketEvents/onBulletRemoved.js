@@ -11,14 +11,22 @@ export default function onBulletRemoved(data) {
     if (data.id === ('/#' + this.socket.id))
         return
 
-    let removeBullet = _.find(this.enemyBullets, {
+    let removeEnemyBullet = _.find(this.enemyBullets.children, {
         bulletId: data.bulletId
     })
 
-    if (!removeBullet) {
+    let removeLocalBullet = _.find(this.bullets.children, {
+        bulletId: data.bulletId
+    })
+
+    if (!removeEnemyBullet && !removeLocalBullet) {
         console.log('Bullet not found: ', data.bulletId)
         return
     }
 
-    removeBullet.kill()
+    if (removeEnemyBullet)
+        removeEnemyBullet.kill()
+
+    if (removeLocalBullet)
+        removeLocalBullet.kill()
 }

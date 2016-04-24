@@ -21,7 +21,7 @@ export default function onUpdatePlayers(data) {
         enemy.kill()
     })
 
-    this.enemies = []
+    this.enemies = this.game.add.group()
 
     EventHandler.emit('players update', data.room.players)
 
@@ -34,6 +34,6 @@ export default function onUpdatePlayers(data) {
         }
 
         let newRemotePlayer = RemotePlayer.call(this, player)
-        this.enemies.push(newRemotePlayer)
+        this.enemies.add(newRemotePlayer)
     })
 }
