@@ -1,4 +1,5 @@
 import Guid from './Guid'
+import emitBulletFired from './SocketEvents/emitBulletFired'
 
 export default function FireStandardBullet() {
     let x = this.rootScope.player.x
@@ -16,8 +17,7 @@ export default function FireStandardBullet() {
     this.fx.volume = .3 * this.rootScope.volume
     this.fx.play()
 
-    console.log('bullet.bulletId', bullet.bulletId)
-    this.rootScope.socket.emit('bullet fired', {
+    emitBulletFired.call(this.rootScope, {
         roomId: this.rootScope.roomId,
         bulletId: bullet.bulletId,
         playerId: '/#' + this.rootScope.socket.id,
