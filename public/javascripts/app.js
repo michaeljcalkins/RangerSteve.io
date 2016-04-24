@@ -1576,10 +1576,14 @@ var propTypes = {
 function onMovePlayer(data) {
     check(data, propTypes);
 
+    if (data.damagedPlayerId !== '/#' + this.socket.id) return;
+
     var movePlayer = _PlayerById2.default.call(this, data.id);
 
     // Player not found
     if (!movePlayer) {
+        console.log('Could not find player', data);
+        console.log('This players id', '/#' + this.socket.id);
         return;
     }
 
