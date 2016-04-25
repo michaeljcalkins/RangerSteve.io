@@ -1,4 +1,5 @@
 import { PropTypes } from 'react'
+import SprayBlood from '../SprayBlood'
 
 const propTypes = {
     id: PropTypes.string.isRequired,
@@ -24,16 +25,28 @@ export default function onBulletRemoved(data) {
         return
     }
 
+    let lastKnownX = false
+    let lastKnownY = false
+
     if (removeEnemyBullet) {
-        let lastKnownX = removeEnemyBullet.x
-        let lastKnownY = removeEnemyBullet.y
+        lastKnownX = removeEnemyBullet.x
+        lastKnownY = removeEnemyBullet.y
 
         removeEnemyBullet.kill()
 
         _.remove(this.enemyBullets, {
             bulletId: data.bulletId
         })
+    }
 
+    if (removeLocalBullet) {
+        lastKnownX = removeLocalBullet.x
+        lastKnownY = removeLocalBullet.y
+
+        removeLocalBullet.kill()
+    }
+
+    if (lastKnownX && lastKnownY && !data.hasDamagedPlayer) {
         let ricochet = this.add.sprite(lastKnownX, lastKnownY - 15, 'ricochet')
         ricochet.scale.setTo(.17)
         ricochet.animations.add('collision', [0,1,2,3,4,5], 45, false, true)
@@ -41,16 +54,12 @@ export default function onBulletRemoved(data) {
         ricochet.animations.currentAnim.killOnComplete = true
     }
 
-    if (removeLocalBullet) {
-        let lastKnownX = removeLocalBullet.x
-        let lastKnownY = removeLocalBullet.y
-
-        removeLocalBullet.kill()
-
-        let ricochet = this.add.sprite(lastKnownX, lastKnownY - 15, 'ricochet')
-        ricochet.scale.setTo(.17)
-        ricochet.animations.add('collision', [0,1,2,3,4,5], 45, false, true)
-        ricochet.animations.play('collision')
-        ricochet.animations.currentAnim.killOnComplete = true
+    if (lastKnownX && lastKnownY && data.hasDamagedPlayer) {
+        SprayBlood.call(this, {
+            bulletY: data.bulletY,
+            bulletX: data.bulletX,
+            playerX: data.playerX,
+            bulletRotation: data.bulletRotation
+        })
     }
 }
