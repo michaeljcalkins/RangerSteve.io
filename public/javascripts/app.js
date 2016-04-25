@@ -142,8 +142,8 @@ function Create() {
         _this.player.meta.selectedSecondaryWeaponId = weapon.id;
     });
 
-    this.positionText = this.add.text(300, 300, this.game.input.mousePointer.x + ',' + this.game.input.mousePointer.y, textStyles);
-    this.positionText.fixedToCamera = true;
+    // this.positionText = this.add.text(300, 300, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
+    // this.positionText.fixedToCamera = true
 
     /**
      * Camera Settings
@@ -224,6 +224,7 @@ function Preload() {
     this.load.spritesheet('muzzle-flash', '/images/muzzle-flash.png', 447, 271);
     this.load.spritesheet('commando', '/images/commando.png', 300, 315);
     this.load.spritesheet('ricochet', '/images/ricochet.png', 274, 185);
+    this.load.spritesheet('blood', '/images/blood.png', 440, 256);
 
     // Weapons
     _GameConsts2.default.PRIMARY_WEAPONS.forEach(function (weapon) {
@@ -292,7 +293,7 @@ function Update() {
         this.player.meta[this.currentWeapon].fire();
     }
 
-    this.positionText.text = this.game.input.worldX + ', ' + this.game.input.worldY;
+    // this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`
 
     // Check for out of bounds kill
     if (this.player.body.onFloor()) {
@@ -418,14 +419,34 @@ function CollisionHandler() {
         });
     }, null, this);
 
-    this.physics.arcade.overlap(this.bullets, this.enemies, function (bullet, player) {
+    this.physics.arcade.overlap(this.bullets, this.enemies, function (bullet) {
         bullet.kill();
-        console.log('your bullet collided with an enemy');
     });
 
     // Did this player get hit by any enemy bullets
     this.physics.arcade.overlap(this.player, this.enemyBullets, function (player, bullet) {
         bullet.kill();
+
+        var bloodY = bullet.y;
+        var bloodX = player.x;
+        var bloodRotation = 0;
+        bloodRotation = bullet.rotation;
+        if (player.x > bullet.x) {
+            console.log('left side');
+            bloodX += 10;
+            bloodY -= 25;
+        } else {
+            console.log('right side');
+            bloodX -= 10;
+            bloodY += 25;
+        }
+
+        var blood = _this.add.sprite(bloodX, bloodY, 'blood');
+        blood.scale.setTo(.17);
+        blood.rotation = bloodRotation;
+        blood.animations.add('spray', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 45, false, true);
+        blood.animations.play('spray');
+        blood.animations.currentAnim.killOnComplete = true;
 
         _emitBulletRemoved2.default.call(_this, {
             roomId: _this.roomId,
@@ -1625,8 +1646,8 @@ function onBulletRemoved(data) {
     }
 
     if (removeLocalBullet) {
-        var _lastKnownX = removeEnemyBullet.x;
-        var _lastKnownY = removeEnemyBullet.x;
+        var _lastKnownX = removeLocalBullet.x;
+        var _lastKnownY = removeLocalBullet.y;
 
         removeLocalBullet.kill();
 

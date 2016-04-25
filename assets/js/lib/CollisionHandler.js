@@ -18,8 +18,6 @@ export default function CollisionHandler() {
         ricochet.animations.play('collision')
         ricochet.animations.currentAnim.killOnComplete = true
 
-
-
         emitBulletRemoved.call(this, {
             roomId: this.roomId,
             bulletId: bullet.bulletId
@@ -42,14 +40,34 @@ export default function CollisionHandler() {
         })
     }, null, this)
 
-    this.physics.arcade.overlap(this.bullets, this.enemies, (bullet, player) => {
+    this.physics.arcade.overlap(this.bullets, this.enemies, (bullet) => {
         bullet.kill()
-        console.log('your bullet collided with an enemy')
     })
 
     // Did this player get hit by any enemy bullets
     this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
         bullet.kill()
+
+        let bloodY = bullet.y
+        let bloodX = player.x
+        let bloodRotation = 0
+        bloodRotation = bullet.rotation
+        if (player.x > bullet.x) {
+            console.log('left side')
+            bloodX += 10
+            bloodY -= 25
+        } else {
+            console.log('right side')
+            bloodX -= 10
+            bloodY += 25
+        }
+
+        let blood = this.add.sprite(bloodX, bloodY, 'blood')
+        blood.scale.setTo(.17)
+        blood.rotation = bloodRotation
+        blood.animations.add('spray', [0,1,2,3,4,5,6,7,8,9,10,11,12,13], 45, false, true)
+        blood.animations.play('spray')
+        blood.animations.currentAnim.killOnComplete = true
 
         emitBulletRemoved.call(this, {
             roomId: this.roomId,

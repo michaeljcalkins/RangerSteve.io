@@ -42,8 +42,8 @@ export default function onBulletRemoved(data) {
     }
 
     if (removeLocalBullet) {
-        let lastKnownX = removeEnemyBullet.x
-        let lastKnownY = removeEnemyBullet.x
+        let lastKnownX = removeLocalBullet.x
+        let lastKnownY = removeLocalBullet.y
 
         removeLocalBullet.kill()
 

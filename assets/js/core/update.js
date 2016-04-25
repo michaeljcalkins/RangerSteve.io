@@ -15,7 +15,7 @@ export default function Update() {
         this.player.meta[this.currentWeapon].fire()
     }
 
-    this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`
+    // this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`
 
     // Check for out of bounds kill
     if (this.player.body.onFloor()) {
