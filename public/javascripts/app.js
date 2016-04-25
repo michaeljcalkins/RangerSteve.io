@@ -172,10 +172,18 @@ function Create() {
         _this.currentWeapon = _this.currentWeapon === 'primaryWeapon' ? 'secondaryWeapon' : 'primaryWeapon';
 
         _this.currentWeaponSprite.loadTexture(_this.player.meta[_this.currentWeapon].id);
-        _this.currentWeaponSprite.x = _this.player.meta[_this.currentWeapon].meta.spriteX;
-        _this.currentWeaponSprite.y = _this.player.meta[_this.currentWeapon].meta.spriteY;
+
         _this.currentWeaponSprite.scale.setTo(_this.player.meta[_this.currentWeapon].meta.scale);
         _this.currentWeaponSprite.rotation = _this.player.meta[_this.currentWeapon].meta.rotation;
+
+        if (_this.player.meta.facing === 'left') {
+            _this.currentWeaponSprite.x = _this.player.meta[_this.currentWeapon].meta.leftFaceX;
+            _this.currentWeaponSprite.y = _this.player.meta[_this.currentWeapon].meta.leftFaceY;
+            _this.currentWeaponSprite.scale.y *= -1;
+        } else {
+            _this.currentWeaponSprite.x = _this.player.meta[_this.currentWeapon].meta.rightFaceX;
+            _this.currentWeaponSprite.y = _this.player.meta[_this.currentWeapon].meta.rightFaceY;
+        }
     });
 
     /**
@@ -980,8 +988,8 @@ function playerFaceLeft() {
         this.rightArmSprite.y = 10;
 
         this.currentWeaponSprite.scale.y *= -1;
-        this.currentWeaponSprite.y = 30;
-        this.currentWeaponSprite.x = -7;
+        this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.leftFaceX;
+        this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.leftFaceY;
     }
 }
 
@@ -1008,8 +1016,8 @@ function playerFaceRight() {
         this.rightArmSprite.y = 0;
 
         this.currentWeaponSprite.scale.y *= -1;
-        this.currentWeaponSprite.y = 19;
-        this.currentWeaponSprite.x = 3;
+        this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.rightFaceX;
+        this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.rightFaceY;
     }
 }
 
@@ -2189,8 +2197,12 @@ var AK47 = function (_Phaser$Group) {
         _this.meta = {
             rotation: 80.20,
             scale: 1.3,
-            spriteX: 12,
-            spriteY: 19
+
+            leftFaceX: -7,
+            leftFaceY: 30,
+
+            rightFaceX: -7,
+            rightFaceY: 19
         };
         _this.bulletHeight = 2;
         _this.bulletSpeed = 2300;
@@ -2411,8 +2423,12 @@ var DesertEagle = function (_Phaser$Group) {
         _this.meta = {
             rotation: 80.15,
             scale: 1.3,
-            spriteX: 10,
-            spriteY: -29
+
+            leftFaceX: -12,
+            leftFaceY: -20,
+
+            rightFaceX: 9,
+            rightFaceY: -29
         };
         _this.bulletHeight = 2;
         _this.bulletSpeed = 2300;

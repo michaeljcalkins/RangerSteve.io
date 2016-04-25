@@ -109,10 +109,19 @@ export default function Create() {
             : 'primaryWeapon'
 
         this.currentWeaponSprite.loadTexture(this.player.meta[this.currentWeapon].id)
-        this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.spriteX
-        this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.spriteY
+
         this.currentWeaponSprite.scale.setTo(this.player.meta[this.currentWeapon].meta.scale)
         this.currentWeaponSprite.rotation = this.player.meta[this.currentWeapon].meta.rotation
+
+        if (this.player.meta.facing === 'left') {
+            this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.leftFaceX
+            this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.leftFaceY
+            this.currentWeaponSprite.scale.y *= -1
+        } else {
+            this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.rightFaceX
+            this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.rightFaceY
+        }
+
     })
 
     /**

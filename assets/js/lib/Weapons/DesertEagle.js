@@ -12,8 +12,12 @@ export default class DesertEagle extends Phaser.Group {
         this.meta = {
             rotation: 80.15,
             scale: 1.3,
-            spriteX: 10,
-            spriteY: -29
+
+            leftFaceX: -12,
+            leftFaceY: -20,
+
+            rightFaceX: 9,
+            rightFaceY: -29
         }
         this.bulletHeight = 2
         this.bulletSpeed = 2300

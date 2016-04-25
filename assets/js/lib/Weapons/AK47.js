@@ -12,8 +12,12 @@ export default class AK47 extends Phaser.Group {
         this.meta = {
             rotation: 80.20,
             scale: 1.3,
-            spriteX: 12,
-            spriteY: 19
+
+            leftFaceX: -7,
+            leftFaceY: 30,
+
+            rightFaceX: -7,
+            rightFaceY: 19
         }
         this.bulletHeight = 2
         this.bulletSpeed = 2300
