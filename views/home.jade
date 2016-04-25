@@ -1,6 +1,8 @@
 extends layout
 
 block content
+    .alert.alert-info.text-center(style="margin: 0") Ranger Steve is under construction with daily updates. <a class="btn btn-primary" href="https://www.twitch.tv/michaeljcalkins" target="_blank">Follow Michael for updates.</a> 
+
     section.main-section.text-center
         .align-middle
             div
@@ -11,7 +13,7 @@ block content
     .container 
         .section-wrapper
             section.white-section
-                video.fullscreen-video(loop, muted, autoplay, poster="/images/BG/BG.png")
+                video.fullscreen-video(loop, muted, autoplay, poster="")
                     //- source(src="", type="video/webm")
                     source(src="/video/home-video.mp4", type="video/mp4")
                     //- source(src="", type="video/ogg")
