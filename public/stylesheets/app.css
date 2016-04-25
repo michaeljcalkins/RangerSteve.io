@@ -106,6 +106,12 @@ section {
     font-size: 29px;
     font-weight: 300; }
 
+.video-section {
+  max-height: 450px;
+  overflow: hidden; }
+  .video-section video {
+    margin-top: -40px; }
+
 body.game {
   cursor: url(/images/crosshair.png) 15 15, auto; }
 

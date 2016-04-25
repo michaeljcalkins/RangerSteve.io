@@ -101,3 +101,12 @@ section {
         }
     }
 }
+
+.video-section {
+    max-height: 450px;
+    overflow: hidden;
+
+    video {
+        margin-top: -40px;
+    }
+}
