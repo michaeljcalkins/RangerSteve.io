@@ -116,8 +116,9 @@ section {
 .video-section {
     max-height: 450px;
     overflow: hidden;
+    padding: 0;
 
     video {
-        margin-top: -40px;
+        margin-top: -30px;
     }
 }
