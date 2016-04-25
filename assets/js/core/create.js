@@ -109,7 +109,6 @@ export default function Create() {
             : 'primaryWeapon'
 
         this.currentWeaponSprite.loadTexture(this.player.meta[this.currentWeapon].id)
-
         this.currentWeaponSprite.scale.setTo(this.player.meta[this.currentWeapon].meta.scale)
         this.currentWeaponSprite.rotation = this.player.meta[this.currentWeapon].meta.rotation
 
@@ -122,6 +121,8 @@ export default function Create() {
             this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.rightFaceY
         }
 
+        this.muzzleFlash.x = this.player.meta[this.currentWeapon].meta.muzzleFlashX
+        this.muzzleFlash.y = this.player.meta[this.currentWeapon].meta.muzzleFlashY
     })
 
     /**

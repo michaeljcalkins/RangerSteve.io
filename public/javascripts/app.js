@@ -172,7 +172,6 @@ function Create() {
         _this.currentWeapon = _this.currentWeapon === 'primaryWeapon' ? 'secondaryWeapon' : 'primaryWeapon';
 
         _this.currentWeaponSprite.loadTexture(_this.player.meta[_this.currentWeapon].id);
-
         _this.currentWeaponSprite.scale.setTo(_this.player.meta[_this.currentWeapon].meta.scale);
         _this.currentWeaponSprite.rotation = _this.player.meta[_this.currentWeapon].meta.rotation;
 
@@ -184,6 +183,10 @@ function Create() {
             _this.currentWeaponSprite.x = _this.player.meta[_this.currentWeapon].meta.rightFaceX;
             _this.currentWeaponSprite.y = _this.player.meta[_this.currentWeapon].meta.rightFaceY;
         }
+
+        _this.muzzleFlash.x = _this.player.meta[_this.currentWeapon].meta.muzzleFlashX;
+        _this.muzzleFlash.y = _this.player.meta[_this.currentWeapon].meta.muzzleFlashY;
+        console.log(_this.muzzleFlash.x, _this.muzzleFlash.y);
     });
 
     /**
@@ -2202,7 +2205,10 @@ var AK47 = function (_Phaser$Group) {
             leftFaceY: 30,
 
             rightFaceX: -7,
-            rightFaceY: 19
+            rightFaceY: 19,
+
+            muzzleFlashX: 102,
+            muzzleFlashY: -72
         };
         _this.bulletHeight = 2;
         _this.bulletSpeed = 2300;
@@ -2428,7 +2434,10 @@ var DesertEagle = function (_Phaser$Group) {
             leftFaceY: -20,
 
             rightFaceX: 9,
-            rightFaceY: -29
+            rightFaceY: -29,
+
+            muzzleFlashX: 5,
+            muzzleFlashY: -75
         };
         _this.bulletHeight = 2;
         _this.bulletSpeed = 2300;

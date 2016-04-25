@@ -17,7 +17,10 @@ export default class DesertEagle extends Phaser.Group {
             leftFaceY: -20,
 
             rightFaceX: 9,
-            rightFaceY: -29
+            rightFaceY: -29,
+
+            muzzleFlashX: 5,
+            muzzleFlashY: -75
         }
         this.bulletHeight = 2
         this.bulletSpeed = 2300
