@@ -4,7 +4,7 @@ html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  background: #F2F2F2 !important; }
+  background: #f5f5f5 !important; }
 
 html {
   overflow: hidden; }
@@ -25,6 +25,9 @@ section {
   -webkit-transition: none;
   transition: none; }
 
+.home-container {
+  background: url(/images/map-background.png) no-repeat top center; }
+
 .align-middle {
   display: -webkit-box;
   display: flex;
@@ -34,13 +37,15 @@ section {
   justify-content: center; }
 
 .section-wrapper {
-  box-shadow: 0 0 3px 0 #C6C6C6;
   float: left;
   width: 100%; }
 
 .main-section {
   background: url(/images/explode2.png) no-repeat center -170px;
   background-size: 1100px;
+  border-radius: none;
+  box-shadow: none;
+  margin: 0;
   position: relative;
   height: 800px;
   overflow: hidden; }
@@ -73,7 +78,12 @@ section {
 section {
   width: 100%;
   clear: both;
-  float: left; }
+  float: left;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 0 0 #e5e5e5;
+  margin: 0 0 2em 0;
+  padding: 3em; }
   section h1 {
     padding: 50px 50px 10px 50px; }
   section p {
@@ -85,7 +95,7 @@ section {
     padding: 40px 25px; }
 
 .gray-section {
-  background: #F8F8F8; }
+  background: #fff; }
 
 .white-section {
   background: white; }

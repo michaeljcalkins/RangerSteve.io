@@ -1,105 +1,106 @@
 extends layout
 
 block content
-    .alert.alert-info.text-center(style="margin: 0") Ranger Steve is under construction with daily updates. <a class="btn btn-primary" href="https://www.twitch.tv/michaeljcalkins" target="_blank">Follow Michael for updates.</a> 
+    .home-container
+        .alert.alert-info.text-center(style="margin: 0") Ranger Steve is under construction with daily updates. <a class="btn btn-primary" href="https://www.twitch.tv/michaeljcalkins" target="_blank">Follow Michael for updates.</a> 
 
-    section.main-section.text-center
-        .align-middle
-            div
-                .main-header Ranger Steve
-                .sub-header Buffalo Invasion
-                a.btn.btn-primary.btn-lg(href="/game") Play Now
+        section.main-section.text-center
+            .align-middle
+                div
+                    .main-header Ranger Steve
+                    .sub-header Buffalo Invasion
+                    a.btn.btn-primary.btn-lg(href="/game") Play Now
 
-    .container 
-        .section-wrapper
-            section.white-section.video-section
-                video.fullscreen-video(loop, muted, autoplay, poster="/images/home-video-preview.png")
-                    source(src="/video/home-video.webm", type="video/webm")
-                    source(src="/video/home-video.mp4", type="video/mp4")
-                    //- source(src="", type="video/ogg")
+        .container 
+            .section-wrapper
+                section.white-section.video-section
+                    video.fullscreen-video(loop, muted, autoplay, poster="/images/home-video-preview.png")
+                        source(src="/video/home-video.webm", type="video/webm")
+                        source(src="/video/home-video.mp4", type="video/mp4")
+                        //- source(src="", type="video/ogg")
 
-            section.gray-section
-                .row
-                    .col-sm-6
-                        h1 Fast paced, intense gameplay
-                        p This is a realtime, "shoot em up", explosive multiplayer game that makes playing with your friends as simple as sharing a link.
-                    .col-sm-6
-                        img.img-rounded(src="/images/screenshots/fast.png")
-    
-            section.white-section
-                .row
-                    .col-sm-6
-                        img.img-rounded(src="/images/screenshots/weapons.png")
-                    .col-sm-6
-                        h1 All your favorite weapons
-                        p Choose from the AK-47 to the Barrett sniper to kill enemy players and the buffalo horde.  
+                section.gray-section
+                    .row
+                        .col-sm-6
+                            h1 Fast paced, intense gameplay
+                            p This is a realtime, "shoot em up", explosive multiplayer game that makes playing with your friends as simple as sharing a link.
+                        .col-sm-6
+                            img.img-rounded(src="/images/screenshots/fast.png")
+        
+                section.white-section
+                    .row
+                        .col-sm-6
+                            img.img-rounded(src="/images/screenshots/weapons.png")
+                        .col-sm-6
+                            h1 All your favorite weapons
+                            p Choose from the AK-47 to the Barrett sniper to kill enemy players and the buffalo horde.  
+                    
+                section.gray-section
+                    .row
+                        .col-sm-6
+                            h1 Play with your friends instantly
+                            p By sharing the URL in your address bar you can instantly play with your friends.  Making it easy to start LAN party wherever you area.
+                        .col-sm-6
+                            img.img-rounded(src="/images/screenshots/share.png")
+
+                section.white-section.newsletter-section.
+                    <!-- Begin MailChimp Signup Form -->
+                    <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+                    <style type="text/css">
+                    #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+                    /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+                    We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+                    </style>
+                    <div id="mc_embed_signup">
+                    <form action="//clouddueling.us6.list-manage.com/subscribe/post?u=ee7e3d14e2b1356adb186012a&amp;id=f4a249ec8b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                    <div id="mc_embed_signup_scroll">
+                    <label for="mce-EMAIL">Updates for Ranger Steve</label>
+                    <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ee7e3d14e2b1356adb186012a_f4a249ec8b" tabindex="-1" value=""></div>
+                    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                    </div>
+                    </form>
+                    </div>
+                    <!--End mc_embed_signup-->
+
+                section.white-section
+                    .row
+                        .col-sm-6
+                            img.img-rounded(src="http://placehold.it/500x300")
+                        .col-sm-6
+                            h1 Kill streak bonuses
+                            p The more you kill and the higher your score the better the weapons you get access to.  The longer you survive without dying the more perks you'll get to kill with.
+                            
+                section.gray-section
+                    .row
+                        .col-sm-6
+                            h1 Leaderboards
+                            p Maintain your spot on top of the leaderboards that show the top 10 players in on the map for as long as you can.  They're coming for you...
+                        .col-sm-6
+                            img.img-rounded(src="http://placehold.it/500x300")
+
+                section.white-section
+                    .row
+                        .col-sm-6   
+                            img.img-rounded(src="http://placehold.it/500x300")
+                        .col-sm-6
+                            h1 Score stealing
+                            p You earn points by killing players and buffalo, but when you kill a player you take part of their score into your own.
+
+                section.gray-section
+                    .row
+                        .col-sm-6
+                            h1 Fighting the buffalo horde
+                            p You will fight the tough and wild buffalo throughout the map and when a player activates a bonus.
+                        .col-sm-6
+                            img.img-rounded(src="http://placehold.it/500x300")
                 
-            section.gray-section
-                .row
-                    .col-sm-6
-                        h1 Play with your friends instantly
-                        p By sharing the URL in your address bar you can instantly play with your friends.  Making it easy to start LAN party wherever you area.
-                    .col-sm-6
-                        img.img-rounded(src="/images/screenshots/share.png")
-
-            section.white-section.newsletter-section.
-                <!-- Begin MailChimp Signup Form -->
-                <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
-                <style type="text/css">
-                #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
-                /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-                We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-                </style>
-                <div id="mc_embed_signup">
-                <form action="//clouddueling.us6.list-manage.com/subscribe/post?u=ee7e3d14e2b1356adb186012a&amp;id=f4a249ec8b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                <div id="mc_embed_signup_scroll">
-                <label for="mce-EMAIL">Updates for Ranger Steve</label>
-                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ee7e3d14e2b1356adb186012a_f4a249ec8b" tabindex="-1" value=""></div>
-                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-                </div>
-                </form>
-                </div>
-                <!--End mc_embed_signup-->
-
-            section.white-section
-                .row
-                    .col-sm-6
-                        img.img-rounded(src="http://placehold.it/500x300")
-                    .col-sm-6
-                        h1 Kill streak bonuses
-                        p The more you kill and the higher your score the better the weapons you get access to.  The longer you survive without dying the more perks you'll get to kill with.
-                        
-            section.gray-section
-                .row
-                    .col-sm-6
-                        h1 Leaderboards
-                        p Maintain your spot on top of the leaderboards that show the top 10 players in on the map for as long as you can.  They're coming for you...
-                    .col-sm-6
-                        img.img-rounded(src="http://placehold.it/500x300")
-
-            section.white-section
-                .row
-                    .col-sm-6   
-                        img.img-rounded(src="http://placehold.it/500x300")
-                    .col-sm-6
-                        h1 Score stealing
-                        p You earn points by killing players and buffalo, but when you kill a player you take part of their score into your own.
-
-            section.gray-section
-                .row
-                    .col-sm-6
-                        h1 Fighting the buffalo horde
-                        p You will fight the tough and wild buffalo throughout the map and when a player activates a bonus.
-                    .col-sm-6
-                        img.img-rounded(src="http://placehold.it/500x300")
-            
-            section.white-section
-                .row
-                    .col-sm-6
-                        img.img-rounded(src="/images/screenshots/browser.png")
-                    .col-sm-6
-                        h1 No fancy graphics card required
-                        p The only thing you need to play this game is a regular computer and an updated browser.
-            
+                section.white-section
+                    .row
+                        .col-sm-6
+                            img.img-rounded(src="/images/screenshots/browser.png")
+                        .col-sm-6
+                            h1 No fancy graphics card required
+                            p The only thing you need to play this game is a regular computer and an updated browser.
+                
