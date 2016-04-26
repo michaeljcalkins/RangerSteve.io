@@ -34,6 +34,12 @@ export default function onMovePlayer(data) {
     movePlayer.rightArmGroup.angle = data.rightArmAngle
     movePlayer.leftArmGroup.angle = data.leftArmAngle
 
+    if (data.facing === 'right') {
+        playerFaceRight(movePlayer)
+    } else {
+        playerFaceLeft(movePlayer)
+    }
+
     if (movePlayer.x > movePlayer.lastPosition.x) {
         movePlayer.animations.play('right')
     }
@@ -49,14 +55,6 @@ export default function onMovePlayer(data) {
             movePlayer.frame = 7
         } else {
             movePlayer.frame = 6
-        }
-
-        if (data.facing === 'left' && movePlayer.facing !== 'left') {
-            playerFaceLeft(movePlayer)
-        }
-
-        if (data.facing === 'right' && movePlayer.facing !== 'right') {
-            playerFaceRight(movePlayer)
         }
     }
 

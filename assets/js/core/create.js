@@ -52,10 +52,8 @@ export default function Create() {
 
 
     /**
-     * Text
+     * Events
      */
-    let textStyles = { fontSize: '14px', fill: '#000' }
-
     EventHandler.emit('score update', '')
     EventHandler.emit('health update', '')
     EventHandler.on('volume update', (data) => {
@@ -70,8 +68,9 @@ export default function Create() {
         this.player.meta.selectedSecondaryWeaponId = weapon.id
     })
 
-    this.positionText = this.add.text(300, 300, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
-    this.positionText.fixedToCamera = true
+    // let textStyles = { fontSize: '14px', fill: '#000' }
+    // this.positionText = this.add.text(300, 300, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
+    // this.positionText.fixedToCamera = true
 
 
     /**
