@@ -1,6 +1,7 @@
 import { PropTypes } from 'react'
 import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
+import * as HighRuleJungle from '../../maps/HighRuleJungle'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -49,7 +50,7 @@ export default function onPlayerRespawn(data) {
 
         this.deathSprite.visible = false
 
-        let spawnPoint = this.mapInstance.getRandomSpawnPoint()
+        let spawnPoint = HighRuleJungle.getRandomSpawnPoint()
         this.player.x = spawnPoint.x
         this.player.y = spawnPoint.y
         this.player.alpha = 1

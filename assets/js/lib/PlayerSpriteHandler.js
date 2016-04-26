@@ -1,8 +1,9 @@
 import GameConsts from './GameConsts'
 import Weapons from './Weapons'
+import * as HighRuleJungle from '../maps/HighRuleJungle'
 
 export default function PlayerSpriteHandler() {
-    let spawnPoint = this.mapInstance.getRandomSpawnPoint()
+    let spawnPoint = HighRuleJungle.getRandomSpawnPoint()
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.scale.setTo(GameConsts.PLAYER_SCALE)
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)

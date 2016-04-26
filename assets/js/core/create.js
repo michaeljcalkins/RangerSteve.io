@@ -1,7 +1,7 @@
 import GameConsts from '../lib/GameConsts'
 import SetEventHandlers from '../lib/SocketEvents/setEventHandlers'
 import EventHandler from '../lib/EventHandler'
-import HighRuleJungle from '../maps/HighRuleJungle'
+import * as HighRuleJungle from '../maps/HighRuleJungle'
 import PlayerSpriteHandler from '../lib/PlayerSpriteHandler'
 import GetQueryString from '../lib/GetQueryString'
 
@@ -11,6 +11,7 @@ export default function Create() {
     this.socket = io.connect()
     this.enemies = this.game.add.group()
     this.enemyBullets = []
+    this.jumping = false
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)
@@ -25,8 +26,7 @@ export default function Create() {
     /**
      * Map
      */
-    this.mapInstance = new HighRuleJungle(this)
-    this.mapInstance.create()
+    HighRuleJungle.create.call(this)
 
 
     /**
@@ -42,12 +42,8 @@ export default function Create() {
     // Since we're jumping we need gravity
     this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
-    // Flag to track if the jump button is pressed
-    this.jumping = false
-
     PlayerSpriteHandler.call(this)
-
-    this.mapInstance.createOverlays()
+    HighRuleJungle.createOverlays.call(this)
 
     /**
      * Weapons

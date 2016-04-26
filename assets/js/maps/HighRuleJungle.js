@@ -1,3 +1,5 @@
+const DEBUG = false
+
 const spawnPoints = [
     { x: 815, y: 1730 },
     { x: 3380, y: 1030 },
@@ -34,41 +36,39 @@ const ledges = [
     { id: 23, x: 5940, y: 2018, width: 1050, height: 600 }
 ]
 
-export default class HighRuleJungle {
-    constructor(rootScope) {
-        this.rootScope = rootScope
-    }
+export function getRandomSpawnPoint() {
+    return _.sample(spawnPoints)
+}
 
-    getRandomSpawnPoint() {
-        return _.sample(spawnPoints)
-    }
+export function createOverlays() {
+    this.bridge = this.add.sprite(1751, 1655, 'bridge')
+    this.towerRail = this.add.sprite(5643, 1525, 'tower-rail')
+}
 
-    createOverlays() {
-        this.rootScope.bridge = this.rootScope.add.sprite(1751, 1655, 'bridge')
-        this.rootScope.towerRail = this.rootScope.add.sprite(5643, 1525, 'tower-rail')
-    }
+export function create() {
+    this.skysprite = this.add.sprite(0, 0, 'map-bg')
+    this.skysprite.width = this.game.world.width
+    this.skysprite.height = this.game.world.height
+    this.platforms = this.add.group()
+    this.platforms.enableBody = true
+    createLedges.call(this)
+    this.platforms.setAll('body.immovable', true)
+    this.platforms.setAll('body.allowGravity', false)
+}
 
-    create() {
-        this.rootScope.skysprite = this.rootScope.add.tileSprite(0, 0, this.rootScope.game.world.width, this.rootScope.game.world.height, 'map-bg')
-        this.rootScope.platforms = this.rootScope.add.group()
-        this.rootScope.platforms.enableBody = true
-        this.createLedges()
-        this.rootScope.platforms.setAll('body.immovable', true)
-        this.rootScope.platforms.setAll('body.allowGravity', false)
-    }
+export function createLedges() {
+    ledges.forEach((ledge) => {
+        if (DEBUG) {
+            let newLedge = this.platforms.create(ledge.x, ledge.y, 'ground')
+            newLedge.alpha = 0.4
+            let style = { font: "20px Arial", fill: "#ff0044", align: "center", backgroundColor: "#ffff00" }
+            let text = this.game.add.text(ledge.x, ledge.y, ledge.id, style)
+            text.alpha = 0.2
+            return
+        }
 
-    createLedges() {
-        ledges.forEach((ledge) => {
-            // var newLedge = this.rootScope.platforms.create(ledge.x, ledge.y, 'ground')
-            var newLedge = this.rootScope.platforms.create(ledge.x, ledge.y)
-            newLedge.height = ledge.height
-            newLedge.width = ledge.width
-
-            // Debug stuff
-            // newLedge.alpha = 0.4
-            // let style = { font: "20px Arial", fill: "#ff0044", align: "center", backgroundColor: "#ffff00" }
-            // let text = this.rootScope.game.add.text(ledge.x, ledge.y, ledge.id, style)
-            // text.alpha = 0.2
-        })
-    }
+        let newLedge = this.platforms.create(ledge.x, ledge.y)
+        newLedge.height = ledge.height
+        newLedge.width = ledge.width
+    })
 }
