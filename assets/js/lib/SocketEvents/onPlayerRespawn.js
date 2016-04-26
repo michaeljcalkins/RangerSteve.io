@@ -7,11 +7,20 @@ const propTypes = {
     health: PropTypes.number.isRequired
 }
 
+let respawnInProgress = false
+let respawnHandle = null
+
 export default function onPlayerRespawn(data) {
     check(data, propTypes)
 
     if (data.damagedPlayerId !== ('/#' + this.socket.id))
         return
+
+    if (respawnInProgress) {
+        return
+    }
+
+    respawnInProgress = true
 
     // Set primary weapon
     this.player.meta.primaryWeapon = new Weapons[this.player.meta.selectedPrimaryWeaponId](this)
@@ -27,12 +36,26 @@ export default function onPlayerRespawn(data) {
     if (this.currentWeapon === 'secondaryWeapon')
         this.currentWeaponSprite.loadTexture(this.player.meta.selectedSecondaryWeaponId)
 
-    // Reset health
-    this.player.meta.health = data.health
-    EventHandler.emit('health update', String(this.player.meta.health))
+    this.deathSprite.x = this.player.x - 50
+    this.deathSprite.y = this.player.y - 45
+    this.player.alpha = 0
+    this.deathSprite.visible = true
+    this.deathSprite.animations.play('playerDeath')
 
-    // Spawn player
-    let spawnPoint = this.mapInstance.getRandomSpawnPoint()
-    this.player.x = spawnPoint.x
-    this.player.y = spawnPoint.y
+    clearTimeout(respawnHandle)
+    respawnHandle = setTimeout(() => {
+        this.player.meta.health = data.health
+        EventHandler.emit('health update', String(this.player.meta.health))
+
+        this.deathSprite.visible = false
+
+        let spawnPoint = this.mapInstance.getRandomSpawnPoint()
+        this.player.x = spawnPoint.x
+        this.player.y = spawnPoint.y
+        this.player.alpha = 1
+
+        setTimeout(() => {
+            respawnInProgress = false
+        }, 1000)
+    }, 2500)
 }

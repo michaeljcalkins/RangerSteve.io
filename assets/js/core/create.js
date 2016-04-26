@@ -74,8 +74,8 @@ export default function Create() {
         this.player.meta.selectedSecondaryWeaponId = weapon.id
     })
 
-    // this.positionText = this.add.text(300, 300, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
-    // this.positionText.fixedToCamera = true
+    this.positionText = this.add.text(300, 300, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
+    this.positionText.fixedToCamera = true
 
 
     /**
@@ -124,6 +124,11 @@ export default function Create() {
         this.muzzleFlash.x = this.player.meta[this.currentWeapon].meta.muzzleFlashX
         this.muzzleFlash.y = this.player.meta[this.currentWeapon].meta.muzzleFlashY
     })
+
+    this.deathSprite = this.add.sprite(this.player.x, this.player.y, 'death')
+    this.deathSprite.scale.setTo(.17)
+    this.deathSprite.animations.add('playerDeath', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21], 20)
+    this.deathSprite.visible = false
 
     /**
      * Start listening for events

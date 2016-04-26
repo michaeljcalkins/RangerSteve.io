@@ -4,10 +4,10 @@ import SprayBlood from './SprayBlood'
 
 export default function CollisionHandler() {
     // Collide this player with the map
-    this.physics.arcade.collide(this.player, this.platforms, null, null, this)
+    this.physics.arcade.collide(this.player, this.platforms)
 
     // Did this player's bullets hit any platforms
-    this.physics.arcade.collide(this.platforms, this.bullets, (platform, bullet) => {
+    this.physics.arcade.overlap(this.platforms, this.bullets, function(platform, bullet) {
         let lastKnownX = bullet.x
         let lastKnownY = bullet.y
 
@@ -26,7 +26,7 @@ export default function CollisionHandler() {
     }, null, this)
 
     // Did enemy bullets hit any platforms
-    this.physics.arcade.overlap(this.platforms, this.enemyBullets, (platform, bullet) => {
+    this.physics.arcade.overlap(this.enemyBullets, this.platforms, function(bullet) {
         bullet.kill()
 
         let ricochet = this.add.sprite(bullet.x, bullet.y - 15, 'ricochet')
@@ -41,7 +41,7 @@ export default function CollisionHandler() {
         })
     }, null, this)
 
-    this.physics.arcade.overlap(this.bullets, this.enemies, (bullet) => {
+    this.physics.arcade.overlap(this.bullets, this.enemies, function(bullet) {
         bullet.kill()
     })
 

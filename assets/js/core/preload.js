@@ -13,6 +13,7 @@ export default function Preload() {
     this.load.spritesheet('commando', '/images/commando.png', 300, 315)
     this.load.spritesheet('ricochet', '/images/ricochet.png', 274, 185)
     this.load.spritesheet('blood', '/images/blood.png', 440, 256)
+    this.load.spritesheet('death', '/images/death.png', 500, 512)
 
     // Weapons
     GameConsts.PRIMARY_WEAPONS.forEach((weapon) => {

@@ -11,7 +11,7 @@ const spawnPoints = [
 const ledges = [
     { id: 1, x: 2145, y: 2065, width: 135, height: 40 },
     { id: 2, x: 2613, y: 1094, width: 1100, height: 112 },
-    { id: 3, x: 3657, y: 3446, width: 500, height: 600 },
+    { id: 3, x: 3657, y: 3446, width: 550, height: 600 },
     { id: 4, x: 5217, y: 1938, width: 380, height: 600 },
     { id: 5, x: 422, y: 1824, width: 1150, height: 300 },
     { id: 6, x: 1555, y: 1749, width: 270, height: 730 },
