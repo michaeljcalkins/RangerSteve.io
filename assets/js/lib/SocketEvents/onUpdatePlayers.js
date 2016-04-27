@@ -27,8 +27,8 @@ export default function onUpdatePlayers(data) {
 
     data.room.players.forEach((player) => {
         if (player.id === ('/#' + this.socket.id)) {
-            EventHandler.emit('score update', String(player.meta.score))
-            EventHandler.emit('health update', String(player.meta.health))
+            EventHandler.emit('score update', player.meta.score)
+            EventHandler.emit('health update', player.meta.health)
             EventHandler.emit('player update', { player })
             return
         }

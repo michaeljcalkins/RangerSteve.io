@@ -13,5 +13,5 @@ export default function onPlayerHealthUpdate(data) {
         return
 
     this.player.meta.health = data.health
-    EventHandler.emit('health update', String(this.player.meta.health))
+    EventHandler.emit('health update', this.player.meta.health)
 }

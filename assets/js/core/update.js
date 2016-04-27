@@ -34,7 +34,8 @@ export default function Update() {
             y: this.player.y,
             rightArmAngle: this.rightArmGroup.angle,
             leftArmAngle: this.leftArmGroup.angle,
-            facing: this.player.meta.facing
+            facing: this.player.meta.facing,
+            respawnInProgress: this.respawnInProgress
         })
     }
 }

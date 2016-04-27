@@ -17,7 +17,7 @@ export default function onPlayerDamaged(data) {
         return
 
     this.player.meta.health = data.health
-    EventHandler.emit('health update', String(this.player.meta.health))
+    EventHandler.emit('health update', this.player.meta.health)
 
     if (this.player.meta.health > 55 && this.player.meta.health < 100) {
         clearTimeout(damageTimeout)

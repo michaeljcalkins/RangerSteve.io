@@ -1,6 +1,7 @@
 import { PropTypes } from 'react'
 import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
+import PlayerById from '../PlayerById'
 import * as HighRuleJungle from '../../maps/HighRuleJungle'
 
 const propTypes = {
@@ -8,20 +9,25 @@ const propTypes = {
     health: PropTypes.number.isRequired
 }
 
-let respawnInProgress = false
 let respawnHandle = null
 
 export default function onPlayerRespawn(data) {
     check(data, propTypes)
 
-    if (data.damagedPlayerId !== ('/#' + this.socket.id))
-        return
-
-    if (respawnInProgress) {
+    if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
+        let selectedPlayer = PlayerById.call(this, data.damagedPlayerId)
+        this.deathSprite.x = selectedPlayer.x - 50
+        this.deathSprite.y = selectedPlayer.y - 45
+        selectedPlayer.kill()
+        this.deathSprite.visible = true
+        this.deathSprite.animations.play('playerDeath')
+        console.log('selectedPlayer', selectedPlayer)
         return
     }
 
-    respawnInProgress = true
+    if (this.respawnInProgress) return
+
+    this.respawnInProgress = true
 
     // Set primary weapon
     this.player.meta.primaryWeapon = new Weapons[this.player.meta.selectedPrimaryWeaponId](this)
@@ -46,7 +52,7 @@ export default function onPlayerRespawn(data) {
     clearTimeout(respawnHandle)
     respawnHandle = setTimeout(() => {
         this.player.meta.health = data.health
-        EventHandler.emit('health update', String(this.player.meta.health))
+        EventHandler.emit('health update', this.player.meta.health)
 
         this.deathSprite.visible = false
 
@@ -56,7 +62,7 @@ export default function onPlayerRespawn(data) {
         this.player.alpha = 1
 
         setTimeout(() => {
-            respawnInProgress = false
+            this.respawnInProgress = false
         }, 1000)
     }, 2500)
 }

@@ -47,6 +47,8 @@ export default function CollisionHandler() {
 
     // Did this player get hit by any enemy bullets
     this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
+        if (this.respawnInProgress) return
+
         bullet.kill()
 
         SprayBlood.call(this, {

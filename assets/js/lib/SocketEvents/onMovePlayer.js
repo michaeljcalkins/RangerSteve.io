@@ -18,11 +18,18 @@ export default function onMovePlayer(data) {
         return
 
     let movePlayer = PlayerById.call(this, data.id)
+    console.log('data', data.respawnInProgress)
 
     // Player not found
     if (! movePlayer) {
         console.log('Could not find player', data)
         console.log('This players id', '/#' + this.socket.id)
+        return
+    }
+
+    if (data.respawnInProgress) {
+        movePlayer.x = -1000
+        console.log('respawn in progress')
         return
     }
 
