@@ -33,7 +33,7 @@ block content
                             img.img-rounded(src="/images/screenshots/weapons.png")
                         .col-sm-6
                             h1 All your favorite weapons
-                            p Choose from the AK-47 to the Barrett sniper to kill enemy players and the buffalo horde.  
+                            p The more you kill, the better the weapons you get to fight with.  The longer you survive, longer you get to keep fighting with the unlocked weapons.
                     
                 section
                     .row
@@ -67,10 +67,12 @@ block content
                 section
                     .row
                         .col-sm-6
-                            img.img-rounded(src="http://placehold.it/500x300")
+                            video(width="500", height="300", loop, muted, autoplay, poster="/images/kill-streak-preview.png")
+                                source(src="/video/kill-streak.webm", type="video/webm")
+                                source(src="/video/kill-streak.mp4", type="video/mp4")
                         .col-sm-6
-                            h1 Kill streak bonuses
-                            p The more you kill and the higher your score the better the weapons you get access to.  The longer you survive without dying the more perks you'll get to kill with.
+                            h1 Kill streaks
+                            p Everyone on the server will know when you're on a "Unstoppable" kill streak, it's kill or be killed out there.
                             
                 section
                     .row
