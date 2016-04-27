@@ -3218,7 +3218,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"hud-leaderboard hud-item\">\n    <h1>Leaderboard</h1>\n    <ol>\n        <li track-by=\"$index\" v-for=\"player in sortedPlayers\">\n            <span>{{player.meta.nickname}}</span>\n        </li>\n    </ol>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"hud-leaderboard hud-item\">\n    <h1>Leaderboard</h1>\n    <ol>\n        <li track-by=\"$index\" v-for=\"player in sortedPlayers\">\n            {{player.meta.nickname}}\n        </li>\n    </ol>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

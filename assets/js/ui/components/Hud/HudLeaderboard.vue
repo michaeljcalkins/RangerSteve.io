@@ -6,7 +6,7 @@
                 track-by="$index"
                 v-for="player in sortedPlayers"
             >
-                <span>{{player.meta.nickname}}</span>
+                {{player.meta.nickname}}
             </li>
         </ol>
     </div>
