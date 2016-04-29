@@ -269,6 +269,33 @@ body.game {
     .hud-ammo .progress .progress-bar {
       background: #F5A623; }
 
+.credits-container {
+  background: url(/images/credits-map-background.png) no-repeat top center;
+  background-attachment: fixed;
+  text-align: center;
+  z-index: 1;
+  padding-bottom: 400px;
+  padding-top: 100px; }
+  .credits-container img {
+    height: 300px; }
+  .credits-container .row {
+    margin-bottom: 100px; }
+  .credits-container a,
+  .credits-container a:hover {
+    color: white;
+    text-transform: none; }
+  .credits-container h1 {
+    color: white;
+    font-size: 70px; }
+  .credits-container h2 {
+    color: white;
+    font-size: 60px; }
+  .credits-container h3 {
+    font-weight: bold;
+    color: white;
+    font-size: 40px;
+    letter-spacing: 3px; }
+
 .modal-content {
   background: url(/images/ui/panel/5.png) no-repeat top center;
   box-shadow: none !important;

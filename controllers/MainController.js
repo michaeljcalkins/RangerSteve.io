@@ -4,5 +4,8 @@ module.exports = {
     },
     game:  function(req, res) {
         res.render('game', { title: 'Game | Ranger Steve: Buffalo Invasion' });
+    },
+    credits:  function(req, res) {
+        res.render('credits', { title: 'Credits | Ranger Steve: Buffalo Invasion' });
     }
 }

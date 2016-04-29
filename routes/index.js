@@ -5,6 +5,7 @@ module.exports = function() {
 
     router.get('/', controllers.main.home)
     router.get('/game', controllers.main.game)
+    router.get('/credits', controllers.main.credits)
 
     return router
 }

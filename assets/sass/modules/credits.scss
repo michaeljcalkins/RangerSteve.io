@@ -1,0 +1,39 @@
+.credits-container {
+  background: url(/images/credits-map-background.png) no-repeat top center;
+  background-attachment: fixed;
+  text-align: center;
+  z-index: 1;
+  padding-bottom: 400px;
+  padding-top: 100px;
+
+  img {
+    height: 300px;
+  }
+
+  .row {
+    margin-bottom: 100px;
+  }
+
+  a,
+  a:hover {
+    color: white;
+    text-transform: none;
+  }
+
+  h1 {
+    color: white;
+    font-size: 70px;
+  }
+
+  h2 {
+    color: white;
+    font-size: 60px;
+  }
+
+  h3 {
+    font-weight: bold;
+    color: white;
+    font-size: 40px;
+    letter-spacing: 3px;
+  }
+}
