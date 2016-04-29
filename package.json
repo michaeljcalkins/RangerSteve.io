@@ -12,6 +12,7 @@
     "debug": "~2.2.0",
     "event-emitter": "^0.3.4",
     "express": "~4.13.1",
+    "express-nunjucks": "^1.0.0",
     "human-readable-ids": "^1.0.1",
     "jade": "~1.11.0",
     "lodash": "^4.6.1",

@@ -10,7 +10,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compression = require('compression')
-var nunjucks = require('nunjucks')
+const nunjucks = require('express-nunjucks');
 require('http').Server(app)
 var SocketHandler = require('./lib/SocketHandler')
 
@@ -23,13 +23,26 @@ var routes = require('./routes')(io)
 SocketHandler(io)
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'resources/views'));
 app.set('view engine', 'nunjucks');
 
-nunjucks.configure('views', {
+// Configuring the template system.
+nunjucks.setup({
+    // (default: true) controls if output with dangerous characters are escaped automatically.
     autoescape: true,
-    express: app
-});
+    // (default: false) throw errors when outputting a null/undefined value.
+    throwOnUndefined: false,
+    // (default: false) automatically remove trailing newlines from a block/tag.
+    trimBlocks: false,
+    // (default: false) automatically remove leading whitespace from a block/tag.
+    lstripBlocks: false,
+    // (default: false) if true, the system will automatically update templates when they are changed on the filesystem.
+    watch: true,
+    // (default: false) if true, the system will avoid using a cache and templates will be recompiled every single time.
+    noCache: true,
+    // (default: see nunjucks syntax) defines the syntax for nunjucks tags.
+    tags: {}
+}, app)
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(compression())

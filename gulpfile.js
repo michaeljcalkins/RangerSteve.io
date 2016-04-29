@@ -5,25 +5,23 @@ var gulp = require('gulp'),
 
 require('laravel-elixir-vueify')
 
-elixir.config.assetsPath = 'assets'
-
 elixir.extend('obfuscate', function() {
     new elixir.Task('obfuscate', function() {
-        return gulp.src('public/javascripts/app.js')
+        return gulp.src('public/js/app.js')
             .pipe(streamify(jsObfuscator()))
-            .pipe(gulp.dest('public/javascripts'))
+            .pipe(gulp.dest('public/js'))
     })
 })
 
 elixir(function(mix) {
     if (! elixir.config.production) {
         return mix
-            .sass('assets/sass/app.scss', 'public/stylesheets/app.css')
-            .browserify('assets/js/app.js', 'public/javascripts/app.js')
+            .sass('app.scss')
+            .browserify('app.js')
     }
 
     mix
-        .sass('assets/sass/app.scss', 'public/stylesheets/app.css')
-        .browserify('assets/js/app.js', 'public/javascripts/app.js')
+        .sass('app.scss')
+        .browserify('app.js')
         .obfuscate()
 })

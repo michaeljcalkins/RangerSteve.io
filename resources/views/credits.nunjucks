@@ -1,4 +1,4 @@
-{% extends 'master' %}
+{% extends 'master.nunjucks' %}
 
 {% block title %}Credits | Ranger Steve: Buffalo Invasion{% endblock %}
 

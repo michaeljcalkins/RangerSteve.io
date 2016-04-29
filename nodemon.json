@@ -16,7 +16,8 @@
     "controllers/",
     "lib/",
     "routes/",
-    "views/"
+    "resources/",
+    "app.js"
   ],
   "env": {
     "NODE_ENV": "development"
