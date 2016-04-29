@@ -1,0 +1,142 @@
+{% extends 'master' %}
+
+{% block title %}Game | Ranger Steve: Buffalo Invasion{% endblock %}
+
+{% block content %}
+<div class="home-container">
+  <div style="margin: 0" class="alert alert-info text-center">Ranger Steve is under construction with daily updates.
+		<a class="btn btn-primary" href="https://www.twitch.tv/michaeljcalkins" target="_blank">Follow Michael for updates.</a>
+	</div>
+  <section class="main-section text-center">
+    <div class="align-middle">
+      <div>
+        <div class="main-header">Ranger Steve</div>
+        <div class="sub-header">Buffalo Invasion</div>
+				<a href="/game" class="btn btn-primary btn-lg">Play Now</a>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <div class="section-wrapper">
+      <section class="video-section">
+        <video loop="loop" muted="muted" autoplay="autoplay" poster="/images/home-video-preview.png" class="fullscreen-video">
+          <source src="/video/home-video.webm" type="video/webm" />
+          <source src="/video/home-video.mp4" type="video/mp4" />
+        </video>
+      </section>
+      <section>
+        <div class="row">
+          <div class="col-sm-6">
+            <h1>Fast paced, intense gameplay</h1>
+            <p>This is a realtime, "shoot em up", explosive multiplayer game that makes playing with your friends as simple as sharing a link.</p>
+          </div>
+          <div class="col-sm-6">
+						<img src="/images/screenshots/fast.png" class="img-rounded" />
+					</div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <div class="col-sm-6">
+						<img src="/images/screenshots/weapons.png" class="img-rounded" />
+					</div>
+          <div class="col-sm-6">
+            <h1>All your favorite weapons</h1>
+            <p>The more you kill, the better the weapons you get to fight with.  The longer you survive, longer you get to keep fighting with the unlocked weapons.</p>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <div class="col-sm-6">
+            <h1>Play with your friends instantly</h1>
+            <p>By sharing the URL in your address bar you can instantly play with your friends.  Making it easy to start LAN party wherever you area.</p>
+          </div>
+          <div class="col-sm-6">
+						<img src="/images/screenshots/share.png" class="img-rounded" />
+					</div>
+        </div>
+      </section>
+      <section class="newsletter-section">
+        <!-- Begin MailChimp Signup Form -->
+        <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+        #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+        /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+        We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        </style>
+        <div id="mc_embed_signup">
+        <form action="//clouddueling.us6.list-manage.com/subscribe/post?u=ee7e3d14e2b1356adb186012a&amp;id=f4a249ec8b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+        <label for="mce-EMAIL">Updates for Ranger Steve</label>
+        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+        <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ee7e3d14e2b1356adb186012a_f4a249ec8b" tabindex="-1" value=""></div>
+        <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+        </form>
+        </div>
+        <!--End mc_embed_signup-->
+      </section>
+      <section>
+        <div class="row">
+          <div class="col-sm-6">
+            <video width="500" height="300" loop="loop" muted="muted" autoplay="autoplay" poster="/images/kill-streak-preview.png">
+              <source src="/video/kill-streak.webm" type="video/webm" />
+              <source src="/video/kill-streak.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="col-sm-6">
+            <h1>Kill streaks</h1>
+            <p>Everyone on the server will know when you're on a "Unstoppable" kill streak, it's kill or be killed out there.</p>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <div class="col-sm-6">
+            <h1>Leaderboard</h1>
+            <p>Maintain your spot on top of the leaderboard that show the top 10 players in on the map for as long as you can.  They're coming for you...</p>
+          </div>
+          <div class="col-sm-6">
+						<img src="/images/screenshots/leaderboard.png" class="img-rounded" />
+					</div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <div class="col-sm-6">
+						<img src="http://placehold.it/500x300" class="img-rounded" />
+					</div>
+          <div class="col-sm-6">
+            <h1>Score stealing</h1>
+            <p>You earn points by killing players and buffalo, but when you kill a player you take part of their score into your own.</p>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <div class="col-sm-6">
+            <h1>Fighting the buffalo horde</h1>
+            <p>You will fight the tough and wild buffalo throughout the map and when a player activates a bonus.</p>
+          </div>
+          <div class="col-sm-6">
+						<img src="http://placehold.it/500x300" class="img-rounded"/>
+					</div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <div class="col-sm-6">
+						<img src="/images/screenshots/browser.png" class="img-rounded" />
+					</div>
+          <div class="col-sm-6">
+            <h1>No fancy graphics card required</h1>
+            <p>The only thing you need to play this game is a regular computer and an updated browser.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}
