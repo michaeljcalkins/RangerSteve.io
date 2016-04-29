@@ -1744,7 +1744,6 @@ function onMovePlayer(data) {
     if (data.id === '/#' + this.socket.id) return;
 
     var movePlayer = _PlayerById2.default.call(this, data.id);
-    console.log('data', data.respawnInProgress);
 
     // Player not found
     if (!movePlayer) {
@@ -1755,7 +1754,6 @@ function onMovePlayer(data) {
 
     if (data.respawnInProgress) {
         movePlayer.x = -1000;
-        console.log('respawn in progress');
         return;
     }
 
