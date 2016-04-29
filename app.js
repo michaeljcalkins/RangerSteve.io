@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV === 'production') {
+    require ('newrelic')
+}
+
 var express = require('express');
 var socketIo = require('socket.io')
 var path = require('path');
@@ -6,7 +10,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compression = require('compression')
-var server = require('http').Server(app);
+require('http').Server(app)
 var SocketHandler = require('./lib/SocketHandler')
 
 var app = express()
