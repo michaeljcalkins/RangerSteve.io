@@ -228,12 +228,6 @@ function onPlayerDamaged(data) {
         util.log('Respawning player...', data)
         player.meta.health = 100
 
-        if (player.meta.score > 9) {
-            player.meta.score -= 10
-        } else {
-            player.meta.score = 0
-        }
-
         io.to(data.roomId).emit('player respawn', {
             id: this.id,
             damagedPlayerId: data.damagedPlayerId,
@@ -244,7 +238,14 @@ function onPlayerDamaged(data) {
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
         } else {
+            // Falling to your death makes you lose 10 points
             util.log(data.damagedPlayerId, 'fell to his death.')
+
+            if (player.meta.score > 9) {
+                player.meta.score -= 10
+            } else {
+                player.meta.score = 0
+            }
         }
 
         io.to(data.roomId).emit('update players', {
