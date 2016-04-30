@@ -14,16 +14,14 @@ let bodyParser = require('body-parser')
 let compression = require('compression')
 let nunjucks = require('express-nunjucks')
 let SocketHandler = require('./app/sockets')
+let routes = require('./app/routes')
 
 let app = express()
 let io = socketIo()
 app.io = io
-
-let routes = require('./app/routes')
-
 SocketHandler(io)
 
-app.set('views', path.join(__dirname, 'resources/views'));
+app.set('views', path.join(__dirname, 'resources/views'))
 app.set('view engine', 'nunjucks');
 
 nunjucks.setup({
@@ -50,8 +48,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), {
     maxAge: 86400000 // 1d
 }));
-
-console.log('routes', routes)
 
 app.use('/', routes)
 

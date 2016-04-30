@@ -1,7 +1,5 @@
 {% extends 'master.nunjucks' %}
 
-{% block title %}Game | Ranger Steve: Buffalo Invasion{% endblock %}
-
 {% block content %}
 <div class="home-container">
     <div style="margin: 0" class="alert alert-info text-center">Ranger Steve is under construction with daily updates.

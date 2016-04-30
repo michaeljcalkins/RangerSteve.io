@@ -1,7 +1,5 @@
 {% extends 'master.nunjucks' %}
 
-{% block title %}Credits | Ranger Steve: Buffalo Invasion{% endblock %}
-
 {% block content %}
 <div class="credits-screen"></div>
 <div class="credits-container">
