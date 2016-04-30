@@ -15,19 +15,15 @@ const propTypes = {
 export default function RemoteBullet(data) {
     check(data, propTypes)
 
-    let enemyBullet = this.game.add.sprite(data.x, data.y, 'bullet')
-    enemyBullet.bulletId = data.bulletId
-    enemyBullet.playerId = data.playerId
-    enemyBullet.damage = data.damage
-    enemyBullet.rotation = data.pointerAngle
-    enemyBullet.height = data.height
-    enemyBullet.width = data.width
-    enemyBullet.enableBody = true
-    enemyBullet.physicsBodyType = Phaser.Physics.ARCADE
-    this.game.physics.enable(enemyBullet, Phaser.Physics.ARCADE)
-    enemyBullet.body.gravity.y = -1800
-    enemyBullet.x = data.x
-    enemyBullet.y = data.y
+    let bullet = this.enemyBullets.getFirstDead()
+    bullet.reset(data.x, data.y)
+    bullet.bulletId = data.bulletId
+    bullet.playerId = data.playerId
+    bullet.damage = data.damage
+    bullet.rotation = data.pointerAngle
+    bullet.height = data.height
+    bullet.width = data.width
+    bullet.body.gravity.y = -1800
 
-    return enemyBullet
+    return bullet
 }

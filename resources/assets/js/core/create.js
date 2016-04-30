@@ -10,7 +10,6 @@ export default function Create() {
     this.volume = GameConsts.STARTING_VOLUME
     this.socket = io.connect()
     this.enemies = this.game.add.group()
-    this.enemyBullets = []
     this.jumping = false
     this.respawnInProgress = false
 
@@ -39,6 +38,14 @@ export default function Create() {
     this.bullets.createMultiple(50, 'bullet')
     this.bullets.setAll('checkWorldBounds', true)
     this.bullets.setAll('outOfBoundsKill', true)
+
+    this.enemyBullets = this.game.add.group()
+    this.enemyBullets.enableBody = true
+    this.physicsBodyType = Phaser.Physics.ARCADE
+    this.enemyBullets.createMultiple(50, 'bullet')
+    this.enemyBullets.setAll('checkWorldBounds', true)
+    this.enemyBullets.setAll('outOfBoundsKill', true)
+
 
     // Since we're jumping we need gravity
     this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
