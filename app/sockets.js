@@ -194,7 +194,6 @@ function onClientDisconnect() {
 }
 
 function onPlayerFullHealth(data) {
-    util.log('Player full health')
     let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health = 100
 
@@ -205,7 +204,6 @@ function onPlayerFullHealth(data) {
 }
 
 function onPlayerHealing(data) {
-    util.log('Player is healing')
     let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health += 10
 
@@ -219,14 +217,11 @@ function onPlayerHealing(data) {
 }
 
 function onPlayerDamaged(data) {
-    util.log('Player damaged...', data)
-
     let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health -= Number(data.damage)
 
     // Player was killed when shot
     if (player.meta.health <= 0) {
-        util.log('Respawning player...', data)
         player.meta.health = 100
 
         io.to(data.roomId).emit('player respawn', {
@@ -244,8 +239,6 @@ function onPlayerDamaged(data) {
             })
         } else {
             // Falling to your death makes you lose 10 points
-            util.log(data.damagedPlayerId, 'fell to his death.')
-
             if (player.meta.score > 9) {
                 player.meta.score -= 10
             } else {
@@ -269,18 +262,16 @@ function onPlayerDamaged(data) {
 }
 
 function onBulletFired(data) {
-    util.log('Creating new bullet...', data)
     data.id = this.id
     io.to(data.roomId).emit('bullet fired', data)
 }
 
 function onBulletRemoved(data) {
     if (!data.bulletId) {
-        console.error('Bullet id missing when removing bullet...', data)
+        util.log('Bullet id missing when removing bullet...', data)
         return
     }
 
     data.id = this.id
-    util.log('Removing bullet...', data)
     io.to(data.roomId).emit('bullet removed', data)
 }
