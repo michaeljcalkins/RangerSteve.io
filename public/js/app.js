@@ -31547,7 +31547,6 @@ function onPlayerRespawn(data) {
         selectedPlayer.kill();
         this.deathSprite.visible = true;
         this.deathSprite.animations.play('playerDeath');
-        console.log('selectedPlayer', selectedPlayer);
         return;
     }
 
