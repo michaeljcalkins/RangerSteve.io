@@ -34,6 +34,14 @@ export default function onUpdatePlayers(data) {
         }
 
         let newRemotePlayer = RemotePlayer.call(this, player)
+
+        let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unamed Ranger'
+
+        let style = { font: "36px Arial", fill: "#fff", align: "center" }
+        let text = this.game.add.text(0, -200, enemyPlayerName, style)
+        newRemotePlayer.addChild(text)
+        text.x = (text.width / 2) * -1
+
         this.enemies.add(newRemotePlayer)
     })
 }

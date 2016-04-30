@@ -29694,12 +29694,12 @@ function Create() {
     this.roomId = (0, _GetQueryString2.default)('roomId');
     this.volume = _GameConsts2.default.STARTING_VOLUME;
     this.socket = io.connect();
-    this.enemies = this.game.add.group();
     this.jumping = false;
     this.respawnInProgress = false;
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE);
+    this.physicsBodyType = Phaser.Physics.ARCADE;
     this.world.setBounds(0, 0, _GameConsts2.default.WORLD_WIDTH, _GameConsts2.default.WORLD_HEIGHT);
 
     // Scale game on window resize
@@ -29713,11 +29713,16 @@ function Create() {
     HighRuleJungle.create.call(this);
 
     /**
+     * Enemy Settings
+     */
+    this.enemies = this.game.add.group();
+    this.enemies.enableBody = true;
+
+    /**
      * Bullet Settings
      */
     this.bullets = this.game.add.group();
     this.bullets.enableBody = true;
-    this.physicsBodyType = Phaser.Physics.ARCADE;
     this.bullets.createMultiple(50, 'bullet');
     this.bullets.setAll('checkWorldBounds', true);
     this.bullets.setAll('outOfBoundsKill', true);
@@ -30051,8 +30056,6 @@ function CollisionHandler() {
 
     // Did your bullets hit any enemy players
     this.physics.arcade.overlap(this.bullets, this.enemies, function (bullet, enemy) {
-        if (this.respawnInProgress) return;
-
         bullet.kill();
 
         _SprayBlood2.default.call(this, {
@@ -30796,6 +30799,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function PlayerSpriteHandler() {
     var spawnPoint = HighRuleJungle.getRandomSpawnPoint();
+
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando');
     this.player.scale.setTo(_GameConsts2.default.PLAYER_SCALE);
     this.player.anchor.setTo(_GameConsts2.default.PLAYER_ANCHOR);
@@ -31744,6 +31748,14 @@ function onUpdatePlayers(data) {
         }
 
         var newRemotePlayer = _RemotePlayer2.default.call(_this, player);
+
+        var enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unamed Ranger';
+
+        var style = { font: "36px Arial", fill: "#fff", align: "center" };
+        var text = _this.game.add.text(0, -200, enemyPlayerName, style);
+        newRemotePlayer.addChild(text);
+        text.x = text.width / 2 * -1;
+
         _this.enemies.add(newRemotePlayer);
     });
 }

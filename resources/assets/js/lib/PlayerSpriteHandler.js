@@ -4,6 +4,7 @@ import * as HighRuleJungle from '../maps/HighRuleJungle'
 
 export default function PlayerSpriteHandler() {
     let spawnPoint = HighRuleJungle.getRandomSpawnPoint()
+
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.scale.setTo(GameConsts.PLAYER_SCALE)
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
@@ -29,7 +30,6 @@ export default function PlayerSpriteHandler() {
     this.player.meta = {
         health: 100
     }
-
 
     //  Our two animations, walking left and right.
     this.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)

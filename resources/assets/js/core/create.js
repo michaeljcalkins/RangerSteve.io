@@ -9,12 +9,12 @@ export default function Create() {
     this.roomId = GetQueryString('roomId')
     this.volume = GameConsts.STARTING_VOLUME
     this.socket = io.connect()
-    this.enemies = this.game.add.group()
     this.jumping = false
     this.respawnInProgress = false
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)
+    this.physicsBodyType = Phaser.Physics.ARCADE
     this.world.setBounds(0, 0, GameConsts.WORLD_WIDTH, GameConsts.WORLD_HEIGHT)
 
     // Scale game on window resize
@@ -30,11 +30,17 @@ export default function Create() {
 
 
     /**
+     * Enemy Settings
+     */
+    this.enemies = this.game.add.group()
+    this.enemies.enableBody = true
+
+
+    /**
      * Bullet Settings
      */
     this.bullets = this.game.add.group()
     this.bullets.enableBody = true
-    this.physicsBodyType = Phaser.Physics.ARCADE
     this.bullets.createMultiple(50, 'bullet')
     this.bullets.setAll('checkWorldBounds', true)
     this.bullets.setAll('outOfBoundsKill', true)
