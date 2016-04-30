@@ -29911,11 +29911,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function Update() {
     _CollisionHandler2.default.call(this);
-    _PlayerMovementHandler2.default.call(this);
-    _PlayerJumpHandler2.default.call(this);
-    _PlayerAngleHandler2.default.call(this);
+    console.log('this.respawnInProgress', this.respawnInProgress);
+    if (!this.respawnInProgress) {
+        _PlayerMovementHandler2.default.call(this);
+        _PlayerJumpHandler2.default.call(this);
+        _PlayerAngleHandler2.default.call(this);
+    }
 
-    if (this.game.input.activePointer.isDown && this.player.meta.health > 0) {
+    if (this.game.input.activePointer.isDown && this.player.meta.health > 0 && !this.respawnInProgress) {
         this.player.meta[this.currentWeapon].fire();
     }
 

@@ -6,11 +6,14 @@ import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 
 export default function Update() {
     CollisionHandler.call(this)
-    PlayerMovementHandler.call(this)
-    PlayerJumpHandler.call(this)
-    PlayerAngleHandler.call(this)
 
-    if (this.game.input.activePointer.isDown && this.player.meta.health > 0)
+    if (! this.respawnInProgress) {
+        PlayerMovementHandler.call(this)
+        PlayerJumpHandler.call(this)
+        PlayerAngleHandler.call(this)
+    }
+
+    if (this.game.input.activePointer.isDown && this.player.meta.health > 0 && !this.respawnInProgress)
     {
         this.player.meta[this.currentWeapon].fire()
     }
