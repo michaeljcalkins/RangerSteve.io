@@ -269,6 +269,16 @@ body.game {
     .hud-ammo .progress .progress-bar {
       background: #F5A623; }
 
+.hud-kill-confirmed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-family: Orbitron;
+  margin-top: -70px;
+  margin-left: -20px;
+  color: #fff;
+  font-size: 20px; }
+
 .credits-container {
   background: url(/images/credits-map-background.png) no-repeat top center;
   background-attachment: fixed;

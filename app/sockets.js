@@ -224,6 +224,7 @@ function onPlayerDamaged(data) {
     let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health -= Number(data.damage)
 
+    // Player was killed when shot
     if (player.meta.health <= 0) {
         util.log('Respawning player...', data)
         player.meta.health = 100
@@ -237,6 +238,10 @@ function onPlayerDamaged(data) {
         let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
+            io.to(data.roomId).emit('player kill confirmed', {
+                id: attackingPlayer.id,
+                score: 10
+            })
         } else {
             // Falling to your death makes you lose 10 points
             util.log(data.damagedPlayerId, 'fell to his death.')

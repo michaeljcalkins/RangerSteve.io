@@ -1,4 +1,5 @@
 <template>
+    <hud-kill-confirmed :show-kill-confirmed="showKillConfirmed"></hud-kill-confirmed>
     <hud-health :health="health"></hud-health>
     <hud-score :score="score"></hud-score>
     <hud-leaderboard :players="players"></hud-leaderboard>
@@ -28,6 +29,7 @@ import HudScore from '../components/Hud/HudScore.vue'
 import HudLeaderboard from '../components/Hud/HudLeaderboard.vue'
 import HudSettingsButton from '../components/Hud/HudSettingsButton.vue'
 import HudJumpJet from '../components/Hud/HudJumpJet.vue'
+import HudKillConfirmed from '../components/Hud/HudKillConfirmed.vue'
 import SettingsModal from '../components/Settings/SettingsModal.vue'
 
 export default {
@@ -37,12 +39,14 @@ export default {
         HudLeaderboard,
         HudSettingsButton,
         HudJumpJet,
+        HudKillConfirmed,
         SettingsModal
     },
     data: function() {
         return {
             currentWeapon: 1,
             health: 100,
+            showKillConfirmed: false,
             jumpJetCounter: 0,
             nickname: 'Unamed Ranger',
             player: {},
@@ -55,6 +59,15 @@ export default {
         }
     },
     created: function() {
+        let killConfirmedHandle = null
+        EventHandler.on('player kill confirmed', () => {
+            this.showKillConfirmed = true
+            clearTimeout(killConfirmedHandle)
+            killConfirmedHandle = setTimeout(() => {
+                this.showKillConfirmed = false
+            }, 3000)
+        })
+
         EventHandler.on('health update', (health) => {
             this.health = health
         })

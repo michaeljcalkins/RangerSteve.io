@@ -29652,7 +29652,7 @@ window.check = check;
 require('./ui');
 require('./game');
 
-},{"./game":181,"./ui":228}],177:[function(require,module,exports){
+},{"./game":181,"./ui":229}],177:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29809,7 +29809,7 @@ function Create() {
     _setEventHandlers2.default.call(this);
 }
 
-},{"../lib/EventHandler":183,"../lib/GameConsts":187,"../lib/GetQueryString":188,"../lib/PlayerSpriteHandler":196,"../lib/SocketEvents/setEventHandlers":214,"../maps/HighRuleJungle":227}],178:[function(require,module,exports){
+},{"../lib/EventHandler":183,"../lib/GameConsts":187,"../lib/GetQueryString":188,"../lib/PlayerSpriteHandler":196,"../lib/SocketEvents/setEventHandlers":215,"../maps/HighRuleJungle":228}],178:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30087,7 +30087,7 @@ function CollisionHandler() {
     });
 }
 
-},{"./SocketEvents/emitBulletRemoved":201,"./SocketEvents/emitPlayerDamaged":203,"./SprayBlood":215}],183:[function(require,module,exports){
+},{"./SocketEvents/emitBulletRemoved":201,"./SocketEvents/emitPlayerDamaged":203,"./SprayBlood":216}],183:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30900,7 +30900,7 @@ function PlayerSpriteHandler() {
     this.currentWeaponSprite.addChild(this.muzzleFlash);
 }
 
-},{"../maps/HighRuleJungle":227,"./GameConsts":187,"./Weapons":226}],197:[function(require,module,exports){
+},{"../maps/HighRuleJungle":228,"./GameConsts":187,"./Weapons":227}],197:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31323,7 +31323,7 @@ function onBulletRemoved(data) {
     }
 }
 
-},{"../SprayBlood":215,"react":172}],206:[function(require,module,exports){
+},{"../SprayBlood":216,"react":172}],206:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31504,6 +31504,35 @@ function onPlayerHealthUpdate(data) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.default = onPlayerKillConfirmed;
+
+var _react = require('react');
+
+var _EventHandler = require('../EventHandler');
+
+var _EventHandler2 = _interopRequireDefault(_EventHandler);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var propTypes = {
+    id: _react.PropTypes.string.isRequired,
+    score: _react.PropTypes.number.isRequired
+};
+
+function onPlayerKillConfirmed(data) {
+    check(data, propTypes);
+
+    if (data.id !== '/#' + this.socket.id) return;
+
+    _EventHandler2.default.emit('player kill confirmed');
+}
+
+},{"../EventHandler":183,"react":172}],210:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.default = onPlayerRespawn;
 
 var _react = require('react');
@@ -31590,7 +31619,7 @@ function onPlayerRespawn(data) {
     }, 2500);
 }
 
-},{"../../maps/HighRuleJungle":227,"../EventHandler":183,"../PlayerById":192,"../Weapons":226,"react":172}],210:[function(require,module,exports){
+},{"../../maps/HighRuleJungle":228,"../EventHandler":183,"../PlayerById":192,"../Weapons":227,"react":172}],211:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31627,7 +31656,7 @@ function onRemovePlayer(data) {
     this.enemies.splice(this.enemies.indexOf(removePlayer), 1);
 }
 
-},{"../PlayerById":192,"react":172}],211:[function(require,module,exports){
+},{"../PlayerById":192,"react":172}],212:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31657,7 +31686,7 @@ function onSocketConnected() {
     });
 }
 
-},{"../GetQueryString":188}],212:[function(require,module,exports){
+},{"../GetQueryString":188}],213:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31668,7 +31697,7 @@ function onSocketDisconnect() {
     console.log('Disconnected from socket server');
 }
 
-},{}],213:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31726,7 +31755,7 @@ function onUpdatePlayers(data) {
     });
 }
 
-},{"../EventHandler":183,"../RemotePlayer":198,"react":172}],214:[function(require,module,exports){
+},{"../EventHandler":183,"../RemotePlayer":198,"react":172}],215:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31746,6 +31775,7 @@ exports.default = function () {
     this.socket.on('player respawn', _onPlayerRespawn2.default.bind(this));
     this.socket.on('player damaged', _onPlayerDamaged2.default.bind(this));
     this.socket.on('player health update', _onPlayerHealthUpdate2.default.bind(this));
+    this.socket.on('player kill confirmed', _onPlayerKillConfirmed2.default.bind(this));
 
     this.socket.on('bullet fired', _onBulletFired2.default.bind(this));
     this.socket.on('bullet removed', _onBulletRemoved2.default.bind(this));
@@ -31802,9 +31832,13 @@ var _onPlayerHealthUpdate = require('./onPlayerHealthUpdate');
 
 var _onPlayerHealthUpdate2 = _interopRequireDefault(_onPlayerHealthUpdate);
 
+var _onPlayerKillConfirmed = require('./onPlayerKillConfirmed');
+
+var _onPlayerKillConfirmed2 = _interopRequireDefault(_onPlayerKillConfirmed);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../EventHandler":183,"./onBulletFired":204,"./onBulletRemoved":205,"./onMovePlayer":206,"./onPlayerDamaged":207,"./onPlayerHealthUpdate":208,"./onPlayerRespawn":209,"./onRemovePlayer":210,"./onSocketConnected":211,"./onSocketDisconnect":212,"./onUpdatePlayers":213}],215:[function(require,module,exports){
+},{"../EventHandler":183,"./onBulletFired":204,"./onBulletRemoved":205,"./onMovePlayer":206,"./onPlayerDamaged":207,"./onPlayerHealthUpdate":208,"./onPlayerKillConfirmed":209,"./onPlayerRespawn":210,"./onRemovePlayer":211,"./onSocketConnected":212,"./onSocketDisconnect":213,"./onUpdatePlayers":214}],216:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31843,7 +31877,7 @@ var propTypes = {
     bulletRotation: _react.PropTypes.number.isRequired
 };
 
-},{"react":172}],216:[function(require,module,exports){
+},{"react":172}],217:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31924,7 +31958,7 @@ var AK47 = function (_Phaser$Group) {
 
 exports.default = AK47;
 
-},{"../FireStandardBullet":186}],217:[function(require,module,exports){
+},{"../FireStandardBullet":186}],218:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31998,7 +32032,7 @@ var AUG = function (_Phaser$Group) {
 
 exports.default = AUG;
 
-},{"../FireStandardBullet":186}],218:[function(require,module,exports){
+},{"../FireStandardBullet":186}],219:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32072,7 +32106,7 @@ var Barrett = function (_Phaser$Group) {
 
 exports.default = Barrett;
 
-},{"../FireStandardBullet":186}],219:[function(require,module,exports){
+},{"../FireStandardBullet":186}],220:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32153,7 +32187,7 @@ var DesertEagle = function (_Phaser$Group) {
 
 exports.default = DesertEagle;
 
-},{"../FireStandardBullet":186}],220:[function(require,module,exports){
+},{"../FireStandardBullet":186}],221:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32227,7 +32261,7 @@ var G43 = function (_Phaser$Group) {
 
 exports.default = G43;
 
-},{"../FireStandardBullet":186}],221:[function(require,module,exports){
+},{"../FireStandardBullet":186}],222:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32301,7 +32335,7 @@ var M4A1 = function (_Phaser$Group) {
 
 exports.default = M4A1;
 
-},{"../FireStandardBullet":186}],222:[function(require,module,exports){
+},{"../FireStandardBullet":186}],223:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32374,7 +32408,7 @@ var M500 = function (_Phaser$Group) {
 
 exports.default = M500;
 
-},{"../FireShotgunShell":185}],223:[function(require,module,exports){
+},{"../FireShotgunShell":185}],224:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32448,7 +32482,7 @@ var P90 = function (_Phaser$Group) {
 
 exports.default = P90;
 
-},{"../FireStandardBullet":186}],224:[function(require,module,exports){
+},{"../FireStandardBullet":186}],225:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32564,7 +32598,7 @@ var RPG = function (_Phaser$Group) {
 
 exports.default = RPG;
 
-},{"../FireRocket":184}],225:[function(require,module,exports){
+},{"../FireRocket":184}],226:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32638,7 +32672,7 @@ var Skorpion = function (_Phaser$Group) {
 
 exports.default = Skorpion;
 
-},{"../FireStandardBullet":186}],226:[function(require,module,exports){
+},{"../FireStandardBullet":186}],227:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32700,7 +32734,7 @@ exports.default = {
     Skorpion: _Skorpion2.default
 };
 
-},{"./AK47":216,"./AUG":217,"./Barrett":218,"./DesertEagle":219,"./G43":220,"./M4A1":221,"./M500":222,"./P90":223,"./RPG":224,"./Skorpion":225}],227:[function(require,module,exports){
+},{"./AK47":217,"./AUG":218,"./Barrett":219,"./DesertEagle":220,"./G43":221,"./M4A1":222,"./M500":223,"./P90":224,"./RPG":225,"./Skorpion":226}],228:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32755,7 +32789,7 @@ function createLedges() {
     });
 }
 
-},{}],228:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -32773,7 +32807,7 @@ new _vue2.default({
     components: { GameUiContainer: _GameUiContainer2.default }
 });
 
-},{"./ui/containers/GameUiContainer.vue":239,"vue":174}],229:[function(require,module,exports){
+},{"./ui/containers/GameUiContainer.vue":241,"vue":174}],230:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32795,7 +32829,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],230:[function(require,module,exports){
+},{"vue":174,"vue-hot-reload-api":173}],231:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32829,7 +32863,29 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],231:[function(require,module,exports){
+},{"vue":174,"vue-hot-reload-api":173}],232:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    props: ['showKillConfirmed']
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div v-show=\"showKillConfirmed\" class=\"hud-kill-confirmed\">+10</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/michaelcalkins/Code/rangersteve/resources/assets/js/ui/components/Hud/HudKillConfirmed.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":174,"vue-hot-reload-api":173}],233:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32861,7 +32917,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],232:[function(require,module,exports){
+},{"vue":174,"vue-hot-reload-api":173}],234:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32883,7 +32939,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],233:[function(require,module,exports){
+},{"vue":174,"vue-hot-reload-api":173}],235:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32905,7 +32961,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],234:[function(require,module,exports){
+},{"vue":174,"vue-hot-reload-api":173}],236:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32949,7 +33005,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],235:[function(require,module,exports){
+},{"vue":174,"vue-hot-reload-api":173}],237:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32991,7 +33047,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../../lib/GameConsts":187,"vue":174,"vue-hot-reload-api":173}],236:[function(require,module,exports){
+},{"../../../lib/GameConsts":187,"vue":174,"vue-hot-reload-api":173}],238:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33033,7 +33089,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../../lib/GameConsts":187,"vue":174,"vue-hot-reload-api":173}],237:[function(require,module,exports){
+},{"../../../lib/GameConsts":187,"vue":174,"vue-hot-reload-api":173}],239:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33122,7 +33178,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../../lib/GameConsts":187,"vue":174,"vue-hot-reload-api":173}],238:[function(require,module,exports){
+},{"../../../lib/GameConsts":187,"vue":174,"vue-hot-reload-api":173}],240:[function(require,module,exports){
 var __vueify_style__ = require("vueify-insert-css").insert("\n.hud-settings-modal {\n    cursor: default;\n}\n")
 'use strict';
 
@@ -33184,7 +33240,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./ChooseCharacterMenu.vue":234,"./ChoosePrimaryMenu.vue":235,"./ChooseSecondaryMenu.vue":236,"./MainSettingsMenu.vue":237,"vue":174,"vue-hot-reload-api":173,"vueify-insert-css":175}],239:[function(require,module,exports){
+},{"./ChooseCharacterMenu.vue":236,"./ChoosePrimaryMenu.vue":237,"./ChooseSecondaryMenu.vue":238,"./MainSettingsMenu.vue":239,"vue":174,"vue-hot-reload-api":173,"vueify-insert-css":175}],241:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33215,6 +33271,10 @@ var _HudJumpJet = require('../components/Hud/HudJumpJet.vue');
 
 var _HudJumpJet2 = _interopRequireDefault(_HudJumpJet);
 
+var _HudKillConfirmed = require('../components/Hud/HudKillConfirmed.vue');
+
+var _HudKillConfirmed2 = _interopRequireDefault(_HudKillConfirmed);
+
 var _SettingsModal = require('../components/Settings/SettingsModal.vue');
 
 var _SettingsModal2 = _interopRequireDefault(_SettingsModal);
@@ -33228,12 +33288,14 @@ exports.default = {
         HudLeaderboard: _HudLeaderboard2.default,
         HudSettingsButton: _HudSettingsButton2.default,
         HudJumpJet: _HudJumpJet2.default,
+        HudKillConfirmed: _HudKillConfirmed2.default,
         SettingsModal: _SettingsModal2.default
     },
     data: function data() {
         return {
             currentWeapon: 1,
             health: 100,
+            showKillConfirmed: false,
             jumpJetCounter: 0,
             nickname: 'Unamed Ranger',
             player: {},
@@ -33247,6 +33309,15 @@ exports.default = {
     },
     created: function created() {
         var _this = this;
+
+        var killConfirmedHandle = null;
+        _EventHandler2.default.on('player kill confirmed', function () {
+            _this.showKillConfirmed = true;
+            clearTimeout(killConfirmedHandle);
+            killConfirmedHandle = setTimeout(function () {
+                _this.showKillConfirmed = false;
+            }, 3000);
+        });
 
         _EventHandler2.default.on('health update', function (health) {
             _this.health = health;
@@ -33305,7 +33376,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<hud-health :health=\"health\"></hud-health>\n<hud-score :score=\"score\"></hud-score>\n<hud-leaderboard :players=\"players\"></hud-leaderboard>\n<hud-jump-jet :jump-jet-counter=\"jumpJetCounter\"></hud-jump-jet>\n<hud-settings-button :on-button-click=\"handleSettingsButtonClick\"></hud-settings-button>\n<settings-modal :default-nickname-value=\"nickname\" :default-sound-effect-value=\"volume\" :is-open=\"settingsModalOpen\" :on-close=\"handleSettingsButtonClick\" :on-nickname-change=\"handleNicknameChange\" :on-primary-gun-click=\"handlePrimaryGunClick\" :on-secondary-gun-click=\"handleSecondaryGunClick\" :on-sound-effect-volume-change=\"handleSoundEffectVolumeChange\" :player=\"player\" :selected-primary-weapon=\"selectedPrimaryWeapon\" :selected-secondary-weapon=\"selectedSecondaryWeapon\"></settings-modal>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<hud-kill-confirmed :show-kill-confirmed=\"showKillConfirmed\"></hud-kill-confirmed>\n<hud-health :health=\"health\"></hud-health>\n<hud-score :score=\"score\"></hud-score>\n<hud-leaderboard :players=\"players\"></hud-leaderboard>\n<hud-jump-jet :jump-jet-counter=\"jumpJetCounter\"></hud-jump-jet>\n<hud-settings-button :on-button-click=\"handleSettingsButtonClick\"></hud-settings-button>\n<settings-modal :default-nickname-value=\"nickname\" :default-sound-effect-value=\"volume\" :is-open=\"settingsModalOpen\" :on-close=\"handleSettingsButtonClick\" :on-nickname-change=\"handleNicknameChange\" :on-primary-gun-click=\"handlePrimaryGunClick\" :on-secondary-gun-click=\"handleSecondaryGunClick\" :on-sound-effect-volume-change=\"handleSoundEffectVolumeChange\" :player=\"player\" :selected-primary-weapon=\"selectedPrimaryWeapon\" :selected-secondary-weapon=\"selectedSecondaryWeapon\"></settings-modal>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -33317,6 +33388,6 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../lib/EventHandler":183,"../components/Hud/HudHealth.vue":229,"../components/Hud/HudJumpJet.vue":230,"../components/Hud/HudLeaderboard.vue":231,"../components/Hud/HudScore.vue":232,"../components/Hud/HudSettingsButton.vue":233,"../components/Settings/SettingsModal.vue":238,"vue":174,"vue-hot-reload-api":173}]},{},[176]);
+},{"../../lib/EventHandler":183,"../components/Hud/HudHealth.vue":230,"../components/Hud/HudJumpJet.vue":231,"../components/Hud/HudKillConfirmed.vue":232,"../components/Hud/HudLeaderboard.vue":233,"../components/Hud/HudScore.vue":234,"../components/Hud/HudSettingsButton.vue":235,"../components/Settings/SettingsModal.vue":240,"vue":174,"vue-hot-reload-api":173}]},{},[176]);
 
 //# sourceMappingURL=app.js.map

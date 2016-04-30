@@ -113,3 +113,14 @@
         }
     }
 }
+
+.hud-kill-confirmed {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-family: Orbitron;
+    margin-top: -70px;
+    margin-left: -20px;
+    color: #fff;
+    font-size: 20px;
+}
