@@ -15,6 +15,7 @@ let compression = require('compression')
 let nunjucks = require('express-nunjucks')
 let SocketHandler = require('./app/sockets')
 let routes = require('./app/routes')
+let locals = require('./app/middleware/locals')
 
 let app = express()
 let io = socketIo()
@@ -40,6 +41,7 @@ nunjucks.setup({
 }, app)
 
 app.use(favicon(path.join(__dirname, 'public', 'images/favicon.ico')));
+app.use(locals)
 app.use(compression())
 app.use(logger('dev'))
 app.use(bodyParser.json())
