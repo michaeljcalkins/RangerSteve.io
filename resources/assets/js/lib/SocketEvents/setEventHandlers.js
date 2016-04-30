@@ -25,7 +25,7 @@ export default function() {
     this.socket.on('player kill confirmed', onPlayerKillConfirmed.bind(this))
 
     this.socket.on('bullet fired', onBulletFired.bind(this))
-    this.socket.on('bullet removed', onBulletRemoved.bind(this))
+    // this.socket.on('bullet removed', onBulletRemoved.bind(this))
 
     EventHandler.on('player update nickname', (data) => {
         this.socket.emit('player update nickname', {
