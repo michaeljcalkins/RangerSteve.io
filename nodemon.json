@@ -13,9 +13,7 @@
   },
   "watch": [
     "bin/",
-    "controllers/",
-    "lib/",
-    "routes/",
+    "app/",
     "resources/",
     "app.js"
   ],

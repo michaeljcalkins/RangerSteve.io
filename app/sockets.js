@@ -4,7 +4,8 @@ let util = require('util')
 let hri = require('human-readable-ids').hri
 let _ = require('lodash')
 
-let Player = require('./Player')
+let Player = require('./services/Player')
+let PlayerById = require('./services/PlayerById')
 let rooms = {}
 let io = null
 
@@ -50,9 +51,9 @@ function onSocketConnection(socket) {
 }
 
 function onPlayerUpdateNickname(data) {
-    var player = playerById(data.roomId, this.id)
+    var player = PlayerById(data.roomId, this.id, rooms)
 
-    if (!player) {
+    if (! player) {
         util.log('Player not found when updating nickname: ' + this.id)
         return
     }
@@ -68,7 +69,7 @@ function onPlayerUpdateNickname(data) {
 function onNewPlayer (data) {
     util.log('Creating new player...', data)
 
-    var player = playerById(data.roomId, this.id)
+    var player = PlayerById(data.roomId, this.id, rooms)
     if (player) {
         util.log('Player already in room: ' + this.id)
         return
@@ -130,7 +131,7 @@ function onNewPlayer (data) {
 // Player has moved
 function onMovePlayer (data) {
     // Find player in array
-    var movePlayer = playerById(data.roomId, this.id)
+    var movePlayer = PlayerById(data.roomId, this.id, rooms)
 
     // Player not found
     if (!movePlayer) {
@@ -169,7 +170,7 @@ function onClientDisconnect() {
             selectedRoomId = roomId
     })
 
-    var removePlayer = playerById(selectedRoomId, this.id)
+    var removePlayer = PlayerById(selectedRoomId, this.id, rooms)
 
     // Player not found
     if (!removePlayer) {
@@ -190,7 +191,7 @@ function onClientDisconnect() {
 
 function onPlayerFullHealth(data) {
     util.log('Player full health')
-    let player = playerById(data.roomId, this.id)
+    let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health = 100
 
     io.to(data.roomId).emit('player health update', {
@@ -201,7 +202,7 @@ function onPlayerFullHealth(data) {
 
 function onPlayerHealing(data) {
     util.log('Player is healing')
-    let player = playerById(data.roomId, this.id)
+    let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health += 10
 
     if (player.meta.health > 100)
@@ -216,7 +217,7 @@ function onPlayerHealing(data) {
 function onPlayerDamaged(data) {
     util.log('Player damaged...', data)
 
-    let player = playerById(data.roomId, this.id)
+    let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health -= Number(data.damage)
 
     if (player.meta.health <= 0) {
@@ -235,7 +236,7 @@ function onPlayerDamaged(data) {
             health: 100
         })
 
-        let attackingPlayer = playerById(data.roomId, data.attackingPlayerId)
+        let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
         } else {
@@ -272,11 +273,4 @@ function onBulletRemoved(data) {
     data.id = this.id
     util.log('Removing bullet...', data)
     io.to(data.roomId).emit('bullet removed', data)
-}
-
-function playerById (roomId, id) {
-    if (!_.has(rooms, `[${roomId}].players`))
-        return false
-
-    return _.find(rooms[roomId].players, { id })
 }
