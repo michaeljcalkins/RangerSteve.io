@@ -51,6 +51,7 @@ function onSocketConnection(socket) {
 }
 
 function onPlayerUpdateNickname(data) {
+    let nickname = data.nickname
     var player = PlayerById(data.roomId, this.id, rooms)
 
     if (! player) {
@@ -58,7 +59,10 @@ function onPlayerUpdateNickname(data) {
         return
     }
 
-    player.meta.nickname = data.nickname
+    if (nickname.length > 25)
+        nickname = nickname.splice(0, 25)
+
+    player.meta.nickname = nickname
 
     io.to(data.roomId).emit('update players', {
         room: rooms[data.roomId]

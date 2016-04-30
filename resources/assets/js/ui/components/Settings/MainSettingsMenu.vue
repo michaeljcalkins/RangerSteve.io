@@ -50,6 +50,7 @@
             class="form-control"
             @keyup="handleNicknameChange"
             v-model="nickname"
+            maxlength="25"
             type="text"
         />
     </div>
@@ -86,7 +87,10 @@ export default {
         }
     },
     methods: {
-        handleNicknameChange: function(evt) {
+        handleNicknameChange: function() {
+            if (this.nickname.length > 25)
+                this.nickname = this.nickname.splice(0, 25)
+
             this.onNicknameChange(this.nickname)
         },
 
