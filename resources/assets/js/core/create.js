@@ -16,6 +16,7 @@ export default function Create() {
     this.physics.startSystem(Phaser.Physics.ARCADE)
     this.physicsBodyType = Phaser.Physics.ARCADE
     this.world.setBounds(0, 0, GameConsts.WORLD_WIDTH, GameConsts.WORLD_HEIGHT)
+    this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
     // Scale game on window resize
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
@@ -34,6 +35,9 @@ export default function Create() {
      */
     this.enemies = this.game.add.group()
     this.enemies.enableBody = true
+    this.enemies.physicsBodyType = Phaser.Physics.ARCADE
+    this.physics.arcade.enable(this.enemies)
+    this.game.physics.enable(this.enemies, Phaser.Physics.ARCADE)
 
 
     /**
@@ -41,6 +45,7 @@ export default function Create() {
      */
     this.bullets = this.game.add.group()
     this.bullets.enableBody = true
+    this.bullets.physicsBodyType = Phaser.Physics.ARCADE
     this.bullets.createMultiple(50, 'bullet')
     this.bullets.setAll('checkWorldBounds', true)
     this.bullets.setAll('outOfBoundsKill', true)
@@ -51,12 +56,9 @@ export default function Create() {
     this.enemyBullets.setAll('checkWorldBounds', true)
     this.enemyBullets.setAll('outOfBoundsKill', true)
 
-
-    // Since we're jumping we need gravity
-    this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
-
     PlayerSpriteHandler.call(this)
     HighRuleJungle.createOverlays.call(this)
+
 
     /**
      * Weapons
@@ -137,6 +139,7 @@ export default function Create() {
     this.deathSprite.scale.setTo(.17)
     this.deathSprite.animations.add('playerDeath', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21], 20)
     this.deathSprite.visible = false
+
 
     /**
      * Start listening for events

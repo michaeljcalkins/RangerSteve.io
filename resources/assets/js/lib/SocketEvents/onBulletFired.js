@@ -1,5 +1,4 @@
 import { PropTypes } from 'react'
-import RemoteBullet from '../RemoteBullet'
 
 const propTypes = {
     bulletId: PropTypes.string.isRequired,
@@ -19,9 +18,19 @@ export default function onBulletFired(data) {
     if (data.id === ('/#' + this.socket.id))
         return
 
-    let enemyBullet = RemoteBullet.call(this, data)
-    let newVelocity = this.game.physics.arcade
-        .velocityFromRotation(data.pointerAngle, data.bulletSpeed)
-    enemyBullet.body.velocity.x += newVelocity.x
-    enemyBullet.body.velocity.y += newVelocity.y
+    let bullet = this.enemyBullets.getFirstDead()
+    bullet.reset(data.x, data.y)
+    bullet.bulletId = data.bulletId
+    bullet.playerId = data.playerId
+    bullet.damage = data.damage
+    bullet.rotation = data.pointerAngle
+    bullet.height = data.height
+    bullet.width = data.width
+    bullet.body.gravity.y = -1800
+    bullet.enableBody = true
+    bullet.physicsBodyType = Phaser.Physics.ARCADE
+
+    let newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, data.bulletSpeed)
+    bullet.body.velocity.x += newVelocity.x
+    bullet.body.velocity.y += newVelocity.y
 }

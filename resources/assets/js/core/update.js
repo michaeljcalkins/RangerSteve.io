@@ -13,8 +13,7 @@ export default function Update() {
         PlayerAngleHandler.call(this)
     }
 
-    if (this.game.input.activePointer.isDown && this.player.meta.health > 0 && !this.respawnInProgress)
-    {
+    if (this.game.input.activePointer.isDown && this.player.meta.health > 0 && !this.respawnInProgress) {
         this.player.meta[this.currentWeapon].fire()
     }
 

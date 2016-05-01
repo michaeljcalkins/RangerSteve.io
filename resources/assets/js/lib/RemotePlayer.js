@@ -26,6 +26,12 @@ export default function RemotePlayer(player) {
     }
 
 
+    //  We need to enable physics on the player
+    this.physics.arcade.enable(newRemotePlayer)
+
+    // Enable physics on the player
+    this.game.physics.enable(newRemotePlayer, Phaser.Physics.ARCADE)
+    newRemotePlayer.body.gravity.y = -1900
 
 
 
@@ -88,10 +94,6 @@ export default function RemotePlayer(player) {
     newRemotePlayer.rightArmGroup.pivot.y = 0
     newRemotePlayer.rightArmGroup.x = -25
     newRemotePlayer.rightArmGroup.y = -65
-
-
-
-
 
     return newRemotePlayer
 }

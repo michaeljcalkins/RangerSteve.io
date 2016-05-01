@@ -1,10 +1,21 @@
-import emitBulletRemoved from './SocketEvents/emitBulletRemoved'
 import emitPlayerDamaged from './SocketEvents/emitPlayerDamaged'
 import SprayBlood from './SprayBlood'
 
 export default function CollisionHandler() {
     // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms)
+
+    // Did your bullets hit any enemies
+    this.physics.arcade.overlap(this.enemies, this.bullets, function(enemy, bullet) {
+        bullet.kill()
+
+        SprayBlood.call(this, {
+            bulletY: bullet.y,
+            bulletX: bullet.x,
+            playerX: enemy.x,
+            bulletRotation: bullet.rotation
+        })
+    }, null, this)
 
     // Did your bullets hit any platforms
     this.physics.arcade.overlap(this.platforms, this.bullets, function(platform, bullet) {
@@ -30,18 +41,6 @@ export default function CollisionHandler() {
         ricochet.animations.play('collision')
         ricochet.animations.currentAnim.killOnComplete = true
     }, null, this)
-
-    // Did your bullets hit any enemy players
-    this.physics.arcade.overlap(this.bullets, this.enemies, function(bullet, enemy) {
-        bullet.kill()
-
-        SprayBlood.call(this, {
-            bulletY: bullet.y,
-            bulletX: bullet.x,
-            playerX: enemy.x,
-            bulletRotation: bullet.rotation
-        })
-    })
 
     // Did enemy bullets hit you
     this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
