@@ -47,7 +47,6 @@ export default function Create() {
 
     this.enemyBullets = this.game.add.group()
     this.enemyBullets.enableBody = true
-    this.physicsBodyType = Phaser.Physics.ARCADE
     this.enemyBullets.createMultiple(50, 'bullet')
     this.enemyBullets.setAll('checkWorldBounds', true)
     this.enemyBullets.setAll('outOfBoundsKill', true)

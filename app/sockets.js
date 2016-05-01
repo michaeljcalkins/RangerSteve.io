@@ -84,7 +84,7 @@ function onNewPlayer (data) {
     newPlayer.id = this.id
     newPlayer.meta = {
         health: 100,
-        score: 0
+        score: 100
     }
 
     if (data.roomId) {

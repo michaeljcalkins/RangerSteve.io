@@ -29729,7 +29729,6 @@ function Create() {
 
     this.enemyBullets = this.game.add.group();
     this.enemyBullets.enableBody = true;
-    this.physicsBodyType = Phaser.Physics.ARCADE;
     this.enemyBullets.createMultiple(50, 'bullet');
     this.enemyBullets.setAll('checkWorldBounds', true);
     this.enemyBullets.setAll('outOfBoundsKill', true);
@@ -29936,7 +29935,7 @@ function Update() {
     // this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`
 
     // Check for out of bounds kill
-    if (this.player.body.onFloor() && this.player.meta.health > 0) {
+    if (this.player.body.onFloor() && this.player.meta.health > 0 && !this.respawnInProgress) {
         this.socket.emit('player damaged', {
             roomId: this.roomId,
             damage: 1000,
