@@ -19,33 +19,33 @@
                 </div>
                 <div class="modal-body">
                     <main-settings-menu
-                        v-if="view == 'main'"
+                        v-if="settingsView == 'main'"
                         :default-nickname-value="defaultNicknameValue"
                         :default-sound-effect-value="defaultSoundEffectValue"
                         :on-nickname-change="onNicknameChange"
                         :on-sound-effect-volume-change="onSoundEffectVolumeChange"
-                        :on-view-change="handleViewChange"
+                        :on-view-change="onViewChange"
                         :selected-primary-weapon="selectedPrimaryWeapon"
                         :selected-secondary-weapon="selectedSecondaryWeapon"
                     ></main-settings-menu>
 
                     <choose-primary-menu
-                        v-if="view == 'choosePrimary'"
+                        v-if="settingsView == 'choosePrimary'"
                         :on-primary-gun-click="onPrimaryGunClick"
-                        :on-view-change="handleViewChange"
+                        :on-view-change="onViewChange"
                         :player="player"
                     ></choose-primary-menu>
 
                     <choose-secondary-menu
-                        v-if="view == 'chooseSecondary'"
+                        v-if="settingsView == 'chooseSecondary'"
                         :on-secondary-gun-click="onSecondaryGunClick"
-                        :on-view-change="handleViewChange"
+                        :on-view-change="onViewChange"
                         :player="player"
                     ></choose-secondary-menu>
 
                     <choose-character-menu
-                        v-if="view == 'chooseCharacter'"
-                        :on-view-change="handleViewChange"
+                        v-if="settingsView == 'chooseCharacter'"
+                        :on-view-change="onViewChange"
                         :player="player"
                     ></choose-character-menu>
                 </div>
@@ -80,23 +80,15 @@ export default {
         'onClose',
         'defaultNicknameValue',
         'defaultSoundEffectValue',
+        'onViewChange',
         'onNicknameChange',
         'onPrimaryGunClick',
         'onSecondaryGunClick',
         'onSoundEffectVolumeChange',
         'player',
+        'settingsView',
         'selectedPrimaryWeapon',
         'selectedSecondaryWeapon'
-    ],
-    data: function() {
-        return {
-            view: 'main'
-        }
-    },
-    methods: {
-        handleViewChange(view) {
-            this.view = view
-        }
-    }
+    ]
 }
 </script>

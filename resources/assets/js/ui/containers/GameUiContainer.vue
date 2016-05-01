@@ -11,11 +11,13 @@
         :default-nickname-value="nickname"
         :default-sound-effect-value="volume"
         :is-open="settingsModalOpen"
+        :on-view-change="handleViewChange"
         :on-close="handleSettingsButtonClick"
         :on-nickname-change="handleNicknameChange"
         :on-primary-gun-click="handlePrimaryGunClick"
         :on-secondary-gun-click="handleSecondaryGunClick"
         :on-sound-effect-volume-change="handleSoundEffectVolumeChange"
+        :settings-view="settingsView"
         :player="player"
         :selected-primary-weapon="selectedPrimaryWeapon"
         :selected-secondary-weapon="selectedSecondaryWeapon"
@@ -52,6 +54,7 @@ export default {
             player: {},
             players: [],
             score: 0,
+            settingsView: 'main',
             selectedPrimaryWeapon: 'AK47',
             selectedSecondaryWeapon: 'DesertEagle',
             settingsModalOpen: false,
@@ -99,6 +102,7 @@ export default {
     methods: {
         handleSettingsButtonClick: function() {
             this.settingsModalOpen = !this.settingsModalOpen
+            this.settingsView = 'main'
         },
 
         handleNicknameChange: function(nickname) {
@@ -121,6 +125,10 @@ export default {
             EventHandler.emit('secondary weapon update', weapon)
             this.selectedSecondaryWeapon = weapon.id
             toastr.info('Your weapon will change the next time you respawn.')
+        },
+
+        handleViewChange(view) {
+            this.settingsView = view
         }
     }
 }
