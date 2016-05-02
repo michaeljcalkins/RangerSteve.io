@@ -43,11 +43,28 @@ function onSocketConnection(socket) {
     socket.on('player damaged', onPlayerDamaged)
     socket.on('player full health', onPlayerFullHealth)
     socket.on('player healing', onPlayerHealing)
+    socket.on('player adjust score', onPlayerAdjustScore)
 
     socket.on('bullet fired', onBulletFired)
     socket.on('bullet removed', onBulletRemoved)
 
     socket.on('player update nickname', onPlayerUpdateNickname)
+}
+
+function onPlayerAdjustScore(data) {
+    var player = PlayerById(data.roomId, this.id, rooms)
+
+    if (! player) {
+        util.log('Player not found when adjust score', data)
+        return
+    }
+
+    player.meta.score += data.amount
+    player.meta.score = player.meta.score <= 0 ? 0 : player.meta.score
+
+    io.to(data.roomId).emit('update players', {
+        room: rooms[data.roomId]
+    })
 }
 
 function onPlayerUpdateNickname(data) {
@@ -237,13 +254,6 @@ function onPlayerDamaged(data) {
                 id: attackingPlayer.id,
                 score: 10
             })
-        } else {
-            // Falling to your death makes you lose 10 points
-            if (player.meta.score > 9) {
-                player.meta.score -= 10
-            } else {
-                player.meta.score = 0
-            }
         }
 
         io.to(data.roomId).emit('update players', {

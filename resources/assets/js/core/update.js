@@ -22,6 +22,11 @@ export default function Update() {
     // Check for out of bounds kill
     if (this.player.body.onFloor() && this.player.meta.health > 0 && ! this.respawnInProgress) {
         this.player.meta.health = 0
+        this.socket.emit('player adjust score', {
+            roomId: this.roomId,
+            amount: -10
+        })
+
         this.socket.emit('player damaged', {
             roomId: this.roomId,
             damage: 1000,
