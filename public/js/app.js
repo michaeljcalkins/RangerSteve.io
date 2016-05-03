@@ -29878,7 +29878,7 @@ function Preload() {
     this.load.image('head', '/images/body/head.png');
     this.load.image('torso', '/images/body/torso.png');
 
-    this.load.audio('AK47-sound', '/audio/AK47.ogg');
+    this.load.audio('AK47-sound', '/audio/AK47.mp3');
     this.load.audio('M500-sound', '/audio/M500.ogg');
     this.load.audio('Skorpion-sound', '/audio/Skorpion.ogg');
     this.load.audio('AUG-sound', '/audio/AUG.ogg');
