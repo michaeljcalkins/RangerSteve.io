@@ -73,13 +73,32 @@
     top: 10px;
     width: 220px;
 
+    table {
+        margin-bottom: 0;
+
+        tr:first-child td {
+            border-top: 1px solid #ddd !important;
+            padding-top: 8px !important;
+        }
+
+        td {
+            border: 0 !important;
+            padding: 2px 0 !important;
+        }
+
+        td:last-child {
+            text-align: right;
+        }
+    }
+
     h1 {
         font-size: 16px;
         font-family: Orbitron;
         font-weight: 400;
         letter-spacing: 2px;
         text-transform: uppercase;
-        margin: 0 0 5px;
+        text-align: center;
+        margin: 4px 0 8px;
     }
 
     ol {

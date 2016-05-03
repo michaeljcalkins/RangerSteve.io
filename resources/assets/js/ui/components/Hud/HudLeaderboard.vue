@@ -1,14 +1,17 @@
 <template>
     <div class="hud-leaderboard hud-item">
         <h1>Leaderboard</h1>
-        <ol>
-            <li
-                track-by="$index"
-                v-for="player in sortedPlayers"
-            >
-                {{player.meta.nickname}}
-            </li>
-        </ol>
+        <table class="table table-condensed">
+            <tbody>
+                <tr
+                    track-by="$index"
+                    v-for="player in sortedPlayers"
+                >
+                    <td>{{player.meta.nickname}}</td>
+                    <td>{{player.meta.score}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
