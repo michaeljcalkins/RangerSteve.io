@@ -109,6 +109,4 @@ export default function PlayerSpriteHandler() {
     this.muzzleFlash.x = 102
     this.muzzleFlash.visible = false
     this.currentWeaponSprite.addChild(this.muzzleFlash)
-
-    console.log('Completed player sprite')
 }

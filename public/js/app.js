@@ -30620,7 +30620,6 @@ function playerFaceLeft() {
         this.currentWeaponSprite.scale.y *= -1;
         this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.leftFaceX;
         this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.leftFaceY;
-        console.log('Player face left');
     }
 }
 
@@ -30649,7 +30648,6 @@ function playerFaceRight() {
         this.currentWeaponSprite.scale.y *= -1;
         this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.rightFaceX;
         this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.rightFaceY;
-        console.log('Player face right');
     }
 }
 
@@ -30910,8 +30908,6 @@ function PlayerSpriteHandler() {
     this.muzzleFlash.x = 102;
     this.muzzleFlash.visible = false;
     this.currentWeaponSprite.addChild(this.muzzleFlash);
-
-    console.log('Completed player sprite');
 }
 
 },{"../maps/HighRuleJungle":226,"./GameConsts":187,"./Weapons":225}],197:[function(require,module,exports){
