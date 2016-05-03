@@ -20,7 +20,9 @@ function setEventHandlers() {
 
 setInterval(function() {
     util.log('Current rooms', JSON.stringify(rooms))
+}, 10000)
 
+setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
         util.log(rooms[roomId].players)
         rooms[roomId].players.forEach((player) => {
@@ -30,7 +32,7 @@ setInterval(function() {
             }
         })
     })
-}, 10000)
+}, 3000)
 
 // New socket connection
 function onSocketConnection(socket) {
