@@ -29879,16 +29879,16 @@ function Preload() {
     this.load.image('torso', '/images/body/torso.png');
 
     this.load.audio('AK47-sound', '/audio/AK47.mp3');
-    this.load.audio('M500-sound', '/audio/M500.ogg');
-    this.load.audio('Skorpion-sound', '/audio/Skorpion.ogg');
-    this.load.audio('AUG-sound', '/audio/AUG.ogg');
-    this.load.audio('G43-sound', '/audio/G43.ogg');
-    this.load.audio('P90-sound', '/audio/P90.ogg');
-    this.load.audio('M4A1-sound', '/audio/M4A1.ogg');
-    this.load.audio('BarretM90-sound', '/audio/BarretM90.ogg');
+    this.load.audio('M500-sound', '/audio/M500.mp3');
+    this.load.audio('Skorpion-sound', '/audio/Skorpion.mp3');
+    this.load.audio('AUG-sound', '/audio/AUG.mp3');
+    this.load.audio('G43-sound', '/audio/G43.mp3');
+    this.load.audio('P90-sound', '/audio/P90.mp3');
+    this.load.audio('M4A1-sound', '/audio/M4A1.mp3');
+    this.load.audio('BarretM90-sound', '/audio/BarretM90.mp3');
 
-    this.load.audio('DesertEagle-sound', '/audio/DesertEagle.ogg');
-    this.load.audio('RPG-sound', '/audio/RPG.ogg');
+    this.load.audio('DesertEagle-sound', '/audio/DesertEagle.mp3');
+    this.load.audio('RPG-sound', '/audio/RPG.mp3');
 }
 
 },{"../lib/GameConsts":187}],180:[function(require,module,exports){
@@ -30223,9 +30223,14 @@ function FireStandardBullet() {
     bullet.height = this.bulletHeight;
     bullet.width = this.bulletWidth;
     bullet.body.gravity.y = -1800;
+    bullet.alpha = 0;
     bullet.reset(x, y);
     var pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed);
     bullet.rotation = pointerAngle;
+
+    setTimeout(function () {
+        bullet.alpha = 1;
+    }, 40);
 
     this.fx.volume = .3 * this.rootScope.volume;
     this.fx.play();

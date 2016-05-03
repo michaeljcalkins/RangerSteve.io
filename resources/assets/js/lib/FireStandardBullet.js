@@ -10,9 +10,14 @@ export default function FireStandardBullet() {
     bullet.height = this.bulletHeight
     bullet.width = this.bulletWidth
     bullet.body.gravity.y = -1800
+    bullet.alpha = 0
     bullet.reset(x, y)
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
     bullet.rotation = pointerAngle
+
+    setTimeout(function() {
+        bullet.alpha = 1
+    }, 40)
 
     this.fx.volume = .3 * this.rootScope.volume
     this.fx.play()
