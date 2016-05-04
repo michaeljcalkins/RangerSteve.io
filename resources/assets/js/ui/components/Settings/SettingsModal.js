@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 
-import MainSettingsMenu from './MainSettingsMenu.vue'
-import ChoosePrimaryMenu from './ChoosePrimaryMenu.vue'
-import ChooseSecondaryMenu from './ChooseSecondaryMenu.vue'
-import ChooseCharacterMenu from './ChooseCharacterMenu.vue'
+import MainSettingsMenu from './MainSettingsMenu'
+import ChoosePrimaryMenu from './ChoosePrimaryMenu'
+import ChooseSecondaryMenu from './ChooseSecondaryMenu'
+import ChooseCharacterMenu from './ChooseCharacterMenu'
 
 export default function SettingsModal({
     isOpen,
@@ -21,7 +21,7 @@ export default function SettingsModal({
     selectedSecondaryWeapon
 }) {
     function renderModalView() {
-        switch (this.state.settingsView) {
+        switch (settingsView) {
             case 'choosePrimary':
                 return (
                     <ChoosePrimaryMenu

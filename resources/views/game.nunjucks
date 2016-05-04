@@ -8,7 +8,9 @@
         <link rel="stylesheet" href="/css/app.css">
     </head>
     <body class="game">
-        <game-ui-container></game-ui-container>
+        <div id="ui-app">
+            <game-ui-container></game-ui-container>
+        </div>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

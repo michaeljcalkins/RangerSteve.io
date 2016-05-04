@@ -73,13 +73,13 @@ export default function MainSettingsMenu({
         <div>
             <div
                 className="row"
-                style="margin-bottom: 10px"
+                style={ { marginBottom: '10px' } }
             >
                 <div className="col-sm-6">
                     <label>Primary</label>
                     <div
                         className="option-group option-weapon-group align-middle"
-                        onClick={ handlePrimaryViewClick('choosePrimary') }
+                        onClick={ handlePrimaryViewClick }
                         style={ { marginBottom: '28px' } }
                     >
                         <div>
@@ -92,7 +92,7 @@ export default function MainSettingsMenu({
                     <label>Secondary</label>
                     <div
                         className="option-group option-weapon-group align-middle"
-                        onClick={ handleSecondaryViewClick('chooseSecondary') }
+                        onClick={ handleSecondaryViewClick }
                     >
                         <div>
                             <img src={ secondaryWeapon.image } />
@@ -105,7 +105,7 @@ export default function MainSettingsMenu({
                     <label>Character</label>
                     <div
                         className="option-group option-character-group align-middle"
-                        onClick={ handleCharacterViewClick('chooseCharacter') }
+                        onClick={ handleCharacterViewClick }
                     >
                         <div>
                             <img src="/images/characters/Ranger-Steve.png" />
@@ -121,7 +121,7 @@ export default function MainSettingsMenu({
                 <input
                     className="form-control"
                     defaultValue={ nickname }
-                    maxlength="25"
+                    maxLength="25"
                     onChange={ handleNicknameChange }
                     type="text"
                 />

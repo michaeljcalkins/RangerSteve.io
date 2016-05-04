@@ -1,15 +1,15 @@
 import React from 'react'
 
 import EventHandler from '../../lib/EventHandler'
-import HudHealth from '../components/Hud/HudHealth.vue'
-import HudScore from '../components/Hud/HudScore.vue'
-import HudLeaderboard from '../components/Hud/HudLeaderboard.vue'
-import HudSettingsButton from '../components/Hud/HudSettingsButton.vue'
-import HudJumpJet from '../components/Hud/HudJumpJet.vue'
-import HudKillConfirmed from '../components/Hud/HudKillConfirmed.vue'
-import HudChatMessage from '../components/Hud/HudChatMessage.vue'
-import HudChat from '../components/Hud/HudChat.vue'
-import SettingsModal from '../components/Settings/SettingsModal.vue'
+import HudHealth from '../components/Hud/HudHealth'
+import HudScore from '../components/Hud/HudScore'
+import HudLeaderboard from '../components/Hud/HudLeaderboard'
+import HudSettingsButton from '../components/Hud/HudSettingsButton'
+import HudJumpJet from '../components/Hud/HudJumpJet'
+import HudKillConfirmed from '../components/Hud/HudKillConfirmed'
+import HudChatMessage from '../components/Hud/HudChatMessage'
+import HudChat from '../components/Hud/HudChat'
+import SettingsModal from '../components/Settings/SettingsModal'
 
 export default class GameUiContainer extends React.Component {
     constructor() {
@@ -60,7 +60,7 @@ export default class GameUiContainer extends React.Component {
         })
 
         EventHandler.on('health update', (health) => {
-            this.setState({ helath })
+            this.setState({ health })
         })
 
         EventHandler.on('score update', (score) => {
@@ -75,7 +75,7 @@ export default class GameUiContainer extends React.Component {
             this.setState({ players })
         })
 
-        EventHandler.on('player update', (data) => {
+        EventHandler.on('player update', (player) => {
             this.setState({ player })
         })
 
@@ -163,12 +163,12 @@ export default class GameUiContainer extends React.Component {
                     defaultNicknameValue={ this.state.nickname }
                     defaultSoundEffectValue={ this.state.volume }
                     isOpen={ this.state.settingsModalOpen }
-                    onClose={ this.state.handleCloseSettingsModal }
-                    onNicknameChange={ this.state.handleNicknameChange }
-                    onPrimaryGunClick={ this.state.handlePrimaryGunClick }
-                    onSecondaryGunClick={ this.state.handleSecondaryGunClick }
-                    onSoundEffectVolumeChange={ this.state.handleSoundEffectVolumeChange }
-                    onViewChange={ this.state.handleViewChange }
+                    onClose={ this.handleCloseSettingsModal }
+                    onNicknameChange={ this.handleNicknameChange }
+                    onPrimaryGunClick={ this.handlePrimaryGunClick }
+                    onSecondaryGunClick={ this.handleSecondaryGunClick }
+                    onSoundEffectVolumeChange={ this.handleSoundEffectVolumeChange }
+                    onViewChange={ this.handleViewChange }
                     player={ this.state.player }
                     selectedPrimaryWeapon={ this.state.selectedPrimaryWeapon }
                     selectedSecondaryWeapon={ this.state.selectedSecondaryWeapon }
