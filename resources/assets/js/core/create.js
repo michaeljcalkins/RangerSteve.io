@@ -83,9 +83,13 @@ export default function Create() {
         this.player.meta.selectedSecondaryWeaponId = weapon.id
     })
 
-    // let textStyles = { fontSize: '14px', fill: '#000' }
-    // this.positionText = this.add.text(300, 300, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
-    // this.positionText.fixedToCamera = true
+    EventHandler.on('input enable', () => {
+        this.game.input.enabled = true
+    })
+
+    EventHandler.on('input disable', () => {
+        this.game.input.enabled = false
+    })
 
 
     /**
@@ -107,9 +111,16 @@ export default function Create() {
     /**
      * Keyboard Events
      */
+    // Open chat
+    this.input.keyboard.addKey(Phaser.Keyboard.T).onDown.add(() => {
+        EventHandler.emit('chat open')
+        this.game.input.enabled = false
+    })
+
     // Open settings modal
-    this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(function() {
+    this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
         EventHandler.emit('settings open')
+        this.game.input.enabled = false
     })
 
     // Switch weapons

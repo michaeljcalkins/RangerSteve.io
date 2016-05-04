@@ -24,7 +24,6 @@ setInterval(function() {
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
-        util.log(rooms[roomId].players)
         rooms[roomId].players.forEach((player) => {
             if (io.sockets.sockets[player.id] === undefined){
                 rooms[roomId].players.splice(rooms[roomId].players.indexOf(player), 1)
@@ -47,10 +46,16 @@ function onSocketConnection(socket) {
     socket.on('player healing', onPlayerHealing)
     socket.on('player adjust score', onPlayerAdjustScore)
 
+    socket.on('message send', onMessageSend)
+
     socket.on('bullet fired', onBulletFired)
-    socket.on('bullet removed', onBulletRemoved)
 
     socket.on('player update nickname', onPlayerUpdateNickname)
+}
+
+function onMessageSend(data) {
+    console.log('asdf')
+    io.to(data.roomId).emit('message received', data)
 }
 
 function onPlayerAdjustScore(data) {

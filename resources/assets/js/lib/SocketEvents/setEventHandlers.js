@@ -5,11 +5,12 @@ import onSocketDisconnect from './onSocketDisconnect'
 import onMovePlayer from './onMovePlayer'
 import onRemovePlayer from './onRemovePlayer'
 import onBulletFired from './onBulletFired'
-import onBulletRemoved from './onBulletRemoved'
 import onPlayerDamaged from './onPlayerDamaged'
 import onPlayerRespawn from './onPlayerRespawn'
 import onPlayerHealthUpdate from './onPlayerHealthUpdate'
 import onPlayerKillConfirmed from './onPlayerKillConfirmed'
+import onMessageReceived from './onMessageReceived'
+import emitMessageSend from './emitMessageSend'
 
 export default function() {
     this.socket.on('connect', onSocketConnected.bind(this))
@@ -24,8 +25,18 @@ export default function() {
     this.socket.on('player health update', onPlayerHealthUpdate.bind(this))
     this.socket.on('player kill confirmed', onPlayerKillConfirmed.bind(this))
 
+    this.socket.on('message received', onMessageReceived.bind(this))
+
     this.socket.on('bullet fired', onBulletFired.bind(this))
-    // this.socket.on('bullet removed', onBulletRemoved.bind(this))
+
+    EventHandler.on('message send', (data) => {
+        emitMessageSend.call(this, {
+            roomId: this.roomId,
+            playerId: '/#' + this.socket.id,
+            playerNickname: this.player.meta.nickname ? this.player.meta.nickname : 'Unamed Ranger',
+            message: data.message
+        })
+    })
 
     EventHandler.on('player update nickname', (data) => {
         this.socket.emit('player update nickname', {

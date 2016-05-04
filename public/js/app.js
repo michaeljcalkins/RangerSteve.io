@@ -19365,6 +19365,136 @@ module.exports = validateDOMNesting;
 module.exports = require('./lib/React');
 
 },{"./lib/React":67}],173:[function(require,module,exports){
+(function (process){
+'use strict';
+
+var Vue = require('vue');
+var Vue__default = 'default' in Vue ? Vue['default'] : Vue;
+
+// @NOTE: We have to use Vue.nextTick because the element might not be
+//        present at the time model changes, but will be in the next batch.
+//        But because we use Vue.nextTick, the directive may already be unbound
+//        by the time the callback executes, so we have to make sure it was not.
+
+var focus = {
+  priority: 1000,
+
+  bind: function() {
+    var self = this;
+    this.bound = true;
+
+    this.focus = function() {
+      if (self.bound === true) {
+        self.el.focus();
+      }
+    };
+
+    this.blur = function() {
+      if (self.bound === true) {
+        self.el.blur();
+      }
+    };
+  },
+
+  update: function(value) {
+    if (value) {
+      Vue__default.nextTick(this.focus);
+    } else {
+      Vue__default.nextTick(this.blur);
+    }
+  },
+
+  unbind: function() {
+    this.bound = false;
+  },
+};
+
+var focusModel = {
+  twoWay: true,
+  priority: 1000,
+
+  bind: function() {
+    var self = this;
+    this.bound = true;
+
+    this.focus = function() {
+      if (self.bound === true) {
+        self.el.focus();
+      }
+    };
+
+    this.blur = function() {
+      if (self.bound === true) {
+        self.el.blur();
+      }
+    };
+
+    this.focusHandler = function() {
+      self.set(true);
+    };
+
+    this.blurHandler = function() {
+      self.set(false);
+    };
+
+    Vue.util.on(this.el, 'focus', this.focusHandler);
+    Vue.util.on(this.el, 'blur', this.blurHandler);
+  },
+
+  update: function(value) {
+    if (value === true) {
+      Vue__default.nextTick(this.focus);
+    } else if (value === false) {
+      Vue__default.nextTick(this.blur);
+    } else {
+      if (process.env.NODE_ENV !== 'production') {
+        Vue.util.warn(
+          this.name + '="' +
+          this.expression + '" expects a boolean value, ' +
+          'got ' + JSON.stringify(value)
+        );
+      }
+    }
+  },
+
+  unbind: function() {
+    Vue.util.off(this.el, 'focus', this.focusHandler);
+    Vue.util.off(this.el, 'blur', this.blurHandler);
+    this.bound = false;
+  },
+};
+
+var focusAuto = {
+  priority: 100,
+  bind: function() {
+    var self = this;
+    this.bound = true;
+
+    Vue__default.nextTick(function() {
+      if (self.bound === true) {
+        self.el.focus();
+      }
+    });
+  },
+  unbind: function(){
+    this.bound = false;
+  },
+};
+
+var mixin = {
+  directives: {
+    focus: focus,
+    focusModel: focusModel,
+    focusAuto: focusAuto,
+  },
+};
+
+exports.focus = focus;
+exports.focusModel = focusModel;
+exports.focusAuto = focusAuto;
+exports.mixin = mixin;
+}).call(this,require('_process'))
+},{"_process":43,"vue":175}],174:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -19664,7 +19794,7 @@ function format (id) {
   return id.match(/[^\/]+\.vue$/)[0]
 }
 
-},{}],174:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 (function (process,global){
 /*!
  * Vue.js v1.0.21
@@ -29590,7 +29720,7 @@ setTimeout(function () {
 
 module.exports = Vue;
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":43}],175:[function(require,module,exports){
+},{"_process":43}],176:[function(require,module,exports){
 var inserted = exports.cache = {}
 
 exports.insert = function (css) {
@@ -29610,7 +29740,7 @@ exports.insert = function (css) {
   return elem
 }
 
-},{}],176:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 'use strict';
 
 toastr.options = {
@@ -29652,7 +29782,7 @@ window.check = check;
 require('./ui');
 require('./game');
 
-},{"./game":181,"./ui":227}],177:[function(require,module,exports){
+},{"./game":182,"./ui":229}],178:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29763,9 +29893,15 @@ function Create() {
         _this.player.meta.selectedSecondaryWeaponId = weapon.id;
     });
 
-    // let textStyles = { fontSize: '14px', fill: '#000' }
-    // this.positionText = this.add.text(300, 300, `${this.game.input.mousePointer.x},${this.game.input.mousePointer.y}`, textStyles)
-    // this.positionText.fixedToCamera = true
+    _EventHandler2.default.on('input enable', function () {
+        console.log('enable');
+        _this.game.input.enabled = true;
+    });
+
+    _EventHandler2.default.on('input disable', function () {
+        console.log('disable');
+        _this.game.input.enabled = false;
+    });
 
     /**
      * Camera Settings
@@ -29784,9 +29920,16 @@ function Create() {
     /**
      * Keyboard Events
      */
+    // Open chat
+    this.input.keyboard.addKey(Phaser.Keyboard.T).onDown.add(function () {
+        _EventHandler2.default.emit('chat open');
+        _this.game.input.enabled = false;
+    });
+
     // Open settings modal
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(function () {
         _EventHandler2.default.emit('settings open');
+        _this.game.input.enabled = false;
     });
 
     // Switch weapons
@@ -29821,7 +29964,7 @@ function Create() {
     _setEventHandlers2.default.call(this);
 }
 
-},{"../lib/EventHandler":183,"../lib/GameConsts":187,"../lib/GetQueryString":188,"../lib/PlayerSpriteHandler":196,"../lib/SocketEvents/setEventHandlers":213,"../maps/HighRuleJungle":226}],178:[function(require,module,exports){
+},{"../lib/EventHandler":184,"../lib/GameConsts":188,"../lib/GetQueryString":189,"../lib/PlayerSpriteHandler":197,"../lib/SocketEvents/setEventHandlers":215,"../maps/HighRuleJungle":228}],179:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29833,7 +29976,7 @@ function Init() {
     this.game.stage.disableVisibilityChange = true;
 }
 
-},{}],179:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29891,7 +30034,7 @@ function Preload() {
     this.load.audio('RPG-sound', '/audio/RPG.mp3');
 }
 
-},{"../lib/GameConsts":187}],180:[function(require,module,exports){
+},{"../lib/GameConsts":188}],181:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29965,7 +30108,7 @@ function Update() {
     }
 }
 
-},{"../lib/CollisionHandler":182,"../lib/PlayerAngleHandler":191,"../lib/PlayerJumpHandler":194,"../lib/PlayerMovementHandler":195,"../lib/SocketEvents/emitMovePlayer":200}],181:[function(require,module,exports){
+},{"../lib/CollisionHandler":183,"../lib/PlayerAngleHandler":192,"../lib/PlayerJumpHandler":195,"../lib/PlayerMovementHandler":196,"../lib/SocketEvents/emitMovePlayer":202}],182:[function(require,module,exports){
 'use strict';
 
 var _Init = require('./core/Init');
@@ -30008,7 +30151,7 @@ game.state.add('Game', function () {
     };
 }, true);
 
-},{"./core/Create":177,"./core/Init":178,"./core/Preload":179,"./core/Update":180}],182:[function(require,module,exports){
+},{"./core/Create":178,"./core/Init":179,"./core/Preload":180,"./core/Update":181}],183:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30091,7 +30234,7 @@ function CollisionHandler() {
     });
 }
 
-},{"./SocketEvents/emitPlayerDamaged":201,"./SprayBlood":214}],183:[function(require,module,exports){
+},{"./SocketEvents/emitPlayerDamaged":203,"./SprayBlood":216}],184:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30108,7 +30251,7 @@ var EventHandler = (0, _eventEmitter2.default)({});
 
 exports.default = EventHandler;
 
-},{"event-emitter":15}],184:[function(require,module,exports){
+},{"event-emitter":15}],185:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30152,7 +30295,7 @@ function FireRocket() {
     });
 }
 
-},{"./Guid":189}],185:[function(require,module,exports){
+},{"./Guid":190}],186:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30196,7 +30339,7 @@ function FireShotgunShell() {
     });
 }
 
-},{"./Guid":189}],186:[function(require,module,exports){
+},{"./Guid":190}],187:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30249,7 +30392,7 @@ function FireStandardBullet() {
     });
 }
 
-},{"./Guid":189,"./SocketEvents/emitBulletFired":199}],187:[function(require,module,exports){
+},{"./Guid":190,"./SocketEvents/emitBulletFired":200}],188:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30343,7 +30486,7 @@ var GameConsts = {
 
 exports.default = GameConsts;
 
-},{}],188:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30366,7 +30509,7 @@ function GetQueryString(field, url) {
     return string ? string[1] : null;
 }
 
-},{"react":172}],189:[function(require,module,exports){
+},{"react":172}],190:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30381,7 +30524,7 @@ function Guid() {
     return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
 }
 
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30417,7 +30560,7 @@ function upInputReleased() {
     return this.input.keyboard.upDuration(Phaser.Keyboard.W);
 }
 
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30561,7 +30704,7 @@ function PlayerAngleHandler() {
     this.rightArmGroup.angle = rightAngle;
 }
 
-},{}],192:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30587,7 +30730,7 @@ function PlayerById(id) {
     return false;
 }
 
-},{"react":172}],193:[function(require,module,exports){
+},{"react":172}],194:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30651,7 +30794,7 @@ function playerFaceRight() {
     }
 }
 
-},{}],194:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30720,7 +30863,7 @@ function PlayerJumpHandler() {
     }
 }
 
-},{"./EventHandler":183,"./GameConsts":187,"./InputHelpers":190}],195:[function(require,module,exports){
+},{"./EventHandler":184,"./GameConsts":188,"./InputHelpers":191}],196:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30781,7 +30924,7 @@ function PlayerMovementHandler() {
     }
 }
 
-},{"./GameConsts":187,"./InputHelpers":190,"./PlayerFaceHandler":193}],196:[function(require,module,exports){
+},{"./GameConsts":188,"./InputHelpers":191,"./PlayerFaceHandler":194}],197:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30910,7 +31053,7 @@ function PlayerSpriteHandler() {
     this.currentWeaponSprite.addChild(this.muzzleFlash);
 }
 
-},{"../maps/HighRuleJungle":226,"./GameConsts":187,"./Weapons":225}],197:[function(require,module,exports){
+},{"../maps/HighRuleJungle":228,"./GameConsts":188,"./Weapons":227}],198:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31019,7 +31162,7 @@ function RemotePlayer(player) {
     return newRemotePlayer;
 }
 
-},{"./GameConsts":187,"react":172}],198:[function(require,module,exports){
+},{"./GameConsts":188,"react":172}],199:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31083,7 +31226,7 @@ function playerFaceRight(remotePlayer) {
     }
 }
 
-},{}],199:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31110,7 +31253,28 @@ var propTypes = {
     damage: _react.PropTypes.number.isRequired
 };
 
-},{"react":172}],200:[function(require,module,exports){
+},{"react":172}],201:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (data) {
+    check(data, propTypes);
+    this.socket.emit('message send', data);
+};
+
+var _react = require('react');
+
+var propTypes = {
+    roomId: _react.PropTypes.string.isRequired,
+    playerNickname: _react.PropTypes.string.isRequired,
+    playerId: _react.PropTypes.string.isRequired,
+    message: _react.PropTypes.string.isRequired
+};
+
+},{"react":172}],202:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31134,7 +31298,7 @@ var propTypes = {
     respawnInProgress: _react.PropTypes.bool.isRequired
 };
 
-},{"react":172}],201:[function(require,module,exports){
+},{"react":172}],203:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31155,7 +31319,7 @@ var propTypes = {
     attackingPlayerId: _react.PropTypes.string.isRequired
 };
 
-},{"react":172}],202:[function(require,module,exports){
+},{"react":172}],204:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31199,85 +31363,35 @@ function onBulletFired(data) {
     bullet.body.velocity.y += newVelocity.y;
 }
 
-},{"react":172}],203:[function(require,module,exports){
+},{"react":172}],205:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.default = onBulletRemoved;
+exports.default = onBulletFired;
+
+var _EventHandler = require('../EventHandler');
+
+var _EventHandler2 = _interopRequireDefault(_EventHandler);
 
 var _react = require('react');
-
-var _SprayBlood = require('../SprayBlood');
-
-var _SprayBlood2 = _interopRequireDefault(_SprayBlood);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var propTypes = {
-    id: _react.PropTypes.string.isRequired,
-    bulletId: _react.PropTypes.string.isRequired
+    roomId: _react.PropTypes.string.isRequired,
+    playerNickname: _react.PropTypes.string.isRequired,
+    playerId: _react.PropTypes.string.isRequired,
+    message: _react.PropTypes.string.isRequired
 };
 
-function onBulletRemoved(data) {
+function onBulletFired(data) {
     check(data, propTypes);
-
-    if (data.id === '/#' + this.socket.id) return;
-
-    var removeEnemyBullet = _.find(this.enemyBullets, {
-        bulletId: data.bulletId
-    });
-
-    var removeLocalBullet = _.find(this.bullets.children, {
-        bulletId: data.bulletId
-    });
-
-    if (!removeEnemyBullet && !removeLocalBullet) {
-        console.log('Bullet not found: ', data.bulletId);
-        return;
-    }
-
-    var lastKnownX = false;
-    var lastKnownY = false;
-
-    if (removeEnemyBullet) {
-        lastKnownX = removeEnemyBullet.x;
-        lastKnownY = removeEnemyBullet.y;
-
-        removeEnemyBullet.kill();
-
-        _.remove(this.enemyBullets, {
-            bulletId: data.bulletId
-        });
-    }
-
-    if (removeLocalBullet) {
-        lastKnownX = removeLocalBullet.x;
-        lastKnownY = removeLocalBullet.y;
-
-        removeLocalBullet.kill();
-    }
-
-    if (lastKnownX && lastKnownY && !data.hasDamagedPlayer) {
-        var ricochet = this.add.sprite(lastKnownX, lastKnownY - 15, 'ricochet');
-        ricochet.scale.setTo(.17);
-        ricochet.animations.add('collision', [0, 1, 2, 3, 4, 5], 45, false, true);
-        ricochet.animations.play('collision');
-        ricochet.animations.currentAnim.killOnComplete = true;
-    }
-
-    if (lastKnownX && lastKnownY && data.hasDamagedPlayer) {
-        _SprayBlood2.default.call(this, {
-            bulletY: data.bulletY,
-            bulletX: data.bulletX,
-            playerX: data.playerX,
-            bulletRotation: data.bulletRotation
-        });
-    }
+    _EventHandler2.default.emit('message received', data);
 }
 
-},{"../SprayBlood":214,"react":172}],204:[function(require,module,exports){
+},{"../EventHandler":184,"react":172}],206:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31355,7 +31469,7 @@ function onMovePlayer(data) {
     movePlayer.lastPosition.y = movePlayer.y;
 }
 
-},{"../PlayerById":192,"../RemotePlayerFaceHandler":198,"react":172}],205:[function(require,module,exports){
+},{"../PlayerById":193,"../RemotePlayerFaceHandler":199,"react":172}],207:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31422,7 +31536,7 @@ function onPlayerDamaged(data) {
     }
 }
 
-},{"../EventHandler":183,"react":172}],206:[function(require,module,exports){
+},{"../EventHandler":184,"react":172}],208:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31452,7 +31566,7 @@ function onPlayerHealthUpdate(data) {
     _EventHandler2.default.emit('health update', this.player.meta.health);
 }
 
-},{"../EventHandler":183,"react":172}],207:[function(require,module,exports){
+},{"../EventHandler":184,"react":172}],209:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31481,7 +31595,7 @@ function onPlayerKillConfirmed(data) {
     _EventHandler2.default.emit('player kill confirmed');
 }
 
-},{"../EventHandler":183,"react":172}],208:[function(require,module,exports){
+},{"../EventHandler":184,"react":172}],210:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31573,7 +31687,7 @@ function onPlayerRespawn(data) {
     }, 2500);
 }
 
-},{"../../maps/HighRuleJungle":226,"../EventHandler":183,"../PlayerById":192,"../Weapons":225,"react":172}],209:[function(require,module,exports){
+},{"../../maps/HighRuleJungle":228,"../EventHandler":184,"../PlayerById":193,"../Weapons":227,"react":172}],211:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31610,7 +31724,7 @@ function onRemovePlayer(data) {
     this.enemies.splice(this.enemies.indexOf(removePlayer), 1);
 }
 
-},{"../PlayerById":192,"react":172}],210:[function(require,module,exports){
+},{"../PlayerById":193,"react":172}],212:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31640,7 +31754,7 @@ function onSocketConnected() {
     });
 }
 
-},{"../GetQueryString":188}],211:[function(require,module,exports){
+},{"../GetQueryString":189}],213:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31651,7 +31765,7 @@ function onSocketDisconnect() {
     console.log('Disconnected from socket server');
 }
 
-},{}],212:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31724,7 +31838,7 @@ function onUpdatePlayers(data) {
     });
 }
 
-},{"../EventHandler":183,"../RemotePlayer":197,"react":172}],213:[function(require,module,exports){
+},{"../EventHandler":184,"../RemotePlayer":198,"react":172}],215:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31746,8 +31860,18 @@ exports.default = function () {
     this.socket.on('player health update', _onPlayerHealthUpdate2.default.bind(this));
     this.socket.on('player kill confirmed', _onPlayerKillConfirmed2.default.bind(this));
 
+    this.socket.on('message received', _onMessageReceived2.default.bind(this));
+
     this.socket.on('bullet fired', _onBulletFired2.default.bind(this));
-    // this.socket.on('bullet removed', onBulletRemoved.bind(this))
+
+    _EventHandler2.default.on('message send', function (data) {
+        _emitMessageSend2.default.call(_this, {
+            roomId: _this.roomId,
+            playerId: '/#' + _this.socket.id,
+            playerNickname: _this.player.meta.nickname ? _this.player.meta.nickname : 'Unamed Ranger',
+            message: data.message
+        });
+    });
 
     _EventHandler2.default.on('player update nickname', function (data) {
         _this.socket.emit('player update nickname', {
@@ -31785,10 +31909,6 @@ var _onBulletFired = require('./onBulletFired');
 
 var _onBulletFired2 = _interopRequireDefault(_onBulletFired);
 
-var _onBulletRemoved = require('./onBulletRemoved');
-
-var _onBulletRemoved2 = _interopRequireDefault(_onBulletRemoved);
-
 var _onPlayerDamaged = require('./onPlayerDamaged');
 
 var _onPlayerDamaged2 = _interopRequireDefault(_onPlayerDamaged);
@@ -31805,9 +31925,17 @@ var _onPlayerKillConfirmed = require('./onPlayerKillConfirmed');
 
 var _onPlayerKillConfirmed2 = _interopRequireDefault(_onPlayerKillConfirmed);
 
+var _onMessageReceived = require('./onMessageReceived');
+
+var _onMessageReceived2 = _interopRequireDefault(_onMessageReceived);
+
+var _emitMessageSend = require('./emitMessageSend');
+
+var _emitMessageSend2 = _interopRequireDefault(_emitMessageSend);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../EventHandler":183,"./onBulletFired":202,"./onBulletRemoved":203,"./onMovePlayer":204,"./onPlayerDamaged":205,"./onPlayerHealthUpdate":206,"./onPlayerKillConfirmed":207,"./onPlayerRespawn":208,"./onRemovePlayer":209,"./onSocketConnected":210,"./onSocketDisconnect":211,"./onUpdatePlayers":212}],214:[function(require,module,exports){
+},{"../EventHandler":184,"./emitMessageSend":201,"./onBulletFired":204,"./onMessageReceived":205,"./onMovePlayer":206,"./onPlayerDamaged":207,"./onPlayerHealthUpdate":208,"./onPlayerKillConfirmed":209,"./onPlayerRespawn":210,"./onRemovePlayer":211,"./onSocketConnected":212,"./onSocketDisconnect":213,"./onUpdatePlayers":214}],216:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31846,7 +31974,7 @@ var propTypes = {
     bulletRotation: _react.PropTypes.number.isRequired
 };
 
-},{"react":172}],215:[function(require,module,exports){
+},{"react":172}],217:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31927,7 +32055,7 @@ var AK47 = function (_Phaser$Group) {
 
 exports.default = AK47;
 
-},{"../FireStandardBullet":186}],216:[function(require,module,exports){
+},{"../FireStandardBullet":187}],218:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32001,7 +32129,7 @@ var AUG = function (_Phaser$Group) {
 
 exports.default = AUG;
 
-},{"../FireStandardBullet":186}],217:[function(require,module,exports){
+},{"../FireStandardBullet":187}],219:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32075,7 +32203,7 @@ var Barrett = function (_Phaser$Group) {
 
 exports.default = Barrett;
 
-},{"../FireStandardBullet":186}],218:[function(require,module,exports){
+},{"../FireStandardBullet":187}],220:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32156,7 +32284,7 @@ var DesertEagle = function (_Phaser$Group) {
 
 exports.default = DesertEagle;
 
-},{"../FireStandardBullet":186}],219:[function(require,module,exports){
+},{"../FireStandardBullet":187}],221:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32230,7 +32358,7 @@ var G43 = function (_Phaser$Group) {
 
 exports.default = G43;
 
-},{"../FireStandardBullet":186}],220:[function(require,module,exports){
+},{"../FireStandardBullet":187}],222:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32304,7 +32432,7 @@ var M4A1 = function (_Phaser$Group) {
 
 exports.default = M4A1;
 
-},{"../FireStandardBullet":186}],221:[function(require,module,exports){
+},{"../FireStandardBullet":187}],223:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32377,7 +32505,7 @@ var M500 = function (_Phaser$Group) {
 
 exports.default = M500;
 
-},{"../FireShotgunShell":185}],222:[function(require,module,exports){
+},{"../FireShotgunShell":186}],224:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32451,7 +32579,7 @@ var P90 = function (_Phaser$Group) {
 
 exports.default = P90;
 
-},{"../FireStandardBullet":186}],223:[function(require,module,exports){
+},{"../FireStandardBullet":187}],225:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32567,7 +32695,7 @@ var RPG = function (_Phaser$Group) {
 
 exports.default = RPG;
 
-},{"../FireRocket":184}],224:[function(require,module,exports){
+},{"../FireRocket":185}],226:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32641,7 +32769,7 @@ var Skorpion = function (_Phaser$Group) {
 
 exports.default = Skorpion;
 
-},{"../FireStandardBullet":186}],225:[function(require,module,exports){
+},{"../FireStandardBullet":187}],227:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32703,7 +32831,7 @@ exports.default = {
     Skorpion: _Skorpion2.default
 };
 
-},{"./AK47":215,"./AUG":216,"./Barrett":217,"./DesertEagle":218,"./G43":219,"./M4A1":220,"./M500":221,"./P90":222,"./RPG":223,"./Skorpion":224}],226:[function(require,module,exports){
+},{"./AK47":217,"./AUG":218,"./Barrett":219,"./DesertEagle":220,"./G43":221,"./M4A1":222,"./M500":223,"./P90":224,"./RPG":225,"./Skorpion":226}],228:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32758,7 +32886,7 @@ function createLedges() {
     });
 }
 
-},{}],227:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -32776,7 +32904,66 @@ new _vue2.default({
     components: { GameUiContainer: _GameUiContainer2.default }
 });
 
-},{"./ui/containers/GameUiContainer.vue":239,"vue":174}],228:[function(require,module,exports){
+},{"./ui/containers/GameUiContainer.vue":243,"vue":175}],230:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    props: ['messages']
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"hud-chat\">\n    <ul class=\"list-unstyled\">\n        <li v-for=\"message in messages\">{{message.playerNickname}}: {{message.message}}</li>\n    </ul>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/michaelcalkins/Code/rangersteve/resources/assets/js/ui/components/Hud/HudChat.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":175,"vue-hot-reload-api":174}],231:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _vueFocus = require('vue-focus');
+
+exports.default = {
+    directives: { focus: _vueFocus.focus },
+    props: ['onSendMessage', 'isOpen'],
+    methods: {
+        handleSendMessage: function handleSendMessage() {
+            this.onSendMessage(this.message);
+            this.message = '';
+        }
+    },
+    data: function data() {
+        return {
+            message: ''
+        };
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"hud-chat-message hud-item\" :style=\"{ display: isOpen ? 'block' : 'none' }\">\n    <div class=\"form-group\">\n        <textarea v-focus=\"isOpen\" class=\"form-control\" @keyup.enter=\"handleSendMessage\" v-model=\"message\" placeholder=\"Push enter to send or esc...\"></textarea>\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/michaelcalkins/Code/rangersteve/resources/assets/js/ui/components/Hud/HudChatMessage.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":175,"vue-focus":173,"vue-hot-reload-api":174}],232:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32798,7 +32985,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],229:[function(require,module,exports){
+},{"vue":175,"vue-hot-reload-api":174}],233:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32832,7 +33019,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],230:[function(require,module,exports){
+},{"vue":175,"vue-hot-reload-api":174}],234:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32854,7 +33041,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],231:[function(require,module,exports){
+},{"vue":175,"vue-hot-reload-api":174}],235:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32886,7 +33073,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],232:[function(require,module,exports){
+},{"vue":175,"vue-hot-reload-api":174}],236:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32908,7 +33095,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],233:[function(require,module,exports){
+},{"vue":175,"vue-hot-reload-api":174}],237:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32930,7 +33117,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],234:[function(require,module,exports){
+},{"vue":175,"vue-hot-reload-api":174}],238:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32974,7 +33161,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":174,"vue-hot-reload-api":173}],235:[function(require,module,exports){
+},{"vue":175,"vue-hot-reload-api":174}],239:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33016,7 +33203,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../../lib/GameConsts":187,"vue":174,"vue-hot-reload-api":173}],236:[function(require,module,exports){
+},{"../../../lib/GameConsts":188,"vue":175,"vue-hot-reload-api":174}],240:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33058,7 +33245,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../../lib/GameConsts":187,"vue":174,"vue-hot-reload-api":173}],237:[function(require,module,exports){
+},{"../../../lib/GameConsts":188,"vue":175,"vue-hot-reload-api":174}],241:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33147,7 +33334,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../../lib/GameConsts":187,"vue":174,"vue-hot-reload-api":173}],238:[function(require,module,exports){
+},{"../../../lib/GameConsts":188,"vue":175,"vue-hot-reload-api":174}],242:[function(require,module,exports){
 var __vueify_style__ = require("vueify-insert-css").insert("\n.hud-settings-modal {\n    cursor: default;\n}\n")
 'use strict';
 
@@ -33199,7 +33386,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./ChooseCharacterMenu.vue":234,"./ChoosePrimaryMenu.vue":235,"./ChooseSecondaryMenu.vue":236,"./MainSettingsMenu.vue":237,"vue":174,"vue-hot-reload-api":173,"vueify-insert-css":175}],239:[function(require,module,exports){
+},{"./ChooseCharacterMenu.vue":238,"./ChoosePrimaryMenu.vue":239,"./ChooseSecondaryMenu.vue":240,"./MainSettingsMenu.vue":241,"vue":175,"vue-hot-reload-api":174,"vueify-insert-css":176}],243:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33234,6 +33421,14 @@ var _HudKillConfirmed = require('../components/Hud/HudKillConfirmed.vue');
 
 var _HudKillConfirmed2 = _interopRequireDefault(_HudKillConfirmed);
 
+var _HudChatMessage = require('../components/Hud/HudChatMessage.vue');
+
+var _HudChatMessage2 = _interopRequireDefault(_HudChatMessage);
+
+var _HudChat = require('../components/Hud/HudChat.vue');
+
+var _HudChat2 = _interopRequireDefault(_HudChat);
+
 var _SettingsModal = require('../components/Settings/SettingsModal.vue');
 
 var _SettingsModal2 = _interopRequireDefault(_SettingsModal);
@@ -33248,14 +33443,18 @@ exports.default = {
         HudSettingsButton: _HudSettingsButton2.default,
         HudJumpJet: _HudJumpJet2.default,
         HudKillConfirmed: _HudKillConfirmed2.default,
+        HudChatMessage: _HudChatMessage2.default,
+        HudChat: _HudChat2.default,
         SettingsModal: _SettingsModal2.default
     },
     data: function data() {
         return {
+            chatModalOpen: false,
             currentWeapon: 1,
             health: 100,
             showKillConfirmed: false,
             jumpJetCounter: 0,
+            messages: [],
             nickname: 'Unamed Ranger',
             player: {},
             players: [],
@@ -33279,6 +33478,10 @@ exports.default = {
             }, 3000);
         });
 
+        _EventHandler2.default.on('message received', function (data) {
+            _this.messages.push(data);
+        });
+
         _EventHandler2.default.on('health update', function (health) {
             _this.health = health;
         });
@@ -33300,7 +33503,18 @@ exports.default = {
         });
 
         _EventHandler2.default.on('settings open', function (data) {
-            _this.settingsModalOpen = !_this.settingsModalOpen;
+            _this.settingsModalOpen = true;
+            _EventHandler2.default.emit('input disable');
+        });
+
+        _EventHandler2.default.on('chat open', function (data) {
+            _this.chatModalOpen = true;
+            _EventHandler2.default.emit('input disable');
+        });
+
+        _EventHandler2.default.on('chat close', function (data) {
+            _this.chatModalOpen = false;
+            _EventHandler2.default.emit('input enable');
         });
 
         _EventHandler2.default.on('player jump jet update', function (data) {
@@ -33308,9 +33522,22 @@ exports.default = {
         });
     },
     methods: {
-        handleSettingsButtonClick: function handleSettingsButtonClick() {
-            this.settingsModalOpen = !this.settingsModalOpen;
+        handleSendMessage: function handleSendMessage(message) {
+            _EventHandler2.default.emit('message send', { message: message });
+            this.chatModalOpen = false;
+            _EventHandler2.default.emit('input enable');
+        },
+
+        handleCloseSettingsModal: function handleCloseSettingsModal() {
+            this.settingsModalOpen = false;
             this.settingsView = 'main';
+            _EventHandler2.default.emit('input enable');
+        },
+
+        handleSettingsButtonClick: function handleSettingsButtonClick() {
+            this.settingsModalOpen = true;
+            this.settingsView = 'main';
+            _EventHandler2.default.emit('input disable');
         },
 
         handleNicknameChange: function handleNicknameChange(nickname) {
@@ -33341,7 +33568,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<hud-kill-confirmed :show-kill-confirmed=\"showKillConfirmed\"></hud-kill-confirmed>\n<hud-health :health=\"health\"></hud-health>\n<hud-score :score=\"score\"></hud-score>\n<hud-leaderboard :players=\"players\"></hud-leaderboard>\n<hud-jump-jet :jump-jet-counter=\"jumpJetCounter\"></hud-jump-jet>\n<hud-settings-button :on-button-click=\"handleSettingsButtonClick\"></hud-settings-button>\n<settings-modal :default-nickname-value=\"nickname\" :default-sound-effect-value=\"volume\" :is-open=\"settingsModalOpen\" :on-view-change=\"handleViewChange\" :on-close=\"handleSettingsButtonClick\" :on-nickname-change=\"handleNicknameChange\" :on-primary-gun-click=\"handlePrimaryGunClick\" :on-secondary-gun-click=\"handleSecondaryGunClick\" :on-sound-effect-volume-change=\"handleSoundEffectVolumeChange\" :settings-view=\"settingsView\" :player=\"player\" :selected-primary-weapon=\"selectedPrimaryWeapon\" :selected-secondary-weapon=\"selectedSecondaryWeapon\"></settings-modal>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<hud-kill-confirmed :show-kill-confirmed=\"showKillConfirmed\"></hud-kill-confirmed>\n<hud-health :health=\"health\"></hud-health>\n<hud-score :score=\"score\"></hud-score>\n<hud-leaderboard :players=\"players\"></hud-leaderboard>\n<hud-jump-jet :jump-jet-counter=\"jumpJetCounter\"></hud-jump-jet>\n<hud-settings-button :on-button-click=\"handleSettingsButtonClick\"></hud-settings-button>\n<hud-chat-message :on-send-message=\"handleSendMessage\" :is-open=\"chatModalOpen\"></hud-chat-message>\n<hud-chat :messages=\"messages\"></hud-chat>\n<settings-modal :default-nickname-value=\"nickname\" :default-sound-effect-value=\"volume\" :is-open=\"settingsModalOpen\" :on-view-change=\"handleViewChange\" :on-close=\"handleCloseSettingsModal\" :on-nickname-change=\"handleNicknameChange\" :on-primary-gun-click=\"handlePrimaryGunClick\" :on-secondary-gun-click=\"handleSecondaryGunClick\" :on-sound-effect-volume-change=\"handleSoundEffectVolumeChange\" :settings-view=\"settingsView\" :player=\"player\" :selected-primary-weapon=\"selectedPrimaryWeapon\" :selected-secondary-weapon=\"selectedSecondaryWeapon\"></settings-modal>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -33353,6 +33580,6 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../lib/EventHandler":183,"../components/Hud/HudHealth.vue":228,"../components/Hud/HudJumpJet.vue":229,"../components/Hud/HudKillConfirmed.vue":230,"../components/Hud/HudLeaderboard.vue":231,"../components/Hud/HudScore.vue":232,"../components/Hud/HudSettingsButton.vue":233,"../components/Settings/SettingsModal.vue":238,"vue":174,"vue-hot-reload-api":173}]},{},[176]);
+},{"../../lib/EventHandler":184,"../components/Hud/HudChat.vue":230,"../components/Hud/HudChatMessage.vue":231,"../components/Hud/HudHealth.vue":232,"../components/Hud/HudJumpJet.vue":233,"../components/Hud/HudKillConfirmed.vue":234,"../components/Hud/HudLeaderboard.vue":235,"../components/Hud/HudScore.vue":236,"../components/Hud/HudSettingsButton.vue":237,"../components/Settings/SettingsModal.vue":242,"vue":175,"vue-hot-reload-api":174}]},{},[177]);
 
 //# sourceMappingURL=app.js.map

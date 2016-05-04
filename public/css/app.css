@@ -291,6 +291,34 @@ body.game {
   color: #fff;
   font-size: 20px; }
 
+.hud-chat-message {
+  cursor: pointer;
+  left: 50%;
+  top: 50%;
+  margin-top: -50px;
+  margin-left: -150px;
+  font-family: 'Lucida Grande', Arial;
+  height: 100px;
+  width: 300px; }
+  .hud-chat-message textarea {
+    width: 100%;
+    margin: -5px 5px 0;
+    height: 85px;
+    padding: 6px 8px; }
+
+.hud-chat {
+  background: rgba(80, 79, 77, 0.4);
+  width: 300px;
+  position: absolute;
+  left: 0;
+  bottom: 70px; }
+  .hud-chat ul {
+    margin: 0;
+    padding: 0; }
+  .hud-chat li {
+    color: white;
+    padding: 4px 3px; }
+
 .credits-container {
   background: url(/images/credits-map-background.png) no-repeat top center;
   background-attachment: fixed;

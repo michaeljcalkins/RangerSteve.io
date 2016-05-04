@@ -1,7 +1,10 @@
-import Vue from 'vue'
-import GameUiContainer from './ui/containers/GameUiContainer.vue'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import GameUiContainer from './ui/containers/GameUiContainer'
 
-new Vue({
-    el: 'body',
-    components: { GameUiContainer }
-})
+const element = document.getElementByTagName('body')
+
+ReactDOM.render(
+    <GameUiContainer />,
+    element
+)

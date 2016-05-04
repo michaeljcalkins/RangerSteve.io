@@ -3,7 +3,7 @@
 {% block content %}
 <div class="home-container">
     <div style="margin: 0" class="alert alert-info text-center">Ranger Steve is under construction with daily updates.
-        <a class="btn btn-primary" href="https://www.twitch.tv/michaeljcalkins" target="_blank">Follow Michael for updates.</a>
+        <a class="btn btn-primary" href="https://www.twitter.com/michaeljcalkins" target="_blank">Follow Michael for updates.</a>
     </div>
     <section class="main-section text-center">
         <div class="align-middle">
