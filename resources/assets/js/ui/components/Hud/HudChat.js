@@ -19,3 +19,11 @@ export default function HudChat({
         </div>
     )
 }
+
+HudChat.defaultProps = {
+    messages: []
+}
+
+HudChat.propTypes = {
+    messages: PropTypes.array
+}

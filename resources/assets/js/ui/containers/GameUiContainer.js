@@ -44,6 +44,10 @@ export default class GameUiContainer extends React.Component {
     }
 
     componentDidMount() {
+        this.startEventHandler()
+    }
+
+    startEventHandler() {
         let killConfirmedHandle = null
         EventHandler.on('player kill confirmed', () => {
             this.showKillConfirmed = true
@@ -54,8 +58,11 @@ export default class GameUiContainer extends React.Component {
         })
 
         EventHandler.on('message received', (data) => {
+            let newMessages = Object.assign(this.state.messages)
+            newMessages.push(data)
+
             this.setState({
-                messages: this.state.messages.push(data)
+                messages: newMessages
             })
         })
 
@@ -100,7 +107,9 @@ export default class GameUiContainer extends React.Component {
     }
 
     handleSendMessage(message) {
-        EventHandler.emit('message send', { message })
+        if (message.length > 0) {
+            EventHandler.emit('message send', { message })
+        }
         this.setState({ chatModalOpen: false })
         EventHandler.emit('input enable')
     }
