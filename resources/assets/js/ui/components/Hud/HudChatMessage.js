@@ -31,8 +31,6 @@ export default class HudChatMessage extends React.Component {
                 <div className="form-group">
                     <textarea
                         className="form-control"
-                        autoFocus
-                        defaultValue=""
                         onKeyPress={ this.handleSendMessage }
                         placeholder="Push enter to send..."
                         ref="messageInput"

@@ -39,6 +39,7 @@ export default function() {
     })
 
     EventHandler.on('player update nickname', (data) => {
+        this.player.meta.nickname = data.nickname
         this.socket.emit('player update nickname', {
             roomId: this.roomId,
             nickname: data.nickname

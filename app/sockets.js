@@ -54,7 +54,6 @@ function onSocketConnection(socket) {
 }
 
 function onMessageSend(data) {
-    console.log('asdf')
     io.to(data.roomId).emit('message received', data)
 }
 
