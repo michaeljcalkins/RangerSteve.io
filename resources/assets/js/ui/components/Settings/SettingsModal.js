@@ -22,44 +22,44 @@ export default function SettingsModal({
 }) {
     function renderModalView() {
         switch (settingsView) {
-            case 'choosePrimary':
-                return (
-                    <ChoosePrimaryMenu
-                        onPrimaryGunClick={ onPrimaryGunClick }
-                        onViewChange={ onViewChange }
-                        player={ player }
-                    />
-                )
+        case 'choosePrimary':
+            return (
+                <ChoosePrimaryMenu
+                    onPrimaryGunClick={ onPrimaryGunClick }
+                    onViewChange={ onViewChange }
+                    player={ player }
+                />
+            )
 
-            case 'chooseSecondary':
-                return (
-                    <ChooseSecondaryMenu
-                        onSecondaryGunClick={ onSecondaryGunClick }
-                        onViewChange={ onViewChange }
-                        player={ player }
-                    />
-                )
+        case 'chooseSecondary':
+            return (
+                <ChooseSecondaryMenu
+                    onSecondaryGunClick={ onSecondaryGunClick }
+                    onViewChange={ onViewChange }
+                    player={ player }
+                />
+            )
 
-            case 'chooseCharacter':
-                return (
-                    <ChooseCharacterMenu
-                        onViewChange={ onViewChange }
-                        player={ player }
-                    />
-                )
+        case 'chooseCharacter':
+            return (
+                <ChooseCharacterMenu
+                    onViewChange={ onViewChange }
+                    player={ player }
+                />
+            )
 
-            default:
-                return (
-                    <MainSettingsMenu
-                        defaultNicknameValue={ defaultNicknameValue }
-                        defaultSoundEffectValue={ defaultSoundEffectValue }
-                        onNicknameChange={ onNicknameChange }
-                        onSoundEffectVolumeChange={ onSoundEffectVolumeChange }
-                        onViewChange={ onViewChange }
-                        selectedPrimaryWeapon={ selectedPrimaryWeapon }
-                        selectedSecondaryWeapon={ selectedSecondaryWeapon }
-                    />
-                )
+        default:
+            return (
+                <MainSettingsMenu
+                    defaultNicknameValue={ defaultNicknameValue }
+                    defaultSoundEffectValue={ defaultSoundEffectValue }
+                    onNicknameChange={ onNicknameChange }
+                    onSoundEffectVolumeChange={ onSoundEffectVolumeChange }
+                    onViewChange={ onViewChange }
+                    selectedPrimaryWeapon={ selectedPrimaryWeapon }
+                    selectedSecondaryWeapon={ selectedSecondaryWeapon }
+                />
+            )
         }
     }
 
@@ -95,4 +95,20 @@ export default function SettingsModal({
             </div>
         </div>
     )
+}
+
+SettingsModal.propTypes = {
+    defaultNicknameValue: PropTypes.string,
+    defaultSoundEffectValue: PropTypes.number,
+    isOpen: PropTypes.bool,
+    onClose: PropTypes.func,
+    onNicknameChange: PropTypes.func,
+    onPrimaryGunClick: PropTypes.func,
+    onSecondaryGunClick: PropTypes.func,
+    onSoundEffectVolumeChange: PropTypes.func,
+    onViewChange: PropTypes.func,
+    player: PropTypes.object,
+    selectedPrimaryWeapon: PropTypes.string,
+    selectedSecondaryWeapon: PropTypes.string,
+    settingsView: PropTypes.string
 }

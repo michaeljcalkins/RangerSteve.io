@@ -4,7 +4,7 @@ export default function HudChat({
     messages
 }) {
     function renderMessages() {
-        return messages.map(function(message, index) {
+        return messages.slice(-5).map(function(message, index) {
             return (
                 <li key={ index }>{ message.playerNickname }: { message.message }</li>
             )

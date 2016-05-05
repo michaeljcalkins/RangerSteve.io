@@ -163,11 +163,10 @@
 }
 
 .hud-chat {
-    background: rgba(80, 79, 77, .4);
     width: 300px;
     position: absolute;
-    left: 0;
-    bottom: 70px;
+    left: 8px;
+    bottom: 65px;
 
     ul {
         margin: 0;
@@ -175,7 +174,9 @@
     }
 
     li {
-        color: white;
+        color: #fff;
+        text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+        font-size: 12px;
         padding: 4px 3px;
     }
 }

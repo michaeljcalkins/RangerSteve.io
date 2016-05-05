@@ -23,7 +23,7 @@ export default function ChoosePrimaryMenu({
                 <div
                     className="option-group option-weapon-group align-middle"
                     key={ index }
-                    onClick={ handleSelectPrimaryClick(weapon) }
+                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
                     { player.meta.score < weapon.minScore
                         ? <div className="option-screen"></div>
@@ -48,4 +48,10 @@ export default function ChoosePrimaryMenu({
             </div>
         </div>
     )
+}
+
+ChoosePrimaryMenu.propTypes = {
+    onPrimaryGunClick: PropTypes.func.isRequired,
+    onViewChange: PropTypes.func.isRequired,
+    player: PropTypes.object.isRequired
 }

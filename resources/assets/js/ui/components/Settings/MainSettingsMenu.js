@@ -2,141 +2,159 @@ import React, { PropTypes } from 'react'
 
 import GameConsts from '../../../lib/GameConsts'
 
-export default function MainSettingsMenu({
-    defaultNicknameValue,
-    defaultSoundEffectValue,
-    onNicknameChange,
-    onSoundEffectVolumeChange,
-    onViewChange,
-    selectedPrimaryWeapon,
-    selectedSecondaryWeapon
-}) {
-    let nickname = defaultNicknameValue
-    let volume = defaultSoundEffectValue
+export default class MainSettingsMenu extends React.Component {
+    constructor(props) {
+        super(props)
 
-    function handleNicknameChange() {
-        if (nickname.length > 25)
-            nickname = nickname.splice(0, 25)
+        this.state = {
+            nickname: props.defaultNicknameValue,
+            volume: props.defaultSoundEffectValue
+        }
 
-        onNicknameChange(nickname)
+        this.handleNicknameChange = this.handleNicknameChange.bind(this)
+        this.handleSoundEffectVolumeChange = this.handleSoundEffectVolumeChange.bind(this)
+        this.handlePrimaryViewClick = this.handlePrimaryViewClick.bind(this)
+        this.handleSecondaryViewClick = this.handleSecondaryViewClick.bind(this)
+        this.handleCharacterViewClick = this.handleCharacterViewClick.bind(this)
+        this.primaryWeapon = this.primaryWeapon.bind(this)
+        this.secondaryWeapon = this.secondaryWeapon.bind(this)
     }
 
-    function handleSoundEffectVolumeChange(evt) {
-        onSoundEffectVolumeChange(evt.target.value)
+    handleNicknameChange(evt) {
+        if (this.state.nickname.length > 25) return
+        let nickname = evt.target.value.slice(0, 25)
+        this.setState({ nickname })
+        this.props.onNicknameChange(nickname)
     }
 
-    function handlePrimaryViewClick() {
-        onViewChange('choosePrimary')
+    handleSoundEffectVolumeChange(evt) {
+        this.props.onSoundEffectVolumeChange(evt.target.value)
     }
 
-    function handleSecondaryViewClick() {
-        onViewChange('chooseSecondary')
+    handlePrimaryViewClick() {
+        this.props.onViewChange('choosePrimary')
     }
 
-    function handleCharacterViewClick() {
-        onViewChange('chooseCharacter')
+    handleSecondaryViewClick() {
+        this.props.onViewChange('chooseSecondary')
     }
 
-    function primaryWeapon() {
-        if (!selectedPrimaryWeapon)
+    handleCharacterViewClick() {
+        this.props.onViewChange('chooseCharacter')
+    }
+
+    primaryWeapon() {
+        if (!this.props.selectedPrimaryWeapon)
             return null
 
         let weapon = _.find(GameConsts.PRIMARY_WEAPONS, {
-            id: selectedPrimaryWeapon
+            id: this.props.selectedPrimaryWeapon
         })
 
         if (! weapon) {
-            console.error('Could not find primary weapon.', selectedPrimaryWeapon)
+            console.error('Could not find primary weapon.', this.props.selectedPrimaryWeapon)
             return null
         }
 
         return weapon
     }
 
-    function secondaryWeapon() {
-        if (! selectedSecondaryWeapon)
+    secondaryWeapon() {
+        if (! this.props.selectedSecondaryWeapon)
             return null
 
         let weapon = _.find(GameConsts.SECONDARY_WEAPONS, {
-            id: selectedSecondaryWeapon
+            id: this.props.selectedSecondaryWeapon
         })
 
         if (!weapon) {
-            console.error('Could not find secondary weapon.', selectedSecondaryWeapon)
+            console.error('Could not find secondary weapon.', this.props.selectedSecondaryWeapon)
             return null
         }
 
         return weapon
     }
 
-    return (
-        <div>
-            <div
-                className="row"
-                style={ { marginBottom: '10px' } }
-            >
-                <div className="col-sm-6">
-                    <label>Primary</label>
-                    <div
-                        className="option-group option-weapon-group align-middle"
-                        onClick={ handlePrimaryViewClick }
-                        style={ { marginBottom: '28px' } }
-                    >
-                        <div>
-                            <img src={ primaryWeapon.image } />
+    render() {
+        return (
+            <div>
+                <div
+                    className="row"
+                    style={ { marginBottom: '10px' } }
+                >
+                    <div className="col-sm-6">
+                        <label>Primary</label>
+                        <div
+                            className="option-group option-weapon-group align-middle"
+                            onClick={ this.handlePrimaryViewClick }
+                            style={ { marginBottom: '28px' } }
+                        >
+                            <div>
+                                <img src={ this.primaryWeapon().image } />
+                            </div>
+                            <span className="caret"></span>
+                            <span className="option-name">{ this.primaryWeapon().name }</span>
                         </div>
-                        <span className="caret"></span>
-                        <span className="option-name">{ primaryWeapon.name }</span>
-                    </div>
 
-                    <label>Secondary</label>
-                    <div
-                        className="option-group option-weapon-group align-middle"
-                        onClick={ handleSecondaryViewClick }
-                    >
-                        <div>
-                            <img src={ secondaryWeapon.image } />
+                        <label>Secondary</label>
+                        <div
+                            className="option-group option-weapon-group align-middle"
+                            onClick={ this.handleSecondaryViewClick }
+                        >
+                            <div>
+                                <img src={ this.secondaryWeapon().image } />
+                            </div>
+                            <span className="caret"></span>
+                            <span className="option-name">{ this.secondaryWeapon().name }</span>
                         </div>
-                        <span className="caret"></span>
-                        <span className="option-name">{ secondaryWeapon.name }</span>
+                    </div>
+                    <div className="col-sm-6">
+                        <label>Character</label>
+                        <div
+                            className="option-group option-character-group align-middle"
+                            onClick={ this.handleCharacterViewClick }
+                        >
+                            <div>
+                                <img src="/images/characters/Ranger-Steve.png" />
+                            </div>
+                            <span className="caret"></span>
+                            <span className="option-name">Ranger Steve</span>
+                        </div>
                     </div>
                 </div>
-                <div className="col-sm-6">
-                    <label>Character</label>
-                    <div
-                        className="option-group option-character-group align-middle"
-                        onClick={ handleCharacterViewClick }
-                    >
-                        <div>
-                            <img src="/images/characters/Ranger-Steve.png" />
-                        </div>
-                        <span className="caret"></span>
-                        <span className="option-name">Ranger Steve</span>
-                    </div>
+
+                <div className="form-group">
+                    <label>Nickname</label>
+                    <input
+                        className="form-control"
+                        defaultValue={ this.state.nickname }
+                        maxLength="25"
+                        onChange={ this.handleNicknameChange }
+                        type="text"
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Sound Effects Volume</label>
+                    <input
+                        defaultValue={ this.state.volume }
+                        max="1"
+                        min="0"
+                        onChange={ this.handleSoundEffectVolumeChange }
+                        step=".01"
+                        type="range"
+                    />
                 </div>
             </div>
+        )
+    }
+}
 
-            <div className="form-group">
-                <label>Nickname</label>
-                <input
-                    className="form-control"
-                    defaultValue={ nickname }
-                    maxLength="25"
-                    onChange={ handleNicknameChange }
-                    type="text"
-                />
-            </div>
-            <div className="form-group">
-                <label>Sound Effects Volume</label>
-                <input
-                    defaultValue={ volume }
-                    max="1"
-                    min="0"
-                    onChange={ handleSoundEffectVolumeChange }
-                    step=".01"
-                    type="range"
-                />
-            </div>
-        </div>
-    )
+MainSettingsMenu.propTypes = {
+    defaultNicknameValue: PropTypes.string,
+    defaultSoundEffectValue: PropTypes.number,
+    onNicknameChange: PropTypes.func,
+    onSoundEffectVolumeChange: PropTypes.func,
+    onViewChange: PropTypes.func,
+    selectedPrimaryWeapon: PropTypes.string,
+    selectedSecondaryWeapon: PropTypes.string
 }

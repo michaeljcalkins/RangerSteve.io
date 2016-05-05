@@ -3,18 +3,18 @@ import React, { PropTypes } from 'react'
 import GameConsts from '../../../lib/GameConsts'
 
 export default function ChooseSecondaryMenu({
-    onViewChange,
     onSecondaryGunClick,
+    onViewChange,
     player
 }) {
     const secondaryWeapons = GameConsts.SECONDARY_WEAPONS
 
     function handleSelectPrimaryClick(weapon) {
-        if (this.player.meta.score < weapon.minScore)
+        if (player.meta.score < weapon.minScore)
             return
 
-        this.onSecondaryGunClick(weapon)
-        this.onViewChange('main')
+        onSecondaryGunClick(weapon)
+        onViewChange('main')
     }
 
     function renderWeapons() {
@@ -23,7 +23,7 @@ export default function ChooseSecondaryMenu({
                 <div
                     className="option-group option-weapon-group align-middle"
                     key={ index }
-                    onClick={ handleSelectPrimaryClick(weapon) }
+                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
                     <div
                         className="option-screen"
@@ -47,4 +47,10 @@ export default function ChooseSecondaryMenu({
             </div>
         </div>
     )
+}
+
+ChooseSecondaryMenu.propTypes = {
+    onSecondaryGunClick: PropTypes.func.isRequired,
+    onViewChange: PropTypes.func.isRequired,
+    player: PropTypes.object.isRequired
 }

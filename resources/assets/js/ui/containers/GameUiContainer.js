@@ -82,8 +82,8 @@ export default class GameUiContainer extends React.Component {
             this.setState({ players })
         })
 
-        EventHandler.on('player update', (player) => {
-            this.setState({ player })
+        EventHandler.on('player update', (data) => {
+            this.setState({ player: data.player })
         })
 
         EventHandler.on('settings open', () => {

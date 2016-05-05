@@ -7,7 +7,7 @@ export default function HudLeaderboard({
         return players.map(function(player, index) {
             return (
                 <tr key={ index }>
-                    <td>{ player.meta.nickname }</td>
+                    <td>{ player.meta.nickname ? player.meta.nickname : 'Unamed Ranger' }</td>
                     <td>{ player.meta.score }</td>
                 </tr>
             )
@@ -24,4 +24,8 @@ export default function HudLeaderboard({
             </table>
         </div>
     )
+}
+
+HudLeaderboard.propTypes = {
+    players: PropTypes.array.isRequired
 }
