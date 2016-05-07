@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import GameConsts from '../../../lib/GameConsts'
+import NameGenerator from '../../../lib/NameGenerator'
 
 export default class MainSettingsMenu extends React.Component {
     constructor(props) {
@@ -18,11 +19,19 @@ export default class MainSettingsMenu extends React.Component {
         this.handleCharacterViewClick = this.handleCharacterViewClick.bind(this)
         this.primaryWeapon = this.primaryWeapon.bind(this)
         this.secondaryWeapon = this.secondaryWeapon.bind(this)
+        this.handleGenerateName = this.handleGenerateName.bind(this)
+    }
+
+    handleGenerateName() {
+        const nickname = NameGenerator()
+        this.refs.nicknameInput.value = nickname
+        this.setState({ nickname })
+        this.props.onNicknameChange(nickname)
     }
 
     handleNicknameChange(evt) {
         if (this.state.nickname.length > 25) return
-        let nickname = evt.target.value.slice(0, 25)
+        const nickname = evt.target.value.slice(0, 25)
         this.setState({ nickname })
         this.props.onNicknameChange(nickname)
     }
@@ -124,11 +133,12 @@ export default class MainSettingsMenu extends React.Component {
                 </div>
 
                 <div className="form-group">
-                    <label>Nickname</label>
+                    <label>Nickname <span className="pointer" onClick={ this.handleGenerateName }>(Generate Name)</span></label>
                     <input
                         className="form-control"
                         defaultValue={ this.state.nickname }
                         maxLength="25"
+                        ref="nicknameInput"
                         onChange={ this.handleNicknameChange }
                         type="text"
                     />
