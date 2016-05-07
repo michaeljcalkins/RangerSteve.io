@@ -1,4 +1,5 @@
 import React from 'react'
+import store from 'store'
 
 import EventHandler from '../../lib/EventHandler'
 import HudHealth from '../components/Hud/HudHealth'
@@ -22,15 +23,15 @@ export default class GameUiContainer extends React.Component {
             showKillConfirmed: false,
             jumpJetCounter: 0,
             messages: [],
-            nickname: 'Unamed Ranger',
+            nickname: store.get('nickname', 'Unamed Ranger'),
             player: {},
             players: [],
             score: 0,
             settingsView: 'main',
             selectedPrimaryWeapon: 'AK47',
             selectedSecondaryWeapon: 'DesertEagle',
-            settingsModalOpen: false,
-            volume: .5
+            settingsModalOpen: !store.has('nickname'),
+            volume: store.get('volume', .5)
         }
 
         this.handleSendMessage = this.handleSendMessage.bind(this)
@@ -45,6 +46,7 @@ export default class GameUiContainer extends React.Component {
 
     componentDidMount() {
         this.startEventHandler()
+        this.handleNicknameChange(this.state.nickname)
     }
 
     startEventHandler() {
@@ -141,11 +143,13 @@ export default class GameUiContainer extends React.Component {
     handleNicknameChange(nickname) {
         this.setState({ nickname })
         EventHandler.emit('player update nickname', { nickname })
+        store.set('nickname', nickname)
     }
 
     handleSoundEffectVolumeChange(volume) {
         this.setState({ volume })
         EventHandler.emit('volume update', { volume })
+        store.set('volume', volume)
     }
 
     handlePrimaryGunClick(weapon) {

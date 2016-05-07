@@ -20,7 +20,7 @@ function setEventHandlers() {
 
 setInterval(function() {
     Object.keys(rooms).forEach((key) => {
-        util.log('ROOM >>>>>>>>>>>>>>>>', rooms[key])
+        util.log('ROOM >>>>>>>>>>>>>>>>', JSON.stringify(rooms[key], null, 4))
     })
 }, 3000)
 
@@ -110,7 +110,8 @@ function onNewPlayer (data) {
     newPlayer.id = this.id
     newPlayer.meta = {
         health: 100,
-        score: 0
+        score: 0,
+        nickname: data.nickname
     }
 
     if (data.roomId) {

@@ -28,7 +28,7 @@ export default class MainSettingsMenu extends React.Component {
     }
 
     handleSoundEffectVolumeChange(evt) {
-        this.props.onSoundEffectVolumeChange(evt.target.value)
+        this.props.onSoundEffectVolumeChange(Number(evt.target.value))
     }
 
     handlePrimaryViewClick() {

@@ -4,6 +4,7 @@ import MainSettingsMenu from './MainSettingsMenu'
 import ChoosePrimaryMenu from './ChoosePrimaryMenu'
 import ChooseSecondaryMenu from './ChooseSecondaryMenu'
 import ChooseCharacterMenu from './ChooseCharacterMenu'
+import ControlsMenu from './ControlsMenu'
 
 export default function SettingsModal({
     isOpen,
@@ -48,6 +49,13 @@ export default function SettingsModal({
                 />
             )
 
+        case 'controls':
+            return (
+                <ControlsMenu
+                    onViewChange={ onViewChange }
+                />
+            )
+
         default:
             return (
                 <MainSettingsMenu
@@ -77,9 +85,25 @@ export default function SettingsModal({
                         >
                             <span>&times;</span>
                         </button>
-                        <h4 className="modal-title">Options</h4>
+                        <h4 className="modal-title">Ranger Steve</h4>
                     </div>
                     <div className="modal-body">
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <ul className="nav nav-pills" style={ { marginBottom: '15px' } }>
+                                    <li className="active pointer">
+                                        <a onClick={ onViewChange.bind(this, 'main') }>
+                                            Main
+                                        </a>
+                                    </li>
+                                    <li className="pointer">
+                                        <a onClick={ onViewChange.bind(this, 'controls') }>
+                                            Controls
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         { renderModalView() }
                     </div>
                     <div className="modal-footer">
