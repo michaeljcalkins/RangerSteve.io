@@ -47,7 +47,8 @@ export default function ChooseCharacterMenu({
     return (
         <div className="row">
             <div className="col-sm-12">
-                <label>Select a character</label>
+                <label>Select a Character</label>
+                <em className="pull-right">(Changes take effect when you respawn)</em>
                 <div className="options-menu">
                     { renderCharacters() }
                 </div>

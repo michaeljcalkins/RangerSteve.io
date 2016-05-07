@@ -154,16 +154,13 @@ export default class GameUiContainer extends React.Component {
 
     handlePrimaryGunClick(weapon) {
         this.setState({ selectedPrimaryWeapon: weapon.id })
-        toastr.clear()
-        toastr.info('Your weapon will change the next time you respawn.')
+
         EventHandler.emit('primary weapon update', weapon)
         store.set('selectedPrimaryWeapon', weapon.id)
     }
 
     handleSecondaryGunClick(weapon) {
         this.setState({ selectedSecondaryWeapon: weapon.id })
-        toastr.clear()
-        toastr.info('Your weapon will change the next time you respawn.')
         EventHandler.emit('secondary weapon update', weapon)
         store.set('selectedSecondaryWeapon', weapon.id)
     }

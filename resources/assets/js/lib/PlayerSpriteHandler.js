@@ -1,3 +1,4 @@
+import store from 'store'
 import GameConsts from './GameConsts'
 import Weapons from './Weapons'
 import * as HighRuleJungle from '../maps/HighRuleJungle'
@@ -27,21 +28,21 @@ export default function PlayerSpriteHandler() {
     // Add drag to the player that slows them down when they are not accelerating
     this.player.body.drag.setTo(GameConsts.DRAG, 0) // x, y
     this.player.body.setSize(145, 295, 0, -3)
-    this.player.meta = {
-        health: 100
-    }
 
     //  Our two animations, walking left and right.
     this.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
     this.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
 
+    const startingPrimaryWeaponId = store.get('selectedPrimaryWeapon', 'AK47')
+    const startingSecondaryWeaponId = store.get('selectedSecondaryWeapon', 'DesertEagle')
+
     this.player.meta = {
         health: 100,
         face: 'right',
-        primaryWeapon: new Weapons[GameConsts.STARTING_PRIMARY_ID](this),
-        secondaryWeapon: new Weapons[GameConsts.STARTING_SECONDARY_ID](this),
-        selectedPrimaryWeaponId: GameConsts.STARTING_PRIMARY_ID,
-        selectedSecondaryWeaponId: GameConsts.STARTING_SECONDARY_ID
+        primaryWeapon: new Weapons[startingPrimaryWeaponId](this),
+        secondaryWeapon: new Weapons[startingSecondaryWeaponId](this),
+        selectedPrimaryWeaponId: startingPrimaryWeaponId,
+        selectedSecondaryWeaponId: startingSecondaryWeaponId
     }
 
     this.player.meta.primaryWeapon.id = GameConsts.STARTING_PRIMARY_ID

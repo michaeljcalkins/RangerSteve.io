@@ -41,6 +41,7 @@ export default function ChooseSecondaryMenu({
         <div className="row">
             <div className="col-sm-12">
                 <label>Select a Secondary Weapon</label>
+                <em className="pull-right">(Changes take effect when you respawn)</em>
                 <div className="options-menu">
                     { renderWeapons() }
                 </div>

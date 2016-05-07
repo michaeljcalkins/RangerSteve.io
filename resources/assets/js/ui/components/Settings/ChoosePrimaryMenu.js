@@ -42,6 +42,7 @@ export default function ChoosePrimaryMenu({
         <div className="row">
             <div className="col-sm-12">
                 <label>Select a Primary Weapon</label>
+                <em className="pull-right">(Changes take effect when you respawn)</em>
                 <div className="options-menu">
                     { renderWeapons() }
                 </div>

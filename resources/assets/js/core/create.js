@@ -1,3 +1,4 @@
+import store from 'store'
 import GameConsts from '../lib/GameConsts'
 import SetEventHandlers from '../lib/SocketEvents/setEventHandlers'
 import EventHandler from '../lib/EventHandler'
@@ -7,7 +8,7 @@ import GetQueryString from '../lib/GetQueryString'
 
 export default function Create() {
     this.roomId = GetQueryString('roomId')
-    this.volume = GameConsts.STARTING_VOLUME
+    this.volume = store.get('volume', GameConsts.STARTING_VOLUME)
     this.socket = io.connect()
     this.jumping = false
     this.respawnInProgress = false

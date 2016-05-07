@@ -91,7 +91,7 @@ const GameConsts = {
             id: 'RPG',
             name: 'RPG',
             image: '/images/guns/Spr_RPG.png',
-            minScore: 20
+            minScore: 0
         }
     ]
 }
