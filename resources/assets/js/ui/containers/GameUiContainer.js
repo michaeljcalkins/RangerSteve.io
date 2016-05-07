@@ -11,6 +11,7 @@ import HudKillConfirmed from '../components/Hud/HudKillConfirmed'
 import HudChatMessage from '../components/Hud/HudChatMessage'
 import HudChat from '../components/Hud/HudChat'
 import SettingsModal from '../components/Settings/SettingsModal'
+import NameGenerator from '../../lib/NameGenerator'
 
 export default class GameUiContainer extends React.Component {
     constructor() {
@@ -23,7 +24,7 @@ export default class GameUiContainer extends React.Component {
             showKillConfirmed: false,
             jumpJetCounter: 0,
             messages: [],
-            nickname: store.get('nickname', 'Unamed Ranger'),
+            nickname: store.get('nickname', NameGenerator()),
             player: {},
             players: [],
             score: 0,
