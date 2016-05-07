@@ -28,8 +28,8 @@ export default class GameUiContainer extends React.Component {
             players: [],
             score: 0,
             settingsView: 'main',
-            selectedPrimaryWeapon: 'AK47',
-            selectedSecondaryWeapon: 'DesertEagle',
+            selectedPrimaryWeapon: store.get('selectedPrimaryWeapon', 'AK47'),
+            selectedSecondaryWeapon: store.get('selectedSecondaryWeapon', 'DesertEagle'),
             settingsModalOpen: !store.has('nickname'),
             volume: store.get('volume', .5)
         }
@@ -157,6 +157,7 @@ export default class GameUiContainer extends React.Component {
         toastr.clear()
         toastr.info('Your weapon will change the next time you respawn.')
         EventHandler.emit('primary weapon update', weapon)
+        store.set('selectedPrimaryWeapon', weapon.id)
     }
 
     handleSecondaryGunClick(weapon) {
@@ -164,6 +165,7 @@ export default class GameUiContainer extends React.Component {
         toastr.clear()
         toastr.info('Your weapon will change the next time you respawn.')
         EventHandler.emit('secondary weapon update', weapon)
+        store.set('selectedSecondaryWeapon', weapon.id)
     }
 
     handleViewChange(view) {
