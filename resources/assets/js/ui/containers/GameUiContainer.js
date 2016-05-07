@@ -91,6 +91,11 @@ export default class GameUiContainer extends React.Component {
             EventHandler.emit('input disable')
         })
 
+        EventHandler.on('settings close', () => {
+            this.setState({ settingsModalOpen: false })
+            EventHandler.emit('input enable')
+        })
+
         EventHandler.on('chat open', () => {
             this.setState({ chatModalOpen: true })
             EventHandler.emit('input disable')
@@ -104,6 +109,13 @@ export default class GameUiContainer extends React.Component {
         EventHandler.on('player jump jet update', (data) => {
             this.setState({ jumpJetCounter: data.jumpJetCounter })
         })
+
+        $(document).keyup(function(e) {
+            if (e.keyCode == 27) {
+                EventHandler.emit('settings close')
+                EventHandler.emit('chat close')
+            }
+        });
     }
 
     handleSendMessage(message) {

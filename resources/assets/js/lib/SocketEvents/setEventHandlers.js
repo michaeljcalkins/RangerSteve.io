@@ -10,6 +10,7 @@ import onPlayerRespawn from './onPlayerRespawn'
 import onPlayerHealthUpdate from './onPlayerHealthUpdate'
 import onPlayerKillConfirmed from './onPlayerKillConfirmed'
 import onMessageReceived from './onMessageReceived'
+import onPlayerRemove from './onPlayerRemove'
 import emitMessageSend from './emitMessageSend'
 
 export default function() {
@@ -21,6 +22,7 @@ export default function() {
     this.socket.on('remove player', onRemovePlayer.bind(this))
 
     this.socket.on('player respawn', onPlayerRespawn.bind(this))
+    this.socket.on('player remove', onPlayerRemove.bind(this))
     this.socket.on('player damaged', onPlayerDamaged.bind(this))
     this.socket.on('player health update', onPlayerHealthUpdate.bind(this))
     this.socket.on('player kill confirmed', onPlayerKillConfirmed.bind(this))

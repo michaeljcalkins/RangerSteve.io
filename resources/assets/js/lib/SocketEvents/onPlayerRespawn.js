@@ -16,6 +16,11 @@ export default function onPlayerRespawn(data) {
 
     if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
         let selectedPlayer = PlayerById.call(this, data.damagedPlayerId)
+        if (!selectedPlayer) {
+            console.log('Could not find player to respawn', data.damagedPlayerId)
+            return
+        }
+
         this.deathSprite.x = selectedPlayer.x - 50
         this.deathSprite.y = selectedPlayer.y - 45
         selectedPlayer.kill()

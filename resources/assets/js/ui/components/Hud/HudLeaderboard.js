@@ -4,14 +4,16 @@ export default function HudLeaderboard({
     players
 }) {
     function renderPlayers() {
-        return players.map(function(player, index) {
-            return (
-                <tr key={ index }>
-                    <td>{ player.meta.nickname ? player.meta.nickname : 'Unamed Ranger' }</td>
-                    <td>{ player.meta.score }</td>
-                </tr>
-            )
-        })
+        return players
+            .sort((a, b) => a.meta.score < b.meta.score)
+            .map(function(player, index) {
+                return (
+                    <tr key={ index }>
+                        <td>{ player.meta.nickname ? player.meta.nickname : 'Unamed Ranger' }</td>
+                        <td>{ player.meta.score }</td>
+                    </tr>
+                )
+            })
     }
 
     return (

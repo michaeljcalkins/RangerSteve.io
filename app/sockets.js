@@ -19,8 +19,10 @@ function setEventHandlers() {
 }
 
 setInterval(function() {
-    util.log('Current rooms', JSON.stringify(rooms))
-}, 10000)
+    Object.keys(rooms).forEach((key) => {
+        util.log('ROOM >>>>>>>>>>>>>>>>', rooms[key])
+    })
+}, 3000)
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
@@ -102,6 +104,7 @@ function onNewPlayer (data) {
         return
     }
 
+    util.log('Adding player to room', this.id)
     // Create a new player
     var newPlayer = Player(data.x, data.y)
     newPlayer.id = this.id
@@ -163,6 +166,9 @@ function onMovePlayer (data) {
     // Player not found
     if (!movePlayer) {
         util.log('Player not found when moving: ' + this.id)
+        io.to(data.roomId).emit('player remove', {
+            id: this.id
+        })
         return
     }
 
@@ -193,8 +199,9 @@ function onClientDisconnect() {
 
     let selectedRoomId = null
     Object.keys(rooms).forEach((roomId) => {
-        if (_.find(rooms[roomId].players, { id: this.id }))
+        if (_.find(rooms[roomId].players, { id: this.id })) {
             selectedRoomId = roomId
+        }
     })
 
     var removePlayer = PlayerById(selectedRoomId, this.id, rooms)

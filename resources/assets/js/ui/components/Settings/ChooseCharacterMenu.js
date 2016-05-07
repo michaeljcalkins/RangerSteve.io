@@ -55,3 +55,7 @@ export default function ChooseCharacterMenu({
         </div>
     )
 }
+
+ChooseCharacterMenu.propTypes = {
+    onViewChange: PropTypes.func.isRequired
+}
