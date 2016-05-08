@@ -58,7 +58,7 @@ body.main {
     background-size: 1100px;
     border-radius: none;
     box-shadow: none;
-    padding: 200px 0;
+    padding: 230px 0;
     margin: 0;
     position: relative;
     overflow: hidden;
@@ -155,4 +155,29 @@ section {
         width: auto;
         height: auto;
     }
+}
+
+.social-link {
+    float: right;
+    color: white;
+    display: block;
+    border-radius: 45px;
+    font-size: 24px;
+    height: 45px;
+    line-height: 45px;
+    width: 45px;
+    margin: 13px 0 0 5px;
+
+    &:hover,
+    &:active {
+        color: white;
+    }
+}
+
+.social-link-facebook {
+    background-color: #3b5998;
+}
+
+.social-link-twitter {
+    background-color: #00aced;
 }

@@ -3,6 +3,7 @@
 <head>
     <title>{{ title }}</title>
     <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css">
     <link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app.css">
 </head>
@@ -27,6 +28,14 @@
                             <li><a href="#">Credits</a></li>
                         </ul>
                     </div>
+                </div>
+                <div class="col-sm-3 text-center">
+                    <a class="social-link social-link-twitter" href="https://twitter.com/michaeljcalkins" target="_blank">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a class="social-link social-link-facebook" href="https://www.facebook.com/rangerstevegame" target="_blank">
+                        <i class="fa fa-facebook"></i>
+                    </a>
                 </div>
             </div>
         </div>

@@ -1,15 +1,6 @@
 {% extends 'master.nunjucks' %}
 
 {% block content %}
-<div style="margin: 0" class="alert alert-info text-center">Ranger Steve is under construction with daily updates.
-    <a
-        class="btn btn-primary"
-        href="https://www.twitter.com/michaeljcalkins"
-        target="_blank"
-    >
-        Follow Michael for updates.
-    </a>
-</div>
 <div class="row">
     <div class="col-sm-12 home-container">
         <section class="main-section text-center">
