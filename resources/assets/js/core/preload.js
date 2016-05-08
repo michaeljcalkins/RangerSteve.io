@@ -8,6 +8,7 @@ export default function Preload() {
 
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet', '/images/bullet.png')
+    this.load.spritesheet('hurt-border', '/images/hurt-border.png')
 
     this.load.spritesheet('muzzle-flash', '/images/muzzle-flash.png', 447, 271)
     this.load.spritesheet('commando', '/images/commando.png', 300, 315)

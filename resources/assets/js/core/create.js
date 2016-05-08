@@ -106,6 +106,9 @@ export default function Create() {
         this.game.scale.refresh()
         this.game.height = window.innerHeight
         this.game.width = window.innerWidth
+
+        this.hurtBorderSprite.width = window.innerWidth
+        this.hurtBorderSprite.height = window.innerHeight
     })
 
 
@@ -151,6 +154,11 @@ export default function Create() {
     this.deathSprite.scale.setTo(.17)
     this.deathSprite.animations.add('playerDeath', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21], 20)
     this.deathSprite.visible = false
+
+    this.hurtBorderSprite = this.add.sprite(0, 0, 'hurt-border')
+    this.hurtBorderSprite.width = window.innerWidth
+    this.hurtBorderSprite.height = window.innerHeight
+    this.hurtBorderSprite.fixedToCamera = true
 
 
     /**
