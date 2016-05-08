@@ -60,7 +60,8 @@ export default function Create() {
     PlayerSpriteHandler.call(this)
     HighRuleJungle.createOverlays.call(this)
 
-    this.groundSprite = this.add.sprite(0, 3955, 'ground')
+    this.groundSprite = this.add.sprite(0, 3964, 'ground')
+    this.groundSprite.alpha = 0
     this.groundSprite.width = this.game.world.width
     this.groundSprite.height = 10
     this.physics.arcade.enable(this.groundSprite)
