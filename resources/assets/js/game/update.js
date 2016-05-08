@@ -7,7 +7,7 @@ import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 export default function Update() {
     CollisionHandler.call(this)
 
-    if (! this.respawnInProgress) {
+    if (! this.respawnInProgress && ! this.player.body.onFloor()) {
         PlayerMovementHandler.call(this)
         PlayerJumpHandler.call(this)
         PlayerAngleHandler.call(this)
@@ -17,28 +17,10 @@ export default function Update() {
         this.player.meta[this.currentWeapon].fire()
     }
 
-    // this.positionText.text = `${this.game.input.worldX}, ${this.game.input.worldY}`
-
     if (this.player.meta.health < 100) {
         this.hurtBorderSprite.alpha = ((100 - this.player.meta.health) / 100).toFixed(2)
     } else {
         this.hurtBorderSprite.alpha = 0
-    }
-
-    // Check for out of bounds kill
-    if (this.player.body.onFloor() && this.player.meta.health > 0 && ! this.respawnInProgress) {
-        this.player.meta.health = 0
-        this.socket.emit('player adjust score', {
-            roomId: this.roomId,
-            amount: -10
-        })
-
-        this.socket.emit('player damaged', {
-            roomId: this.roomId,
-            damage: 1000,
-            damagedPlayerId: '/#' + this.socket.id,
-            attackingPlayerId: null
-        })
     }
 
     if (this.roomId) {

@@ -21,17 +21,18 @@ export default function onPlayerRespawn(data) {
             return
         }
 
-        this.deathSprite.x = selectedPlayer.x - 50
-        this.deathSprite.y = selectedPlayer.y - 45
-        selectedPlayer.kill()
-        this.deathSprite.visible = true
-        this.deathSprite.animations.play('playerDeath')
+        this.player.animations.play('death')
         return
     }
 
     if (this.respawnInProgress) return
 
     this.respawnInProgress = true
+    this.leftArmGroup.visible = false
+    this.rightArmGroup.visible = false
+    this.headGroup.visible = false
+    this.torsoGroup.visible = false
+    this.player.animations.play('death')
 
     // Set primary weapon
     this.player.meta.primaryWeapon = new Weapons[this.player.meta.selectedPrimaryWeaponId](this)
@@ -47,26 +48,27 @@ export default function onPlayerRespawn(data) {
     if (this.currentWeapon === 'secondaryWeapon')
         this.currentWeaponSprite.loadTexture(this.player.meta.selectedSecondaryWeaponId)
 
-    this.deathSprite.x = this.player.x - 50
-    this.deathSprite.y = this.player.y - 45
-    this.player.alpha = 0
-    this.deathSprite.visible = true
-    this.deathSprite.animations.play('playerDeath')
 
     clearTimeout(respawnHandle)
     respawnHandle = setTimeout(() => {
+        EventHandler.emit('health update', data.health)
+        this.player.visible = 0
+        this.player.animations.stop()
+        this.player.frame = 7
+        this.leftArmGroup.visible = true
+        this.rightArmGroup.visible = true
+        this.headGroup.visible = true
+        this.torsoGroup.visible = true
+        this.player.body.acceleration.x = 0
         this.player.meta.health = data.health
-        EventHandler.emit('health update', this.player.meta.health)
 
-        this.deathSprite.visible = false
-
-        let spawnPoint = HighRuleJungle.getRandomSpawnPoint()
+        const spawnPoint = HighRuleJungle.getRandomSpawnPoint()
         this.player.x = spawnPoint.x
         this.player.y = spawnPoint.y
-        this.player.alpha = 1
+        this.player.visible = 1
 
         setTimeout(() => {
             this.respawnInProgress = false
         }, 1000)
-    }, 2500)
+    }, 1500)
 }

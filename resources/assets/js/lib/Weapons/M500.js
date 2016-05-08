@@ -23,10 +23,10 @@ export default class M500 extends Phaser.Group {
             muzzleFlashY: -72
         }
         this.bulletHeight = 2
-        this.bulletSpeed = 1900
+        this.bulletSpeed = 2300
         this.bulletWidth = 40
         this.damage = 22
-        this.fireRate = 1650
+        this.fireRate = 1050
         this.fx = this.rootScope.game.add.audio('M500-sound')
         this.nextFire = 0
     }

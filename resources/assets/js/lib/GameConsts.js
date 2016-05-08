@@ -13,8 +13,9 @@ const GameConsts = {
     JUMP_JET_SPEED_REGENERATION: -2400,
 
     // Player Model
-    ANIMATION_LEFT: [0, 1, 2, 3, 4, 5],
-    ANIMATION_RIGHT: [8, 9, 10, 11, 12, 13],
+    ANIMATION_LEFT: _.range(0, 5, 1),
+    ANIMATION_RIGHT: _.range(8, 13, 1),
+    ANIMATION_DEATH: _.range(14, 35, 1),
     ANIMATION_FRAMERATE: 10,
     PLAYER_SCALE: 1,
     PLAYER_ANCHOR: .5,

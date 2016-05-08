@@ -32,6 +32,7 @@ export default function PlayerSpriteHandler() {
     //  Our two animations, walking left and right.
     this.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
     this.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
+    this.player.animations.add('death', GameConsts.ANIMATION_DEATH, 20, false)
 
     const startingPrimaryWeaponId = store.get('selectedPrimaryWeapon', 'AK47')
     const startingSecondaryWeaponId = store.get('selectedSecondaryWeapon', 'DesertEagle')

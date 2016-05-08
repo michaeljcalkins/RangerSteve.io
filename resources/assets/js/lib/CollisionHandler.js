@@ -2,8 +2,26 @@ import emitPlayerDamaged from './SocketEvents/emitPlayerDamaged'
 import SprayBlood from './SprayBlood'
 
 export default function CollisionHandler() {
-    // Collide this player with the map
     this.physics.arcade.collide(this.player, this.platforms)
+    this.physics.arcade.collide(this.player, this.groundSprite, () => {
+        this.game.input.reset()
+
+        if (this.respawnInProgress) return false
+
+        this.player.animations.play('death')
+
+        this.socket.emit('player adjust score', {
+            roomId: this.roomId,
+            amount: -10
+        })
+
+        this.socket.emit('player damaged', {
+            roomId: this.roomId,
+            damage: 1000,
+            damagedPlayerId: '/#' + this.socket.id,
+            attackingPlayerId: null
+        })
+    })
 
     // Did your bullets hit any enemies
     this.physics.arcade.overlap(this.enemies, this.bullets, function(enemy, bullet) {

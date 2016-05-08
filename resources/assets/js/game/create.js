@@ -60,6 +60,16 @@ export default function Create() {
     PlayerSpriteHandler.call(this)
     HighRuleJungle.createOverlays.call(this)
 
+    this.groundSprite = this.add.sprite(0, 3955, 'ground')
+    this.groundSprite.width = this.game.world.width
+    this.groundSprite.height = 10
+    this.physics.arcade.enable(this.groundSprite)
+    this.game.physics.enable(this.groundSprite, Phaser.Physics.ARCADE)
+    this.groundSprite.enableBody = true
+    this.groundSprite.physicsBodyType = Phaser.Physics.ARCADE
+    this.groundSprite.body.immovable = true
+    this.groundSprite.body.allowGravity = false
+
 
     /**
      * Weapons
@@ -149,11 +159,6 @@ export default function Create() {
         this.muzzleFlash.x = this.player.meta[this.currentWeapon].meta.muzzleFlashX
         this.muzzleFlash.y = this.player.meta[this.currentWeapon].meta.muzzleFlashY
     })
-
-    this.deathSprite = this.add.sprite(this.player.x, this.player.y, 'death')
-    this.deathSprite.scale.setTo(.17)
-    this.deathSprite.animations.add('playerDeath', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21], 20)
-    this.deathSprite.visible = false
 
     this.hurtBorderSprite = this.add.sprite(0, 0, 'hurt-border')
     this.hurtBorderSprite.width = window.innerWidth
