@@ -10,10 +10,17 @@ export default class AUG extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AUG', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
-            rotation: 80.1,
-            scale: 1.23,
-            spriteX: 14,
-            spriteY: 29
+            rotation: 80.20,
+            scale: 1.3,
+
+            leftFaceX: -7,
+            leftFaceY: 30,
+
+            rightFaceX: -7,
+            rightFaceY: 19,
+
+            muzzleFlashX: 102,
+            muzzleFlashY: -72
         }
         this.bulletHeight = 2
         this.bulletSpeed = 2300
@@ -28,7 +35,7 @@ export default class AUG extends Phaser.Group {
         if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0)
             return
 
-        this.rootScope.camera.shake(0.001, 100, true)
+        this.rootScope.camera.shake(0.0015, 100, true)
         this.rootScope.muzzleFlash.visible = true
         clearTimeout(this.muzzleFlashHandler)
         this.muzzleFlashHandler = setTimeout(() => {

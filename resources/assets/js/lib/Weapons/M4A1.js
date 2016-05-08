@@ -12,8 +12,15 @@ export default class M4A1 extends Phaser.Group {
         this.meta = {
             rotation: 80.06,
             scale: 1.4,
-            spriteX: 120,
-            spriteY: 209
+
+            leftFaceX: -7,
+            leftFaceY: 30,
+
+            rightFaceX: -7,
+            rightFaceY: 19,
+
+            muzzleFlashX: 102,
+            muzzleFlashY: -72
         }
         this.bulletHeight = 2
         this.bulletSpeed = 2400
@@ -28,7 +35,7 @@ export default class M4A1 extends Phaser.Group {
         if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0)
             return
 
-        this.rootScope.camera.shake(0.001, 100, true)
+        this.rootScope.camera.shake(0.0015, 100, true)
         this.rootScope.muzzleFlash.visible = true
         clearTimeout(this.muzzleFlashHandler)
         this.muzzleFlashHandler = setTimeout(() => {

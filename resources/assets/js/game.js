@@ -1,7 +1,7 @@
-import init from './core/Init'
-import preload from './core/Preload'
-import update from './core/Update'
-import create from './core/Create'
+import init from './game/Init'
+import preload from './game/Preload'
+import update from './game/Update'
+import create from './game/Create'
 
 const gameWidth = window.innerWidth
 const gameHeight = window.innerHeight

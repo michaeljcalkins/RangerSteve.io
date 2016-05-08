@@ -10,14 +10,22 @@ export default class M500 extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'M500', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
-            rotation: 80.15,
+            rotation: 80.20,
             scale: 1.3,
-            spriteX: 12,
-            spriteY: 19
+
+            leftFaceX: -7,
+            leftFaceY: 30,
+
+            rightFaceX: -7,
+            rightFaceY: 19,
+
+            muzzleFlashX: 102,
+            muzzleFlashY: -72
         }
         this.bulletHeight = 2
         this.bulletSpeed = 1900
         this.bulletWidth = 40
+        this.damage = 22
         this.fireRate = 1650
         this.fx = this.rootScope.game.add.audio('M500-sound')
         this.nextFire = 0
@@ -27,7 +35,7 @@ export default class M500 extends Phaser.Group {
         if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0)
             return
 
-        this.rootScope.camera.shake(0.001, 100, true)
+        this.rootScope.camera.shake(0.0015, 100, true)
         this.rootScope.muzzleFlash.visible = true
         clearTimeout(this.muzzleFlashHandler)
         this.muzzleFlashHandler = setTimeout(() => {

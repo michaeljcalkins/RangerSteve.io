@@ -45,8 +45,8 @@ export default function PlayerSpriteHandler() {
         selectedSecondaryWeaponId: startingSecondaryWeaponId
     }
 
-    this.player.meta.primaryWeapon.id = GameConsts.STARTING_PRIMARY_ID
-    this.player.meta.secondaryWeapon.id = GameConsts.STARTING_SECONDARY_ID
+    this.player.meta.primaryWeapon.id = startingPrimaryWeaponId
+    this.player.meta.secondaryWeapon.id = startingSecondaryWeaponId
 
     this.leftArmGroup = this.game.add.group()
     this.rightArmGroup = this.game.add.group()
@@ -74,7 +74,7 @@ export default function PlayerSpriteHandler() {
     this.currentWeaponSprite = this.game.add.sprite(
         this.player.meta.primaryWeapon.meta.spriteX,
         this.player.meta.primaryWeapon.meta.spriteY,
-        GameConsts.STARTING_PRIMARY_ID
+        startingPrimaryWeaponId
     )
     this.currentWeaponSprite.scale.setTo(this.player.meta.primaryWeapon.meta.scale)
     this.currentWeaponSprite.rotation = this.player.meta.primaryWeapon.meta.rotation
