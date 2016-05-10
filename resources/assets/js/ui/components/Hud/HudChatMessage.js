@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 
-import EventHandler from '../../../lib/EventHandler'
-
 export default class HudChatMessage extends React.Component {
     constructor(props) {
         super(props)
