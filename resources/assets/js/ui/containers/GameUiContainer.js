@@ -2,16 +2,16 @@ import React from 'react'
 import store from 'store'
 
 import EventHandler from '../../lib/EventHandler'
+import HudChat from '../components/Hud/HudChat'
+import HudChatMessage from '../components/Hud/HudChatMessage'
 import HudHealth from '../components/Hud/HudHealth'
-import HudScore from '../components/Hud/HudScore'
-import HudLeaderboard from '../components/Hud/HudLeaderboard'
-import HudSettingsButton from '../components/Hud/HudSettingsButton'
 import HudJumpJet from '../components/Hud/HudJumpJet'
 import HudKillConfirmed from '../components/Hud/HudKillConfirmed'
-import HudChatMessage from '../components/Hud/HudChatMessage'
-import HudChat from '../components/Hud/HudChat'
-import SettingsModal from '../components/Settings/SettingsModal'
+import HudLeaderboard from '../components/Hud/HudLeaderboard'
+import HudScore from '../components/Hud/HudScore'
+import HudSettingsButton from '../components/Hud/HudSettingsButton'
 import NameGenerator from '../../lib/NameGenerator'
+import SettingsModal from '../components/Settings/SettingsModal'
 
 export default class GameUiContainer extends React.Component {
     constructor() {
@@ -98,7 +98,7 @@ export default class GameUiContainer extends React.Component {
             this.setState({ settingsModalOpen: false })
             EventHandler.emit('input enable')
         })
-        
+
         EventHandler.on('chat open', () => {
             this.setState({ chatModalOpen: true })
             EventHandler.emit('input disable')
