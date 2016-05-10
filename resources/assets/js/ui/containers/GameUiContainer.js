@@ -98,7 +98,7 @@ export default class GameUiContainer extends React.Component {
             this.setState({ settingsModalOpen: false })
             EventHandler.emit('input enable')
         })
-
+        
         EventHandler.on('chat open', () => {
             this.setState({ chatModalOpen: true })
             EventHandler.emit('input disable')
