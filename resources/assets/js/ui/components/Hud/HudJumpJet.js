@@ -1,20 +1,11 @@
 import React, { PropTypes } from 'react'
 
+import RemainingFuelPercent from '../../../lib/RemainingFuelPercent'
+
 export default function HudJumpJet({
     jumpJetCounter
 }) {
-    function percent(counter) {
-        let percent = 100
-
-        if (counter < 0) {
-            percent = 100 - ((counter * -1) / 130000 * 100).toFixed(0)
-            percent = percent < 0 ? 0 : percent
-        }
-
-        return percent
-    }
-
-    const widthPercent = percent(jumpJetCounter) + '%'
+    const widthPercent = RemainingFuelPercent(jumpJetCounter) + '%'
 
     return (
         <div className="hud-jump-jet hud-item">
@@ -26,4 +17,8 @@ export default function HudJumpJet({
             </div>
         </div>
     )
+}
+
+HudJumpJet.propTypes = {
+    jumpJetCounter: PropTypes.number.isRequired
 }

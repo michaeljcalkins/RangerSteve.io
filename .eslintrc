@@ -12,7 +12,9 @@
         "_": true,
         "PIXI": true,
         "toastr": true,
-        "check": true
+        "check": true,
+        "describe": true,
+        "it": true
     },
     "ecmaFeatures": {
         "jsx": true

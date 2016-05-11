@@ -9,7 +9,8 @@ export default class HudChatMessage extends React.Component {
     }
 
     componentDidUpdate() {
-        ReactDOM.findDOMNode(this.refs.messageInput).focus()
+        if (this.props.isOpen)
+            ReactDOM.findDOMNode(this.refs.messageInput).focus()
     }
 
     handleSendMessage(evt) {
@@ -19,13 +20,11 @@ export default class HudChatMessage extends React.Component {
     }
 
     render() {
-        const styleDisplay = this.props.isOpen ? 'block' : 'none'
+        if (! this.props.isOpen)
+            return null
 
         return (
-            <div
-                className="hud-chat-message hud-item"
-                style={ { display: styleDisplay } }
-            >
+            <div className="hud-chat-message hud-item">
                 <div className="form-group">
                     <textarea
                         className="form-control"
@@ -37,4 +36,9 @@ export default class HudChatMessage extends React.Component {
             </div>
         )
     }
+}
+
+HudChatMessage.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onSendMessage: PropTypes.func.isRequired
 }

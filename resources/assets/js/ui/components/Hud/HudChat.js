@@ -9,7 +9,9 @@ export default function HudChat({
 
         return messages.slice(-5).map(function(message, index) {
             return (
-                <li key={ index }>{ message.playerNickname }: { message.message }</li>
+                <li key={ index }>
+                    { message.playerNickname }: { message.message }
+                </li>
             )
         })
     }
