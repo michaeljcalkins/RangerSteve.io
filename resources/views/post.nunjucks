@@ -1,0 +1,15 @@
+{% extends 'master.nunjucks' %}
+
+{% block content %}
+<div class="container">
+    <div class="row" style="padding-top: 20px;">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
+                <span>{{ post.date.getMonth() + 1 }}/{{ post.date.getDate() }}/{{ post.date.getFullYear() }}
+                <div>{{ post.content | safe }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
