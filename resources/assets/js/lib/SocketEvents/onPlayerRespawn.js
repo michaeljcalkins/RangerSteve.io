@@ -21,7 +21,7 @@ export default function onPlayerRespawn(data) {
             return
         }
 
-        this.player.animations.play('death')
+        selectedPlayer.animations.play('death')
         return
     }
 

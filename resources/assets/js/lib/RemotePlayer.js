@@ -19,6 +19,7 @@ export default function RemotePlayer(player) {
     newRemotePlayer.alive = true
     newRemotePlayer.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
     newRemotePlayer.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
+    newRemotePlayer.animations.add('death', GameConsts.ANIMATION_DEATH, 20, false)
     newRemotePlayer.id = player.id
     newRemotePlayer.lastPosition = {
         x: player.x,

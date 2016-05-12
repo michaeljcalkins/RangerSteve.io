@@ -1,14 +1,14 @@
 import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
 
-const rangeOfVariance = _.range(.03, .10, .01)
+const rangeOfVariance = _.range(.03, .15, .01)
 
 export default function FireShotgunShell() {
     let x = this.rootScope.player.x
     let y = this.rootScope.player.y
 
     let pointerAngle = null
-    for(var i = 0; i <= 4; i++) {
+    for(var i = 0; i < 4; i++) {
         let bullet = this.rootScope.bullets.getFirstDead()
         bullet.bulletId = Guid()
         bullet.height = this.bulletHeight
