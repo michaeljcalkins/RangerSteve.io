@@ -9,6 +9,7 @@
                     <div class="main-header">Ranger Steve</div>
                     <div class="sub-header">Buffalo Invasion</div>
                     <a href="/game" class="btn btn-primary btn-lg">Play Now</a>
+                    <a href="#buy" class="btn btn-danger btn-lg">Pre-Order Now</a>
                 </div>
             </div>
         </section>
@@ -131,6 +132,34 @@
                 <div class="col-sm-6">
                     <h1>No fancy graphics card required</h1>
                     <p>The only thing you need to play this game is a regular computer and an updated browser.</p>
+                </div>
+            </div>
+        </section>
+        <section class="buy-section" id="buy">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Pre-Order Now!</h1>
+
+                    <p>
+                        We're still working hard to develop the best multiplayer game out there.
+                        Show us your love and pre-order the game now.
+                        You'll also get some nice benefits:
+                    </p>
+
+                    <ul>
+                        <li>Full version of the game when it's released (including Steam key).</li>
+                        <li>Exclusive access <strong>new guns and characters</strong> as they're released.</li>
+                        <li>Exclusive access <strong>new maps</strong> as they're created.</li>
+                    </ul>
+
+                    <iframe
+                        src="https://www.humblebundle.com/widget/v2/product/ranger_steve_widget/kpQLPSy2QO?theme=light"
+                        style="width: 100%; padding: 0 50px 50px;"
+                        height="380"
+                        style="border: none;"
+                        scrolling="no"
+                        frameborder="0"
+                    ></iframe>
                 </div>
             </div>
         </section>

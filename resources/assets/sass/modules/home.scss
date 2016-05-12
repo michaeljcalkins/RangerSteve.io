@@ -112,6 +112,13 @@ section {
         line-height: 1.7;
     }
 
+    ul li {
+        margin-left: 35px;
+        color: #5a5a61;
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
     img, video {
         margin: 0 auto;
         width: 500px;
@@ -140,6 +147,21 @@ section {
             font-size: 29px;
             font-weight: 300;
         }
+    }
+}
+
+.buy-section {
+    h1 {
+        padding: 20px 50px 10px;
+    }
+
+    p {
+        margin-bottom: 20px;
+        padding-bottom: 0;
+    }
+
+    ul {
+        margin-bottom: 25px;
     }
 }
 

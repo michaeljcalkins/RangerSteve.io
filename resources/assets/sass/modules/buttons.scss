@@ -1,0 +1,48 @@
+// Bootstrap Colors
+$default: #ffffff;
+$primary: #428bca;
+$success: #5cb85c;
+$info:    #5bc0de;
+$warning: #f0ad4e;
+$danger:  #d9534f;
+
+// Reset and Sizing
+.btn {
+  margin: .2em .1em; // Demo Only
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border: none;
+  border-bottom: .15em solid black;
+  border-radius: 3px;
+  padding: 0.65em 1.3em;}
+
+.btn-lg {
+  padding: 1em 2em;}
+
+.btn-sm,
+.btn-xs {
+  font-size: .85em;
+  padding: .5em 1em;}
+
+.btn-xs {
+  font-size: .85em;
+  padding: .25em .75em;}
+
+// Colors
+@mixin btn($btncolor){
+  border-color: darken($btncolor,15%);
+  background-image: linear-gradient($btncolor, darken($btncolor,5%));
+  &:hover {
+    background: linear-gradient(darken($btncolor,5%), darken($btncolor,10%));
+  }
+}
+
+.btn-default { @include btn($default);}
+.btn-primary { @include btn($primary);}
+.btn-success { @include btn($success);}
+.btn-info    { @include btn($info);}
+.btn-warning { @include btn($warning);}
+.btn-danger  { @include btn($danger);}
