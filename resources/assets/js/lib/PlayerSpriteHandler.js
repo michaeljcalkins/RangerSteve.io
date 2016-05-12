@@ -1,6 +1,7 @@
 import store from 'store'
 import GameConsts from './GameConsts'
 import Weapons from './Weapons'
+import NameGenerator from './NameGenerator'
 import * as HighRuleJungle from '../maps/HighRuleJungle'
 
 export default function PlayerSpriteHandler() {
@@ -39,6 +40,7 @@ export default function PlayerSpriteHandler() {
 
     this.player.meta = {
         health: 100,
+        nickname: store.get('nickname', NameGenerator()),
         face: 'right',
         primaryWeapon: new Weapons[startingPrimaryWeaponId](this),
         secondaryWeapon: new Weapons[startingSecondaryWeaponId](this),

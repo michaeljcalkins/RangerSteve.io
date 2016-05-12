@@ -10,6 +10,13 @@
                 <div>{{ post.content | safe }}</div>
             </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                Have feedback on this post? Let <a target="_blank" href="https://www.twitter.com/michaeljcalkins">@michaeljcalkins</a> know on Twitter.
+                <hr>
+                Need help or found a bug? <a target="_blank" href="mailto:michaeljamescalkins@gmail.com">Contact us.</a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

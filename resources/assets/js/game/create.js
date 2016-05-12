@@ -81,8 +81,9 @@ export default function Create() {
     /**
      * Events
      */
-    EventHandler.emit('score update', '')
-    EventHandler.emit('health update', '')
+    EventHandler.emit('score update', 0)
+    EventHandler.emit('health update', 0)
+    EventHandler.emit('player update nickname', { nickname: this.player.meta.nickname })
     EventHandler.on('volume update', (data) => {
         this.volume = data.volume
     })
