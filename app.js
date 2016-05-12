@@ -56,21 +56,26 @@ app.use(express.static(path.join(__dirname, 'public'), {
 app.use('/', routes)
 
 poet.addRoute('/blog', function (req, res) {
-  var posts = poet.helpers.getPosts(req.params.post);
-  if (posts) {
-    res.render('blog', { posts: posts });
-  } else {
-    res.send(404);
-  }
+    var posts = poet.helpers.getPosts(req.params.post)
+    if (posts) {
+        res.render('blog', { posts: posts })
+    } else {
+        res.send(404)
+    }
 });
 
 poet.addRoute('/blog/:post', function (req, res) {
-  var post = poet.helpers.getPost(req.params.post);
-  if (post) {
-    res.render('post', { post: post });
-  } else {
-    res.send(404);
-  }
+    var post = poet.helpers.getPost(req.params.post)
+    var posts = poet.helpers.getPosts(req.params.post)
+
+    if (post) {
+        res.render('post', {
+            post: post,
+            posts: posts
+        })
+    } else {
+        res.send(404)
+    }
 });
 
 // catch 404 and forward to error handler

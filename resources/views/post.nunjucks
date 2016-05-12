@@ -3,18 +3,28 @@
 {% block content %}
 <div class="container">
     <div class="row" style="padding-top: 20px;">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
-                <span>{{ post.date.getMonth() + 1 }}/{{ post.date.getDate() }}/{{ post.date.getFullYear() }}
-                <div>{{ post.content | safe }}</div>
+        <div class="col-sm-9">
+            <div class="panel panel-default">
+                <div class="panel-body markdown-body">
+                    <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
+                    <p>{{ post.date.getMonth() + 1 }}/{{ post.date.getDate() }}/{{ post.date.getFullYear() }} - Michael J. Calkins</p>
+                    <div>{{ post.content | safe }}</div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    Have feedback on this post? Let <a target="_blank" href="https://www.twitter.com/michaeljcalkins">@michaeljcalkins</a> know on Twitter.
+                    <hr>
+                    Need help or found a bug? <a target="_blank" href="mailto:michaeljamescalkins@gmail.com">Contact us.</a>
+                </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                Have feedback on this post? Let <a target="_blank" href="https://www.twitter.com/michaeljcalkins">@michaeljcalkins</a> know on Twitter.
-                <hr>
-                Need help or found a bug? <a target="_blank" href="mailto:michaeljamescalkins@gmail.com">Contact us.</a>
+        <div class="col-sm-3">
+            <h3 style="margin-top: 0;">Recent Posts</h3>
+            <div class="list-group">
+                {% for post in posts %}
+                    <a class="list-group-item" href="{{ post.url }}">{{ post.title }}</a>
+                {% endfor %}
             </div>
         </div>
     </div>
