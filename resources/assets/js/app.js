@@ -16,5 +16,8 @@ function check(object, propTypes, _throw) {
 }
 window.check = check
 
-require('./ui')
-require('./game')
+import ui from './ui'
+import game from './game'
+
+ui()
+game()
