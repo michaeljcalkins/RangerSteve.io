@@ -17,15 +17,18 @@ export default function FireShotgunShell() {
         bullet.alpha = 0
         bullet.reset(x, y)
 
+        let socketPointerAngle = null
         if (pointerAngle === null) {
             pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
             bullet.rotation = pointerAngle
+            socketPointerAngle = pointerAngle
         } else {
             let randomPointerAngle = _.sample(rangeOfVariance) + pointerAngle
             let newVelocity = this.game.physics.arcade.velocityFromRotation(randomPointerAngle, this.bulletSpeed)
             bullet.body.velocity.x += newVelocity.x
             bullet.body.velocity.y += newVelocity.y
             bullet.rotation = randomPointerAngle
+            socketPointerAngle = randomPointerAngle
         }
 
         setTimeout(function() {
@@ -38,7 +41,7 @@ export default function FireShotgunShell() {
             playerId: '/#' + this.rootScope.socket.id,
             x,
             y,
-            pointerAngle,
+            pointerAngle: socketPointerAngle,
             bulletSpeed: this.bulletSpeed,
             height: bullet.height,
             width: bullet.width,
