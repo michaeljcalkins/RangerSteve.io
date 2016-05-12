@@ -134,14 +134,14 @@
 }
 
 .hud-kill-confirmed {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-family: Orbitron;
-    margin-top: -70px;
-    margin-left: -20px;
     color: #fff;
-    font-size: 20px;
+    font-family: Righteous;
+    font-size: 30px;
+    left: 50%;
+    margin-left: -25px;
+    margin-top: -90px;
+    text-shadow: -1px -1px 0 #504F4D,1px -1px 0 #504F4D,-1px 1px 0 #504F4D,1px 1px 0 #504F4D;
+    top: 50%;
 }
 
 .hud-chat-message {

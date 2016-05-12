@@ -53,20 +53,17 @@ export default class GameUiContainer extends React.Component {
     startEventHandler() {
         let killConfirmedHandle = null
         EventHandler.on('player kill confirmed', () => {
-            this.showKillConfirmed = true
+            this.setState({ showKillConfirmed: true })
             clearTimeout(killConfirmedHandle)
             killConfirmedHandle = setTimeout(() => {
-                this.showKillConfirmed = false
+                this.setState({ showKillConfirmed: false })
             }, 3000)
         })
 
         EventHandler.on('message received', (data) => {
             let newMessages = Object.assign(this.state.messages)
             newMessages.push(data)
-
-            this.setState({
-                messages: newMessages
-            })
+            this.setState({ messages: newMessages })
         })
 
         EventHandler.on('health update', (health) => {
