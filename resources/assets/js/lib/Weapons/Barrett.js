@@ -7,7 +7,7 @@ export default class Barrett extends Phaser.Group {
         this.muzzleFlashHandler = null
         this.rootScope = rootScope
 
-        Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE)
+        Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'Barrett', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
             id: 'Barrett',
@@ -36,7 +36,7 @@ export default class Barrett extends Phaser.Group {
         if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0)
             return
 
-        this.rootScope.camera.shake(0.0015, 100, true)
+        this.rootScope.camera.shake(0.005, 100, true)
         this.rootScope.muzzleFlash.visible = true
         clearTimeout(this.muzzleFlashHandler)
         this.muzzleFlashHandler = setTimeout(() => {

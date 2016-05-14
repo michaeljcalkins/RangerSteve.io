@@ -10,9 +10,12 @@ function check(object, propTypes, _throw) {
                 } else {
                     console.error(error.message)
                 }
+                return false
             }
         }
     }
+
+    return true
 }
 window.check = check
 

@@ -7,7 +7,7 @@ export default class DesertEagle extends Phaser.Group {
         this.muzzleFlashHandler = null
         this.rootScope = rootScope
 
-        Phaser.Group.call(this, rootScope.game, rootScope.game.world, 'Desert Eagle', false, true, Phaser.Physics.ARCADE)
+        Phaser.Group.call(this, rootScope.game, rootScope.game.world, 'DesertEagle', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
             id: 'DesertEagle',
@@ -36,7 +36,7 @@ export default class DesertEagle extends Phaser.Group {
         if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0)
             return
 
-        this.rootScope.camera.shake(0.001, 100, true)
+        this.rootScope.camera.shake(0.0015, 100, true)
         this.rootScope.muzzleFlash.visible = true
         clearTimeout(this.muzzleFlashHandler)
         this.muzzleFlashHandler = setTimeout(() => {

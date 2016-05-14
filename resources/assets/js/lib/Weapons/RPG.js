@@ -7,7 +7,7 @@ export default class RPG extends Phaser.Group {
         this.muzzleFlashHandler = null
         this.rootScope = rootScope
 
-        Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE)
+        Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'RPG', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
             id: 'RPG',
