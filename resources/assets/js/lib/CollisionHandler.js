@@ -62,7 +62,7 @@ export default function CollisionHandler() {
 
     // Did enemy bullets hit you
     this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
-        if (this.respawnInProgress) return
+        if (this.respawnInProgress || ! bullet.weaponId || ! this.socket.id) return
 
         bullet.kill()
 
@@ -72,8 +72,6 @@ export default function CollisionHandler() {
             playerX: player.x,
             bulletRotation: bullet.rotation
         })
-
-        console.log(bullet.weaponId)
 
         emitPlayerDamaged.call(this, {
             roomId: this.roomId,
