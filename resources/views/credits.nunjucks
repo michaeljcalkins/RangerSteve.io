@@ -58,9 +58,8 @@
         <div class="col-sm-12">
             <h3>Made With</h3>
             <h2><a target="_blank" href="http://phaser.io/">Phaser.io</a></h2>
-            <h2><a target="_blank" href="http://www.adonisjs.com/">AdonisJS</a></h2>
             <h2><a target="_blank" href="https://facebook.github.io/react/">ReactJS</a></h2>
-            <h2><a target="_blank" href="https://nodejs.org/en/">NodeJS</a></h2>
+            <h2><a target="_blank" href="http://expressjs.com/">ExpressJS</a></h2>
             <h2><a target="_blank" href="https://github.com/socketio/socket.io">Socket.io</a></h2>
         </div>
     </div>
