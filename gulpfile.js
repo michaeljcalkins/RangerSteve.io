@@ -13,8 +13,12 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     sourcemaps = require('gulp-sourcemaps'),
     streamify = require('gulp-streamify'),
+    obfuscator = require('gulp-js-obfuscator'),
     uglify = require('gulp-uglify'),
-    watchify = require('watchify')
+    watchify = require('watchify'),
+    argv = require('yargs').argv
+
+const isProduction = argv.production || false
 
 // ****************************************************
 // Directory Variables
@@ -87,9 +91,14 @@ gulp.task('buildjs', function() {
         return bundler.bundle()
             .on('error', handleError)
             .pipe(source('app.js'))
-            // .pipe(gulpif(isProduction, streamify(uglify({ mangle: false }))))
+            .pipe(gulpif(isProduction, streamify(uglify({ mangle: false }))))
+            .pipe(gulpif(isProduction, streamify(obfuscator())))
             .pipe(gulp.dest(DIST + 'js'))
             .pipe(notify({message: 'JS Compiled!'}))
+    }
+
+    if (isProduction) {
+        return rebundle()
     }
 
     bundler.on('update', rebundle)
