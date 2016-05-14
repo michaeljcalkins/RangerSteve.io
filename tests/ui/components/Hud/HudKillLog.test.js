@@ -28,8 +28,8 @@ describe('Hud - <HudKillLog />', function() {
 
         it('Should contain kill logs', function() {
             let wrapper = shallow(<HudKillLog { ...props } />)
-            assert.equal(wrapper.find('ul').childAt(0).html(), '<li>Steve <img src="AK47.png"/> Michael</li>')
-            assert.equal(wrapper.find('ul').childAt(1).html(), '<li>Steve <img src="DesertEagle.png"/> Rob</li>')
+            assert.equal(wrapper.find('ul').childAt(0).html(), '<li>Steve <img src="/images/guns/Spr_AK47.png"/> Michael</li>')
+            assert.equal(wrapper.find('ul').childAt(1).html(), '<li>Steve <img src="/images/guns/Spr_DesertEagle.png"/> Rob</li>')
         })
     })
 })
