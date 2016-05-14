@@ -19,13 +19,14 @@ export default function FireStandardBullet() {
         bullet.alpha = 1
     }, 40)
 
-    this.fx.volume = .3 * this.rootScope.volume
+    this.fx.volume = this.rootScope.volume
     this.fx.play()
 
     emitBulletFired.call(this.rootScope, {
         roomId: this.rootScope.roomId,
         bulletId: bullet.bulletId,
         playerId: '/#' + this.rootScope.socket.id,
+        weaponId: this.meta.id,
         x,
         y,
         pointerAngle,

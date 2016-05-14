@@ -7,9 +7,10 @@ export default class AK47 extends Phaser.Group {
         this.muzzleFlashHandler = null
         this.rootScope = rootScope
 
-        Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE)
+        Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AK47', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
+            id: 'AK47',
             rotation: 80.20,
             scale: 1.3,
 

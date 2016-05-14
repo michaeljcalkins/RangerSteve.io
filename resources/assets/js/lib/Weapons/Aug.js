@@ -10,6 +10,7 @@ export default class AUG extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AUG', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
+            id: 'AUG',
             rotation: 80.20,
             scale: 1.3,
 

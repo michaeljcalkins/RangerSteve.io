@@ -10,7 +10,8 @@ const propTypes = {
     bulletSpeed: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
-    damage: PropTypes.number.isRequired
+    damage: PropTypes.number.isRequired,
+    weaponId: PropTypes.string.isRequired
 }
 
 export default function(data) {

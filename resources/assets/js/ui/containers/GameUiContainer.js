@@ -7,6 +7,7 @@ import HudNewChatMessage from '../components/Hud/HudNewChatMessage'
 import HudHealth from '../components/Hud/HudHealth'
 import HudJumpJet from '../components/Hud/HudJumpJet'
 import HudKillConfirmed from '../components/Hud/HudKillConfirmed'
+import HudKillLog from '../components/Hud/HudKillLog'
 import HudLeaderboard from '../components/Hud/HudLeaderboard'
 import HudScore from '../components/Hud/HudScore'
 import HudSettingsButton from '../components/Hud/HudSettingsButton'
@@ -24,6 +25,7 @@ export default class GameUiContainer extends React.Component {
             showKillConfirmed: false,
             jumpJetCounter: 0,
             messages: [],
+            killLogMessages: [],
             nickname: store.get('nickname', NameGenerator()),
             player: {},
             players: [],
@@ -58,6 +60,18 @@ export default class GameUiContainer extends React.Component {
             killConfirmedHandle = setTimeout(() => {
                 this.setState({ showKillConfirmed: false })
             }, 3000)
+        })
+
+        EventHandler.on('player kill log', (data) => {
+            let newMessages = Object.assign(this.state.killLogMessages)
+            newMessages.push(data)
+            this.setState({ killLogMessages: newMessages })
+
+            setTimeout(() => {
+                let newMessages = Object.assign(this.state.killLogMessages)
+                _.remove(newMessages, data)
+                this.setState({ killLogMessages: newMessages })
+            }, 10000)
         })
 
         EventHandler.on('message received', (data) => {
@@ -171,6 +185,7 @@ export default class GameUiContainer extends React.Component {
         return (
             <div>
                 <HudKillConfirmed showKillConfirmed={ this.state.showKillConfirmed } />
+                <HudKillLog messages={ this.state.killLogMessages } />
                 <HudHealth health={ this.state.health } />
                 <HudScore score={ this.state.score } />
                 <HudLeaderboard players={ this.state.players } />

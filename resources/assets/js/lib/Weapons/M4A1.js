@@ -10,6 +10,7 @@ export default class M4A1 extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'M4A1', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
+            id: 'M4A1',
             rotation: 80.06,
             scale: 1.4,
 

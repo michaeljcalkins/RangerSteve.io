@@ -10,6 +10,7 @@ export default class P90 extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'P90', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
+            id: 'P90',
             rotation: 80.20,
             scale: 1.3,
 

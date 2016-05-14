@@ -4,7 +4,8 @@ const propTypes = {
     roomId: PropTypes.string.isRequired,
     damage: PropTypes.number.isRequired,
     damagedPlayerId: PropTypes.string.isRequired,
-    attackingPlayerId: PropTypes.string.isRequired
+    attackingPlayerId: PropTypes.string.isRequired,
+    weaponId: PropTypes.string.isRequired
 }
 
 export default function(data) {

@@ -10,6 +10,7 @@ export default class Barrett extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
+            id: 'Barrett',
             rotation: 80.20,
             scale: 1.3,
 

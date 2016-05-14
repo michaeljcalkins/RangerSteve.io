@@ -10,6 +10,7 @@ export default class M500 extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'M500', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
+            id: 'M500',
             rotation: 80.20,
             scale: 1.3,
 
@@ -25,7 +26,7 @@ export default class M500 extends Phaser.Group {
         this.bulletHeight = 2
         this.bulletSpeed = 2300
         this.bulletWidth = 40
-        this.damage = 22
+        this.damage = 20
         this.fireRate = 1450
         this.fx = this.rootScope.game.add.audio('M500-sound')
         this.nextFire = 0

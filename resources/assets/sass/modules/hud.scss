@@ -27,6 +27,24 @@
     width: 48px;
 }
 
+.hud-kill-log {
+    position: absolute;
+    top: 70px;
+    left: 10px;
+
+    li {
+        color: #fff;
+        text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+        font-size: 12px;
+        padding: 4px 3px;
+
+        img {
+            height: 20px;
+            margin: 0 10px;
+        }
+    }
+}
+
 .hud-jump-jet {
     background-image: url(/images/icons/gas-32-white.png);
     background-size: 26px;

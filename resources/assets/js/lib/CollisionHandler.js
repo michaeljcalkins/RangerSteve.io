@@ -73,9 +73,12 @@ export default function CollisionHandler() {
             bulletRotation: bullet.rotation
         })
 
+        console.log(bullet.weaponId)
+
         emitPlayerDamaged.call(this, {
             roomId: this.roomId,
             damage: bullet.damage,
+            weaponId: bullet.weaponId,
             damagedPlayerId: '/#' + this.socket.id,
             attackingPlayerId: bullet.playerId
         })

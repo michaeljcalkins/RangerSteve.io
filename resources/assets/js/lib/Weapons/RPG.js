@@ -10,6 +10,7 @@ export default class RPG extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'AK-47', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
+            id: 'RPG',
             rotation: 80.15,
             scale: 1.3,
             spriteX: 12,

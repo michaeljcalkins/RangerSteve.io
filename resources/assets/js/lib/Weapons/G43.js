@@ -10,6 +10,7 @@ export default class G43 extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'G43', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
+            id: 'G43',
             rotation: 80.20,
             scale: 1.3,
 

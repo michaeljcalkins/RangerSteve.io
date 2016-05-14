@@ -10,6 +10,7 @@ export default class Skorpion extends Phaser.Group {
         Phaser.Group.call(this, this.rootScope.game, this.rootScope.game.world, 'Skorpion', false, true, Phaser.Physics.ARCADE)
 
         this.meta = {
+            id: 'Skorpion',
             rotation: 80.20,
             scale: 1.3,
 

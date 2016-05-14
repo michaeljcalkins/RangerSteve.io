@@ -9,7 +9,8 @@ const propTypes = {
     width: PropTypes.number.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    bulletSpeed: PropTypes.number.isRequired
+    bulletSpeed: PropTypes.number.isRequired,
+    weaponId: PropTypes.string.isRequired
 }
 
 export default function onBulletFired(data) {
@@ -26,6 +27,7 @@ export default function onBulletFired(data) {
     bullet.rotation = data.pointerAngle
     bullet.height = data.height
     bullet.width = data.width
+    bullet.weaponId = data.weaponId
     bullet.body.gravity.y = -1800
     bullet.enableBody = true
     bullet.physicsBodyType = Phaser.Physics.ARCADE

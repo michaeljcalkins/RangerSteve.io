@@ -22,7 +22,7 @@ setInterval(function() {
     Object.keys(rooms).forEach((key) => {
         util.log('ROOM >>>>>>>>>>>>>>>>', JSON.stringify(rooms[key], null, 4))
     })
-}, 3000)
+}, 10000)
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
@@ -264,10 +264,15 @@ function onPlayerDamaged(data) {
         let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
-            console.log('attackingPlayer.id', attackingPlayer.id)
             io.to(data.roomId).emit('player kill confirmed', {
                 id: attackingPlayer.id,
                 score: 10
+            })
+
+            io.to(data.roomId).emit('player kill log', {
+                deadNickname: player.meta.nickname,
+                attackerNickname: attackingPlayer.meta.nickname,
+                weaponId: data.weaponId
             })
         }
 
