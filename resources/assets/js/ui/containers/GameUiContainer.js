@@ -2,8 +2,8 @@ import React from 'react'
 import store from 'store'
 
 import EventHandler from '../../lib/EventHandler'
-import HudChat from '../components/Hud/HudChat'
-import HudChatMessage from '../components/Hud/HudChatMessage'
+import HudChatHistory from '../components/Hud/HudChatHistory'
+import HudNewChatMessage from '../components/Hud/HudNewChatMessage'
 import HudHealth from '../components/Hud/HudHealth'
 import HudJumpJet from '../components/Hud/HudJumpJet'
 import HudKillConfirmed from '../components/Hud/HudKillConfirmed'
@@ -176,11 +176,11 @@ export default class GameUiContainer extends React.Component {
                 <HudLeaderboard players={ this.state.players } />
                 <HudJumpJet jumpJetCounter={ this.state.jumpJetCounter } />
                 <HudSettingsButton onButtonClick={ this.handleSettingsButtonClick } />
-                <HudChatMessage
+                <HudNewChatMessage
                     isOpen={ this.state.chatModalOpen }
                     onSendMessage={ this.handleSendMessage }
                 />
-                <HudChat messages={ this.state.messages } />
+                <HudChatHistory messages={ this.state.messages } />
                 <SettingsModal
                     defaultNicknameValue={ this.state.nickname }
                     defaultSoundEffectValue={ this.state.volume }

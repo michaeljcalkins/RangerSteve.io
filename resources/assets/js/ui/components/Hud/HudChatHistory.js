@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-export default function HudChat({
+export default function HudChatHistory({
     messages
 }) {
     function renderMessages() {
@@ -25,10 +25,10 @@ export default function HudChat({
     )
 }
 
-HudChat.defaultProps = {
+HudChatHistory.defaultProps = {
     messages: []
 }
 
-HudChat.propTypes = {
+HudChatHistory.propTypes = {
     messages: PropTypes.array
 }

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 
-export default class HudChatMessage extends React.Component {
+export default class HudNewChatMessage extends React.Component {
     constructor(props) {
         super(props)
 
@@ -38,7 +38,7 @@ export default class HudChatMessage extends React.Component {
     }
 }
 
-HudChatMessage.propTypes = {
+HudNewChatMessage.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onSendMessage: PropTypes.func.isRequired
 }
