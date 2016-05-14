@@ -15,3 +15,5 @@ Along with this I'm finally asking for pre-game sales for Ranger Steve which wil
 Starting at **$9.97** this price will increase as the game matures.
 
 This is great news because it means I can begin the growing this game's income to pay for it's servers! :)
+
+![Ranger Steve in the concepts gallery](http://i.imgur.com/qtTFyRM.png)
