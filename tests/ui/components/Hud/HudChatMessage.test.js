@@ -17,8 +17,8 @@ describe('Hud - <HudChatMessage />', function() {
         })
 
         it('Should render <HudChatMessage />', function() {
-            const newProps = Object.assign(props, { isOpen: true })
-            let wrapper = shallow(<HudChatMessage { ...newProps } />)
+            let wrapper = shallow(<HudChatMessage { ...props } />)
+            wrapper.setProps({ isOpen: true })
             assert.equal(wrapper.find('textarea').length, 1)
         })
     })
