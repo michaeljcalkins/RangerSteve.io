@@ -39,6 +39,7 @@ export default function FireShotgunShell() {
             roomId: this.rootScope.roomId,
             bulletId: bullet.bulletId,
             playerId: '/#' + this.rootScope.socket.id,
+            weaponId: this.meta.id,
             x,
             y,
             pointerAngle: socketPointerAngle,
