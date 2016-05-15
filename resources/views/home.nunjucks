@@ -146,17 +146,6 @@
         <section>
             <div class="row">
                 <div class="col-sm-6">
-                    <img src="http://placehold.it/500x300" class="img-rounded" />
-                </div>
-                <div class="col-sm-6">
-                    <h1>Score stealing</h1>
-                    <p>You earn points by killing players and buffalo, but when you kill a player you take part of their score into your own.</p>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="row">
-                <div class="col-sm-6">
                     <h1>Fighting the buffalo horde</h1>
                     <p>You will fight the tough and wild buffalo throughout the map and when a player activates a bonus.</p>
                 </div>
