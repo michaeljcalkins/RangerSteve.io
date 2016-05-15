@@ -137,8 +137,15 @@
             padding: 2px 0 !important;
         }
 
+        td:first-child {
+            max-width: 160px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
         td:last-child {
             text-align: right;
+            width: 80px;
         }
     }
 

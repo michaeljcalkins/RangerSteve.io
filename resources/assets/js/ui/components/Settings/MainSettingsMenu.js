@@ -30,8 +30,8 @@ export default class MainSettingsMenu extends React.Component {
     }
 
     handleNicknameChange(evt) {
-        if (this.state.nickname.length > 15) return
-        const nickname = evt.target.value.slice(0, 15)
+        if (this.state.nickname.length > 100) return
+        const nickname = evt.target.value.slice(0, 100)
         this.setState({ nickname })
         this.props.onNicknameChange(nickname)
     }
@@ -137,7 +137,7 @@ export default class MainSettingsMenu extends React.Component {
                     <input
                         className="form-control"
                         defaultValue={ this.state.nickname }
-                        maxLength="15"
+                        maxLength="100"
                         onChange={ this.handleNicknameChange }
                         ref="nicknameInput"
                         type="text"

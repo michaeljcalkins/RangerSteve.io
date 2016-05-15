@@ -9,7 +9,12 @@ export default function HudLeaderboard({
             .map(function(player, index) {
                 return (
                     <tr key={ index }>
-                        <td>{ player.meta.nickname ? player.meta.nickname : 'Unamed Ranger' }</td>
+                        <td>
+                            { player.meta.nickname
+                                ? player.meta.nickname
+                                : 'Unamed Ranger'
+                            }
+                        </td>
                         <td>{ player.meta.score }</td>
                     </tr>
                 )
