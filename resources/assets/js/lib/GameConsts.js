@@ -1,7 +1,7 @@
 const GameConsts = {
     WORLD_WIDTH: 8000,
     WORLD_HEIGHT: 3966,
-    STARTING_VOLUME: .5,
+    STARTING_VOLUME: .25,
 
     // Physics
     MAX_SPEED: 600,
