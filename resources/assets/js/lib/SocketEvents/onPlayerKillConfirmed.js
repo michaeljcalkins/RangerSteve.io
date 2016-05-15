@@ -13,4 +13,5 @@ export default function onPlayerKillConfirmed(data) {
         return
 
     EventHandler.emit('player kill confirmed')
+    EventHandler.emit('player killing spree', data)
 }

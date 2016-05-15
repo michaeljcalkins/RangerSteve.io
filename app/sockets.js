@@ -111,7 +111,8 @@ function onNewPlayer (data) {
     newPlayer.meta = {
         health: 100,
         score: 0,
-        nickname: data.nickname
+        nickname: data.nickname,
+        killingSpree: 0
     }
 
     if (data.roomId) {
@@ -255,6 +256,7 @@ function onPlayerDamaged(data) {
     // Player was killed when shot
     if (player.meta.health <= 0) {
         player.meta.health = 0
+        player.meta.killingSpree = 0
 
         // Falling to your death causes a score loss
         if (data.damage === 1000 && player.meta.score >= 10)
@@ -263,9 +265,11 @@ function onPlayerDamaged(data) {
         let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
+            attackingPlayer.meta.killingSpree += 1
             io.to(data.roomId).emit('player kill confirmed', {
                 id: attackingPlayer.id,
-                score: 10
+                score: 10,
+                killingSpree: attackingPlayer.meta.killingSpree
             })
 
             io.to(data.roomId).emit('player kill log', {

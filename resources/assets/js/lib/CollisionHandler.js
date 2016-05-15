@@ -64,7 +64,7 @@ export default function CollisionHandler() {
 
     // Did enemy bullets hit you
     this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
-        if (! bullet.weaponId || ! this.socket.id) return
+        if (! bullet.weaponId || ! this.socket.id || this.player.meta.health <= 0) return
 
         bullet.kill()
 

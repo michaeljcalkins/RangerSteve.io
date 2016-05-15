@@ -11,6 +11,7 @@ import HudKillLog from '../components/Hud/HudKillLog'
 import HudLeaderboard from '../components/Hud/HudLeaderboard'
 import HudScore from '../components/Hud/HudScore'
 import HudSettingsButton from '../components/Hud/HudSettingsButton'
+import HudKillingSpree from '../components/Hud/HudKillingSpree'
 import NameGenerator from '../../lib/NameGenerator'
 import SettingsModal from '../components/Settings/SettingsModal'
 
@@ -26,6 +27,7 @@ export default class GameUiContainer extends React.Component {
             jumpJetCounter: 0,
             messages: [],
             killLogMessages: [],
+            killingSpreeCount: 0,
             nickname: store.get('nickname', NameGenerator()),
             player: {},
             players: [],
@@ -53,6 +55,18 @@ export default class GameUiContainer extends React.Component {
     }
 
     startEventHandler() {
+        EventHandler.on('player killing spree', (data) => {
+            this.setState({
+                killingSpreeCount: data.killingSpree
+            })
+
+            setTimeout(() => {
+                this.setState({
+                    killingSpreeCount: 0
+                })
+            }, 3000)
+        })
+
         let killConfirmedHandle = null
         EventHandler.on('player kill confirmed', () => {
             this.setState({ showKillConfirmed: true })
@@ -186,6 +200,7 @@ export default class GameUiContainer extends React.Component {
             <div>
                 <HudKillConfirmed showKillConfirmed={ this.state.showKillConfirmed } />
                 <HudKillLog messages={ this.state.killLogMessages } />
+                <HudKillingSpree killingSpreeCount={ this.state.killingSpreeCount } />
                 <HudHealth health={ this.state.health } />
                 <HudScore score={ this.state.score } />
                 <HudLeaderboard players={ this.state.players } />
