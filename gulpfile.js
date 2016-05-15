@@ -87,6 +87,7 @@ gulp.task('buildjs', function() {
 
     var rebundle = function() {
         var startDate = new Date();
+        console.log('isProduction', isProduction)
         console.log('Update start at ' + startDate.toLocaleString());
         return bundler.bundle()
             .on('error', handleError)
@@ -95,10 +96,6 @@ gulp.task('buildjs', function() {
             .pipe(gulpif(isProduction, streamify(obfuscator())))
             .pipe(gulp.dest(DIST + 'js'))
             .pipe(notify({message: 'JS Compiled!'}))
-    }
-
-    if (isProduction) {
-        return rebundle()
     }
 
     bundler.on('update', rebundle)

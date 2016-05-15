@@ -1,7 +1,7 @@
 import { PropTypes } from 'react'
+
 import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
-import PlayerById from '../PlayerById'
 import * as HighRuleJungle from '../../maps/HighRuleJungle'
 
 const propTypes = {
@@ -9,30 +9,10 @@ const propTypes = {
     health: PropTypes.number.isRequired
 }
 
-let respawnHandle = null
-
 export default function onPlayerRespawn(data) {
     check(data, propTypes)
 
-    if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
-        let selectedPlayer = PlayerById.call(this, data.damagedPlayerId)
-        if (!selectedPlayer) {
-            console.log('Could not find player to respawn', data.damagedPlayerId)
-            return
-        }
-
-        selectedPlayer.animations.play('death')
-        return
-    }
-
-    if (this.respawnInProgress) return
-
-    this.respawnInProgress = true
-    this.leftArmGroup.visible = false
-    this.rightArmGroup.visible = false
-    this.headGroup.visible = false
-    this.torsoGroup.visible = false
-    this.player.animations.play('death')
+    if (data.damagedPlayerId !== ('/#' + this.socket.id)) return
 
     // Set primary weapon
     this.player.meta.primaryWeapon = new Weapons[this.player.meta.selectedPrimaryWeaponId](this)
@@ -48,27 +28,20 @@ export default function onPlayerRespawn(data) {
     if (this.currentWeapon === 'secondaryWeapon')
         this.currentWeaponSprite.loadTexture(this.player.meta.selectedSecondaryWeaponId)
 
+    this.player.meta.health = data.health
+    EventHandler.emit('health update', data.health)
 
-    clearTimeout(respawnHandle)
-    respawnHandle = setTimeout(() => {
-        EventHandler.emit('health update', data.health)
-        this.player.visible = 0
-        this.player.animations.stop()
-        this.player.frame = 7
-        this.leftArmGroup.visible = true
-        this.rightArmGroup.visible = true
-        this.headGroup.visible = true
-        this.torsoGroup.visible = true
-        this.player.body.acceleration.x = 0
-        this.player.meta.health = data.health
+    // Hide child groups
+    this.leftArmGroup.visible = true
+    this.rightArmGroup.visible = true
+    this.headGroup.visible = true
+    this.torsoGroup.visible = true
 
-        const spawnPoint = HighRuleJungle.getRandomSpawnPoint()
-        this.player.x = spawnPoint.x
-        this.player.y = spawnPoint.y
-        this.player.visible = 1
+    // Create and set the new spawn point
+    const spawnPoint = HighRuleJungle.getRandomSpawnPoint()
+    this.player.x = spawnPoint.x
+    this.player.y = spawnPoint.y
 
-        setTimeout(() => {
-            this.respawnInProgress = false
-        }, 1000)
-    }, 1500)
+    this.game.input.reset()
+    this.game.input.enabled = true
 }

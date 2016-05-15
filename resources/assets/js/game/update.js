@@ -7,13 +7,13 @@ import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 export default function Update() {
     CollisionHandler.call(this)
 
-    if (! this.respawnInProgress && ! this.player.body.onFloor()) {
+    if (this.player.meta.health > 0) {
         PlayerMovementHandler.call(this)
         PlayerJumpHandler.call(this)
         PlayerAngleHandler.call(this)
     }
 
-    if (this.game.input.activePointer.isDown && this.player.meta.health > 0 && !this.respawnInProgress) {
+    if (this.game.input.activePointer.isDown && this.player.meta.health > 0) {
         this.player.meta[this.currentWeapon].fire()
     }
 
@@ -23,15 +23,14 @@ export default function Update() {
         this.hurtBorderSprite.alpha = 0
     }
 
-    if (this.roomId) {
+    if (this.roomId && this.player.meta.health > 0) {
         emitMovePlayer.call(this, {
             roomId: this.roomId,
             x: this.player.x,
             y: this.player.y,
             rightArmAngle: this.rightArmGroup.angle,
             leftArmAngle: this.leftArmGroup.angle,
-            facing: this.player.meta.facing,
-            respawnInProgress: this.respawnInProgress
+            facing: this.player.meta.facing
         })
     }
 }

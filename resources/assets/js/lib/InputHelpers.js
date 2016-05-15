@@ -2,7 +2,6 @@
 // In this case, either holding the right arrow or tapping or clicking on the left
 // side of the screen.
 export function leftInputIsActive() {
-    if (this.respawnInProgress) return false
     return this.game.input.keyboard.isDown(Phaser.Keyboard.A)
 }
 
@@ -10,7 +9,6 @@ export function leftInputIsActive() {
 // In this case, either holding the right arrow or tapping or clicking on the right
 // side of the screen.
 export function rightInputIsActive() {
-    if (this.respawnInProgress) return false
     return this.game.input.keyboard.isDown(Phaser.Keyboard.D)
 }
 
@@ -18,12 +16,10 @@ export function rightInputIsActive() {
 // In this case, either holding the up arrow or tapping or clicking on the center
 // part of the screen.
 export function upInputIsActive(duration) {
-    if (this.respawnInProgress) return false
     return this.game.input.keyboard.downDuration(Phaser.Keyboard.W, duration)
 }
 
 // This function returns true when the player releases the "jump" control
 export function upInputReleased() {
-    if (this.respawnInProgress) return false
     return this.game.input.keyboard.upDuration(Phaser.Keyboard.W)
 }

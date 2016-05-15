@@ -26,11 +26,6 @@ export default function onMovePlayer(data) {
         return
     }
 
-    if (data.respawnInProgress) {
-        movePlayer.x = -1000
-        return
-    }
-
     // Update player position
     movePlayer.x = data.x
     movePlayer.y = data.y

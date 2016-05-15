@@ -4,16 +4,16 @@ import SprayBlood from './SprayBlood'
 export default function CollisionHandler() {
     this.physics.arcade.collide(this.player, this.platforms)
     this.physics.arcade.collide(this.player, this.groundSprite, () => {
-        this.game.input.reset()
+        if (this.player.meta.health <= 0 || this.player.y < 3900) return
 
-        if (this.respawnInProgress) return false
-
-        this.player.animations.play('death')
-
-        this.socket.emit('player adjust score', {
-            roomId: this.roomId,
-            amount: -10
-        })
+        this.game.input.enabled = false
+        this.player.body.acceleration.x = 0
+        this.player.body.acceleration.y = 0
+        this.player.meta.health = 0
+        this.leftArmGroup.visible = false
+        this.rightArmGroup.visible = false
+        this.headGroup.visible = false
+        this.torsoGroup.visible = false
 
         this.socket.emit('player damaged', {
             roomId: this.roomId,
@@ -21,6 +21,8 @@ export default function CollisionHandler() {
             damagedPlayerId: '/#' + this.socket.id,
             attackingPlayerId: null
         })
+
+        this.player.animations.play('death')
     })
 
     // Did your bullets hit any enemies
@@ -62,7 +64,7 @@ export default function CollisionHandler() {
 
     // Did enemy bullets hit you
     this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
-        if (this.respawnInProgress || ! bullet.weaponId || ! this.socket.id) return
+        if (! bullet.weaponId || ! this.socket.id) return
 
         bullet.kill()
 

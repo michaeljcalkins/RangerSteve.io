@@ -11,7 +11,6 @@ export default function Create() {
     this.volume = store.get('volume', GameConsts.STARTING_VOLUME)
     this.socket = io.connect()
     this.jumping = false
-    this.respawnInProgress = false
 
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)

@@ -18,11 +18,11 @@ function setEventHandlers() {
     io.on('connection', onSocketConnection.bind(this))
 }
 
-setInterval(function() {
-    Object.keys(rooms).forEach((key) => {
-        util.log('ROOM >>>>>>>>>>>>>>>>', JSON.stringify(rooms[key], null, 4))
-    })
-}, 10000)
+// setInterval(function() {
+//     Object.keys(rooms).forEach((key) => {
+//         util.log('ROOM >>>>>>>>>>>>>>>>', JSON.stringify(rooms[key], null, 4))
+//     })
+// }, 10000)
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
@@ -164,8 +164,10 @@ function onMovePlayer (data) {
     // Find player in array
     var movePlayer = PlayerById(data.roomId, this.id, rooms)
 
+    if (movePlayer.meta.health <= 0) return
+
     // Player not found
-    if (!movePlayer) {
+    if (! movePlayer) {
         util.log('Player not found when moving: ' + this.id)
         io.to(data.roomId).emit('player remove', {
             id: this.id
@@ -189,8 +191,7 @@ function onMovePlayer (data) {
         rightArmAngle: data.rightArmAngle,
         leftArmAngle: data.leftArmAngle,
         facing: data.facing,
-        lastMovement: data.lastMovement,
-        respawnInProgress: data.respawnInProgress
+        lastMovement: data.lastMovement
     })
 }
 
@@ -253,13 +254,7 @@ function onPlayerDamaged(data) {
 
     // Player was killed when shot
     if (player.meta.health <= 0) {
-        player.meta.health = 100
-
-        io.to(data.roomId).emit('player respawn', {
-            id: this.id,
-            damagedPlayerId: data.damagedPlayerId,
-            health: 100
-        })
+        player.meta.health = 0
 
         let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
         if (attackingPlayer) {
@@ -275,6 +270,23 @@ function onPlayerDamaged(data) {
                 weaponId: data.weaponId
             })
         }
+
+        io.to(data.roomId).emit('player damaged', {
+            id: this.id,
+            damagedPlayerId: data.damagedPlayerId,
+            damage: data.damage,
+            health: player.meta.health
+        })
+
+        setTimeout(() => {
+            player.meta.health = 100
+
+            io.to(data.roomId).emit('player respawn', {
+                id: this.id,
+                damagedPlayerId: data.damagedPlayerId,
+                health: 100
+            })
+        }, 3000)
 
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]
@@ -294,14 +306,4 @@ function onPlayerDamaged(data) {
 function onBulletFired(data) {
     data.id = this.id
     io.to(data.roomId).emit('bullet fired', data)
-}
-
-function onBulletRemoved(data) {
-    if (!data.bulletId) {
-        util.log('Bullet id missing when removing bullet...', data)
-        return
-    }
-
-    data.id = this.id
-    io.to(data.roomId).emit('bullet removed', data)
 }
