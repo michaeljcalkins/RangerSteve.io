@@ -147,7 +147,11 @@
             <div class="row">
                 <div class="col-sm-6">
                     <h1>Fighting the buffalo horde</h1>
-                    <p>You will fight the tough and wild buffalo throughout the map and when a player activates a bonus.</p>
+                    <p>
+                        You will fight the tough and wild buffalo throughout the map and when a player activates a bonus.
+                        <br />
+                        <strong>On hold while foundation of game is being completed.</strong>
+                    </p>
                 </div>
                 <div class="col-sm-6">
                     <img src="http://placehold.it/500x300" class="img-rounded"/>
