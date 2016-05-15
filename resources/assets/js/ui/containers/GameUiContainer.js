@@ -59,7 +59,7 @@ export default class GameUiContainer extends React.Component {
             clearTimeout(killConfirmedHandle)
             killConfirmedHandle = setTimeout(() => {
                 this.setState({ showKillConfirmed: false })
-            }, 3000)
+            }, 10000)
         })
 
         EventHandler.on('player kill log', (data) => {

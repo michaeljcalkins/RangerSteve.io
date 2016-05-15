@@ -256,6 +256,10 @@ function onPlayerDamaged(data) {
     if (player.meta.health <= 0) {
         player.meta.health = 0
 
+        // Falling to your death causes a score loss
+        if (data.damage === 1000 && player.meta.score >= 10)
+            player.meta.score -= 10
+
         let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
