@@ -55,10 +55,34 @@ export default class GameUiContainer extends React.Component {
     }
 
     startEventHandler() {
+        let lastKillingSpreeCount = 0
+
         EventHandler.on('player killing spree', (data) => {
+            if (data.killingSpree === lastKillingSpreeCount) return
+
+            lastKillingSpreeCount = data.killingSpree
+
             this.setState({
                 killingSpreeCount: data.killingSpree
             })
+
+            if (data.killingSpree === 3) {
+                EventHandler.emit('play triplekill')
+            } else if (data.killingSpree === 4) {
+                EventHandler.emit('play multikill')
+            } else if (data.killingSpree === 6) {
+                EventHandler.emit('play ultrakill')
+            } else if (data.killingSpree === 8) {
+                EventHandler.emit('play killingspree')
+            } else if (data.killingSpree === 10) {
+                EventHandler.emit('play unstoppable')
+            } else if (data.killingSpree === 12) {
+                EventHandler.emit('play ludicrouskill')
+            } else if (data.killingSpree === 14) {
+                EventHandler.emit('play rampagekill')
+            } else if (data.killingSpree === 15) {
+                EventHandler.emit('play monsterkill')
+            }
 
             setTimeout(() => {
                 this.setState({
@@ -73,7 +97,7 @@ export default class GameUiContainer extends React.Component {
             clearTimeout(killConfirmedHandle)
             killConfirmedHandle = setTimeout(() => {
                 this.setState({ showKillConfirmed: false })
-            }, 10000)
+            }, 3000)
         })
 
         EventHandler.on('player kill log', (data) => {

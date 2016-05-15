@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react'
 
+import EventHandler from '../../../lib/EventHandler'
+
 export default function HudKillingSpree({
     killingSpreeCount
 }) {

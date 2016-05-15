@@ -103,6 +103,54 @@ export default function Create() {
         this.game.input.enabled = false
     })
 
+    this.triplekillSound = this.game.add.audio('triplekill')
+    EventHandler.on('play triplekill', () => {
+        this.triplekillSound.volume = this.volume
+        this.triplekillSound.play()
+    })
+
+    this.multikillSound = this.game.add.audio('multikill')
+    EventHandler.on('play multikill', () => {
+        this.multikillSound.volume = this.volume
+        this.multikillSound.play()
+    })
+
+    this.ultrakillSound = this.game.add.audio('ultrakill')
+    EventHandler.on('play ultrakill', () => {
+        this.ultrakillSound.volume = this.volume
+        this.ultrakillSound.play()
+    })
+
+    this.killingspreeSound = this.game.add.audio('killingspree')
+    EventHandler.on('play killingspree', () => {
+        this.killingspreeSound.volume = this.volume
+        this.killingspreeSound.play()
+    })
+
+    this.unstoppableSound = this.game.add.audio('unstoppable')
+    EventHandler.on('play unstoppable', () => {
+        this.unstoppableSound.volume = this.volume
+        this.unstoppableSound.play()
+    })
+
+    this.ludicrouskillSound = this.game.add.audio('ludicrouskill')
+    EventHandler.on('play ludicrouskill', () => {
+        this.ludicrouskillSound.volume = this.volume
+        this.ludicrouskillSound.play()
+    })
+
+    this.rampagekillSound = this.game.add.audio('rampagekill')
+    EventHandler.on('play rampagekill', () => {
+        this.rampagekillSound.volume = this.volume
+        this.rampagekillSound.play()
+    })
+
+    this.monsterkillSound = this.game.add.audio('monsterkill')
+    EventHandler.on('play monsterkill', () => {
+        this.monsterkillSound.volume = this.volume
+        this.monsterkillSound.play()
+    })
+
 
     /**
      * Camera Settings

@@ -40,4 +40,13 @@ export default function Preload() {
 
     this.load.audio('DesertEagle-sound', '/audio/DesertEagle.mp3')
     this.load.audio('RPG-sound', '/audio/RPG.mp3')
+
+    this.load.audio('triplekill', '/audio/killingSpree/triplekill_ultimate.mp3')
+    this.load.audio('multikill', '/audio/killingSpree/multikill_ultimate.mp3')
+    this.load.audio('ultrakill', '/audio/killingSpree/ultrakill_ultimate.mp3')
+    this.load.audio('killingspree', '/audio/killingSpree/killingspree_ultimate.mp3')
+    this.load.audio('unstoppable', '/audio/killingSpree/unstoppable_ultimate.mp3')
+    this.load.audio('ludicrouskill', '/audio/killingSpree/ludicrouskill_ultimate.mp3')
+    this.load.audio('rampage', '/audio/killingSpree/rampage_ultimate.mp3')
+    this.load.audio('monsterkill', '/audio/killingSpree/monsterkill_ultimate.mp3')
 }
