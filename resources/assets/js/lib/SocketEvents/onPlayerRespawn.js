@@ -14,6 +14,9 @@ export default function onPlayerRespawn(data) {
 
     if (data.damagedPlayerId !== ('/#' + this.socket.id)) return
 
+    this.player.body.acceleration.x = 0
+    this.player.body.acceleration.y = 0
+
     // Set primary weapon
     this.player.meta.primaryWeapon = new Weapons[this.player.meta.selectedPrimaryWeaponId](this)
     this.player.meta.primaryWeapon.id = this.player.meta.selectedPrimaryWeaponId
