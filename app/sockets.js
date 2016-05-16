@@ -47,12 +47,16 @@ function onSocketConnection(socket) {
     socket.on('player full health', onPlayerFullHealth)
     socket.on('player healing', onPlayerHealing)
     socket.on('player adjust score', onPlayerAdjustScore)
+    socket.on('player update nickname', onPlayerUpdateNickname)
+    socket.on('player update weapon', onPlayerUpdateWeapon)
 
     socket.on('message send', onMessageSend)
 
     socket.on('bullet fired', onBulletFired)
+}
 
-    socket.on('player update nickname', onPlayerUpdateNickname)
+function onPlayerUpdateWeapon(data) {
+    io.to(data.roomId).emit('player update weapon', data)
 }
 
 function onMessageSend(data) {
@@ -105,15 +109,17 @@ function onNewPlayer (data) {
     }
 
     util.log('Adding player to room', this.id)
+
     // Create a new player
     var newPlayer = Player(data.x, data.y)
     newPlayer.id = this.id
+
     newPlayer.meta = {
         health: 100,
         score: 0,
         nickname: data.nickname,
         killingSpree: 0,
-        currentWeaponId: data.currentWeaponId
+        currentWeaponMeta: data.currentWeaponMeta
     }
 
     if (data.roomId) {

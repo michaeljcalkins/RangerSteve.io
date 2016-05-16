@@ -48,9 +48,6 @@ export default function PlayerSpriteHandler() {
         selectedSecondaryWeaponId: startingSecondaryWeaponId
     }
 
-    this.player.meta.primaryWeapon.id = startingPrimaryWeaponId
-    this.player.meta.secondaryWeapon.id = startingSecondaryWeaponId
-
     this.leftArmGroup = this.game.add.group()
     this.rightArmGroup = this.game.add.group()
     this.headGroup = this.game.add.group()

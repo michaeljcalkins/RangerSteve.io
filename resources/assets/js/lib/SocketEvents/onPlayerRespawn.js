@@ -3,6 +3,7 @@ import { PropTypes } from 'react'
 import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
 import * as HighRuleJungle from '../../maps/HighRuleJungle'
+import emitPlayerUpdateWeapon from './emitPlayerUpdateWeapon'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -19,20 +20,25 @@ export default function onPlayerRespawn(data) {
 
     // Set primary weapon
     this.player.meta.primaryWeapon = new Weapons[this.player.meta.selectedPrimaryWeaponId](this)
-    this.player.meta.primaryWeapon.id = this.player.meta.selectedPrimaryWeaponId
 
     if (this.currentWeapon === 'primaryWeapon')
         this.currentWeaponSprite.loadTexture(this.player.meta.selectedPrimaryWeaponId)
 
     // Set secondary weapon
     this.player.meta.secondaryWeapon = new Weapons[this.player.meta.selectedSecondaryWeaponId](this)
-    this.player.meta.secondaryWeapon.id = this.player.meta.selectedSecondaryWeaponId
 
     if (this.currentWeapon === 'secondaryWeapon')
         this.currentWeaponSprite.loadTexture(this.player.meta.selectedSecondaryWeaponId)
 
     this.player.meta.health = data.health
     EventHandler.emit('health update', data.health)
+
+    let currentWeapon = this.currentWeapon === 'primaryWeapon' ? this.player.meta.primaryWeapon : this.player.meta.secondaryWeapon
+    emitPlayerUpdateWeapon.call(this, {
+        id: '/#' + this.socket.id,
+        roomId: this.roomId,
+        currentWeaponMeta: currentWeapon.meta
+    })
 
     // Hide child groups
     this.leftArmGroup.visible = true

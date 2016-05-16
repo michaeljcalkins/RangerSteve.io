@@ -12,6 +12,7 @@ import onPlayerKillConfirmed from './onPlayerKillConfirmed'
 import onMessageReceived from './onMessageReceived'
 import onPlayerRemove from './onPlayerRemove'
 import onPlayerKillLog from './onPlayerKillLog'
+import onPlayerUpdateWeapon from './onPlayerUpdateWeapon'
 import emitMessageSend from './emitMessageSend'
 
 export default function() {
@@ -28,6 +29,7 @@ export default function() {
     this.socket.on('player health update', onPlayerHealthUpdate.bind(this))
     this.socket.on('player kill confirmed', onPlayerKillConfirmed.bind(this))
     this.socket.on('player kill log', onPlayerKillLog.bind(this))
+    this.socket.on('player update weapon', onPlayerUpdateWeapon.bind(this))
 
     this.socket.on('message received', onMessageReceived.bind(this))
 

@@ -5,6 +5,7 @@ import EventHandler from '../lib/EventHandler'
 import * as HighRuleJungle from '../maps/HighRuleJungle'
 import PlayerSpriteHandler from '../lib/PlayerSpriteHandler'
 import GetQueryString from '../lib/GetQueryString'
+import emitPlayerUpdateWeapon from '../lib/SocketEvents/emitPlayerUpdateWeapon'
 
 export default function Create() {
     this.roomId = GetQueryString('roomId')
@@ -192,7 +193,7 @@ export default function Create() {
             ? 'secondaryWeapon'
             : 'primaryWeapon'
 
-        this.currentWeaponSprite.loadTexture(this.player.meta[this.currentWeapon].id)
+        this.currentWeaponSprite.loadTexture(this.player.meta[this.currentWeapon].meta.id)
         this.currentWeaponSprite.scale.setTo(this.player.meta[this.currentWeapon].meta.scale)
         this.currentWeaponSprite.rotation = this.player.meta[this.currentWeapon].meta.rotation
 
@@ -207,6 +208,13 @@ export default function Create() {
 
         this.muzzleFlash.x = this.player.meta[this.currentWeapon].meta.muzzleFlashX
         this.muzzleFlash.y = this.player.meta[this.currentWeapon].meta.muzzleFlashY
+
+        let currentWeapon = this.currentWeapon === 'primaryWeapon' ? this.player.meta.primaryWeapon : this.player.meta.secondaryWeapon
+        emitPlayerUpdateWeapon.call(this, {
+            id: '/#' + this.socket.id,
+            roomId: this.roomId,
+            currentWeaponMeta: currentWeapon.meta
+        })
     })
 
     this.hurtBorderSprite = this.add.sprite(0, 0, 'hurt-border')
