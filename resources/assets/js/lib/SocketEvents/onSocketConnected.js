@@ -13,6 +13,7 @@ export default function onSocketConnected() {
         roomId: this.roomId,
         x: this.player.x,
         y: this.player.y,
+        currentWeaponId: this.currentWeapon === 'primaryWeapon' ? this.player.meta.selectedPrimaryWeaponId : this.player.meta.selectedSecondaryWeaponId,
         nickname: store.get('nickname')
     })
 }

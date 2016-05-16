@@ -87,7 +87,6 @@ gulp.task('buildjs', function() {
 
     var rebundle = function() {
         var startDate = new Date();
-        console.log('isProduction', isProduction)
         console.log('Update start at ' + startDate.toLocaleString());
         return bundler.bundle()
             .on('error', handleError)

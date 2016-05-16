@@ -1,5 +1,5 @@
-import GameConsts from './GameConsts'
 import { PropTypes } from 'react'
+import GameConsts from './GameConsts'
 
 const propTypes = {
     x: PropTypes.number.isRequired,
@@ -34,8 +34,6 @@ export default function RemotePlayer(player) {
     this.game.physics.enable(newRemotePlayer, Phaser.Physics.ARCADE)
     newRemotePlayer.body.gravity.y = -1900
 
-
-
     newRemotePlayer.leftArmGroup = this.game.add.group()
     newRemotePlayer.rightArmGroup = this.game.add.group()
     newRemotePlayer.headGroup = this.game.add.group()
@@ -58,18 +56,8 @@ export default function RemotePlayer(player) {
     newRemotePlayer.leftArmSprite.rotation = 80.1
     newRemotePlayer.leftArmGroup.add(newRemotePlayer.leftArmSprite)
 
-
-    // // Gun
-    // newRemotePlayer.currentWeaponSprite = this.game.add.sprite(
-    //     this.player.meta.primaryWeapon.meta.spriteX,
-    //     this.player.meta.primaryWeapon.meta.spriteY,
-    //     GameConsts.STARTING_PRIMARY_ID
-    // )
-    // this.currentWeaponSprite.scale.setTo(this.player.meta.primaryWeapon.meta.scale)
-    // this.currentWeaponSprite.rotation = this.player.meta.primaryWeapon.meta.rotation
-
     // Current weapon
-    newRemotePlayer.currentWeaponSprite = this.game.add.sprite(0, 0, 'AK47')
+    newRemotePlayer.currentWeaponSprite = this.game.add.sprite(0, 0, player.meta.currentWeaponId)
     newRemotePlayer.currentWeaponSprite.rotation = 80.20
     newRemotePlayer.currentWeaponSprite.scale.setTo(1.3)
 

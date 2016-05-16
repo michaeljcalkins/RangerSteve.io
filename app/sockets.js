@@ -112,7 +112,8 @@ function onNewPlayer (data) {
         health: 100,
         score: 0,
         nickname: data.nickname,
-        killingSpree: 0
+        killingSpree: 0,
+        currentWeaponId: data.currentWeaponId
     }
 
     if (data.roomId) {
