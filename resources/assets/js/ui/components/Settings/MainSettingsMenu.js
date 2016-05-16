@@ -95,6 +95,7 @@ export default class MainSettingsMenu extends React.Component {
                         <label>Primary</label>
                         <div
                             className="option-group option-weapon-group align-middle"
+                            id="open-primary-weapon-menu-button"
                             onClick={ this.handlePrimaryViewClick }
                             style={ { marginBottom: '28px' } }
                         >
@@ -108,6 +109,7 @@ export default class MainSettingsMenu extends React.Component {
                         <label>Secondary</label>
                         <div
                             className="option-group option-weapon-group align-middle"
+                            id="open-secondary-weapon-menu-button"
                             onClick={ this.handleSecondaryViewClick }
                         >
                             <div>
@@ -121,6 +123,7 @@ export default class MainSettingsMenu extends React.Component {
                         <label>Character</label>
                         <div
                             className="option-group option-character-group align-middle"
+                            id="open-character-menu-buttom"
                             onClick={ this.handleCharacterViewClick }
                         >
                             <div>
