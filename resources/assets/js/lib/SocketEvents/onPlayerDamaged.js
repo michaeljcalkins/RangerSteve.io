@@ -50,4 +50,12 @@ export default function onPlayerDamaged(data) {
             }, 500)
         }, 5000)
     }
+
+    if (this.player.meta.health <= 0) {
+        this.rightArmGroup.visible = false
+        this.leftArmGroup.visible = false
+        this.headGroup.visible = false
+        this.torsoGroup.visible = false
+        this.player.animations.play('death')
+    }
 }
