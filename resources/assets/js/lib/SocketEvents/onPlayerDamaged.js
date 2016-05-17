@@ -13,8 +13,9 @@ let lastKnownHealth = null
 export default function onPlayerDamaged(data) {
     check(data, propTypes)
 
-    if (data.damagedPlayerId !== ('/#' + this.socket.id))
+    if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
         return
+    }
 
     this.player.meta.health = data.health
     EventHandler.emit('health update', this.player.meta.health)

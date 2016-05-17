@@ -34,7 +34,6 @@ export default function onUpdatePlayers(data) {
         }
 
         let newRemotePlayer = RemotePlayer.call(this, player)
-
         let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unamed Ranger'
 
         let style = {
@@ -50,5 +49,13 @@ export default function onUpdatePlayers(data) {
         text.smoothed = true
 
         this.enemies.add(newRemotePlayer)
+
+        if (player.meta.health <= 0) {
+            newRemotePlayer.rightArmGroup.visible = false
+            newRemotePlayer.leftArmGroup.visible = false
+            newRemotePlayer.headGroup.visible = false
+            newRemotePlayer.torsoGroup.visible = false
+            newRemotePlayer.animations.play('death')
+        }
     })
 }

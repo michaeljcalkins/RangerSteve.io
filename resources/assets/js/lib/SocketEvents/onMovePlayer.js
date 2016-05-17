@@ -8,7 +8,8 @@ const propTypes = {
     y: PropTypes.number.isRequired,
     rightArmAngle: PropTypes.number.isRequired,
     leftArmAngle: PropTypes.number.isRequired,
-    facing: PropTypes.string.isRequired
+    facing: PropTypes.string.isRequired,
+    health: PropTypes.number.isRequired
 }
 
 export default function onMovePlayer(data) {
@@ -29,6 +30,11 @@ export default function onMovePlayer(data) {
     // Update player position
     movePlayer.x = data.x
     movePlayer.y = data.y
+
+    movePlayer.rightArmGroup.visible = true
+    movePlayer.leftArmGroup.visible = true
+    movePlayer.headGroup.visible = true
+    movePlayer.torsoGroup.visible = true
 
     // Update player angles
     movePlayer.rightArmGroup.angle = data.rightArmAngle

@@ -199,7 +199,8 @@ function onMovePlayer (data) {
         rightArmAngle: data.rightArmAngle,
         leftArmAngle: data.leftArmAngle,
         facing: data.facing,
-        lastMovement: data.lastMovement
+        lastMovement: data.lastMovement,
+        health: movePlayer.meta.health
     })
 }
 
