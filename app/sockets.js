@@ -258,6 +258,10 @@ function onPlayerHealing(data) {
 
 function onPlayerDamaged(data) {
     let player = PlayerById(data.roomId, this.id, rooms)
+
+    if (player.meta.health <= 0)
+        return
+
     player.meta.health -= Number(data.damage)
 
     // Player was killed when shot
