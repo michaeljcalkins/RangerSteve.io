@@ -1,4 +1,5 @@
 import Guid from './Guid'
+import emitBulletFired from './SocketEvents/emitBulletFired'
 
 export default function FireRocket() {
     let x = this.rootScope.player.x
@@ -6,26 +7,33 @@ export default function FireRocket() {
 
     let bullet = this.rootScope.bullets.getFirstDead()
     bullet.bulletId = Guid()
+    bullet.weaponId = this.meta.id
     bullet.height = this.bulletHeight
     bullet.width = this.bulletWidth
     bullet.body.gravity.y = -1800
+    bullet.alpha = 0
     bullet.reset(x, y)
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
     bullet.rotation = pointerAngle
 
-    this.fx.volume = .3 * this.rootScope.volume
+    setTimeout(function() {
+        bullet.alpha = 1
+    }, 40)
+
+    this.fx.volume = this.rootScope.volume
     this.fx.play()
 
-    this.rootScope.socket.emit('bullet fired', {
+    emitBulletFired.call(this.rootScope, {
         roomId: this.rootScope.roomId,
-        bulletId: this.bulletId,
+        bulletId: bullet.bulletId,
         playerId: '/#' + this.rootScope.socket.id,
+        weaponId: this.meta.id,
         x,
         y,
         pointerAngle,
         bulletSpeed: this.bulletSpeed,
-        height: this.bulletHeight,
-        width: this.bulletWidth,
+        height: bullet.height,
+        width: bullet.width,
         damage: this.damage
     })
 }

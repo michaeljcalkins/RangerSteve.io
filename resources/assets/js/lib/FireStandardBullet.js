@@ -7,6 +7,7 @@ export default function FireStandardBullet() {
 
     let bullet = this.rootScope.bullets.getFirstDead()
     bullet.bulletId = Guid()
+    bullet.weaponId = this.meta.id
     bullet.height = this.bulletHeight
     bullet.width = this.bulletWidth
     bullet.body.gravity.y = -1800
