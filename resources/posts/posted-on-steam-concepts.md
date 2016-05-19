@@ -5,9 +5,9 @@
   "date": "5-13-2016"
 }}}
 
-![Ranger Steve Steam Concept Page](http://i.imgur.com/zdTqyS5.png)
+![Ranger Steve Steam Concept Page](https://i.imgur.com/zdTqyS5.png)
 
-[Ranger Steve Steam Concept Page](http://steamcommunity.com/sharedfiles/filedetails/?id=683945477)
+[Ranger Steve Steam Concept Page](https://steamcommunity.com/sharedfiles/filedetails/?id=683945477)
 
 Finally had enough of Ranger Steve to start posting it places and while I'm completely unsure if this is a good idea,  I'm trying to find good feedback.
 
@@ -16,4 +16,4 @@ Starting at **$9.97** this price will increase as the game matures.
 
 This is great news because it means I can begin the growing this game's income to pay for it's servers! :)
 
-![Ranger Steve in the concepts gallery](http://i.imgur.com/qtTFyRM.png)
+![Ranger Steve in the concepts gallery](https://i.imgur.com/qtTFyRM.png)
