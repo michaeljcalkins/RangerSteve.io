@@ -2,8 +2,16 @@
 <html>
 <head>
     <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" lang="en-us" content="Explosive multiplayer shooter game that lets you instantly play with your friends.">
+    <meta itemprop="name" content="Ranger Steve: Buffalo Invasion">
+    <meta property="og:title" content="Ranger Steve: Buffalo Invasion">
+    <meta property="og:site_name" content="Ranger Steve: Buffalo Invasion">
+    <meta property="og:description" content="Explosive multiplayer shooter game that lets you instantly play with your friends.">
+    <meta property="og:url" content="https://rangersteve.io/">
+
     <link rel="shortcut icon" href="/images/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css">
     <link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app.css">
 
