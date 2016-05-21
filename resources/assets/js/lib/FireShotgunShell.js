@@ -51,6 +51,6 @@ export default function FireShotgunShell() {
         })
     }
 
-    this.fx.volume = this.rootScope.volume
+    this.fx.volume = this.rootScope.sfxVolume
     this.fx.play()
 }

@@ -34,6 +34,10 @@
     <div id="ui-app">
         <game-ui-container></game-ui-container>
     </div>
+    <audio loop>
+        <source src="/audio/ost.ogg" type="audio/ogg">
+        <source src="/audio/ost.mp3" type="audio/mpeg">
+    </audio>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/phaser/2.4.7/phaser.min.js"></script>

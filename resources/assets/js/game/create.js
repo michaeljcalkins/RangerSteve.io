@@ -9,7 +9,8 @@ import emitPlayerUpdateWeapon from '../lib/SocketEvents/emitPlayerUpdateWeapon'
 
 export default function Create() {
     this.roomId = GetQueryString('roomId')
-    this.volume = store.get('volume', GameConsts.STARTING_VOLUME)
+    this.sfxVolume = store.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME)
+    this.musicVolume = store.get('musicVolume', GameConsts.STARTING_MUSIC_VOLUME)
     this.socket = io.connect()
     this.jumping = false
 
@@ -84,13 +85,12 @@ export default function Create() {
     EventHandler.emit('score update', 0)
     EventHandler.emit('health update', 0)
     EventHandler.emit('player update nickname', { nickname: this.player.meta.nickname })
-    EventHandler.on('volume update', (data) => {
-        this.volume = data.volume
-    })
 
-    EventHandler.on('primary weapon update', (weapon) => {
-        this.player.meta.selectedPrimaryWeaponId = weapon.id
+    EventHandler.on('sfx volume update', (data) => this.sfxVolume = data.volume)
+    EventHandler.on('music volume update', (data) => {
+        this.audioPlayer.volume = data.volume
     })
+    EventHandler.on('primary weapon update', (weapon) => this.player.meta.selectedPrimaryWeaponId = weapon.id)
 
     EventHandler.on('secondary weapon update', (weapon) => {
         this.player.meta.selectedSecondaryWeaponId = weapon.id
@@ -106,49 +106,49 @@ export default function Create() {
 
     this.triplekillSound = this.game.add.audio('triplekill')
     EventHandler.on('play triplekill', () => {
-        this.triplekillSound.volume = this.volume
+        this.triplekillSound.volume = this.sfxVolume
         this.triplekillSound.play()
     })
 
     this.multikillSound = this.game.add.audio('multikill')
     EventHandler.on('play multikill', () => {
-        this.multikillSound.volume = this.volume
+        this.multikillSound.volume = this.sfxVolume
         this.multikillSound.play()
     })
 
     this.ultrakillSound = this.game.add.audio('ultrakill')
     EventHandler.on('play ultrakill', () => {
-        this.ultrakillSound.volume = this.volume
+        this.ultrakillSound.volume = this.sfxVolume
         this.ultrakillSound.play()
     })
 
     this.killingspreeSound = this.game.add.audio('killingspree')
     EventHandler.on('play killingspree', () => {
-        this.killingspreeSound.volume = this.volume
+        this.killingspreeSound.volume = this.sfxVolume
         this.killingspreeSound.play()
     })
 
     this.unstoppableSound = this.game.add.audio('unstoppable')
     EventHandler.on('play unstoppable', () => {
-        this.unstoppableSound.volume = this.volume
+        this.unstoppableSound.volume = this.sfxVolume
         this.unstoppableSound.play()
     })
 
     this.ludicrouskillSound = this.game.add.audio('ludicrouskill')
     EventHandler.on('play ludicrouskill', () => {
-        this.ludicrouskillSound.volume = this.volume
+        this.ludicrouskillSound.volume = this.sfxVolume
         this.ludicrouskillSound.play()
     })
 
     this.rampagekillSound = this.game.add.audio('rampagekill')
     EventHandler.on('play rampagekill', () => {
-        this.rampagekillSound.volume = this.volume
+        this.rampagekillSound.volume = this.sfxVolume
         this.rampagekillSound.play()
     })
 
     this.monsterkillSound = this.game.add.audio('monsterkill')
     EventHandler.on('play monsterkill', () => {
-        this.monsterkillSound.volume = this.volume
+        this.monsterkillSound.volume = this.sfxVolume
         this.monsterkillSound.play()
     })
 
@@ -217,10 +217,23 @@ export default function Create() {
         })
     })
 
+
+    /**
+     * Player Is Hurt Border
+     */
     this.hurtBorderSprite = this.add.sprite(0, 0, 'hurt-border')
     this.hurtBorderSprite.width = window.innerWidth
     this.hurtBorderSprite.height = window.innerHeight
     this.hurtBorderSprite.fixedToCamera = true
+
+    /**
+     * Audio
+     */
+    this.audioPlayer = new Audio()
+    this.audioPlayer.controls = false
+    this.audioPlayer.src = '/audio/ost.mp3'
+    this.audioPlayer.volume = this.musicVolume
+    this.audioPlayer.play()
 
 
     /**

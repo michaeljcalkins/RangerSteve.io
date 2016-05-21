@@ -9,7 +9,8 @@ export default class MainSettingsMenu extends React.Component {
 
         this.state = {
             nickname: props.defaultNicknameValue,
-            volume: props.defaultSoundEffectValue
+            sfxVolume: props.defaultSoundEffectValue,
+            musicVolume: props.defaultMusicValue
         }
 
         this.handleNicknameChange = this.handleNicknameChange.bind(this)
@@ -20,6 +21,7 @@ export default class MainSettingsMenu extends React.Component {
         this.primaryWeapon = this.primaryWeapon.bind(this)
         this.secondaryWeapon = this.secondaryWeapon.bind(this)
         this.handleGenerateName = this.handleGenerateName.bind(this)
+        this.handleMusicVolumeChange = this.handleMusicVolumeChange.bind(this)
     }
 
     handleGenerateName() {
@@ -34,6 +36,10 @@ export default class MainSettingsMenu extends React.Component {
         const nickname = evt.target.value.slice(0, 100)
         this.setState({ nickname })
         this.props.onNicknameChange(nickname)
+    }
+
+    handleMusicVolumeChange(evt) {
+        this.props.onMusicVolumeChange(Number(evt.target.value))
     }
 
     handleSoundEffectVolumeChange(evt) {
@@ -53,7 +59,7 @@ export default class MainSettingsMenu extends React.Component {
     }
 
     primaryWeapon() {
-        if (!this.props.selectedPrimaryWeapon)
+        if (! this.props.selectedPrimaryWeapon)
             return null
 
         let weapon = _.find(GameConsts.PRIMARY_WEAPONS, {
@@ -76,7 +82,7 @@ export default class MainSettingsMenu extends React.Component {
             id: this.props.selectedSecondaryWeapon
         })
 
-        if (!weapon) {
+        if (! weapon) {
             console.error('Could not find secondary weapon.', this.props.selectedSecondaryWeapon)
             return null
         }
@@ -146,16 +152,33 @@ export default class MainSettingsMenu extends React.Component {
                         type="text"
                     />
                 </div>
-                <div className="form-group">
-                    <label>Sound Effects Volume</label>
-                    <input
-                        defaultValue={ this.state.volume }
-                        max="1"
-                        min="0"
-                        onChange={ this.handleSoundEffectVolumeChange }
-                        step=".01"
-                        type="range"
-                    />
+                <div className="row">
+                    <div className="col-sm-6">
+                        <div className="form-group">
+                            <label>Sound Effects Volume</label>
+                            <input
+                                defaultValue={ this.state.sfxVolume }
+                                max="1"
+                                min="0"
+                                onChange={ this.handleSoundEffectVolumeChange }
+                                step=".01"
+                                type="range"
+                            />
+                        </div>
+                    </div>
+                    <div className="col-sm-6">
+                        <div className="form-group">
+                            <label>Music Volume</label>
+                            <input
+                                defaultValue={ this.state.musicVolume }
+                                max="1"
+                                min="0"
+                                onChange={ this.handleMusicVolumeChange }
+                                step=".01"
+                                type="range"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         )
@@ -163,8 +186,10 @@ export default class MainSettingsMenu extends React.Component {
 }
 
 MainSettingsMenu.propTypes = {
+    defaultMusicValue: PropTypes.number,
     defaultNicknameValue: PropTypes.string,
     defaultSoundEffectValue: PropTypes.number,
+    onMusicVolumeChange: PropTypes.func,
     onNicknameChange: PropTypes.func,
     onSoundEffectVolumeChange: PropTypes.func,
     onViewChange: PropTypes.func,

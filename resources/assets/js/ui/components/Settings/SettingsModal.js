@@ -11,11 +11,13 @@ export default function SettingsModal({
     onClose,
     defaultNicknameValue,
     defaultSoundEffectValue,
+    defaultMusicValue,
     onViewChange,
     onNicknameChange,
     onPrimaryGunClick,
     onSecondaryGunClick,
     onSoundEffectVolumeChange,
+    onMusicVolumeChange,
     player,
     settingsView,
     selectedPrimaryWeapon,
@@ -59,8 +61,10 @@ export default function SettingsModal({
         default:
             return (
                 <MainSettingsMenu
+                    defaultMusicValue={ defaultMusicValue }
                     defaultNicknameValue={ defaultNicknameValue }
                     defaultSoundEffectValue={ defaultSoundEffectValue }
+                    onMusicVolumeChange={ onMusicVolumeChange }
                     onNicknameChange={ onNicknameChange }
                     onSoundEffectVolumeChange={ onSoundEffectVolumeChange }
                     onViewChange={ onViewChange }

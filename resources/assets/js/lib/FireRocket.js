@@ -20,7 +20,7 @@ export default function FireRocket() {
         bullet.alpha = 1
     }, 40)
 
-    this.fx.volume = this.rootScope.volume
+    this.fx.volume = this.rootScope.sfxVolume
     this.fx.play()
 
     emitBulletFired.call(this.rootScope, {

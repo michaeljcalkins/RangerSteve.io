@@ -36,7 +36,8 @@ export default class GameUiContainer extends React.Component {
             selectedPrimaryWeapon: store.get('selectedPrimaryWeapon', 'AK47'),
             selectedSecondaryWeapon: store.get('selectedSecondaryWeapon', 'DesertEagle'),
             settingsModalOpen: !store.has('nickname'),
-            volume: store.get('volume', .5)
+            sfxVolume: store.get('sfxVolume', .1),
+            musicVolume: store.get('musicVolume', .3)
         }
 
         this.handleSendMessage = this.handleSendMessage.bind(this)
@@ -47,6 +48,7 @@ export default class GameUiContainer extends React.Component {
         this.handlePrimaryGunClick = this.handlePrimaryGunClick.bind(this)
         this.handleSecondaryGunClick = this.handleSecondaryGunClick.bind(this)
         this.handleViewChange = this.handleViewChange.bind(this)
+        this.handleMusicVolumeChange = this.handleMusicVolumeChange.bind(this)
     }
 
     componentDidMount() {
@@ -197,9 +199,15 @@ export default class GameUiContainer extends React.Component {
     }
 
     handleSoundEffectVolumeChange(volume) {
-        this.setState({ volume })
-        EventHandler.emit('volume update', { volume })
-        store.set('volume', volume)
+        this.setState({ sfxVolume: volume })
+        EventHandler.emit('sfx volume update', { volume })
+        store.set('sfxVolume', volume)
+    }
+
+    handleMusicVolumeChange(volume) {
+        this.setState({ musicVolume: volume })
+        EventHandler.emit('music volume update', { volume })
+        store.set('musicVolume', volume)
     }
 
     handlePrimaryGunClick(weapon) {
@@ -236,10 +244,12 @@ export default class GameUiContainer extends React.Component {
                 />
                 <HudChatHistory messages={ this.state.messages } />
                 <SettingsModal
+                    defaultMusicValue={ this.state.musicVolume }
                     defaultNicknameValue={ this.state.nickname }
-                    defaultSoundEffectValue={ this.state.volume }
+                    defaultSoundEffectValue={ this.state.sfxVolume }
                     isOpen={ this.state.settingsModalOpen }
                     onClose={ this.handleCloseSettingsModal }
+                    onMusicVolumeChange={ this.handleMusicVolumeChange }
                     onNicknameChange={ this.handleNicknameChange }
                     onPrimaryGunClick={ this.handlePrimaryGunClick }
                     onSecondaryGunClick={ this.handleSecondaryGunClick }
