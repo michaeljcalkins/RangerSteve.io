@@ -234,6 +234,11 @@ export default function Create() {
     this.audioPlayer.src = '/audio/ost.mp3'
     this.audioPlayer.volume = this.musicVolume
     this.audioPlayer.play()
+    // Creates a loop for music
+    this.audioPlayer.addEventListener('ended', function() {
+        this.currentTime = 0
+        this.play()
+    }, false);
 
 
     /**
