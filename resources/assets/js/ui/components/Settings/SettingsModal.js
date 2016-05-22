@@ -110,15 +110,6 @@ export default function SettingsModal({
                         </div>
                         { renderModalView() }
                     </div>
-                    <div className="modal-footer">
-                        <button
-                            className="btn btn-default"
-                            onClick={ onClose }
-                            type="button"
-                        >
-                            Close
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
