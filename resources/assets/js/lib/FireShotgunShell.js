@@ -11,6 +11,7 @@ export default function FireShotgunShell() {
     for(var i = 0; i < 4; i++) {
         let bullet = this.rootScope.bullets.getFirstDead()
         bullet.bulletId = Guid()
+        bullet.damage = this.damage
         bullet.weaponId = this.meta.id
         bullet.height = this.bulletHeight
         bullet.width = this.bulletWidth

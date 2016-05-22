@@ -15,7 +15,7 @@ export default function CollisionHandler() {
         this.headGroup.visible = false
         this.torsoGroup.visible = false
 
-        this.socket.emit('player damaged', {
+        emitPlayerDamaged.call(this, {
             roomId: this.roomId,
             damage: 1000,
             damagedPlayerId: '/#' + this.socket.id,
@@ -43,6 +43,14 @@ export default function CollisionHandler() {
             ricochet.animations.play('collision')
             ricochet.animations.currentAnim.killOnComplete = true
         }
+
+        emitPlayerDamaged.call(this, {
+            roomId: this.roomId,
+            damage: bullet.damage,
+            weaponId: bullet.weaponId,
+            damagedPlayerId: enemy.id,
+            attackingPlayerId: '/#' + this.socket.id
+        })
     }, null, this)
 
     // Did your bullets hit any platforms
@@ -111,13 +119,5 @@ export default function CollisionHandler() {
             ricochet.animations.play('collision')
             ricochet.animations.currentAnim.killOnComplete = true
         }
-
-        emitPlayerDamaged.call(this, {
-            roomId: this.roomId,
-            damage: bullet.damage,
-            weaponId: bullet.weaponId,
-            damagedPlayerId: '/#' + this.socket.id,
-            attackingPlayerId: bullet.playerId
-        })
     })
 }

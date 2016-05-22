@@ -7,6 +7,7 @@ export default function FireRocket() {
 
     let bullet = this.rootScope.bullets.getFirstDead()
     bullet.bulletId = Guid()
+    bullet.damage = this.damage
     bullet.weaponId = this.meta.id
     bullet.height = this.bulletHeight
     bullet.width = this.bulletWidth
