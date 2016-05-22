@@ -25,6 +25,29 @@ export default function CollisionHandler() {
         this.player.animations.play('death')
     })
 
+    // Did enemy bullets hit you
+    this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
+        if (! bullet.weaponId || ! this.socket.id || this.player.meta.health <= 0) return
+
+        bullet.kill()
+
+        SprayBlood.call(this, {
+            bulletY: bullet.y,
+            bulletX: bullet.x,
+            playerX: player.x,
+            bulletRotation: bullet.rotation
+        })
+
+        if (bullet.weaponId === 'RPG') {
+            let ricochet = this.add.sprite(bullet.x, bullet.y - 50, 'rocket')
+            ricochet.scale.setTo(.5, .5)
+            ricochet.anchor.setTo(.5, .5)
+            ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
+            ricochet.animations.play('collision')
+            ricochet.animations.currentAnim.killOnComplete = true
+        }
+    })
+
     // Did your bullets hit any enemies
     this.physics.arcade.overlap(this.enemies, this.bullets, function(enemy, bullet) {
         bullet.kill()
@@ -37,8 +60,9 @@ export default function CollisionHandler() {
         })
 
         if (bullet.weaponId === 'RPG') {
-            let ricochet = this.add.sprite(bullet.x - 125, bullet.y - 200, 'rocket')
-            ricochet.scale.setTo(.5)
+            let ricochet = this.add.sprite(bullet.x, bullet.y - 50, 'rocket')
+            ricochet.scale.setTo(.5, .5)
+            ricochet.anchor.setTo(.5, .5)
             ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
             ricochet.animations.play('collision')
             ricochet.animations.currentAnim.killOnComplete = true
@@ -77,46 +101,23 @@ export default function CollisionHandler() {
 
     // Did enemy bullets hit any platforms
     this.physics.arcade.overlap(this.enemyBullets, this.platforms, function(bullet) {
-        let lastKnownX = bullet.x
-        let lastKnownY = bullet.y
-
         bullet.kill()
 
         if (bullet.weaponId === 'RPG') {
-            let ricochet = this.add.sprite(lastKnownX - 125, lastKnownY - 200, 'rocket')
-            ricochet.scale.setTo(.5)
+            let ricochet = this.add.sprite(bullet.x, bullet.y - 50, 'rocket')
+            ricochet.scale.setTo(.5, .5)
+            ricochet.anchor.setTo(.5, .5)
             ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
             ricochet.animations.play('collision')
             ricochet.animations.currentAnim.killOnComplete = true
             return
         }
 
-        let ricochet = this.add.sprite(lastKnownX, lastKnownY - 15, 'ricochet')
+        let ricochet = this.add.sprite(bullet.x - 10, bullet.y - 10, 'ricochet')
         ricochet.scale.setTo(.17)
+        ricochet.anchor.setTo(.5, .5)
         ricochet.animations.add('collision', [0,1,2,3,4,5], 45, false, true)
         ricochet.animations.play('collision')
         ricochet.animations.currentAnim.killOnComplete = true
     }, null, this)
-
-    // Did enemy bullets hit you
-    this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
-        if (! bullet.weaponId || ! this.socket.id || this.player.meta.health <= 0) return
-
-        bullet.kill()
-
-        SprayBlood.call(this, {
-            bulletY: bullet.y,
-            bulletX: bullet.x,
-            playerX: player.x,
-            bulletRotation: bullet.rotation
-        })
-
-        if (bullet.weaponId === 'RPG') {
-            let ricochet = this.add.sprite(bullet.x - 125, bullet.y - 200, 'rocket')
-            ricochet.scale.setTo(.5)
-            ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
-            ricochet.animations.play('collision')
-            ricochet.animations.currentAnim.killOnComplete = true
-        }
-    })
 }
