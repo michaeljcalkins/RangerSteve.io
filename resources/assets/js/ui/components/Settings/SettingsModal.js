@@ -76,42 +76,49 @@ export default function SettingsModal({
     }
 
     return (
-        <div
-            className="modal hud-settings-modal"
-            style={ { display: isOpen ? 'block' : 'none' } }>
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <button
-                            className="close"
-                            onClick={ onClose }
-                            type="button"
-                        >
-                            <span>&times;</span>
-                        </button>
-                        <h4 className="modal-title">Ranger Steve</h4>
-                    </div>
-                    <div className="modal-body">
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <ul className="nav nav-pills" style={ { marginBottom: '15px' } }>
-                                    <li className="active pointer">
-                                        <a onClick={ onViewChange.bind(this, 'main') }>
-                                            Main
-                                        </a>
-                                    </li>
-                                    <li className="pointer">
-                                        <a onClick={ onViewChange.bind(this, 'controls') }>
-                                            Controls
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+        <div>
+            <div
+                className="modal hud-settings-modal"
+                style={ { display: isOpen ? 'block' : 'none' } }
+            >
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button
+                                className="close"
+                                onClick={ onClose }
+                                type="button"
+                            >
+                                <span>&times;</span>
+                            </button>
+                            <h4 className="modal-title">Ranger Steve</h4>
                         </div>
-                        { renderModalView() }
+                        <div className="modal-body">
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <ul className="nav nav-pills" style={ { marginBottom: '15px' } }>
+                                        <li className="active pointer">
+                                            <a onClick={ onViewChange.bind(this, 'main') }>
+                                                Main
+                                            </a>
+                                        </li>
+                                        <li className="pointer">
+                                            <a onClick={ onViewChange.bind(this, 'controls') }>
+                                                Controls
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            { renderModalView() }
+                        </div>
                     </div>
                 </div>
             </div>
+            <div
+                className="modal-backdrop fade in"
+                style={ { display: isOpen ? 'block' : 'none' } }
+            ></div>
         </div>
     )
 }

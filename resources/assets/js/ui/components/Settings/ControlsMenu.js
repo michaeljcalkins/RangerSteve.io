@@ -1,8 +1,6 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 
-export default function ControlsMenu({
-    onViewChange
-}) {
+export default function ControlsMenu() {
     return (
         <div className="row">
             <div className="col-sm-12">
@@ -10,7 +8,7 @@ export default function ControlsMenu({
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Controls</th>
+                                <th className="col-sm-4">Controls</th>
                                 <th>Description</th>
                             </tr>
                         </thead>
@@ -49,8 +47,4 @@ export default function ControlsMenu({
             </div>
         </div>
     )
-}
-
-ControlsMenu.propTypes = {
-    onViewChange: PropTypes.func.isRequired
 }
