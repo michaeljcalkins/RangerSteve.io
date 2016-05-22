@@ -25,9 +25,6 @@ export default function ChooseSecondaryMenu({
                     key={ index }
                     onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
-                    <div
-                        className="option-screen"
-                        v-show="player.meta.score < weapon.minScore"></div>
                     <div>
                         <img src={ weapon.image } />
                     </div>

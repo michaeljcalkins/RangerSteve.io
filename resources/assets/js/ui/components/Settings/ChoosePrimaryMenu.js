@@ -25,10 +25,6 @@ export default function ChoosePrimaryMenu({
                     key={ index }
                     onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
-                    { player.meta.score < weapon.minScore
-                        ? <div className="option-screen"></div>
-                        : null
-                    }
                     <div>
                         <img src={ weapon.image } />
                     </div>
