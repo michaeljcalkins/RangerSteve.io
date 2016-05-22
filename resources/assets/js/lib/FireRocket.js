@@ -18,7 +18,7 @@ export default function FireRocket() {
 
     setTimeout(function() {
         bullet.alpha = 1
-    }, 40)
+    }, 100)
 
     this.fx.volume = this.rootScope.sfxVolume
     this.fx.play()

@@ -23,8 +23,8 @@ export default class RPG extends Phaser.Group {
             muzzleFlashX: 102,
             muzzleFlashY: -72
         }
-        this.bulletHeight = 10
-        this.bulletSpeed = 2000
+        this.bulletHeight = 7
+        this.bulletSpeed = 1800
         this.bulletWidth = 40
         this.damage = 100
         this.fireRate = 6000
