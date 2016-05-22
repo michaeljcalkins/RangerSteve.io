@@ -35,6 +35,14 @@ export default function CollisionHandler() {
             playerX: enemy.x,
             bulletRotation: bullet.rotation
         })
+
+        if (bullet.weaponId === 'RPG') {
+            let ricochet = this.add.sprite(bullet.x - 125, bullet.y - 200, 'rocket')
+            ricochet.scale.setTo(.5)
+            ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
+            ricochet.animations.play('collision')
+            ricochet.animations.currentAnim.killOnComplete = true
+        }
     }, null, this)
 
     // Did your bullets hit any platforms
@@ -95,6 +103,14 @@ export default function CollisionHandler() {
             playerX: player.x,
             bulletRotation: bullet.rotation
         })
+
+        if (bullet.weaponId === 'RPG') {
+            let ricochet = this.add.sprite(bullet.x - 125, bullet.y - 200, 'rocket')
+            ricochet.scale.setTo(.5)
+            ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
+            ricochet.animations.play('collision')
+            ricochet.animations.currentAnim.killOnComplete = true
+        }
 
         emitPlayerDamaged.call(this, {
             roomId: this.roomId,
