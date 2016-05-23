@@ -1,5 +1,7 @@
 {% extends 'master.nunjucks' %}
 
+{% block title %}{{ post.title }}{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row" style="padding-top: 20px;">

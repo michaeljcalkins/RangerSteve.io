@@ -2,19 +2,13 @@
 
 let MainController = {
     home: function(req, res) {
-        res.render('home', {
-            title: 'Ranger Steve: Buffalo Invasion'
-        })
+        res.render('home')
     },
     game: function(req, res) {
-        res.render('game', {
-            title: 'Game'
-        })
+        res.render('game')
     },
     credits: function(req, res) {
-        res.render('credits', {
-            title: 'Credits'
-        })
+        res.render('credits')
     }
 }
 

@@ -1,5 +1,7 @@
 {% extends 'master.nunjucks' %}
 
+{% block title %}What's New | Ranger Steve: Buffalo Invasion{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row" style="padding-top: 20px;">
