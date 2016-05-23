@@ -1,8 +1,5 @@
-var fetchUserCountHandle = null
-
 function fetchUserCount() {
-    clearTimeout(fetchUserCountHandle)
-    var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest()
 
     xhr.open("GET", "https://rangersteve.io/api/v1/users/count", false)
     xhr.send()
@@ -12,10 +9,10 @@ function fetchUserCount() {
     chrome.browserAction.setBadgeText({
         text: result
     })
-
-    fetchUserCountHandle = setTimeout(function() {
-        fetchUserCount()
-    }, 60000)
 }
 
 fetchUserCount()
+
+setInterval(function() {
+    fetchUserCount()
+}, 60000)
