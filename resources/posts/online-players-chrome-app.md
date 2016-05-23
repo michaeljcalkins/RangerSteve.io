@@ -1,5 +1,5 @@
 {{{
-  "title": "Online Player Counter for Chrome",
+  "title": "Online Players Chrome Extension",
   "tags": ["general"],
   "category": "Updates",
   "date": "5-23-2016"
