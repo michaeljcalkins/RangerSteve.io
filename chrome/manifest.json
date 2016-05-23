@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "Ranger Steve: Buffalo Invasion",
+  "description": "Shows number of people currently playing Ranger Steve.",
+  "version": "1.0",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "tabs",
+    "https://rangersteve.io/*"
+  ]
+}
