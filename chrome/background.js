@@ -1,7 +1,3 @@
-// chrome.browserAction.setBadgeBackgroundColor({
-//     color: '#00abff'
-// })
-
 var fetchUserCountHandle = null
 
 function fetchUserCount() {
@@ -19,7 +15,7 @@ function fetchUserCount() {
 
     fetchUserCountHandle = setTimeout(function() {
         fetchUserCount()
-    }, 10000)
+    }, 60000 * 5)
 }
 
 fetchUserCount()
