@@ -9,7 +9,7 @@ let PlayerById = require('./services/PlayerById')
 let rooms = {}
 let io = null
 
-module.exports = function(ioInstance) {
+function sockets(ioInstance) {
     io = ioInstance
     setEventHandlers()
 }
@@ -328,3 +328,6 @@ function onBulletFired(data) {
     data.id = this.id
     io.to(data.roomId).emit('bullet fired', data)
 }
+
+module.exports.rooms = rooms
+module.exports.init = sockets

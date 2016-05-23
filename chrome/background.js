@@ -12,7 +12,7 @@ function fetchUserCount() {
 
     setTimeout(function() {
         fetchUserCount()
-    }, 4000)
+    }, 60 * 5)
 }
 
 chrome.browserAction.onClicked.addListener(function(activeTab){

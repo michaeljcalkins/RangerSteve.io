@@ -20,8 +20,7 @@ let locals = require('./app/middleware/locals')
 let app = express()
 let io = socketIo()
 app.io = io
-SocketHandler(io)
-
+SocketHandler.init(io)
 
 let poet = require('poet')(app, {
     posts: 'resources/posts'
