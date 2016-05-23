@@ -20,7 +20,7 @@ export default function onPlayerDamaged(data) {
             damagedPlayer.meta.health = data.health
 
             if (damagedPlayer.meta.health <= 0) {
-                console.log('asdf')
+                console.log('YOU KILLED SOMEONE')
                 damagedPlayer.rightArmGroup.visible = false
                 damagedPlayer.leftArmGroup.visible = false
                 damagedPlayer.headGroup.visible = false

@@ -50,6 +50,8 @@ export default function CollisionHandler() {
 
     // Did your bullets hit any enemies
     this.physics.arcade.overlap(this.enemies, this.bullets, function(enemy, bullet) {
+        if (enemy.meta.health <= 0) return false
+        
         bullet.kill()
 
         SprayBlood.call(this, {

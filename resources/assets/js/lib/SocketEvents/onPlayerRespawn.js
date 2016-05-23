@@ -4,6 +4,7 @@ import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
 import * as HighRuleJungle from '../../maps/HighRuleJungle'
 import emitPlayerUpdateWeapon from './emitPlayerUpdateWeapon'
+import PlayerById from'../PlayerById'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -13,7 +14,11 @@ const propTypes = {
 export default function onPlayerRespawn(data) {
     check(data, propTypes)
 
-    if (data.damagedPlayerId !== ('/#' + this.socket.id)) return
+    if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
+        let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
+        enemyPlayer.meta.health = 100
+        return
+    }
 
     this.player.body.acceleration.x = 0
     this.player.body.acceleration.y = 0
