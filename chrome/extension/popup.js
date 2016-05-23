@@ -7,10 +7,12 @@ function fetchUserCount() {
     var result = xhr.responseText
 
     document.getElementById('player-counter').innerHTML = result
+
+    chrome.browserAction.setBadgeText({
+        text: result
+    })
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     fetchUserCount()
-    var backGround = chrome.extension.getBackgroundPage();
-    backGround.fetchUserCount();
 })

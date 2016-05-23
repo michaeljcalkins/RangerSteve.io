@@ -15,7 +15,7 @@ function fetchUserCount() {
 
     fetchUserCountHandle = setTimeout(function() {
         fetchUserCount()
-    }, 60000 * 1)
+    }, 60000)
 }
 
 fetchUserCount()
