@@ -48,6 +48,6 @@ export default function Preload() {
     this.load.audio('killingspree', '/audio/killingSpree/killingspree_ultimate.mp3')
     this.load.audio('unstoppable', '/audio/killingSpree/unstoppable_ultimate.mp3')
     this.load.audio('ludicrouskill', '/audio/killingSpree/ludicrouskill_ultimate.mp3')
-    this.load.audio('rampage', '/audio/killingSpree/rampage_ultimate.mp3')
+    this.load.audio('rampagekill', '/audio/killingSpree/rampage_ultimate.mp3')
     this.load.audio('monsterkill', '/audio/killingSpree/monsterkill_ultimate.mp3')
 }

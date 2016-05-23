@@ -1,5 +1,7 @@
 import emitPlayerDamaged from './SocketEvents/emitPlayerDamaged'
 import SprayBlood from './SprayBlood'
+import RocketExplosion from './RocketExplosion'
+import BulletRicochet from './BulletRicochet'
 
 export default function CollisionHandler() {
     this.physics.arcade.collide(this.player, this.platforms)
@@ -39,12 +41,10 @@ export default function CollisionHandler() {
         })
 
         if (bullet.weaponId === 'RPG') {
-            let ricochet = this.add.sprite(bullet.x, bullet.y - 50, 'rocket')
-            ricochet.scale.setTo(.5, .5)
-            ricochet.anchor.setTo(.5, .5)
-            ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
-            ricochet.animations.play('collision')
-            ricochet.animations.currentAnim.killOnComplete = true
+            RocketExplosion.call(this, {
+                bulletY: bullet.y,
+                bulletX: bullet.x
+            })
         }
     })
 
@@ -60,12 +60,10 @@ export default function CollisionHandler() {
         })
 
         if (bullet.weaponId === 'RPG') {
-            let ricochet = this.add.sprite(bullet.x, bullet.y - 50, 'rocket')
-            ricochet.scale.setTo(.5, .5)
-            ricochet.anchor.setTo(.5, .5)
-            ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
-            ricochet.animations.play('collision')
-            ricochet.animations.currentAnim.killOnComplete = true
+            RocketExplosion.call(this, {
+                bulletY: bullet.y,
+                bulletX: bullet.x
+            })
         }
 
         emitPlayerDamaged.call(this, {
@@ -82,21 +80,16 @@ export default function CollisionHandler() {
         bullet.kill()
 
         if (bullet.weaponId === 'RPG') {
-            let ricochet = this.add.sprite(bullet.x, bullet.y - 50, 'rocket')
-            ricochet.scale.setTo(.5, .5)
-            ricochet.anchor.setTo(.5, .5)
-            ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
-            ricochet.animations.play('collision')
-            ricochet.animations.currentAnim.killOnComplete = true
-            return
+            RocketExplosion.call(this, {
+                bulletY: bullet.y,
+                bulletX: bullet.x
+            })
         }
 
-        let ricochet = this.add.sprite(bullet.x - 10, bullet.y - 10, 'ricochet')
-        ricochet.scale.setTo(.17)
-        ricochet.anchor.setTo(.5, .5)
-        ricochet.animations.add('collision', [0,1,2,3,4,5], 45, false, true)
-        ricochet.animations.play('collision')
-        ricochet.animations.currentAnim.killOnComplete = true
+        BulletRicochet.call(this, {
+            bulletY: bullet.y,
+            bulletX: bullet.x
+        })
     }, null, this)
 
     // Did enemy bullets hit any platforms
@@ -104,20 +97,15 @@ export default function CollisionHandler() {
         bullet.kill()
 
         if (bullet.weaponId === 'RPG') {
-            let ricochet = this.add.sprite(bullet.x, bullet.y - 50, 'rocket')
-            ricochet.scale.setTo(.5, .5)
-            ricochet.anchor.setTo(.5, .5)
-            ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
-            ricochet.animations.play('collision')
-            ricochet.animations.currentAnim.killOnComplete = true
-            return
+            RocketExplosion.call(this, {
+                bulletY: bullet.y,
+                bulletX: bullet.x
+            })
         }
 
-        let ricochet = this.add.sprite(bullet.x - 10, bullet.y - 10, 'ricochet')
-        ricochet.scale.setTo(.17)
-        ricochet.anchor.setTo(.5, .5)
-        ricochet.animations.add('collision', [0,1,2,3,4,5], 45, false, true)
-        ricochet.animations.play('collision')
-        ricochet.animations.currentAnim.killOnComplete = true
+        BulletRicochet.call(this, {
+            bulletY: bullet.y,
+            bulletX: bullet.x
+        })
     }, null, this)
 }

@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 import PlayerById from '../PlayerById'
 
 const propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
 }
 
 export default function onRemovePlayer(data) {
@@ -11,7 +11,7 @@ export default function onRemovePlayer(data) {
     let removePlayer = PlayerById.call(this, data.id)
 
     // Player not found
-    if (!removePlayer) {
+    if (! removePlayer) {
         console.log('Player not found: ', data.id)
         return
     }

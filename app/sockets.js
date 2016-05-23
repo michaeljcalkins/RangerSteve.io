@@ -258,10 +258,11 @@ function onPlayerHealing(data) {
 }
 
 function onPlayerDamaged(data) {
-    let player = PlayerById(data.roomId, this.id, rooms)
+    let player = PlayerById(data.roomId, data.damagedPlayerId, rooms)
 
-    if (player.meta.health <= 0)
+    if (! player || player.meta.health <= 0){
         return
+    }
 
     player.meta.health -= Number(data.damage)
 

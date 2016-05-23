@@ -1,6 +1,5 @@
 import { PropTypes } from 'react'
 import GameConsts from './GameConsts'
-import Weapons from './Weapons'
 
 const propTypes = {
     x: PropTypes.number.isRequired,
@@ -84,6 +83,8 @@ export default function RemotePlayer(player) {
     newRemotePlayer.rightArmGroup.pivot.y = 0
     newRemotePlayer.rightArmGroup.x = -25
     newRemotePlayer.rightArmGroup.y = -65
+
+    newRemotePlayer.meta = player.meta
 
     return newRemotePlayer
 }

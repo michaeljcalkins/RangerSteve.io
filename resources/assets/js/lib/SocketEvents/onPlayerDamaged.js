@@ -1,5 +1,6 @@
-import EventHandler from '../EventHandler'
 import { PropTypes } from 'react'
+import EventHandler from '../EventHandler'
+import PlayerById from '../PlayerById'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -14,6 +15,19 @@ export default function onPlayerDamaged(data) {
     check(data, propTypes)
 
     if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
+        let damagedPlayer = PlayerById.call(this, data.damagedPlayerId)
+        if (damagedPlayer) {
+            damagedPlayer.meta.health = data.health
+
+            if (damagedPlayer.meta.health <= 0) {
+                console.log('asdf')
+                damagedPlayer.rightArmGroup.visible = false
+                damagedPlayer.leftArmGroup.visible = false
+                damagedPlayer.headGroup.visible = false
+                damagedPlayer.torsoGroup.visible = false
+                damagedPlayer.animations.play('death')
+            }
+        }
         return
     }
 

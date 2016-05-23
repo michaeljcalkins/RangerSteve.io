@@ -20,10 +20,7 @@ export default function onMovePlayer(data) {
 
     let movePlayer = PlayerById.call(this, data.id)
 
-    // Player not found
-    if (! movePlayer) {
-        console.log('Could not find player', data)
-        console.log('This players id', '/#' + this.socket.id)
+    if (! movePlayer || movePlayer.meta.health <= 0) {
         return
     }
 
@@ -48,13 +45,9 @@ export default function onMovePlayer(data) {
 
     if (movePlayer.x > movePlayer.lastPosition.x) {
         movePlayer.animations.play('right')
-    }
-    else if (movePlayer.x < movePlayer.lastPosition.x)
-    {
+    } else if (movePlayer.x < movePlayer.lastPosition.x) {
         movePlayer.animations.play('left')
-    }
-    else
-    {
+    } else {
         movePlayer.animations.stop()
 
         if (movePlayer.facing === 'right') {

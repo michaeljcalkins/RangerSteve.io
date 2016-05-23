@@ -11,6 +11,4 @@ export default function onPlayerRemove(data) {
         location.reload()
         return
     }
-
-    console.log(this.enemies)
 }
