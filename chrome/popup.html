@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+    <title>Set Page Color Popup</title>
+    <style>
+        /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */progress,sub,sup{vertical-align:baseline}button,hr,input{overflow:visible}[type=checkbox],[type=radio],legend{box-sizing:border-box;padding:0}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:ButtonText dotted 1px}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{color:inherit;display:table;max-width:100%;white-space:normal}textarea{overflow:auto}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
+
+        body {
+            padding: 30px;
+            width: 200px;
+        }
+
+        .myButton {
+            outline: none;
+            -moz-box-shadow: inset 0px 1px 0px 0px #a4e271;
+            -webkit-box-shadow: inset 0px 1px 0px 0px #a4e271;
+            box-shadow: inset 0px 1px 0px 0px #a4e271;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809));
+            background: -moz-linear-gradient(top, #89c403 5%, #77a809 100%);
+            background: -webkit-linear-gradient(top, #89c403 5%, #77a809 100%);
+            background: -o-linear-gradient(top, #89c403 5%, #77a809 100%);
+            background: -ms-linear-gradient(top, #89c403 5%, #77a809 100%);
+            background: linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809', GradientType=0);
+            background-color: #89c403;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            border: 1px solid #74b807;
+            display: block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 14px 41px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #528009;
+            text-align: center;
+        }
+
+        .myButton:hover {
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403));
+            background: -moz-linear-gradient(top, #77a809 5%, #89c403 100%);
+            background: -webkit-linear-gradient(top, #77a809 5%, #89c403 100%);
+            background: -o-linear-gradient(top, #77a809 5%, #89c403 100%);
+            background: -ms-linear-gradient(top, #77a809 5%, #89c403 100%);
+            background: linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403', GradientType=0);
+            background-color: #77a809;
+        }
+
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
+    </style>
+    <script src="popup.js"></script>
+</head>
+
+<body>
+    <div style="width: 50%; float: left;">
+        <img src="ranger-steve.png" style="width: 100%;" />
+    </div>
+    <div style="width: 50%; float: left; text-align: center; font-family: Arial;">
+        <h2>Current Players</h2>
+        <h1 id="player-counter">10</h1>
+    </div>
+    <div style="width: 100%; margin: 10px 0 30px; float: left;">
+        <a class="myButton" id="myButton" href="https://rangersteve.io/game" target="_blank">
+            Play Now!
+        </a>
+    </div>
+</body>
+</html>

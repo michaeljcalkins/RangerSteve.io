@@ -1,4 +1,11 @@
+// chrome.browserAction.setBadgeBackgroundColor({
+//     color: '#00abff'
+// })
+
+var fetchUserCountHandle = null
+
 function fetchUserCount() {
+    clearTimeout(fetchUserCountHandle)
     var xhr = new XMLHttpRequest();
 
     xhr.open("GET", "https://rangersteve.io/api/v1/users/count", false)
@@ -10,14 +17,9 @@ function fetchUserCount() {
         text: result
     })
 
-    setTimeout(function() {
+    fetchUserCountHandle = setTimeout(function() {
         fetchUserCount()
-    }, 60 * 5)
+    }, 10000)
 }
-
-chrome.browserAction.onClicked.addListener(function(activeTab){
-    var newURL = "https://rangersteve.io/game";
-    chrome.tabs.create({ url: newURL });
-})
 
 fetchUserCount()
