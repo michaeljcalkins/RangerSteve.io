@@ -3,109 +3,13 @@
 {% block title %}Home | Ranger Steve: Buffalo Invasion{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-sm-12 home-container">
-        <section class="main-section text-center">
-            <div class="align-middle">
-                <div>
-                    <div class="main-header">Ranger Steve</div>
-                    <div class="sub-header">Buffalo Invasion</div>
-                    <a href="/game" class="btn btn-primary btn-lg">Play Now</a>
-                </div>
-            </div>
-        </section>
-    </div>
-</div>
-<div class="container">
-    <div class="section-wrapper">
-        <section class="video-section">
-            <video loop="loop" muted="muted" autoplay="autoplay" poster="/images/home-video-preview.png" class="fullscreen-video">
-                <source src="/video/home-video.webm" type="video/webm" />
-                <source src="/video/home-video.mp4" type="video/mp4" />
-            </video>
-        </section>
-        <section>
-            <div class="row">
-                <div class="col-sm-6">
-                    <h1>Fast paced, intense gameplay</h1>
-                    <p>This is a realtime, "shoot em up", explosive multiplayer game that makes playing with your friends as simple as sharing a link.</p>
-                </div>
-                <div class="col-sm-6">
-                    <img src="/images/screenshots/fast.png" class="img-rounded" />
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="row">
-                <div class="col-sm-6">
-                    <img src="/images/screenshots/weapons.png" class="img-rounded" />
-                </div>
-                <div class="col-sm-6">
-                    <h1>All your favorite weapons</h1>
-                    <p>The more you kill, the better the weapons you get to fight with.  The longer you survive, longer you get to keep fighting with the unlocked weapons.</p>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="row">
-                <div class="col-sm-6">
-                    <h1>Play with your friends instantly</h1>
-                    <p>By sharing the URL in your address bar you can instantly play with your friends.  Making it easy to start LAN party wherever you are.</p>
-                </div>
-                <div class="col-sm-6">
-                    <img src="/images/screenshots/share.png" class="img-rounded" />
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="row">
-                <div class="col-sm-6">
-                    <video width="500" height="300" loop="loop" muted="muted" autoplay="autoplay" poster="/images/kill-streak-preview.png">
-                        <source src="/video/kill-streak.webm" type="video/webm" />
-                        <source src="/video/kill-streak.mp4" type="video/mp4" />
-                    </video>
-                </div>
-                <div class="col-sm-6">
-                    <h1>Kill streaks</h1>
-                    <p>Everyone on the server will know when you're on a "Unstoppable" kill streak, it's kill or be killed out there.</p>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="row">
-                <div class="col-sm-6">
-                    <h1>Leaderboard</h1>
-                    <p>Maintain your spot on top of the leaderboard that show the top 10 players in on the map for as long as you can.  They're coming for you...</p>
-                </div>
-                <div class="col-sm-6">
-                    <img src="/images/screenshots/leaderboard.png" class="img-rounded" />
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="row">
-                <div class="col-sm-6">
-                    <img src="https://placeholdit.imgix.net/~text?txtsize=47&txt=500%C3%97300&w=500&h=300" class="img-rounded"/>
-                </div>
-                <div class="col-sm-6">
-                    <h1>Fighting the buffalo horde</h1>
-                    <p>
-                        You will fight the tough and wild buffalo throughout the map and when a player activates a bonus.
-                        <br />
-                        <strong>On hold while foundation of game is being completed.</strong>
-                    </p>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="row">
-                <div class="col-sm-6">
-                    <h1>No fancy graphics card required</h1>
-                    <p>The only thing you need to play this game is a regular computer and an updated browser.</p>
-                </div>
-                <div class="col-sm-6">
-                    <img src="/images/screenshots/browser.png" class="img-rounded" />
-                </div>
+<div class="home-container align-middle">
+    <div>
+        <section class="main-section text-center align-middle">
+            <div>
+                <div class="main-header">Ranger Steve</div>
+                <div class="sub-header">Buffalo Invasion</div>
+                <a href="/game" class="btn btn-primary btn-lg">Play Now</a>
             </div>
         </section>
     </div>

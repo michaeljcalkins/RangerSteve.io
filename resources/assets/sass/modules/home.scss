@@ -1,5 +1,6 @@
 body.main {
     padding-top: 71px;
+    height: 100%;
 }
 
 .navbar {
@@ -38,30 +39,33 @@ body.main {
     }
 }
 
-.home-container {
-    background: url(/images/map-background.png) no-repeat top center;
-}
-
 .align-middle {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.section-wrapper {
-    float: left;
-    width: 100%;
+.home-container {
+    background: url(/images/map-background.png) no-repeat top center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .main-section {
-    background: url(/images/explode2.png) no-repeat center -280px;
+    background: url(/images/explode2.png) no-repeat center ;
     background-size: 1100px;
     border-radius: none;
     box-shadow: none;
-    padding: 230px 0;
     margin: 0;
-    position: relative;
     overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
     .main-header {
         clear: both;
@@ -73,6 +77,7 @@ body.main {
         line-height: 60px;
         margin: 0 0 15px;
         text-shadow: 0 6px rgba(0,0,0,.1);
+        text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
     }
 
     .sub-header {
@@ -81,6 +86,7 @@ body.main {
         margin: 0 0 10px;
         text-transform: uppercase;
         font-family: "Black Ops One", "Lucida Grande", Helvetica, Arial;
+        text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
     }
 
     .btn-lg {
