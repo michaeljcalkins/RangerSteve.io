@@ -45,15 +45,6 @@
     {% endif %}
 </head>
 <body class="main">
-    <a href="#" id="subscribe-link">Subscribe to Notifications</a>
-  <script>
-    // This example assumes you've already initialized OneSignal
-    function subscribe() {
-      OneSignal.push(["registerForPushNotifications"]);
-      event.preventDefault();
-    }
-    document.getElementById("subscribe-link").addEventListener('click', subscribe);
-  </script>
     <nav class="navbar navbar-default navbar-fixed-top" style="background: white;">
         <div class="container">
             <div class="row">
