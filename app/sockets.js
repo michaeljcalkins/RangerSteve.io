@@ -6,6 +6,8 @@ let _ = require('lodash')
 
 let Player = require('./services/Player')
 let PlayerById = require('./services/PlayerById')
+let Notification = require('./services/Notification')
+
 let rooms = {}
 let io = null
 
@@ -38,6 +40,8 @@ setInterval(function() {
 // New socket connection
 function onSocketConnection(socket) {
     util.log('New player has connected: ' + socket.id)
+
+    Notification('A player has started playing!')
 
     socket.on('disconnect', onClientDisconnect)
     socket.on('new player', onNewPlayer)
