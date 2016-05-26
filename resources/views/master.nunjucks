@@ -81,5 +81,16 @@
 
     {% block content %}
     {% endblock %}
+
+    <a href="#" id="subscribe-link">Subscribe to Notifications</a>
+ <script>
+   // This example assumes you've already initialized OneSignal
+   function subscribe() {
+     OneSignal.push(["registerForPushNotifications"]);
+     event.preventDefault();
+   }
+   document.getElementById("subscribe-link").addEventListener('click', subscribe);
+ });
+ </script>
 </body>
 </html>
