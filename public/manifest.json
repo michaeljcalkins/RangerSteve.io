@@ -1,0 +1,7 @@
+{
+    "name": "Ranger Steve: Buffalo Invasion",
+    "short_name": "RangerSteve",
+    "start_url": "/",
+    "display": "standalone",
+    "gcm_sender_id": "ranger-steve"
+}

@@ -10,10 +10,23 @@
     <meta property="og:description" content="Explosive multiplayer shooter game that lets you instantly play with your friends.">
     <meta property="og:url" content="https://rangersteve.io/">
 
+    <link rel="manifest" href="/manifest.json">
     <link rel="shortcut icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css">
     <link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app.css">
+
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+    <script>
+    var OneSignal = OneSignal || [];
+    OneSignal.push(["init", {
+        appId: "073be8f0-feda-43ea-965a-07a63e485527",
+        autoRegister: false,
+        notifyButton: {
+            enable: true /* Set to false to hide */
+        }
+    }]);
+    </script>
 
     {% if isProduction %}
         <script>
@@ -32,6 +45,15 @@
     {% endif %}
 </head>
 <body class="main">
+    <a href="#" id="subscribe-link">Subscribe to Notifications</a>
+  <script>
+    // This example assumes you've already initialized OneSignal
+    function subscribe() {
+      OneSignal.push(["registerForPushNotifications"]);
+      event.preventDefault();
+    }
+    document.getElementById("subscribe-link").addEventListener('click', subscribe);
+  </script>
     <nav class="navbar navbar-default navbar-fixed-top" style="background: white;">
         <div class="container">
             <div class="row">
