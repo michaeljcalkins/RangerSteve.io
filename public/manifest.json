@@ -3,7 +3,7 @@
     "short_name": "RangerSteve",
     "icons": [{
         "src": "images/ranger-steve.png",
-        "sizes": "192x192",
+        "sizes": "129x129",
         "type": "image/png"
     }],
     "start_url": "/",
