@@ -1,4 +1,6 @@
-export default function(message) {
+'use strict'
+
+function Notification(message) {
     var data = {
         app_id: "073be8f0-feda-43ea-965a-07a63e485527",
         contents: {"en": message},
@@ -34,3 +36,5 @@ export default function(message) {
     req.write(JSON.stringify(data))
     req.end()
 }
+
+module.exports = Notification
