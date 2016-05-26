@@ -1,6 +1,11 @@
 {
     "name": "Ranger Steve: Buffalo Invasion",
     "short_name": "RangerSteve",
+    "icons": [{
+        "src": "images/ranger-steve.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }],
     "start_url": "/",
     "display": "standalone",
     "gcm_sender_id": "1052493584"
