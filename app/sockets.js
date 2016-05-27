@@ -124,6 +124,16 @@ function onNewPlayer (data) {
         currentWeaponMeta: data.currentWeaponMeta
     }
 
+    if (process.env.NODE_ENV === 'production') {
+        Notification({
+            app_id: '073be8f0-feda-43ea-965a-07a63e485527',
+            contents: { 'en': 'A player has started playing!' },
+            headings: { 'en': 'Ranger Steve: Buffalo Invasion' },
+            url: 'https://rangersteve.io/game',
+            included_segments: ['All']
+        })
+    }
+
     if (data.roomId) {
         if (! rooms[data.roomId]) {
             rooms[data.roomId] = {
@@ -134,16 +144,6 @@ function onNewPlayer (data) {
 
         rooms[data.roomId].players.push(newPlayer)
         this.join(data.roomId)
-
-        if (process.env.NODE_ENV === 'production') {
-            Notification({
-                app_id: '073be8f0-feda-43ea-965a-07a63e485527',
-                contents: { 'en': 'A player has started playing!' },
-                headings: { 'en': 'Ranger Steve: Buffalo Invasion' },
-                url: 'https://rangersteve.io/game',
-                included_segments: ['All']
-            })
-        }
 
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]
