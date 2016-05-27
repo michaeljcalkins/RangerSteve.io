@@ -25,9 +25,7 @@ SocketHandler.init(io)
 let poet = require('poet')(app, {
     posts: 'resources/posts'
 })
-poet.init().then(function () {
-    // Ready to go!
-})
+poet.init()
 
 app.set('views', path.join(__dirname, 'resources/views'))
 app.set('view engine', 'nunjucks');

@@ -41,7 +41,9 @@ setInterval(function() {
 function onSocketConnection(socket) {
     util.log('New player has connected: ' + socket.id)
 
-    Notification('A player has started playing!')
+    if (process.env.NODE_ENV === 'production') {
+        Notification('A player has started playing!')
+    }
 
     socket.on('disconnect', onClientDisconnect)
     socket.on('new player', onNewPlayer)
