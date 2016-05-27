@@ -1,14 +1,6 @@
 'use strict'
 
-function Notification(message) {
-    var data = {
-        app_id: '073be8f0-feda-43ea-965a-07a63e485527',
-        contents: {'en': message},
-        headings: {'en': 'Ranger Steve: Buffalo Invasion'},
-        url: 'https://rangersteve.io/game',
-        included_segments: ['All']
-    }
-
+function Notification(data) {
     var headers = {
         "Content-Type": "application/json",
         "Authorization": "Basic ZDY1YWFiYTUtNTI0ZC00MzIwLTljYzctOTZiNTNjYTgxNTk4"
