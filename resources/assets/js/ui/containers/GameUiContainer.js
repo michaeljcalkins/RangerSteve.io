@@ -10,14 +10,16 @@ import HudKillConfirmed from '../components/Hud/HudKillConfirmed'
 import HudKillLog from '../components/Hud/HudKillLog'
 import HudLeaderboard from '../components/Hud/HudLeaderboard'
 import HudScore from '../components/Hud/HudScore'
+import HudTimer from '../components/Hud/HudTimer'
 import HudSettingsButton from '../components/Hud/HudSettingsButton'
 import HudKillingSpree from '../components/Hud/HudKillingSpree'
 import NameGenerator from '../../lib/NameGenerator'
 import SettingsModal from '../components/Settings/SettingsModal'
+import EndOfRoundLeaderboard from '../components/Round/EndOfRoundLeaderboard'
 
 export default class GameUiContainer extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             chatModalOpen: false,
@@ -93,6 +95,13 @@ export default class GameUiContainer extends React.Component {
             }, 3000)
         })
 
+        EventHandler.on('room update', (room) => {
+            this.setState({
+                roundEndTime: room.roundEndTime,
+                players: room.players
+            })
+        })
+
         let killConfirmedHandle = null
         EventHandler.on('player kill confirmed', () => {
             this.setState({ showKillConfirmed: true })
@@ -130,10 +139,6 @@ export default class GameUiContainer extends React.Component {
 
         EventHandler.on('weapon update', (currentWeapon) => {
             this.setState({ currentWeapon })
-        })
-
-        EventHandler.on('players update', (players) => {
-            this.setState({ players })
         })
 
         EventHandler.on('player update', (data) => {
@@ -235,6 +240,7 @@ export default class GameUiContainer extends React.Component {
                 <HudKillingSpree killingSpreeCount={ this.state.killingSpreeCount } />
                 <HudHealth health={ this.state.health } />
                 <HudScore score={ this.state.score } />
+                <HudTimer roundEndTime={ this.state.roundEndTime } />
                 <HudLeaderboard players={ this.state.players } />
                 <HudJumpJet jumpJetCounter={ this.state.jumpJetCounter } />
                 <HudSettingsButton onButtonClick={ this.handleSettingsButtonClick } />
@@ -243,6 +249,7 @@ export default class GameUiContainer extends React.Component {
                     onSendMessage={ this.handleSendMessage }
                 />
                 <HudChatHistory messages={ this.state.messages } />
+                <EndOfRoundLeaderboard players={ this.state.players } />
                 <SettingsModal
                     defaultMusicValue={ this.state.musicVolume }
                     defaultNicknameValue={ this.state.nickname }

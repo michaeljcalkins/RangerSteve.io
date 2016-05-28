@@ -246,3 +246,15 @@
 .hud-settings-modal {
     cursor: default;
 }
+
+.hud-timer {
+    background-image: url(/images/icons/time-32-white.png);
+    background-size: 26px;
+    height: 48px;
+    left: 50%;
+    margin-left: -60px;
+    top: 10px;
+    width: 120px;
+    padding-left: 45px;
+    text-align: left;
+}

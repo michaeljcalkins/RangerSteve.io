@@ -11,8 +11,10 @@ const propTypes = {
 
 export default function onUpdatePlayers(data) {
     check(data, propTypes)
+    console.log(data.room)
 
     this.roomId = data.room.id
+    this.room = data.room
 
     let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id;
     window.history.pushState({ path: newurl }, '', newurl);
@@ -23,7 +25,7 @@ export default function onUpdatePlayers(data) {
 
     this.enemies = this.game.add.group()
 
-    EventHandler.emit('players update', data.room.players)
+    EventHandler.emit('room update', data.room)
 
     data.room.players.forEach((player) => {
         if (player.id === ('/#' + this.socket.id)) {
@@ -50,4 +52,8 @@ export default function onUpdatePlayers(data) {
 
         this.enemies.add(newRemotePlayer)
     })
+
+    if (this.room.state === 'ended') {
+        this.game.input.enabled = false
+    }
 }

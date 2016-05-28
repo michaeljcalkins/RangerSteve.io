@@ -9,6 +9,7 @@ import emitPlayerUpdateWeapon from '../lib/SocketEvents/emitPlayerUpdateWeapon'
 
 export default function Create() {
     this.roomId = GetQueryString('roomId')
+    this.room = null
     this.sfxVolume = store.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME)
     this.musicVolume = store.get('musicVolume', GameConsts.STARTING_MUSIC_VOLUME)
     this.socket = io.connect()

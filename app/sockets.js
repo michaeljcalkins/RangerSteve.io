@@ -3,6 +3,7 @@
 let util = require('util')
 let hri = require('human-readable-ids').hri
 let _ = require('lodash')
+let moment = require('moment')
 
 let Player = require('./services/Player')
 let PlayerById = require('./services/PlayerById')
@@ -25,6 +26,17 @@ function setEventHandlers() {
 //         util.log('ROOM >>>>>>>>>>>>>>>>', JSON.stringify(rooms[key], null, 4))
 //     })
 // }, 10000)
+
+setInterval(function() {
+    Object.keys(rooms).forEach((roomId) => {
+        if (rooms[roomId].roundEndTime <= moment().unix()) {
+            rooms[roomId].state = 'ended'
+            io.to(roomId).emit('update players', {
+                room: rooms[roomId]
+            })
+        }
+    })
+}, 1000)
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
@@ -118,6 +130,9 @@ function onNewPlayer (data) {
 
     newPlayer.meta = {
         health: 100,
+        kills: 0,
+        deaths: 0,
+        bestKillingSpree: 0,
         score: 0,
         nickname: data.nickname,
         killingSpree: 0,
@@ -138,7 +153,10 @@ function onNewPlayer (data) {
         if (! rooms[data.roomId]) {
             rooms[data.roomId] = {
                 id: data.roomId,
-                players: [newPlayer]
+                players: [newPlayer],
+                // roundEndTime: moment().add(5, 'minutes').unix(),
+                roundEndTime: moment().add(10, 'seconds').unix(),
+                state: 'active'
             }
         }
 
@@ -286,13 +304,21 @@ function onPlayerDamaged(data) {
         player.meta.killingSpree = 0
 
         // Falling to your death causes a score loss
-        if (data.damage === 1000 && player.meta.score >= 10)
+        if (data.damage === 1000 && player.meta.score >= 10) {
             player.meta.score -= 10
+            player.meta.deaths++
+        }
 
         let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
-            attackingPlayer.meta.killingSpree += 1
+            attackingPlayer.meta.kills++
+            attackingPlayer.meta.killingSpree++
+            
+            if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
+                attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
+            }
+
             io.to(data.roomId).emit('player kill confirmed', {
                 id: attackingPlayer.id,
                 score: 10,
