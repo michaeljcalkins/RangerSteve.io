@@ -15,21 +15,17 @@ export default function(data) {
     ricochet.animations.play('collision')
     ricochet.animations.currentAnim.killOnComplete = true
 
-    this.fullDamageBlastRadius = this.add.sprite(ricochet.x, ricochet.y, 'ground')
-    this.fullDamageBlastRadius.alpha = 0
-    this.fullDamageBlastRadius.anchor.setTo(.5, .5)
-    this.fullDamageBlastRadius.height = 85
-    this.fullDamageBlastRadius.width = 100
-    setTimeout(() => {
-        this.fullDamageBlastRadius.kill()
-    }, 200)
+    this.fullDamageBlastRadius.x = ricochet.x
+    this.fullDamageBlastRadius.y = ricochet.y
+    // setTimeout(() => {
+    //     this.fullDamageBlastRadius.kill()
+    // }, 300)
 
-    this.partialDamageBlastRadius = this.add.sprite(ricochet.x, ricochet.y, 'ground')
-    this.partialDamageBlastRadius.alpha = 0
-    this.partialDamageBlastRadius.anchor.setTo(.5, .5)
-    this.partialDamageBlastRadius.height = 170
-    this.partialDamageBlastRadius.width = 200
-    setTimeout(() => {
-        this.partialDamageBlastRadius.kill()
-    }, 200)
+    this.partialDamageBlastRadius.x = ricochet.x
+    this.partialDamageBlastRadius.y = ricochet.y
+    // setTimeout(() => {
+    //     this.partialDamageBlastRadius.kill()
+    // }, 200)
+    console.log(this.fullDamageBlastRadius)
+    console.log(this.partialDamageBlastRadius)
 }

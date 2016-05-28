@@ -14,6 +14,23 @@ export default function Create() {
     this.socket = io.connect()
     this.jumping = false
 
+
+    this.fullDamageBlastRadius = this.add.sprite(0, 0, 'ground')
+    // this.fullDamageBlastRadius.enableBody = true
+    // this.fullDamageBlastRadius.physicsBodyType = Phaser.Physics.ARCADE
+    this.fullDamageBlastRadius.anchor.setTo(.5, .5)
+    this.fullDamageBlastRadius.height = 170
+    this.fullDamageBlastRadius.width = 200
+
+
+    this.partialDamageBlastRadius = this.add.sprite(0, 0, 'ground')
+    // this.partialDamageBlastRadius.enableBody = true
+    // this.partialDamageBlastRadius.physicsBodyType = Phaser.Physics.ARCADE
+    this.partialDamageBlastRadius.anchor.setTo(.5, .5)
+    this.partialDamageBlastRadius.height = 170
+    this.partialDamageBlastRadius.width = 200
+
+
     //  We're going to be using physics, so enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE)
     this.physicsBodyType = Phaser.Physics.ARCADE
