@@ -4,10 +4,10 @@ import PlayerAndEnemyBullets from './Collisions/PlayerAndEnemyBullets'
 import BulletsAndEnemyPlayers from './Collisions/BulletsAndEnemyPlayers'
 import BulletsAndPlatforms from './Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from './Collisions/EnemyBulletsAndPlatforms'
-import FullBlastRadiusAndEnemyPlayers from './FullBlastRadiusAndEnemyPlayers'
-import FullBlastRadiusAndPlayer from './FullBlastRadiusAndPlayer'
-import PartialBlastRadiusAndEnemyPlayers from './PartialBlastRadiusAndEnemyPlayers'
-import PartialBlastRadiusAndPlayer from './PartialBlastRadiusAndPlayer'
+import FullBlastRadiusAndEnemyPlayers from './Collisions/FullBlastRadiusAndEnemyPlayers'
+import FullBlastRadiusAndPlayer from './Collisions/FullBlastRadiusAndPlayer'
+import PartialBlastRadiusAndEnemyPlayers from './Collisions/PartialBlastRadiusAndEnemyPlayers'
+import PartialBlastRadiusAndPlayer from './Collisions/PartialBlastRadiusAndPlayer'
 
 export default function CollisionHandler() {
     PlayerAndPlatforms.call(this)
