@@ -16,8 +16,8 @@ export default function CollisionHandler() {
     BulletsAndEnemyPlayers.call(this)
     EnemyBulletsAndPlatforms.call(this)
     BulletsAndPlatforms.call(this)
-    FullBlastRadiusAndEnemyPlayers.call(this)
-    FullBlastRadiusAndPlayer.call(this)
-    PartialBlastRadiusAndEnemyPlayers.call(this)
-    PartialBlastRadiusAndPlayer.call(this)
+    // FullBlastRadiusAndEnemyPlayers.call(this)
+    // FullBlastRadiusAndPlayer.call(this)
+    // PartialBlastRadiusAndEnemyPlayers.call(this)
+    // PartialBlastRadiusAndPlayer.call(this)
 }
