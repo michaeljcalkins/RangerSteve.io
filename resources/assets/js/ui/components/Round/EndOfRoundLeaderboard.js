@@ -4,12 +4,13 @@ export default function EndOfRoundLeaderboard({
     players
 }) {
     function renderPlayers() {
-        return players
+        let playersArray = Object.keys(players).map(playerId => players[playerId])
+        return playersArray
             .sort((a, b) => a.meta.score < b.meta.score)
-            .map(function(player, index) {
+            .map(function(player, key) {
                 let kdRatio = player.meta.deaths > 0 ? player.meta.kills / player.meta.deaths : player.meta.kills
                 return (
-                    <tr key={ index }>
+                    <tr key={ key }>
                         <td>
                             { player.meta.nickname
                                 ? player.meta.nickname
@@ -32,7 +33,7 @@ export default function EndOfRoundLeaderboard({
             <table className="table table-condensed">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>Player</th>
                         <th>Score</th>
                         <th>Kills</th>
                         <th>Deaths</th>
@@ -44,10 +45,16 @@ export default function EndOfRoundLeaderboard({
                     { renderPlayers() }
                 </tbody>
             </table>
+            <div className="row">
+                <div className="col-sm-12 text-center">
+                    <span>Next round starting in 15 seconds...</span>
+                </div>
+            </div>
         </div>
     )
 }
 
 EndOfRoundLeaderboard.propTypes = {
-    players: PropTypes.array.isRequired
+    players: PropTypes.object.isRequired,
+    roomState: PropTypes.string.isRequired
 }

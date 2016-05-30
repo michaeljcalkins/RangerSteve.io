@@ -13,8 +13,7 @@
   "watch": [
     "bin/",
     "app/",
-    "app.js",
-    "resources/"
+    "app.js"
   ],
   "env": {
     "NODE_ENV": "development"

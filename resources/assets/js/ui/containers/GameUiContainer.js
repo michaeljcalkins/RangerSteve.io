@@ -32,7 +32,7 @@ export default class GameUiContainer extends React.Component {
             killingSpreeCount: 0,
             nickname: store.get('nickname', NameGenerator()),
             player: {},
-            players: [],
+            room: {},
             score: 0,
             settingsView: 'main',
             selectedPrimaryWeapon: store.get('selectedPrimaryWeapon', 'AK47'),
@@ -51,6 +51,7 @@ export default class GameUiContainer extends React.Component {
         this.handleSecondaryGunClick = this.handleSecondaryGunClick.bind(this)
         this.handleViewChange = this.handleViewChange.bind(this)
         this.handleMusicVolumeChange = this.handleMusicVolumeChange.bind(this)
+        this.renderEndOfRoundLeaderboard = this.renderEndOfRoundLeaderboard.bind(this)
     }
 
     componentDidMount() {
@@ -96,10 +97,7 @@ export default class GameUiContainer extends React.Component {
         })
 
         EventHandler.on('room update', (room) => {
-            this.setState({
-                roundEndTime: room.roundEndTime,
-                players: room.players
-            })
+            this.setState({ room })
         })
 
         let killConfirmedHandle = null
@@ -232,6 +230,16 @@ export default class GameUiContainer extends React.Component {
         this.setState({ settingsView: view })
     }
 
+    renderEndOfRoundLeaderboard() {
+        if (_.get(this, 'state.room.state', false) === 'ended') {
+            return (
+                <EndOfRoundLeaderboard players={ this.state.room.players } />
+            )
+        }
+
+        return null
+    }
+
     render() {
         return (
             <div>
@@ -240,8 +248,8 @@ export default class GameUiContainer extends React.Component {
                 <HudKillingSpree killingSpreeCount={ this.state.killingSpreeCount } />
                 <HudHealth health={ this.state.health } />
                 <HudScore score={ this.state.score } />
-                <HudTimer roundEndTime={ this.state.roundEndTime } />
-                <HudLeaderboard players={ this.state.players } />
+                <HudTimer roundEndTime={ this.state.room.roundEndTime } />
+                <HudLeaderboard players={ this.state.room.players } />
                 <HudJumpJet jumpJetCounter={ this.state.jumpJetCounter } />
                 <HudSettingsButton onButtonClick={ this.handleSettingsButtonClick } />
                 <HudNewChatMessage
@@ -249,7 +257,7 @@ export default class GameUiContainer extends React.Component {
                     onSendMessage={ this.handleSendMessage }
                 />
                 <HudChatHistory messages={ this.state.messages } />
-                <EndOfRoundLeaderboard players={ this.state.players } />
+                { this.renderEndOfRoundLeaderboard() }
                 <SettingsModal
                     defaultMusicValue={ this.state.musicVolume }
                     defaultNicknameValue={ this.state.nickname }

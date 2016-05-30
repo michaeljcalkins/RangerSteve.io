@@ -4,11 +4,13 @@ export default function HudLeaderboard({
     players
 }) {
     function renderPlayers() {
-        return players
+        if (! players) return null
+        let playersArray = Object.keys(players).map(playerId => players[playerId])
+        return playersArray
             .sort((a, b) => a.meta.score < b.meta.score)
-            .map(function(player, index) {
+            .map(function(player, key) {
                 return (
-                    <tr key={ index }>
+                    <tr key={ key }>
                         <td>
                             { player.meta.nickname
                                 ? player.meta.nickname
@@ -34,5 +36,5 @@ export default function HudLeaderboard({
 }
 
 HudLeaderboard.propTypes = {
-    players: PropTypes.array.isRequired
+    players: PropTypes.object.isRequired
 }

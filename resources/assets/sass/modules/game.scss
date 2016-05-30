@@ -49,10 +49,9 @@ body.game {
     position: absolute;
     top: 7px;
     color: #E3DED3;
-    letter-spacing: 2px;
     left: 7px;
     font-size: 16px;
-    font-family: Orbitron, "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-family: Righteous, Arial, sans-serif;
 }
 
 .options-menu {
@@ -63,32 +62,5 @@ body.game {
         &:nth-child(odd) {
             margin-right: 5px;
         }
-    }
-}
-
-.end-of-round-leaderboard {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 660px;
-
-    h1 {
-        font-family: Orbitron;
-        font-size: 21px;
-    }
-
-    h1, td {
-        text-align: left;
-    }
-
-    th {
-        font-size: 14px;
-        font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
-    }
-
-    td {
-        font-size: 14px;
-        font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
     }
 }

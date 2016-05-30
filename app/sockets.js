@@ -21,16 +21,36 @@ function setEventHandlers() {
     io.on('connection', onSocketConnection.bind(this))
 }
 
-// setInterval(function() {
-//     Object.keys(rooms).forEach((key) => {
-//         util.log('ROOM >>>>>>>>>>>>>>>>', JSON.stringify(rooms[key], null, 4))
-//     })
-// }, 10000)
-
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
-        if (rooms[roomId].roundEndTime <= moment().unix()) {
+        if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
+            util.log('Restarting round for', roomId)
+            rooms[roomId].state = 'active'
+            rooms[roomId].roundEndTime = moment().add(5, 'minutes').unix()
+            Object.keys(rooms[roomId].players).forEach((playerId) => {
+                rooms[roomId].players[playerId].meta.health = 100
+                rooms[roomId].players[playerId].meta.deaths = 0
+                rooms[roomId].players[playerId].meta.kills = 0
+                rooms[roomId].players[playerId].meta.bestKillingSpree = 0
+                rooms[roomId].players[playerId].meta.killingSpree = 0
+                rooms[roomId].players[playerId].meta.score = 0
+
+                io.to(roomId).emit('player respawn', {
+                    id: this.id,
+                    damagedPlayerId: playerId,
+                    health: 100
+                })
+            })
+
+            io.to(roomId).emit('update players', {
+                room: rooms[roomId]
+            })
+        }
+
+        if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
+            util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
+            rooms[roomId].roundStartTime = moment().add(15, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })
@@ -38,16 +58,11 @@ setInterval(function() {
     })
 }, 1000)
 
-setInterval(function() {
-    Object.keys(rooms).forEach((roomId) => {
-        rooms[roomId].players.forEach((player) => {
-            if (io.sockets.sockets[player.id] === undefined){
-                rooms[roomId].players.splice(rooms[roomId].players.indexOf(player), 1)
-                util.log('Removing player', player.id)
-            }
-        })
-    })
-}, 3000)
+// setInterval(function() {
+//     Object.keys(rooms).forEach((key) => {
+//         util.log('ROOM >>>>>>>>>>>>>>>>', JSON.stringify(rooms[key], null, 4))
+//     })
+// }, 3000)
 
 // New socket connection
 function onSocketConnection(socket) {
@@ -151,16 +166,17 @@ function onNewPlayer (data) {
 
     if (data.roomId) {
         if (! rooms[data.roomId]) {
+            let playersObj = {}
+            playersObj[this.id] = newPlayer
             rooms[data.roomId] = {
                 id: data.roomId,
-                players: [newPlayer],
-                // roundEndTime: moment().add(5, 'minutes').unix(),
-                roundEndTime: moment().add(10, 'seconds').unix(),
+                players: playersObj,
+                roundEndTime: moment().add(5, 'minutes').unix(),
                 state: 'active'
             }
         }
 
-        rooms[data.roomId].players.push(newPlayer)
+        rooms[data.roomId].players[this.id] = newPlayer
         this.join(data.roomId)
 
         io.to(data.roomId).emit('update players', {
@@ -170,7 +186,7 @@ function onNewPlayer (data) {
     }
 
     let availableRooms = Object.keys(rooms).filter(function(room) {
-        if (!room.players) return true
+        if (! room.players) return true
         return room.players.length < 10
     })
 
@@ -202,7 +218,7 @@ function onNewPlayer (data) {
 // Player has moved
 function onMovePlayer (data) {
     // Find player in array
-    var movePlayer = PlayerById(data.roomId, this.id, rooms)
+    var movePlayer = rooms[data.roomId].players[this.id]
 
     if (movePlayer.meta.health <= 0) return
 
@@ -250,14 +266,14 @@ function onClientDisconnect() {
     var removePlayer = PlayerById(selectedRoomId, this.id, rooms)
 
     // Player not found
-    if (!removePlayer) {
+    if (! removePlayer) {
         util.log('Player not found when disconnecting: ' + this.id)
         return
     }
 
     // Remove player from players array
     Object.keys(rooms).forEach((roomId) => {
-        rooms[roomId].players.splice(rooms[roomId].players.indexOf(removePlayer), 1)
+        delete rooms[roomId].players[this.id]
     })
 
     // Broadcast removed player to connected socket clients
@@ -314,7 +330,7 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.score += 10
             attackingPlayer.meta.kills++
             attackingPlayer.meta.killingSpree++
-            
+
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
             }

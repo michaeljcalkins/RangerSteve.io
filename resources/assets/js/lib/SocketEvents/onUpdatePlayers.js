@@ -5,13 +5,12 @@ import EventHandler from '../EventHandler'
 const propTypes = {
     room: PropTypes.shape({
         id: PropTypes.string.isRequired,
-        players: PropTypes.array.isRequired
+        players: PropTypes.object.isRequired
     })
 }
 
 export default function onUpdatePlayers(data) {
     check(data, propTypes)
-    console.log(data.room)
 
     this.roomId = data.room.id
     this.room = data.room
@@ -27,7 +26,8 @@ export default function onUpdatePlayers(data) {
 
     EventHandler.emit('room update', data.room)
 
-    data.room.players.forEach((player) => {
+    let playersArray = Object.keys(data.room.players).map(playerId => data.room.players[playerId])
+    playersArray.forEach((player) => {
         if (player.id === ('/#' + this.socket.id)) {
             EventHandler.emit('score update', player.meta.score)
             EventHandler.emit('health update', player.meta.health)
@@ -54,6 +54,10 @@ export default function onUpdatePlayers(data) {
     })
 
     if (this.room.state === 'ended') {
-        this.game.input.enabled = false
+        this.game.paused = true
+    }
+
+    if (this.room.state === 'active') {
+        this.game.paused = false
     }
 }

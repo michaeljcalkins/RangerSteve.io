@@ -5,7 +5,7 @@ import { assert } from 'chai'
 import HudLeaderboard from '../../../../resources/assets/js/ui/components/Hud/HudLeaderboard'
 
 const props = {
-    players: []
+    players: {}
 }
 
 describe('Hud - <HudLeaderboard />', function() {
