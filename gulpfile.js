@@ -92,7 +92,7 @@ gulp.task('buildjs', function() {
             .on('error', handleError)
             .pipe(source('app.js'))
             .pipe(gulpif(isProduction, streamify(uglify({ mangle: false }))))
-            .pipe(gulpif(isProduction, streamify(obfuscator())))
+            // .pipe(gulpif(isProduction, streamify(obfuscator())))
             .pipe(gulp.dest(DIST + 'js'))
             .pipe(notify({message: 'JS Compiled!'}))
     }
