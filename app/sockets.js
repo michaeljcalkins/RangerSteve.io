@@ -50,7 +50,7 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].roundStartTime = moment().add(10, 'seconds').unix()
+            rooms[roomId].roundStartTime = moment().add(25, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })
@@ -171,7 +171,7 @@ function onNewPlayer (data) {
             rooms[data.roomId] = {
                 id: data.roomId,
                 players: playersObj,
-                roundEndTime: moment().add(10, 'seconds').unix(),
+                roundEndTime: moment().add(5, 'minutes').unix(),
                 state: 'active'
             }
         }
@@ -195,7 +195,8 @@ function onNewPlayer (data) {
         let newRoomId = hri.random()
         let newRoom = {
             id: newRoomId,
-            players: [newPlayer]
+            players: [newPlayer],
+            roundStartTime: moment().add(5, 'minutes').unix()
         }
         rooms[newRoomId] = newRoom
 
@@ -217,10 +218,9 @@ function onNewPlayer (data) {
 
 // Player has moved
 function onMovePlayer (data) {
-    // Find player in array
     var movePlayer = rooms[data.roomId].players[this.id]
 
-    if (movePlayer.meta.health <= 0) return
+    if (! movePlayer || movePlayer.meta.health <= 0) return
 
     // Player not found
     if (! movePlayer) {
@@ -308,9 +308,7 @@ function onPlayerHealing(data) {
 function onPlayerDamaged(data) {
     let player = PlayerById(data.roomId, data.damagedPlayerId, rooms)
 
-    if (! player || player.meta.health <= 0){
-        return
-    }
+    if (! player || player.meta.health <= 0) return
 
     player.meta.health -= Number(data.damage)
 
@@ -318,11 +316,11 @@ function onPlayerDamaged(data) {
     if (player.meta.health <= 0) {
         player.meta.health = 0
         player.meta.killingSpree = 0
+        player.meta.deaths++
 
         // Falling to your death causes a score loss
         if (data.damage === 1000 && player.meta.score >= 10) {
             player.meta.score -= 10
-            player.meta.deaths++
         }
 
         let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
