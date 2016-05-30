@@ -206,7 +206,7 @@ function onNewPlayer (data) {
         })
     } else {
         util.log('Adding player to', availableRooms[0])
-        rooms[availableRooms[0]].players.push(newPlayer)
+        rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
         this.join(availableRooms[0])
         io.to(availableRooms[0]).emit('update players', {
             room: rooms[availableRooms[0]]
