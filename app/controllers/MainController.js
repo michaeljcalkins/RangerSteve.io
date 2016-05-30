@@ -9,6 +9,9 @@ let MainController = {
     },
     credits: function(req, res) {
         res.render('credits')
+    },
+    gallery: function(req, res) {
+        res.render('gallery')
     }
 }
 

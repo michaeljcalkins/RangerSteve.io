@@ -55,7 +55,7 @@ body.main {
 }
 
 .main-section {
-    background: url(/images/explode2.png) no-repeat center ;
+    background: url(/images/explode2.png) no-repeat center -120px;
     background-size: 1100px;
     border-radius: none;
     box-shadow: none;
@@ -67,22 +67,29 @@ body.main {
     right: 0;
     bottom: 0;
 
+    & > div {
+        position: absolute;
+        left: 50%;
+        top: 55%;
+        transform: translate(-50%, -50%);
+    }
+
     .main-header {
         clear: both;
         color: #fff;
         font-family: Bangers, Arial, sans-serif;
-        font-size: 90px;
+        font-size: 110px;
         font-weight: 300;
         letter-spacing: 2px;
         line-height: 60px;
-        margin: 0 0 15px;
+        margin-bottom: 17px;
         text-shadow: 0 6px rgba(0,0,0,.1);
         text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
     }
 
     .sub-header {
         color: #fff;
-        font-size: 44px;
+        font-size: 54px;
         margin: 0 0 10px;
         text-transform: uppercase;
         font-family: "Black Ops One", Arial;
