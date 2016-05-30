@@ -22,7 +22,7 @@ export default function EndOfRoundLeaderboard({
                         <td>{ player.meta.score }</td>
                         <td>{ player.meta.kills }</td>
                         <td>{ player.meta.deaths }</td>
-                        <td>{ kdRatio }</td>
+                        <td>{ kdRatio.toFixed(2) }</td>
                         <td>{ player.meta.bestKillingSpree }</td>
                     </tr>
                 )
