@@ -39,7 +39,7 @@ export default function() {
         emitMessageSend.call(this, {
             roomId: this.roomId,
             playerId: '/#' + this.socket.id,
-            playerNickname: this.player.meta.nickname ? this.player.meta.nickname : 'Unamed Ranger',
+            playerNickname: this.player.meta.nickname ? this.player.meta.nickname : 'Unnamed Ranger',
             message: data.message
         })
     })

@@ -36,7 +36,7 @@ export default function onUpdatePlayers(data) {
         }
 
         let newRemotePlayer = RemotePlayer.call(this, player)
-        let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unamed Ranger'
+        let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unnamed Ranger'
 
         let style = {
             font: "36px Arial",

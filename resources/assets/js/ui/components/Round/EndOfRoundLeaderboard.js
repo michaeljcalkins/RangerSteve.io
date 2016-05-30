@@ -4,8 +4,8 @@ export default function EndOfRoundLeaderboard({
     players
 }) {
     function renderPlayers() {
-        let playersArray = Object.keys(players).map(playerId => players[playerId])
-        return playersArray
+        Object
+            .values(players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map(function(player, key) {
                 let kdRatio = player.meta.deaths > 0 ? player.meta.kills / player.meta.deaths : player.meta.kills
@@ -14,7 +14,7 @@ export default function EndOfRoundLeaderboard({
                         <td>
                             { player.meta.nickname
                                 ? player.meta.nickname
-                                : 'Unamed Ranger'
+                                : 'Unnamed Ranger'
                             }
                         </td>
                         <td>{ player.meta.score }</td>
@@ -55,6 +55,6 @@ export default function EndOfRoundLeaderboard({
 }
 
 EndOfRoundLeaderboard.propTypes = {
-    players: PropTypes.object.isRequired,
+    players: PropTypes.object,
     roomState: PropTypes.string.isRequired
 }
