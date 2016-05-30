@@ -34,7 +34,6 @@ export default function ChooseCharacterMenu({
                     key={ index }
                     onClick={ handleSelectPrimaryClick.bind(this, character) }
                 >
-                    { renderCharacters() }
                     <div>
                         <img height="160" src={ character.image } />
                     </div>

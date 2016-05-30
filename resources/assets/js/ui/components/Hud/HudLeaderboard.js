@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react'
+import _ from 'lodash'
 
 export default function HudLeaderboard({
     players
 }) {
     function renderPlayers() {
         if (! players) return null
-        return Object
-            .values(players)
+        return _.values(players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map(function(player, key) {
                 return (

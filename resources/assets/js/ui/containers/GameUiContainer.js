@@ -233,7 +233,10 @@ export default class GameUiContainer extends React.Component {
     renderEndOfRoundLeaderboard() {
         if (_.get(this, 'state.room.state', false) === 'ended') {
             return (
-                <EndOfRoundLeaderboard players={ this.state.room.players } />
+                <EndOfRoundLeaderboard
+                    players={ this.state.room.players }
+                    roundStartTime={ this.state.room.roundStartTime }
+                />
             )
         }
 

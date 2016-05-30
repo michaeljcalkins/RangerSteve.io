@@ -50,7 +50,7 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].roundStartTime = moment().add(15, 'seconds').unix()
+            rooms[roomId].roundStartTime = moment().add(10, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })
@@ -171,7 +171,7 @@ function onNewPlayer (data) {
             rooms[data.roomId] = {
                 id: data.roomId,
                 players: playersObj,
-                roundEndTime: moment().add(5, 'minutes').unix(),
+                roundEndTime: moment().add(10, 'seconds').unix(),
                 state: 'active'
             }
         }
