@@ -8,6 +8,7 @@ let moment = require('moment')
 let Player = require('./services/Player')
 let PlayerById = require('./services/PlayerById')
 let Notification = require('./services/Notification')
+let CreateRoom = require('./services/CreateRoom')
 
 let rooms = {}
 let io = null
@@ -166,15 +167,10 @@ function onNewPlayer (data) {
 
     if (data.roomId) {
         if (! rooms[data.roomId]) {
-            let playersObj = {}
-            playersObj[this.id] = newPlayer
-            rooms[data.roomId] = {
+            rooms[data.roomId] = CreateRoom({
                 id: data.roomId,
-                players: playersObj,
-                roundEndTime: moment().add(5, 'minutes').unix(),
-                state: 'active',
-                map: _.sample(['HighRuleJungle', 'PunkFallout'])
-            }
+                player: newPlayer
+            })
         }
 
         rooms[data.roomId].players[this.id] = newPlayer
@@ -192,13 +188,12 @@ function onNewPlayer (data) {
     })
 
     if (availableRooms.length <= 0) {
-        // create a new room
+
         let newRoomId = hri.random()
-        let newRoom = {
+        rooms[newRoomId] = CreateRoom({
             id: newRoomId,
-            players: [newPlayer],
-            roundStartTime: moment().add(5, 'minutes').unix()
-        }
+            player: newPlayer
+        })
         rooms[newRoomId] = newRoom
 
         util.log('Created new room', newRoom)
@@ -367,7 +362,6 @@ function onPlayerDamaged(data) {
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]
         })
-
         return
     }
 

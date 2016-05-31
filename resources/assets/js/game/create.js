@@ -2,7 +2,6 @@ import store from 'store'
 import GameConsts from '../lib/GameConsts'
 import SetEventHandlers from '../lib/SocketEvents/setEventHandlers'
 import GetQueryString from '../lib/GetQueryString'
-import emitPlayerUpdateWeapon from '../lib/SocketEvents/emitPlayerUpdateWeapon'
 
 export default function Create() {
     this.roomId = GetQueryString('roomId')
