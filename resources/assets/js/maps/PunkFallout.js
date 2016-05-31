@@ -1,66 +1,72 @@
-const DEBUG = true
+import GameConsts from '../lib/GameConsts'
 
-const spawnPoints = [
-    { x: 815, y: 1730 },
-    { x: 3380, y: 1030 },
-    { x: 4437, y: 1550 },
-    { x: 6690, y: 1860 },
-    { x: 3832, y: 3350 },
-    { x: 3775, y: 2300 },
-    { x: 2420, y: 2900 }
+const WORLD_WIDTH = 2282
+const WORLD_HEIGHT = 2854
+const BG_WIDTH = 2282
+const BG_HEIGHT = 2854
+const GROUND_LOOP_SPRITE_Y = 2850
+
+const SPAWN_POINTS = [
+    { x: 600, y: 2402 }
 ]
 
-const ledges = [
-    { id: 1, x: 2145, y: 2065, width: 135, height: 40 },
-    { id: 2, x: 2613, y: 1094, width: 1100, height: 112 },
-    { id: 3, x: 3657, y: 3446, width: 550, height: 600 },
-    { id: 4, x: 5217, y: 1938, width: 380, height: 600 },
-    { id: 5, x: 422, y: 1824, width: 1150, height: 300 },
-    { id: 6, x: 1555, y: 1749, width: 270, height: 730 },
-    { id: 7, x: 1820, y: 1749, width: 470, height: 6 },
-    { id: 8, x: 2275, y: 1749, width: 320, height: 630 },
-    { id: 9, x: 2595, y: 1667, width: 1120, height: 260 },
-    { id: 10, x: 4304, y: 1621, width: 375, height: 1300 },
-    { id: 11, x: 1825, y: 2298, width: 160, height: 152 },
-    { id: 12, x: 5644, y: 1573, width: 330, height: 20 },
-    { id: 13, x: 4673, y: 2017, width: 570, height: 254 },
-    { id: 14, x: 2948, y: 3137, width: 380, height: 300 },
-    { id: 15, x: 3983, y: 2028, width: 341, height: 700 },
-    { id: 16, x: 1912, y: 2967, width: 1045, height: 500 },
-    { id: 17, x: 6628, y: 1590, width: 385, height: 37 },
-    { id: 18, x: 6628, y: 1178, width: 385, height: 37 },
-    { id: 19, x: 5590, y: 2038, width: 350, height: 600 },
-    { id: 20, x: 6984, y: 1989, width: 450, height: 167 },
-    { id: 21, x: 3672, y: 2401, width: 330, height: 500 },
-    { id: 22, x: 3303, y: 2599, width: 400, height: 300 },
-    { id: 23, x: 5940, y: 2018, width: 1050, height: 600 }
+const LEDGES = [
+    { id: 1, x: 174, y: 892, width: 512, height: 135 },
+    { id: 2, x: 0, y: 0, width: 175, height: 3000 },
+    { id: 3, x: 874, y: 892, width: 990, height: 135 },
+    { id: 4, x: 1862, y: 0, width: 400, height: 3000 },
+    { id: 5, x: 46, y: 1302, width: 990, height: 135 },
+    { id: 6, x: 1290, y: 1302, width: 990, height: 135 },
+    { id: 7, x: 100, y: 1302, width: 200, height: 500 },
+    { id: 8, x: 392, y: 2502, width: 873, height: 135 },
+    { id: 9, x: 175, y: 2042, width: 393, height: 135 },
+    { id: 10, x: 175, y: 1702, width: 325, height: 135 },
+    { id: 11, x: 720, y: 1712, width: 940, height: 135 },
+    { id: 12, x: 1055, y: 1847, width: 200, height: 335 },
+    { id: 13, x: 1728, y: 2014, width: 175, height: 335 },
+    { id: 14, x: 1395, y: 2349, width: 475, height: 135 },
+    { id: 15, x: 302, y: 327, width: 795, height: 105 }
 ]
 
 export function getRandomSpawnPoint() {
-    return _.sample(spawnPoints)
+    return _.sample(SPAWN_POINTS)
 }
 
 export function createOverlays() {
-    this.bridge = this.add.sprite(1751, 1655, 'bridge')
-    this.towerRail = this.add.sprite(5643, 1525, 'tower-rail')
+
 }
 
 export function create() {
-    this.skysprite = this.add.sprite(0, 0, 'map-bg')
-    this.skysprite.width = this.game.world.width
-    this.skysprite.height = this.game.world.height
+    this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
+    this.skysprite = this.add.sprite(0, 0, 'punk-fallout-map-bg')
+    this.skysprite.width = BG_WIDTH
+    this.skysprite.height = BG_HEIGHT
+
     this.platforms = this.add.group()
     this.platforms.enableBody = true
     createLedges.call(this)
     this.platforms.setAll('body.immovable', true)
     this.platforms.setAll('body.allowGravity', false)
+
+    this.groundLoopSprite = this.add.sprite(0, GROUND_LOOP_SPRITE_Y, 'ground')
+    // this.groundLoopSprite.alpha = 0
+    this.groundLoopSprite.width = this.game.world.width
+    this.groundLoopSprite.height = 10
+    this.physics.arcade.enable(this.groundLoopSprite)
+    this.game.physics.enable(this.groundLoopSprite, Phaser.Physics.ARCADE)
+    this.groundLoopSprite.enableBody = true
+    this.groundLoopSprite.physicsBodyType = Phaser.Physics.ARCADE
+    this.groundLoopSprite.body.immovable = true
+    this.groundLoopSprite.body.allowGravity = false
 }
 
 export function createLedges() {
-    ledges.forEach((ledge) => {
-        if (DEBUG) {
+    LEDGES.forEach((ledge) => {
+        if (GameConsts.DEBUG) {
             let newLedge = this.platforms.create(ledge.x, ledge.y, 'ground')
             newLedge.alpha = 0.4
+            newLedge.height = ledge.height
+            newLedge.width = ledge.width
             let style = { font: "20px Arial", fill: "#ff0044", align: "center", backgroundColor: "#ffff00" }
             let text = this.game.add.text(ledge.x, ledge.y, ledge.id, style)
             text.alpha = 0.2
@@ -70,5 +76,11 @@ export function createLedges() {
         let newLedge = this.platforms.create(ledge.x, ledge.y)
         newLedge.height = ledge.height
         newLedge.width = ledge.width
+    })
+}
+
+export function update() {
+    this.physics.arcade.collide(this.player, this.groundLoopSprite, () => {
+        this.player.y = 100
     })
 }

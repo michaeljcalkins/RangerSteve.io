@@ -1,6 +1,8 @@
-const DEBUG = false
+import GameConsts from '../lib/GameConsts'
 
-const spawnPoints = [
+const WORLD_WIDTH = 8000
+const WORLD_HEIGHT = 3966
+const SPAWN_POINTS = [
     { x: 815, y: 1730 },
     { x: 3380, y: 1030 },
     { x: 4437, y: 1550 },
@@ -9,9 +11,8 @@ const spawnPoints = [
     { x: 3775, y: 2300 },
     { x: 2420, y: 2900 }
 ]
-
-const ledges = [
-    { id: 1, x: 2145, y: 2065, width: 135, height: 40 },
+const LEDGES = [
+    { id: 1, x: 500, y: 500, width: 135, height: 40 },
     { id: 2, x: 2613, y: 1094, width: 1100, height: 112 },
     { id: 3, x: 3657, y: 3446, width: 550, height: 600 },
     { id: 4, x: 5217, y: 1938, width: 380, height: 600 },
@@ -37,7 +38,7 @@ const ledges = [
 ]
 
 export function getRandomSpawnPoint() {
-    return _.sample(spawnPoints)
+    return _.sample(SPAWN_POINTS)
 }
 
 export function createOverlays() {
@@ -46,6 +47,7 @@ export function createOverlays() {
 }
 
 export function create() {
+    this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
     this.skysprite = this.add.sprite(0, 0, 'map-bg')
     this.skysprite.width = this.game.world.width
     this.skysprite.height = this.game.world.height
@@ -54,13 +56,27 @@ export function create() {
     createLedges.call(this)
     this.platforms.setAll('body.immovable', true)
     this.platforms.setAll('body.allowGravity', false)
+
+
+    this.groundSprite = this.add.sprite(0, 3964, 'ground')
+    this.groundSprite.alpha = 0
+    this.groundSprite.width = this.game.world.width
+    this.groundSprite.height = 10
+    this.physics.arcade.enable(this.groundSprite)
+    this.game.physics.enable(this.groundSprite, Phaser.Physics.ARCADE)
+    this.groundSprite.enableBody = true
+    this.groundSprite.physicsBodyType = Phaser.Physics.ARCADE
+    this.groundSprite.body.immovable = true
+    this.groundSprite.body.allowGravity = false
 }
 
 export function createLedges() {
-    ledges.forEach((ledge) => {
-        if (DEBUG) {
+    LEDGES.forEach((ledge) => {
+        if (GameConsts.DEBUG) {
             let newLedge = this.platforms.create(ledge.x, ledge.y, 'ground')
             newLedge.alpha = 0.4
+            newLedge.height = ledge.height
+            newLedge.width = ledge.width
             let style = { font: "20px Arial", fill: "#ff0044", align: "center", backgroundColor: "#ffff00" }
             let text = this.game.add.text(ledge.x, ledge.y, ledge.id, style)
             text.alpha = 0.2

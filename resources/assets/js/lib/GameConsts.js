@@ -1,6 +1,5 @@
 const GameConsts = {
-    WORLD_WIDTH: 8000,
-    WORLD_HEIGHT: 3966,
+    DEBUG: false,
     STARTING_SFX_VOLUME: .1,
     STARTING_MUSIC_VOLUME: .2,
 
@@ -22,6 +21,12 @@ const GameConsts = {
     PLAYER_ANCHOR: .5,
     STARTING_PRIMARY_ID: 'AK47',
     STARTING_SECONDARY_ID: 'DesertEagle',
+
+    // Maps
+    MAPS: [
+        'HighRuleJungle',
+        'PunkFallout'
+    ],
 
     // Weapons
     PRIMARY_WEAPONS: [

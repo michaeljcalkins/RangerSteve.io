@@ -3,9 +3,10 @@ import GameConsts from './GameConsts'
 import Weapons from './Weapons'
 import NameGenerator from './NameGenerator'
 import * as HighRuleJungle from '../maps/HighRuleJungle'
+import * as PunkFallout from '../maps/PunkFallout'
 
 export default function PlayerSpriteHandler() {
-    let spawnPoint = HighRuleJungle.getRandomSpawnPoint()
+    let spawnPoint = PunkFallout.getRandomSpawnPoint()
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.scale.setTo(GameConsts.PLAYER_SCALE)

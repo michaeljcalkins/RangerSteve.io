@@ -2,6 +2,7 @@ import init from './game/Init'
 import preload from './game/Preload'
 import update from './game/Update'
 import create from './game/Create'
+import GameConsts from './lib/GameConsts'
 
 export default function() {
     const gameWidth = window.innerWidth
@@ -15,7 +16,9 @@ export default function() {
         this.create = create
         this.update = update
         this.render = () => {
-            // this.game.debug.body(this.player)
+            if (GameConsts.DEBUG) {
+                this.game.debug.inputInfo(60, 60)
+            }
         }
     }, true)
 }
