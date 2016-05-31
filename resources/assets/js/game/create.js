@@ -1,6 +1,5 @@
 import store from 'store'
 import GameConsts from '../lib/GameConsts'
-import SetEventHandlers from '../lib/SocketEvents/setEventHandlers'
 import GetQueryString from '../lib/GetQueryString'
 
 export default function Create() {
@@ -8,10 +7,7 @@ export default function Create() {
     this.room = null
     this.sfxVolume = store.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME)
     this.musicVolume = store.get('musicVolume', GameConsts.STARTING_MUSIC_VOLUME)
-    this.socket = io.connect()
     this.jumping = false
-    this.state = 'loading'
-
 
     // this.fullDamageBlastRadius = this.add.sprite(0, 0, 'ground')
     // this.fullDamageBlastRadius.enableBody = true
@@ -81,15 +77,10 @@ export default function Create() {
     this.audioPlayer.src = '/audio/ost.mp3'
     this.audioPlayer.volume = this.musicVolume
     this.audioPlayer.play()
+
     // Creates a loop for music
     this.audioPlayer.addEventListener('ended', function() {
         this.currentTime = 0
         this.play()
-    }, false);
-
-
-    /**
-     * Start listening for events
-     */
-    SetEventHandlers.call(this)
+    }, false)
 }

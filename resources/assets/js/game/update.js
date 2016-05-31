@@ -3,14 +3,13 @@ import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
-import * as PunkFallout from '../maps/PunkFallout'
+import Maps from '../maps'
 
 export default function Update() {
-    if (this.state !== 'active') return
+    if (this.gameState !== 'active' || ! this.room) return
 
     CollisionHandler.call(this)
-
-    PunkFallout.update.call(this)
+    Maps[this.room.map].update.call(this)
 
     if (this.player.meta.health > 0) {
         PlayerMovementHandler.call(this)

@@ -32,6 +32,10 @@ export function getRandomSpawnPoint() {
     return _.sample(SPAWN_POINTS)
 }
 
+export function preload() {
+    this.load.image('punk-fallout-map-bg', '/images/maps/punk-fallout/background.png')
+}
+
 export function createOverlays() {
 
 }

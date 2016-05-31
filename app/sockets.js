@@ -188,15 +188,13 @@ function onNewPlayer (data) {
     })
 
     if (availableRooms.length <= 0) {
-
         let newRoomId = hri.random()
         rooms[newRoomId] = CreateRoom({
             id: newRoomId,
             player: newPlayer
         })
-        rooms[newRoomId] = newRoom
 
-        util.log('Created new room', newRoom)
+        util.log('Created new room', newRoomId)
         this.join(newRoomId)
         io.to(newRoomId).emit('update players', {
             room: rooms[newRoomId]

@@ -1,4 +1,5 @@
 import GameConsts from '../lib/GameConsts'
+import emitPlayerDamaged from '../lib/SocketEvents/emitPlayerDamaged'
 
 const WORLD_WIDTH = 8000
 const WORLD_HEIGHT = 3966
@@ -39,6 +40,12 @@ const LEDGES = [
 
 export function getRandomSpawnPoint() {
     return _.sample(SPAWN_POINTS)
+}
+
+export function preload() {
+    this.load.image('map-bg', '/images/maps/high-rule-jungle/background.png')
+    this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png')
+    this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png')
 }
 
 export function createOverlays() {
@@ -86,5 +93,29 @@ export function createLedges() {
         let newLedge = this.platforms.create(ledge.x, ledge.y)
         newLedge.height = ledge.height
         newLedge.width = ledge.width
+    })
+}
+
+export function update() {
+    this.physics.arcade.collide(this.player, this.groundSprite, () => {
+        if (this.player.meta.health <= 0 || this.player.y < 3900) return
+
+        this.game.input.enabled = false
+        this.player.body.acceleration.x = 0
+        this.player.body.acceleration.y = 0
+        this.player.meta.health = 0
+        this.leftArmGroup.visible = false
+        this.rightArmGroup.visible = false
+        this.headGroup.visible = false
+        this.torsoGroup.visible = false
+
+        emitPlayerDamaged.call(this, {
+            roomId: this.roomId,
+            damage: 1000,
+            damagedPlayerId: '/#' + this.socket.id,
+            attackingPlayerId: null
+        })
+
+        this.player.animations.play('death')
     })
 }
