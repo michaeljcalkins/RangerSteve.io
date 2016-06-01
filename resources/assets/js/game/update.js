@@ -27,6 +27,10 @@ export default function Update() {
         this.hurtBorderSprite.alpha = 0
     }
 
+    if (this.room.map) {
+        Maps[this.room.map].update.call(this)
+    }
+
     if (this.roomId && this.player.meta.health > 0 && (this.room !== null && this.room.state !== 'ended')) {
         emitMovePlayer.call(this, {
             roomId: this.roomId,

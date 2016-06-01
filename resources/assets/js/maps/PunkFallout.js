@@ -98,9 +98,3 @@ export function update() {
         this.player.y = 100
     })
 }
-
-export function destroy() {
-    this.platforms.destroy()
-    this.skysprite.destroy()
-    this.cache.removeImage('map-bg', true)
-}

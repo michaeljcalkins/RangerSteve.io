@@ -14,6 +14,8 @@ const propTypes = {
     })
 }
 
+let lastRoomState = null
+
 export default function onUpdatePlayers(data) {
     check(data, propTypes)
 
@@ -217,25 +219,13 @@ export default function onUpdatePlayers(data) {
 
         if (this.room.state === 'ended') {
             this.game.paused = true
-            this.gameState = 'loading'
 
-            _.debounce(() => {
-                console.log('loading new map')
-                Maps[this.currentMap].destroy.call(this)
-
-                this.load.onLoadComplete.add(() => {
-                    Maps[this.room.map].create.call(this)
-                    Maps[this.room.map].createOverlays.call(this)
-                    this.currentMap = this.room.map
-                })
-
-                Maps[this.room.map].preload.call(this)
-                this.game.load.start()
-            }, 5000, false)()
         }
 
-        if (this.room.state === 'active') {
-            this.game.paused = false
+        if (this.room.state === 'active' && lastRoomState === 'ended') {
+            window.location.reload()
         }
+
+        lastRoomState = this.room.state
     }
 }

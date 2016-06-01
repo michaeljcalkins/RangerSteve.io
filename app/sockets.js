@@ -26,8 +26,10 @@ setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
             util.log('Restarting round for', roomId)
-            rooms[roomId].state = 'active'
-            rooms[roomId].roundEndTime = moment().add(1, 'minutes').unix()
+            rooms[roomId] = CreateRoom({
+                id: roomId,
+                players: rooms[roomId].players
+            })
             Object.keys(rooms[roomId].players).forEach((playerId) => {
                 rooms[roomId].players[playerId].meta.health = 100
                 rooms[roomId].players[playerId].meta.deaths = 0

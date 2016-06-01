@@ -119,13 +119,3 @@ export function update() {
         this.player.animations.play('death')
     })
 }
-
-export function destroy() {
-    this.platforms.destroy()
-    this.bridge.destroy()
-    this.cache.removeImage('bridge', true)
-    this.towerRail.destroy()
-    this.cache.removeImage('tower-rail')
-    this.skysprite.destroy()
-    this.cache.removeImage('map-bg', true)
-}
