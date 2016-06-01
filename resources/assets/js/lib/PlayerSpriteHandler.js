@@ -110,4 +110,10 @@ export default function PlayerSpriteHandler() {
     this.muzzleFlash.x = 102
     this.muzzleFlash.visible = false
     this.currentWeaponSprite.addChild(this.muzzleFlash)
+
+    
+    /**
+     * Camera Settings
+     */
+    this.camera.follow(this.player)
 }

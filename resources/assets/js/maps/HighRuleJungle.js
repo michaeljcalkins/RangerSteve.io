@@ -43,9 +43,9 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('map-bg', '/images/maps/high-rule-jungle/background.png')
-    this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png')
-    this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png')
+    this.load.image('map-bg', '/images/maps/high-rule-jungle/background.png', true)
+    this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png', true)
+    this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png', true)
 }
 
 export function createOverlays() {
@@ -118,4 +118,14 @@ export function update() {
 
         this.player.animations.play('death')
     })
+}
+
+export function destroy() {
+    this.platforms.destroy()
+    this.bridge.destroy()
+    this.cache.removeImage('bridge', true)
+    this.towerRail.destroy()
+    this.cache.removeImage('tower-rail')
+    this.skysprite.destroy()
+    this.cache.removeImage('map-bg', true)
 }

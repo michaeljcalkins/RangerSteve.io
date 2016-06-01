@@ -1,4 +1,5 @@
 import { PropTypes } from 'react'
+import _ from 'lodash'
 
 import RemotePlayer from '../RemotePlayer'
 import EventHandler from '../EventHandler'
@@ -24,6 +25,7 @@ export default function onUpdatePlayers(data) {
 
     if (this.gameState === 'loading') {
         Maps[this.room.map].preload.call(this)
+        this.currentMap = this.room.map
 
         this.load.onLoadComplete.add(() => {
             this.enemies = this.game.add.group()
@@ -31,12 +33,6 @@ export default function onUpdatePlayers(data) {
             Maps[this.room.map].create.call(this)
             PlayerSpriteHandler.call(this)
             Maps[this.room.map].createOverlays.call(this)
-
-
-            /**
-             * Camera Settings
-             */
-            this.camera.follow(this.player)
 
 
             /**
@@ -221,6 +217,21 @@ export default function onUpdatePlayers(data) {
 
         if (this.room.state === 'ended') {
             this.game.paused = true
+            this.gameState = 'loading'
+
+            _.debounce(() => {
+                console.log('loading new map')
+                Maps[this.currentMap].destroy.call(this)
+
+                this.load.onLoadComplete.add(() => {
+                    Maps[this.room.map].create.call(this)
+                    Maps[this.room.map].createOverlays.call(this)
+                    this.currentMap = this.room.map
+                })
+
+                Maps[this.room.map].preload.call(this)
+                this.game.load.start()
+            }, 5000, false)()
         }
 
         if (this.room.state === 'active') {

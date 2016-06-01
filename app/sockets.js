@@ -27,7 +27,7 @@ setInterval(function() {
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
             util.log('Restarting round for', roomId)
             rooms[roomId].state = 'active'
-            rooms[roomId].roundEndTime = moment().add(5, 'minutes').unix()
+            rooms[roomId].roundEndTime = moment().add(1, 'minutes').unix()
             Object.keys(rooms[roomId].players).forEach((playerId) => {
                 rooms[roomId].players[playerId].meta.health = 100
                 rooms[roomId].players[playerId].meta.deaths = 0
@@ -51,7 +51,8 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].roundStartTime = moment().add(20, 'seconds').unix()
+            rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout'])
+            rooms[roomId].roundStartTime = moment().add(15, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })

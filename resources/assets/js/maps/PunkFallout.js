@@ -43,7 +43,7 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('punk-fallout-map-bg', '/images/maps/punk-fallout/background.png')
+    this.load.image('map-bg', '/images/maps/punk-fallout/background.png', true)
 }
 
 export function createOverlays() {
@@ -52,7 +52,7 @@ export function createOverlays() {
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-    this.skysprite = this.add.sprite(0, 0, 'punk-fallout-map-bg')
+    this.skysprite = this.add.sprite(0, 0, 'map-bg')
     this.skysprite.width = BG_WIDTH
     this.skysprite.height = BG_HEIGHT
 
@@ -97,4 +97,10 @@ export function update() {
     this.physics.arcade.collide(this.player, this.groundLoopSprite, () => {
         this.player.y = 100
     })
+}
+
+export function destroy() {
+    this.platforms.destroy()
+    this.skysprite.destroy()
+    this.cache.removeImage('map-bg', true)
 }
