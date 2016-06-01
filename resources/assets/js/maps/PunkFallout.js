@@ -7,7 +7,17 @@ const BG_HEIGHT = 2854
 const GROUND_LOOP_SPRITE_Y = 2850
 
 const SPAWN_POINTS = [
-    { x: 600, y: 2402 }
+    { x: 600, y: 2402 },
+    { x: 1000, y: 2402 },
+    { x: 1627, y: 2272 },
+    { x: 380, y: 1585 },
+    { x: 400, y: 1200 },
+    { x: 1600, y: 1200 },
+    { x: 1637, y: 770 },
+    { x: 320, y: 770 },
+    { x: 466, y: 220 },
+    { x: 400, y: 1600 },
+    { x: 1790, y: 1800 }
 ]
 
 const LEDGES = [
@@ -53,7 +63,7 @@ export function create() {
     this.platforms.setAll('body.allowGravity', false)
 
     this.groundLoopSprite = this.add.sprite(0, GROUND_LOOP_SPRITE_Y, 'ground')
-    // this.groundLoopSprite.alpha = 0
+    this.groundLoopSprite.alpha = 0
     this.groundLoopSprite.width = this.game.world.width
     this.groundLoopSprite.height = 10
     this.physics.arcade.enable(this.groundLoopSprite)
