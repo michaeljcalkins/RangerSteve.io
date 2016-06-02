@@ -17,14 +17,14 @@ const SPAWN_POINTS = [
     { x: 320, y: 770 },
     { x: 466, y: 220 },
     { x: 400, y: 1600 },
-    { x: 1790, y: 1800 }
+    { x: 1700, y: 1800 }
 ]
 
 const LEDGES = [
     { id: 1, x: 174, y: 892, width: 512, height: 135 },
     { id: 2, x: 0, y: 0, width: 175, height: 3000 },
     { id: 3, x: 874, y: 892, width: 990, height: 135 },
-    { id: 4, x: 1862, y: 0, width: 400, height: 3000 },
+    { id: 4, x: 1862, y: 0, width: 450, height: 3000 },
     { id: 5, x: 46, y: 1302, width: 990, height: 135 },
     { id: 6, x: 1290, y: 1302, width: 990, height: 135 },
     { id: 7, x: 100, y: 1302, width: 200, height: 500 },
