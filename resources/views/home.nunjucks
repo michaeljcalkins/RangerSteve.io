@@ -3,15 +3,13 @@
 {% block title %}Home | Ranger Steve: Buffalo Invasion{% endblock %}
 
 {% block content %}
-<div class="home-container align-middle">
-    <div>
-        <section class="main-section text-center align-middle">
-            <div>
-                <div class="main-header">Ranger Steve</div>
-                <div class="sub-header">Buffalo Invasion</div>
-                <a href="/game" class="btn btn-primary btn-lg">Play Now</a>
-            </div>
-        </section>
-    </div>
+<div class="home-container">
+    <section class="main-section text-center">
+        <div>
+            <div class="main-header">Ranger Steve</div>
+            <div class="sub-header">Buffalo Invasion</div>
+            <a href="/game" class="btn btn-primary btn-lg">Play Now</a>
+        </div>
+    </section>
 </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
 
-const rangeOfVariance = _.range(-.15, .15, .01)
+const rangeOfVariance = _.range(-.12, .12, .01)
 
 export default function FireShotgunShell() {
     let x = this.rootScope.player.x
