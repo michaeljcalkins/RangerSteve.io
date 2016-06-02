@@ -187,7 +187,7 @@ function onNewPlayer (data) {
 
     let availableRooms = Object.keys(rooms).filter(function(room) {
         if (! room.players) return true
-        return room.players.length < 10
+        return room.players.length < 8
     })
 
     if (availableRooms.length <= 0) {
@@ -209,7 +209,6 @@ function onNewPlayer (data) {
         io.to(availableRooms[0]).emit('update players', {
             room: rooms[availableRooms[0]]
         })
-        return
     }
 }
 

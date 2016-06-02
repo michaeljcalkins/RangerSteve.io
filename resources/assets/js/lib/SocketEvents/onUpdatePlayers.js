@@ -25,6 +25,9 @@ export default function onUpdatePlayers(data) {
     let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id
     window.history.pushState({ path: newurl }, '', newurl)
 
+    console.log('this.room', this.room)
+    console.log('this.gameState', this.gameState)
+
     if (this.gameState === 'loading') {
         Maps[this.room.map].preload.call(this)
         this.currentMap = this.room.map
