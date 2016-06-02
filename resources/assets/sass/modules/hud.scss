@@ -279,7 +279,16 @@
     th {
         font-size: 14px;
         font-family: 'Open Sans', Arial;
-        text-align: left;
+    }
+
+    tr {
+        th {
+            text-align: right;
+        }
+        
+        th:first-child {
+            text-align: left;
+        }
     }
 
     td {

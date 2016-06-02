@@ -16,6 +16,7 @@ import HudKillingSpree from '../components/Hud/HudKillingSpree'
 import NameGenerator from '../../lib/NameGenerator'
 import SettingsModal from '../components/Settings/SettingsModal'
 import EndOfRoundLeaderboard from '../components/Round/EndOfRoundLeaderboard'
+import Loading from '../components/Loading/Loading'
 
 export default class GameUiContainer extends React.Component {
     constructor(props) {

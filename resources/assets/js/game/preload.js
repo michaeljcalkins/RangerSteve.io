@@ -2,10 +2,6 @@ import GameConsts from '../lib/GameConsts'
 
 export default function Preload() {
     // Map
-    this.load.image('map-bg', '/images/maps/high-rule-jungle/background.png')
-    this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png')
-    this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png')
-
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet', '/images/bullet.png')
     this.load.spritesheet('hurt-border', '/images/hurt-border.png')

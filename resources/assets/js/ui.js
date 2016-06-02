@@ -1,12 +1,12 @@
+// http://codepen.io/michaeljcalkins/pen/OXPEgV?editors=0010
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import GameUiContainer from './ui/containers/GameUiContainer'
 
 export default function() {
-    const element = document.getElementById('ui-app')
-
     ReactDOM.render(
         <GameUiContainer />,
-        element
+        document.getElementById('ui-app')
     )
 }

@@ -3,9 +3,13 @@ import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
+import Maps from '../maps'
 
 export default function Update() {
+    if (this.gameState !== 'active' || ! this.room) return
+
     CollisionHandler.call(this)
+    Maps[this.room.map].update.call(this)
 
     if (this.player.meta.health > 0) {
         PlayerMovementHandler.call(this)
@@ -21,6 +25,10 @@ export default function Update() {
         this.hurtBorderSprite.alpha = ((100 - this.player.meta.health) / 100).toFixed(2)
     } else {
         this.hurtBorderSprite.alpha = 0
+    }
+
+    if (this.room.map) {
+        Maps[this.room.map].update.call(this)
     }
 
     if (this.roomId && this.player.meta.health > 0 && (this.room !== null && this.room.state !== 'ended')) {

@@ -44,6 +44,8 @@
           heap.load("920922219");
         </script>
     {% endif %}
+
+    {% block head %}{% endblock %}
 </head>
 <body class="main">
     <nav class="navbar navbar-default navbar-fixed-top" style="background: white;">
@@ -63,16 +65,25 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="/game">Play Now</a></li>
+                            <li><a href="/gallery">Gallery</a></li>
                             <li><a href="/blog">What's New</a></li>
                             <li><a href="/credits">Credits</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
-                    <a class="social-link social-link-twitter" href="https://twitter.com/michaeljcalkins" target="_blank">
+                    <a
+                        class="social-link social-link-twitter"
+                        href="https://twitter.com/michaeljcalkins"
+                        target="_blank"
+                    >
                         <i class="fa fa-twitter"></i>
                     </a>
-                    <a class="social-link social-link-facebook" href="https://www.facebook.com/rangerstevegame" target="_blank">
+                    <a
+                        class="social-link social-link-facebook"
+                        href="https://www.facebook.com/rangerstevegame"
+                        target="_blank"
+                    >
                         <i class="fa fa-facebook"></i>
                     </a>
                 </div>
@@ -80,7 +91,6 @@
         </div>
     </nav>
 
-    {% block content %}
-    {% endblock %}
+    {% block content %}{% endblock %}
 </body>
 </html>

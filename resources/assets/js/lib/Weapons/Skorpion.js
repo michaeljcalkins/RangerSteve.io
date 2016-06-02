@@ -26,7 +26,7 @@ export default class Skorpion extends Phaser.Group {
         this.bulletHeight = 2
         this.bulletSpeed = 2300
         this.bulletWidth = 40
-        this.damage = 14
+        this.damage = 15
         this.fireRate = 120
         this.fx = this.rootScope.game.add.audio('Skorpion-sound')
         this.nextFire = 0

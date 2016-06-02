@@ -8,6 +8,7 @@ let moment = require('moment')
 let Player = require('./services/Player')
 let PlayerById = require('./services/PlayerById')
 let Notification = require('./services/Notification')
+let CreateRoom = require('./services/CreateRoom')
 
 let rooms = {}
 let io = null
@@ -25,8 +26,10 @@ setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
             util.log('Restarting round for', roomId)
-            rooms[roomId].state = 'active'
-            rooms[roomId].roundEndTime = moment().add(5, 'minutes').unix()
+            rooms[roomId] = CreateRoom({
+                id: roomId,
+                players: rooms[roomId].players
+            })
             Object.keys(rooms[roomId].players).forEach((playerId) => {
                 rooms[roomId].players[playerId].meta.health = 100
                 rooms[roomId].players[playerId].meta.deaths = 0
@@ -50,7 +53,8 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].roundStartTime = moment().add(25, 'seconds').unix()
+            rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout'])
+            rooms[roomId].roundStartTime = moment().add(15, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })
@@ -166,14 +170,10 @@ function onNewPlayer (data) {
 
     if (data.roomId) {
         if (! rooms[data.roomId]) {
-            let playersObj = {}
-            playersObj[this.id] = newPlayer
-            rooms[data.roomId] = {
+            rooms[data.roomId] = CreateRoom({
                 id: data.roomId,
-                players: playersObj,
-                roundEndTime: moment().add(5, 'minutes').unix(),
-                state: 'active'
-            }
+                player: newPlayer
+            })
         }
 
         rooms[data.roomId].players[this.id] = newPlayer
@@ -191,16 +191,13 @@ function onNewPlayer (data) {
     })
 
     if (availableRooms.length <= 0) {
-        // create a new room
         let newRoomId = hri.random()
-        let newRoom = {
+        rooms[newRoomId] = CreateRoom({
             id: newRoomId,
-            players: [newPlayer],
-            roundStartTime: moment().add(5, 'minutes').unix()
-        }
-        rooms[newRoomId] = newRoom
+            player: newPlayer
+        })
 
-        util.log('Created new room', newRoom)
+        util.log('Created new room', newRoomId)
         this.join(newRoomId)
         io.to(newRoomId).emit('update players', {
             room: rooms[newRoomId]
@@ -366,7 +363,6 @@ function onPlayerDamaged(data) {
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]
         })
-
         return
     }
 

@@ -2,10 +2,10 @@ import store from 'store'
 import GameConsts from './GameConsts'
 import Weapons from './Weapons'
 import NameGenerator from './NameGenerator'
-import * as HighRuleJungle from '../maps/HighRuleJungle'
+import Maps from '../maps'
 
 export default function PlayerSpriteHandler() {
-    let spawnPoint = HighRuleJungle.getRandomSpawnPoint()
+    let spawnPoint = Maps[this.room.map].getRandomSpawnPoint()
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.scale.setTo(GameConsts.PLAYER_SCALE)
@@ -110,4 +110,10 @@ export default function PlayerSpriteHandler() {
     this.muzzleFlash.x = 102
     this.muzzleFlash.visible = false
     this.currentWeaponSprite.addChild(this.muzzleFlash)
+
+    
+    /**
+     * Camera Settings
+     */
+    this.camera.follow(this.player)
 }
