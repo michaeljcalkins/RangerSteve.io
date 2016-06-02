@@ -1,11 +1,19 @@
 'use strict'
 
+let fs = require('fs')
+let moment = require('moment')
+
 let MainController = {
     home: function(req, res) {
         res.render('home')
     },
     game: function(req, res) {
-        res.render('game')
+        let fileStat = fs.statSync('public/js/app.js')
+        let lastModifiedTime = moment(fileStat.mtime).unix()
+
+        res.render('game', {
+            lastModifiedTime: lastModifiedTime
+        })
     },
     credits: function(req, res) {
         res.render('credits')
