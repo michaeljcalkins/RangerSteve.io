@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 
 import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
-import * as HighRuleJungle from '../../maps/HighRuleJungle'
+import Maps from '../../maps'
 import emitPlayerUpdateWeapon from './emitPlayerUpdateWeapon'
 import PlayerById from'../PlayerById'
 
@@ -52,7 +52,7 @@ export default function onPlayerRespawn(data) {
     this.torsoGroup.visible = true
 
     // Create and set the new spawn point
-    const spawnPoint = HighRuleJungle.getRandomSpawnPoint()
+    const spawnPoint = Maps[this.room.map].getRandomSpawnPoint()
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
 
