@@ -29,7 +29,9 @@ export default function onUpdatePlayers(data) {
     console.log('this.gameState', this.gameState)
 
     if (this.gameState === 'loading') {
+        console.log('loading now')
         Maps[this.room.map].preload.call(this)
+        this.load.start()
         this.currentMap = this.room.map
 
         this.load.onLoadComplete.add(() => {
