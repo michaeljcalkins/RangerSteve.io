@@ -16,6 +16,7 @@ export default function onPlayerRespawn(data) {
 
     if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
+        if (! enemyPlayer) return
         enemyPlayer.meta.health = 100
         return
     }

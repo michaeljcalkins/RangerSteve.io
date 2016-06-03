@@ -64,7 +64,6 @@ export function create() {
     this.platforms.setAll('body.immovable', true)
     this.platforms.setAll('body.allowGravity', false)
 
-
     this.groundSprite = this.add.sprite(0, 3964, 'ground')
     this.groundSprite.alpha = 0
     this.groundSprite.width = this.game.world.width
