@@ -315,8 +315,14 @@ function onPlayerDamaged(data) {
         player.meta.deaths++
 
         // Falling to your death causes a score loss
-        if (data.damage === 1000 && player.meta.score >= 10) {
-            player.meta.score -= 10
+        if (data.damage === 1000) {
+            if (player.meta.score >= 10) {
+                player.meta.score -= 10
+            }
+
+            io.to(data.roomId).emit('player kill log', {
+                deadNickname: player.meta.nickname
+            })
         }
 
         let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
