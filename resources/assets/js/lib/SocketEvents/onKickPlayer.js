@@ -5,5 +5,5 @@ export default function(data) {
         return
 
     store.set('banned', true)
-    window.location = '/'
+    window.location = 'https://www.google.com'
 }
