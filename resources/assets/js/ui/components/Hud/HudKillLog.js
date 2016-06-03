@@ -15,7 +15,7 @@ export default function HudKillLog({
             if (! message.attackerNickname) {
                 return (
                     <li key={ index }>
-                         { message.deadNickname } <img height="32" src="/images/icons/skull-32-white.png" />
+                         { message.deadNickname } <img height="32" src="/images/icons/skull-32-black.png" />
                     </li>
                 )
             }
