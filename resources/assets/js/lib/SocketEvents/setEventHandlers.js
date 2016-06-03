@@ -14,6 +14,7 @@ import onPlayerRemove from './onPlayerRemove'
 import onPlayerKillLog from './onPlayerKillLog'
 import onPlayerUpdateWeapon from './onPlayerUpdateWeapon'
 import emitMessageSend from './emitMessageSend'
+import onKickPlayer from './onKickPlayer'
 
 export default function() {
     this.socket.on('connect', onSocketConnected.bind(this))
@@ -34,6 +35,7 @@ export default function() {
     this.socket.on('message received', onMessageReceived.bind(this))
 
     this.socket.on('bullet fired', onBulletFired.bind(this))
+    this.socket.on('kick player', onKickPlayer.bind(this))
 
     EventHandler.on('message send', (data) => {
         emitMessageSend.call(this, {
