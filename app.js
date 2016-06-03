@@ -1,21 +1,18 @@
 'use strict'
 
-if (process.env.NODE_ENV === 'production') {
-    require ('newrelic')
-}
-
 let express = require('express')
 let socketIo = require('socket.io')
-let path = require('path');
-let favicon = require('serve-favicon');
-let logger = require('morgan');
-let cookieParser = require('cookie-parser');
+let path = require('path')
+let favicon = require('serve-favicon')
+let logger = require('morgan')
+let cookieParser = require('cookie-parser')
 let bodyParser = require('body-parser')
 let compression = require('compression')
 let nunjucks = require('express-nunjucks')
 let SocketHandler = require('./app/sockets')
 let routes = require('./app/routes')
 let locals = require('./app/middleware/locals')
+let ipfilter = require('ipfilter')
 
 let app = express()
 let io = socketIo()
@@ -39,6 +36,9 @@ nunjucks.setup({
     noCache: true
 }, app)
 
+let ips = []
+
+app.use(ipfilter(ips))
 app.use(favicon(path.join(__dirname, 'public', 'images/favicon.ico')));
 app.use(locals)
 app.use(compression())

@@ -70,7 +70,8 @@ setInterval(function() {
 
 // New socket connection
 function onSocketConnection(socket) {
-    util.log('New player has connected: ' + socket.id)
+    let address = socket.handshake.address
+    console.log('New connection from ' + socket.request.connection.remoteAddress)
 
     socket.on('disconnect', onClientDisconnect)
     socket.on('new player', onNewPlayer)
