@@ -4,7 +4,7 @@ import game from './game'
 import store from 'store'
 
 if (store.get('banned') === true) {
-    window.location = '/'
+    window.location = 'https://www.google.com'
 }
 
 window.check = Check
