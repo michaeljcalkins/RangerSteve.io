@@ -12,6 +12,14 @@ export default function HudKillLog({
                 selectedWeapon = _.find(GameConsts.SECONDARY_WEAPONS, { id: message.weaponId })
             }
 
+            if (! message.attackerNickname) {
+                return (
+                    <li key={ index }>
+                         { message.deadNickname } <img height="32" src="/images/icons/skull-32-white.png" />
+                    </li>
+                )
+            }
+
             return (
                 <li key={ index }>
                     { message.attackerNickname } <img src={ selectedWeapon.image } /> { message.deadNickname }
