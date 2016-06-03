@@ -87,6 +87,20 @@ function onSocketConnection(socket) {
     socket.on('message send', onMessageSend)
 
     socket.on('bullet fired', onBulletFired)
+    socket.on('kick player', onKickPlayer)
+}
+
+function onKickPlayer(data) {
+    let players = _.values(rooms[data.roomId].players)
+    let player = _.find(players, { meta: { nickname: data.nickname } })
+    if (! player) {
+        util.error('Could not find player.')
+    }
+
+    io.to(data.roomId).emit('kick player', {
+        id: player.id,
+        roomId: data.roomId
+    })
 }
 
 function onPlayerUpdateWeapon(data) {

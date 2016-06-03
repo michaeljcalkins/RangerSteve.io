@@ -66,4 +66,13 @@ export default function Create() {
         this.currentTime = 0
         this.play()
     }, false)
+
+    window.Meta = {
+        kickPlayerByUsername: (nickname) => {
+            return this.socket.emit('kick player', {
+                roomId: this.roomId,
+                nickname
+            })
+        }
+    }
 }

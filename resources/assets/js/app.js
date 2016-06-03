@@ -4,7 +4,7 @@ import game from './game'
 import store from 'store'
 
 if (store.get('banned') === true) {
-    window.location = 'https://rangersteve.io'
+    window.location = '/'
 }
 
 window.check = Check
