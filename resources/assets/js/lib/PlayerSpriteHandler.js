@@ -1,8 +1,7 @@
 import store from 'store'
 import GameConsts from './GameConsts'
 import Weapons from './Weapons'
-import NameGenerator from './NameGenerator'
-import Maps from '../maps'
+import Maps from './Maps'
 
 export default function PlayerSpriteHandler() {
     let spawnPoint = Maps[this.room.map].getRandomSpawnPoint()
@@ -39,8 +38,8 @@ export default function PlayerSpriteHandler() {
     const startingSecondaryWeaponId = store.get('selectedSecondaryWeapon', 'DesertEagle')
 
     this.player.meta = {
-        health: 100,
-        nickname: store.get('nickname', NameGenerator()),
+        // health: 100,
+        // nickname: store.get('nickname', NameGenerator()),
         facing: 'right',
         primaryWeapon: new Weapons[startingPrimaryWeaponId](this),
         secondaryWeapon: new Weapons[startingSecondaryWeaponId](this),
@@ -111,7 +110,7 @@ export default function PlayerSpriteHandler() {
     this.muzzleFlash.visible = false
     this.currentWeaponSprite.addChild(this.muzzleFlash)
 
-    
+
     /**
      * Camera Settings
      */

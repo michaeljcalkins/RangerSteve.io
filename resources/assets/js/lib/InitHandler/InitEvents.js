@@ -1,15 +1,8 @@
 import EventHandler from '../EventHandler'
 import emitPlayerUpdateWeapon from '../SocketEvents/emitPlayerUpdateWeapon'
+import actions from '../../actions'
 
 export default function() {
-    EventHandler.emit('score update', 0)
-    EventHandler.emit('health update', 0)
-    EventHandler.emit('player update nickname', { nickname: this.player.meta.nickname })
-
-    EventHandler.on('sfx volume update', (data) => this.sfxVolume = data.volume)
-    EventHandler.on('music volume update', (data) => {
-        this.audioPlayer.volume = data.volume
-    })
     EventHandler.on('primary weapon update', (weapon) => this.player.meta.selectedPrimaryWeaponId = weapon.id)
 
     EventHandler.on('secondary weapon update', (weapon) => {
@@ -77,43 +70,52 @@ export default function() {
      */
     // Open chat
     this.input.keyboard.addKey(Phaser.Keyboard.T).onDown.add(() => {
-        EventHandler.emit('chat open')
+        this.game.store.dispatch(actions.player.openChatModal())
         this.game.input.enabled = false
     })
 
     // Open settings modal
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
-        EventHandler.emit('settings open')
+        this.game.store.dispatch(actions.player.openSettingsModal())
         this.game.input.enabled = false
     })
 
     // Switch weapons
     this.input.keyboard.addKey(Phaser.Keyboard.Q).onDown.add(() => {
-        this.currentWeapon = this.currentWeapon === 'primaryWeapon'
-            ? 'secondaryWeapon'
-            : 'primaryWeapon'
+        let currentWeapon = this.game.store.getState().player.currentWeapon
 
-        this.currentWeaponSprite.loadTexture(this.player.meta[this.currentWeapon].meta.id)
-        this.currentWeaponSprite.scale.setTo(this.player.meta[this.currentWeapon].meta.scale)
-        this.currentWeaponSprite.rotation = this.player.meta[this.currentWeapon].meta.rotation
-
-        if (this.player.meta.facing === 'left') {
-            this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.leftFaceX
-            this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.leftFaceY
-            this.currentWeaponSprite.scale.y *= -1
+        if (currentWeapon === 'primaryWeapon') {
+            this.game.store.dispatch(actions.player.setCurrentWeapon('secondaryWeapon'))
         } else {
-            this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.rightFaceX
-            this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.rightFaceY
+            this.game.store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
         }
 
-        this.muzzleFlash.x = this.player.meta[this.currentWeapon].meta.muzzleFlashX
-        this.muzzleFlash.y = this.player.meta[this.currentWeapon].meta.muzzleFlashY
+        currentWeapon = this.game.store.getState().player.currentWeapon
 
-        let currentWeapon = this.currentWeapon === 'primaryWeapon' ? this.player.meta.primaryWeapon : this.player.meta.secondaryWeapon
+        this.currentWeaponSprite.loadTexture(this.player.meta[currentWeapon].meta.id)
+        this.currentWeaponSprite.scale.setTo(this.player.meta[currentWeapon].meta.scale)
+        this.currentWeaponSprite.rotation = this.player.meta[currentWeapon].meta.rotation
+
+        if (this.player.meta.facing === 'left') {
+            this.currentWeaponSprite.x = this.player.meta[currentWeapon].meta.leftFaceX
+            this.currentWeaponSprite.y = this.player.meta[currentWeapon].meta.leftFaceY
+            this.currentWeaponSprite.scale.y *= -1
+        } else {
+            this.currentWeaponSprite.x = this.player.meta[currentWeapon].meta.rightFaceX
+            this.currentWeaponSprite.y = this.player.meta[currentWeapon].meta.rightFaceY
+        }
+
+        this.muzzleFlash.x = this.player.meta[currentWeapon].meta.muzzleFlashX
+        this.muzzleFlash.y = this.player.meta[currentWeapon].meta.muzzleFlashY
+
+        const currentWeaponMeta = currentWeapon === 'primaryWeapon'
+            ? this.player.meta.primaryWeapon.meta
+            : this.player.meta.secondaryWeapon.meta
+
         emitPlayerUpdateWeapon.call(this, {
             id: '/#' + this.socket.id,
             roomId: this.roomId,
-            currentWeaponMeta: currentWeapon.meta
+            currentWeaponMeta
         })
     })
 }

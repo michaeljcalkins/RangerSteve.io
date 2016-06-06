@@ -1,14 +1,11 @@
-import store from 'store'
-
 export default function onSocketConnected() {
-    // Send local player data to the game server
     this.socket.emit('new player', {
-        roomId: this.roomId,
+        roomId: this.game.store.getState().room.id,
         // x: this.player.x,
         // y: this.player.y,
         x: 0,
         y: 0,
-        currentWeaponMeta: 'primaryWeapon',
-        nickname: store.get('nickname')
+        currentWeaponMeta: this.game.store.getState().player.currentWeapon,
+        nickname: this.game.store.getState().player.nickname
     })
 }

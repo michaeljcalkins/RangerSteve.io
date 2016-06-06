@@ -53,7 +53,8 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout'])
+            // rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout', 'DarkForest'])
+            rooms[roomId].map = _.sample(['DarkForest'])
             rooms[roomId].roundStartTime = moment().add(12, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]

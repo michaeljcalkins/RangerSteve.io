@@ -2,9 +2,9 @@ import { PropTypes } from 'react'
 
 import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
-import Maps from '../../maps'
+import Maps from '../Maps'
 import emitPlayerUpdateWeapon from './emitPlayerUpdateWeapon'
-import PlayerById from'../PlayerById'
+import PlayerById from '../PlayerById'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -27,23 +27,28 @@ export default function onPlayerRespawn(data) {
     // Set primary weapon
     this.player.meta.primaryWeapon = new Weapons[this.player.meta.selectedPrimaryWeaponId](this)
 
-    if (this.currentWeapon === 'primaryWeapon')
+    const currentWeapon = this.game.store.getState().player.currentWeapon
+
+    if (currentWeapon === 'primaryWeapon')
         this.currentWeaponSprite.loadTexture(this.player.meta.selectedPrimaryWeaponId)
 
     // Set secondary weapon
     this.player.meta.secondaryWeapon = new Weapons[this.player.meta.selectedSecondaryWeaponId](this)
 
-    if (this.currentWeapon === 'secondaryWeapon')
+    if (currentWeapon === 'secondaryWeapon')
         this.currentWeaponSprite.loadTexture(this.player.meta.selectedSecondaryWeaponId)
 
     this.player.meta.health = data.health
     EventHandler.emit('health update', data.health)
 
-    let currentWeapon = this.currentWeapon === 'primaryWeapon' ? this.player.meta.primaryWeapon : this.player.meta.secondaryWeapon
+    const currentWeaponMeta = this.currentWeapon === 'primary'
+        ? this.player.meta.primaryWeapon.meta
+        : this.player.meta.secondaryWeapon.meta
+
     emitPlayerUpdateWeapon.call(this, {
         id: '/#' + this.socket.id,
         roomId: this.roomId,
-        currentWeaponMeta: currentWeapon.meta
+        currentWeaponMeta
     })
 
     // Hide child groups

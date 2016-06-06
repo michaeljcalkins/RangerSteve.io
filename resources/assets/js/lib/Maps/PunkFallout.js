@@ -1,4 +1,4 @@
-import GameConsts from '../lib/GameConsts'
+import GameConsts from '../GameConsts'
 
 const WORLD_WIDTH = 2282
 const WORLD_HEIGHT = 2854

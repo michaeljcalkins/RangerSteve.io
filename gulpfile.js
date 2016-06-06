@@ -23,8 +23,7 @@ const isProduction = argv.production || false
 // ****************************************************
 // Directory Variables
 // ****************************************************
-var APP = 'app/',
-    SRC = 'resources/assets/',
+var SRC = 'resources/assets/',
     DIST = 'public/';
 
 var handleError = function (err) {
@@ -77,7 +76,8 @@ gulp.task('buildjs', function() {
             global: true,
             ignore: /\/node_modules\//,
             extensions: [".js"],
-            presets: ["es2015", "react"]
+            presets: ["es2015", "react"],
+            plugins: ["transform-object-rest-spread"]
         })
         .transform("browserify-shim", {
             global: true,

@@ -7,3 +7,7 @@ export default function HudScore({
         <div className="hud-score hud-item">{ score }</div>
     )
 }
+
+HudScore.propTypes = {
+    score: PropTypes.number.isRequired
+}

@@ -1,4 +1,4 @@
-import Maps from '../../maps'
+import Maps from '../../lib/Maps'
 import PlayerSpriteHandler from '../PlayerSpriteHandler'
 
 export default function() {

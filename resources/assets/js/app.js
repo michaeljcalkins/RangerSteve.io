@@ -1,12 +1,17 @@
+import { createStore } from 'redux'
+
+import reducers from './reducers'
 import Check from './lib/Check'
 import ui from './ui'
 import game from './game'
-import store from 'store'
+import storage from 'store'
 
-if (store.get('banned') === true) {
+if (storage.get('banned') === true) {
     window.location = 'https://www.google.com'
 }
 
+let store = createStore(reducers)
+
 window.check = Check
-ui()
-game()
+ui(store)
+game(store)

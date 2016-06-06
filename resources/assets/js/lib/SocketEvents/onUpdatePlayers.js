@@ -3,8 +3,8 @@ import _ from 'lodash'
 
 import RemotePlayer from '../RemotePlayer'
 import InitHandler from '../InitHandler'
-import EventHandler from '../EventHandler'
-import Maps from '../../maps'
+import Maps from '../Maps'
+import actions from '../../actions'
 
 const propTypes = {
     room: PropTypes.shape({
@@ -17,6 +17,8 @@ let lastRoomState = null
 
 export default function onUpdatePlayers(data) {
     check(data, propTypes)
+
+    this.game.store.dispatch(actions.room.setRoom(data.room))
 
     this.roomId = data.room.id
     this.room = data.room
@@ -46,13 +48,10 @@ export default function onUpdatePlayers(data) {
 
         this.enemies = this.game.add.group()
 
-        EventHandler.emit('room update', data.room)
-
         _.values(data.room.players).forEach((player) => {
             if (player.id === ('/#' + this.socket.id)) {
-                EventHandler.emit('score update', player.meta.score)
-                EventHandler.emit('health update', player.meta.health)
-                EventHandler.emit('player update', { player })
+                this.game.store.dispatch(actions.player.setScore(player.meta.score))
+                this.game.store.dispatch(actions.player.setHealth(player.meta.health))
                 return
             }
 

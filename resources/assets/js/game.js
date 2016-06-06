@@ -4,12 +4,13 @@ import update from './game/Update'
 import create from './game/Create'
 import GameConsts from './lib/GameConsts'
 
-export default function() {
+export default function(store) {
     const gameWidth = window.innerWidth
     const gameHeight = window.innerHeight
     let game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game')
 
     game.state.add('Game', function() {
+        game.store = store
         this.game = game
         this.init = init
         this.preload = preload

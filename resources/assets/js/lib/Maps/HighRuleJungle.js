@@ -1,5 +1,5 @@
-import GameConsts from '../lib/GameConsts'
-import emitPlayerDamaged from '../lib/SocketEvents/emitPlayerDamaged'
+import GameConsts from '../GameConsts'
+import emitPlayerDamaged from '../SocketEvents/emitPlayerDamaged'
 
 const WORLD_WIDTH = 8000
 const WORLD_HEIGHT = 3966

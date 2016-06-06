@@ -47,12 +47,6 @@ export default function Create() {
 
 
     /**
-     * Weapons
-     */
-    this.currentWeapon = 'primaryWeapon'
-
-
-    /**
      * Audio
      */
     this.audioPlayer = new Audio()
