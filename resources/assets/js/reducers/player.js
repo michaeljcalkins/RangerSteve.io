@@ -97,6 +97,18 @@ const player = (state = initialState, action) => {
                 jumps: action.value
             }
 
+        case 'DECREMENT_JUMPS':
+            return {
+                ...state,
+                jumps: state.jumps--
+            }
+
+        case 'INCREMENT_JUMPS':
+            return {
+                ...state,
+                jumps: state.jumps++
+            }
+
         default:
             return state
     }

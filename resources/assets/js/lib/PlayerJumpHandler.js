@@ -8,7 +8,7 @@ let jumpJetCounter = 0
 
 export default function PlayerJumpHandler() {
     // Set a variable that is true when the player is touching the ground
-    let onTheGround = this.player.body.touching.down
+    const onTheGround = this.player.body.touching.down
 
     // If the player is touching the ground, let him have 2 jumps
     if (onTheGround) {
@@ -38,7 +38,7 @@ export default function PlayerJumpHandler() {
         }
     }
 
-    EventHandler.emit('player jump jet update', { jumpJetCounter })
+    this.game.store.dispatch(actions.player.setJumpJetCounter(jumpJetCounter))
 
     // Reduce the number of available jumps if the jump input is released
     if (this.jumping && upInputReleased.call(this)) {
@@ -47,6 +47,7 @@ export default function PlayerJumpHandler() {
 
         if (this.jumps !== 1) {
             this.jumps--
+            this.game.store.dispatch(actions.player.decrementJumps())
         }
 
         this.jumping = false

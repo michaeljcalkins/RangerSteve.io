@@ -81,3 +81,17 @@ export const setJumpJetCounter = (value) => {
         value
     }
 }
+
+export const incrementJumps = (value) => {
+    return {
+        type: 'INCREMENT_JUMPS',
+        value
+    }
+}
+
+export const decrementJumps = (value) => {
+    return {
+        type: 'DECREMENT_JUMPS',
+        value
+    }
+}

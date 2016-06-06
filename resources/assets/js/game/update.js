@@ -5,10 +5,10 @@ import PlayerAngleHandler from '../lib/PlayerAngleHandler'
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 import Maps from '../lib/Maps'
 
-export default function Update(store) {
+export default function Update() {
     if (this.gameState !== 'active' || ! this.room) return
 
-    const currentWeapon = store.getState().player.currentWeapon
+    const currentWeapon = this.game.store.getState().player.currentWeapon
 
     CollisionHandler.call(this)
     Maps[this.room.map].update.call(this)
