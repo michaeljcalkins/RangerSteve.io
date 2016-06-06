@@ -153,10 +153,6 @@ export default class GameUi extends React.Component {
             EventHandler.emit('input enable')
         })
 
-        EventHandler.on('player jump jet update', (data) => {
-            this.setState({ jumpJetCounter: data.jumpJetCounter })
-        })
-
         $(document).keyup(function(e) {
             if (e.keyCode == 27) {
                 EventHandler.emit('settings close')
@@ -233,7 +229,11 @@ export default class GameUi extends React.Component {
     }
 
     render() {
-        const { player } = this.props
+        const {
+            player,
+            onCloseSettingsModal,
+            onOpenSettingsModal
+         } = this.props
 
         return (
             <div>
@@ -244,8 +244,8 @@ export default class GameUi extends React.Component {
                 <HudScore score={ player.score } />
                 <HudTimer roundEndTime={ this.state.room.roundEndTime } />
                 <HudLeaderboard players={ this.state.room.players } />
-                <HudJumpJet jumpJetCounter={ this.state.jumpJetCounter } />
-                <HudSettingsButton onButtonClick={ this.handleSettingsButtonClick } />
+                <HudJumpJet jumpJetCounter={ player.jumpJetCounter } />
+                <HudSettingsButton onButtonClick={ onOpenSettingsModal } />
                 <HudNewChatMessage
                     isOpen={ player.chatModalIsOpen }
                     onSendMessage={ this.handleSendMessage }
@@ -253,11 +253,11 @@ export default class GameUi extends React.Component {
                 <HudChatHistory messages={ this.state.messages } />
                 { this.renderEndOfRoundLeaderboard() }
                 <SettingsModal
-                    defaultMusicValue={ this.state.musicVolume }
-                    defaultNicknameValue={ this.state.nickname }
-                    defaultSoundEffectValue={ this.state.sfxVolume }
+                    defaultMusicValue={ player.musicVolume }
+                    defaultNicknameValue={ player.nickname }
+                    defaultSoundEffectValue={ player.sfxVolume }
                     isOpen={ player.settingsModalIsOpen }
-                    onClose={ this.handleCloseSettingsModal }
+                    onClose={ onCloseSettingsModal }
                     onMusicVolumeChange={ this.handleMusicVolumeChange }
                     onNicknameChange={ this.handleNicknameChange }
                     onPrimaryGunClick={ this.handlePrimaryGunClick }

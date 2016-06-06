@@ -10,8 +10,11 @@ const initialState = {
     selectedPrimaryWeaponId: '',
     sfxVolume: .2,
     musicVolume: .2,
+    jumpJetCounter: 0,
     chatModalIsOpen: false,
-    settingsModalIsOpen: false
+    settingsModalIsOpen: false,
+    jumps: 2,
+    jumping: false
 }
 
 const player = (state = initialState, action) => {
@@ -62,6 +65,36 @@ const player = (state = initialState, action) => {
             return {
                 ...state,
                 settingsModalIsOpen: action.value
+            }
+
+        case 'SET_JUMP_JET_COUNTER':
+            return {
+                ...state,
+                jumpJetCounter: action.value
+            }
+
+        case 'DECREMENT_JUMP_JET_COUNTER':
+            return {
+                ...state,
+                jumpJetCounter: state.jumpJetCounter - action.value
+            }
+
+        case 'INCREMENT_JUMP_JET_COUNTER':
+            return {
+                ...state,
+                jumpJetCounter: state.jumpJetCounter + action.value
+            }
+
+        case 'SET_JUMPING':
+            return {
+                ...state,
+                jumping: action.value
+            }
+
+        case 'SET_JUMPS':
+            return {
+                ...state,
+                jumps: action.value
             }
 
         default:

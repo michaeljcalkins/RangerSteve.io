@@ -46,3 +46,38 @@ export const closeChatModal = () => {
         value: false
     }
 }
+
+export const setJumping = (value) => {
+    return {
+        type: 'SET_JUMPING',
+        value
+    }
+}
+
+export const setJumps = (value) => {
+    return {
+        type: 'SET_JUMPS',
+        value
+    }
+}
+
+export const decrementJumpJetCounter = (value) => {
+    return {
+        type: 'DECREMENT_JUMP_JET_COUNTER',
+        value
+    }
+}
+
+export const incrementJumpJetCounter = (value) => {
+    return {
+        type: 'INCREMENT_JUMP_JET_COUNTER',
+        value
+    }
+}
+
+export const setJumpJetCounter = (value) => {
+    return {
+        type: 'SET_JUMP_JET_COUNTER',
+        value
+    }
+}

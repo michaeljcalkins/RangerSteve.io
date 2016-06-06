@@ -1,6 +1,8 @@
 import GameConsts from './GameConsts'
 import EventHandler from './EventHandler'
+
 import { upInputIsActive, upInputReleased } from './InputHelpers'
+import actions from '../actions'
 
 let jumpJetCounter = 0
 
@@ -10,29 +12,29 @@ export default function PlayerJumpHandler() {
 
     // If the player is touching the ground, let him have 2 jumps
     if (onTheGround) {
-        this.jumps = 2
-        this.jumping = false
+        this.game.store.dispatch(actions.player.setJumps(2))
+        this.game.store.dispatch(actions.player.setJumping(false))
     }
 
     // Jump!
     if (this.jumps === 2 && upInputIsActive.call(this, 5) && onTheGround) {
         this.player.body.velocity.y = GameConsts.JUMP_SPEED
-        this.jumping = true
+        this.game.store.dispatch(actions.player.setJumping(true))
     } else if (upInputIsActive.call(this, 5)) {
-        this.jumps = 1
+        this.game.store.dispatch(actions.player.setJumps(1))
     }
 
     // Jump Jet!
     if (this.jumps === 1 && this.input.keyboard.isDown(Phaser.Keyboard.W) && jumpJetCounter > -130000) {
         this.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
-        jumpJetCounter += GameConsts.JUMP_JET_SPEED
+        this.game.store.dispatch(actions.player.incrementJumpJetCounter(GameConsts.JUMP_JET_SPEED))
     } else {
         this.player.body.acceleration.y = 0
 
         if (jumpJetCounter < 0) {
-            jumpJetCounter -= GameConsts.JUMP_JET_SPEED_REGENERATION
+            this.game.store.dispatch(actions.player.decrementJumpJetCounter(GameConsts.JUMP_JET_SPEED_REGENERATION))
         } else {
-            jumpJetCounter = 0
+            this.game.store.dispatch(actions.player.setJumpJetCounter(0))
         }
     }
 

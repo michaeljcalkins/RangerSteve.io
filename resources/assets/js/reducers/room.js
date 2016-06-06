@@ -1,4 +1,5 @@
 const initialState = {
+
 }
 
 const room = (state = initialState, action) => {
