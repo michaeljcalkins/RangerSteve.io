@@ -2,10 +2,12 @@ import { combineReducers } from 'redux'
 
 import player from './player'
 import room from './room'
+import game from './game'
 
 const App = combineReducers({
     player,
-    room
+    room,
+    game
 })
 
 export default App

@@ -9,14 +9,6 @@ export default function() {
         this.player.meta.selectedSecondaryWeaponId = weapon.id
     })
 
-    EventHandler.on('input enable', () => {
-        this.game.input.enabled = true
-    })
-
-    EventHandler.on('input disable', () => {
-        this.game.input.enabled = false
-    })
-
     this.triplekillSound = this.game.add.audio('triplekill')
     EventHandler.on('play triplekill', () => {
         this.triplekillSound.volume = this.sfxVolume
@@ -70,14 +62,12 @@ export default function() {
      */
     // Open chat
     this.input.keyboard.addKey(Phaser.Keyboard.T).onDown.add(() => {
-        this.game.store.dispatch(actions.player.openChatModal())
-        this.game.input.enabled = false
+        this.game.store.dispatch(actions.game.openChatModal())
     })
 
     // Open settings modal
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
-        this.game.store.dispatch(actions.player.openSettingsModal())
-        this.game.input.enabled = false
+        this.game.store.dispatch(actions.game.openSettingsModal())
     })
 
     // Switch weapons

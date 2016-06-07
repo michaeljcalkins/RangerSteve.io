@@ -38,8 +38,6 @@ export default function PlayerSpriteHandler() {
     const startingSecondaryWeaponId = store.get('selectedSecondaryWeapon', 'DesertEagle')
 
     this.player.meta = {
-        // health: 100,
-        // nickname: store.get('nickname', NameGenerator()),
         facing: 'right',
         primaryWeapon: new Weapons[startingPrimaryWeaponId](this),
         secondaryWeapon: new Weapons[startingSecondaryWeaponId](this),

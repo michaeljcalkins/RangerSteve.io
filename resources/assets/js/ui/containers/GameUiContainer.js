@@ -6,19 +6,27 @@ import GameUi from '../components/Hud/GameUi'
 
 const mapStateToProps = (state) => {
     return {
-        player: state.player
+        player: state.player,
+        room: state.room,
+        game: state.game
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     const playerActions = bindActionCreators(actions.player, dispatch)
+    const gameActions = bindActionCreators(actions.game, dispatch)
 
     return {
-        onSetMusicVolume: playerActions.setMusicVolume,
-        onSetSfxVolume: playerActions.setSfxVolume,
+        onSetMusicVolume: gameActions.setMusicVolume,
+        onSetSfxVolume: gameActions.setSfxVolume,
         onSetNickname: playerActions.setNickname,
-        onCloseSettingsModal: playerActions.closeSettingsModal,
-        onOpenSettingsModal: playerActions.openSettingsModal,
+        onCloseSettingsModal: gameActions.closeSettingsModal,
+        onOpenSettingsModal: gameActions.openSettingsModal,
+        onCloseChatModal: gameActions.closeChatModal,
+        onMusicVolumeChange: gameActions.setMusicVolume,
+        onNicknameChange: playerActions.setNickname,
+        onSfxVolumeChange: gameActions.setSfxVolume,
+        onSettingsViewChange: gameActions.setSettingsModalView
     }
 }
 

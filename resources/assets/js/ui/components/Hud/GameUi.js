@@ -13,7 +13,6 @@ import HudScore from './HudScore'
 import HudTimer from './HudTimer'
 import HudSettingsButton from './HudSettingsButton'
 import HudKillingSpree from './HudKillingSpree'
-import NameGenerator from '../../../lib/NameGenerator'
 import SettingsModal from '../Settings/SettingsModal'
 import EndOfRoundLeaderboard from '../Round/EndOfRoundLeaderboard'
 
@@ -21,28 +20,7 @@ export default class GameUi extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            chatModalOpen: false,
-            currentWeapon: 1,
-            showKillConfirmed: false,
-            jumpJetCounter: 0,
-            messages: [],
-            killLogMessages: [],
-            killingSpreeCount: 0,
-            nickname: store.get('nickname', NameGenerator()),
-            player: {},
-            room: {},
-            settingsView: 'main',
-            selectedPrimaryWeapon: store.get('selectedPrimaryWeapon', 'AK47'),
-            selectedSecondaryWeapon: store.get('selectedSecondaryWeapon', 'DesertEagle'),
-            settingsModalOpen: !store.has('nickname'),
-            sfxVolume: store.get('sfxVolume', .1),
-            musicVolume: store.get('musicVolume', .3)
-        }
-
         this.handleSendMessage = this.handleSendMessage.bind(this)
-        this.handleCloseSettingsModal = this.handleCloseSettingsModal.bind(this)
-        this.handleSettingsButtonClick = this.handleSettingsButtonClick.bind(this)
         this.handleNicknameChange = this.handleNicknameChange.bind(this)
         this.handleSoundEffectVolumeChange = this.handleSoundEffectVolumeChange.bind(this)
         this.handlePrimaryGunClick = this.handlePrimaryGunClick.bind(this)
@@ -54,7 +32,7 @@ export default class GameUi extends React.Component {
 
     componentDidMount() {
         this.startEventHandler()
-        this.handleNicknameChange(this.state.nickname)
+        // this.handleNicknameChange(this.state.nickname)
     }
 
     startEventHandler() {
@@ -94,10 +72,6 @@ export default class GameUi extends React.Component {
             }, 3000)
         })
 
-        EventHandler.on('room update', (room) => {
-            this.setState({ room })
-        })
-
         let killConfirmedHandle = null
         EventHandler.on('player kill confirmed', () => {
             this.setState({ showKillConfirmed: true })
@@ -125,39 +99,14 @@ export default class GameUi extends React.Component {
             this.setState({ messages: newMessages })
         })
 
-        EventHandler.on('weapon update', (currentWeapon) => {
-            this.setState({ currentWeapon })
-        })
-
         EventHandler.on('player update', (data) => {
             this.setState({ player: data.player })
         })
 
-        EventHandler.on('settings open', () => {
-            this.setState({ settingsModalOpen: true })
-            EventHandler.emit('input disable')
-        })
-
-        EventHandler.on('settings close', () => {
-            this.setState({ settingsModalOpen: false })
-            EventHandler.emit('input enable')
-        })
-
-        EventHandler.on('chat open', () => {
-            this.setState({ chatModalOpen: true })
-            EventHandler.emit('input disable')
-        })
-
-        EventHandler.on('chat close', () => {
-            this.setState({ chatModalOpen: false })
-            EventHandler.emit('input enable')
-        })
-
-        $(document).keyup(function(e) {
-            if (e.keyCode == 27) {
-                EventHandler.emit('settings close')
-                EventHandler.emit('chat close')
-            }
+        $(document).keyup((e) => {
+            if (e.keyCode !== 27) return
+            this.props.onCloseSettingsModal()
+            this.props.onCloseChatModal()
         });
     }
 
@@ -167,18 +116,6 @@ export default class GameUi extends React.Component {
         }
         this.setState({ chatModalOpen: false })
         EventHandler.emit('input enable')
-    }
-
-    handleCloseSettingsModal() {
-        this.setState({ settingsModalOpen: false })
-        this.setState({ settingsView: 'main' })
-        EventHandler.emit('input enable')
-    }
-
-    handleSettingsButtonClick() {
-        this.setState({ settingsModalOpen: true })
-        this.setState({ settingsView: 'main' })
-        EventHandler.emit('input disable')
     }
 
     handleNicknameChange(nickname) {
@@ -216,11 +153,13 @@ export default class GameUi extends React.Component {
     }
 
     renderEndOfRoundLeaderboard() {
-        if (_.get(this, 'state.room.state', false) === 'ended') {
+        const { room } = this.props
+
+        if (_.get(this, 'room.state', false) === 'ended') {
             return (
                 <EndOfRoundLeaderboard
-                    players={ this.state.room.players }
-                    roundStartTime={ this.state.room.roundStartTime }
+                    players={ room.players }
+                    roundStartTime={ room.roundStartTime }
                 />
             )
         }
@@ -231,43 +170,49 @@ export default class GameUi extends React.Component {
     render() {
         const {
             player,
+            room,
+            game,
             onCloseSettingsModal,
-            onOpenSettingsModal
-         } = this.props
+            onOpenSettingsModal,
+            onSettingsViewChange,
+            onMusicVolumeChange,
+            onSfxVolumeChange,
+            onNicknameChange
+        } = this.props
 
         return (
             <div>
-                <HudKillConfirmed showKillConfirmed={ this.state.showKillConfirmed } />
-                <HudKillLog messages={ this.state.killLogMessages } />
-                <HudKillingSpree killingSpreeCount={ this.state.killingSpreeCount } />
+                <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
+                <HudKillLog messages={ game.killLogMessages } />
+                <HudKillingSpree killingSpreeCount={ game.killingSpreeCount } />
                 <HudHealth health={ player.health } />
                 <HudScore score={ player.score } />
-                <HudTimer roundEndTime={ this.state.room.roundEndTime } />
-                <HudLeaderboard players={ this.state.room.players } />
+                <HudTimer roundEndTime={ room.roundEndTime } />
+                <HudLeaderboard players={ room.players } />
                 <HudJumpJet jumpJetCounter={ player.jumpJetCounter } />
                 <HudSettingsButton onButtonClick={ onOpenSettingsModal } />
                 <HudNewChatMessage
-                    isOpen={ player.chatModalIsOpen }
+                    isOpen={ game.chatModalIsOpen }
                     onSendMessage={ this.handleSendMessage }
                 />
-                <HudChatHistory messages={ this.state.messages } />
+                <HudChatHistory messages={ game.messages } />
                 { this.renderEndOfRoundLeaderboard() }
                 <SettingsModal
                     defaultMusicValue={ player.musicVolume }
                     defaultNicknameValue={ player.nickname }
                     defaultSoundEffectValue={ player.sfxVolume }
-                    isOpen={ player.settingsModalIsOpen }
+                    isOpen={ game.settingsModalIsOpen }
                     onClose={ onCloseSettingsModal }
-                    onMusicVolumeChange={ this.handleMusicVolumeChange }
-                    onNicknameChange={ this.handleNicknameChange }
+                    onMusicVolumeChange={ onMusicVolumeChange }
+                    onNicknameChange={ onNicknameChange }
                     onPrimaryGunClick={ this.handlePrimaryGunClick }
                     onSecondaryGunClick={ this.handleSecondaryGunClick }
-                    onSoundEffectVolumeChange={ this.handleSoundEffectVolumeChange }
-                    onViewChange={ this.handleViewChange }
-                    player={ this.state.player }
-                    selectedPrimaryWeapon={ this.state.selectedPrimaryWeapon }
-                    selectedSecondaryWeapon={ this.state.selectedSecondaryWeapon }
-                    settingsView={ this.state.settingsView }
+                    onSfxVolumeChange={ onSfxVolumeChange }
+                    onViewChange={ onSettingsViewChange }
+                    player={ player }
+                    selectedPrimaryWeapon={ player.selectedPrimaryWeapon }
+                    selectedSecondaryWeapon={ player.selectedSecondaryWeapon }
+                    settingsView={ game.settingsView }
                 />
             </div>
         )
@@ -275,5 +220,14 @@ export default class GameUi extends React.Component {
 }
 
 GameUi.propTypes = {
-    player: PropTypes.object.isRequired
+    game: PropTypes.object.isRequired,
+    onCloseChatModal: PropTypes.func.isRequired,
+    onCloseSettingsModal: PropTypes.func.isRequired,
+    onMusicVolumeChange: PropTypes.func.isRequired,
+    onNicknameChange: PropTypes.func.isRequired,
+    onOpenSettingsModal: PropTypes.func.isRequired,
+    onSettingsViewChange: PropTypes.func.isRequired,
+    onSfxVolumeChange: PropTypes.func.isRequired,
+    player: PropTypes.object.isRequired,
+    room: PropTypes.object.isRequired
 }

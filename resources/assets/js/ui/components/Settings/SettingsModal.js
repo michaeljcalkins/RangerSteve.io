@@ -16,7 +16,7 @@ export default function SettingsModal({
     onNicknameChange,
     onPrimaryGunClick,
     onSecondaryGunClick,
-    onSoundEffectVolumeChange,
+    onSfxVolumeChange,
     onMusicVolumeChange,
     player,
     settingsView,
@@ -66,7 +66,7 @@ export default function SettingsModal({
                     defaultSoundEffectValue={ defaultSoundEffectValue }
                     onMusicVolumeChange={ onMusicVolumeChange }
                     onNicknameChange={ onNicknameChange }
-                    onSoundEffectVolumeChange={ onSoundEffectVolumeChange }
+                    onSfxVolumeChange={ onSfxVolumeChange }
                     onViewChange={ onViewChange }
                     selectedPrimaryWeapon={ selectedPrimaryWeapon }
                     selectedSecondaryWeapon={ selectedSecondaryWeapon }

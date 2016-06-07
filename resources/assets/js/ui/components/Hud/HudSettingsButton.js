@@ -10,3 +10,7 @@ export default function HudSettingsButton({
         ></div>
     )
 }
+
+HudSettingsButton.propTypes = {
+    onButtonClick: PropTypes.func.isRequired
+}

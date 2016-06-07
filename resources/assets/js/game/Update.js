@@ -6,12 +6,17 @@ import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 import Maps from '../lib/Maps'
 
 export default function Update() {
-    if (this.gameState !== 'active' || ! this.room) return
+    const state = this.game.store.getState()
 
-    const currentWeapon = this.game.store.getState().player.currentWeapon
+    if (this.gameState !== 'active' || ! state.room) return
+
+    const currentWeapon = state.player.currentWeapon
+    const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen
+
+    this.game.input.enabled = isPaused
 
     CollisionHandler.call(this)
-    Maps[this.room.map].update.call(this)
+    Maps[state.room.map].update.call(this)
 
     if (this.player.meta.health > 0) {
         PlayerMovementHandler.call(this)
@@ -29,13 +34,13 @@ export default function Update() {
         this.hurtBorderSprite.alpha = 0
     }
 
-    if (this.room.map) {
-        Maps[this.room.map].update.call(this)
+    if (state.room.map) {
+        Maps[state.room.map].update.call(this)
     }
 
-    if (this.roomId && this.player.meta.health > 0 && (this.room !== null && this.room.state !== 'ended')) {
+    if (state.room.id && this.player.meta.health > 0 && state.room.state !== 'ended') {
         emitMovePlayer.call(this, {
-            roomId: this.roomId,
+            roomId: state.room.id,
             x: this.player.x,
             y: this.player.y,
             rightArmAngle: this.rightArmGroup.angle,

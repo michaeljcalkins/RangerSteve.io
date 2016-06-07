@@ -8,13 +8,11 @@ const initialState = {
     score: 0,
     selectedSecondaryWeaponId: '',
     selectedPrimaryWeaponId: '',
-    sfxVolume: .2,
-    musicVolume: .2,
     jumpJetCounter: 0,
-    chatModalIsOpen: false,
-    settingsModalIsOpen: false,
     jumps: 2,
-    jumping: false
+    jumping: false,
+    selectedPrimaryWeapon: storage.get('selectedPrimaryWeapon', 'AK47'),
+    selectedSecondaryWeapon: storage.get('selectedSecondaryWeapon', 'DesertEagle'),
 }
 
 const player = (state = initialState, action) => {
@@ -41,30 +39,6 @@ const player = (state = initialState, action) => {
             return {
                 ...state,
                 nickname: action.value
-            }
-
-        case 'OPEN_CHAT_MODAL':
-            return {
-                ...state,
-                chatModalIsOpen: action.value
-            }
-
-        case 'CLOSE_CHAT_MODAL':
-            return {
-                ...state,
-                chatModalIsOpen: action.value
-            }
-
-        case 'OPEN_SETTINGS_MODAL':
-            return {
-                ...state,
-                settingsModalIsOpen: action.value
-            }
-
-        case 'CLOSE_SETTINGS_MODAL':
-            return {
-                ...state,
-                settingsModalIsOpen: action.value
             }
 
         case 'SET_JUMP_JET_COUNTER':

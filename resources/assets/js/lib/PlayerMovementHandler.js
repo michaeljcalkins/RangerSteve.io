@@ -3,7 +3,9 @@ import { playerFaceLeft, playerFaceRight } from './PlayerFaceHandler'
 import { leftInputIsActive, rightInputIsActive } from './InputHelpers'
 
 export default function PlayerMovementHandler() {
-    if (this.player.meta.health <= 0) return
+    const state = this.game.store.getState()
+
+    if (state.player.health <= 0) return
 
     if (leftInputIsActive.call(this)) {
         // If the LEFT key is down, set the player velocity to move left

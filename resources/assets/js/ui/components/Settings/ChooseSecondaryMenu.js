@@ -4,15 +4,11 @@ import GameConsts from '../../../lib/GameConsts'
 
 export default function ChooseSecondaryMenu({
     onSecondaryGunClick,
-    onViewChange,
-    player
+    onViewChange
 }) {
     const secondaryWeapons = GameConsts.SECONDARY_WEAPONS
 
     function handleSelectPrimaryClick(weapon) {
-        if (player.meta.score < weapon.minScore)
-            return
-
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }
@@ -49,6 +45,5 @@ export default function ChooseSecondaryMenu({
 
 ChooseSecondaryMenu.propTypes = {
     onSecondaryGunClick: PropTypes.func.isRequired,
-    onViewChange: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired
+    onViewChange: PropTypes.func.isRequired
 }
