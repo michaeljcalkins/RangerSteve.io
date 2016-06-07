@@ -13,6 +13,7 @@ const initialState = {
     jumping: false,
     selectedPrimaryWeapon: storage.get('selectedPrimaryWeapon', 'AK47'),
     selectedSecondaryWeapon: storage.get('selectedSecondaryWeapon', 'DesertEagle'),
+    facing: 'left'
 }
 
 const player = (state = initialState, action) => {
@@ -81,6 +82,12 @@ const player = (state = initialState, action) => {
             return {
                 ...state,
                 jumps: state.jumps++
+            }
+
+        case 'SET_FACING':
+            return {
+                ...state,
+                facing: action.value
             }
 
         default:

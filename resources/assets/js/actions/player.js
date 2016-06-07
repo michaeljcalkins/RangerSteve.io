@@ -74,3 +74,10 @@ export const decrementJumps = (value) => {
         value
     }
 }
+
+export const setFacing = (value) => {
+    return {
+        type: 'SET_FACING',
+        value
+    }
+}

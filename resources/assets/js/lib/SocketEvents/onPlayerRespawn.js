@@ -58,7 +58,7 @@ export default function onPlayerRespawn(data) {
     this.torsoGroup.visible = true
 
     // Create and set the new spawn point
-    const spawnPoint = Maps[this.room.map].getRandomSpawnPoint()
+    const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
 

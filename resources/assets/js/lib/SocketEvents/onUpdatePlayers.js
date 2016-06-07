@@ -20,38 +20,39 @@ export default function onUpdatePlayers(data) {
 
     this.game.store.dispatch(actions.room.setRoom(data.room))
 
-    this.roomId = data.room.id
-    this.room = data.room
+    const store = this.game.store
+    const state = this.game.store.getState()
 
-    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id
+    const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id
     window.history.pushState({ path: newurl }, '', newurl)
 
-    if (this.gameState === 'loading') {
-        Maps[this.room.map].preload.call(this)
-        this.currentMap = this.room.map
+    if (state.game.state === 'loading') {
+        console.log(state.room)
+        Maps[state.room.map].preload.call(this)
+        this.currentMap = state.room.map
 
         this.load.onLoadComplete.add(() => {
             this.enemies = this.game.add.group()
 
             InitHandler.call(this)
 
-            this.gameState = 'active'
+            store.dispatch(actions.game.setState('active'))
         }, this)
 
         this.load.start()
     }
 
-    if (this.gameState === 'active') {
+    if (state.game.state === 'active') {
         this.enemies.forEach(function (enemy) {
             enemy.kill()
         })
 
         this.enemies = this.game.add.group()
 
-        _.values(data.room.players).forEach((player) => {
+        _.values(state.room.players).forEach((player) => {
             if (player.id === ('/#' + this.socket.id)) {
-                this.game.store.dispatch(actions.player.setScore(player.meta.score))
-                this.game.store.dispatch(actions.player.setHealth(player.meta.health))
+                store.dispatch(actions.player.setScore(player.meta.score))
+                store.dispatch(actions.player.setHealth(player.meta.health))
                 return
             }
 
@@ -73,15 +74,15 @@ export default function onUpdatePlayers(data) {
             this.enemies.add(newRemotePlayer)
         })
 
-        if (this.room.state === 'ended') {
+        if (state.room.state === 'ended') {
             this.game.paused = true
         }
 
-        if (this.room.state === 'active' && lastRoomState === 'ended') {
+        if (state.room.state === 'active' && lastRoomState === 'ended') {
             window.location.reload()
             return
         }
 
-        lastRoomState = this.room.state
+        lastRoomState = state.room.state
     }
 }

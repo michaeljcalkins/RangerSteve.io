@@ -10,7 +10,8 @@ const initialState = {
     settingsModalIsOpen: !storage.has('nickname'),
     settingsView: 'main',
     sfxVolume: storage.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME),
-    showKillConfirmed: false
+    showKillConfirmed: false,
+    state: 'loading'
 }
 
 const player = (state = initialState, action) => {
@@ -67,6 +68,12 @@ const player = (state = initialState, action) => {
             return {
                 ...state,
                 killingSpreeCount: action.value
+            }
+
+        case 'SET_STATE':
+            return {
+                ...state,
+                state: action.value
             }
 
         default:

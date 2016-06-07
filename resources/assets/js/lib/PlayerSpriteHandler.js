@@ -4,7 +4,8 @@ import Weapons from './Weapons'
 import Maps from './Maps'
 
 export default function PlayerSpriteHandler() {
-    let spawnPoint = Maps[this.room.map].getRandomSpawnPoint()
+    const state = this.game.store.getState()
+    const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.scale.setTo(GameConsts.PLAYER_SCALE)

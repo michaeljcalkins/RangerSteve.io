@@ -3,10 +3,13 @@ import emitPlayerUpdateWeapon from '../SocketEvents/emitPlayerUpdateWeapon'
 import actions from '../../actions'
 
 export default function() {
-    EventHandler.on('primary weapon update', (weapon) => this.player.meta.selectedPrimaryWeaponId = weapon.id)
+
+    EventHandler.on('primary weapon update', (weapon) => {
+        this.game.store.getState().player.selectedPrimaryWeaponId = weapon.id
+    })
 
     EventHandler.on('secondary weapon update', (weapon) => {
-        this.player.meta.selectedSecondaryWeaponId = weapon.id
+        this.game.store.getState().player.selectedSecondaryWeaponId = weapon.id
     })
 
     this.triplekillSound = this.game.add.audio('triplekill')

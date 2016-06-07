@@ -67,3 +67,10 @@ export const setSettingsModalView = (value) => {
         value
     }
 }
+
+export const setState = (value) => {
+    return {
+        type: 'SET_STATE',
+        value
+    }
+}
