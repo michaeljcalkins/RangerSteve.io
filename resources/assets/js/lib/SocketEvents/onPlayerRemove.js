@@ -7,7 +7,7 @@ const propTypes = {
 export default function onPlayerRemove(data) {
     check(data, propTypes)
 
-    if (data.id === ('/#' + this.socket.id)) {
+    if (data.id === ('/#' + window.socket.id)) {
         location.reload()
         return
     }

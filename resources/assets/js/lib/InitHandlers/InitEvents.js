@@ -2,14 +2,6 @@ import emitPlayerUpdateWeapon from '../SocketEvents/emitPlayerUpdateWeapon'
 import actions from '../../actions'
 
 export default function() {
-    /**
-     * Keyboard Events
-     */
-    // Open chat
-    this.input.keyboard.addKey(Phaser.Keyboard.T).onDown.add(() => {
-        this.game.store.dispatch(actions.game.openChatModal())
-    })
-
     // Open settings modal
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
         this.game.store.dispatch(actions.game.openSettingsModal())
@@ -48,7 +40,7 @@ export default function() {
             : this.player.meta.secondaryWeapon.meta
 
         emitPlayerUpdateWeapon.call(this, {
-            id: '/#' + this.socket.id,
+            id: '/#' + window.socket.id,
             roomId: this.roomId,
             currentWeaponMeta
         })

@@ -17,7 +17,7 @@ const propTypes = {
 export default function onBulletFired(data) {
     check(data, propTypes)
 
-    if (data.id === ('/#' + this.socket.id))
+    if (data.id === ('/#' + window.socket.id))
         return
 
     /**

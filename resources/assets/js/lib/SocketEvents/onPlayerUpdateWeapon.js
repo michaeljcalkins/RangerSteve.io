@@ -10,7 +10,7 @@ const propTypes = {
 export default function(data) {
     check(data, propTypes)
 
-    if (data.id === ('/#' + this.socket.id)) return
+    if (data.id === ('/#' + window.socket.id)) return
 
     let player = PlayerById.call(this, data.id)
 

@@ -18,7 +18,7 @@ export default function onPlayerRespawn(data) {
     const store = this.game.store
     const currentWeapon = state.player.currentWeapon
 
-    if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
+    if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (! enemyPlayer) return
         enemyPlayer.meta.health = 100
@@ -43,7 +43,7 @@ export default function onPlayerRespawn(data) {
         : state.player.secondaryWeapon.meta
 
     emitPlayerUpdateWeapon.call(this, {
-        id: '/#' + this.socket.id,
+        id: '/#' + window.socket.id,
         roomId: this.roomId,
         currentWeaponMeta
     })

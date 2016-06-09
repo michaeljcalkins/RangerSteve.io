@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 import _ from 'lodash'
 
 import RemotePlayer from '../RemotePlayer'
-import InitHandler from '../InitHandler'
+import InitHandler from '../InitHandlers'
 import Maps from '../Maps'
 import actions from '../../actions'
 
@@ -48,7 +48,7 @@ export default function onUpdatePlayers(data) {
         this.enemies = this.game.add.group()
 
         _.values(this.game.store.getState().room.players).forEach((player) => {
-            if (player.id === ('/#' + this.socket.id)) {
+            if (player.id === ('/#' + window.socket.id)) {
                 store.dispatch(actions.player.setScore(player.meta.score))
                 store.dispatch(actions.player.setHealth(player.meta.health))
                 return

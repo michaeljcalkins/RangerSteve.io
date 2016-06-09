@@ -4,6 +4,8 @@ import emitBulletFired from './SocketEvents/emitBulletFired'
 const rangeOfVariance = _.range(-.12, .12, .01)
 
 export default function FireShotgunShell() {
+    const state = this.rootScope.game.store.getState()
+
     let x = this.rootScope.player.x
     let y = this.rootScope.player.y
 
@@ -38,9 +40,9 @@ export default function FireShotgunShell() {
         }, 40)
 
         emitBulletFired.call(this.rootScope, {
-            roomId: this.rootScope.roomId,
+            roomId: state.room.id,
             bulletId: bullet.bulletId,
-            playerId: '/#' + this.rootScope.socket.id,
+            playerId: '/#' + window.socket.id,
             weaponId: this.meta.id,
             x,
             y,
@@ -52,6 +54,6 @@ export default function FireShotgunShell() {
         })
     }
 
-    this.fx.volume = this.rootScope.sfxVolume
+    this.fx.volume = state.game.sfxVolume
     this.fx.play()
 }

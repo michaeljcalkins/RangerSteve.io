@@ -8,5 +8,5 @@ const propTypes = {
 
 export default function(data) {
     check(data, propTypes)
-    this.socket.emit('player update weapon', data)
+    window.socket.emit('player update weapon', data)
 }

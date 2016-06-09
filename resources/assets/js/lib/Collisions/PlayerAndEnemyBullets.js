@@ -6,7 +6,7 @@ export default function() {
 
     // Did enemy bullets hit you
     this.physics.arcade.overlap(this.player, this.enemyBullets, (player, bullet) => {
-        if (! bullet.weaponId || ! this.socket.id || state.player.health <= 0) return
+        if (! bullet.weaponId || ! window.socket.id || state.player.health <= 0) return
 
         bullet.kill()
 

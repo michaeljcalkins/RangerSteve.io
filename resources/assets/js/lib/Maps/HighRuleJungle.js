@@ -111,7 +111,7 @@ export function update() {
         emitPlayerDamaged.call(this, {
             roomId: this.roomId,
             damage: 1000,
-            damagedPlayerId: '/#' + this.socket.id,
+            damagedPlayerId: '/#' + window.socket.id,
             attackingPlayerId: null
         })
 

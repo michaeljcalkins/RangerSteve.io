@@ -15,7 +15,7 @@ const propTypes = {
 export default function onMovePlayer(data) {
     check(data, propTypes)
 
-    if (data.id === ('/#' + this.socket.id))
+    if (data.id === ('/#' + window.socket.id))
         return
 
     let movePlayer = PlayerById.call(this, data.id)

@@ -23,11 +23,11 @@ export default class GameUi extends React.Component {
         this.handleSendMessage = this.handleSendMessage.bind(this)
         this.handleNicknameChange = this.handleNicknameChange.bind(this)
         this.handleSoundEffectVolumeChange = this.handleSoundEffectVolumeChange.bind(this)
-        this.handlePrimaryGunClick = this.handlePrimaryGunClick.bind(this)
-        this.handleSecondaryGunClick = this.handleSecondaryGunClick.bind(this)
         this.handleViewChange = this.handleViewChange.bind(this)
         this.handleMusicVolumeChange = this.handleMusicVolumeChange.bind(this)
         this.renderEndOfRoundLeaderboard = this.renderEndOfRoundLeaderboard.bind(this)
+        this.handleSelectPrimaryClick = this.handleSelectPrimaryClick.bind(this)
+        this.handleSelectSecondaryClick = this.handleSelectSecondaryClick.bind(this)
     }
 
     componentDidMount() {
@@ -36,9 +36,23 @@ export default class GameUi extends React.Component {
 
     startEventHandler() {
         $(document).keyup((e) => {
-            if (e.keyCode !== 27) return
-            this.props.onCloseSettingsModal()
-            this.props.onCloseChatModal()
+            const game = this.props.game
+
+            if (e.keyCode === Phaser.Keyboard.ESC) {
+                e.preventDefault()
+                this.props.onCloseSettingsModal()
+                this.props.onCloseChatModal()
+            }
+
+            if (e.keyCode === Phaser.Keyboard.T && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
+                e.preventDefault()
+                this.props.onOpenChatModal()
+            }
+
+            if (e.keyCode === Phaser.Keyboard.TAB && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
+                e.preventDefault()
+                this.props.onOpenSettingsModal()
+            }
         })
     }
 
@@ -46,7 +60,7 @@ export default class GameUi extends React.Component {
         if (message.length === 0) return
         emitMessageSend.call(this, {
             roomId: this.props.room.id,
-            playerId: '/#' + this.socket.id,
+            playerId: '/#' + window.socket.id,
             playerNickname: this.props.player.nickname ? this.props.player.nickname : 'Unnamed Ranger',
             message
         })
@@ -55,7 +69,7 @@ export default class GameUi extends React.Component {
     handleNicknameChange(nickname) {
         store.set('nickname', nickname)
         this.props.onNicknameChange(nickname)
-        this.socket.emit('player update nickname', {
+        window.socket.emit('player update nickname', {
             roomId: this.props.room.id,
             nickname: data.nickname
         })
@@ -126,10 +140,8 @@ export default class GameUi extends React.Component {
                 <HudChatHistory messages={ game.messages } />
                 { this.renderEndOfRoundLeaderboard() }
                 <SettingsModal
-                    defaultMusicValue={ player.musicVolume }
-                    defaultNicknameValue={ player.nickname }
-                    defaultSoundEffectValue={ player.sfxVolume }
                     isOpen={ game.settingsModalIsOpen }
+                    game={ game }
                     onClose={ onCloseSettingsModal }
                     onMusicVolumeChange={ this.handleMusicVolumeChange }
                     onNicknameChange={ this.handleNicknameChange }
@@ -138,9 +150,6 @@ export default class GameUi extends React.Component {
                     onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
                     onViewChange={ onSettingsViewChange }
                     player={ player }
-                    selectedPrimaryWeapon={ player.primaryWeapon }
-                    selectedSecondaryWeapon={ player.secondaryWeapon }
-                    settingsView={ game.settingsView }
                 />
             </div>
         )
@@ -153,6 +162,7 @@ GameUi.propTypes = {
     onCloseSettingsModal: PropTypes.func.isRequired,
     onMusicVolumeChange: PropTypes.func.isRequired,
     onNicknameChange: PropTypes.func.isRequired,
+    onOpenChatModal: PropTypes.func.isRequired,
     onOpenSettingsModal: PropTypes.func.isRequired,
     onSettingsViewChange: PropTypes.func.isRequired,
     onSfxVolumeChange: PropTypes.func.isRequired,

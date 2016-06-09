@@ -23,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
         onCloseSettingsModal: gameActions.closeSettingsModal,
         onOpenSettingsModal: gameActions.openSettingsModal,
         onCloseChatModal: gameActions.closeChatModal,
+        onOpenChatModal: gameActions.openChatModal,
         onMusicVolumeChange: gameActions.setMusicVolume,
         onNicknameChange: playerActions.setNickname,
         onSfxVolumeChange: gameActions.setSfxVolume,

@@ -11,7 +11,7 @@ let killConfirmedHandle = null
 export default function onPlayerKillConfirmed(data) {
     check(data, propTypes)
 
-    if (data.id !== ('/#' + this.socket.id))
+    if (data.id !== ('/#' + window.socket.id))
         return
 
     this.game.store.dispatch(actions.player.setShowKillConfirmed(true))

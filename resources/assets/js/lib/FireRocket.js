@@ -2,6 +2,8 @@ import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
 
 export default function FireRocket() {
+    const state = this.rootScope.game.store.getState()
+
     let x = this.rootScope.player.x
     let y = this.rootScope.player.y
 
@@ -21,13 +23,13 @@ export default function FireRocket() {
         bullet.alpha = 1
     }, 100)
 
-    this.fx.volume = this.rootScope.sfxVolume
+    this.fx.volume = state.game.sfxVolume
     this.fx.play()
 
     emitBulletFired.call(this.rootScope, {
-        roomId: this.rootScope.roomId,
+        roomId: state.room.id,
         bulletId: bullet.bulletId,
-        playerId: '/#' + this.rootScope.socket.id,
+        playerId: '/#' + window.socket.id,
         weaponId: this.meta.id,
         x,
         y,

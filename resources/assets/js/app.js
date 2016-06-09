@@ -10,10 +10,14 @@ if (storage.get('banned') === true) {
     window.location = '/'
 }
 
+window.check = Check
+
 const store = createStore(reducers, {}, compose(
     window.devToolsExtension && window.devToolsExtension()
 ))
 
-window.check = Check
+window.socket = io.connect()
+
+
 ui(store)
 game(store)

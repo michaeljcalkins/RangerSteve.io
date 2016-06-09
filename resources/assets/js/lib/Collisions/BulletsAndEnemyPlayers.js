@@ -28,7 +28,7 @@ export default function() {
             damage: bullet.damage,
             weaponId: bullet.weaponId,
             damagedPlayerId: enemy.id,
-            attackingPlayerId: '/#' + this.socket.id
+            attackingPlayerId: '/#' + window.socket.id
         })
     }, null, this)
 }

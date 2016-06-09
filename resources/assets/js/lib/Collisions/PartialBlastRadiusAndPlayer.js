@@ -13,7 +13,7 @@ export default function() {
             roomId: this.roomId,
             damage: 30,
             weaponId: bullet.weaponId,
-            damagedPlayerId: '/#' + this.socket.id,
+            damagedPlayerId: '/#' + window.socket.id,
             attackingPlayerId: null
         })
     }, null, this)

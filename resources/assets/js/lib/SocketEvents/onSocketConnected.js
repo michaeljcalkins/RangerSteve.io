@@ -1,5 +1,5 @@
 export default function onSocketConnected() {
-    this.socket.emit('new player', {
+    window.socket.emit('new player', {
         roomId: this.game.store.getState().room.id,
         // x: this.player.x,
         // y: this.player.y,

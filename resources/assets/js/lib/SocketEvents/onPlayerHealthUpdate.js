@@ -9,7 +9,7 @@ const propTypes = {
 export default function onPlayerHealthUpdate(data) {
     check(data, propTypes)
 
-    if (data.id !== ('/#' + this.socket.id))
+    if (data.id !== ('/#' + window.socket.id))
         return
 
     this.player.meta.health = data.health

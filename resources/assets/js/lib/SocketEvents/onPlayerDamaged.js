@@ -14,7 +14,7 @@ let lastKnownHealth = null
 export default function onPlayerDamaged(data) {
     check(data, propTypes)
 
-    if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
+    if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
         let damagedPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (damagedPlayer) {
             damagedPlayer.meta.health = data.health
@@ -36,7 +36,7 @@ export default function onPlayerDamaged(data) {
         clearTimeout(damageTimeout)
         damageTimeout = setTimeout(() => {
             // Player's health will fully regenerate
-            this.socket.emit('player full health', {
+            window.socket.emit('player full health', {
                 roomId: this.roomId
             })
         }, 5000)
@@ -56,7 +56,7 @@ export default function onPlayerDamaged(data) {
                 lastKnownHealth += 10
 
                 // Increase player health by 10 every 1/2 a second
-                this.socket.emit('player healing', {
+                window.socket.emit('player healing', {
                     roomId: this.roomId
                 })
             }, 500)

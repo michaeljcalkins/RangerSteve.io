@@ -8,9 +8,9 @@ export default class MainSettingsMenu extends React.Component {
         super(props)
 
         this.state = {
-            nickname: props.defaultNicknameValue,
-            sfxVolume: props.defaultSoundEffectValue,
-            musicVolume: props.defaultMusicValue
+            nickname: props.player.nickname,
+            sfxVolume: props.game.sfxVolume,
+            musicVolume: props.game.musicVolume
         }
 
         this.handleNicknameChange = this.handleNicknameChange.bind(this)
@@ -22,6 +22,8 @@ export default class MainSettingsMenu extends React.Component {
         this.secondaryWeapon = this.secondaryWeapon.bind(this)
         this.handleGenerateName = this.handleGenerateName.bind(this)
         this.handleMusicVolumeChange = this.handleMusicVolumeChange.bind(this)
+        this.renderPrimaryWeaponImage = this.renderPrimaryWeaponImage.bind(this)
+        this.renderSecondaryWeaponImage = this.renderSecondaryWeaponImage.bind(this)
     }
 
     handleGenerateName() {
@@ -59,15 +61,14 @@ export default class MainSettingsMenu extends React.Component {
     }
 
     primaryWeapon() {
-        if (! this.props.selectedPrimaryWeapon)
-            return null
+        const { selectedPrimaryWeaponId } = this.props.player
 
         let weapon = _.find(GameConsts.PRIMARY_WEAPONS, {
-            id: this.props.selectedPrimaryWeapon
+            id: selectedPrimaryWeaponId
         })
 
         if (! weapon) {
-            console.error('Could not find primary weapon.', this.props.selectedPrimaryWeapon)
+            console.error('Could not find primary weapon.', selectedPrimaryWeaponId)
             return null
         }
 
@@ -75,19 +76,40 @@ export default class MainSettingsMenu extends React.Component {
     }
 
     secondaryWeapon() {
-        if (! this.props.selectedSecondaryWeapon)
-            return null
+        const { selectedSecondaryWeaponId } = this.props.player
 
         let weapon = _.find(GameConsts.SECONDARY_WEAPONS, {
-            id: this.props.selectedSecondaryWeapon
+            id: selectedSecondaryWeaponId
         })
 
         if (! weapon) {
-            console.error('Could not find secondary weapon.', this.props.selectedSecondaryWeapon)
+            console.error('Could not find secondary weapon.', selectedSecondaryWeaponId)
             return null
         }
 
         return weapon
+    }
+
+    renderPrimaryWeaponImage() {
+        const primaryWeapon = this.primaryWeapon()
+
+        if (! primaryWeapon)
+            return null
+
+        return (
+            <img src={ primaryWeapon.image } />
+        )
+    }
+
+    renderSecondaryWeaponImage() {
+        const secondaryWeapon = this.secondaryWeapon()
+
+        if (! secondaryWeapon)
+            return null
+
+        return (
+            <img src={ secondaryWeapon.image } />
+        )
     }
 
     render() {
@@ -106,7 +128,7 @@ export default class MainSettingsMenu extends React.Component {
                             style={ { marginBottom: '28px' } }
                         >
                             <div>
-                                <img src={ this.primaryWeapon().image } />
+                                { this.renderPrimaryWeaponImage() }
                             </div>
                             <span className="caret"></span>
                             <span className="option-name">{ this.primaryWeapon().name }</span>
@@ -119,7 +141,7 @@ export default class MainSettingsMenu extends React.Component {
                             onClick={ this.handleSecondaryViewClick }
                         >
                             <div>
-                                <img src={ this.secondaryWeapon().image } />
+                                { this.renderSecondaryWeaponImage() }
                             </div>
                             <span className="caret"></span>
                             <span className="option-name">{ this.secondaryWeapon().name }</span>
@@ -186,13 +208,10 @@ export default class MainSettingsMenu extends React.Component {
 }
 
 MainSettingsMenu.propTypes = {
-    defaultMusicValue: PropTypes.number,
-    defaultNicknameValue: PropTypes.string,
-    defaultSoundEffectValue: PropTypes.number,
+    game: PropTypes.object,
     onMusicVolumeChange: PropTypes.func,
     onNicknameChange: PropTypes.func,
     onSoundEffectVolumeChange: PropTypes.func,
     onViewChange: PropTypes.func,
-    selectedPrimaryWeapon: PropTypes.string,
-    selectedSecondaryWeapon: PropTypes.string
+    player: PropTypes.object
 }
