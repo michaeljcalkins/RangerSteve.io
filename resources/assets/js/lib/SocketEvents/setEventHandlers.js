@@ -35,21 +35,4 @@ export default function() {
 
     this.socket.on('bullet fired', onBulletFired.bind(this))
     this.socket.on('kick player', onKickPlayer.bind(this))
-
-    EventHandler.on('message send', (data) => {
-        emitMessageSend.call(this, {
-            roomId: this.roomId,
-            playerId: '/#' + this.socket.id,
-            playerNickname: this.player.meta.nickname ? this.player.meta.nickname : 'Unnamed Ranger',
-            message: data.message
-        })
-    })
-
-    EventHandler.on('player update nickname', (data) => {
-        this.player.meta.nickname = data.nickname
-        this.socket.emit('player update nickname', {
-            roomId: this.roomId,
-            nickname: data.nickname
-        })
-    })
 }

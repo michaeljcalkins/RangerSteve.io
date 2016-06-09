@@ -43,14 +43,22 @@ export default class GameUi extends React.Component {
     }
 
     handleSendMessage(message) {
-        if (message.length > 0) {
-            emitMessageSend({ message })
-        }
+        if (message.length === 0) return
+        emitMessageSend.call(this, {
+            roomId: this.props.room.id,
+            playerId: '/#' + this.socket.id,
+            playerNickname: this.props.player.nickname ? this.props.player.nickname : 'Unnamed Ranger',
+            message
+        })
     }
 
     handleNicknameChange(nickname) {
         store.set('nickname', nickname)
         this.props.onNicknameChange(nickname)
+        this.socket.emit('player update nickname', {
+            roomId: this.props.room.id,
+            nickname: data.nickname
+        })
     }
 
     handleSoundEffectVolumeChange(volume) {
