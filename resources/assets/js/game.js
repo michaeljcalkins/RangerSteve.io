@@ -11,11 +11,11 @@ export default function(store) {
 
     game.state.add('Game', function() {
         this.game = game
+        this.game.store = store
         this.init = Init
         this.preload = Preload
         this.create = Create
         this.update = Update
         this.render = Render
-        this.game.store = store
     }, true)
 }

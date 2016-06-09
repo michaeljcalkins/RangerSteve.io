@@ -2,6 +2,7 @@ import store from 'store'
 import GameConsts from './GameConsts'
 import Weapons from './Weapons'
 import Maps from './Maps'
+import actions from '../actions'
 
 export default function PlayerSpriteHandler() {
     const state = this.game.store.getState()
@@ -35,16 +36,8 @@ export default function PlayerSpriteHandler() {
     this.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
     this.player.animations.add('death', GameConsts.ANIMATION_DEATH, 20, false)
 
-    const startingPrimaryWeaponId = store.get('selectedPrimaryWeapon', 'AK47')
-    const startingSecondaryWeaponId = store.get('selectedSecondaryWeapon', 'DesertEagle')
-
-    this.player.meta = {
-        facing: 'right',
-        primaryWeapon: new Weapons[startingPrimaryWeaponId](this),
-        secondaryWeapon: new Weapons[startingSecondaryWeaponId](this),
-        selectedPrimaryWeaponId: startingPrimaryWeaponId,
-        selectedSecondaryWeaponId: startingSecondaryWeaponId
-    }
+    this.game.store.dispatch(actions.player.setPrimaryWeapon(new Weapons[this.game.store.getState().player.selectedPrimaryWeaponId](this)))
+    this.game.store.dispatch(actions.player.setSecondaryWeapon(new Weapons[this.game.store.getState().player.selectedSecondaryWeaponId](this)))
 
     this.leftArmGroup = this.game.add.group()
     this.rightArmGroup = this.game.add.group()
@@ -70,12 +63,12 @@ export default function PlayerSpriteHandler() {
 
     // Gun
     this.currentWeaponSprite = this.game.add.sprite(
-        this.player.meta.primaryWeapon.meta.spriteX,
-        this.player.meta.primaryWeapon.meta.spriteY,
-        startingPrimaryWeaponId
+        this.game.store.getState().player.primaryWeapon.meta.spriteX,
+        this.game.store.getState().player.primaryWeapon.meta.spriteY,
+        this.game.store.getState().player.selectedPrimaryWeaponId
     )
-    this.currentWeaponSprite.scale.setTo(this.player.meta.primaryWeapon.meta.scale)
-    this.currentWeaponSprite.rotation = this.player.meta.primaryWeapon.meta.rotation
+    this.currentWeaponSprite.scale.setTo(this.game.store.getState().player.primaryWeapon.meta.scale)
+    this.currentWeaponSprite.rotation = this.game.store.getState().player.primaryWeapon.meta.rotation
 
     // Right arm
     this.rightArmGroup.add(this.currentWeaponSprite)

@@ -1,5 +1,4 @@
 import GameConsts from './GameConsts'
-import EventHandler from './EventHandler'
 
 import { upInputIsActive, upInputReleased } from './InputHelpers'
 import actions from '../actions'

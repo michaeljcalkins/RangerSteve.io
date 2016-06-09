@@ -1,4 +1,3 @@
-import EventHandler from '../EventHandler'
 import onUpdatePlayers from './onUpdatePlayers'
 import onSocketConnected from './onSocketConnected'
 import onSocketDisconnect from './onSocketDisconnect'

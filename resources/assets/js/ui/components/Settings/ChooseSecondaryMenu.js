@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import storage from 'store'
 
 import GameConsts from '../../../lib/GameConsts'
 
@@ -6,15 +7,14 @@ export default function ChooseSecondaryMenu({
     onSecondaryGunClick,
     onViewChange
 }) {
-    const secondaryWeapons = GameConsts.SECONDARY_WEAPONS
-
     function handleSelectPrimaryClick(weapon) {
+        storage.set('selectedPrimaryWeaponId', weapon.id)
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }
 
     function renderWeapons() {
-        return secondaryWeapons.map(function(weapon, index) {
+        return GameConsts.SECONDARY_WEAPONS.map(function(weapon, index) {
             return (
                 <div
                     className="option-group option-weapon-group align-middle"

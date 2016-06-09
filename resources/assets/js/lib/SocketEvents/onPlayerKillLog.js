@@ -1,5 +1,6 @@
 import { PropTypes } from 'react'
-import EventHandler from '../EventHandler'
+
+import actions from '../../actions'
 
 const propTypes = {
     deadNickname: PropTypes.string.isRequired,
@@ -9,5 +10,9 @@ const propTypes = {
 
 export default function onPlayerKillLog(data) {
     check(data, propTypes)
-    EventHandler.emit('player kill log', data)
+
+    this.game.store.dispatch(actions.killLog.addKillLog(data))
+    setTimeout(() => {
+        this.game.store.dispatch(actions.killLog.removeKillLog(data))
+    }, 10000)
 }

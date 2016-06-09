@@ -6,13 +6,13 @@ const initialState = {
     health: 100,
     nickname: storage.get('nickname', NameGenerator()),
     score: 0,
-    selectedSecondaryWeaponId: '',
-    selectedPrimaryWeaponId: '',
+    selectedSecondaryWeaponId: storage.get('selectedPrimaryWeapon', 'AK47'),
+    selectedPrimaryWeaponId: storage.get('selectedSecondaryWeapon', 'DesertEagle'),
     jumpJetCounter: 0,
     jumps: 2,
     jumping: false,
-    selectedPrimaryWeapon: storage.get('selectedPrimaryWeapon', 'AK47'),
-    selectedSecondaryWeapon: storage.get('selectedSecondaryWeapon', 'DesertEagle'),
+    primaryWeapon: null,
+    secondaryWeapon: null,
     facing: 'left'
 }
 
@@ -88,6 +88,36 @@ const player = (state = initialState, action) => {
             return {
                 ...state,
                 facing: action.value
+            }
+
+        case 'SET_SELECTED_PRIMARY_WEAPON_ID':
+            return {
+                ...state,
+                selectedPrimaryWeaponId: action.value
+            }
+
+        case 'SET_SELECTED_SECONDARY_WEAPON_ID':
+            return {
+                ...state,
+                selectedSecondaryWeaponId: action.value
+            }
+
+        case 'SET_PRIMARY_WEAPON':
+            return {
+                ...state,
+                primaryWeapon: action.value
+            }
+
+        case 'SET_SECONDARY_WEAPON':
+            return {
+                ...state,
+                secondaryWeapon: action.value
+            }
+
+        case 'SET_SHOW_KILL_CONFIRMED':
+            return {
+                ...state,
+                showKillConfirmed: action.value
             }
 
         default:

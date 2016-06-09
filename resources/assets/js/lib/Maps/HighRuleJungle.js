@@ -99,7 +99,7 @@ export function update() {
     this.physics.arcade.collide(this.player, this.groundSprite, () => {
         if (this.player.meta.health <= 0 || this.player.y < 3900) return
 
-        this.game.input.enabled = false
+        // this.game.input.enabled = false
         this.player.body.acceleration.x = 0
         this.player.body.acceleration.y = 0
         this.player.meta.health = 0

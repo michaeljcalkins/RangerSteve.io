@@ -1,6 +1,6 @@
 import { PropTypes } from 'react'
-import EventHandler from '../EventHandler'
 import PlayerById from '../PlayerById'
+import actions from '../../actions'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -30,10 +30,9 @@ export default function onPlayerDamaged(data) {
         return
     }
 
-    this.player.meta.health = data.health
-    EventHandler.emit('health update', this.player.meta.health)
+    this.game.store.dispatch(actions.player.setHealth(data.health))
 
-    if (this.player.meta.health > 55 && this.player.meta.health < 100) {
+    if (this.game.getState().player.health > 55 && this.game.getState().player.health < 100) {
         clearTimeout(damageTimeout)
         damageTimeout = setTimeout(() => {
             // Player's health will fully regenerate
@@ -43,12 +42,12 @@ export default function onPlayerDamaged(data) {
         }, 5000)
     }
 
-    if (this.player.meta.health > 0 && this.player.meta.health <= 55) {
+    if (this.game.getState().player.health > 0 && this.game.getState().player.health <= 55) {
         // Wait 5 seconds to begin healing process
         clearTimeout(damageTimeout)
         clearInterval(healingInterval)
         damageTimeout = setTimeout(() => {
-            lastKnownHealth = this.player.meta.health
+            lastKnownHealth = this.game.getState().player.health
             healingInterval = setInterval(() => {
                 if (lastKnownHealth >= 100) {
                     clearInterval(healingInterval)
@@ -64,7 +63,7 @@ export default function onPlayerDamaged(data) {
         }, 5000)
     }
 
-    if (this.player.meta.health <= 0) {
+    if (this.game.getState().player.health <= 0) {
         this.rightArmGroup.visible = false
         this.leftArmGroup.visible = false
         this.headGroup.visible = false

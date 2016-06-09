@@ -1,10 +1,11 @@
 export default function PlayerAngleHandler() {
-    let angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90
+    const state = this.game.store.getState()
+    const angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90
 
     let leftAngle = angleInDegrees
     let rightAngle = angleInDegrees
 
-    if (this.player.meta.facing === 'right') {
+    if (state.player.facing === 'right') {
         // User is aiming up and to the right
         if (angleInDegrees <= 81 && angleInDegrees >= 71) {
             leftAngle -= 8
@@ -69,7 +70,7 @@ export default function PlayerAngleHandler() {
         }
     }
 
-    if (this.player.meta.facing === 'left') {
+    if (state.player.facing === 'left') {
         // User is aiming up and to the left
         if (angleInDegrees >= -91 && angleInDegrees <= -81) {
             leftAngle += 20

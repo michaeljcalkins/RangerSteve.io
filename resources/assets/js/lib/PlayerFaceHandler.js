@@ -53,7 +53,7 @@ export function playerFaceRight() {
         this.rightArmSprite.y = 0
 
         this.currentWeaponSprite.scale.y *= -1
-        this.currentWeaponSprite.x = player.meta[player.currentWeapon].meta.rightFaceX
-        this.currentWeaponSprite.y = player.meta[player.currentWeapon].meta.rightFaceY
+        this.currentWeaponSprite.x = player[player.currentWeapon].meta.rightFaceX
+        this.currentWeaponSprite.y = player[player.currentWeapon].meta.rightFaceY
     }
 }

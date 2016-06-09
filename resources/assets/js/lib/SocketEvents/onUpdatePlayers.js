@@ -22,12 +22,10 @@ export default function onUpdatePlayers(data) {
 
     const store = this.game.store
     const state = this.game.store.getState()
-
-    const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + data.room.id
+    const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + this.game.store.getState().room.id
     window.history.pushState({ path: newurl }, '', newurl)
 
-    if (state.game.state === 'loading') {
-        console.log(state.room)
+    if (this.game.store.getState().game.state === 'loading') {
         Maps[state.room.map].preload.call(this)
         this.currentMap = state.room.map
 
@@ -42,14 +40,14 @@ export default function onUpdatePlayers(data) {
         this.load.start()
     }
 
-    if (state.game.state === 'active') {
+    if (this.game.store.getState().game.state === 'active') {
         this.enemies.forEach(function (enemy) {
             enemy.kill()
         })
 
         this.enemies = this.game.add.group()
 
-        _.values(state.room.players).forEach((player) => {
+        _.values(this.game.store.getState().room.players).forEach((player) => {
             if (player.id === ('/#' + this.socket.id)) {
                 store.dispatch(actions.player.setScore(player.meta.score))
                 store.dispatch(actions.player.setHealth(player.meta.health))

@@ -9,7 +9,9 @@ import EnemyBulletsAndPlatforms from './Collisions/EnemyBulletsAndPlatforms'
 // import PartialBlastRadiusAndPlayer from './Collisions/PartialBlastRadiusAndPlayer'
 
 export default function CollisionHandler() {
-    if (this.gameState !== 'active') return
+    const state = this.game.store.getState()
+
+    if (state.game.state !== 'active') return
 
     PlayerAndPlatforms.call(this)
     PlayerAndEnemyBullets.call(this)

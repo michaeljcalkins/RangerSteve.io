@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import actions from '../../actions'
-import GameUi from '../components/Hud/GameUi'
+import GameUi from '../components/GameUi'
 
 const mapStateToProps = (state) => {
     return {

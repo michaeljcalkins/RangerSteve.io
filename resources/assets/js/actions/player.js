@@ -81,3 +81,38 @@ export const setFacing = (value) => {
         value
     }
 }
+
+export const setSelectedPrimaryWeaponId = (value) => {
+    return {
+        type: 'SET_SELECTED_PRIMARY_WEAPON_ID',
+        value
+    }
+}
+
+export const setSelectedSecondaryWeaponId = (value) => {
+    return {
+        type: 'SET_SELECTED_SECONDARY_WEAPON_ID',
+        value
+    }
+}
+
+export const setPrimaryWeapon = (value) => {
+    return {
+        type: 'SET_PRIMARY_WEAPON',
+        value
+    }
+}
+
+export const setSecondaryWeapon = (value) => {
+    return {
+        type: 'SET_SECONDARY_WEAPON',
+        value
+    }
+}
+
+export const setShowKillConfirmed = (value) => {
+    return {
+        type: 'SET_SHOW_KILL_CONFIRMED',
+        value
+    }
+}
