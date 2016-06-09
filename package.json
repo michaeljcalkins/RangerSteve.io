@@ -27,7 +27,6 @@
     "express": "~4.13.1",
     "express-nunjucks": "^1.0.0",
     "human-readable-ids": "^1.0.1",
-    "ipfilter": "0.0.4",
     "lodash": "^4.6.1",
     "moment": "^2.13.0",
     "morgan": "~1.6.1",
