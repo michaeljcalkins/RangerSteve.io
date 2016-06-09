@@ -24,7 +24,7 @@ export default function() {
         }
 
         emitPlayerDamaged.call(this, {
-            roomId: this.roomId,
+            roomId: state.room.id,
             damage: bullet.damage,
             weaponId: bullet.weaponId,
             damagedPlayerId: enemy.id,

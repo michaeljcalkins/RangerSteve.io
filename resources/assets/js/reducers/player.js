@@ -13,7 +13,7 @@ const initialState = {
     jumping: false,
     primaryWeapon: null,
     secondaryWeapon: null,
-    facing: 'left'
+    facing: null
 }
 
 const player = (state = initialState, action) => {

@@ -9,39 +9,39 @@ export default function() {
 
     // Switch weapons
     this.input.keyboard.addKey(Phaser.Keyboard.Q).onDown.add(() => {
-        let currentWeapon = this.game.store.getState().player.currentWeapon
-
+        const currentWeapon = this.game.store.getState().player.currentWeapon
         if (currentWeapon === 'primaryWeapon') {
             this.game.store.dispatch(actions.player.setCurrentWeapon('secondaryWeapon'))
         } else {
             this.game.store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
         }
 
-        currentWeapon = this.game.store.getState().player.currentWeapon
+        const newCurrentWeapon = this.game.store.getState().player.currentWeapon
+        const state = this.game.store.getState()
 
-        this.currentWeaponSprite.loadTexture(this.player.meta[currentWeapon].meta.id)
-        this.currentWeaponSprite.scale.setTo(this.player.meta[currentWeapon].meta.scale)
-        this.currentWeaponSprite.rotation = this.player.meta[currentWeapon].meta.rotation
+        this.currentWeaponSprite.loadTexture(state.player[newCurrentWeapon].meta.id)
+        this.currentWeaponSprite.scale.setTo(state.player[newCurrentWeapon].meta.scale)
+        this.currentWeaponSprite.rotation = state.player[newCurrentWeapon].meta.rotation
 
-        if (this.player.meta.facing === 'left') {
-            this.currentWeaponSprite.x = this.player.meta[currentWeapon].meta.leftFaceX
-            this.currentWeaponSprite.y = this.player.meta[currentWeapon].meta.leftFaceY
+        if (state.player.facing === 'left') {
+            this.currentWeaponSprite.x = state.player[newCurrentWeapon].meta.leftFaceX
+            this.currentWeaponSprite.y = state.player[newCurrentWeapon].meta.leftFaceY
             this.currentWeaponSprite.scale.y *= -1
         } else {
-            this.currentWeaponSprite.x = this.player.meta[currentWeapon].meta.rightFaceX
-            this.currentWeaponSprite.y = this.player.meta[currentWeapon].meta.rightFaceY
+            this.currentWeaponSprite.x = state.player[newCurrentWeapon].meta.rightFaceX
+            this.currentWeaponSprite.y = state.player[newCurrentWeapon].meta.rightFaceY
         }
 
-        this.muzzleFlash.x = this.player.meta[currentWeapon].meta.muzzleFlashX
-        this.muzzleFlash.y = this.player.meta[currentWeapon].meta.muzzleFlashY
+        this.muzzleFlash.x = state.player[newCurrentWeapon].meta.muzzleFlashX
+        this.muzzleFlash.y = state.player[newCurrentWeapon].meta.muzzleFlashY
 
-        const currentWeaponMeta = currentWeapon === 'primaryWeapon'
-            ? this.player.meta.primaryWeapon.meta
-            : this.player.meta.secondaryWeapon.meta
+        const currentWeaponMeta = newCurrentWeapon === 'primaryWeapon'
+            ? state.player.primaryWeapon.meta
+            : state.player.secondaryWeapon.meta
 
         emitPlayerUpdateWeapon.call(this, {
             id: '/#' + window.socket.id,
-            roomId: this.roomId,
+            roomId: state.room.id,
             currentWeaponMeta
         })
     })

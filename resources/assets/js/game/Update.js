@@ -24,7 +24,7 @@ export default function Update() {
     }
 
     if (this.game.input.activePointer.isDown && state.player.health > 0) {
-        
+
         state.player[currentWeapon].fire()
     }
 
@@ -38,7 +38,7 @@ export default function Update() {
         Maps[state.room.map].update.call(this)
     }
 
-    if (state.room.id && state.player.health > 0 && state.room.state !== 'ended') {
+    if (state.room.id && state.player.health > 0 && state.room.state !== 'ended' && state.player.facing !== null) {
         emitMovePlayer.call(this, {
             roomId: state.room.id,
             x: this.player.x,

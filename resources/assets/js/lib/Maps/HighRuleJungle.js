@@ -109,7 +109,7 @@ export function update() {
         this.torsoGroup.visible = false
 
         emitPlayerDamaged.call(this, {
-            roomId: this.roomId,
+            roomId: state.room.id,
             damage: 1000,
             damagedPlayerId: '/#' + window.socket.id,
             attackingPlayerId: null

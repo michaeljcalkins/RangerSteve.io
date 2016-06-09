@@ -10,7 +10,7 @@ export default function() {
         if (enemy.meta.health <= 0) return false
 
         emitPlayerDamaged.call(this, {
-            roomId: this.roomId,
+            roomId: state.room.id,
             damage: 30,
             weaponId: bullet.weaponId,
             damagedPlayerId: enemy.id,

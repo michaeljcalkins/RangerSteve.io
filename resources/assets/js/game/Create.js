@@ -24,7 +24,7 @@ export default function Create() {
     window.Meta = {
         kickPlayerByUsername: (nickname) => {
             return window.socket.emit('kick player', {
-                roomId: this.roomId,
+                roomId: state.room.id,
                 nickname
             })
         }

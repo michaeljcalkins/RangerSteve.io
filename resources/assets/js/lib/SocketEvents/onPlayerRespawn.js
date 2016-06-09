@@ -44,7 +44,7 @@ export default function onPlayerRespawn(data) {
 
     emitPlayerUpdateWeapon.call(this, {
         id: '/#' + window.socket.id,
-        roomId: this.roomId,
+        roomId: state.room.id,
         currentWeaponMeta
     })
 
