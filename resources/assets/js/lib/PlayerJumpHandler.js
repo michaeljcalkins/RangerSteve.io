@@ -24,7 +24,11 @@ export default function PlayerJumpHandler() {
     }
 
     // Jump Jet!
-    if (this.game.store.getState().player.jumps === 1 && this.input.keyboard.isDown(Phaser.Keyboard.W) && this.game.store.getState().player.jumpJetCounter > -130000) {
+    if (
+        this.game.store.getState().player.jumps === 1 &&
+        this.input.keyboard.isDown(Phaser.Keyboard.W) &&
+        this.game.store.getState().player.jumpJetCounter > -130000
+    ) {
         this.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
         this.game.store.dispatch(actions.player.incrementJumpJetCounter(GameConsts.JUMP_JET_SPEED))
     } else {
@@ -36,8 +40,6 @@ export default function PlayerJumpHandler() {
             this.game.store.dispatch(actions.player.setJumpJetCounter(0))
         }
     }
-
-    this.game.store.dispatch(actions.player.setJumpJetCounter(jumpJetCounter))
 
     // Reduce the number of available jumps if the jump input is released
     if (this.game.store.getState().player.jumping && upInputReleased.call(this)) {

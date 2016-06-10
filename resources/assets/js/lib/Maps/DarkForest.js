@@ -1,41 +1,42 @@
 import GameConsts from '../GameConsts'
 
-const WORLD_WIDTH = 1645
-const WORLD_HEIGHT = 1999
+const WORLD_WIDTH = 4004
+const WORLD_HEIGHT = 927
 const BG_WIDTH = WORLD_WIDTH
 const BG_HEIGHT = WORLD_HEIGHT
 const GROUND_LOOP_SPRITE_Y = 2150
 
 const SPAWN_POINTS = [
-    { x: 600, y: 2402 },
-    { x: 1000, y: 2402 },
-    { x: 1627, y: 2272 },
-    { x: 380, y: 1585 },
-    { x: 400, y: 1200 },
-    { x: 1600, y: 1200 },
-    { x: 1637, y: 770 },
-    { x: 320, y: 770 },
-    { x: 466, y: 220 },
-    { x: 400, y: 1600 },
-    { x: 1700, y: 1800 }
+    { x: 2800, y: 400 },
+    // { x: 1000, y: 2402 },
+    // { x: 1627, y: 2272 },
+    // { x: 380, y: 1585 },
+    // { x: 400, y: 1200 },
+    // { x: 1600, y: 1200 },
+    // { x: 1637, y: 770 },
+    // { x: 320, y: 770 },
+    // { x: 466, y: 220 },
+    // { x: 400, y: 1600 },
+    // { x: 1700, y: 1800 }
 ]
 
 const LEDGES = [
-    { id: 1, x: 174, y: 892, width: 512, height: 135 },
-    { id: 2, x: 0, y: 0, width: 175, height: 3000 },
-    { id: 3, x: 874, y: 892, width: 990, height: 135 },
-    { id: 4, x: 1862, y: 0, width: 450, height: 3000 },
-    { id: 5, x: 46, y: 1302, width: 990, height: 135 },
-    { id: 6, x: 1290, y: 1302, width: 990, height: 135 },
-    { id: 7, x: 100, y: 1302, width: 200, height: 500 },
-    { id: 8, x: 392, y: 2502, width: 873, height: 135 },
-    { id: 9, x: 175, y: 2042, width: 393, height: 135 },
-    { id: 10, x: 175, y: 1702, width: 325, height: 135 },
-    { id: 11, x: 720, y: 1712, width: 940, height: 135 },
-    { id: 12, x: 1055, y: 1847, width: 200, height: 335 },
-    { id: 13, x: 1728, y: 2014, width: 175, height: 335 },
-    { id: 14, x: 1395, y: 2349, width: 475, height: 135 },
-    { id: 15, x: 302, y: 327, width: 795, height: 105 }
+    { id: 1, x: 0, y: 885, width: 4004, height: 135 },
+    { id: 2, x: 0, y: 0, width: 3613, height: 20 },
+    { id: 3, x: 540, y: 615, width: 420, height: 235 },
+    { id: 4, x: 250, y: 280, width: 195, height: 45 },
+    { id: 5, x: 740, y: 315, width: 195, height: 45 },
+    { id: 6, x: 975, y: 270, width: 120, height: 42 },
+    { id: 7, x: 1210, y: 570, width: 600, height: 500 },
+    { id: 8, x: 1552, y: 436, width: 470, height: 600 },
+    { id: 9, x: 2010, y: 630, width: 375, height: 400 },
+    { id: 10, x: 2362, y: 286, width: 110, height: 45 },
+    { id: 11, x: 2510, y: 330, width: 175, height: 45 },
+    { id: 12, x: 2616, y: 611, width: 425, height: 335 },
+    { id: 13, x: 2995, y: 355, width: 330, height: 50 },
+    { id: 14, x: 3060, y: 210, width: 202, height: 50 },
+    { id: 15, x: 7, y: 727, width: 290, height: 105 },
+    { id: 16, x: 3060, y: 690, width: 290, height: 105 }
 ]
 
 export function getRandomSpawnPoint() {

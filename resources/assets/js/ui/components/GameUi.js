@@ -140,8 +140,8 @@ export default class GameUi extends React.Component {
                 <HudChatHistory messages={ game.messages } />
                 { this.renderEndOfRoundLeaderboard() }
                 <SettingsModal
-                    isOpen={ game.settingsModalIsOpen }
                     game={ game }
+                    isOpen={ game.settingsModalIsOpen }
                     onClose={ onCloseSettingsModal }
                     onMusicVolumeChange={ this.handleMusicVolumeChange }
                     onNicknameChange={ this.handleNicknameChange }
