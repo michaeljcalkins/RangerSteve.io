@@ -8,6 +8,8 @@ import Maps from '../lib/Maps'
 export default function Update() {
     const state = this.game.store.getState()
 
+    this.audioPlayer.volume = state.game.musicVolume
+
     if (state.game.state !== 'active' || ! state.room) return
 
     const currentWeapon = state.player.currentWeapon
