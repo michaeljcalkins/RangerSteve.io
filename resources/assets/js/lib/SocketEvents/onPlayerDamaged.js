@@ -32,7 +32,7 @@ export default function onPlayerDamaged(data) {
 
     this.game.store.dispatch(actions.player.setHealth(data.health))
 
-    if (this.game.getState().player.health > 55 && this.game.getState().player.health < 100) {
+    if (this.game.store.getState().player.health > 55 && this.game.store.getState().player.health < 100) {
         clearTimeout(damageTimeout)
         damageTimeout = setTimeout(() => {
             // Player's health will fully regenerate
@@ -42,12 +42,12 @@ export default function onPlayerDamaged(data) {
         }, 5000)
     }
 
-    if (this.game.getState().player.health > 0 && this.game.getState().player.health <= 55) {
+    if (this.game.store.getState().player.health > 0 && this.game.store.getState().player.health <= 55) {
         // Wait 5 seconds to begin healing process
         clearTimeout(damageTimeout)
         clearInterval(healingInterval)
         damageTimeout = setTimeout(() => {
-            lastKnownHealth = this.game.getState().player.health
+            lastKnownHealth = this.game.store.getState().player.health
             healingInterval = setInterval(() => {
                 if (lastKnownHealth >= 100) {
                     clearInterval(healingInterval)
@@ -63,7 +63,7 @@ export default function onPlayerDamaged(data) {
         }, 5000)
     }
 
-    if (this.game.getState().player.health <= 0) {
+    if (this.game.store.getState().player.health <= 0) {
         this.rightArmGroup.visible = false
         this.leftArmGroup.visible = false
         this.headGroup.visible = false

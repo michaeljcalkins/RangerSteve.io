@@ -15,6 +15,8 @@ const propTypes = {
 export default function onMovePlayer(data) {
     check(data, propTypes)
 
+    const state = this.game.store.getState()
+
     if (data.id === ('/#' + window.socket.id))
         return
 
