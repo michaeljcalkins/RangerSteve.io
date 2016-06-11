@@ -13,6 +13,7 @@ import onPlayerRemove from './onPlayerRemove'
 import onPlayerKillLog from './onPlayerKillLog'
 import onPlayerUpdateWeapon from './onPlayerUpdateWeapon'
 import onKickPlayer from './onKickPlayer'
+import onLoadGame from './onLoadGame'
 
 export default function() {
     window.socket.on('connect', onSocketConnected.bind(this))
@@ -34,4 +35,5 @@ export default function() {
 
     window.socket.on('bullet fired', onBulletFired.bind(this))
     window.socket.on('kick player', onKickPlayer.bind(this))
+    window.socket.on('load game', onLoadGame.bind(this))
 }

@@ -2,8 +2,6 @@ import { PropTypes } from 'react'
 import _ from 'lodash'
 
 import RemotePlayer from '../RemotePlayer'
-import InitHandler from '../InitHandlers'
-import Maps from '../Maps'
 import actions from '../../actions'
 
 const propTypes = {
@@ -17,71 +15,54 @@ let lastRoomState = null
 
 export default function onUpdatePlayers(data) {
     check(data, propTypes)
-
-    this.game.store.dispatch(actions.room.setRoom(data.room))
+    console.log('UPDATE PLAYERS')
 
     const store = this.game.store
-    const state = this.game.store.getState()
-    const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + this.game.store.getState().room.id
+
+    if (store.getState().game.state !== 'active') return
+
+    store.dispatch(actions.room.setRoom(data.room))
+
+    const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + store.getState().room.id
     window.history.pushState({ path: newurl }, '', newurl)
 
-    if (this.game.store.getState().game.state === 'loading') {
-        Maps[state.room.map].preload.call(this)
-        this.currentMap = state.room.map
+    this.enemies.forEach(function (enemy) {
+        enemy.kill()
+    })
 
-        this.load.onLoadComplete.add(() => {
-            this.enemies = this.game.add.group()
-
-            InitHandler.call(this)
-
-            store.dispatch(actions.game.setState('active'))
-            onUpdatePlayers.call(this, data)
-        }, this)
-
-        this.load.start()
-    }
-
-    if (this.game.store.getState().game.state === 'active') {
-        this.enemies.forEach(function (enemy) {
-            enemy.kill()
-        })
-
-        this.enemies = this.game.add.group()
-
-        _.values(this.game.store.getState().room.players).forEach((player) => {
-            if (player.id === ('/#' + window.socket.id)) {
-                store.dispatch(actions.player.setScore(player.meta.score))
-                store.dispatch(actions.player.setHealth(player.meta.health))
-                return
-            }
-
-            let newRemotePlayer = RemotePlayer.call(this, player)
-            let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unnamed Ranger'
-
-            let style = {
-                font: "36px Arial",
-                fill: "#fff",
-                align: "center",
-                stroke: "black",
-                strokeThickness: 7
-            }
-            let text = this.game.add.text(0, -210, enemyPlayerName, style)
-            newRemotePlayer.addChild(text)
-            text.x = (text.width / 2) * -1
-            text.smoothed = true
-
-            this.enemies.add(newRemotePlayer)
-        })
-
-        if (this.game.store.getState().room.state === 'ended') {
-            this.game.paused = true
-        }
-
-        if (this.game.store.getState().room.state === 'active' && lastRoomState === 'ended') {
-            window.location.reload()
+    _.values(store.getState().room.players).forEach((player) => {
+        if (player.id === ('/#' + window.socket.id)) {
+            store.dispatch(actions.player.setScore(player.meta.score))
+            store.dispatch(actions.player.setHealth(player.meta.health))
             return
         }
 
-        lastRoomState = this.game.store.getState().room.state
+        let newRemotePlayer = RemotePlayer.call(this, player)
+        let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unnamed Ranger'
+
+        let style = {
+            font: "36px Arial",
+            fill: "#fff",
+            align: "center",
+            stroke: "black",
+            strokeThickness: 7
+        }
+        let text = this.game.add.text(0, -210, enemyPlayerName, style)
+        newRemotePlayer.addChild(text)
+        text.x = (text.width / 2) * -1
+        text.smoothed = true
+
+        this.enemies.add(newRemotePlayer)
+    })
+
+    if (store.getState().room.state === 'ended') {
+        this.game.paused = true
     }
+
+    if (store.getState().room.state === 'active' && lastRoomState === 'ended') {
+        window.location.reload()
+        return
+    }
+
+    lastRoomState = store.getState().room.state
 }

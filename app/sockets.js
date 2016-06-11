@@ -89,6 +89,14 @@ function onSocketConnection(socket) {
 
     socket.on('bullet fired', onBulletFired)
     socket.on('kick player', onKickPlayer)
+    socket.on('load complete', onLoadComplete)
+}
+
+function onLoadComplete(data) {
+    util.log('LOAD COMPLETE')
+    io.to(data.roomId).emit('update players', {
+        room: rooms[data.roomId]
+    })
 }
 
 function onKickPlayer(data) {
@@ -195,7 +203,11 @@ function onNewPlayer (data) {
         rooms[data.roomId].players[this.id] = newPlayer
         this.join(data.roomId)
 
-        io.to(data.roomId).emit('update players', {
+        // io.to(data.roomId).emit('update players', {
+        //     room: rooms[data.roomId]
+        // })
+
+        io.to(data.roomId).emit('load game', {
             room: rooms[data.roomId]
         })
         return
@@ -215,14 +227,24 @@ function onNewPlayer (data) {
 
         util.log('Created new room', newRoomId)
         this.join(newRoomId)
-        io.to(newRoomId).emit('update players', {
+
+        // io.to(newRoomId).emit('update players', {
+        //     room: rooms[newRoomId]
+        // })
+
+        io.to(newRoomId).emit('load game', {
             room: rooms[newRoomId]
         })
     } else {
         util.log('Adding player to', availableRooms[0])
         rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
         this.join(availableRooms[0])
-        io.to(availableRooms[0]).emit('update players', {
+
+        // io.to(availableRooms[0]).emit('update players', {
+        //     room: rooms[availableRooms[0]]
+        // })
+
+        io.to(rooms[availableRooms[0]].id).emit('load game', {
             room: rooms[availableRooms[0]]
         })
     }
