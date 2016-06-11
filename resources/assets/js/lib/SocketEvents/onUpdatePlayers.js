@@ -35,6 +35,7 @@ export default function onUpdatePlayers(data) {
             InitHandler.call(this)
 
             store.dispatch(actions.game.setState('active'))
+            onUpdatePlayers.call(this, data)
         }, this)
 
         this.load.start()
@@ -72,15 +73,15 @@ export default function onUpdatePlayers(data) {
             this.enemies.add(newRemotePlayer)
         })
 
-        if (state.room.state === 'ended') {
+        if (this.game.store.getState().room.state === 'ended') {
             this.game.paused = true
         }
 
-        if (state.room.state === 'active' && lastRoomState === 'ended') {
+        if (this.game.store.getState().room.state === 'active' && lastRoomState === 'ended') {
             window.location.reload()
             return
         }
 
-        lastRoomState = state.room.state
+        lastRoomState = this.game.store.getState().room.state
     }
 }

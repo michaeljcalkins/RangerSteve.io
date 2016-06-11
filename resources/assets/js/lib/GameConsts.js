@@ -86,7 +86,7 @@ const GameConsts = {
         },
         {
             id: 'SilverBaller',
-            name: 'SilverBaller',
+            name: 'Silenced Beretta',
             image: '/images/guns/Spr_SilverBaller.png'
         }
     ]
