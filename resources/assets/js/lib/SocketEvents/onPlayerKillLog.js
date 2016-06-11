@@ -14,8 +14,8 @@ export default function onPlayerKillLog(data) {
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
 
-    this.game.store.dispatch(actions.killLog.addKillLog(data))
+    store.dispatch(actions.killLog.addKillLog(data))
     setTimeout(() => {
-        this.game.store.dispatch(actions.killLog.removeKillLog(data))
+        store.dispatch(actions.killLog.removeKillLog(data))
     }, 10000)
 }
