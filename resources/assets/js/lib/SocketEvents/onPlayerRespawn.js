@@ -18,6 +18,8 @@ export default function onPlayerRespawn(data) {
     const store = this.game.store
     const currentWeapon = state.player.currentWeapon
 
+    if (store.getState().game.state !== 'active') return
+
     if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (! enemyPlayer) return

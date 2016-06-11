@@ -16,10 +16,9 @@ const propTypes = {
 export default function onBulletFired(data) {
     check(data, propTypes)
 
-    const state = this.game.store.getState()
-
-    if (data.id === ('/#' + window.socket.id))
-        return
+    const store = this.game.store
+    if (store.getState().game.state !== 'active') return
+    if (data.id === ('/#' + window.socket.id)) return
 
     /**
      * Weapon Soundboard
@@ -61,6 +60,6 @@ export default function onBulletFired(data) {
 
     let distanceBetweenBulletAndPlayer = Phaser.Math.distance(this.player.x, this.player.y, data.x, data.y)
     let enemyBulletVolume = distanceBetweenBulletAndPlayer > 0 ? 1 - (distanceBetweenBulletAndPlayer / 3000) : 0
-    soundboard[bullet.weaponId].volume = state.game.sfxVolume * enemyBulletVolume
+    soundboard[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
     soundboard[bullet.weaponId].play()
 }

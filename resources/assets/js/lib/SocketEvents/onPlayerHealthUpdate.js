@@ -9,8 +9,9 @@ const propTypes = {
 export default function onPlayerHealthUpdate(data) {
     check(data, propTypes)
 
-    if (data.id !== ('/#' + window.socket.id))
-        return
+    const store = this.game.store
+    if (store.getState().game.state !== 'active') return
+    if (data.id !== ('/#' + window.socket.id)) return
 
     this.player.meta.health = data.health
     this.game.store.dispatch(actions.player.setHealth(data.health))

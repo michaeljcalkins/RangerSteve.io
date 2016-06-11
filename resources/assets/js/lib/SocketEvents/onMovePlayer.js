@@ -15,14 +15,13 @@ const propTypes = {
 export default function onMovePlayer(data) {
     check(data, propTypes)
 
-    const state = this.game.store.getState()
-
-    if (data.id === ('/#' + window.socket.id))
-        return
+    const store = this.game.store
+    if (store.getState().game.state !== 'active') return
+    if (data.id === ('/#' + window.socket.id)) return
 
     let movePlayer = PlayerById.call(this, data.id)
 
-    if (! movePlayer || movePlayer.meta.health <= 0 || (state.room !== null && state.room.state === 'ended')) {
+    if (! movePlayer || movePlayer.meta.health <= 0 || (store.getState().room !== null && store.getState().room.state === 'ended')) {
         return
     }
 

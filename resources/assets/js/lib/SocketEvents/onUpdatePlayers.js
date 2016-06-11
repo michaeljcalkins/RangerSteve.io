@@ -17,7 +17,6 @@ export default function onUpdatePlayers(data) {
     check(data, propTypes)
 
     const store = this.game.store
-
     if (store.getState().game.state !== 'active') return
 
     store.dispatch(actions.room.setRoom(data.room))

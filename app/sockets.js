@@ -247,8 +247,8 @@ function onMovePlayer (data) {
     // Player not found
     if (! movePlayer) {
         util.log('Player not found when moving: ' + this.id)
-        io.to(data.roomId).emit('player remove', {
-            id: this.id
+        io.to(data.roomid).emit('update players', {
+            room: rooms[data.roomid]
         })
         return
     }

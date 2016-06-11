@@ -14,6 +14,9 @@ let lastKnownHealth = null
 export default function onPlayerDamaged(data) {
     check(data, propTypes)
 
+    const store = this.game.store
+    if (store.getState().game.state !== 'active') return
+
     if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
         let damagedPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (damagedPlayer) {
