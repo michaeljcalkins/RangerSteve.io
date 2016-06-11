@@ -15,7 +15,6 @@ let lastRoomState = null
 
 export default function onUpdatePlayers(data) {
     check(data, propTypes)
-    console.log('UPDATE PLAYERS')
 
     const store = this.game.store
 

@@ -8,8 +8,6 @@ const propTypes = {
 export default function onRemovePlayer(data) {
     check(data, propTypes)
 
-    console.log('REMOVE PLAYER')
-
     let removePlayer = PlayerById.call(this, data.id)
 
     // Player not found

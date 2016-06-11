@@ -203,10 +203,6 @@ function onNewPlayer (data) {
         rooms[data.roomId].players[this.id] = newPlayer
         this.join(data.roomId)
 
-        // io.to(data.roomId).emit('update players', {
-        //     room: rooms[data.roomId]
-        // })
-
         io.to(data.roomId).emit('load game', {
             room: rooms[data.roomId]
         })
@@ -228,10 +224,6 @@ function onNewPlayer (data) {
         util.log('Created new room', newRoomId)
         this.join(newRoomId)
 
-        // io.to(newRoomId).emit('update players', {
-        //     room: rooms[newRoomId]
-        // })
-
         io.to(newRoomId).emit('load game', {
             room: rooms[newRoomId]
         })
@@ -239,10 +231,6 @@ function onNewPlayer (data) {
         util.log('Adding player to', availableRooms[0])
         rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
         this.join(availableRooms[0])
-
-        // io.to(availableRooms[0]).emit('update players', {
-        //     room: rooms[availableRooms[0]]
-        // })
 
         io.to(rooms[availableRooms[0]].id).emit('load game', {
             room: rooms[availableRooms[0]]

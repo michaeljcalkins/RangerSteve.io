@@ -29,7 +29,6 @@ export default function onLoadGame(data) {
 
         store.dispatch(actions.game.setState('active'))
 
-        console.log('LOAD GAME COMPLETE')
         window.socket.emit('load complete', {
             roomId: store.getState().room.id
         })

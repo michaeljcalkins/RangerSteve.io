@@ -21,7 +21,6 @@ export default function() {
 
     window.socket.on('update players', onUpdatePlayers.bind(this))
     window.socket.on('move player', onMovePlayer.bind(this))
-    window.socket.on('remove player', onRemovePlayer.bind(this))
 
     window.socket.on('player respawn', onPlayerRespawn.bind(this))
     window.socket.on('player remove', onPlayerRemove.bind(this))
