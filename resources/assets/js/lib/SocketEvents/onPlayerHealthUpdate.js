@@ -13,6 +13,5 @@ export default function onPlayerHealthUpdate(data) {
     if (store.getState().game.state !== 'active') return
     if (data.id !== ('/#' + window.socket.id)) return
 
-    this.player.meta.health = data.health
-    this.game.store.dispatch(actions.player.setHealth(data.health))
+    store.dispatch(actions.player.setHealth(data.health))
 }
