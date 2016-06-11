@@ -11,5 +11,5 @@ const propTypes = {
 
 export default function(data) {
     check(data, propTypes)
-    this.socket.emit('move player', data)
+    window.socket.emit('move player', data)
 }

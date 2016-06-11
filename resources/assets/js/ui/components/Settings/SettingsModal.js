@@ -9,22 +9,17 @@ import ControlsMenu from './ControlsMenu'
 export default function SettingsModal({
     isOpen,
     onClose,
-    defaultNicknameValue,
-    defaultSoundEffectValue,
-    defaultMusicValue,
     onViewChange,
     onNicknameChange,
     onPrimaryGunClick,
     onSecondaryGunClick,
-    onSoundEffectVolumeChange,
+    onSfxVolumeChange,
     onMusicVolumeChange,
     player,
-    settingsView,
-    selectedPrimaryWeapon,
-    selectedSecondaryWeapon
+    game
 }) {
     function renderModalView() {
-        switch (settingsView) {
+        switch (game.settingsView) {
         case 'choosePrimary':
             return (
                 <ChoosePrimaryMenu
@@ -61,15 +56,12 @@ export default function SettingsModal({
         default:
             return (
                 <MainSettingsMenu
-                    defaultMusicValue={ defaultMusicValue }
-                    defaultNicknameValue={ defaultNicknameValue }
-                    defaultSoundEffectValue={ defaultSoundEffectValue }
                     onMusicVolumeChange={ onMusicVolumeChange }
                     onNicknameChange={ onNicknameChange }
-                    onSoundEffectVolumeChange={ onSoundEffectVolumeChange }
+                    onSfxVolumeChange={ onSfxVolumeChange }
                     onViewChange={ onViewChange }
-                    selectedPrimaryWeapon={ selectedPrimaryWeapon }
-                    selectedSecondaryWeapon={ selectedSecondaryWeapon }
+                    player={ player }
+                    game={ game }
                 />
             )
         }

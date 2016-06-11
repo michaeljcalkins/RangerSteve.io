@@ -1,6 +1,9 @@
+import actions from '../actions'
+
 export function playerFaceLeft() {
-    if (this.player.meta.facing !== 'left') {
-        this.player.meta.facing = 'left'
+    if (this.game.store.getState().player.facing !== 'left') {
+        this.game.store.dispatch(actions.player.setFacing('left'))
+        const player = this.game.store.getState().player
 
         this.rightArmGroup.x = 25
         this.rightArmGroup.y = -65
@@ -21,14 +24,15 @@ export function playerFaceLeft() {
         this.rightArmSprite.y = 10
 
         this.currentWeaponSprite.scale.y *= -1
-        this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.leftFaceX
-        this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.leftFaceY
+        this.currentWeaponSprite.x = player[player.currentWeapon].meta.leftFaceX
+        this.currentWeaponSprite.y = player[player.currentWeapon].meta.leftFaceY
     }
 }
 
 export function playerFaceRight() {
-    if (this.player.meta.facing !== 'right') {
-        this.player.meta.facing = 'right'
+    if (this.game.store.getState().player.facing !== 'right') {
+        this.game.store.dispatch(actions.player.setFacing('right'))
+        const player = this.game.store.getState().player
 
         this.rightArmGroup.x = -25
         this.rightArmGroup.y = -65
@@ -49,7 +53,7 @@ export function playerFaceRight() {
         this.rightArmSprite.y = 0
 
         this.currentWeaponSprite.scale.y *= -1
-        this.currentWeaponSprite.x = this.player.meta[this.currentWeapon].meta.rightFaceX
-        this.currentWeaponSprite.y = this.player.meta[this.currentWeapon].meta.rightFaceY
+        this.currentWeaponSprite.x = player[player.currentWeapon].meta.rightFaceX
+        this.currentWeaponSprite.y = player[player.currentWeapon].meta.rightFaceY
     }
 }

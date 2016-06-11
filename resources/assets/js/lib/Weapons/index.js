@@ -8,6 +8,7 @@ import M500 from './M500'
 import P90 from './P90'
 import RPG from './RPG'
 import Skorpion from './Skorpion'
+import SilverBaller from './SilverBaller'
 
 export default {
     AK47,
@@ -19,5 +20,6 @@ export default {
     M500,
     P90,
     RPG,
-    Skorpion
+    Skorpion,
+    SilverBaller
 }

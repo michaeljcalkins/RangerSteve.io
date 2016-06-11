@@ -1,6 +1,6 @@
 import { PropTypes } from 'react'
-import EventHandler from '../EventHandler'
 import PlayerById from '../PlayerById'
+import actions from '../../actions'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -14,7 +14,10 @@ let lastKnownHealth = null
 export default function onPlayerDamaged(data) {
     check(data, propTypes)
 
-    if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
+    const store = this.game.store
+    if (store.getState().game.state !== 'active') return
+
+    if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
         let damagedPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (damagedPlayer) {
             damagedPlayer.meta.health = data.health
@@ -30,25 +33,24 @@ export default function onPlayerDamaged(data) {
         return
     }
 
-    this.player.meta.health = data.health
-    EventHandler.emit('health update', this.player.meta.health)
+    this.game.store.dispatch(actions.player.setHealth(data.health))
 
-    if (this.player.meta.health > 55 && this.player.meta.health < 100) {
+    if (this.game.store.getState().player.health > 55 && this.game.store.getState().player.health < 100) {
         clearTimeout(damageTimeout)
         damageTimeout = setTimeout(() => {
             // Player's health will fully regenerate
-            this.socket.emit('player full health', {
-                roomId: this.roomId
+            window.socket.emit('player full health', {
+                roomId: this.game.store.getState().room.id
             })
         }, 5000)
     }
 
-    if (this.player.meta.health > 0 && this.player.meta.health <= 55) {
+    if (this.game.store.getState().player.health > 0 && this.game.store.getState().player.health <= 55) {
         // Wait 5 seconds to begin healing process
         clearTimeout(damageTimeout)
         clearInterval(healingInterval)
         damageTimeout = setTimeout(() => {
-            lastKnownHealth = this.player.meta.health
+            lastKnownHealth = this.game.store.getState().player.health
             healingInterval = setInterval(() => {
                 if (lastKnownHealth >= 100) {
                     clearInterval(healingInterval)
@@ -57,14 +59,14 @@ export default function onPlayerDamaged(data) {
                 lastKnownHealth += 10
 
                 // Increase player health by 10 every 1/2 a second
-                this.socket.emit('player healing', {
-                    roomId: this.roomId
+                window.socket.emit('player healing', {
+                    roomId: state.room.id
                 })
             }, 500)
         }, 5000)
     }
 
-    if (this.player.meta.health <= 0) {
+    if (this.game.store.getState().player.health <= 0) {
         this.rightArmGroup.visible = false
         this.leftArmGroup.visible = false
         this.headGroup.visible = false

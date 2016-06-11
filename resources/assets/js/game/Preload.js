@@ -1,6 +1,6 @@
 import GameConsts from '../lib/GameConsts'
 
-export default function Preload() {
+export default function Preload(store) {
     // Map
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet', '/images/bullet.png')
@@ -36,6 +36,7 @@ export default function Preload() {
     this.load.audio('BarretM90-sound', '/audio/BarretM90.mp3')
 
     this.load.audio('DesertEagle-sound', '/audio/DesertEagle.mp3')
+    this.load.audio('SilverBaller-sound', '/audio/SilverBaller.mp3')
     this.load.audio('RPG-sound', '/audio/RPG.mp3')
 
     this.load.audio('triplekill', '/audio/killingSpree/triplekill_ultimate.mp3')

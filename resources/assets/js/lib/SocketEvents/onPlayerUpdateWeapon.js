@@ -10,7 +10,9 @@ const propTypes = {
 export default function(data) {
     check(data, propTypes)
 
-    if (data.id === ('/#' + this.socket.id)) return
+    const store = this.game.store
+    if (store.getState().game.state !== 'active') return
+    if (data.id === ('/#' + window.socket.id)) return
 
     let player = PlayerById.call(this, data.id)
 

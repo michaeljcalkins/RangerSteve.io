@@ -9,10 +9,10 @@ export default function() {
         // if (this.player.meta.health <= 0 || this.player.y < 3900) return
 
         emitPlayerDamaged.call(this, {
-            roomId: this.roomId,
+            roomId: state.room.id,
             damage: 100,
             weaponId: bullet.weaponId,
-            damagedPlayerId: '/#' + this.socket.id,
+            damagedPlayerId: '/#' + window.socket.id,
             attackingPlayerId: null
         })
     }, null, this)

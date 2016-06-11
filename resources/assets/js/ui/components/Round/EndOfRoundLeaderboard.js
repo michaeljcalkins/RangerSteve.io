@@ -2,12 +2,40 @@ import React, { PropTypes } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
 
-export default function EndOfRoundLeaderboard({
-    players,
-    roundStartTime
-}) {
-    function renderPlayers() {
-        return _.values(players)
+export default class EndOfRoundLeaderboard extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            elapsed: 0
+        }
+
+        this.renderPlayers = this.renderPlayers.bind(this)
+        this.tick = this.tick.bind(this)
+    }
+
+    componentDidMount() {
+        this.timer = setInterval(this.tick.bind(this), 100)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer)
+    }
+
+    tick() {
+        let timeRemaining = this.props.roundStartTime - moment().unix()
+        var minutes = Math.floor(timeRemaining / 60)
+        var seconds = timeRemaining - minutes * 60
+
+        if (isNaN(minutes) || isNaN(seconds) || minutes < 0) {
+            return '0'
+        }
+
+        this.setState({ elapsed: `${seconds}` })
+    }
+
+    renderPlayers() {
+        return _.values(this.props.players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map(function(player, key) {
                 let kdRatio = player.meta.deaths > 0 ? player.meta.kills / player.meta.deaths : player.meta.kills
@@ -29,43 +57,33 @@ export default function EndOfRoundLeaderboard({
             })
     }
 
-    function formatTime() {
-        let timeRemaining = roundStartTime - moment().unix()
-        var minutes = Math.floor(timeRemaining / 60)
-        var seconds = timeRemaining - minutes * 60
-
-        if (isNaN(minutes) || isNaN(seconds) || minutes < 0) {
-            return '0'
-        }
-
-        return `${seconds}`
-    }
-
-    return (
-        <div className="end-of-round-leaderboard hud-item">
-            <h1>Leaderboard</h1>
-            <table className="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Player</th>
-                        <th>Score</th>
-                        <th>Kills</th>
-                        <th>Deaths</th>
-                        <th>K/D Ratio</th>
-                        <th>Best Killing Spree</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { renderPlayers() }
-                </tbody>
-            </table>
-            <div className="row">
-                <div className="col-sm-12 text-center">
-                    <span>Next round starting in { formatTime() } seconds...</span>
+    render() {
+        return (
+            <div className="end-of-round-leaderboard hud-item">
+                <h1>Leaderboard</h1>
+                <table className="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Score</th>
+                            <th>Kills</th>
+                            <th>Deaths</th>
+                            <th>K/D Ratio</th>
+                            <th>Best Killing Spree</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { this.renderPlayers() }
+                    </tbody>
+                </table>
+                <div className="row">
+                    <div className="col-sm-12 text-center">
+                        <span>Next round starting in { this.state.elapsed } seconds...</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 EndOfRoundLeaderboard.propTypes = {

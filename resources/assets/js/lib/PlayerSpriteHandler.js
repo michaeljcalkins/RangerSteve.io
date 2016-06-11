@@ -1,18 +1,18 @@
 import store from 'store'
 import GameConsts from './GameConsts'
 import Weapons from './Weapons'
-import NameGenerator from './NameGenerator'
-import Maps from '../maps'
+import Maps from './Maps'
+import actions from '../actions'
 
 export default function PlayerSpriteHandler() {
-    let spawnPoint = Maps[this.room.map].getRandomSpawnPoint()
+    const state = this.game.store.getState()
+    const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.scale.setTo(GameConsts.PLAYER_SCALE)
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     this.player.height = 91
     this.player.width = 94
-    this.player.debug = true
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
@@ -28,25 +28,15 @@ export default function PlayerSpriteHandler() {
 
     // Add drag to the player that slows them down when they are not accelerating
     this.player.body.drag.setTo(GameConsts.DRAG, 0) // x, y
-    this.player.body.setSize(145, 295, 0, -3)
+    this.player.body.setSize(145, 295, 26, 0)
 
     //  Our two animations, walking left and right.
     this.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
     this.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
     this.player.animations.add('death', GameConsts.ANIMATION_DEATH, 20, false)
 
-    const startingPrimaryWeaponId = store.get('selectedPrimaryWeapon', 'AK47')
-    const startingSecondaryWeaponId = store.get('selectedSecondaryWeapon', 'DesertEagle')
-
-    this.player.meta = {
-        health: 100,
-        nickname: store.get('nickname', NameGenerator()),
-        facing: 'right',
-        primaryWeapon: new Weapons[startingPrimaryWeaponId](this),
-        secondaryWeapon: new Weapons[startingSecondaryWeaponId](this),
-        selectedPrimaryWeaponId: startingPrimaryWeaponId,
-        selectedSecondaryWeaponId: startingSecondaryWeaponId
-    }
+    this.game.store.dispatch(actions.player.setPrimaryWeapon(new Weapons[this.game.store.getState().player.selectedPrimaryWeaponId](this)))
+    this.game.store.dispatch(actions.player.setSecondaryWeapon(new Weapons[this.game.store.getState().player.selectedSecondaryWeaponId](this)))
 
     this.leftArmGroup = this.game.add.group()
     this.rightArmGroup = this.game.add.group()
@@ -72,12 +62,12 @@ export default function PlayerSpriteHandler() {
 
     // Gun
     this.currentWeaponSprite = this.game.add.sprite(
-        this.player.meta.primaryWeapon.meta.spriteX,
-        this.player.meta.primaryWeapon.meta.spriteY,
-        startingPrimaryWeaponId
+        this.game.store.getState().player.primaryWeapon.meta.spriteX,
+        this.game.store.getState().player.primaryWeapon.meta.spriteY,
+        this.game.store.getState().player.selectedPrimaryWeaponId
     )
-    this.currentWeaponSprite.scale.setTo(this.player.meta.primaryWeapon.meta.scale)
-    this.currentWeaponSprite.rotation = this.player.meta.primaryWeapon.meta.rotation
+    this.currentWeaponSprite.scale.setTo(this.game.store.getState().player.primaryWeapon.meta.scale)
+    this.currentWeaponSprite.rotation = this.game.store.getState().player.primaryWeapon.meta.rotation
 
     // Right arm
     this.rightArmGroup.add(this.currentWeaponSprite)
@@ -110,8 +100,9 @@ export default function PlayerSpriteHandler() {
     this.muzzleFlash.x = 102
     this.muzzleFlash.visible = false
     this.currentWeaponSprite.addChild(this.muzzleFlash)
+    this.player.anchor.set(.5)
 
-    
+
     /**
      * Camera Settings
      */

@@ -1,5 +1,5 @@
-import EventHandler from '../EventHandler'
 import { PropTypes } from 'react'
+import actions from '../../actions'
 
 const propTypes = {
     id: PropTypes.string.isRequired,
@@ -9,9 +9,10 @@ const propTypes = {
 export default function onPlayerHealthUpdate(data) {
     check(data, propTypes)
 
-    if (data.id !== ('/#' + this.socket.id))
-        return
+    const store = this.game.store
+    if (store.getState().game.state !== 'active') return
+    if (data.id !== ('/#' + window.socket.id)) return
 
     this.player.meta.health = data.health
-    EventHandler.emit('health update', this.player.meta.health)
+    this.game.store.dispatch(actions.player.setHealth(data.health))
 }

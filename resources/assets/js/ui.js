@@ -1,12 +1,14 @@
-// http://codepen.io/michaeljcalkins/pen/OXPEgV?editors=0010
-
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+
 import GameUiContainer from './ui/containers/GameUiContainer'
 
-export default function() {
-    ReactDOM.render(
-        <GameUiContainer />,
+export default function(store) {
+    render(
+        <Provider store={ store }>
+            <GameUiContainer />
+        </Provider>,
         document.getElementById('ui-app')
     )
 }

@@ -1,10 +1,10 @@
 import { PropTypes } from 'react'
 
-import EventHandler from '../EventHandler'
 import Weapons from '../Weapons'
-import Maps from '../../maps'
+import Maps from '../Maps'
 import emitPlayerUpdateWeapon from './emitPlayerUpdateWeapon'
-import PlayerById from'../PlayerById'
+import PlayerById from '../PlayerById'
+import actions from '../../actions'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -14,7 +14,13 @@ const propTypes = {
 export default function onPlayerRespawn(data) {
     check(data, propTypes)
 
-    if (data.damagedPlayerId !== ('/#' + this.socket.id)) {
+    const state = this.game.store.getState()
+    const store = this.game.store
+    const currentWeapon = state.player.currentWeapon
+
+    if (store.getState().game.state !== 'active') return
+
+    if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (! enemyPlayer) return
         enemyPlayer.meta.health = 100
@@ -24,26 +30,24 @@ export default function onPlayerRespawn(data) {
     this.player.body.acceleration.x = 0
     this.player.body.acceleration.y = 0
 
-    // Set primary weapon
-    this.player.meta.primaryWeapon = new Weapons[this.player.meta.selectedPrimaryWeaponId](this)
+    store.dispatch(actions.player.setPrimaryWeapon(new Weapons[state.player.selectedPrimaryWeaponId](this)))
+    store.dispatch(actions.player.setSecondaryWeapon(new Weapons[state.player.selectedSecondaryWeaponId](this)))
 
-    if (this.currentWeapon === 'primaryWeapon')
-        this.currentWeaponSprite.loadTexture(this.player.meta.selectedPrimaryWeaponId)
+    if (currentWeapon === 'secondaryWeapon')
+        this.currentWeaponSprite.loadTexture(state.player.selectedSecondaryWeaponId)
+    else
+        this.currentWeaponSprite.loadTexture(state.player.selectedPrimaryWeaponId)
 
-    // Set secondary weapon
-    this.player.meta.secondaryWeapon = new Weapons[this.player.meta.selectedSecondaryWeaponId](this)
+    store.dispatch(actions.player.setHealth(data.health))
 
-    if (this.currentWeapon === 'secondaryWeapon')
-        this.currentWeaponSprite.loadTexture(this.player.meta.selectedSecondaryWeaponId)
+    const currentWeaponMeta = this.currentWeapon === 'primary'
+        ? state.player.primaryWeapon.meta
+        : state.player.secondaryWeapon.meta
 
-    this.player.meta.health = data.health
-    EventHandler.emit('health update', data.health)
-
-    let currentWeapon = this.currentWeapon === 'primaryWeapon' ? this.player.meta.primaryWeapon : this.player.meta.secondaryWeapon
     emitPlayerUpdateWeapon.call(this, {
-        id: '/#' + this.socket.id,
-        roomId: this.roomId,
-        currentWeaponMeta: currentWeapon.meta
+        id: '/#' + window.socket.id,
+        roomId: state.room.id,
+        currentWeaponMeta
     })
 
     // Hide child groups
@@ -53,10 +57,10 @@ export default function onPlayerRespawn(data) {
     this.torsoGroup.visible = true
 
     // Create and set the new spawn point
-    const spawnPoint = Maps[this.room.map].getRandomSpawnPoint()
+    const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
 
-    this.game.input.reset()
-    this.game.input.enabled = true
+    // this.game.input.reset()
+    // this.game.input.enabled = true
 }

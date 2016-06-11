@@ -16,5 +16,5 @@ const propTypes = {
 
 export default function(data) {
     if (! check(data, propTypes)) return
-    this.socket.emit('bullet fired', data)
+    window.socket.emit('bullet fired', data)
 }

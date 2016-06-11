@@ -10,5 +10,5 @@ const propTypes = {
 
 export default function(data) {
     check(data, propTypes)
-    this.socket.emit('player damaged', data)
+    window.socket.emit('player damaged', data)
 }

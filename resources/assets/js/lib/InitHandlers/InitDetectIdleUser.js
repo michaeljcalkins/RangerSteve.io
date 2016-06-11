@@ -5,11 +5,12 @@ export default function() {
     document.onkeypress = resetTimer
 
     function playerIsIdle() {
-        window.location.href = 'https://rangersteve.io'
+        window.location.href = '/'
     }
 
     function resetTimer() {
         clearTimeout(t)
-        t = setTimeout(playerIsIdle, 60000)
+        // t = setTimeout(playerIsIdle, 60000)
+        t = setTimeout(playerIsIdle, 6000000)
     }
 }

@@ -1,5 +1,4 @@
 import { PropTypes } from 'react'
-import Weapons from '../Weapons'
 
 const propTypes = {
     bulletId: PropTypes.string.isRequired,
@@ -17,8 +16,9 @@ const propTypes = {
 export default function onBulletFired(data) {
     check(data, propTypes)
 
-    if (data.id === ('/#' + this.socket.id))
-        return
+    const store = this.game.store
+    if (store.getState().game.state !== 'active') return
+    if (data.id === ('/#' + window.socket.id)) return
 
     /**
      * Weapon Soundboard
@@ -33,7 +33,8 @@ export default function onBulletFired(data) {
         M500: this.game.add.audio('M500-sound'),
         P90: this.game.add.audio('P90-sound'),
         RPG: this.game.add.audio('RPG-sound'),
-        Skorpion: this.game.add.audio('Skorpion-sound')
+        Skorpion: this.game.add.audio('Skorpion-sound'),
+        SilverBaller: this.game.add.audio('SilverBaller-sound')
     }
 
     let bullet = this.enemyBullets.getFirstDead()
@@ -53,8 +54,12 @@ export default function onBulletFired(data) {
     bullet.body.velocity.x += newVelocity.x
     bullet.body.velocity.y += newVelocity.y
 
+    if (data.weaponId === 'SilverBaller') {
+        bullet.alpha = 0
+    }
+
     let distanceBetweenBulletAndPlayer = Phaser.Math.distance(this.player.x, this.player.y, data.x, data.y)
     let enemyBulletVolume = distanceBetweenBulletAndPlayer > 0 ? 1 - (distanceBetweenBulletAndPlayer / 3000) : 0
-    soundboard[bullet.weaponId].volume = this.sfxVolume * enemyBulletVolume
+    soundboard[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
     soundboard[bullet.weaponId].play()
 }

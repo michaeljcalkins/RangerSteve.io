@@ -9,5 +9,5 @@ const propTypes = {
 
 export default function(data) {
     check(data, propTypes)
-    this.socket.emit('message send', data)
+    window.socket.emit('message send', data)
 }

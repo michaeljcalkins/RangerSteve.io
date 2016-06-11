@@ -53,7 +53,8 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout'])
+            // rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout', 'DarkForest'])
+            rooms[roomId].map = _.sample(['DarkForest'])
             rooms[roomId].roundStartTime = moment().add(12, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
@@ -88,6 +89,14 @@ function onSocketConnection(socket) {
 
     socket.on('bullet fired', onBulletFired)
     socket.on('kick player', onKickPlayer)
+    socket.on('load complete', onLoadComplete)
+}
+
+function onLoadComplete(data) {
+    util.log('LOAD COMPLETE')
+    io.to(data.roomId).emit('update players', {
+        room: rooms[data.roomId]
+    })
 }
 
 function onKickPlayer(data) {
@@ -194,7 +203,7 @@ function onNewPlayer (data) {
         rooms[data.roomId].players[this.id] = newPlayer
         this.join(data.roomId)
 
-        io.to(data.roomId).emit('update players', {
+        io.to(data.roomId).emit('load game', {
             room: rooms[data.roomId]
         })
         return
@@ -214,14 +223,16 @@ function onNewPlayer (data) {
 
         util.log('Created new room', newRoomId)
         this.join(newRoomId)
-        io.to(newRoomId).emit('update players', {
+
+        io.to(newRoomId).emit('load game', {
             room: rooms[newRoomId]
         })
     } else {
         util.log('Adding player to', availableRooms[0])
         rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
         this.join(availableRooms[0])
-        io.to(availableRooms[0]).emit('update players', {
+
+        io.to(rooms[availableRooms[0]].id).emit('load game', {
             room: rooms[availableRooms[0]]
         })
     }
@@ -236,8 +247,8 @@ function onMovePlayer (data) {
     // Player not found
     if (! movePlayer) {
         util.log('Player not found when moving: ' + this.id)
-        io.to(data.roomId).emit('player remove', {
-            id: this.id
+        io.to(data.roomid).emit('update players', {
+            room: rooms[data.roomid]
         })
         return
     }

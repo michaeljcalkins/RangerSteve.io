@@ -4,21 +4,15 @@ import GameConsts from '../../../lib/GameConsts'
 
 export default function ChoosePrimaryMenu({
     onViewChange,
-    onPrimaryGunClick,
-    player
+    onPrimaryGunClick
 }) {
-    const primaryWeapons = GameConsts.PRIMARY_WEAPONS
-
     function handleSelectPrimaryClick(weapon) {
-        if (player.meta.score < weapon.minScore)
-            return
-
         onPrimaryGunClick(weapon)
         onViewChange('main')
     }
 
     function renderWeapons() {
-        return primaryWeapons.map(function(weapon, index) {
+        return GameConsts.PRIMARY_WEAPONS.map(function(weapon, index) {
             return (
                 <div
                     className="option-group option-weapon-group align-middle"
@@ -49,6 +43,5 @@ export default function ChoosePrimaryMenu({
 
 ChoosePrimaryMenu.propTypes = {
     onPrimaryGunClick: PropTypes.func.isRequired,
-    onViewChange: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired
+    onViewChange: PropTypes.func.isRequired
 }

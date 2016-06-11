@@ -24,8 +24,9 @@ const GameConsts = {
 
     // Maps
     MAPS: [
-        'HighRuleJungle',
-        'PunkFallout'
+        // 'HighRuleJungle',
+        // 'PunkFallout',
+        'DarkForest'
     ],
 
     // Weapons
@@ -82,6 +83,11 @@ const GameConsts = {
             id: 'RPG',
             name: 'RPG',
             image: '/images/guns/Spr_RPG.png'
+        },
+        {
+            id: 'SilverBaller',
+            name: 'Silenced Beretta',
+            image: '/images/guns/Spr_SilverBaller.png'
         }
     ]
 }
