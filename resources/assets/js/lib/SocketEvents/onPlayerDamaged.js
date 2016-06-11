@@ -37,7 +37,7 @@ export default function onPlayerDamaged(data) {
         damageTimeout = setTimeout(() => {
             // Player's health will fully regenerate
             window.socket.emit('player full health', {
-                roomId: state.room.id
+                roomId: this.game.store.getState().room.id
             })
         }, 5000)
     }
