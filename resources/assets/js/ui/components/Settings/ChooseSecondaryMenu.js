@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import storage from 'store'
 
 import GameConsts from '../../../lib/GameConsts'
 
@@ -8,7 +7,6 @@ export default function ChooseSecondaryMenu({
     onViewChange
 }) {
     function handleSelectPrimaryClick(weapon) {
-        storage.set('selectedPrimaryWeaponId', weapon.id)
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import store from 'store'
+import storage from 'store'
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudNewChatMessage from './Hud/HudNewChatMessage'
@@ -26,8 +26,8 @@ export default class GameUi extends React.Component {
         this.handleViewChange = this.handleViewChange.bind(this)
         this.handleMusicVolumeChange = this.handleMusicVolumeChange.bind(this)
         this.renderEndOfRoundLeaderboard = this.renderEndOfRoundLeaderboard.bind(this)
-        this.handleSelectPrimaryClick = this.handleSelectPrimaryClick.bind(this)
-        this.handleSelectSecondaryClick = this.handleSelectSecondaryClick.bind(this)
+        this.handlePrimaryGunClick = this.handlePrimaryGunClick.bind(this)
+        this.handleSecondaryGunClick = this.handleSecondaryGunClick.bind(this)
     }
 
     componentDidMount() {
@@ -67,7 +67,7 @@ export default class GameUi extends React.Component {
     }
 
     handleNicknameChange(nickname) {
-        store.set('nickname', nickname)
+        storage.set('nickname', nickname)
         this.props.onNicknameChange(nickname)
         window.socket.emit('player update nickname', {
             roomId: this.props.room.id,
@@ -76,12 +76,12 @@ export default class GameUi extends React.Component {
     }
 
     handleSoundEffectVolumeChange(volume) {
-        store.set('sfxVolume', volume)
+        storage.set('sfxVolume', volume)
         this.props.onSfxVolumeChange(volume)
     }
 
     handleMusicVolumeChange(volume) {
-        store.set('musicVolume', volume)
+        storage.set('musicVolume', volume)
         this.props.onMusicVolumeChange(volume)
     }
 
@@ -89,12 +89,14 @@ export default class GameUi extends React.Component {
         this.setState({ settingsView: view })
     }
 
-    handleSelectPrimaryClick(weapon) {
-        this.game.store.getState().player.selectedPrimaryWeaponId = weapon.id
+    handlePrimaryGunClick(weapon) {
+        this.props.onPrimaryWeaponIdChange(weapon.id)
+        storage.set('selectedPrimaryWeaponId', weapon.id)
     }
 
-    handleSelectSecondaryClick(weapon) {
-        this.game.store.getState().player.selectedSecondaryWeaponId = weapon.id
+    handleSecondaryGunClick(weapon) {
+        this.props.onSecondaryWeaponIdChange(weapon.id)
+        storage.set('selectedSecondaryWeaponId', weapon.id)
     }
 
     renderEndOfRoundLeaderboard() {
@@ -164,6 +166,8 @@ GameUi.propTypes = {
     onNicknameChange: PropTypes.func.isRequired,
     onOpenChatModal: PropTypes.func.isRequired,
     onOpenSettingsModal: PropTypes.func.isRequired,
+    onPrimaryWeaponIdChange: PropTypes.func.isRequired,
+    onSecondaryWeaponIdChange: PropTypes.func.isRequired,
     onSettingsViewChange: PropTypes.func.isRequired,
     onSfxVolumeChange: PropTypes.func.isRequired,
     player: PropTypes.object.isRequired,

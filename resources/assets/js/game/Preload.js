@@ -36,6 +36,7 @@ export default function Preload(store) {
     this.load.audio('BarretM90-sound', '/audio/BarretM90.mp3')
 
     this.load.audio('DesertEagle-sound', '/audio/DesertEagle.mp3')
+    this.load.audio('SilverBaller-sound', '/audio/SilverBaller.mp3')
     this.load.audio('RPG-sound', '/audio/RPG.mp3')
 
     this.load.audio('triplekill', '/audio/killingSpree/triplekill_ultimate.mp3')

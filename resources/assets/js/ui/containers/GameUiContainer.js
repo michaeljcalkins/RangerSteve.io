@@ -27,7 +27,9 @@ const mapDispatchToProps = (dispatch) => {
         onMusicVolumeChange: gameActions.setMusicVolume,
         onNicknameChange: playerActions.setNickname,
         onSfxVolumeChange: gameActions.setSfxVolume,
-        onSettingsViewChange: gameActions.setSettingsModalView
+        onSettingsViewChange: gameActions.setSettingsModalView,
+        onPrimaryWeaponIdChange: playerActions.setSelectedPrimaryWeaponId,
+        onSecondaryWeaponIdChange: playerActions.setSelectedSecondaryWeaponId
     }
 }
 

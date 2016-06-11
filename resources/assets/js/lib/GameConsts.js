@@ -83,6 +83,11 @@ const GameConsts = {
             id: 'RPG',
             name: 'RPG',
             image: '/images/guns/Spr_RPG.png'
+        },
+        {
+            id: 'SilverBaller',
+            name: 'SilverBaller',
+            image: '/images/guns/Spr_SilverBaller.png'
         }
     ]
 }

@@ -6,14 +6,14 @@ const initialState = {
     health: 100,
     nickname: storage.get('nickname', NameGenerator()),
     score: 0,
-    selectedSecondaryWeaponId: storage.get('selectedSecondaryWeapon', 'DesertEagle'),
-    selectedPrimaryWeaponId: storage.get('selectedPrimaryWeapon', 'AK47'),
+    selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
+    selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
     jumpJetCounter: 0,
     jumps: 2,
     jumping: false,
     primaryWeapon: null,
     secondaryWeapon: null,
-    facing: null
+    facing: 'right'
 }
 
 const player = (state = initialState, action) => {

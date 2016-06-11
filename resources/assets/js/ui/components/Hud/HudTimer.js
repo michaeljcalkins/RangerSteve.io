@@ -26,6 +26,7 @@ export default class HudTimer extends React.Component {
 
         if (isNaN(minutes) || isNaN(seconds) || minutes < 0) {
             this.setState({ elapsed: '0:00' })
+            return
         }
 
         this.setState({ elapsed: `${minutes}:${seconds}` })

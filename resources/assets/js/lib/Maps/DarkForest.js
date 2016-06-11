@@ -8,35 +8,37 @@ const GROUND_LOOP_SPRITE_Y = 2150
 
 const SPAWN_POINTS = [
     { x: 3200, y: 460 },
-    { x: 100, y: 690 },
+    { x: 200, y: 600 },
     { x: 1500, y: 550 },
     { x: 2300, y: 555 },
     { x: 1150, y: 730 },
     { x: 1680, y: 385 },
     { x: 3450, y: 750 },
-    // { x: 320, y: 770 },
-    // { x: 466, y: 220 },
-    // { x: 400, y: 1600 },
-    // { x: 1700, y: 1800 }
+    { x: 55, y: 314 },
+    { x: 3950, y: 340 },
+    { x: 430, y: 800 },
+    { x: 3455, y: 800 }
 ]
 
 const LEDGES = [
-    { id: 1, x: 0, y: 805, width: 4004, height: 135 },
-    // { id: 2, x: 0, y: 0, width: 4004, height: 80 },
-    { id: 3, x: 570, y: 630, width: 430, height: 235 },
-    { id: 4, x: 430, y: 255, width: 195, height: 40 },
-    { id: 5, x: 992, y: 285, width: 195, height: 45 },
-    { id: 6, x: 1225, y: 240, width: 120, height: 40 },
-    { id: 7, x: 1390, y: 590, width: 600, height: 500 },
-    { id: 8, x: 1740, y: 467, width: 470, height: 600 },
-    { id: 9, x: 2210, y: 640, width: 370, height: 400 },
-    { id: 10, x: 2440, y: 253, width: 110, height: 35 },
-    { id: 11, x: 2588, y: 290, width: 175, height: 45 },
-    { id: 12, x: 2864, y: 650, width: 440, height: 335 },
-    { id: 13, x: 2995, y: 315, width: 330, height: 45 },
-    { id: 14, x: 3060, y: 180, width: 202, height: 47 },
-    { id: 15, x: 0, y: 732, width: 300, height: 105 },
-    { id: 16, x: 3620, y: 705, width: 590, height: 305 }
+    { id: 1, x: 0, y: 905, width: 4004, height: 135 },
+    { id: 2, x: 0, y: 410, width: 90, height: 300 },
+    { id: 3, x: 573, y: 772, width: 430, height: 235 },
+    { id: 4, x: 380, y: 173, width: 195, height: 40 },
+    { id: 5, x: 1078, y: 236, width: 215, height: 45 },
+    { id: 6, x: 1345, y: 185, width: 140, height: 38 },
+    { id: 7, x: 1390, y: 715, width: 600, height: 500 },
+    { id: 8, x: 1740, y: 590, width: 470, height: 600 },
+    { id: 9, x: 2210, y: 748, width: 370, height: 400 },
+    { id: 10, x: 2455, y: 187, width: 135, height: 45 },
+    { id: 11, x: 2642, y: 238, width: 215, height: 45 },
+    { id: 12, x: 2864, y: 786, width: 440, height: 335 },
+    { id: 13, x: 3250, y: 237, width: 330, height: 45 },
+    { id: 14, x: 3919, y: 430, width: 202, height: 400 },
+    { id: 15, x: 0, y: 702, width: 300, height: 505 },
+    { id: 16, x: 3620, y: 705, width: 590, height: 305 },
+    { id: 17, x: 0, y: 0, width: 8, height: BG_HEIGHT },
+    { id: 17, x: BG_WIDTH - 10, y: 0, width: 8, height: BG_HEIGHT }
 ]
 
 export function getRandomSpawnPoint() {
@@ -44,7 +46,7 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('map-bg', '/images/maps/dark-forest/background.png', true)
+    this.load.image('background', '/images/maps/dark-forest/background.png', true)
 }
 
 export function createOverlays() {
@@ -53,9 +55,10 @@ export function createOverlays() {
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-    this.skysprite = this.add.sprite(0, 0, 'map-bg')
-    this.skysprite.width = BG_WIDTH
-    this.skysprite.height = BG_HEIGHT
+
+    this.background = this.add.sprite(0, 0, 'background')
+    this.background.width = BG_WIDTH
+    this.background.height = BG_HEIGHT
 
     this.platforms = this.add.group()
     this.platforms.enableBody = true
