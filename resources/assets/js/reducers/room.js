@@ -1,5 +1,5 @@
 const initialState = {
-
+    roundEndTime: 0
 }
 
 const room = (state = initialState, action) => {

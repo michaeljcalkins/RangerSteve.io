@@ -13,7 +13,6 @@ export default function PlayerSpriteHandler() {
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     this.player.height = 91
     this.player.width = 94
-    this.player.debug = true
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
@@ -29,7 +28,7 @@ export default function PlayerSpriteHandler() {
 
     // Add drag to the player that slows them down when they are not accelerating
     this.player.body.drag.setTo(GameConsts.DRAG, 0) // x, y
-    this.player.body.setSize(145, 295, 0, -3)
+    this.player.body.setSize(145, 295, 26, 0)
 
     //  Our two animations, walking left and right.
     this.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
@@ -101,6 +100,7 @@ export default function PlayerSpriteHandler() {
     this.muzzleFlash.x = 102
     this.muzzleFlash.visible = false
     this.currentWeaponSprite.addChild(this.muzzleFlash)
+    this.player.anchor.set(.5)
 
 
     /**

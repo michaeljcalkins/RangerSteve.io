@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "body-parser": "~1.13.2",
+    "chai": "^3.5.0",
     "compression": "^1.6.1",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
@@ -51,6 +52,7 @@
     "babelify": "^7.3.0",
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
+    "chai": "^3.5.0",
     "enzyme": "^2.3.0",
     "eslint": "^2.5.3",
     "eslint-plugin-react": "^4.3.0",
@@ -69,6 +71,7 @@
     "mocha": "^2.4.5",
     "react-addons-test-utils": "^15.0.2",
     "react-dom": "^15.0.2",
+    "sinon": "^1.17.4",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"

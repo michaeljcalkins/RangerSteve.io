@@ -7,13 +7,13 @@ const BG_HEIGHT = WORLD_HEIGHT
 const GROUND_LOOP_SPRITE_Y = 2150
 
 const SPAWN_POINTS = [
-    { x: 2800, y: 400 },
-    // { x: 1000, y: 2402 },
-    // { x: 1627, y: 2272 },
-    // { x: 380, y: 1585 },
-    // { x: 400, y: 1200 },
-    // { x: 1600, y: 1200 },
-    // { x: 1637, y: 770 },
+    { x: 3200, y: 460 },
+    { x: 100, y: 690 },
+    { x: 1500, y: 550 },
+    { x: 2300, y: 555 },
+    { x: 1150, y: 730 },
+    { x: 1680, y: 385 },
+    { x: 3450, y: 750 },
     // { x: 320, y: 770 },
     // { x: 466, y: 220 },
     // { x: 400, y: 1600 },
@@ -21,22 +21,22 @@ const SPAWN_POINTS = [
 ]
 
 const LEDGES = [
-    { id: 1, x: 0, y: 885, width: 4004, height: 135 },
-    { id: 2, x: 0, y: 0, width: 3613, height: 20 },
-    { id: 3, x: 540, y: 615, width: 420, height: 235 },
-    { id: 4, x: 250, y: 280, width: 195, height: 45 },
-    { id: 5, x: 740, y: 315, width: 195, height: 45 },
-    { id: 6, x: 975, y: 270, width: 120, height: 42 },
-    { id: 7, x: 1210, y: 570, width: 600, height: 500 },
-    { id: 8, x: 1552, y: 436, width: 470, height: 600 },
-    { id: 9, x: 2010, y: 630, width: 375, height: 400 },
-    { id: 10, x: 2362, y: 286, width: 110, height: 45 },
-    { id: 11, x: 2510, y: 330, width: 175, height: 45 },
-    { id: 12, x: 2616, y: 611, width: 425, height: 335 },
-    { id: 13, x: 2995, y: 355, width: 330, height: 50 },
-    { id: 14, x: 3060, y: 210, width: 202, height: 50 },
-    { id: 15, x: 7, y: 727, width: 290, height: 105 },
-    { id: 16, x: 3060, y: 690, width: 290, height: 105 }
+    { id: 1, x: 0, y: 805, width: 4004, height: 135 },
+    // { id: 2, x: 0, y: 0, width: 4004, height: 80 },
+    { id: 3, x: 570, y: 630, width: 430, height: 235 },
+    { id: 4, x: 430, y: 255, width: 195, height: 40 },
+    { id: 5, x: 992, y: 285, width: 195, height: 45 },
+    { id: 6, x: 1225, y: 240, width: 120, height: 40 },
+    { id: 7, x: 1390, y: 590, width: 600, height: 500 },
+    { id: 8, x: 1740, y: 467, width: 470, height: 600 },
+    { id: 9, x: 2210, y: 640, width: 370, height: 400 },
+    { id: 10, x: 2440, y: 253, width: 110, height: 35 },
+    { id: 11, x: 2588, y: 290, width: 175, height: 45 },
+    { id: 12, x: 2864, y: 650, width: 440, height: 335 },
+    { id: 13, x: 2995, y: 315, width: 330, height: 45 },
+    { id: 14, x: 3060, y: 180, width: 202, height: 47 },
+    { id: 15, x: 0, y: 732, width: 300, height: 105 },
+    { id: 16, x: 3620, y: 705, width: 590, height: 305 }
 ]
 
 export function getRandomSpawnPoint() {
