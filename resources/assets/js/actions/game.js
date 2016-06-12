@@ -1,3 +1,31 @@
+export const addKillLogMessage = (value) => {
+    return {
+        type: 'ADD_KILL_LOG_MESSAGE',
+        value
+    }
+}
+
+export const removeKillLogMessage = (value) => {
+    return {
+        type: 'REMOVE_KILL_LOG_MESSAGE',
+        value
+    }
+}
+
+export const addChatMessage = (value) => {
+    return {
+        type: 'ADD_CHAT_MESSAGE',
+        value
+    }
+}
+
+export const removeChatMessage = (value) => {
+    return {
+        type: 'REMOVE_CHAT_MESSAGE',
+        value
+    }
+}
+
 export const openSettingsModal = () => {
     return {
         type: 'OPEN_SETTINGS_MODAL',
@@ -50,13 +78,6 @@ export const setMusicVolume = (value) => {
 export const setSfxVolume = (value) => {
     return {
         type: 'SET_SFX_VOLUME',
-        value
-    }
-}
-
-export const setKillingSpreeCount = (value) => {
-    return {
-        type: 'SET_KILLING_SPREE_COUNT',
         value
     }
 }

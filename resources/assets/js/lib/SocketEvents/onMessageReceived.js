@@ -15,5 +15,5 @@ export default function onBulletFired(data) {
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
 
-    this.game.store.dispatch(actions.chatMessages.addMessage(data))
+    this.game.store.dispatch(actions.game.addChatMessage(data))
 }

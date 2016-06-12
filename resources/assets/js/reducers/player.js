@@ -18,6 +18,12 @@ const initialState = {
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_KILLING_SPREE_COUNT':
+            return {
+                ...state,
+                killingSpreeCount: action.value
+            }
+
         case 'SET_CURRENT_WEAPON':
             return {
                 ...state,
