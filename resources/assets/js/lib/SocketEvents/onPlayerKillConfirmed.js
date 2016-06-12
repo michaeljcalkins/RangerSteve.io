@@ -1,5 +1,6 @@
 import { PropTypes } from 'react'
 import actions from '../../actions'
+import PlayKillingSpreeSound from '../PlayKillingSpreeSound'
 
 const propTypes = {
     id: PropTypes.string.isRequired,
@@ -7,6 +8,7 @@ const propTypes = {
 }
 
 let killConfirmedHandle = null
+let lastKillingSpreeCount = 0
 
 export default function onPlayerKillConfirmed(data) {
     check(data, propTypes)
@@ -21,10 +23,13 @@ export default function onPlayerKillConfirmed(data) {
         store.dispatch(actions.player.setShowKillConfirmed(false))
     }, 3000)
 
-    let lastKillingSpreeCount = 0
+    // Show the killing spree hud if applicable
+    store.dispatch(actions.player.setKillingSpreeCount(data.killingSpree))
     if (data.killingSpree === lastKillingSpreeCount) return
     lastKillingSpreeCount = data.killingSpree
-    store.dispatch(actions.player.setKillingSpreeCount(data.killingSpree))
+    PlayKillingSpreeSound.call(this, data.killingSpree, store.getState().game.sfxVolume)
+
+    // This will hide the killing spree hud
     setTimeout(() => {
         store.dispatch(actions.player.setKillingSpreeCount(0))
     }, 3000)
