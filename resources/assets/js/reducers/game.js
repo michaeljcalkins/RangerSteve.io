@@ -43,7 +43,7 @@ const player = (state = initialState, action) => {
                 ]
             }
 
-        case 'REMOVE_CHAT_MESSAGE':
+        case 'REMOVE_KILL_LOG_MESSAGE':
             const index = state.killLogMessages.indexOf(action.value)
             return {
                 ...state,
