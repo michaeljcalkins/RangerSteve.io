@@ -13,6 +13,8 @@ const propTypes = {
     weaponId: PropTypes.string.isRequired
 }
 
+let soundThrottle = false
+
 export default function onBulletFired(data) {
     check(data, propTypes)
 
@@ -60,6 +62,15 @@ export default function onBulletFired(data) {
 
     let distanceBetweenBulletAndPlayer = Phaser.Math.distance(this.player.x, this.player.y, data.x, data.y)
     let enemyBulletVolume = distanceBetweenBulletAndPlayer > 0 ? 1 - (distanceBetweenBulletAndPlayer / 3000) : 0
+
+    /**
+     * Sound throttle stops the four bullets
+     * fired by the shotgun from being
+     * played four times.
+     */
+    if (soundThrottle) return
+    soundThrottle = true
     soundboard[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
     soundboard[bullet.weaponId].play()
+    setTimeout(() => soundThrottle = false, 100)
 }
