@@ -21,7 +21,11 @@ export default function onMovePlayer(data) {
 
     let movePlayer = PlayerById.call(this, data.id)
 
-    if (! movePlayer || movePlayer.meta.health <= 0 || (store.getState().room !== null && store.getState().room.state === 'ended')) {
+    if (
+        ! movePlayer ||
+        movePlayer.meta.health <= 0 ||
+        (store.getState().room !== null && store.getState().room.state === 'ended')
+    ) {
         return
     }
 

@@ -28,6 +28,8 @@ export default function onUpdatePlayers(data) {
         enemy.kill()
     })
 
+    this.enemies = this.game.add.group()
+
     _.values(store.getState().room.players).forEach((player) => {
         if (player.id === ('/#' + window.socket.id)) {
             store.dispatch(actions.player.setScore(player.meta.score))
