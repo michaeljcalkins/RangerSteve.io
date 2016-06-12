@@ -75,7 +75,7 @@ export default class GameUi extends React.Component {
         this.props.onNicknameChange(nickname)
         window.socket.emit('player update nickname', {
             roomId: this.props.room.id,
-            nickname: data.nickname
+            nickname
         })
     }
 
