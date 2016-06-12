@@ -9,7 +9,6 @@ import onPlayerHealthUpdate from './onPlayerHealthUpdate'
 import onPlayerKillConfirmed from './onPlayerKillConfirmed'
 import onMessageReceived from './onMessageReceived'
 import onPlayerKillLog from './onPlayerKillLog'
-import onPlayerUpdateWeapon from './onPlayerUpdateWeapon'
 import onKickPlayer from './onKickPlayer'
 import onLoadGame from './onLoadGame'
 
@@ -25,7 +24,6 @@ export default function() {
     window.socket.on('player health update', onPlayerHealthUpdate.bind(this))
     window.socket.on('player kill confirmed', onPlayerKillConfirmed.bind(this))
     window.socket.on('player kill log', onPlayerKillLog.bind(this))
-    window.socket.on('player update weapon', onPlayerUpdateWeapon.bind(this))
 
     window.socket.on('message received', onMessageReceived.bind(this))
 

@@ -81,7 +81,6 @@ function onSocketConnection(socket) {
     socket.on('player healing', onPlayerHealing)
     socket.on('player adjust score', onPlayerAdjustScore)
     socket.on('player update nickname', onPlayerUpdateNickname)
-    socket.on('player update weapon', onPlayerUpdateWeapon)
 
     socket.on('message send', onMessageSend)
 
@@ -107,10 +106,6 @@ function onKickPlayer(data) {
         id: player.id,
         roomId: data.roomId
     })
-}
-
-function onPlayerUpdateWeapon(data) {
-    io.to(data.roomId).emit('player update weapon', data)
 }
 
 function onMessageSend(data) {
