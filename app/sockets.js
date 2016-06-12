@@ -53,8 +53,7 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            // rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout', 'DarkForest'])
-            rooms[roomId].map = _.sample(['DarkForest'])
+            rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout', 'DarkForest'])
             rooms[roomId].roundStartTime = moment().add(12, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
@@ -71,7 +70,6 @@ setInterval(function() {
 
 // New socket connection
 function onSocketConnection(socket) {
-    let address = socket.handshake.address
     console.log('New connection from ' + socket.request.connection.remoteAddress)
 
     socket.on('disconnect', onClientDisconnect)
@@ -93,7 +91,6 @@ function onSocketConnection(socket) {
 }
 
 function onLoadComplete(data) {
-    util.log('LOAD COMPLETE')
     io.to(data.roomId).emit('update players', {
         room: rooms[data.roomId]
     })

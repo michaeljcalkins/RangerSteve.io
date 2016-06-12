@@ -12,7 +12,7 @@ export default class SilverBaller extends Phaser.Group {
         this.meta = {
             id: 'SilverBaller',
             rotation: 80.15,
-            scale: 1.3,
+            scale: 1.4,
 
             leftFaceX: -12,
             leftFaceY: -20,
