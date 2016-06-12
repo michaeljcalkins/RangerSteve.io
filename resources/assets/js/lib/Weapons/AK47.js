@@ -12,7 +12,7 @@ export default class AK47 extends Phaser.Group {
         this.meta = {
             id: 'AK47',
             rotation: 80.20,
-            scale: 1.3,
+            scale: 1.4,
 
             leftFaceX: -7,
             leftFaceY: 30,
