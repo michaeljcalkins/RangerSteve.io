@@ -7,7 +7,7 @@ export default function HudChatHistory({
         if (messages.length === 0)
             return (<li>Press T to chat</li>)
 
-        return messages.slice(-5).map(function(message, index) {
+        return messages.map(function(message, index) {
             return (
                 <li key={ index }>
                     { message.playerNickname }: { message.message }

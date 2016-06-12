@@ -1,3 +1,9 @@
+export const reduceToMaxChatMessages = () => {
+    return {
+        type: 'REDUCE_TO_MAX_CHAT_MESSAGES'
+    }
+}
+
 export const addKillLogMessage = (value) => {
     return {
         type: 'ADD_KILL_LOG_MESSAGE',

@@ -16,21 +16,28 @@ const initialState = {
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'REDUCE_TO_MAX_CHAT_MESSAGES':
+            return {
+                ...state,
+                chatMessages: state.chatMessages.slice(-5)
+            }
+
         case 'ADD_CHAT_MESSAGE':
             return {
                 ...state,
                 chatMessages: [
-                    state.chatMessages,
-                    ...action.value
+                    ...state.chatMessages,
+                    action.value
                 ]
             }
 
         case 'REMOVE_CHAT_MESSAGE':
+            var index = state.chatMessages.indexOf(action.value)
             return {
                 ...state,
                 chatMessages: [
-                    state.chatMessages,
-                    ...action.value
+                    ...state.chatMessages.slice(0, index),
+                    ...state.chatMessages.slice(index + 1)
                 ]
             }
 
@@ -43,8 +50,8 @@ const player = (state = initialState, action) => {
                 ]
             }
 
-        case 'REMOVE_CHAT_MESSAGE':
-            const index = state.killLogMessages.indexOf(action.value)
+        case 'REMOVE_KILL_LOG_MESSAGE':
+            var index = state.killLogMessages.indexOf(action.value)
             return {
                 ...state,
                 killLogMessages: [
