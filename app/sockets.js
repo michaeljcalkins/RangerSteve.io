@@ -176,7 +176,7 @@ function onNewPlayer (data) {
         score: 0,
         nickname: data.nickname,
         killingSpree: 0,
-        currentWeaponMeta: data.currentWeaponMeta
+        weaponId: data.weaponId
     }
 
     if (process.env.NODE_ENV === 'production') {
@@ -267,7 +267,8 @@ function onMovePlayer (data) {
         leftArmAngle: data.leftArmAngle,
         facing: data.facing,
         lastMovement: data.lastMovement,
-        health: movePlayer.meta.health
+        health: movePlayer.meta.health,
+        weaponId: data.weaponId
     })
 }
 

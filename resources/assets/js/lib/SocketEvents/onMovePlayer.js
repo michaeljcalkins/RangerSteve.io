@@ -1,6 +1,7 @@
 import { PropTypes } from 'react'
 import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
+import WeaponConsts from '../WeaponConsts'
 
 const propTypes = {
     id: PropTypes.string.isRequired,
@@ -9,7 +10,8 @@ const propTypes = {
     rightArmAngle: PropTypes.number.isRequired,
     leftArmAngle: PropTypes.number.isRequired,
     facing: PropTypes.string.isRequired,
-    health: PropTypes.number.isRequired
+    health: PropTypes.number.isRequired,
+    weaponId: PropTypes.string.isRequired
 }
 
 export default function onMovePlayer(data) {
@@ -60,6 +62,12 @@ export default function onMovePlayer(data) {
         } else {
             movePlayer.frame = 6
         }
+    }
+
+    if (movePlayer.currentWeaponSprite.id !== data.weaponId) {
+        movePlayer.currentWeaponSprite.loadTexture(data.weaponId)
+        movePlayer.currentWeaponSprite.rotation = WeaponConsts[data.weaponId].rotation
+        movePlayer.currentWeaponSprite.scale.setTo(WeaponConsts[data.weaponId].scale)
     }
 
     movePlayer.lastPosition.x = movePlayer.x
