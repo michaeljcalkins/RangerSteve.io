@@ -11,6 +11,7 @@ Math.random = (function(rand) {
     document.addEventListener('mousemove', function(event) {
         salt = event.pageX * event.pageY * window.innerWidth * window.innerHeight
     })
+    
     return function() {
         return (rand() + (1 / (1 + salt))) % 1;
     }
