@@ -81,7 +81,6 @@ function onSocketConnection(socket) {
     socket.on('player healing', onPlayerHealing)
     socket.on('player adjust score', onPlayerAdjustScore)
     socket.on('player update nickname', onPlayerUpdateNickname)
-    socket.on('player update weapon', onPlayerUpdateWeapon)
 
     socket.on('message send', onMessageSend)
 
@@ -107,10 +106,6 @@ function onKickPlayer(data) {
         id: player.id,
         roomId: data.roomId
     })
-}
-
-function onPlayerUpdateWeapon(data) {
-    io.to(data.roomId).emit('player update weapon', data)
 }
 
 function onMessageSend(data) {
@@ -176,7 +171,7 @@ function onNewPlayer (data) {
         score: 0,
         nickname: data.nickname,
         killingSpree: 0,
-        currentWeaponMeta: data.currentWeaponMeta
+        weaponId: data.weaponId
     }
 
     if (process.env.NODE_ENV === 'production') {
@@ -267,7 +262,8 @@ function onMovePlayer (data) {
         leftArmAngle: data.leftArmAngle,
         facing: data.facing,
         lastMovement: data.lastMovement,
-        health: movePlayer.meta.health
+        health: movePlayer.meta.health,
+        weaponId: data.weaponId
     })
 }
 

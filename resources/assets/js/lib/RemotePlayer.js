@@ -1,5 +1,6 @@
 import { PropTypes } from 'react'
 import GameConsts from './GameConsts'
+import WeaponConsts from './WeaponConsts'
 
 const propTypes = {
     x: PropTypes.number.isRequired,
@@ -25,7 +26,6 @@ export default function RemotePlayer(player) {
         x: player.x,
         y: player.y
     }
-
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(newRemotePlayer)
@@ -57,9 +57,10 @@ export default function RemotePlayer(player) {
     newRemotePlayer.leftArmGroup.add(newRemotePlayer.leftArmSprite)
 
     // Current weapon
-    newRemotePlayer.currentWeaponSprite = this.game.add.sprite(0, 0, player.meta.currentWeaponMeta.id)
-    newRemotePlayer.currentWeaponSprite.rotation = player.meta.currentWeaponMeta.rotation
-    newRemotePlayer.currentWeaponSprite.scale.setTo(player.meta.currentWeaponMeta.scale)
+    newRemotePlayer.currentWeaponSprite = this.game.add.sprite(0, 0, player.meta.weaponId)
+    newRemotePlayer.currentWeaponSprite.id = player.meta.weaponId
+    newRemotePlayer.currentWeaponSprite.rotation = WeaponConsts[player.meta.weaponId].rotation
+    newRemotePlayer.currentWeaponSprite.scale.setTo(WeaponConsts[player.meta.weaponId].scale)
 
     // Right arm
     newRemotePlayer.rightArmGroup.add(newRemotePlayer.currentWeaponSprite)

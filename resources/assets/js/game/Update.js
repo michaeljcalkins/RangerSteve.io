@@ -47,7 +47,8 @@ export default function Update() {
             y: this.player.y,
             rightArmAngle: this.rightArmGroup.angle,
             leftArmAngle: this.leftArmGroup.angle,
-            facing: state.player.facing
+            facing: state.player.facing,
+            weaponId: state.player.currentWeapon === 'primaryWeapon' ? state.player.selectedPrimaryWeaponId : state.player.selectedSecondaryWeaponId
         }
 
         if (_.isEqual(lastPlayerData, newPlayerData)) return

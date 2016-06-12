@@ -1,5 +1,6 @@
 import GameConsts from '../GameConsts'
 import emitPlayerDamaged from '../SocketEvents/emitPlayerDamaged'
+import actions from '../../actions'
 
 const WORLD_WIDTH = 8000
 const WORLD_HEIGHT = 3966
@@ -96,20 +97,23 @@ export function createLedges() {
 }
 
 export function update() {
+    const store = this.game.store
+
     this.physics.arcade.collide(this.player, this.groundSprite, () => {
-        if (this.player.meta.health <= 0 || this.player.y < 3900) return
+        if (store.getState().player.health <= 0 || this.player.y < 3900) return
 
         // this.game.input.enabled = false
         this.player.body.acceleration.x = 0
         this.player.body.acceleration.y = 0
-        this.player.meta.health = 0
+        store.dispatch(actions.player.setHealth(0))
+
         this.leftArmGroup.visible = false
         this.rightArmGroup.visible = false
         this.headGroup.visible = false
         this.torsoGroup.visible = false
 
         emitPlayerDamaged.call(this, {
-            roomId: state.room.id,
+            roomId: store.getState().room.id,
             damage: 1000,
             damagedPlayerId: '/#' + window.socket.id,
             attackingPlayerId: null
