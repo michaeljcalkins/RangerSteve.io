@@ -40,10 +40,6 @@ export default function Update() {
         this.hurtBorderSprite.alpha = 0
     }
 
-    if (state.room.map) {
-        Maps[state.room.map].update.call(this)
-    }
-
     if (state.room.id && state.player.health > 0 && state.room.state !== 'ended' && state.player.facing !== null) {
         let newPlayerData = {
             roomId: state.room.id,
