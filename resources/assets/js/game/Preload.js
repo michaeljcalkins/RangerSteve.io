@@ -38,6 +38,7 @@ export default function Preload(store) {
     this.load.audio('DesertEagle-sound', '/audio/DesertEagle.mp3')
     this.load.audio('SilverBaller-sound', '/audio/SilverBaller.mp3')
     this.load.audio('RPG-sound', '/audio/RPG.mp3')
+    this.load.audio('RPG-explosion-sound', '/audio/RPGExplosion.mp3')
 
     this.load.audio('triplekill', '/audio/killingSpree/triplekill_ultimate.mp3')
     this.load.audio('multikill', '/audio/killingSpree/multikill_ultimate.mp3')
