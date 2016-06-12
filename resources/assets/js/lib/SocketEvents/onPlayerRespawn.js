@@ -2,7 +2,6 @@ import { PropTypes } from 'react'
 
 import Weapons from '../Weapons'
 import Maps from '../Maps'
-import emitPlayerUpdateWeapon from './emitPlayerUpdateWeapon'
 import PlayerById from '../PlayerById'
 import actions from '../../actions'
 
@@ -40,16 +39,6 @@ export default function onPlayerRespawn(data) {
 
     store.dispatch(actions.player.setHealth(data.health))
 
-    const currentWeaponMeta = this.currentWeapon === 'primary'
-        ? state.player.primaryWeapon.meta
-        : state.player.secondaryWeapon.meta
-
-    emitPlayerUpdateWeapon.call(this, {
-        id: '/#' + window.socket.id,
-        roomId: state.room.id,
-        currentWeaponMeta
-    })
-
     // Hide child groups
     this.leftArmGroup.visible = true
     this.rightArmGroup.visible = true
@@ -60,7 +49,4 @@ export default function onPlayerRespawn(data) {
     const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
-
-    // this.game.input.reset()
-    // this.game.input.enabled = true
 }

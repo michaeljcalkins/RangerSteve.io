@@ -15,6 +15,10 @@ export default function(data) {
     ricochet.animations.play('collision')
     ricochet.animations.currentAnim.killOnComplete = true
 
+    this.fx = this.game.add.audio('RPG-explosion-sound')
+    this.fx.volume = this.game.store.getState().game.sfxVolume
+    this.fx.play()
+
     // this.fullDamageBlastRadius.x = ricochet.x
     // this.fullDamageBlastRadius.y = ricochet.y
     // setTimeout(() => {
