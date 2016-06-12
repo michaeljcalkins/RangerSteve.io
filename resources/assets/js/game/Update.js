@@ -1,9 +1,12 @@
+import _ from 'lodash'
 import CollisionHandler from '../lib/CollisionHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 import Maps from '../lib/Maps'
+
+let lastPlayerData = {}
 
 export default function Update() {
     const state = this.game.store.getState()
@@ -28,7 +31,6 @@ export default function Update() {
     }
 
     if (this.game.input.activePointer.isDown && state.player.health > 0) {
-
         state.player[currentWeapon].fire()
     }
 
@@ -43,13 +45,18 @@ export default function Update() {
     }
 
     if (state.room.id && state.player.health > 0 && state.room.state !== 'ended' && state.player.facing !== null) {
-        emitMovePlayer.call(this, {
+        let newPlayerData = {
             roomId: state.room.id,
             x: this.player.x,
             y: this.player.y,
             rightArmAngle: this.rightArmGroup.angle,
             leftArmAngle: this.leftArmGroup.angle,
             facing: state.player.facing
-        })
+        }
+
+        if (_.isEqual(lastPlayerData, newPlayerData)) return
+
+        emitMovePlayer.call(this, newPlayerData)
+        lastPlayerData = newPlayerData
     }
 }
