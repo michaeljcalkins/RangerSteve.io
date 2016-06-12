@@ -1,3 +1,10 @@
+export const setKillingSpreeCount = (value) => {
+    return {
+        type: 'SET_KILLING_SPREE_COUNT',
+        value
+    }
+}
+
 export const setCurrentWeapon = (value) => {
     return {
         type: 'SET_CURRENT_WEAPON',

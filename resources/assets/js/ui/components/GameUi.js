@@ -95,8 +95,8 @@ export default class GameUi extends React.Component {
     }
 
     handleSecondaryGunClick(weapon) {
-        this.props.onSecondaryWeaponIdChange(weapon.id)
         storage.set('selectedSecondaryWeaponId', weapon.id)
+        this.props.onSecondaryWeaponIdChange(weapon.id)
     }
 
     renderEndOfRoundLeaderboard() {

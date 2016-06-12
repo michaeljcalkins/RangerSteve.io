@@ -15,17 +15,17 @@ export default function onPlayerKillConfirmed(data) {
     if (store.getState().game.state !== 'active') return
     if (data.id !== ('/#' + window.socket.id)) return
 
-    this.game.store.dispatch(actions.player.setShowKillConfirmed(true))
+    store.dispatch(actions.player.setShowKillConfirmed(true))
     clearTimeout(killConfirmedHandle)
     killConfirmedHandle = setTimeout(() => {
-        this.game.store.dispatch(actions.player.setShowKillConfirmed(false))
+        store.dispatch(actions.player.setShowKillConfirmed(false))
     }, 3000)
 
     let lastKillingSpreeCount = 0
     if (data.killingSpree === lastKillingSpreeCount) return
     lastKillingSpreeCount = data.killingSpree
-    this.game.store.dispatch(actions.player.setKillingSpreeCount(data.killingSpree))
+    store.dispatch(actions.player.setKillingSpreeCount(data.killingSpree))
     setTimeout(() => {
-        this.game.store.dispatch(actions.player.setKillingSpreeCount(0))
+        store.dispatch(actions.player.setKillingSpreeCount(0))
     }, 3000)
 }

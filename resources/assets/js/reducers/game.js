@@ -5,7 +5,7 @@ const initialState = {
     chatModalIsOpen: false,
     killingSpreeCount: 0,
     killLogMessages: [],
-    messages: [],
+    chatMessages: [],
     musicVolume: storage.get('musicVolume', GameConsts.STARTING_MUSIC_VOLUME),
     settingsModalIsOpen: !storage.has('nickname'),
     settingsView: 'main',
@@ -16,6 +16,43 @@ const initialState = {
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'ADD_CHAT_MESSAGE':
+            return {
+                ...state,
+                chatMessages: [
+                    state.chatMessages,
+                    ...action.value
+                ]
+            }
+
+        case 'REMOVE_CHAT_MESSAGE':
+            return {
+                ...state,
+                chatMessages: [
+                    state.chatMessages,
+                    ...action.value
+                ]
+            }
+
+        case 'ADD_KILL_LOG_MESSAGE':
+            return {
+                ...state,
+                killLogMessages: [
+                    ...state.killLogMessages,
+                    action.value
+                ]
+            }
+
+        case 'REMOVE_CHAT_MESSAGE':
+            const index = state.killLogMessages.indexOf(action.value)
+            return {
+                ...state,
+                killLogMessages: [
+                    ...state.killLogMessages.slice(0, index),
+                    ...state.killLogMessages.slice(index + 1)
+                ]
+            }
+
         case 'OPEN_CHAT_MODAL':
             return {
                 ...state,
@@ -62,12 +99,6 @@ const player = (state = initialState, action) => {
             return {
                 ...state,
                 sfxVolume: action.value
-            }
-
-        case 'SET_KILLING_SPREE_COUNT':
-            return {
-                ...state,
-                killingSpreeCount: action.value
             }
 
         case 'SET_STATE':
