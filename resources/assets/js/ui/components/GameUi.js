@@ -58,6 +58,10 @@ export default class GameUi extends React.Component {
 
     handleSendMessage(message) {
         if (message.length === 0) return
+
+        this.props.onCloseChatModal()
+        this.props.onReduceToMaxChatMessages()
+
         emitMessageSend.call(this, {
             roomId: this.props.room.id,
             playerId: '/#' + window.socket.id,
@@ -117,6 +121,7 @@ export default class GameUi extends React.Component {
             room,
             game,
             onCloseSettingsModal,
+            onCloseChatModal,
             onOpenSettingsModal,
             onSettingsViewChange,
             onMusicVolumeChange,
@@ -139,7 +144,7 @@ export default class GameUi extends React.Component {
                     isOpen={ game.chatModalIsOpen }
                     onSendMessage={ this.handleSendMessage }
                 />
-                <HudChatHistory messages={ game.messages } />
+                <HudChatHistory messages={ game.chatMessages } />
                 { this.renderEndOfRoundLeaderboard() }
                 <SettingsModal
                     game={ game }
@@ -163,6 +168,7 @@ GameUi.propTypes = {
     onCloseChatModal: PropTypes.func.isRequired,
     onCloseSettingsModal: PropTypes.func.isRequired,
     onMusicVolumeChange: PropTypes.func.isRequired,
+    onReduceToMaxChatMessages: PropTypes.func.isRequired,
     onNicknameChange: PropTypes.func.isRequired,
     onOpenChatModal: PropTypes.func.isRequired,
     onOpenSettingsModal: PropTypes.func.isRequired,
