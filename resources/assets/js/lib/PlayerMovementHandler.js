@@ -7,7 +7,7 @@ export default function PlayerMovementHandler() {
 
     if (state.player.health <= 0) return
 
-    if (leftInputIsActive.call(this)) {
+    if (leftInputIsActive.call(this, state.game.keyboardControls.left)) {
         // If the LEFT key is down, set the player velocity to move left
         this.player.body.acceleration.x = -GameConsts.ACCELERATION
         this.player.animations.play('left')
@@ -20,7 +20,7 @@ export default function PlayerMovementHandler() {
         if (this.game.input.worldX < this.player.x) {
             playerFaceLeft.call(this)
         }
-    } else if (rightInputIsActive.call(this)) {
+    } else if (rightInputIsActive.call(this, state.game.keyboardControls.right)) {
         // If the RIGHT key is down, set the player velocity to move right
         this.player.body.acceleration.x = GameConsts.ACCELERATION
         this.player.animations.play('right')

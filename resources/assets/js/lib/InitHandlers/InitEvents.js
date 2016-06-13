@@ -1,5 +1,7 @@
 import actions from '../../actions'
 
+let lastSwitchWeaponKey = null
+
 export default function() {
     const store = this.game.store
 
@@ -9,7 +11,9 @@ export default function() {
     })
 
     // Switch weapons
-    this.input.keyboard.addKey(Phaser.Keyboard.Q).onDown.add(() => {
+    this.input.keyboard.removeKey(lastSwitchWeaponKey)
+    lastSwitchWeaponKey = store.getState().game.keyboardControls.switchWeapon
+    this.input.keyboard.addKey(store.getState().game.keyboardControls.switchWeapon).onUp.add(() => {
         const currentWeapon = store.getState().player.currentWeapon
 
         if (currentWeapon === 'primaryWeapon') {

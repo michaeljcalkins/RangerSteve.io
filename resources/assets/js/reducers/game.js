@@ -6,16 +6,39 @@ const initialState = {
     killingSpreeCount: 0,
     killLogMessages: [],
     chatMessages: [],
+    keyboardControls: {
+        left: storage.get('keyboardControl.left', Phaser.Keyboard.A),
+        right: storage.get('keyboardControl.right', Phaser.Keyboard.D),
+        up: storage.get('keyboardControl.up', Phaser.Keyboard.W),
+        switchWeapon: storage.get('keyboardControl.switchWeapon', Phaser.Keyboard.Q),
+        newChatMessage: storage.get('keyboardControl.newChatMessage', Phaser.Keyboard.T)
+    },
     musicVolume: storage.get('musicVolume', GameConsts.STARTING_MUSIC_VOLUME),
     settingsModalIsOpen: !storage.has('nickname'),
     settingsView: 'main',
     sfxVolume: storage.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME),
     showKillConfirmed: false,
-    state: 'loading'
+    state: 'loading',
+    resetEventsFlag: false
 }
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_RESET_EVENTS_FLAG':
+            return {
+                ...state,
+                resetEventsFlag: action.value
+            }
+
+        case 'SET_KEYBOARD_CONTROL':
+            return {
+                ...state,
+                keyboardControls: {
+                    ...state.keyboardControls,
+                    ...action.value
+                }
+            }
+
         case 'REDUCE_TO_MAX_CHAT_MESSAGES':
             return {
                 ...state,

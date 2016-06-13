@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import cs from 'classnames'
 
 import MainSettingsMenu from './MainSettingsMenu'
 import ChoosePrimaryMenu from './ChoosePrimaryMenu'
@@ -15,6 +16,8 @@ export default function SettingsModal({
     onSecondaryGunClick,
     onSfxVolumeChange,
     onMusicVolumeChange,
+    onKeyboardControlChange,
+    onSetResetEventsFlag,
     player,
     game
 }) {
@@ -49,6 +52,9 @@ export default function SettingsModal({
         case 'controls':
             return (
                 <ControlsMenu
+                    game={ game }
+                    onKeyboardControlChange={ onKeyboardControlChange }
+                    onSetResetEventsFlag={ onSetResetEventsFlag }
                     onViewChange={ onViewChange }
                 />
             )
@@ -56,12 +62,12 @@ export default function SettingsModal({
         default:
             return (
                 <MainSettingsMenu
+                    game={ game }
                     onMusicVolumeChange={ onMusicVolumeChange }
                     onNicknameChange={ onNicknameChange }
                     onSfxVolumeChange={ onSfxVolumeChange }
                     onViewChange={ onViewChange }
                     player={ player }
-                    game={ game }
                 />
             )
         }
@@ -83,18 +89,28 @@ export default function SettingsModal({
                             >
                                 <span>&times;</span>
                             </button>
-                            <h4 className="modal-title">Ranger Steve</h4>
+                            <h4 className="modal-title">Options</h4>
                         </div>
                         <div className="modal-body">
                             <div className="row">
                                 <div className="col-sm-12">
                                     <ul className="nav nav-pills" style={ { marginBottom: '15px' } }>
-                                        <li className="active pointer">
+                                        <li
+                                            className={ cs({
+                                                pointer: true,
+                                                active: game.settingsView === 'main'
+                                            }) }
+                                        >
                                             <a onClick={ onViewChange.bind(this, 'main') }>
                                                 Main
                                             </a>
                                         </li>
-                                        <li className="pointer">
+                                        <li
+                                            className={ cs({
+                                                pointer: true,
+                                                active: game.settingsView === 'controls'
+                                            }) }
+                                        >
                                             <a onClick={ onViewChange.bind(this, 'controls') }>
                                                 Controls
                                             </a>
