@@ -32,7 +32,8 @@ export default function ControlsMenu({
         W: Phaser.Keyboard.W,
         X: Phaser.Keyboard.X,
         Y: Phaser.Keyboard.Y,
-        Z: Phaser.Keyboard.Z
+        Z: Phaser.Keyboard.Z,
+        SPACEBAR: Phaser.Keyboard.SPACEBAR 
     }
 
     function handleSetAzerty() {
