@@ -33,7 +33,7 @@ export default function ControlsMenu({
         X: Phaser.Keyboard.X,
         Y: Phaser.Keyboard.Y,
         Z: Phaser.Keyboard.Z,
-        SPACEBAR: Phaser.Keyboard.SPACEBAR 
+        SPACEBAR: Phaser.Keyboard.SPACEBAR
     }
 
     function handleSetAzerty() {
@@ -242,5 +242,6 @@ export default function ControlsMenu({
 
 ControlsMenu.propTypes = {
     game: PropTypes.object.isRequired,
-    onKeyboardControlChange: PropTypes.func.isRequired
+    onKeyboardControlChange: PropTypes.func.isRequired,
+    onSetResetEventsFlag: PropTypes.func.isRequired
 }
