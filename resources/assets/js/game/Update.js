@@ -5,11 +5,19 @@ import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 import Maps from '../lib/Maps'
+import InitEvents from '../lib/InitHandlers/InitEvents'
+import actions from '../actions'
 
 let lastPlayerData = {}
 
 export default function Update() {
+    if (this.game.store.getState().game.resetEventsFlag) {
+        this.game.store.dispatch(actions.game.setResetEventsFlag(false))
+        InitEvents.call(this)
+    }
+
     const state = this.game.store.getState()
+
 
     if (this.audioPlayer) {
         this.audioPlayer.volume = state.game.musicVolume

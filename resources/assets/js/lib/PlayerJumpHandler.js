@@ -3,8 +3,6 @@ import GameConsts from './GameConsts'
 import { upInputIsActive, upInputReleased } from './InputHelpers'
 import actions from '../actions'
 
-let jumpJetCounter = 0
-
 export default function PlayerJumpHandler() {
     // Set a variable that is true when the player is touching the ground
     const onTheGround = this.player.body.touching.down
@@ -16,17 +14,17 @@ export default function PlayerJumpHandler() {
     }
 
     // Jump!
-    if (this.game.store.getState().player.jumps === 2 && upInputIsActive.call(this, 5) && onTheGround) {
+    if (this.game.store.getState().player.jumps === 2 && upInputIsActive.call(this, 5, this.game.store.getState().game.keyboardControls.up) && onTheGround) {
         this.player.body.velocity.y = GameConsts.JUMP_SPEED
         this.game.store.dispatch(actions.player.setJumping(true))
-    } else if (upInputIsActive.call(this, 5)) {
+    } else if (upInputIsActive.call(this, 5, this.game.store.getState().game.keyboardControls.up)) {
         this.game.store.dispatch(actions.player.setJumps(1))
     }
 
     // Jump Jet!
     if (
         this.game.store.getState().player.jumps === 1 &&
-        this.input.keyboard.isDown(Phaser.Keyboard.W) &&
+        this.input.keyboard.isDown(this.game.store.getState().game.keyboardControls.up) &&
         this.game.store.getState().player.jumpJetCounter > -130000
     ) {
         this.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
@@ -42,7 +40,7 @@ export default function PlayerJumpHandler() {
     }
 
     // Reduce the number of available jumps if the jump input is released
-    if (this.game.store.getState().player.jumping && upInputReleased.call(this)) {
+    if (this.game.store.getState().player.jumping && upInputReleased.call(this, this.game.store.getState().game.keyboardControls.up)) {
         this.player.body.acceleration.x = 0
         this.player.body.acceleration.y = 0
 

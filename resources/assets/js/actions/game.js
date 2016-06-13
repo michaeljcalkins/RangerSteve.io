@@ -1,3 +1,17 @@
+export const setResetEventsFlag = (value) => {
+    return {
+        type: 'SET_RESET_EVENTS_FLAG',
+        value
+    }
+}
+
+export const setKeyboardControl = (value) => {
+    return {
+        type: 'SET_KEYBOARD_CONTROL',
+        value
+    }
+}
+
 export const reduceToMaxChatMessages = () => {
     return {
         type: 'REDUCE_TO_MAX_CHAT_MESSAGES'

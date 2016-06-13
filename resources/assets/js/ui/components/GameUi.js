@@ -44,7 +44,7 @@ export default class GameUi extends React.Component {
                 this.props.onCloseChatModal()
             }
 
-            if (e.keyCode === Phaser.Keyboard.T && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
+            if (e.keyCode === this.props.game.keyboardControls.newChatMessage && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
                 e.preventDefault()
                 this.props.onOpenChatModal()
             }
@@ -146,11 +146,13 @@ export default class GameUi extends React.Component {
                     game={ game }
                     isOpen={ game.settingsModalIsOpen }
                     onClose={ onCloseSettingsModal }
+                    onKeyboardControlChange={ this.props.onKeyboardControlChange }
                     onMusicVolumeChange={ this.handleMusicVolumeChange }
                     onNicknameChange={ this.handleNicknameChange }
                     onPrimaryGunClick={ this.handlePrimaryGunClick }
                     onSecondaryGunClick={ this.handleSecondaryGunClick }
                     onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
+                    onSetResetEventsFlag={ this.props.onSetResetEventsFlag }
                     onViewChange={ onSettingsViewChange }
                     player={ player }
                 />
@@ -169,6 +171,7 @@ GameUi.propTypes = {
     onOpenChatModal: PropTypes.func.isRequired,
     onOpenSettingsModal: PropTypes.func.isRequired,
     onPrimaryWeaponIdChange: PropTypes.func.isRequired,
+    onKeyboardControlChange: PropTypes.func.isRequired,
     onSecondaryWeaponIdChange: PropTypes.func.isRequired,
     onSettingsViewChange: PropTypes.func.isRequired,
     onSfxVolumeChange: PropTypes.func.isRequired,

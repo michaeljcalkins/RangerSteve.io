@@ -24,9 +24,9 @@ const GameConsts = {
 
     // Maps
     MAPS: [
-        // 'HighRuleJungle',
-        // 'PunkFallout',
-        'DarkForest'
+        'HighRuleJungle',
+        'PunkFallout'
+        // 'DarkForest'
     ],
 
     // Weapons
