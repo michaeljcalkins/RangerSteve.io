@@ -23,18 +23,17 @@ export default function onMovePlayer(data) {
 
     let movePlayer = PlayerById.call(this, data.id)
 
-    if (
-        ! movePlayer ||
-        movePlayer.meta.health <= 0 ||
-        (store.getState().room !== null && store.getState().room.state === 'ended')
-    ) {
-        return
+    if (! movePlayer || (store.getState().room !== null && store.getState().room.state === 'ended')) return
+
+    if (movePlayer.meta.health <= 0) {
+        return movePlayer.alpha = 0
     }
 
     // Update player position
     movePlayer.x = data.x
     movePlayer.y = data.y
 
+    movePlayer.alpha = 1
     movePlayer.rightArmGroup.visible = true
     movePlayer.leftArmGroup.visible = true
     movePlayer.headGroup.visible = true

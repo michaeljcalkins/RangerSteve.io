@@ -356,7 +356,7 @@ function onPlayerDamaged(data) {
 
             io.to(data.roomId).emit('player kill confirmed', {
                 id: attackingPlayer.id,
-                score: 10,
+                damagedPlayerId: data.damagedPlayerId,
                 killingSpree: attackingPlayer.meta.killingSpree
             })
 
@@ -382,7 +382,7 @@ function onPlayerDamaged(data) {
                 damagedPlayerId: data.damagedPlayerId,
                 health: 100
             })
-        }, 3000)
+        }, 5000)
 
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]
