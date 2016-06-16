@@ -14,6 +14,7 @@ import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
 import SettingsModal from './Settings/SettingsModal'
 import EndOfRoundLeaderboard from './Round/EndOfRoundLeaderboard'
+import RespawnModal from './Respawn/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 
 export default class GameUi extends React.Component {
@@ -142,6 +143,10 @@ export default class GameUi extends React.Component {
                 />
                 <HudChatHistory messages={ game.chatMessages } />
                 { this.renderEndOfRoundLeaderboard() }
+                <RespawnModal
+                    isOpen
+                    onClose
+                />
                 <SettingsModal
                     game={ game }
                     isOpen={ game.settingsModalIsOpen }

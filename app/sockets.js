@@ -30,6 +30,7 @@ setInterval(function() {
                 id: roomId,
                 players: rooms[roomId].players
             })
+
             Object.keys(rooms[roomId].players).forEach((playerId) => {
                 rooms[roomId].players[playerId].meta.health = 100
                 rooms[roomId].players[playerId].meta.deaths = 0
@@ -38,11 +39,11 @@ setInterval(function() {
                 rooms[roomId].players[playerId].meta.killingSpree = 0
                 rooms[roomId].players[playerId].meta.score = 0
 
-                io.to(roomId).emit('player respawn', {
-                    id: this.id,
-                    damagedPlayerId: playerId,
-                    health: 100
-                })
+                // io.to(roomId).emit('player respawn', {
+                //     id: this.id,
+                //     damagedPlayerId: playerId,
+                //     health: 100
+                // })
             })
 
             io.to(roomId).emit('update players', {
@@ -332,6 +333,7 @@ function onPlayerDamaged(data) {
         player.meta.health = 0
         player.meta.killingSpree = 0
         player.meta.deaths++
+        player.meta.canRespawnTimestamp = moment().add(5, 'seconds').unix()
 
         // Falling to your death causes a score loss
         if (data.damage === 1000) {
@@ -374,15 +376,15 @@ function onPlayerDamaged(data) {
             health: player.meta.health
         })
 
-        setTimeout(() => {
-            player.meta.health = 100
-
-            io.to(data.roomId).emit('player respawn', {
-                id: this.id,
-                damagedPlayerId: data.damagedPlayerId,
-                health: 100
-            })
-        }, 5000)
+        // setTimeout(() => {
+        //     player.meta.health = 100
+        //
+        //     io.to(data.roomId).emit('player respawn', {
+        //         id: this.id,
+        //         damagedPlayerId: data.damagedPlayerId,
+        //         health: 100
+        //     })
+        // }, 5000)
 
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]

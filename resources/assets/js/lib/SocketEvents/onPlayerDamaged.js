@@ -17,21 +17,8 @@ export default function onPlayerDamaged(data) {
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
 
-    if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
-        let damagedPlayer = PlayerById.call(this, data.damagedPlayerId)
-        if (damagedPlayer) {
-            damagedPlayer.meta.health = data.health
-
-            if (damagedPlayer.meta.health <= 0) {
-                damagedPlayer.rightArmGroup.visible = false
-                damagedPlayer.leftArmGroup.visible = false
-                damagedPlayer.headGroup.visible = false
-                damagedPlayer.torsoGroup.visible = false
-                damagedPlayer.animations.play('death')
-            }
-        }
-        return
-    }
+    clearTimeout(damageTimeout)
+    clearInterval(healingInterval)
 
     store.dispatch(actions.player.setHealth(data.health))
 
