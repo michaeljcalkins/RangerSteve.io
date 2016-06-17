@@ -21,6 +21,12 @@ storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_DAMAGE_STATS':
+            return {
+                ...state,
+                damageStats: action.value
+            }
+
         case 'SET_RESPAWN_TIME':
             return {
                 ...state,

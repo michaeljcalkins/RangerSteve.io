@@ -21,6 +21,7 @@ export default function onPlayerDamaged(data) {
     clearInterval(healingInterval)
 
     store.dispatch(actions.player.setHealth(data.health))
+    store.dispatch(actions.player.setDamageStats(data.damageStats))
 
     if (data.health <= 0) {
         const newRespawnTime = moment().add(5, 'seconds').valueOf()

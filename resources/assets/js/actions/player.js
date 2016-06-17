@@ -1,3 +1,10 @@
+export const setDamageStats = (value) => {
+    return {
+        type: 'SET_DAMAGE_STATS',
+        value
+    }
+}
+
 export const setRespawnTime = (value) => {
     return {
         type: 'SET_RESPAWN_TIME',

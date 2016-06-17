@@ -327,6 +327,15 @@ function onPlayerDamaged(data) {
     if (! player || player.meta.health <= 0) return
 
     player.meta.health -= Number(data.damage)
+    player.meta.damageStats = player.meta.damageStats || {}
+
+    if (player.meta.damageStats.attackingPlayerId !== data.attackingPlayerId) {
+        player.meta.damageStats.attackingPlayerId = data.attackingPlayerId
+        player.meta.damageStats.damage = player.meta.damageStats.damage || 0
+        player.meta.damageStats.weaponId = data.weaponId
+    }
+
+    player.meta.damageStats.damage += data.damage
 
     // Player was killed when shot
     if (player.meta.health <= 0) {
@@ -373,7 +382,8 @@ function onPlayerDamaged(data) {
             id: this.id,
             damagedPlayerId: data.damagedPlayerId,
             damage: data.damage,
-            health: player.meta.health
+            health: player.meta.health,
+            damageStats: player.meta.damageStats
         })
 
         setTimeout(() => {
