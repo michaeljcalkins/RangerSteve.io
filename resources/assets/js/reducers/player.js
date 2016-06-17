@@ -14,8 +14,10 @@ const initialState = {
     primaryWeapon: null,
     secondaryWeapon: null,
     facing: 'right',
-    respawnTime: null,
+    respawnTime: null
 }
+
+storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
     switch (action.type) {
