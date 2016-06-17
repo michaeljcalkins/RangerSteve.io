@@ -6,8 +6,7 @@ export default class RespawnModal extends React.Component {
         super(props)
 
         this.state = {
-            elapsed: 0,
-            roundEndTime: moment().add(15, 'seconds').valueOf()
+            elapsed: 0
         }
     }
 
@@ -20,7 +19,8 @@ export default class RespawnModal extends React.Component {
     }
 
     tick() {
-        const timeRemaining = this.state.roundEndTime - moment().valueOf()
+        const { respawnTime } = this.props.player
+        const timeRemaining = respawnTime - moment().valueOf()
         let seconds = Number((timeRemaining / 1000).toFixed(1))
         if (seconds % 1 === 0) seconds = seconds + '.0'
 
@@ -86,5 +86,6 @@ export default class RespawnModal extends React.Component {
 }
 
 RespawnModal.propTypes = {
-    isOpen: PropTypes.boolean
+    isOpen: PropTypes.bool,
+    player: PropTypes.object
 }

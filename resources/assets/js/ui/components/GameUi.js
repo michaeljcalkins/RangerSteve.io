@@ -16,6 +16,7 @@ import SettingsModal from './Settings/SettingsModal'
 import EndOfRoundLeaderboard from './Round/EndOfRoundLeaderboard'
 import RespawnModal from './Respawn/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
+import LoadingScreen from './LoadingScreen/LoadingScreen'
 
 export default class GameUi extends React.Component {
     constructor(props) {
@@ -128,6 +129,7 @@ export default class GameUi extends React.Component {
 
         return (
             <div>
+                { game.state === 'loading' && <LoadingScreen /> }
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
@@ -144,8 +146,8 @@ export default class GameUi extends React.Component {
                 <HudChatHistory messages={ game.chatMessages } />
                 { this.renderEndOfRoundLeaderboard() }
                 <RespawnModal
-                    isOpen
-                    onClose
+                    isOpen={ player.health <= 0 }
+                    player={ player }
                 />
                 <SettingsModal
                     game={ game }
@@ -156,8 +158,8 @@ export default class GameUi extends React.Component {
                     onNicknameChange={ this.handleNicknameChange }
                     onPrimaryGunClick={ this.handlePrimaryGunClick }
                     onSecondaryGunClick={ this.handleSecondaryGunClick }
-                    onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
                     onSetResetEventsFlag={ this.props.onSetResetEventsFlag }
+                    onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
                     onViewChange={ onSettingsViewChange }
                     player={ player }
                 />

@@ -1,3 +1,10 @@
+export const setRespawnTime = (value) => {
+    return {
+        type: 'SET_RESPAWN_TIME',
+        value
+    }
+}
+
 export const setKillingSpreeCount = (value) => {
     return {
         type: 'SET_KILLING_SPREE_COUNT',

@@ -376,15 +376,15 @@ function onPlayerDamaged(data) {
             health: player.meta.health
         })
 
-        // setTimeout(() => {
-        //     player.meta.health = 100
-        //
-        //     io.to(data.roomId).emit('player respawn', {
-        //         id: this.id,
-        //         damagedPlayerId: data.damagedPlayerId,
-        //         health: 100
-        //     })
-        // }, 5000)
+        setTimeout(() => {
+            player.meta.health = 100
+
+            io.to(data.roomId).emit('player respawn', {
+                id: this.id,
+                damagedPlayerId: data.damagedPlayerId,
+                health: 100
+            })
+        }, 5000)
 
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]

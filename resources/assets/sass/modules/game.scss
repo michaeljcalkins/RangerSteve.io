@@ -1,5 +1,5 @@
 body.game {
-    background: black !important;
+    background: #2B2825 !important;
     cursor: url(/images/crosshair.png) 15 15, auto;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -62,5 +62,28 @@ body.game {
         &:nth-child(odd) {
             margin-right: 5px;
         }
+    }
+}
+
+.loading-screen {
+    background: url(/images/ranger-steve.png) 51% center no-repeat #2B2825;
+    background-size: 100px;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10000;
+
+    .loading-text {
+        color: white;
+        font-family: Bangers;
+        font-size: 26px;
+        left: 50%;
+        letter-spacing: 2px;
+        margin-top: 90px;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
 }

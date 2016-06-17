@@ -1,5 +1,5 @@
 import { PropTypes } from 'react'
-import PlayerById from '../PlayerById'
+import moment from 'moment'
 import actions from '../../actions'
 
 const propTypes = {
@@ -21,6 +21,11 @@ export default function onPlayerDamaged(data) {
     clearInterval(healingInterval)
 
     store.dispatch(actions.player.setHealth(data.health))
+
+    if (data.health <= 0) {
+        const newRespawnTime = moment().add(5, 'seconds').valueOf()
+        store.dispatch(actions.player.setRespawnTime(newRespawnTime))
+    }
 
     if (store.getState().player.health > 55 && store.getState().player.health < 100) {
         clearTimeout(damageTimeout)

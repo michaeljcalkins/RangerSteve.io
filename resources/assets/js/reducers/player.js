@@ -13,11 +13,18 @@ const initialState = {
     jumping: false,
     primaryWeapon: null,
     secondaryWeapon: null,
-    facing: 'right'
+    facing: 'right',
+    respawnTime: null,
 }
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_RESPAWN_TIME':
+            return {
+                ...state,
+                respawnTime: action.value
+            }
+
         case 'SET_KILLING_SPREE_COUNT':
             return {
                 ...state,
