@@ -36,7 +36,7 @@ export default class RespawnModal extends React.Component {
     renderCauseOfDeath() {
         const { player } = this.props
 
-        if (_.has(player, 'damageStats.attackingPlayerId')) {
+        if (! _.has(player, 'damageStats.attackingPlayerId')) {
             return (
                 <div className="media" style={ { margin: '0 0 10px' } }>
                     <div className="media-left">
@@ -55,20 +55,18 @@ export default class RespawnModal extends React.Component {
                     <img className="media-object" src="https://placehold.it/60x60" />
                 </div>
                 <div className="media-body">
-                    <h4 className="media-heading">Silver Sanchez</h4>
-                    <strong><span className="text-danger">Killed you with their</span> <span className="text-primary">AK-47</span></strong><br />
-                    Damage taken: <strong>168</strong> in <strong>2 hits</strong> from Silver Sanchez<br />
-                    Damage given: <strong>11</strong> in <strong>1 hits</strong> to Silver Sanchez
+                    <h4 className="media-heading">{ player.damageStats.attackingPlayerId }</h4>
+                    <strong><span className="text-danger">Killed you with their</span> <span className="text-primary">{ player.damageStats.weaponId }</span></strong><br />
+                    Damage taken: <strong>{ player.damageStats.attackingDamage }</strong> in <strong>{ player.damageStats.attackingHits } hits</strong> from { player.damageStats.attackingPlayerId }<br />
+                    Damage given: <strong>{ player.attackingDamageStats.attackingDamage }</strong> in <strong>{ player.attackingDamageStats.attackingHits } hits</strong> to { player.damageStats.attackingPlayerId }
                 </div>
-                <div className="media-right">
-                    <img className="media-object" height="45" style={ { margin: '10px 0 0' } } src="/images/guns/Spr_AK47.png" />
-                </div>
+
             </div>
         )
     }
 
     render() {
-        const { isOpen, player } = this.props
+        const { isOpen } = this.props
         const shareLink = window.location.href
 
         return (

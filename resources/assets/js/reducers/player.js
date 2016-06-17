@@ -4,6 +4,7 @@ import NameGenerator from '../lib/NameGenerator'
 const initialState = {
     currentWeapon: 'primaryWeapon',
     health: 100,
+    damageStats: {},
     nickname: storage.get('nickname', NameGenerator()),
     score: 0,
     selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
@@ -21,6 +22,12 @@ storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_ATTACKING_DAMAGE_STATS':
+            return {
+                ...state,
+                attackingDamageStats: action.value
+            }
+
         case 'SET_DAMAGE_STATS':
             return {
                 ...state,

@@ -4,7 +4,9 @@ import actions from '../../actions'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
-    health: PropTypes.number.isRequired
+    health: PropTypes.number.isRequired,
+    damageStats: PropTypes.object.isRequired,
+    attackingDamageStats: PropTypes.object.isRequired
 }
 
 let damageTimeout = null
@@ -22,6 +24,7 @@ export default function onPlayerDamaged(data) {
 
     store.dispatch(actions.player.setHealth(data.health))
     store.dispatch(actions.player.setDamageStats(data.damageStats))
+    store.dispatch(actions.player.setAttackingDamageStats(data.attackingDamageStats))
 
     if (data.health <= 0) {
         const newRespawnTime = moment().add(5, 'seconds').valueOf()

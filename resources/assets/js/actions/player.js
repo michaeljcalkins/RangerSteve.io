@@ -1,3 +1,10 @@
+export const setAttackingDamageStats = (value) => {
+    return {
+        type: 'SET_ATTACKING_DAMAGE_STATS',
+        value
+    }
+}
+
 export const setDamageStats = (value) => {
     return {
         type: 'SET_DAMAGE_STATS',
