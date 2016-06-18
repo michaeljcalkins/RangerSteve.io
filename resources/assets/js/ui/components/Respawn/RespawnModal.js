@@ -33,10 +33,34 @@ export default class RespawnModal extends React.Component {
         this.setState({ elapsed: seconds })
     }
 
+    renderDamageGiven() {
+        const { player } = this.props
+
+        if (! _.get(player, 'attackingDamageStats.attackingDamage')) return null
+
+        return (
+            <div>
+                Damage given: <strong>{ player.attackingDamageStats.attackingDamage }</strong> in <strong>{ player.attackingDamageStats.attackingHits } hits</strong> to { player.damageStats.attackingPlayerId }
+            </div>
+        )
+    }
+
+    renderDamageTaken() {
+        const { player } = this.props
+
+        if (! player.damageStats) return null
+
+        return (
+            <div>
+                Damage taken: <strong>{ player.damageStats.attackingDamage }</strong> in <strong>{ player.damageStats.attackingHits } hits</strong> from { player.damageStats.attackingPlayerId }<br />
+            </div>
+        )
+    }
+
     renderCauseOfDeath() {
         const { player } = this.props
 
-        if (! _.has(player, 'damageStats.attackingPlayerId')) {
+        if (! _.get(player, 'damageStats.attackingPlayerId')) {
             return (
                 <div className="media" style={ { margin: '0 0 10px' } }>
                     <div className="media-left">
@@ -57,10 +81,9 @@ export default class RespawnModal extends React.Component {
                 <div className="media-body">
                     <h4 className="media-heading">{ player.damageStats.attackingPlayerId }</h4>
                     <strong><span className="text-danger">Killed you with their</span> <span className="text-primary">{ player.damageStats.weaponId }</span></strong><br />
-                    Damage taken: <strong>{ player.damageStats.attackingDamage }</strong> in <strong>{ player.damageStats.attackingHits } hits</strong> from { player.damageStats.attackingPlayerId }<br />
-                    Damage given: <strong>{ player.attackingDamageStats.attackingDamage }</strong> in <strong>{ player.attackingDamageStats.attackingHits } hits</strong> to { player.damageStats.attackingPlayerId }
+                    { this.renderDamageTaken() }
+                    { this.renderDamageGiven() }
                 </div>
-
             </div>
         )
     }

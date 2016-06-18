@@ -380,13 +380,17 @@ function onPlayerDamaged(data) {
             })
         }
 
+        const attackingDamageStats = _.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id
+            ? _.get(attackingPlayer, 'meta.damageStats', {})
+            : {}
+
         io.to(data.roomId).emit('player damaged', {
             id: this.id,
             damagedPlayerId: data.damagedPlayerId,
             damage: data.damage,
             health: player.meta.health,
             damageStats: player.meta.damageStats,
-            attackingDamageStats: _.get(attackingPlayer, 'meta.damageStats', {})
+            attackingDamageStats
         })
 
         setTimeout(() => {
@@ -401,6 +405,12 @@ function onPlayerDamaged(data) {
             player.meta.damageStats.attackingPlayerId = null
             player.meta.damageStats.attackingDamage = 0
             player.meta.damageStats.attackingHits = 0
+
+            if (_.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id) {
+                attackingPlayer.meta.damageStats.attackingPlayerId = null
+                attackingPlayer.meta.damageStats.attackingDamage = 0
+                attackingPlayer.meta.damageStats.attackingHits = 0
+            }
         }, 5000)
 
         io.to(data.roomId).emit('update players', {
