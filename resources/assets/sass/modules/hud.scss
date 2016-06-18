@@ -1,7 +1,6 @@
 .hud-item {
     background-size: 26px;
     background: #504F4D no-repeat 10px;
-    border-radius: 3px;
     box-shadow: 0px 1px 2px 0 #202021;
     color: #E3DFD4;
     font-family: Righteous;
@@ -13,15 +12,14 @@
 }
 
 .hud-settings {
-    background: url(/images/ui/button/64x64/197.png);
-    background-size: cover;
-    border-radius: 5px;
-    box-shadow: none;
+    background: url(/images/icons/cog-32-white.png) #504F4D center no-repeat;
+    background-size: 26px;
     border: 0;
+    padding: 10px;
     cursor: pointer;
     padding: 0;
-    right: 240px;
-    top: 10px;
+    right: 0;
+    bottom: 55px;
     height: 48px;
     width: 48px;
 }
@@ -82,8 +80,8 @@
     background-size: 26px;
     height: 48px;
     padding: 14px 0 0 45px;
-    right: 10px;
-    bottom: 10px;
+    right: 0;
+    bottom: 0;
     width: 175px;
 
     .progress {
@@ -99,17 +97,17 @@
     background-image: url(/images/icons/trophy-32-white.png);
     background-size: 26px;
     height: 48px;
-    left: 10px;
-    top: 10px;
+    left: 0;
+    top: 0;
     width: 120px;
 }
 
 .hud-health {
     background-image: url(/images/icons/plus-4-32-white.png);
     background-size: 26px;
-    bottom: 10px;
+    bottom: 0;
     height: 48px;
-    left: 10px;
+    left: 0;
     width: 120px;
 }
 
@@ -118,9 +116,9 @@
     font-size: 14px;
     line-height: 18px;
     padding: 10px;
-    right: 10px;
+    right: 0;
     text-align: left;
-    top: 10px;
+    top: 0;
     width: 220px;
 
     table {
@@ -207,27 +205,52 @@
 
 .hud-chat-message {
     cursor: pointer;
-    left: 50%;
-    top: 50%;
-    margin-top: -50px;
-    margin-left: -150px;
+    left: 0;
+    bottom: 55px;
     font-family: 'Open Sans', Arial;
-    height: 100px;
     width: 300px;
+    padding: 4px 3px;
+    font-size: inherit;
 
-    textarea {
-        width: 100%;
-        margin: -5px 5px 0;
-        height: 85px;
-        padding: 6px 8px;
+    input {
+        background: none;
+        box-shadow: none;
+        border: 0;
+        border-radius: 0;
+        color: white;
+        padding: 4px 3px;
+        font-size: 12px;
+        width: 80%;
+        float: left;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    button {
+        border-radius: 0;
+        color: white;
+        border: 0;
+        width: 17%;
+        float: right;
+
+        &:hover {
+            text-decoration: none;
+            color: white;
+        }
     }
 }
 
 .hud-chat {
+    background: -webkit-linear-gradient(left, rgba(90, 89, 87, 1), rgba(90, 89, 87, 0)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, rgba(90, 89, 87, 1), rgba(90, 89, 87, 0)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, rgba(90, 89, 87, 1), rgba(90, 89, 87, 0)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, rgba(90, 89, 87, 1), rgba(90, 89, 87, 0)); /* Standard syntax (must be last) */
     width: 300px;
     position: absolute;
-    left: 8px;
-    bottom: 65px;
+    left: 0;
+    bottom: 105px;
 
     ul {
         margin: 0;
@@ -236,9 +259,12 @@
 
     li {
         color: #fff;
-        text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
         font-size: 12px;
-        padding: 4px 3px;
+        padding: 4px 5px;
+
+        strong {
+            color: #bbb;
+        }
     }
 }
 
@@ -252,7 +278,7 @@
     height: 48px;
     left: 50%;
     margin-left: -60px;
-    top: 10px;
+    bottom: 0;
     width: 120px;
     padding-left: 45px;
     text-align: left;
@@ -285,7 +311,7 @@
         th {
             text-align: right;
         }
-        
+
         th:first-child {
             text-align: left;
         }

@@ -10,7 +10,7 @@ export default function HudChatHistory({
         return messages.map(function(message, index) {
             return (
                 <li key={ index }>
-                    { message.playerNickname }: { message.message }
+                    <strong>{ message.playerNickname }:</strong> { message.message }
                 </li>
             )
         })
