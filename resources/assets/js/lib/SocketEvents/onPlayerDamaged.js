@@ -1,10 +1,12 @@
 import { PropTypes } from 'react'
-import PlayerById from '../PlayerById'
+import moment from 'moment'
 import actions from '../../actions'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
-    health: PropTypes.number.isRequired
+    health: PropTypes.number.isRequired,
+    damageStats: PropTypes.object.isRequired,
+    attackingDamageStats: PropTypes.object.isRequired
 }
 
 let damageTimeout = null
@@ -17,23 +19,17 @@ export default function onPlayerDamaged(data) {
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
 
-    if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
-        let damagedPlayer = PlayerById.call(this, data.damagedPlayerId)
-        if (damagedPlayer) {
-            damagedPlayer.meta.health = data.health
-
-            if (damagedPlayer.meta.health <= 0) {
-                damagedPlayer.rightArmGroup.visible = false
-                damagedPlayer.leftArmGroup.visible = false
-                damagedPlayer.headGroup.visible = false
-                damagedPlayer.torsoGroup.visible = false
-                damagedPlayer.animations.play('death')
-            }
-        }
-        return
-    }
+    clearTimeout(damageTimeout)
+    clearInterval(healingInterval)
 
     store.dispatch(actions.player.setHealth(data.health))
+    store.dispatch(actions.player.setDamageStats(data.damageStats))
+    store.dispatch(actions.player.setAttackingDamageStats(data.attackingDamageStats))
+
+    if (data.health <= 0) {
+        const newRespawnTime = moment().add(5, 'seconds').valueOf()
+        store.dispatch(actions.player.setRespawnTime(newRespawnTime))
+    }
 
     if (store.getState().player.health > 55 && store.getState().player.health < 100) {
         clearTimeout(damageTimeout)

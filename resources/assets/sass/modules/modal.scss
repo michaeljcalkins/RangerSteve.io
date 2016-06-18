@@ -1,3 +1,6 @@
+/**
+ * Standard Modal
+ */
 .modal-content {
     // border-radius: 5px !important;
     background: url(/images/ui/panel/5.png) no-repeat top center;
@@ -56,4 +59,40 @@
 
 .modal .table td {
     vertical-align: middle;
+}
+
+/**
+ * Respawn Modal
+ */
+.respawn-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.respawn-modal .modal-content {
+    background: #504F4D no-repeat 10px;
+    box-shadow: none !important;
+    border: 0;
+    height: auto;
+    font-size: 13px;
+
+    .text-danger {
+        color: #E25041;
+    }
+
+    .text-primary {
+        color: #D1D5D8;
+    }
+
+    hr {
+        border-color: rgba(70, 70, 68, 1);
+        margin: 20px -15px;
+    }
+
+    .progress {
+        margin-top: 5px;
+    }
 }

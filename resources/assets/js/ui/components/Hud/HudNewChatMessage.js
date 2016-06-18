@@ -14,7 +14,7 @@ export default class HudNewChatMessage extends React.Component {
     }
 
     handleSendMessage(evt) {
-        if (evt.key !== 'Enter') return
+        if (evt.key !== 'Enter' || this.refs.messageInput.value.trim().length === 0) return
         this.props.onSendMessage(this.refs.messageInput.value)
         this.refs.messageInput.value = ''
     }
