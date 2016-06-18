@@ -6,6 +6,7 @@ export default class HudNewChatMessage extends React.Component {
         super(props)
 
         this.handleSendMessage = this.handleSendMessage.bind(this)
+        this.handleKepressSendMessage = this.handleKepressSendMessage.bind(this)
     }
 
     componentDidUpdate() {
@@ -13,8 +14,12 @@ export default class HudNewChatMessage extends React.Component {
             ReactDOM.findDOMNode(this.refs.messageInput).focus()
     }
 
-    handleSendMessage(evt) {
+    handleKepressSendMessage(evt) {
         if (evt.key !== 'Enter' || this.refs.messageInput.value.trim().length === 0) return
+        this.handleSendMessage()
+    }
+
+    handleSendMessage() {
         this.props.onSendMessage(this.refs.messageInput.value)
         this.refs.messageInput.value = ''
     }
@@ -25,14 +30,18 @@ export default class HudNewChatMessage extends React.Component {
 
         return (
             <div className="hud-chat-message hud-item">
-                <div className="form-group">
-                    <textarea
-                        className="form-control"
-                        onKeyPress={ this.handleSendMessage }
-                        placeholder="Push enter to send..."
-                        ref="messageInput"
-                    ></textarea>
-                </div>
+                <input
+                    onKeyPress={ this.handleKepressSendMessage }
+                    placeholder="Push enter to send..."
+                    ref="messageInput"
+                    type="text"
+                />
+                <button
+                    className="btn btn-sm btn-link"
+                    onClick={ this.handleSendMessage }
+                >
+                    Send
+                </button>
             </div>
         )
     }
