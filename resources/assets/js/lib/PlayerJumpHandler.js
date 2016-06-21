@@ -4,50 +4,32 @@ import { upInputIsActive, upInputReleased } from './InputHelpers'
 import actions from '../actions'
 
 export default function PlayerJumpHandler() {
-    // Set a variable that is true when the player is touching the ground
+    const store = this.game.store
     const onTheGround = this.player.body.touching.down
 
-    // If the player is touching the ground, let him have 2 jumps
-    if (onTheGround) {
-        this.game.store.dispatch(actions.player.setJumps(2))
-        this.game.store.dispatch(actions.player.setJumping(false))
-    }
-
     // Jump!
-    if (this.game.store.getState().player.jumps === 2 && upInputIsActive.call(this, 5, this.game.store.getState().game.keyboardControls.up) && onTheGround) {
+    if (upInputIsActive.call(this, 5, store.getState().game.keyboardControls.up) && onTheGround) {
         this.player.body.velocity.y = GameConsts.JUMP_SPEED
-        this.game.store.dispatch(actions.player.setJumping(true))
-    } else if (upInputIsActive.call(this, 5, this.game.store.getState().game.keyboardControls.up)) {
-        this.game.store.dispatch(actions.player.setJumps(1))
+        store.dispatch(actions.player.setJumping(true))
     }
 
     // Jump Jet!
-    if (
-        this.game.store.getState().player.jumps === 1 &&
-        this.input.keyboard.isDown(this.game.store.getState().game.keyboardControls.up) &&
-        this.game.store.getState().player.jumpJetCounter > -130000
-    ) {
+    if (this.game.input.activePointer.rightButton.isDown && store.getState().player.health > 0) {
         this.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
-        this.game.store.dispatch(actions.player.incrementJumpJetCounter(GameConsts.JUMP_JET_SPEED))
+        store.dispatch(actions.player.incrementJumpJetCounter(GameConsts.JUMP_JET_SPEED))
     } else {
         this.player.body.acceleration.y = 0
 
-        if (this.game.store.getState().player.jumpJetCounter < 0) {
-            this.game.store.dispatch(actions.player.decrementJumpJetCounter(GameConsts.JUMP_JET_SPEED_REGENERATION))
+        if (store.getState().player.jumpJetCounter < 0) {
+            store.dispatch(actions.player.decrementJumpJetCounter(GameConsts.JUMP_JET_SPEED_REGENERATION))
         } else {
-            this.game.store.dispatch(actions.player.setJumpJetCounter(0))
+            store.dispatch(actions.player.setJumpJetCounter(0))
         }
     }
 
     // Reduce the number of available jumps if the jump input is released
-    if (this.game.store.getState().player.jumping && upInputReleased.call(this, this.game.store.getState().game.keyboardControls.up)) {
+    if (onTheGround && upInputReleased.call(this, store.getState().game.keyboardControls.up)) {
         this.player.body.acceleration.x = 0
         this.player.body.acceleration.y = 0
-
-        if (this.game.store.getState().player.jumps !== 1) {
-            this.game.store.dispatch(actions.player.decrementJumps())
-        }
-
-        this.game.store.dispatch(actions.player.setJumping(false))
     }
 }

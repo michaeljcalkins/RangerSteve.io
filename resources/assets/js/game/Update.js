@@ -5,7 +5,7 @@ import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 import Maps from '../lib/Maps'
-import InitEvents from '../lib/InitHandlers/InitEvents'
+import InitEvents from '../lib/CreateHandler/CreateEvents'
 import actions from '../actions'
 
 let lastPlayerData = {}
@@ -18,7 +18,6 @@ export default function Update() {
 
     const state = this.game.store.getState()
 
-
     if (this.audioPlayer) {
         this.audioPlayer.volume = state.game.musicVolume
     }
@@ -29,6 +28,33 @@ export default function Update() {
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen
     this.game.input.enabled = !isPaused
 
+    // Define some shortcuts to some useful objects
+    var body = this.player.body;
+    var features = this.features;
+
+    // Update player body properties
+    body.drag.x = features.dragX;
+    body.drag.y = features.dragY;
+    body.bounce.x = features.bounceX;
+    body.bounce.y = features.bounceY;
+
+    // Update player body Arcade Slopes properties
+    body.slopes.friction.x = features.frictionX;
+    body.slopes.friction.y = features.frictionY;
+    body.slopes.preferY    = this.features.minimumOffsetY;
+    body.slopes.pullUp     = this.features.pullUp;
+    body.slopes.pullDown   = this.features.pullDown;
+    body.slopes.pullLeft   = this.features.pullLeft;
+    body.slopes.pullRight  = this.features.pullRight;
+    body.slopes.snapUp     = this.features.snapUp;
+    body.slopes.snapDown   = this.features.snapDown;
+    body.slopes.snapLeft   = this.features.snapLeft;
+    body.slopes.snapRight  = this.features.snapRight;
+
+    // Collide the player against the collision layer
+    this.physics.arcade.collide(this.player, this.ground)
+
+
     CollisionHandler.call(this)
     Maps[state.room.map].update.call(this)
 
@@ -38,7 +64,7 @@ export default function Update() {
         PlayerAngleHandler.call(this)
     }
 
-    if (this.game.input.activePointer.isDown && state.player.health > 0) {
+    if (this.game.input.activePointer.leftButton.isDown && state.player.health > 0) {
         state.player[currentWeapon].fire()
     }
 

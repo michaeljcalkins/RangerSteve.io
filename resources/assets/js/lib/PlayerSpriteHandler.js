@@ -1,4 +1,3 @@
-import store from 'store'
 import GameConsts from './GameConsts'
 import Weapons from './Weapons'
 import Maps from './Maps'
@@ -9,26 +8,33 @@ export default function PlayerSpriteHandler() {
     const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
-    this.player.scale.setTo(GameConsts.PLAYER_SCALE)
-    this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     this.player.height = 91
     this.player.width = 94
+    this.player.scale.setTo(GameConsts.PLAYER_SCALE)
+    this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
+    this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT, 70, 0)
+    this.game.slopes.enable(this.player)
 
-    // Enable physics on the player
-    this.game.physics.enable(this.player, Phaser.Physics.ARCADE)
+    // Just a touch of tile padding
+    // this.player.body.tilePadding.x = 1;
+    // this.player.body.tilePadding.y = 1;
+
+    this.player.body.slopes.friction.x = GameConsts.PLAYER_SLOPE_FRICTION_X
+    this.player.body.slopes.friction.y = GameConsts.PLAYER_SLOPE_FRICTION_Y
+
+    // Set player minimum and maximum movement speed
+    this.player.body.maxVelocity.x = GameConsts.MAX_SPEED
+    this.player.body.maxVelocity.y = GameConsts.MAX_SPEED * 10
+
+    // Add drag to the player that slows them down when they are not accelerating
+    this.player.body.drag.x = GameConsts.DRAG
+    this.player.body.drag.y = 0
 
     // Make player collide with world boundaries so he doesn't leave the stage
     this.player.body.collideWorldBounds = true
-
-    // Set player minimum and maximum movement speed
-    this.player.body.maxVelocity.setTo(GameConsts.MAX_SPEED, GameConsts.MAX_SPEED * 10) // x, y
-
-    // Add drag to the player that slows them down when they are not accelerating
-    this.player.body.drag.setTo(GameConsts.DRAG, 0) // x, y
-    this.player.body.setSize(145, 295, 26, 0)
 
     //  Our two animations, walking left and right.
     this.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
@@ -107,4 +113,5 @@ export default function PlayerSpriteHandler() {
      * Camera Settings
      */
     this.camera.follow(this.player)
+    this.camera.lerp.setTo(0.2, 0.2)
 }

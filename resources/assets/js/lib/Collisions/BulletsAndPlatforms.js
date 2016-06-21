@@ -18,4 +18,20 @@ export default function() {
             bulletX: bullet.x
         })
     }, null, this)
+
+    this.physics.arcade.overlap(this.ground, this.bullets, function(bullet) {
+        bullet.kill()
+
+        if (bullet.weaponId === 'RPG') {
+            RocketExplosion.call(this, {
+                bulletY: bullet.y,
+                bulletX: bullet.x
+            })
+        }
+
+        BulletRicochet.call(this, {
+            bulletY: bullet.y,
+            bulletX: bullet.x
+        })
+    }, null, this)
 }
