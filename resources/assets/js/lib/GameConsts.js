@@ -1,5 +1,5 @@
 const GameConsts = {
-    DEBUG: true,
+    DEBUG: false,
     STARTING_SFX_VOLUME: .1,
     STARTING_MUSIC_VOLUME: .2,
 
@@ -21,6 +21,8 @@ const GameConsts = {
     STARTING_SECONDARY_ID: 'DesertEagle',
     PLAYER_SCALE: .25,
     PLAYER_ANCHOR: .5,
+    PLAYER_SPRITE_WIDTH: 96,
+    PLAYER_SPRITE_HEIGHT: 91,
     PLAYER_BODY_WIDTH: 145,
     PLAYER_BODY_HEIGHT: 295,
     PLAYER_SLOPE_FRICTION_X: 2000,
@@ -28,9 +30,9 @@ const GameConsts = {
 
     // Maps
     MAPS: [
-        'HighRuleJungle',
+        // 'HighRuleJungle',
         'PunkFallout',
-        'DarkForest'
+        // 'DarkForest'
     ],
 
     // Weapons

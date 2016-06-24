@@ -24,7 +24,10 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/images/maps/dark-forest/background.jpg', true)
+    this.load.image('background', '/images/maps/dark-forest/background.png', true)
+    this.load.image('parallax1', '/images/maps/dark-forest/parallax1.png', true)
+    this.load.image('parallax2', '/images/maps/dark-forest/parallax2.png', true)
+    this.load.image('parallax3', '/images/maps/dark-forest/parallax3.png', true)
     this.load.tilemap('tilemap', '/maps/dark-forest/dark-forest.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 32, 32);
 }
@@ -34,6 +37,18 @@ export function createOverlays() {
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
+
+    this.parallax3 = this.add.sprite(0, 0, 'parallax3')
+    this.parallax3.width = 3698
+    this.parallax3.height = 1836
+
+    this.parallax2 = this.add.sprite(0, 0, 'parallax2')
+    this.parallax2.width = 3698
+    this.parallax2.height = 1836
+
+    this.parallax1 = this.add.sprite(0, 0, 'parallax1')
+    this.parallax1.width = 3698
+    this.parallax1.height = 1836
 
     this.background = this.add.sprite(0, 0, 'background')
     this.background.width = BG_WIDTH
@@ -82,4 +97,13 @@ export function create() {
 }
 
 export function update() {
+    this.parallax1.x = this.game.camera.x * 0.3
+    this.parallax1.y = this.game.camera.y * 0.3 - 500
+
+    this.parallax2.x = this.game.camera.x * 0.2
+    this.parallax2.y = this.game.camera.y * 0.2 - 200
+
+    this.parallax3.x = this.game.camera.x * 0.1
+    this.parallax3.y = this.game.camera.y * 0.1
+    // move it down a few pixels to account for the missing pixels when moving with camera
 }

@@ -17,7 +17,7 @@ let CreateRoom = function(data) {
         roundEndTime: moment().add(5, 'minutes').unix(),
         state: 'active',
         // map: _.sample(['HighRuleJungle', 'PunkFallout', 'DarkForest'])
-        map: _.sample(['DarkForest'])
+        map: _.sample(['PunkFallout'])
     }
 }
 

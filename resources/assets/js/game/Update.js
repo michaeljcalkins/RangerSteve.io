@@ -51,10 +51,6 @@ export default function Update() {
     body.slopes.snapLeft   = this.features.snapLeft;
     body.slopes.snapRight  = this.features.snapRight;
 
-    // Collide the player against the collision layer
-    this.physics.arcade.collide(this.player, this.ground)
-
-
     CollisionHandler.call(this)
     Maps[state.room.map].update.call(this)
 

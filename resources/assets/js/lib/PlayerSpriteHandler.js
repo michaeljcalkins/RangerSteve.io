@@ -8,8 +8,8 @@ export default function PlayerSpriteHandler() {
     const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
-    this.player.height = 91
-    this.player.width = 94
+    this.player.width = GameConsts.PLAYER_SPRITE_WIDTH
+    this.player.height = GameConsts.PLAYER_SPRITE_HEIGHT
     this.player.scale.setTo(GameConsts.PLAYER_SCALE)
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
