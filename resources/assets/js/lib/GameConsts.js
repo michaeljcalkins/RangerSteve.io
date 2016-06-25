@@ -19,7 +19,7 @@ const GameConsts = {
     ANIMATION_FRAMERATE: 10,
     STARTING_PRIMARY_ID: 'AK47',
     STARTING_SECONDARY_ID: 'DesertEagle',
-    PLAYER_SCALE: .25,
+    PLAYER_SCALE: .27,
     PLAYER_ANCHOR: .5,
     PLAYER_SPRITE_WIDTH: 96,
     PLAYER_SPRITE_HEIGHT: 91,
@@ -27,13 +27,6 @@ const GameConsts = {
     PLAYER_BODY_HEIGHT: 295,
     PLAYER_SLOPE_FRICTION_X: 2000,
     PLAYER_SLOPE_FRICTION_Y: 2000,
-
-    // Maps
-    MAPS: [
-        // 'HighRuleJungle',
-        'PunkFallout',
-        // 'DarkForest'
-    ],
 
     // Weapons
     PRIMARY_WEAPONS: [

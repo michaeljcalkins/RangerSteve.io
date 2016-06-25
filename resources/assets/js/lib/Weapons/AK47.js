@@ -34,7 +34,7 @@ export default class AK47 extends Phaser.Group {
 
     fire() {
         if (this.rootScope.game.time.now < this.nextFire || this.rootScope.bullets.countDead() <= 0)
-            return
+            return false
 
         this.rootScope.camera.shake(0.0015, 100, true)
         this.rootScope.muzzleFlash.visible = true

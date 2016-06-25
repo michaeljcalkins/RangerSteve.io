@@ -15,8 +15,8 @@ export default function RemotePlayer(player) {
     newRemotePlayer.scale.setTo(GameConsts.PLAYER_SCALE)
     newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     newRemotePlayer.facing = 'right'
-    newRemotePlayer.height = 91
-    newRemotePlayer.width = 94
+    newRemotePlayer.width = GameConsts.PLAYER_SPRITE_WIDTH
+    newRemotePlayer.height = GameConsts.PLAYER_SPRITE_HEIGHT
     newRemotePlayer.alive = true
     newRemotePlayer.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
     newRemotePlayer.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
@@ -29,10 +29,9 @@ export default function RemotePlayer(player) {
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(newRemotePlayer)
+    this.game.slopes.enable(newRemotePlayer)
 
-    // Enable physics on the player
-    this.game.physics.enable(newRemotePlayer, Phaser.Physics.ARCADE)
-    newRemotePlayer.body.gravity.y = -1900
+    newRemotePlayer.body.gravity.y = GameConsts.gravity
 
     newRemotePlayer.leftArmGroup = this.game.add.group()
     newRemotePlayer.rightArmGroup = this.game.add.group()

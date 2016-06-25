@@ -10,6 +10,14 @@ import actions from '../actions'
 
 let lastPlayerData = {}
 
+function checkOverlap(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+
+}
 export default function Update() {
     if (this.game.store.getState().game.resetEventsFlag) {
         this.game.store.dispatch(actions.game.setResetEventsFlag(false))
@@ -17,6 +25,7 @@ export default function Update() {
     }
 
     const state = this.game.store.getState()
+    const currentWeapon = state.player.currentWeapon
 
     if (this.audioPlayer) {
         this.audioPlayer.volume = state.game.musicVolume
@@ -24,7 +33,6 @@ export default function Update() {
 
     if (state.game.state !== 'active' || ! state.room) return
 
-    const currentWeapon = state.player.currentWeapon
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen
     this.game.input.enabled = !isPaused
 
@@ -60,7 +68,7 @@ export default function Update() {
         PlayerAngleHandler.call(this)
     }
 
-    if (this.game.input.activePointer.leftButton.isDown && state.player.health > 0) {
+    if (this.game.input.activePointer.leftButton.isDown) {
         state.player[currentWeapon].fire()
     }
 
@@ -87,3 +95,4 @@ export default function Update() {
         lastPlayerData = newPlayerData
     }
 }
+

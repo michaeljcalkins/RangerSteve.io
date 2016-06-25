@@ -18,10 +18,6 @@ export default function PlayerSpriteHandler() {
     this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT, 70, 0)
     this.game.slopes.enable(this.player)
 
-    // Just a touch of tile padding
-    // this.player.body.tilePadding.x = 1;
-    // this.player.body.tilePadding.y = 1;
-
     this.player.body.slopes.friction.x = GameConsts.PLAYER_SLOPE_FRICTION_X
     this.player.body.slopes.friction.y = GameConsts.PLAYER_SLOPE_FRICTION_Y
 
@@ -107,7 +103,6 @@ export default function PlayerSpriteHandler() {
     this.muzzleFlash.visible = false
     this.currentWeaponSprite.addChild(this.muzzleFlash)
     this.player.anchor.set(.5)
-
 
     /**
      * Camera Settings

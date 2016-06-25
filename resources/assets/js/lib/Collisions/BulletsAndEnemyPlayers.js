@@ -4,10 +4,10 @@ import RocketExplosion from '../RocketExplosion'
 
 export default function() {
     const state = this.game.store.getState()
+    const currentWeapon = state.player.currentWeapon
 
-    // Did your bullets hit any enemies
-    this.physics.arcade.overlap(this.enemies, this.bullets, function(enemy, bullet) {
-        if (enemy.meta.health <= 0) return false
+    this.game.physics.arcade.overlap(this.bullets, this.enemies, function(bullet, enemy) {
+        if (enemy.meta.health <= 0) return
 
         bullet.kill()
 
@@ -27,8 +27,8 @@ export default function() {
 
         emitPlayerDamaged.call(this, {
             roomId: state.room.id,
-            damage: bullet.damage,
-            weaponId: bullet.weaponId,
+            damage: state.player[currentWeapon].damage,
+            weaponId: state.player[currentWeapon].name,
             damagedPlayerId: enemy.id,
             attackingPlayerId: '/#' + window.socket.id
         })

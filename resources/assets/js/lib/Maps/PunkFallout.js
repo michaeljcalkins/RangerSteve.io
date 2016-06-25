@@ -6,10 +6,10 @@ const BG_WIDTH = WORLD_WIDTH
 const BG_HEIGHT = WORLD_HEIGHT
 
 const SPAWN_POINTS = [
-    { x: 1000, y: 460 },
-    // { x: 200, y: 600 },
-    // { x: 1500, y: 550 },
-    // { x: 2300, y: 555 },
+    { x: 890, y: 1180 },
+    { x: 1500, y: 1180 },
+    { x: 1550, y: 1500 },
+    { x: 860, y: 1500 },
     // { x: 1150, y: 730 },
     // { x: 1680, y: 385 },
     // { x: 3450, y: 750 },

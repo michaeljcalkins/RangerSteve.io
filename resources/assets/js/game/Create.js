@@ -1,6 +1,5 @@
 import actions from '../actions'
 import SetEventHandlers from '../lib/SocketEvents/SetEventHandlers'
-import GameConsts from '../lib/GameConsts'
 
 export default function Create() {
     this.game.store.dispatch(actions.game.setState('loading'))

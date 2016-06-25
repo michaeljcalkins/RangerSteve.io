@@ -14,7 +14,11 @@ export default function PlayerJumpHandler() {
     }
 
     // Jump Jet!
-    if (this.game.input.activePointer.rightButton.isDown && store.getState().player.health > 0) {
+    if (
+        this.game.input.activePointer.rightButton.isDown &&
+        store.getState().player.health > 0 &&
+        this.game.store.getState().player.jumpJetCounter > -130000
+    ) {
         this.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
         store.dispatch(actions.player.incrementJumpJetCounter(GameConsts.JUMP_JET_SPEED))
     } else {
