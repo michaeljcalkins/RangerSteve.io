@@ -38,10 +38,11 @@
         <source src="/audio/ost.ogg" type="audio/ogg">
         <source src="/audio/ost.mp3" type="audio/mpeg">
     </audio>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/phaser/2.4.8/phaser.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/lodash.min.js"></script>
+    <script src="/js/phaser.min.js"></script>
+    <script src="/js/phaser-arcade-slopes.min.js"></script>
+    <script src="/js/socket.io.min.js"></script>
     <script src="/js/app.js?v={{ lastModifiedTime }}"></script>
 </body>
 </html>

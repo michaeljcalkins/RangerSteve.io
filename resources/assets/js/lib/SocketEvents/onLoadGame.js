@@ -1,5 +1,5 @@
 import actions from '../../actions'
-import InitHandler from '../InitHandlers'
+import CreateHandler from '../CreateHandler'
 import Maps from '../Maps'
 import { PropTypes } from 'react'
 
@@ -23,12 +23,7 @@ export default function onLoadGame(data) {
     this.currentMap = store.getState().room.map
 
     this.load.onLoadComplete.add(() => {
-        this.enemies = this.game.add.group()
-
-        InitHandler.call(this)
-
-        store.dispatch(actions.game.setState('active'))
-
+        CreateHandler.call(this)
         window.socket.emit('load complete', {
             roomId: store.getState().room.id
         })

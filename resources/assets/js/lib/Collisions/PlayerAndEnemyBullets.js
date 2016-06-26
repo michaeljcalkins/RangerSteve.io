@@ -23,5 +23,5 @@ export default function() {
                 bulletX: bullet.x
             })
         }
-    })
+    }, null, this)
 }

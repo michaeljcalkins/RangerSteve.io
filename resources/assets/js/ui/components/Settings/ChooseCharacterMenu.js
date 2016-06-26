@@ -8,18 +8,18 @@ export default function ChooseCharacterMenu({
             name: 'Ranger Steve',
             image: '/images/characters/Ranger-Steve.png'
         },
-        {
-            name: 'G.I. John',
-            image: '/images/characters/GIJohn.png'
-        },
-        {
-            name: 'Real Estate Rob',
-            image: '/images/characters/RealEstateRob.png'
-        },
-        {
-            name: 'LavaEagle',
-            image: '/images/characters/LavaEagle.png'
-        }
+        // {
+        //     name: 'G.I. John',
+        //     image: '/images/characters/GIJohn.png'
+        // },
+        // {
+        //     name: 'Real Estate Rob',
+        //     image: '/images/characters/RealEstateRob.png'
+        // },
+        // {
+        //     name: 'LavaEagle',
+        //     image: '/images/characters/LavaEagle.png'
+        // }
     ]
 
     function handleSelectPrimaryClick() {

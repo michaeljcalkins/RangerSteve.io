@@ -1,6 +1,6 @@
 import GameConsts from '../lib/GameConsts'
 
-export default function Preload(store) {
+export default function Preload() {
     // Map
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet', '/images/bullet.png')

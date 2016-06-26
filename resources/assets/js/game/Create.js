@@ -1,25 +1,13 @@
-import GameConsts from '../lib/GameConsts'
+import actions from '../actions'
+import SetEventHandlers from '../lib/SocketEvents/SetEventHandlers'
 
 export default function Create() {
-    //  We're going to be using physics, so enable the Arcade Physics system
-    this.physics.startSystem(Phaser.Physics.ARCADE)
-    this.physicsBodyType = Phaser.Physics.ARCADE
-    this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
+    this.game.store.dispatch(actions.game.setState('loading'))
 
-    // Scale game on window resize
-    this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
-    this.game.scale.setShowAll()
-    this.game.scale.refresh()
+    this.game.renderer.renderSession.roundPixels = true
+    this.game.stage.disableVisibilityChange = true
 
-
-    /**
-     * Enemy Settings
-     */
-    this.enemies = this.game.add.group()
-    this.enemies.enableBody = true
-    this.enemies.physicsBodyType = Phaser.Physics.ARCADE
-    this.physics.arcade.enable(this.enemies)
-    this.game.physics.enable(this.enemies, Phaser.Physics.ARCADE)
+    SetEventHandlers.call(this)
 
     window.Meta = {
         kickPlayerByUsername: (nickname) => {

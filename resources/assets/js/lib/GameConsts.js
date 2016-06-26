@@ -5,29 +5,28 @@ const GameConsts = {
 
     // Physics
     MAX_SPEED: 600,
-    ACCELERATION: 1960,
-    DRAG: 1500,
-    GRAVITY: 1900,
-    JUMP_SPEED: -850,
-    JUMP_JET_SPEED: -2400,
-    JUMP_JET_SPEED_REGENERATION: -2400,
+    ACCELERATION: 1200,
+    DRAG: 3000,
+    GRAVITY: 1200,
+    JUMP_SPEED: -550,
+    JUMP_JET_SPEED: -1400,
+    JUMP_JET_SPEED_REGENERATION: -1400,
 
     // Player Model
     ANIMATION_LEFT: _.range(0, 5, 1),
     ANIMATION_RIGHT: _.range(8, 13, 1),
     ANIMATION_DEATH: _.range(14, 35, 1),
     ANIMATION_FRAMERATE: 10,
-    PLAYER_SCALE: 1,
-    PLAYER_ANCHOR: .5,
     STARTING_PRIMARY_ID: 'AK47',
     STARTING_SECONDARY_ID: 'DesertEagle',
-
-    // Maps
-    MAPS: [
-        'HighRuleJungle',
-        'PunkFallout'
-        // 'DarkForest'
-    ],
+    PLAYER_SCALE: .27,
+    PLAYER_ANCHOR: .5,
+    PLAYER_SPRITE_WIDTH: 96,
+    PLAYER_SPRITE_HEIGHT: 91,
+    PLAYER_BODY_WIDTH: 145,
+    PLAYER_BODY_HEIGHT: 295,
+    PLAYER_SLOPE_FRICTION_X: 2000,
+    PLAYER_SLOPE_FRICTION_Y: 2000,
 
     // Weapons
     PRIMARY_WEAPONS: [
