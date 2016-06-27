@@ -18,7 +18,6 @@ export default function onLoadGame(data) {
     if (store.getState().game.state !== 'loading') return
 
     store.dispatch(actions.room.setRoom(data.room))
-
     Maps[store.getState().room.map].preload.call(this)
     this.currentMap = store.getState().room.map
 
