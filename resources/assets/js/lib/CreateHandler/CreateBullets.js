@@ -4,6 +4,7 @@ export default function() {
     this.bullets.setAll('checkWorldBounds', true)
     this.bullets.setAll('outOfBoundsKill', true)
     this.physics.arcade.enable(this.bullets)
+    this.game.slopes.enable(this.bullets)
 
     this.enemyBullets = this.game.add.group()
     this.enemyBullets.enableBody = true
