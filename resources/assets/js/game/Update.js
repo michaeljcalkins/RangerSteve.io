@@ -10,14 +10,6 @@ import actions from '../actions'
 
 let lastPlayerData = {}
 
-function checkOverlap(spriteA, spriteB) {
-
-    var boundsA = spriteA.getBounds();
-    var boundsB = spriteB.getBounds();
-
-    return Phaser.Rectangle.intersects(boundsA, boundsB);
-
-}
 export default function Update() {
     if (this.game.store.getState().game.resetEventsFlag) {
         this.game.store.dispatch(actions.game.setResetEventsFlag(false))
@@ -37,14 +29,14 @@ export default function Update() {
     this.game.input.enabled = !isPaused
 
     // Define some shortcuts to some useful objects
-    var body = this.player.body;
-    var features = this.features;
+    var body = this.player.body
+    var features = this.features
 
     // Update player body properties
-    body.drag.x = features.dragX;
-    body.drag.y = features.dragY;
-    body.bounce.x = features.bounceX;
-    body.bounce.y = features.bounceY;
+    body.drag.x = features.dragX
+    body.drag.y = features.dragY
+    body.bounce.x = features.bounceX
+    body.bounce.y = features.bounceY
 
     // Update player body Arcade Slopes properties
     body.slopes.friction.x = features.frictionX;
