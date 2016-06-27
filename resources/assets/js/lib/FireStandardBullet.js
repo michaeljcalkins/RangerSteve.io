@@ -19,6 +19,10 @@ export default function FireStandardBullet() {
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
     bullet.rotation = pointerAngle
 
+    // Add a touch of tile padding for the collision detection
+    bullet.body.tilePadding.x = 50
+    bullet.body.tilePadding.y = 1
+
     setTimeout(() => {
         bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
     }, 40)

@@ -18,19 +18,19 @@ export default function() {
         })
     }, null, this)
 
-    // this.physics.arcade.overlap(this.bullets, this.ground,  function(bullet) {
-    //     bullet.kill()
+    this.physics.arcade.collide(this.bullets, this.ground,  function(bullet) {
+        bullet.kill()
 
-    //     if (bullet.weaponId === 'RPG') {
-    //         RocketExplosion.call(this, {
-    //             bulletY: bullet.y,
-    //             bulletX: bullet.x
-    //         })
-    //     }
+        if (bullet.weaponId === 'RPG') {
+            RocketExplosion.call(this, {
+                bulletY: bullet.y,
+                bulletX: bullet.x
+            })
+        }
 
-    //     BulletRicochet.call(this, {
-    //         bulletY: bullet.y,
-    //         bulletX: bullet.x
-    //     })
-    // }, null, this)
+        BulletRicochet.call(this, {
+            bulletY: bullet.y,
+            bulletX: bullet.x
+        })
+    }, null, this)
 }
