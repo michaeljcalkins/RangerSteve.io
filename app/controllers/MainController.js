@@ -5,7 +5,12 @@ let moment = require('moment')
 
 let MainController = {
     home: function(req, res) {
-        res.render('home')
+        let fileStat = fs.statSync('public/js/app.js')
+        let lastModifiedTime = moment(fileStat.mtime).format('MMMM, Do YYYY')
+
+        res.render('home', {
+            lastUpdatedAt: lastModifiedTime
+        })
     },
     game: function(req, res) {
         let fileStat = fs.statSync('public/js/app.js')
