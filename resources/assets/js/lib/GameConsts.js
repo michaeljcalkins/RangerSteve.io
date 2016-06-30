@@ -9,8 +9,12 @@ const GameConsts = {
     DRAG: 3000,
     GRAVITY: 1200,
     JUMP_SPEED: -550,
-    JUMP_JET_SPEED: -1400,
+
+    // Jump Jet
+    JUMP_JET_SPEED: -1500,
     JUMP_JET_SPEED_REGENERATION: -1400,
+    JUMP_JET_STARTING_FUEL: -190000,
+    JUMP_JET_DEAD_ZONE_FUEL: -185000,
 
     // Player Model
     ANIMATION_LEFT: _.range(0, 5, 1),
@@ -33,42 +37,50 @@ const GameConsts = {
         {
             id: 'AK47',
             name: 'AK-47',
-            image: '/images/guns/Spr_AK47.png'
-        },
-        {
-            id: 'M500',
-            name: 'M500',
-            image: '/images/guns/Spr_M500.png'
-        },
-        {
-            id: 'Skorpion',
-            name: 'Skorpion',
-            image: '/images/guns/Spr_Skorpion.png'
-        },
-        {
-            id: 'AUG',
-            name: 'AUG',
-            image: '/images/guns/Spr_Aug.png'
+            image: '/images/guns/Spr_AK47.png',
+            minScore: 0
         },
         {
             id: 'G43',
             name: 'G43',
-            image: '/images/guns/Spr_g43.png'
+            image: '/images/guns/Spr_g43.png',
+            minScore: 0
+        },
+        {
+            id: 'M500',
+            name: 'M500',
+            image: '/images/guns/Spr_M500.png',
+            minScore: 0
+        },
+        {
+            id: 'AUG',
+            name: 'AUG',
+            image: '/images/guns/Spr_Aug.png',
+            minScore: 20
+        },
+        {
+            id: 'Skorpion',
+            name: 'Skorpion',
+            image: '/images/guns/Spr_Skorpion.png',
+            minScore: 20
         },
         {
             id: 'P90',
             name: 'P90',
-            image: '/images/guns/Spr_p90.png'
+            image: '/images/guns/Spr_p90.png',
+            minScore: 40
         },
         {
             id: 'M4A1',
             name: 'M4A1',
-            image: '/images/guns/Spr_M4A1.png'
+            image: '/images/guns/Spr_M4A1.png',
+            minScore: 40
         },
         {
             id: 'Barrett',
             name: 'Barrett',
-            image: '/images/guns/Spr_Barrett.png'
+            image: '/images/guns/Spr_Barrett.png',
+            minScore: 60
         }
     ],
 
@@ -76,17 +88,20 @@ const GameConsts = {
         {
             id: 'DesertEagle',
             name: 'Desert Eagle',
-            image: '/images/guns/Spr_DesertEagle.png'
-        },
-        {
-            id: 'RPG',
-            name: 'RPG',
-            image: '/images/guns/Spr_RPG.png'
+            image: '/images/guns/Spr_DesertEagle.png',
+            minScore: 0
         },
         {
             id: 'SilverBaller',
             name: 'Silenced Beretta',
-            image: '/images/guns/Spr_SilverBaller.png'
+            image: '/images/guns/Spr_SilverBaller.png',
+            minScore: 40
+        },
+        {
+            id: 'RPG',
+            name: 'RPG',
+            image: '/images/guns/Spr_RPG.png',
+            minScore: 70
         }
     ]
 }

@@ -1,5 +1,6 @@
 import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
+import GameConsts from './GameConsts'
 
 export default function FireStandardBullet() {
     const state = this.rootScope.game.store.getState()
@@ -23,32 +24,26 @@ export default function FireStandardBullet() {
     // Update player body Arcade Slopes properties
     body.slopes.friction.x = features.frictionX
     body.slopes.friction.y = features.frictionY
-    body.slopes.preferY    = features.minimumOffsetY;
-    body.slopes.pullUp     = features.pullUp;
-    body.slopes.pullDown   = features.pullDown;
-    body.slopes.pullLeft   = features.pullLeft;
-    body.slopes.pullRight  = features.pullRight;
-    body.slopes.snapUp     = features.snapUp;
-    body.slopes.snapDown   = features.snapDown;
-    body.slopes.snapLeft   = features.snapLeft;
-    body.slopes.snapRight  = features.snapRight;
-
+    body.slopes.preferY    = features.minimumOffsetY
+    body.slopes.pullUp     = features.pullUp
+    body.slopes.pullDown   = features.pullDown
+    body.slopes.pullLeft   = features.pullLeft
+    body.slopes.pullRight  = features.pullRight
+    body.slopes.snapUp     = features.snapUp
+    body.slopes.snapDown   = features.snapDown
+    body.slopes.snapLeft   = features.snapLeft
+    body.slopes.snapRight  = features.snapRight
 
     bullet.bulletId = Guid()
     bullet.damage = this.damage
     bullet.weaponId = this.meta.id
-    bullet.height = this.bulletHeight
-    bullet.width = this.bulletWidth
     bullet.alpha = 0
-    bullet.body.gravity.y = -1800
-
-    // Add a touch of tile padding for the collision detection
-    bullet.body.tilePadding.x = 50
-    bullet.body.tilePadding.y = 1
+    bullet.body.gravity.y = GameConsts.GRAVITY - 100
 
     bullet.reset(x, y)
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
     bullet.rotation = pointerAngle
+    bullet.body.rotation = pointerAngle
 
     setTimeout(() => {
         bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
@@ -66,8 +61,6 @@ export default function FireStandardBullet() {
         y,
         pointerAngle,
         bulletSpeed: this.bulletSpeed,
-        height: bullet.height,
-        width: bullet.width,
         damage: this.damage
     })
 }

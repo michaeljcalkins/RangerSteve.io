@@ -10,7 +10,6 @@ const initialState = {
     selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
     selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
     jumpJetCounter: 0,
-    jumps: 2,
     jumping: false,
     primaryWeapon: null,
     secondaryWeapon: null,

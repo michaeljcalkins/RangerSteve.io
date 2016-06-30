@@ -6,6 +6,7 @@ export default function Create() {
 
     this.game.renderer.renderSession.roundPixels = true
     this.game.stage.disableVisibilityChange = true
+    this.jumpjetFx = this.game.add.audio('jumpjet')
 
     SetEventHandlers.call(this)
 

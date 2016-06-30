@@ -23,7 +23,7 @@ export default class AK47 extends Phaser.Group {
             muzzleFlashX: 102,
             muzzleFlashY: -72
         }
-        this.bulletHeight = 2
+        this.bulletHeight = 40
         this.bulletSpeed = 2300
         this.bulletWidth = 40
         this.damage = 24

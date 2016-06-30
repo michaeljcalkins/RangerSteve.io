@@ -1,4 +1,7 @@
-export default function RemainingFuelPercent(counter, maxFuel = 130000) {
+import GameConsts from './GameConsts'
+
+export default function RemainingFuelPercent(counter) {
+    const maxFuel = GameConsts.JUMP_JET_STARTING_FUEL * -1
     let percent = 100
 
     if (counter < 0) {

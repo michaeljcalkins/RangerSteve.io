@@ -4,9 +4,10 @@ export default function Preload() {
     // Map
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet', '/images/bullet.png')
-    this.load.spritesheet('hurt-border', '/images/hurt-border.png')
 
+    this.load.spritesheet('hurt-border', '/images/hurt-border.png')
     this.load.spritesheet('muzzle-flash', '/images/muzzle-flash.png', 447, 271)
+    this.load.spritesheet('jumpjet', '/images/jumpjet.png', 214, 418)
     this.load.spritesheet('commando', '/images/commando.png', 300, 315)
     this.load.spritesheet('ricochet', '/images/ricochet.png', 274, 185)
     this.load.spritesheet('blood', '/images/blood.png', 440, 256)
@@ -25,6 +26,8 @@ export default function Preload() {
     this.load.image('left-arm', '/images/body/left-arm.png')
     this.load.image('head', '/images/body/head.png')
     this.load.image('torso', '/images/body/torso.png')
+
+    this.load.audio('jumpjet', '/audio/jumpjet.mp3')
 
     this.load.audio('AK47-sound', '/audio/AK47.mp3')
     this.load.audio('M500-sound', '/audio/M500.mp3')

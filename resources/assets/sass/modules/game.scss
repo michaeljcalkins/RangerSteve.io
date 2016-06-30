@@ -39,6 +39,22 @@ body.game {
 
 .option-weapon-group {
     height: 90px;
+
+    .option-locked {
+        background: rgba(0, 0, 0, .4);
+        bottom: 0;
+        color: #CD1D24;
+        font-family: 'Black Ops One';
+        font-size: 30px;
+        left: 0;
+        letter-spacing: 2px;
+        line-height: 90px;
+        position: absolute;
+        right: 0;
+        text-align: center;
+        top: 0;
+        z-index: 1;
+    }
 }
 
 .option-character-group {

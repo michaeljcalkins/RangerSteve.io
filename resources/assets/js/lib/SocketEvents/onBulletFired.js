@@ -5,8 +5,6 @@ const propTypes = {
     playerId: PropTypes.string.isRequired,
     damage: PropTypes.number.isRequired,
     pointerAngle: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     bulletSpeed: PropTypes.number.isRequired,
@@ -45,8 +43,6 @@ export default function onBulletFired(data) {
     bullet.playerId = data.playerId
     bullet.damage = data.damage
     bullet.rotation = data.pointerAngle
-    bullet.height = data.height
-    bullet.width = data.width
     bullet.weaponId = data.weaponId
     bullet.body.gravity.y = -1800
     bullet.enableBody = true
