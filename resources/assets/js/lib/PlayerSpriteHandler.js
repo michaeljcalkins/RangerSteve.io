@@ -5,6 +5,7 @@ import actions from '../actions'
 
 export default function PlayerSpriteHandler() {
     const state = this.game.store.getState()
+    const store = this.game.store
     const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
@@ -75,6 +76,9 @@ export default function PlayerSpriteHandler() {
     this.currentWeaponSprite.scale.setTo(this.game.store.getState().player.primaryWeapon.meta.scale)
     this.currentWeaponSprite.rotation = this.game.store.getState().player.primaryWeapon.meta.rotation
 
+    const selectedPrimaryWeapon = _.find(GameConsts.PRIMARY_WEAPONS, { id: this.game.store.getState().player.selectedPrimaryWeaponId })
+    this.game.store.dispatch(actions.player.setAmmoRemaining(selectedPrimaryWeapon.ammo))
+
     // Right arm
     this.rightArmGroup.add(this.currentWeaponSprite)
     this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm')
@@ -109,21 +113,21 @@ export default function PlayerSpriteHandler() {
 
     this.leftJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
     this.leftJumpjet.anchor.setTo(0)
-    this.leftJumpjet.scale.setTo(.5)
+    this.leftJumpjet.scale.setTo(.4)
     this.leftJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     this.leftJumpjet.animations.play('thrust')
-    this.leftJumpjet.y = 124
-    this.leftJumpjet.x = -18
+    this.leftJumpjet.y = 130
+    this.leftJumpjet.x = -78
     this.leftJumpjet.visible = false
     this.player.addChild(this.leftJumpjet)
 
     this.rightJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
     this.rightJumpjet.anchor.setTo(0)
-    this.rightJumpjet.scale.setTo(.5)
+    this.rightJumpjet.scale.setTo(.4)
     this.rightJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     this.rightJumpjet.animations.play('thrust')
-    this.rightJumpjet.y = 124
-    this.rightJumpjet.x = -80
+    this.rightJumpjet.y = 130
+    this.rightJumpjet.x = -7
     this.rightJumpjet.visible = false
     this.player.addChild(this.rightJumpjet)
 

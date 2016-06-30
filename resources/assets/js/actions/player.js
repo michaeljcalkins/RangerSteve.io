@@ -1,3 +1,23 @@
+export const setIsReloading = (value) => {
+    return {
+        type: 'SET_IS_RELOADING',
+        value
+    }
+}
+
+export const decrementAmmoRemaining = () => {
+    return {
+        type: 'DECREMENT_AMMO_REMAINING'
+    }
+}
+
+export const setAmmoRemaining = (value) => {
+    return {
+        type: 'SET_AMMO_REMAINING',
+        value
+    }
+}
+
 export const setAttackingDamageStats = (value) => {
     return {
         type: 'SET_ATTACKING_DAMAGE_STATS',

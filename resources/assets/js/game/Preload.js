@@ -14,12 +14,12 @@ export default function Preload() {
     this.load.spritesheet('rocket', '/images/air-explosion.png', 904, 598, 15)
 
     // Weapons
-    GameConsts.PRIMARY_WEAPONS.forEach((weapon) => {
-        this.load.image(weapon.id, weapon.image)
+    Object.keys(GameConsts.PRIMARY_WEAPONS).forEach((weaponId) => {
+        this.load.image(weaponId, GameConsts.PRIMARY_WEAPONS[weaponId].image)
     })
 
-    GameConsts.SECONDARY_WEAPONS.forEach((weapon) => {
-        this.load.image(weapon.id, weapon.image)
+    Object.keys(GameConsts.SECONDARY_WEAPONS).forEach((weaponId) => {
+        this.load.image(weaponId, GameConsts.SECONDARY_WEAPONS[weaponId].image)
     })
 
     this.load.image('right-arm', '/images/body/right-arm.png')

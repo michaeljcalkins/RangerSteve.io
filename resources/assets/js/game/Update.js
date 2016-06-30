@@ -61,6 +61,7 @@ export default function Update() {
     }
 
     if (this.game.input.activePointer.leftButton.isDown) {
+        if (state.player.isReloading) return
         state.player[currentWeapon].fire()
     }
 
@@ -87,4 +88,3 @@ export default function Update() {
         lastPlayerData = newPlayerData
     }
 }
-

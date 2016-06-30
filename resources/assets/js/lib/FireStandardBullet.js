@@ -1,13 +1,18 @@
 import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from './GameConsts'
+import actions from '../actions'
 
 export default function FireStandardBullet() {
-    const state = this.rootScope.game.store.getState()
+    const store = this.rootScope.game.store
+    const state = store.getState()
+
+    if (state.player.ammoRemaining <= 0) {
+        return
+    }
 
     let x = this.rootScope.player.x
     let y = this.rootScope.player.y - 10
-
 
     let bullet = this.rootScope.bullets.getFirstDead()
 
@@ -52,6 +57,8 @@ export default function FireStandardBullet() {
     this.fx.volume = state.game.sfxVolume
     this.fx.play()
 
+    store.dispatch(actions.player.decrementAmmoRemaining())
+
     emitBulletFired.call(this.rootScope, {
         roomId: state.room.id,
         bulletId: bullet.bulletId,
@@ -63,4 +70,23 @@ export default function FireStandardBullet() {
         bulletSpeed: this.bulletSpeed,
         damage: this.damage
     })
+
+    if (store.getState().player.ammoRemaining === 0) {
+        store.dispatch(actions.player.setIsReloading(true))
+
+        const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
+            ? GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
+            : GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
+
+        setTimeout(() => {
+            store.dispatch(actions.player.setIsReloading(false))
+            if (store.getState().player.currentWeapon === 'primaryWeapon') {
+                store.dispatch(actions.player.setAmmoRemaining(GameConsts.PRIMARY_WEAPONS[this.meta.id].ammo))
+                return
+            }
+
+            store.dispatch(actions.player.setAmmoRemaining(GameConsts.SECONDARY_WEAPONS[this.meta.id].ammo))
+        }, reloadTime)
+        return
+    }
 }

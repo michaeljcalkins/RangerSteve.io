@@ -11,7 +11,8 @@ const initialState = {
         right: storage.get('keyboardControl.right', Phaser.Keyboard.D),
         up: storage.get('keyboardControl.up', Phaser.Keyboard.W),
         switchWeapon: storage.get('keyboardControl.switchWeapon', Phaser.Keyboard.Q),
-        newChatMessage: storage.get('keyboardControl.newChatMessage', Phaser.Keyboard.T)
+        newChatMessage: storage.get('keyboardControl.newChatMessage', Phaser.Keyboard.T),
+        reload: storage.get('keyboardControl.reload', Phaser.Keyboard.R)
     },
     musicVolume: storage.get('musicVolume', GameConsts.STARTING_MUSIC_VOLUME),
     settingsModalIsOpen: !storage.has('nickname'),
