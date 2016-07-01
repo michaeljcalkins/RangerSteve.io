@@ -5,18 +5,17 @@ import actions from '../actions'
 
 export default function PlayerSpriteHandler() {
     const state = this.game.store.getState()
-    const store = this.game.store
     const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.width = GameConsts.PLAYER_SPRITE_WIDTH
     this.player.height = GameConsts.PLAYER_SPRITE_HEIGHT
-    this.player.scale.setTo(GameConsts.PLAYER_SCALE)
+    // this.player.scale.setTo(GameConsts.PLAYER_SCALE)
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
-    this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT, 70, 0)
+    this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT, 105, 10)
     this.game.slopes.enable(this.player)
 
     // Add a touch of tile padding for the collision detection
@@ -78,7 +77,7 @@ export default function PlayerSpriteHandler() {
 
     const selectedPrimaryWeapon = GameConsts.PRIMARY_WEAPONS[this.game.store.getState().player.selectedPrimaryWeaponId]
     this.game.store.dispatch(actions.player.setPrimaryAmmoRemaining(selectedPrimaryWeapon.ammo))
-    
+
     const selectedSecondaryWeapon = GameConsts.SECONDARY_WEAPONS[this.game.store.getState().player.selectedSecondaryWeaponId]
     this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
 

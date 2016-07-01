@@ -10,4 +10,8 @@ export default function Render() {
     this.bullets.forEach((bullet) => {
         this.game.debug.body(bullet)
     })
+
+    this.enemies.forEach((bullet) => {
+        this.game.debug.body(bullet)
+    })
 }
