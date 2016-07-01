@@ -12,7 +12,7 @@ export default function RemotePlayer(player) {
     check(player, propTypes)
 
     let newRemotePlayer = this.game.add.sprite(player.x, player.y, 'commando')
-    newRemotePlayer.scale.setTo(GameConsts.PLAYER_SCALE)
+    // newRemotePlayer.scale.setTo(GameConsts.PLAYER_SCALE)
     newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     newRemotePlayer.facing = 'right'
     newRemotePlayer.width = GameConsts.PLAYER_SPRITE_WIDTH
@@ -29,8 +29,8 @@ export default function RemotePlayer(player) {
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(newRemotePlayer)
+    newRemotePlayer.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT, 105, 10)
     this.game.slopes.enable(newRemotePlayer)
-
     newRemotePlayer.body.gravity.y = GameConsts.gravity
 
     newRemotePlayer.leftArmGroup = this.game.add.group()
