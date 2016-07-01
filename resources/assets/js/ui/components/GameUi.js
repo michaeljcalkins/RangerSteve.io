@@ -128,10 +128,12 @@ export default class GameUi extends React.Component {
             onSettingsViewChange
         } = this.props
 
+        const currentAmmoRemaining = player.currentWeapon === 'primaryWeapon' ? player.primaryAmmoRemaining : player.secondaryAmmoRemaining
+
         return (
             <div>
                 { game.state === 'loading' && <LoadingScreen /> }
-                <HudAmmo ammoRemaining={ player.ammoRemaining } />
+                <HudAmmo ammoRemaining={ currentAmmoRemaining } />
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />

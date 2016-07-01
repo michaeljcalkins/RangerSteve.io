@@ -43,12 +43,11 @@ export default function FireStandardBullet() {
     bullet.damage = this.damage
     bullet.weaponId = this.meta.id
     bullet.alpha = 0
-    bullet.body.gravity.y = GameConsts.GRAVITY - 100
+    bullet.body.gravity.y = -1150
 
     bullet.reset(x, y)
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
     bullet.rotation = pointerAngle
-    bullet.body.rotation = pointerAngle
 
     setTimeout(() => {
         bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
@@ -57,7 +56,11 @@ export default function FireStandardBullet() {
     this.fx.volume = state.game.sfxVolume
     this.fx.play()
 
-    store.dispatch(actions.player.decrementAmmoRemaining())
+    if (store.getState().player.currentWeapon === 'primaryWeapon') {
+        store.dispatch(actions.player.decrementPrimaryAmmoRemaining())
+    } else {
+        store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
+    }
 
     emitBulletFired.call(this.rootScope, {
         roomId: state.room.id,
@@ -71,21 +74,27 @@ export default function FireStandardBullet() {
         damage: this.damage
     })
 
-    if (store.getState().player.ammoRemaining === 0) {
+    const currentAmmoRemaining = store.getState().player.currentWeapon === 'primaryWeapon'
+        ? store.getState().player.primaryAmmoRemaining
+        : store.getState().player.secondaryAmmoRemaining
+
+    if (currentAmmoRemaining <= 0 && ! store.getState().player.isReloading) {
         store.dispatch(actions.player.setIsReloading(true))
 
         const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
             ? GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
             : GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
 
+        const currentWeaponId = this.meta.id
+        const currentWeapon = store.getState().player.currentWeapon
         setTimeout(() => {
             store.dispatch(actions.player.setIsReloading(false))
-            if (store.getState().player.currentWeapon === 'primaryWeapon') {
-                store.dispatch(actions.player.setAmmoRemaining(GameConsts.PRIMARY_WEAPONS[this.meta.id].ammo))
+            if (currentWeapon === 'primaryWeapon') {
+                store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[currentWeaponId].ammo))
                 return
             }
 
-            store.dispatch(actions.player.setAmmoRemaining(GameConsts.SECONDARY_WEAPONS[this.meta.id].ammo))
+            store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[currentWeaponId].ammo))
         }, reloadTime)
         return
     }

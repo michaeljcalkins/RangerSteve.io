@@ -5,15 +5,28 @@ export const setIsReloading = (value) => {
     }
 }
 
-export const decrementAmmoRemaining = () => {
+export const decrementSecondaryAmmoRemaining = () => {
     return {
-        type: 'DECREMENT_AMMO_REMAINING'
+        type: 'DECREMENT_SECONDARY_AMMO_REMAINING'
     }
 }
 
-export const setAmmoRemaining = (value) => {
+export const setSecondaryAmmoRemaining = (value) => {
     return {
-        type: 'SET_AMMO_REMAINING',
+        type: 'SET_SECONDARY_AMMO_REMAINING',
+        value
+    }
+}
+
+export const decrementPrimaryAmmoRemaining = () => {
+    return {
+        type: 'DECREMENT_PRIMARY_AMMO_REMAINING'
+    }
+}
+
+export const setPrimaryAmmoRemaining = (value) => {
+    return {
+        type: 'SET_PRIMARY_AMMO_REMAINING',
         value
     }
 }

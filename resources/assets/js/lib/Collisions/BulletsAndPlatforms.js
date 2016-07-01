@@ -32,5 +32,7 @@ export default function() {
             bulletY: bullet.y,
             bulletX: bullet.x
         })
-    }, null, this)
+    }, function(bullet, tile) {
+        return tile.collides
+    }, this)
 }

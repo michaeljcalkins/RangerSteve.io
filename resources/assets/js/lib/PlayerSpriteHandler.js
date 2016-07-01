@@ -76,8 +76,11 @@ export default function PlayerSpriteHandler() {
     this.currentWeaponSprite.scale.setTo(this.game.store.getState().player.primaryWeapon.meta.scale)
     this.currentWeaponSprite.rotation = this.game.store.getState().player.primaryWeapon.meta.rotation
 
-    const selectedPrimaryWeapon = _.find(GameConsts.PRIMARY_WEAPONS, { id: this.game.store.getState().player.selectedPrimaryWeaponId })
-    this.game.store.dispatch(actions.player.setAmmoRemaining(selectedPrimaryWeapon.ammo))
+    const selectedPrimaryWeapon = GameConsts.PRIMARY_WEAPONS[this.game.store.getState().player.selectedPrimaryWeaponId]
+    this.game.store.dispatch(actions.player.setPrimaryAmmoRemaining(selectedPrimaryWeapon.ammo))
+    
+    const selectedSecondaryWeapon = GameConsts.SECONDARY_WEAPONS[this.game.store.getState().player.selectedSecondaryWeaponId]
+    this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
 
     // Right arm
     this.rightArmGroup.add(this.currentWeaponSprite)

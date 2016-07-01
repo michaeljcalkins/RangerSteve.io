@@ -21,11 +21,11 @@ export default function() {
         setTimeout(() => {
             store.dispatch(actions.player.setIsReloading(false))
             if (store.getState().player.currentWeapon === 'primaryWeapon') {
-                store.dispatch(actions.player.setAmmoRemaining(GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo))
+                store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo))
                 return
             }
 
-            store.dispatch(actions.player.setAmmoRemaining(GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].ammo))
+            store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].ammo))
         }, reloadTime)
     })
 
@@ -58,12 +58,5 @@ export default function() {
 
         this.muzzleFlash.x = store.getState().player[newCurrentWeapon].meta.muzzleFlashX
         this.muzzleFlash.y = store.getState().player[newCurrentWeapon].meta.muzzleFlashY
-
-        if (newCurrentWeapon === 'primaryWeapon') {
-            store.dispatch(actions.player.setAmmoRemaining(GameConsts.PRIMARY_WEAPONS[store.getState().player[newCurrentWeapon].meta.id].ammo))
-            return
-        }
-
-        store.dispatch(actions.player.setAmmoRemaining(GameConsts.SECONDARY_WEAPONS[store.getState().player[newCurrentWeapon].meta.id].ammo))
     })
 }
