@@ -18,7 +18,7 @@ export default function() {
         })
     }, null, this)
 
-    this.physics.arcade.collide(this.bullets, this.ground,  function(bullet) {
+    this.physics.arcade.overlap(this.bullets, this.ground, function(bullet) {
         bullet.kill()
 
         if (bullet.weaponId === 'RPG') {
@@ -32,5 +32,7 @@ export default function() {
             bulletY: bullet.y,
             bulletX: bullet.x
         })
-    }, null, this)
+    }, function(bullet, tile) {
+        return tile.collides
+    }, this)
 }

@@ -4,9 +4,11 @@ import GameConsts from '../../../lib/GameConsts'
 
 export default function ChooseSecondaryMenu({
     onSecondaryGunClick,
-    onViewChange
+    onViewChange,
+    player
 }) {
     function handleSelectPrimaryClick(weapon) {
+        if (player.score < weapon.minScore) return
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }
@@ -19,6 +21,10 @@ export default function ChooseSecondaryMenu({
                     key={ index }
                     onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
+                    { player.score < weapon.minScore
+                        ? <div className="option-locked">LOCKED ({ weapon.minScore })</div>
+                        : null
+                    }
                     <div>
                         <img src={ weapon.image } />
                     </div>
@@ -43,5 +49,6 @@ export default function ChooseSecondaryMenu({
 
 ChooseSecondaryMenu.propTypes = {
     onSecondaryGunClick: PropTypes.func.isRequired,
-    onViewChange: PropTypes.func.isRequired
+    onViewChange: PropTypes.func.isRequired,
+    player: PropTypes.object
 }

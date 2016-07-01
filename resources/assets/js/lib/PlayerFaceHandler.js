@@ -1,6 +1,6 @@
 import actions from '../actions'
 
-export function playerFaceLeft() {
+export function playerFaceLeft() {    
     if (this.game.store.getState().player.facing !== 'left') {
         this.game.store.dispatch(actions.player.setFacing('left'))
         const player = this.game.store.getState().player

@@ -3,25 +3,57 @@ import NameGenerator from '../lib/NameGenerator'
 
 const initialState = {
     currentWeapon: 'primaryWeapon',
-    health: 100,
     damageStats: {},
-    nickname: storage.get('nickname', NameGenerator()),
-    score: 0,
-    selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
-    selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
-    jumpJetCounter: 0,
-    jumps: 2,
-    jumping: false,
-    primaryWeapon: null,
-    secondaryWeapon: null,
     facing: 'right',
-    respawnTime: null
+    health: 100,
+    isReloading: false,
+    jumping: false,
+    jumpJetCounter: 0,
+    nickname: storage.get('nickname', NameGenerator()),
+    primaryAmmoRemaining: 0,
+    primaryWeapon: null,
+    respawnTime: null,
+    score: 0,
+    secondaryAmmoRemaining: 0,
+    secondaryWeapon: null,
+    selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
+    selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle')
 }
 
 storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_IS_RELOADING':
+            return {
+                ...state,
+                isReloading: action.value
+            }
+
+        case 'DECREMENT_SECONDARY_AMMO_REMAINING':
+            return {
+                ...state,
+                secondaryAmmoRemaining: state.secondaryAmmoRemaining - 1
+            }
+
+        case 'SET_SECONDARY_AMMO_REMAINING':
+            return {
+                ...state,
+                secondaryAmmoRemaining: action.value
+            }
+
+        case 'DECREMENT_PRIMARY_AMMO_REMAINING':
+            return {
+                ...state,
+                primaryAmmoRemaining: state.primaryAmmoRemaining - 1
+            }
+
+        case 'SET_PRIMARY_AMMO_REMAINING':
+            return {
+                ...state,
+                primaryAmmoRemaining: action.value
+            }
+
         case 'SET_ATTACKING_DAMAGE_STATS':
             return {
                 ...state,

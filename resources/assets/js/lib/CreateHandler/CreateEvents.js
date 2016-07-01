@@ -1,4 +1,5 @@
 import actions from '../../actions'
+import GameConsts from '../GameConsts'
 
 let lastSwitchWeaponKey = null
 
@@ -8,6 +9,24 @@ export default function() {
     // Open settings modal
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
         store.dispatch(actions.game.openSettingsModal())
+    })
+
+    this.input.keyboard.addKey(store.getState().game.keyboardControls.reload).onUp.add(() => {
+        store.dispatch(actions.player.setIsReloading(true))
+
+        const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
+            ? GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
+            : GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
+
+        setTimeout(() => {
+            store.dispatch(actions.player.setIsReloading(false))
+            if (store.getState().player.currentWeapon === 'primaryWeapon') {
+                store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo))
+                return
+            }
+
+            store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].ammo))
+        }, reloadTime)
     })
 
     // Switch weapons

@@ -1,12 +1,18 @@
 import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
+import GameConsts from './GameConsts'
+import actions from '../actions'
 
 export default function FireStandardBullet() {
-    const state = this.rootScope.game.store.getState()
+    const store = this.rootScope.game.store
+    const state = store.getState()
+
+    if (state.player.ammoRemaining <= 0) {
+        return
+    }
 
     let x = this.rootScope.player.x
     let y = this.rootScope.player.y - 10
-
 
     let bullet = this.rootScope.bullets.getFirstDead()
 
@@ -23,28 +29,21 @@ export default function FireStandardBullet() {
     // Update player body Arcade Slopes properties
     body.slopes.friction.x = features.frictionX
     body.slopes.friction.y = features.frictionY
-    body.slopes.preferY    = features.minimumOffsetY;
-    body.slopes.pullUp     = features.pullUp;
-    body.slopes.pullDown   = features.pullDown;
-    body.slopes.pullLeft   = features.pullLeft;
-    body.slopes.pullRight  = features.pullRight;
-    body.slopes.snapUp     = features.snapUp;
-    body.slopes.snapDown   = features.snapDown;
-    body.slopes.snapLeft   = features.snapLeft;
-    body.slopes.snapRight  = features.snapRight;
-
+    body.slopes.preferY    = features.minimumOffsetY
+    body.slopes.pullUp     = features.pullUp
+    body.slopes.pullDown   = features.pullDown
+    body.slopes.pullLeft   = features.pullLeft
+    body.slopes.pullRight  = features.pullRight
+    body.slopes.snapUp     = features.snapUp
+    body.slopes.snapDown   = features.snapDown
+    body.slopes.snapLeft   = features.snapLeft
+    body.slopes.snapRight  = features.snapRight
 
     bullet.bulletId = Guid()
     bullet.damage = this.damage
     bullet.weaponId = this.meta.id
-    bullet.height = this.bulletHeight
-    bullet.width = this.bulletWidth
     bullet.alpha = 0
-    bullet.body.gravity.y = -1800
-
-    // Add a touch of tile padding for the collision detection
-    bullet.body.tilePadding.x = 50
-    bullet.body.tilePadding.y = 1
+    bullet.body.gravity.y = -1150
 
     bullet.reset(x, y)
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
@@ -57,6 +56,12 @@ export default function FireStandardBullet() {
     this.fx.volume = state.game.sfxVolume
     this.fx.play()
 
+    if (store.getState().player.currentWeapon === 'primaryWeapon') {
+        store.dispatch(actions.player.decrementPrimaryAmmoRemaining())
+    } else {
+        store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
+    }
+
     emitBulletFired.call(this.rootScope, {
         roomId: state.room.id,
         bulletId: bullet.bulletId,
@@ -66,8 +71,31 @@ export default function FireStandardBullet() {
         y,
         pointerAngle,
         bulletSpeed: this.bulletSpeed,
-        height: bullet.height,
-        width: bullet.width,
         damage: this.damage
     })
+
+    const currentAmmoRemaining = store.getState().player.currentWeapon === 'primaryWeapon'
+        ? store.getState().player.primaryAmmoRemaining
+        : store.getState().player.secondaryAmmoRemaining
+
+    if (currentAmmoRemaining <= 0 && ! store.getState().player.isReloading) {
+        store.dispatch(actions.player.setIsReloading(true))
+
+        const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
+            ? GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
+            : GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
+
+        const currentWeaponId = this.meta.id
+        const currentWeapon = store.getState().player.currentWeapon
+        setTimeout(() => {
+            store.dispatch(actions.player.setIsReloading(false))
+            if (currentWeapon === 'primaryWeapon') {
+                store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[currentWeaponId].ammo))
+                return
+            }
+
+            store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[currentWeaponId].ammo))
+        }, reloadTime)
+        return
+    }
 }

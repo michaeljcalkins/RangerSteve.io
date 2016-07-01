@@ -23,9 +23,7 @@ if (storage.get('banned') === true) {
 
 window.check = Check
 
-const store = createStore(reducers, {}, compose(
-    // window.devToolsExtension && window.devToolsExtension()
-))
+const store = createStore(reducers, {})
 
 window.socket = io.connect()
 

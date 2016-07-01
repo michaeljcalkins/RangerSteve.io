@@ -1,3 +1,36 @@
+export const setIsReloading = (value) => {
+    return {
+        type: 'SET_IS_RELOADING',
+        value
+    }
+}
+
+export const decrementSecondaryAmmoRemaining = () => {
+    return {
+        type: 'DECREMENT_SECONDARY_AMMO_REMAINING'
+    }
+}
+
+export const setSecondaryAmmoRemaining = (value) => {
+    return {
+        type: 'SET_SECONDARY_AMMO_REMAINING',
+        value
+    }
+}
+
+export const decrementPrimaryAmmoRemaining = () => {
+    return {
+        type: 'DECREMENT_PRIMARY_AMMO_REMAINING'
+    }
+}
+
+export const setPrimaryAmmoRemaining = (value) => {
+    return {
+        type: 'SET_PRIMARY_AMMO_REMAINING',
+        value
+    }
+}
+
 export const setAttackingDamageStats = (value) => {
     return {
         type: 'SET_ATTACKING_DAMAGE_STATS',

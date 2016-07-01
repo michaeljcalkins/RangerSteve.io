@@ -23,7 +23,7 @@
     "extends": "eslint:recommended",
     "esversion": 6,
     "rules": {
-        "indent": [2, 4],
+        "indent": [2, 4, { "SwitchCase": 1 }],
 
         # ES6 Rules
         "no-const-assign": 1,

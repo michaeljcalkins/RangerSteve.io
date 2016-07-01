@@ -8,6 +8,7 @@ import HudJumpJet from './Hud/HudJumpJet'
 import HudKillConfirmed from './Hud/HudKillConfirmed'
 import HudKillLog from './Hud/HudKillLog'
 import HudLeaderboard from './Hud/HudLeaderboard'
+import HudAmmo from './Hud/HudAmmo'
 import HudScore from './Hud/HudScore'
 import HudTimer from './Hud/HudTimer'
 import HudSettingsButton from './Hud/HudSettingsButton'
@@ -127,9 +128,12 @@ export default class GameUi extends React.Component {
             onSettingsViewChange
         } = this.props
 
+        const currentAmmoRemaining = player.currentWeapon === 'primaryWeapon' ? player.primaryAmmoRemaining : player.secondaryAmmoRemaining
+
         return (
             <div>
                 { game.state === 'loading' && <LoadingScreen /> }
+                <HudAmmo ammoRemaining={ currentAmmoRemaining } />
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
@@ -172,14 +176,15 @@ GameUi.propTypes = {
     game: PropTypes.object.isRequired,
     onCloseChatModal: PropTypes.func.isRequired,
     onCloseSettingsModal: PropTypes.func.isRequired,
+    onKeyboardControlChange: PropTypes.func.isRequired,
     onMusicVolumeChange: PropTypes.func.isRequired,
-    onReduceToMaxChatMessages: PropTypes.func.isRequired,
     onNicknameChange: PropTypes.func.isRequired,
     onOpenChatModal: PropTypes.func.isRequired,
     onOpenSettingsModal: PropTypes.func.isRequired,
     onPrimaryWeaponIdChange: PropTypes.func.isRequired,
-    onKeyboardControlChange: PropTypes.func.isRequired,
+    onReduceToMaxChatMessages: PropTypes.func.isRequired,
     onSecondaryWeaponIdChange: PropTypes.func.isRequired,
+    onSetResetEventsFlag: PropTypes.func,
     onSettingsViewChange: PropTypes.func.isRequired,
     onSfxVolumeChange: PropTypes.func.isRequired,
     player: PropTypes.object.isRequired,

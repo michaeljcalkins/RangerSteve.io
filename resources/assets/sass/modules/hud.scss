@@ -1,6 +1,6 @@
 .hud-item {
     background-size: 26px;
-    background: #504F4D no-repeat 10px;
+    background: rgba(80, 79, 77, 1) no-repeat 10px;
     box-shadow: 0px 1px 2px 0 #202021;
     color: #E3DFD4;
     font-family: Righteous;
@@ -18,8 +18,8 @@
     padding: 10px;
     cursor: pointer;
     padding: 0;
-    right: 0;
-    bottom: 55px;
+    right: 230px;
+    top: 0;
     height: 48px;
     width: 48px;
 }
@@ -166,24 +166,24 @@
     background-image: url(/images/icons/ammo-tin-32-white.png);
     background-size: 26px;
     background-position: 7px 10px;
-    bottom: 20px;
-    height: 54px;
+    bottom: 0px;
+    height: 48px;
     font-size: 29px;
-    right: 20px;
-    width: 117px;
-    padding: 7px 10px 0 0;
+    right: 185px;
+    width: 210px;
 
-    .progress {
+    .hud-ammo-remaining-visual {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 0;
-        height: 5px;
-        border-radius: 0 0 3px 3px;
+        bottom: 18px;
+        right: 52px;
 
-        .progress-bar {
-            background: #F5A623;
+        span {
+            background: #E3DFD4;
+            display: block;
+            height: 12px;
+            width: 2px;
+            float: right;
+            margin-left: 2px;
         }
     }
 }
@@ -278,7 +278,7 @@
     height: 48px;
     left: 50%;
     margin-left: -60px;
-    bottom: 0;
+    top: 0;
     width: 120px;
     padding-left: 45px;
     text-align: left;
