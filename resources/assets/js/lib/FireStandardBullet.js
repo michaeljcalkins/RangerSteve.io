@@ -18,32 +18,33 @@ export default function FireStandardBullet() {
 
     // Define some shortcuts to some useful objects
     var body = bullet.body
-    var features = this.rootScope.features
 
     // Update player body properties
-    body.drag.x = features.dragX
-    body.drag.y = features.dragY
-    body.bounce.x = features.bounceX
-    body.bounce.y = features.bounceY
+    body.drag.x = GameConsts.SLOPE_FEATURES.dragX
+    body.drag.y = GameConsts.SLOPE_FEATURES.dragY
+    body.bounce.x = GameConsts.SLOPE_FEATURES.bounceX
+    body.bounce.y = GameConsts.SLOPE_FEATURES.bounceY
 
     // Update player body Arcade Slopes properties
-    body.slopes.friction.x = features.frictionX
-    body.slopes.friction.y = features.frictionY
-    body.slopes.preferY    = features.minimumOffsetY
-    body.slopes.pullUp     = features.pullUp
-    body.slopes.pullDown   = features.pullDown
-    body.slopes.pullLeft   = features.pullLeft
-    body.slopes.pullRight  = features.pullRight
-    body.slopes.snapUp     = features.snapUp
-    body.slopes.snapDown   = features.snapDown
-    body.slopes.snapLeft   = features.snapLeft
-    body.slopes.snapRight  = features.snapRight
+    body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
+    body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
+    body.slopes.preferY    = GameConsts.SLOPE_FEATURES.minimumOffsetY
+    body.slopes.pullUp     = GameConsts.SLOPE_FEATURES.pullUp
+    body.slopes.pullDown   = GameConsts.SLOPE_FEATURES.pullDown
+    body.slopes.pullLeft   = GameConsts.SLOPE_FEATURES.pullLeft
+    body.slopes.pullRight  = GameConsts.SLOPE_FEATURES.pullRight
+    body.slopes.snapUp     = GameConsts.SLOPE_FEATURES.snapUp
+    body.slopes.snapDown   = GameConsts.SLOPE_FEATURES.snapDown
+    body.slopes.snapLeft   = GameConsts.SLOPE_FEATURES.snapLeft
+    body.slopes.snapRight  = GameConsts.SLOPE_FEATURES.snapRight
 
     bullet.bulletId = Guid()
     bullet.damage = this.damage
     bullet.weaponId = this.meta.id
     bullet.alpha = 0
     bullet.body.gravity.y = -1150
+    bullet.height = 2
+    bullet.width = 40
 
     bullet.reset(x, y)
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)

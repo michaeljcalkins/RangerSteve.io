@@ -13,7 +13,7 @@ export default function FireRocket() {
     bullet.weaponId = this.meta.id
     bullet.height = this.bulletHeight
     bullet.width = this.bulletWidth
-    bullet.body.gravity.y = -1800
+    bullet.body.gravity.y = -1150
     bullet.alpha = 0
     bullet.reset(x, y)
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
@@ -35,8 +35,6 @@ export default function FireRocket() {
         y,
         pointerAngle,
         bulletSpeed: this.bulletSpeed,
-        height: bullet.height,
-        width: bullet.width,
         damage: this.damage
     })
 }
