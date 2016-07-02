@@ -14,7 +14,7 @@ export default function ChoosePrimaryMenu({
     }
 
     function renderWeapons() {
-        return GameConsts.PRIMARY_WEAPONS.map(function(weapon, index) {
+        return Object.keys(GameConsts.PRIMARY_WEAPONS).map(function(weapon, index) {
             return (
                 <div
                     className="option-group option-weapon-group align-middle"
