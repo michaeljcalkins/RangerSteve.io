@@ -14,12 +14,14 @@ export default function ChooseSecondaryMenu({
     }
 
     function renderWeapons() {
-        return Object.keys(GameConsts.SECONDARY_WEAPONS).map(function(weapon, index) {
+        return Object.keys(GameConsts.SECONDARY_WEAPONS).map(function(weaponId, index) {
+            const weapon = GameConsts.SECONDARY_WEAPONS[weaponId]
+            
             return (
                 <div
                     className="option-group option-weapon-group align-middle"
                     key={ index }
-                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
+                    onClick={ handleSelectPrimaryClick.bind(this, weapon.id) }
                 >
                     { player.score < weapon.minScore
                         ? <div className="option-locked">LOCKED ({ weapon.minScore })</div>

@@ -17,7 +17,7 @@ export default function FireShotgunShell() {
         bullet.weaponId = this.meta.id
         bullet.height = this.bulletHeight
         bullet.width = this.bulletWidth
-        bullet.body.gravity.y = -1800
+        bullet.body.gravity.y = -1150
         bullet.alpha = 0
         bullet.reset(x, y)
 
@@ -48,8 +48,6 @@ export default function FireShotgunShell() {
             y,
             pointerAngle: socketPointerAngle,
             bulletSpeed: this.bulletSpeed,
-            height: bullet.height,
-            width: bullet.width,
             damage: this.damage
         })
     }
