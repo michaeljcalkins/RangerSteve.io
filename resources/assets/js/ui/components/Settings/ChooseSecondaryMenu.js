@@ -14,7 +14,7 @@ export default function ChooseSecondaryMenu({
     }
 
     function renderWeapons() {
-        return GameConsts.SECONDARY_WEAPONS.map(function(weapon, index) {
+        return Object.keys(GameConsts.SECONDARY_WEAPONS).map(function(weapon, index) {
             return (
                 <div
                     className="option-group option-weapon-group align-middle"
