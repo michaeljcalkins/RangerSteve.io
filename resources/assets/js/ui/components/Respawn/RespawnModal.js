@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import moment from 'moment'
 import _ from 'lodash'
 
+import GameConsts from '../../../lib/GameConsts'
+
 export default class RespawnModal extends React.Component {
     constructor(props) {
         super(props)
@@ -34,52 +36,64 @@ export default class RespawnModal extends React.Component {
     }
 
     renderDamageGiven() {
-        const { player } = this.props
+        const { player, room } = this.props
 
         if (! _.get(player, 'attackingDamageStats.attackingDamage')) return null
 
         return (
             <div>
-                Damage given: <strong>{ player.attackingDamageStats.attackingDamage }</strong> in <strong>{ player.attackingDamageStats.attackingHits } hits</strong> to { player.damageStats.attackingPlayerId }
+                Damage given: <strong>{ player.attackingDamageStats.attackingDamage }</strong> in <strong>{ player.attackingDamageStats.attackingHits } hits</strong> to { room.players[player.damageStats.attackingPlayerId].meta.nickname }
             </div>
         )
     }
 
     renderDamageTaken() {
-        const { player } = this.props
+        const { player, room } = this.props
 
         if (! player.damageStats) return null
 
         return (
             <div>
-                Damage taken: <strong>{ player.damageStats.attackingDamage }</strong> in <strong>{ player.damageStats.attackingHits } hits</strong> from { player.damageStats.attackingPlayerId }<br />
+                Damage taken: <strong>{ player.damageStats.attackingDamage }</strong> in <strong>{ player.damageStats.attackingHits } hits</strong> from { room.players[player.damageStats.attackingPlayerId].meta.nickname }<br />
             </div>
         )
     }
 
     renderCauseOfDeath() {
-        const { player } = this.props
+        const { player, room } = this.props
+
+        let weaponImage = '/images/guns/Spr_M500.png'
+        if (player.damageStats.weaponId) {
+            weaponImage = GameConsts.PRIMARY_WEAPONS[player.damageStats.weaponId]
+                ? GameConsts.PRIMARY_WEAPONS[player.damageStats.weaponId].image
+                : GameConsts.SECONDARY_WEAPONS[player.damageStats.weaponId].image
+        }
 
         if (! _.get(player, 'damageStats.attackingPlayerId')) {
             return (
-                <div className="media" style={ { margin: '0 0 10px' } }>
+                <div className="media">
                     <div className="media-left">
                         <img className="media-object" src="/images/icons/skull-32-black.png" />
                     </div>
                     <div className="media-body">
-                        <h4 className="media-heading" style={ { margin: '7px 0 0' } }>You killed yourself...</h4>
+                        <h4 className="media-heading" style={ { margin: '15px 0 0' } }>You killed yourself...</h4>
                     </div>
                 </div>
             )
         }
 
         return (
-            <div className="media" style={ { margin: '0 0 10px' } }>
+            <div className="media">
                 <div className="media-left">
-                    <img className="media-object" src="https://placehold.it/60x60" />
+                    { weaponImage &&
+                        <img
+                            className="media-object"
+                            src={ weaponImage }
+                        />
+                    }
                 </div>
                 <div className="media-body">
-                    <h4 className="media-heading">{ player.damageStats.attackingPlayerId }</h4>
+                    <h4 className="media-heading">{ room.players[player.damageStats.attackingPlayerId].meta.nickname }</h4>
                     <strong><span className="text-danger">Killed you with their</span> <span className="text-primary">{ player.damageStats.weaponId }</span></strong><br />
                     { this.renderDamageTaken() }
                     { this.renderDamageGiven() }
@@ -89,14 +103,13 @@ export default class RespawnModal extends React.Component {
     }
 
     render() {
-        const { isOpen } = this.props
         const shareLink = window.location.href
 
         return (
             <div>
                 <div
                     className="modal respawn-modal"
-                    style={ { display: isOpen ? 'block' : 'none' } }
+                    style={ { display: 'block' } }
                 >
                     <div className="modal-dialog">
                         <div className="modal-content">
@@ -116,8 +129,8 @@ export default class RespawnModal extends React.Component {
                                 <p className="text-center">Share this link to invite friends to the current game.</p>
                                 <input
                                     className="form-control text-center"
-                                    type="text"
                                     defaultValue={ shareLink }
+                                    type="text"
                                 />
                             </div>
                         </div>
@@ -125,7 +138,7 @@ export default class RespawnModal extends React.Component {
                 </div>
                 <div
                     className="modal-backdrop fade in"
-                    style={ { display: isOpen ? 'block' : 'none' } }
+                    style={ { display: 'block' } }
                 ></div>
             </div>
         )
@@ -134,5 +147,6 @@ export default class RespawnModal extends React.Component {
 
 RespawnModal.propTypes = {
     isOpen: PropTypes.bool,
-    player: PropTypes.object
+    player: PropTypes.object,
+    room: PropTypes.object
 }

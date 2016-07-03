@@ -70,6 +70,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     color: white;
+    width: 610px;
 }
 
 .respawn-modal .modal-content {
@@ -78,6 +79,30 @@
     border: 0;
     height: auto;
     font-size: 13px;
+
+    .media {
+        margin: 0;
+
+        .media-left {
+            width: 200px;
+            position: absolute;
+            text-align: center;
+            left: 10px;
+            top: 0;
+            -ms-transform: rotate(-7deg); /* IE 9 */
+            -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
+            transform: rotate(-7deg);
+        }
+
+        .media-body {
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            margin: 10px auto 0;
+        }
+    }
 
     .text-danger {
         color: #E25041;
