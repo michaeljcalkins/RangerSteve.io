@@ -149,10 +149,11 @@ export default class GameUi extends React.Component {
                 />
                 <HudChatHistory messages={ game.chatMessages } />
                 { this.renderEndOfRoundLeaderboard() }
-                <RespawnModal
-                    isOpen={ player.health <= 0 && room.state !== 'ended' }
-                    player={ player }
-                />
+
+                { player.health <= 0 && room.state !== 'ended' &&
+                    <RespawnModal player={ player } room={ room } />
+                }
+
                 <SettingsModal
                     game={ game }
                     isOpen={ game.settingsModalIsOpen }
