@@ -7,10 +7,6 @@ export default function FireStandardBullet() {
     const store = this.rootScope.game.store
     const state = store.getState()
 
-    if (state.player.ammoRemaining <= 0) {
-        return
-    }
-
     let x = this.rootScope.player.x
     let y = this.rootScope.player.y - 10
 
@@ -45,7 +41,7 @@ export default function FireStandardBullet() {
     bullet.body.gravity.y = -1150
     bullet.height = 2
     bullet.width = 40
-
+    bullet.alpha = 0
     bullet.reset(x, y)
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
     bullet.rotation = pointerAngle

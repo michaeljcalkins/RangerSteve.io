@@ -1,6 +1,6 @@
 {% extends 'master.nunjucks' %}
 
-{% block title %}Home | Ranger Steve: Buffalo Invasion{% endblock %}
+{% block title %}Ranger Steve: Buffalo Invasion{% endblock %}
 
 {% block content %}
 <div class="home-container">
