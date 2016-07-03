@@ -61,7 +61,7 @@ export function create() {
 
     // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
     // preparing slope data for each of tile in the layer
-    this.game.slopes.convertTilemapLayer(this.ground, GameConsts.SLOPE_FEATURES)
+    this.game.slopes.convertTilemapLayer(this.ground, GameConsts.SLOPE_TILES)
 
     // Enable collision between tile indexes 2 and 34
     this.map.setCollisionBetween(2, 34, true, 'collision')
