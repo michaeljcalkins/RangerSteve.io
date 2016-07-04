@@ -41,7 +41,6 @@ export default function FireStandardBullet() {
     bullet.body.gravity.y = -1150
     bullet.height = 2
     bullet.width = 40
-    bullet.alpha = 0
     bullet.reset(x, y)
     let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
     bullet.rotation = pointerAngle
