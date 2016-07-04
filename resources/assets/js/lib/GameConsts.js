@@ -123,7 +123,7 @@ const GameConsts = {
             image: '/images/guns/Spr_RPG.png',
             minScore: 70,
             ammo: 1,
-            reloadTime: 3000
+            reloadTime: 5000
         }
     },
 
