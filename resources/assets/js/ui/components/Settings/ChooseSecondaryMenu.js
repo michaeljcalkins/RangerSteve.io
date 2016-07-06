@@ -7,7 +7,7 @@ export default function ChooseSecondaryMenu({
     onViewChange,
     player
 }) {
-    function handleSelectPrimaryClick(weapon) {
+    function handleSelectSecondaryClick(weapon) {
         if (player.score < weapon.minScore) return
         onSecondaryGunClick(weapon)
         onViewChange('main')
@@ -16,12 +16,12 @@ export default function ChooseSecondaryMenu({
     function renderWeapons() {
         return Object.keys(GameConsts.SECONDARY_WEAPONS).map(function(weaponId, index) {
             const weapon = GameConsts.SECONDARY_WEAPONS[weaponId]
-            
+
             return (
                 <div
                     className="option-group option-weapon-group align-middle"
                     key={ index }
-                    onClick={ handleSelectPrimaryClick.bind(this, weapon.id) }
+                    onClick={ handleSelectSecondaryClick.bind(this, weapon) }
                 >
                     { player.score < weapon.minScore
                         ? <div className="option-locked">LOCKED ({ weapon.minScore })</div>

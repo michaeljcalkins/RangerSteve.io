@@ -62,10 +62,7 @@ export default class MainSettingsMenu extends React.Component {
 
     primaryWeapon() {
         const { selectedPrimaryWeaponId } = this.props.player
-
-        let weapon = _.find(GameConsts.PRIMARY_WEAPONS, {
-            id: selectedPrimaryWeaponId
-        })
+        const weapon = GameConsts.PRIMARY_WEAPONS[selectedPrimaryWeaponId]
 
         if (! weapon) {
             console.error('Could not find primary weapon.', selectedPrimaryWeaponId)
@@ -77,10 +74,7 @@ export default class MainSettingsMenu extends React.Component {
 
     secondaryWeapon() {
         const { selectedSecondaryWeaponId } = this.props.player
-
-        let weapon = _.find(GameConsts.SECONDARY_WEAPONS, {
-            id: selectedSecondaryWeaponId
-        })
+        const weapon = GameConsts.SECONDARY_WEAPONS[selectedSecondaryWeaponId]
 
         if (! weapon) {
             console.error('Could not find secondary weapon.', selectedSecondaryWeaponId)
