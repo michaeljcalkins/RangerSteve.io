@@ -19,15 +19,15 @@ export default function PlayerSpriteHandler() {
     this.game.slopes.enable(this.player)
 
     // Add a touch of tile padding for the collision detection
-    this.player.body.tilePadding.x = 1;
-    this.player.body.tilePadding.y = 1;
+    this.player.body.tilePadding.x = 10
+    this.player.body.tilePadding.y = 10
 
     this.player.body.slopes.friction.x = GameConsts.PLAYER_SLOPE_FRICTION_X
     this.player.body.slopes.friction.y = GameConsts.PLAYER_SLOPE_FRICTION_Y
 
     // Set player minimum and maximum movement speed
-    this.player.body.maxVelocity.x = GameConsts.MAX_SPEED
-    this.player.body.maxVelocity.y = GameConsts.MAX_SPEED * 10
+    this.player.body.maxVelocity.x = GameConsts.MAX_VELOCITY_X
+    this.player.body.maxVelocity.y = GameConsts.MAX_VELOCITY_Y
 
     // Add drag to the player that slows them down when they are not accelerating
     this.player.body.drag.x = GameConsts.DRAG

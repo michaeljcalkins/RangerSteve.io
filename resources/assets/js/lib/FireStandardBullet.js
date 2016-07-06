@@ -47,7 +47,7 @@ export default function FireStandardBullet() {
 
     setTimeout(() => {
         bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
-    }, 40)
+    }, 60)
 
     this.fx.volume = state.game.sfxVolume
     this.fx.play()

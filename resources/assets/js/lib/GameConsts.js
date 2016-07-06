@@ -4,7 +4,8 @@ const GameConsts = {
     STARTING_MUSIC_VOLUME: .2,
 
     // Physics
-    MAX_SPEED: 600,
+    MAX_VELOCITY_X: 650,
+    MAX_VELOCITY_Y: 2500,
     ACCELERATION: 1200,
     DRAG: 3000,
     GRAVITY: 1200,
