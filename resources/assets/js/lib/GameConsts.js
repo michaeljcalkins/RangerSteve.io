@@ -63,7 +63,7 @@ const GameConsts = {
             id: 'AUG',
             name: 'AUG',
             image: '/images/guns/Spr_Aug.png',
-            minScore: 20,
+            minScore: 10,
             ammo: 30,
             reloadTime: 3000
         },
@@ -79,7 +79,7 @@ const GameConsts = {
             id: 'P90',
             name: 'P90',
             image: '/images/guns/Spr_p90.png',
-            minScore: 40,
+            minScore: 30,
             ammo: 50,
             reloadTime: 3000
         },
@@ -95,7 +95,7 @@ const GameConsts = {
             id: 'Barrett',
             name: 'Barrett',
             image: '/images/guns/Spr_Barrett.png',
-            minScore: 60,
+            minScore: 50,
             ammo: 10,
             reloadTime: 3000
         }
@@ -114,7 +114,7 @@ const GameConsts = {
             id: 'SilverBaller',
             name: 'Silenced Beretta',
             image: '/images/guns/Spr_SilverBaller.png',
-            minScore: 40,
+            minScore: 20,
             ammo: 15,
             reloadTime: 3000
         },
@@ -122,7 +122,7 @@ const GameConsts = {
             id: 'RPG',
             name: 'RPG',
             image: '/images/guns/Spr_RPG.png',
-            minScore: 70,
+            minScore: 30,
             ammo: 1,
             reloadTime: 5000
         }
