@@ -1,6 +1,13 @@
-export const setIsReloading = (value) => {
+export const setPrimaryIsReloading = (value) => {
     return {
-        type: 'SET_IS_RELOADING',
+        type: 'SET_PRIMARY_IS_RELOADING',
+        value
+    }
+}
+
+export const setSecondaryIsReloading = (value) => {
+    return {
+        type: 'SET_SECONDARY_IS_RELOADING',
         value
     }
 }

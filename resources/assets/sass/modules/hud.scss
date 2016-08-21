@@ -165,26 +165,15 @@
 .hud-ammo {
     background-image: url(/images/icons/ammo-tin-32-white.png);
     background-size: 26px;
-    background-position: 7px 10px;
+    background-position: 10px 11px;
     bottom: 0px;
     height: 48px;
     font-size: 29px;
     right: 185px;
-    width: 210px;
+    width: 90px;
 
-    .hud-ammo-remaining-visual {
-        position: absolute;
-        bottom: 18px;
-        right: 52px;
-
-        span {
-            background: #E3DFD4;
-            display: block;
-            height: 12px;
-            width: 2px;
-            float: right;
-            margin-left: 2px;
-        }
+    i {
+        font-size: 25px;
     }
 }
 

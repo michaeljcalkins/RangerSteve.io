@@ -61,7 +61,8 @@ export default function Update() {
     }
 
     if (this.game.input.activePointer.leftButton.isDown) {
-        if (state.player.isReloading) return
+        if (state.player.currentWeapon === 'primaryWeapon' && state.player.isPrimaryReloading) return
+        if (state.player.currentWeapon === 'secondaryWeapon' && state.player.isSecondaryReloading) return
         state.player[currentWeapon].fire()
     }
 

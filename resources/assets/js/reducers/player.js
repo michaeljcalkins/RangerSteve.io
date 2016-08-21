@@ -6,7 +6,8 @@ const initialState = {
     damageStats: {},
     facing: 'right',
     health: 100,
-    isReloading: false,
+    isPrimaryReloading: false,
+    isSecondaryReloading: false,
     jumping: false,
     jumpJetCounter: 0,
     nickname: storage.get('nickname', NameGenerator()),
@@ -24,10 +25,16 @@ storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_IS_RELOADING':
+        case 'SET_PRIMARY_IS_RELOADING':
             return {
                 ...state,
-                isReloading: action.value
+                isPrimaryReloading: action.value
+            }
+
+        case 'SET_SECONDARY_IS_RELOADING':
+            return {
+                ...state,
+                isSecondaryReloading: action.value
             }
 
         case 'DECREMENT_SECONDARY_AMMO_REMAINING':

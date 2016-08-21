@@ -6,30 +6,42 @@ let lastSwitchWeaponKey = null
 export default function() {
     const store = this.game.store
 
-    // Open settings modal
+    /**
+     * Open settings modal
+     */
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
         store.dispatch(actions.game.openSettingsModal())
     })
 
+    /**
+     * Reload current gun
+     */
     this.input.keyboard.addKey(store.getState().game.keyboardControls.reload).onUp.add(() => {
-        store.dispatch(actions.player.setIsReloading(true))
-
         const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
             ? GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
             : GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
 
+        if (store.getState().player.currentWeapon === 'primaryWeapon') {
+            store.dispatch(actions.player.setPrimaryIsReloading(false))
+        } else {
+            store.dispatch(actions.player.setSecondaryIsReloading(false))
+        }
+
         setTimeout(() => {
-            store.dispatch(actions.player.setIsReloading(false))
             if (store.getState().player.currentWeapon === 'primaryWeapon') {
+                store.dispatch(actions.player.setPrimaryIsReloading(false))
                 store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo))
                 return
             }
 
+            store.dispatch(actions.player.setSecondaryIsReloading(false))
             store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].ammo))
         }, reloadTime)
     })
 
-    // Switch weapons
+    /** 
+     * Switch weapons
+     */
     this.input.keyboard.removeKey(lastSwitchWeaponKey)
     lastSwitchWeaponKey = store.getState().game.keyboardControls.switchWeapon
     this.input.keyboard.addKey(store.getState().game.keyboardControls.switchWeapon).onUp.add(() => {

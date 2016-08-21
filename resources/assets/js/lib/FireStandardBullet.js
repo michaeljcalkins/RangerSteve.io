@@ -70,13 +70,20 @@ export default function FireStandardBullet() {
         damage: this.damage
     })
 
+    // Get ammo remaining in current gun
     const currentAmmoRemaining = store.getState().player.currentWeapon === 'primaryWeapon'
         ? store.getState().player.primaryAmmoRemaining
         : store.getState().player.secondaryAmmoRemaining
+    
+    if (currentAmmoRemaining <= 0 && ! store.getState().player.isPrimaryReloading && ! store.getState().player.isSecondaryReloading) {
+        // If empty set current gun to reloading
+        if (store.getState().player.currentWeapon === 'primaryWeapon') {
+            store.dispatch(actions.player.setPrimaryIsReloading(true))
+        } else {
+            store.dispatch(actions.player.setSecondaryIsReloading(true))
+        }
 
-    if (currentAmmoRemaining <= 0 && ! store.getState().player.isReloading) {
-        store.dispatch(actions.player.setIsReloading(true))
-
+        // Get reload time in seconds
         const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
             ? GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
             : GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
@@ -84,12 +91,13 @@ export default function FireStandardBullet() {
         const currentWeaponId = this.meta.id
         const currentWeapon = store.getState().player.currentWeapon
         setTimeout(() => {
-            store.dispatch(actions.player.setIsReloading(false))
             if (currentWeapon === 'primaryWeapon') {
+                store.dispatch(actions.player.setPrimaryIsReloading(false))
                 store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[currentWeaponId].ammo))
                 return
             }
 
+            store.dispatch(actions.player.setSecondaryIsReloading(false))
             store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[currentWeaponId].ammo))
         }, reloadTime)
         return
