@@ -13,6 +13,8 @@ let CreateRoom = require('./services/CreateRoom')
 let rooms = {}
 let io = null
 
+const MAX_ROOM_SIZE = 5
+
 function sockets(ioInstance) {
     io = ioInstance
     setEventHandlers()
@@ -54,8 +56,7 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].map = _.sample(['DarkForest'])
-            // rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout', 'DarkForest'])
+            rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout', 'DarkForest'])
             rooms[roomId].roundStartTime = moment().add(12, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
@@ -180,7 +181,7 @@ function onNewPlayer (data) {
         Notification({
             app_id: '073be8f0-feda-43ea-965a-07a63e485527',
             contents: { 'en': 'A player has started playing!' },
-            headings: { 'en': 'Ranger Steve: Buffalo Invasion' },
+            headings: { 'en': 'Ranger Steve' },
             url: 'https://rangersteve.io/game',
             included_segments: ['All']
         })
@@ -204,8 +205,8 @@ function onNewPlayer (data) {
     }
 
     let availableRooms = Object.keys(rooms).filter(function(room) {
-        if (! room.players) return true
-        return room.players.length < 8
+        if (! rooms[room].players) return true
+        return rooms[room].players.length <= MAX_ROOM_SIZE
     })
 
     if (availableRooms.length <= 0) {
