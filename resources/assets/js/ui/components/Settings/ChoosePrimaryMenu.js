@@ -8,7 +8,7 @@ export default function ChoosePrimaryMenu({
     player
 }) {
     function handleSelectPrimaryClick(weapon) {
-        if (player.score < weapon.minScore) return
+        // if (player.score < weapon.minScore) return
         onPrimaryGunClick(weapon)
         onViewChange('main')
     }
