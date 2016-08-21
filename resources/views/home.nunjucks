@@ -22,15 +22,31 @@
                             </div>
                             <button type="submit" class="btn btn-primary btn-block btn-lg">Play Now</button>
                         </form>
-                        <hr>
-                        <p>
-                            Move your mouse to aim your gun<br />
-                            <strong>Left click</strong> to shoot<br />
-                            <strong>Right click</strong> to fly<br />
-                            Press <strong>W</strong> to jump<br />
-                            Press <strong>R</strong> to reload<br />
-                            Press <strong>A</strong> to go left and <strong>D</strong> to go right
-                        </p>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <p>
+                                    <strong>Right click</strong> to fly<br />
+                                    <strong>Left click</strong> to shoot<br />
+                                    Move your mouse to aim your gun<br />
+                                    Press <strong>A</strong> to go left and <strong>D</strong> to go right<br />
+                                    Press <strong>R</strong> to reload<br />
+                                    Press <strong>W</strong> to jump
+                                </p>
+                            </div>
+                            <div class="col-sm-5">
+                                <a 
+                                    class="btn btn-success" 
+                                    href="https://www.patreon.com/rangersteveio" 
+                                    target="_blank"
+                                >
+                                    Support The Game
+                                </a>
+                            </div>
+                        </div>
+                        
                     </div>
                     <span class="last-updated-at">Last Updated: {{ lastUpdatedAt }}</span>
                 </div>
