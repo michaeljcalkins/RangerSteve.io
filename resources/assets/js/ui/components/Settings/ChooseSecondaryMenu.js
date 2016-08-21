@@ -8,7 +8,7 @@ export default function ChooseSecondaryMenu({
     player
 }) {
     function handleSelectSecondaryClick(weapon) {
-        // if (player.score < weapon.minScore) return
+        if (player.score < weapon.minScore) return
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }
