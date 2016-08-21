@@ -1,13 +1,12 @@
 {% extends 'master.nunjucks' %}
 
-{% block title %}Ranger Steve: Buffalo Invasion{% endblock %}
+{% block title %}RangerSteve.io{% endblock %}
 
 {% block content %}
 <div class="home-container">
     <section class="main-section text-center">
         <div>
             <div class="main-header">Ranger Steve</div>
-            <div class="sub-header">Buffalo Invasion</div>
 
             <div class="row">
                 <div class="col-sm-12">
