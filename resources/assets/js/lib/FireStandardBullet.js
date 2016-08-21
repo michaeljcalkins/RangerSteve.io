@@ -75,7 +75,13 @@ export default function FireStandardBullet() {
         ? store.getState().player.primaryAmmoRemaining
         : store.getState().player.secondaryAmmoRemaining
     
-    if (currentAmmoRemaining <= 0 && ! store.getState().player.isPrimaryReloading && ! store.getState().player.isSecondaryReloading) {
+    if (
+        currentAmmoRemaining <= 0 && 
+        (
+            (store.getState().player.currentWeapon === 'primaryWeapon' && ! store.getState().player.isPrimaryReloading) || 
+            (store.getState().player.currentWeapon === 'secondaryWeapon' && ! store.getState().player.isSecondaryReloading)
+        )
+    ) {
         // If empty set current gun to reloading
         if (store.getState().player.currentWeapon === 'primaryWeapon') {
             store.dispatch(actions.player.setPrimaryIsReloading(true))
