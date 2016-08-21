@@ -26,14 +26,12 @@ storage.set('nickname', initialState.nickname)
 const player = (state = initialState, action) => {
     switch (action.type) {
         case 'SET_PRIMARY_IS_RELOADING':
-            console.log('SET_PRIMARY_IS_RELOADING', action.value)
             return {
                 ...state,
                 isPrimaryReloading: action.value
             }
 
         case 'SET_SECONDARY_IS_RELOADING':
-            console.log('SET_SECONDARY_IS_RELOADING', action.value)
             return {
                 ...state,
                 isSecondaryReloading: action.value
