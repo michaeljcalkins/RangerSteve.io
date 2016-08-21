@@ -26,7 +26,7 @@ export default class DesertEagle extends Phaser.Group {
         this.bulletHeight = 2
         this.bulletSpeed = 2300
         this.bulletWidth = 40
-        this.damage = 43
+        this.damage = 36
         this.fireRate = 267
         this.fx = rootScope.game.add.audio('DesertEagle-sound')
         this.nextFire = 0
