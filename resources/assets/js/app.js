@@ -1,6 +1,7 @@
 import { createStore, compose } from 'redux'
 import storage from 'store'
 
+import getParameterByName from './lib/GetParameterByName.js'
 import reducers from './reducers'
 import Check from './lib/Check'
 import ui from './ui'
@@ -39,7 +40,7 @@ let gameLoader = null
 gameLoader = setInterval(() => {
     if (store.getState().game.state === 'loading') {
         window.socket.emit('new player', {
-            roomId: store.getState().room.id,
+            roomId: getParameterByName('roomId'),
             x: 0,
             y: 0,
             weaponId: store.getState().player.currentWeapon === 'primaryWeapon' ? store.getState().player.selectedPrimaryWeaponId : store.getState().player.selectedSecondaryWeaponId,
