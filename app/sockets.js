@@ -40,12 +40,6 @@ setInterval(function() {
                 rooms[roomId].players[playerId].meta.bestKillingSpree = 0
                 rooms[roomId].players[playerId].meta.killingSpree = 0
                 rooms[roomId].players[playerId].meta.score = 0
-
-                // io.to(roomId).emit('player respawn', {
-                //     id: this.id,
-                //     damagedPlayerId: playerId,
-                //     health: 100
-                // })
             })
 
             io.to(roomId).emit('update players', {
@@ -160,7 +154,7 @@ function onNewPlayer (data) {
         return
     }
 
-    util.log('Adding player to room', this.id)
+    util.log('Player id is', this.id)
 
     // Create a new player
     var newPlayer = Player(data.x, data.y)
@@ -206,7 +200,7 @@ function onNewPlayer (data) {
 
     let availableRooms = Object.keys(rooms).filter(function(room) {
         if (! rooms[room].players) return true
-        return rooms[room].players.length <= MAX_ROOM_SIZE
+        return Object.keys(rooms[room].players).length <= MAX_ROOM_SIZE
     })
 
     if (availableRooms.length <= 0) {
@@ -235,6 +229,8 @@ function onNewPlayer (data) {
 
 // Player has moved
 function onMovePlayer (data) {
+    if (! rooms[data.roomId]) return
+
     var movePlayer = rooms[data.roomId].players[this.id]
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
