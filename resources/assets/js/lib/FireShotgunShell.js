@@ -21,7 +21,6 @@ export default function FireShotgunShell() {
         bullet.height = 2
         bullet.width = 40
         bullet.body.gravity.y = -1150
-        bullet.alpha = 1
         bullet.reset(x, y)
 
         let socketPointerAngle = null
@@ -68,7 +67,7 @@ export default function FireShotgunShell() {
     const currentAmmoRemaining = store.getState().player.currentWeapon === 'primaryWeapon'
         ? store.getState().player.primaryAmmoRemaining
         : store.getState().player.secondaryAmmoRemaining
-    
+
     if (
         currentAmmoRemaining <= 0 && 
         (
