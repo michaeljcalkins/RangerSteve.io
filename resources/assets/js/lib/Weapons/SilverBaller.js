@@ -27,7 +27,7 @@ export default class SilverBaller extends Phaser.Group {
         this.bulletSpeed = 2300
         this.bulletWidth = 40
         this.bulletAlpha = 0
-        this.damage = 23
+        this.damage = 32
         this.fireRate = 250
         this.fx = rootScope.game.add.audio('SilverBaller-sound')
         this.nextFire = 0
