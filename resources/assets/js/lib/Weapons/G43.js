@@ -26,7 +26,7 @@ export default class G43 extends Phaser.Group {
         this.bulletHeight = 2
         this.bulletSpeed = 2500
         this.bulletWidth = 40
-        this.damage = 49
+        this.damage = 55
         this.fireRate = 750
         this.fx = this.rootScope.game.add.audio('G43-sound')
         this.nextFire = 0

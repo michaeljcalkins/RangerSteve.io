@@ -26,7 +26,7 @@ export default class Barrett extends Phaser.Group {
         this.bulletHeight = 2
         this.bulletSpeed = 3435
         this.bulletWidth = 40
-        this.damage = 81
+        this.damage = 88
         this.fireRate = 3000
         this.fx = this.rootScope.game.add.audio('BarretM90-sound')
         this.nextFire = 0
