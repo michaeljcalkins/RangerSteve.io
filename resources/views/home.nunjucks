@@ -23,57 +23,48 @@
                                 />
                             </div>
 
-                            <div class="row">
-                                <div class="col-sm-7 text-left">
-                                    <table class="table table-condensed">
-                                        <tbody>
-                                            <tr>
-                                                <td><strong>Fly</strong></td>
-                                                <td>Right click and hold</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Shoot</strong></td>
-                                                <td>Left click</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Aim</strong></td>
-                                                <td>Move your mouse</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Move left</strong></td>
-                                                <td>Press A</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Move right</strong></td>
-                                                <td>Press D</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Reload</strong></td>
-                                                <td>Press R</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>Jump</strong></td>
-                                                <td>Press W</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-sm-5">
-                                    <button
-                                        type="submit"
-                                        class="btn btn-danger btn-block btn-lg"
-                                    >
-                                        Play Now
-                                    </button>
-                                    <a
-                                        class="btn btn-success btn-block btn-lg"
-                                        href="https://www.patreon.com/rangersteveio"
-                                        target="_blank"
-                                    >
-                                        Buy The Game
-                                    </a>
-                                </div>
-                            </div>
+                            <button
+                                type="submit"
+                                class="btn btn-success btn-block btn-lg"
+                            >
+                                Play Now
+                            </button>
+
+                            <br />
+                            <label>How To Play</label>
+
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Fly</strong></td>
+                                        <td>Right click and hold</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Shoot</strong></td>
+                                        <td>Left click</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Aim</strong></td>
+                                        <td>Move your mouse</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Move left</strong></td>
+                                        <td>Press A</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Move right</strong></td>
+                                        <td>Press D</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Reload</strong></td>
+                                        <td>Press R</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Jump</strong></td>
+                                        <td>Press W</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <span class="last-updated-at">Last Updated: {{ lastUpdatedAt }}</span>
                     </div>
