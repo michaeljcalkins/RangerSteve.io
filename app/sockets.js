@@ -7,7 +7,6 @@ let moment = require('moment')
 
 let Player = require('./services/Player')
 let PlayerById = require('./services/PlayerById')
-let Notification = require('./services/Notification')
 let CreateRoom = require('./services/CreateRoom')
 
 let rooms = {}
@@ -169,16 +168,6 @@ function onNewPlayer (data) {
         nickname: data.nickname,
         killingSpree: 0,
         weaponId: data.weaponId
-    }
-
-    if (process.env.NODE_ENV === 'production') {
-        Notification({
-            app_id: '073be8f0-feda-43ea-965a-07a63e485527',
-            contents: { 'en': 'A player has started playing!' },
-            headings: { 'en': 'Ranger Steve' },
-            url: 'https://rangersteve.io/game',
-            included_segments: ['All']
-        })
     }
 
     if (data.roomId) {
