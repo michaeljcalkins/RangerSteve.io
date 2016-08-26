@@ -28,7 +28,6 @@ export default function SettingsModal({
                 <ChoosePrimaryMenu
                     onPrimaryGunClick={ onPrimaryGunClick }
                     onViewChange={ onViewChange }
-                    player={ player }
                 />
             )
 
@@ -37,7 +36,6 @@ export default function SettingsModal({
                 <ChooseSecondaryMenu
                     onSecondaryGunClick={ onSecondaryGunClick }
                     onViewChange={ onViewChange }
-                    player={ player }
                 />
             )
 

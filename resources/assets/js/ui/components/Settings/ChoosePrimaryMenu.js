@@ -4,11 +4,10 @@ import GameConsts from '../../../lib/GameConsts'
 
 export default function ChoosePrimaryMenu({
     onViewChange,
-    onPrimaryGunClick,
-    player
+    onPrimaryGunClick
 }) {
     function handleSelectPrimaryClick(weapon) {
-        if (player.score < weapon.minScore) return
+        mixpanel.track(weapon.id + 'selected')
         onPrimaryGunClick(weapon)
         onViewChange('main')
     }
@@ -23,10 +22,6 @@ export default function ChoosePrimaryMenu({
                     key={ index }
                     onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
-                    { player.score < weapon.minScore
-                        ? <div className="option-locked">LOCKED ({ weapon.minScore })</div>
-                        : null
-                    }
                     <div>
                         <img src={ weapon.image } />
                     </div>

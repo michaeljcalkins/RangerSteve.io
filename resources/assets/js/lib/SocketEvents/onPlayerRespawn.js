@@ -4,6 +4,7 @@ import Weapons from '../Weapons'
 import Maps from '../Maps'
 import PlayerById from '../PlayerById'
 import actions from '../../actions'
+import GameConsts from '../GameConsts.js'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -49,4 +50,10 @@ export default function onPlayerRespawn(data) {
     const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
+
+    store.dispatch(actions.player.setPrimaryIsReloading(false))
+    store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[state.player.selectedPrimaryWeaponId].ammo))
+
+    store.dispatch(actions.player.setSecondaryIsReloading(false))
+    store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[state.player.selectedSecondaryWeaponId].ammo))
 }

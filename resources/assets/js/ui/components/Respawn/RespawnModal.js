@@ -130,6 +130,7 @@ export default class RespawnModal extends React.Component {
                                 <input
                                     className="form-control text-center"
                                     defaultValue={ shareLink }
+                                    readOnly
                                     type="text"
                                 />
                             </div>

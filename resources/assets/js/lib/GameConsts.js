@@ -41,7 +41,7 @@ const GameConsts = {
             image: '/images/guns/Spr_AK47.png',
             minScore: 0,
             ammo: 30,
-            reloadTime: 3000
+            reloadTime: 2000
         },
         G43: {
             id: 'G43',
@@ -49,7 +49,7 @@ const GameConsts = {
             image: '/images/guns/Spr_g43.png',
             minScore: 0,
             ammo: 10,
-            reloadTime: 3000
+            reloadTime: 2000
         },
         M500: {
             id: 'M500',
@@ -65,7 +65,7 @@ const GameConsts = {
             image: '/images/guns/Spr_Aug.png',
             minScore: 10,
             ammo: 30,
-            reloadTime: 3000
+            reloadTime: 2000
         },
         Skorpion: {
             id: 'Skorpion',
@@ -73,7 +73,7 @@ const GameConsts = {
             image: '/images/guns/Spr_Skorpion.png',
             minScore: 20,
             ammo: 20,
-            reloadTime: 3000
+            reloadTime: 2000
         },
         P90: {
             id: 'P90',
@@ -81,7 +81,7 @@ const GameConsts = {
             image: '/images/guns/Spr_p90.png',
             minScore: 30,
             ammo: 50,
-            reloadTime: 3000
+            reloadTime: 2000
         },
         M4A1: {
             id: 'M4A1',
@@ -89,7 +89,7 @@ const GameConsts = {
             image: '/images/guns/Spr_M4A1.png',
             minScore: 40,
             ammo: 30,
-            reloadTime: 3000
+            reloadTime: 2000
         },
         Barrett: {
             id: 'Barrett',
@@ -108,7 +108,7 @@ const GameConsts = {
             image: '/images/guns/Spr_DesertEagle.png',
             minScore: 0,
             ammo: 9,
-            reloadTime: 3000
+            reloadTime: 2000
         },
         SilverBaller: {
             id: 'SilverBaller',
@@ -116,7 +116,7 @@ const GameConsts = {
             image: '/images/guns/Spr_SilverBaller.png',
             minScore: 20,
             ammo: 15,
-            reloadTime: 3000
+            reloadTime: 2000
         },
         RPG: {
             id: 'RPG',
