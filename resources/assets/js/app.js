@@ -23,10 +23,9 @@ if (storage.get('banned') === true) {
 }
 
 window.check = Check
-
-const store = createStore(reducers, {})
-
 window.socket = io.connect()
+
+const store = createStore(reducers)
 
 ui(store)
 game(store)

@@ -22,9 +22,9 @@ export default function() {
             : GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
 
         if (store.getState().player.currentWeapon === 'primaryWeapon') {
-            store.dispatch(actions.player.setPrimaryIsReloading(false))
+            store.dispatch(actions.player.setPrimaryIsReloading(true))
         } else {
-            store.dispatch(actions.player.setSecondaryIsReloading(false))
+            store.dispatch(actions.player.setSecondaryIsReloading(true))
         }
 
         setTimeout(() => {
@@ -39,7 +39,7 @@ export default function() {
         }, reloadTime)
     })
 
-    /** 
+    /**
      * Switch weapons
      */
     this.input.keyboard.removeKey(lastSwitchWeaponKey)

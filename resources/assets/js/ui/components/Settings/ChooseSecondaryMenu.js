@@ -4,11 +4,10 @@ import GameConsts from '../../../lib/GameConsts'
 
 export default function ChooseSecondaryMenu({
     onSecondaryGunClick,
-    onViewChange,
-    player
+    onViewChange
 }) {
     function handleSelectSecondaryClick(weapon) {
-        if (player.score < weapon.minScore) return
+        mixpanel.track(weapon.id + 'selected')
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }
@@ -23,10 +22,6 @@ export default function ChooseSecondaryMenu({
                     key={ index }
                     onClick={ handleSelectSecondaryClick.bind(this, weapon) }
                 >
-                    { player.score < weapon.minScore
-                        ? <div className="option-locked">LOCKED ({ weapon.minScore })</div>
-                        : null
-                    }
                     <div>
                         <img src={ weapon.image } />
                     </div>
