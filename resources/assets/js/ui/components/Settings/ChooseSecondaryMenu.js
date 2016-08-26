@@ -7,7 +7,7 @@ export default function ChooseSecondaryMenu({
     onViewChange
 }) {
     function handleSelectSecondaryClick(weapon) {
-        mixpanel.track(weapon.id + 'selected')
+        mixpanel.track('secondaryWeapon:selected:' + weapon.id)
         onSecondaryGunClick(weapon)
         onViewChange('main')
     }

@@ -7,7 +7,7 @@ export default function ChoosePrimaryMenu({
     onPrimaryGunClick
 }) {
     function handleSelectPrimaryClick(weapon) {
-        mixpanel.track(weapon.id + 'selected')
+        mixpanel.track('primaryWeapon:selected:' + weapon.id)
         onPrimaryGunClick(weapon)
         onViewChange('main')
     }
