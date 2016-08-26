@@ -17,8 +17,8 @@ const initialState = {
     score: 0,
     secondaryAmmoRemaining: 0,
     secondaryWeapon: null,
-    selectedPrimaryWeaponId: 'AK47',
-    selectedSecondaryWeaponId: 'DesertEagle'
+    selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
+    selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle')
 }
 
 storage.set('nickname', initialState.nickname)
