@@ -24,6 +24,7 @@ export default function() {
         if (store.getState().player.currentWeapon === 'primaryWeapon') {
             store.dispatch(actions.player.setPrimaryIsReloading(true))
         } else {
+            if (store.getState().player.selectedSecondaryWeaponId === 'RPG') return
             store.dispatch(actions.player.setSecondaryIsReloading(true))
         }
 
@@ -45,6 +46,8 @@ export default function() {
     this.input.keyboard.removeKey(lastSwitchWeaponKey)
     lastSwitchWeaponKey = store.getState().game.keyboardControls.switchWeapon
     this.input.keyboard.addKey(store.getState().game.keyboardControls.switchWeapon).onUp.add(() => {
+        if (store.getState().player.health <= 0) return
+
         const currentWeapon = store.getState().player.currentWeapon
 
         if (currentWeapon === 'primaryWeapon') {

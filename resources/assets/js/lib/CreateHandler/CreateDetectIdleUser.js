@@ -10,7 +10,6 @@ export default function() {
 
     function resetTimer() {
         clearTimeout(t)
-        // t = setTimeout(playerIsIdle, 60000)
         t = setTimeout(playerIsIdle, 6000000)
     }
 }

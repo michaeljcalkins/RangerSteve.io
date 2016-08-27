@@ -7,7 +7,7 @@ export default function() {
         bullet.kill()
 
         if (bullet.weaponId === 'RPG') {
-            RocketExplosion.call(this, {
+            return RocketExplosion.call(this, {
                 bulletY: bullet.y,
                 bulletX: bullet.x
             })
@@ -23,7 +23,7 @@ export default function() {
         bullet.kill()
 
         if (bullet.weaponId === 'RPG') {
-            RocketExplosion.call(this, {
+            return RocketExplosion.call(this, {
                 bulletY: bullet.y,
                 bulletX: bullet.x
             })

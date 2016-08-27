@@ -11,25 +11,10 @@ export default function(data) {
     let ricochet = this.add.sprite(data.bulletX, data.bulletY - 50, 'rocket')
     ricochet.scale.setTo(.5, .5)
     ricochet.anchor.setTo(.5, .5)
-    ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, false, true)
-    ricochet.animations.play('collision')
-    ricochet.animations.currentAnim.killOnComplete = true
+    ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, true)
+    ricochet.animations.play('collision', 17, false, true)
 
     this.fx = this.game.add.audio('RPG-explosion-sound')
     this.fx.volume = this.game.store.getState().game.sfxVolume
     this.fx.play()
-
-    // this.fullDamageBlastRadius.x = ricochet.x
-    // this.fullDamageBlastRadius.y = ricochet.y
-    // setTimeout(() => {
-    //     this.fullDamageBlastRadius.kill()
-    // }, 300)
-
-    // this.partialDamageBlastRadius.x = ricochet.x
-    // this.partialDamageBlastRadius.y = ricochet.y
-    // setTimeout(() => {
-    //     this.partialDamageBlastRadius.kill()
-    // }, 200)
-    // console.log(this.fullDamageBlastRadius)
-    // console.log(this.partialDamageBlastRadius)
 }
