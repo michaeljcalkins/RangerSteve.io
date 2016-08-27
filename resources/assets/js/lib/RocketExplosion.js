@@ -18,18 +18,4 @@ export default function(data) {
     this.fx = this.game.add.audio('RPG-explosion-sound')
     this.fx.volume = this.game.store.getState().game.sfxVolume
     this.fx.play()
-
-    // this.fullDamageBlastRadius.x = ricochet.x
-    // this.fullDamageBlastRadius.y = ricochet.y
-    // setTimeout(() => {
-    //     this.fullDamageBlastRadius.kill()
-    // }, 300)
-
-    // this.partialDamageBlastRadius.x = ricochet.x
-    // this.partialDamageBlastRadius.y = ricochet.y
-    // setTimeout(() => {
-    //     this.partialDamageBlastRadius.kill()
-    // }, 200)
-    // console.log(this.fullDamageBlastRadius)
-    // console.log(this.partialDamageBlastRadius)
 }
