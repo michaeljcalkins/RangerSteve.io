@@ -1,8 +1,8 @@
-import { createStore, compose } from 'redux'
+import { createStore } from 'redux'
 import storage from 'store'
 
 import getParameterByName from './lib/GetParameterByName.js'
-import reducers from './reducers'
+import rootReducer from './reducers'
 import Check from './lib/Check'
 import ui from './ui'
 import game from './game'
@@ -25,7 +25,7 @@ if (storage.get('banned') === true) {
 window.check = Check
 window.socket = io.connect()
 
-const store = createStore(reducers)
+const store = createStore(rootReducer)
 
 ui(store)
 game(store)

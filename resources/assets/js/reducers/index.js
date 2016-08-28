@@ -4,10 +4,10 @@ import player from './player'
 import room from './room'
 import game from './game'
 
-const App = combineReducers({
+const reducer = combineReducers({
     player,
     room,
     game
 })
 
-export default App
+export default reducer
