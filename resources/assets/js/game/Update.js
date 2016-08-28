@@ -61,8 +61,22 @@ export default function Update() {
     }
 
     if (this.game.input.activePointer.leftButton.isDown) {
-        if (this.game.store.getState().player.currentWeapon === 'primaryWeapon' && this.game.store.getState().player.isPrimaryReloading) return
-        if (this.game.store.getState().player.currentWeapon === 'secondaryWeapon' && this.game.store.getState().player.isSecondaryReloading) return
+        if (
+            this.game.store.getState().player.currentWeapon === 'primaryWeapon' &&
+            (
+                this.game.store.getState().player.isPrimaryReloading ||
+                this.game.store.getState().player.primaryAmmoRemaining <= 0
+            )
+
+        ) return
+
+        if (
+            this.game.store.getState().player.currentWeapon === 'secondaryWeapon' &&
+            (
+                this.game.store.getState().player.isSecondaryReloading ||
+                this.game.store.getState().player.secondaryAmmoRemaining <= 0
+            )
+        ) return
 
         this.game.store.getState().player[currentWeapon].fire()
     }
