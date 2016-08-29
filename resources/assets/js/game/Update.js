@@ -67,7 +67,6 @@ export default function Update() {
                 this.game.store.getState().player.isPrimaryReloading ||
                 this.game.store.getState().player.primaryAmmoRemaining <= 0
             )
-
         ) return
 
         if (
