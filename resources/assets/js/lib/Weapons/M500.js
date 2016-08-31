@@ -12,13 +12,13 @@ export default class M500 extends Phaser.Group {
         this.meta = {
             id: 'M500',
             rotation: 80.20,
-            scale: 1.3,
+            scale: 1.4,
 
-            leftFaceX: -7,
-            leftFaceY: 30,
+            leftFaceX: -19,
+            leftFaceY: 34,
 
-            rightFaceX: -7,
-            rightFaceY: 19,
+            rightFaceX: 1,
+            rightFaceY: 24,
 
             muzzleFlashX: 102,
             muzzleFlashY: -72
