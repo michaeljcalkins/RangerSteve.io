@@ -4,9 +4,9 @@ export default function Render() {
     if (! GameConsts.DEBUG || ! this.player) return
 
     this.game.debug.body(this.player)
-    this.game.debug.inputInfo(320, 628)
-    this.game.debug.cameraInfo(this.camera, 32, 628)
-    this.game.debug.text(this.time.fps || '--', 4, 16, "#ffffff")
+    this.game.debug.inputInfo(32, 200)
+    this.game.debug.cameraInfo(this.camera, 32, 110)
+    this.game.debug.text('FPS: ' + (this.time.fps || '--'), 32, 80, "#ffffff")
     this.bullets.forEach((bullet) => {
         this.game.debug.body(bullet)
     })
