@@ -14,13 +14,13 @@ export default class G43 extends Phaser.Group {
             rotation: 80.20,
             scale: 1.3,
 
-            leftFaceX: -7,
-            leftFaceY: 30,
+            leftFaceX: -14,
+            leftFaceY: 63,
 
-            rightFaceX: -7,
-            rightFaceY: 19,
+            rightFaceX: -4,
+            rightFaceY: 40,
 
-            muzzleFlashX: 102,
+            muzzleFlashX: 132,
             muzzleFlashY: -72
         }
         this.bulletHeight = 2
