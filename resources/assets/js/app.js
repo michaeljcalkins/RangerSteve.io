@@ -40,6 +40,7 @@ gameLoader = setInterval(() => {
     if (store.getState().game.state === 'loading') {
         window.socket.emit('new player', {
             roomId: getParameterByName('roomId'),
+            map: getParameterByName('map'),
             x: 0,
             y: 0,
             weaponId: store.getState().player.currentWeapon === 'primaryWeapon' ? store.getState().player.selectedPrimaryWeaponId : store.getState().player.selectedSecondaryWeaponId,

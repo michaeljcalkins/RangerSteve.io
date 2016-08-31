@@ -182,6 +182,10 @@ function onNewPlayer (data) {
                 id: data.roomId,
                 player: newPlayer
             })
+
+            if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest'].indexOf(data.map) > -1) {
+                rooms[data.roomId].map = data.map
+            }
         }
 
         rooms[data.roomId].players[this.id] = newPlayer
