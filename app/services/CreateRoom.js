@@ -1,9 +1,12 @@
 'use strict'
 
-let moment = require('moment')
-let _ = require('lodash')
+const moment = require('moment')
+const _ = require('lodash')
+const util = require('util')
 
 let CreateRoom = function(data) {
+    util.log('Creating room', data.id)
+
     let playersObj = {}
     if (data.player) {
         playersObj[data.player.id] = data.player
@@ -17,7 +20,6 @@ let CreateRoom = function(data) {
         roundEndTime: moment().add(5, 'minutes').unix(),
         state: 'active',
         map: _.sample(['PunkFallout', 'HighRuleJungle', 'DarkForest'])
-        // map: _.sample(['PunkFallout'])
     }
 }
 

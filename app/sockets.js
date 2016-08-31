@@ -12,7 +12,7 @@ let CreateRoom = require('./services/CreateRoom')
 let rooms = {}
 let io = null
 
-const MAX_ROOM_SIZE = 5
+const MAX_ROOM_SIZE = 7
 
 function sockets(ioInstance) {
     io = ioInstance
@@ -27,10 +27,22 @@ setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
             util.log('Restarting round for', roomId)
+            const previousMap = rooms[roomId].map
+
             rooms[roomId] = CreateRoom({
                 id: roomId,
                 players: rooms[roomId].players
             })
+
+            if (previousMap === 'HighRuleJungle') {
+                rooms[roomId].map = 'PunkFallout'
+            } else if (previousMap === 'PunkFallout') {
+                rooms[roomId].map = 'DarkForest'
+            } else if (previousMap === 'DarkForest') {
+                rooms[roomId].map = 'HighRuleJungle'
+            }
+
+            util.log(rooms[roomId].map, 'has been selected for ', roomId)
 
             Object.keys(rooms[roomId].players).forEach((playerId) => {
                 rooms[roomId].players[playerId].meta.health = 100
@@ -49,7 +61,6 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].map = _.sample(['HighRuleJungle', 'PunkFallout', 'DarkForest'])
             rooms[roomId].roundStartTime = moment().add(12, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
@@ -58,15 +69,9 @@ setInterval(function() {
     })
 }, 1000)
 
-// setInterval(function() {
-//     Object.keys(rooms).forEach((key) => {
-//         util.log('ROOM >>>>>>>>>>>>>>>>', JSON.stringify(rooms[key], null, 4))
-//     })
-// }, 3000)
-
 // New socket connection
 function onSocketConnection(socket) {
-    console.log('New connection from ' + socket.request.connection.remoteAddress)
+    util.log('New connection from ' + socket.request.connection.remoteAddress)
 
     socket.on('disconnect', onClientDisconnect)
     socket.on('new player', onNewPlayer)
@@ -172,10 +177,15 @@ function onNewPlayer (data) {
 
     if (data.roomId) {
         if (! rooms[data.roomId]) {
+            util.log("Creating room on new player")
             rooms[data.roomId] = CreateRoom({
                 id: data.roomId,
                 player: newPlayer
             })
+
+            if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest'].indexOf(data.map) > -1) {
+                rooms[data.roomId].map = data.map
+            }
         }
 
         rooms[data.roomId].players[this.id] = newPlayer
@@ -194,6 +204,7 @@ function onNewPlayer (data) {
 
     if (availableRooms.length <= 0) {
         let newRoomId = hri.random()
+        util.log("Creating room on new player with no rooms available")
         rooms[newRoomId] = CreateRoom({
             id: newRoomId,
             player: newPlayer
