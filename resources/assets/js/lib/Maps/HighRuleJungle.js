@@ -48,7 +48,7 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('map-bg', '/images/maps/high-rule-jungle/background.png', true)
+    this.load.image('background', '/images/maps/high-rule-jungle/background.png', true)
     this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png', true)
     this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png', true)
 }
@@ -60,9 +60,8 @@ export function createOverlays() {
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-    this.skysprite = this.add.sprite(0, 0, 'map-bg')
-    this.skysprite.width = this.game.world.width
-    this.skysprite.height = this.game.world.height
+    this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
+
     this.platforms = this.add.group()
     this.platforms.enableBody = true
     createLedges.call(this)
