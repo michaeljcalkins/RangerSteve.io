@@ -26,7 +26,7 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/images/maps/punk-fallout/background1.png', true)
+    this.load.image('background', '/images/maps/punk-fallout/background.png', true)
     this.load.tilemap('tilemap', '/maps/punk-fallout/punk-fallout.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 32, 32);
 }
