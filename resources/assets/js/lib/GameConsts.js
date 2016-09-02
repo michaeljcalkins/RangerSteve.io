@@ -5,7 +5,7 @@ const GameConsts = {
 
     // Physics
     MAX_VELOCITY_X: 650,
-    MAX_VELOCITY_Y: 2500,
+    MAX_VELOCITY_Y: 2000,
     ACCELERATION: 1200,
     DRAG: 3000,
     GRAVITY: 1200,
@@ -31,7 +31,7 @@ const GameConsts = {
     PLAYER_BODY_WIDTH: 105,
     PLAYER_BODY_HEIGHT: 280,
     PLAYER_SLOPE_FRICTION_X: 2000,
-    PLAYER_SLOPE_FRICTION_Y: 2000,
+    PLAYER_SLOPE_FRICTION_Y: 2200,
 
     // Weapons
     PRIMARY_WEAPONS: {

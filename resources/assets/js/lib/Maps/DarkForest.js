@@ -28,8 +28,6 @@ export function getRandomSpawnPoint() {
 
 export function preload() {
     this.load.image('background', '/images/maps/dark-forest/background.png', true)
-    this.load.image('parallax4', '/images/maps/dark-forest/parallax4.png', true)
-    this.load.image('parallax3', '/images/maps/dark-forest/parallax3.png', true)
     this.load.tilemap('tilemap', '/maps/dark-forest/dark-forest.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 32, 32)
 }
@@ -39,18 +37,7 @@ export function createOverlays() {
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-
-    this.parallax3 = this.add.sprite(0, 0, 'parallax3')
-    this.parallax3.width = 3698
-    this.parallax3.height = 1836
-
-    this.parallax4 = this.add.sprite(0, 0, 'parallax4')
-    this.parallax4.width = 3698
-    this.parallax4.height = 1836
-
-    this.background = this.add.sprite(0, 0, 'background')
-    this.background.width = BG_WIDTH
-    this.background.height = BG_HEIGHT
+    this.game.add.tileSprite(0, 0, BG_WIDTH, BG_HEIGHT, 'background')
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
     this.map = this.add.tilemap('tilemap')
@@ -69,9 +56,4 @@ export function create() {
 }
 
 export function update() {
-    this.parallax4.x = this.game.camera.x * 0.2
-    this.parallax4.y = this.game.camera.y * 0.2 - 200
-
-    this.parallax3.x = this.game.camera.x * 0.1
-    this.parallax3.y = this.game.camera.y * 0.1
 }
