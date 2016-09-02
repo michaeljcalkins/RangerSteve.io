@@ -26,8 +26,8 @@ export default class M4A1 extends Phaser.Group {
         this.bulletHeight = 2
         this.bulletSpeed = 2400
         this.bulletWidth = 40
-        this.damage = 18
-        this.fireRate = 150
+        this.damage = 19
+        this.fireRate = 130
         this.fx = this.rootScope.game.add.audio('M4A1-sound')
         this.nextFire = 0
     }
