@@ -51,7 +51,6 @@ export default class EndOfRoundLeaderboard extends React.Component {
                         <td>{ player.meta.kills }</td>
                         <td>{ player.meta.deaths }</td>
                         <td>{ kdRatio.toFixed(2) }</td>
-                        <td>{ player.meta.bestKillingSpree }</td>
                     </tr>
                 )
             })
@@ -69,7 +68,6 @@ export default class EndOfRoundLeaderboard extends React.Component {
                             <th>Kills</th>
                             <th>Deaths</th>
                             <th>K/D Ratio</th>
-                            <th>Best Killing Spree</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,7 +79,7 @@ export default class EndOfRoundLeaderboard extends React.Component {
                         <span>Next round starting in { this.state.elapsed } seconds...</span>
                     </div>
                 </div>
-                <div className="row">
+                {/*<div className="row">
                     <div className="col-sm-3">
                         Most Shots Fired
                     </div>
@@ -91,10 +89,8 @@ export default class EndOfRoundLeaderboard extends React.Component {
                     <div className="col-sm-3">
                         Most Movement
                     </div>
-                    <div className="col-sm-3">
-                        Lived the longest
-                    </div>
-                </div>
+                    <th>Best Killing Spree</th>
+                </div>*/}
             </div>
         )
     }
