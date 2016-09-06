@@ -3,77 +3,76 @@
 {% block title %}RangerSteve.io{% endblock %}
 
 {% block content %}
-<div class="home-container">
-    <section class="main-section text-center">
-        <div>
-            <div class="main-header">Ranger Steve</div>
+<section class="main-section text-center">
+    <div>
+        <div class="main-header">Ranger Steve</div>
 
-            <form action="/game" method="GET">
+        <form action="/game" method="GET">
+            <div class="well" style="width: 62rem;">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="well" style="width: 62rem;">
-                            <div class="form-group">
-                                <label>Your Nickname</label>
-                                <input
-                                    id="nickname"
-                                    class="form-control"
-                                    placeholder="Enter your nickname..."
-                                    autofocus
-                                    type="text"
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                class="btn btn-success btn-block btn-lg"
-                                id="play-button"
-                            >
-                                Play Now
-                            </button>
-
-                            <br />
-                            <label>How To Play</label>
-
-                            <table class="table table-condensed">
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Fly</strong></td>
-                                        <td>Right click and hold</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Shoot</strong></td>
-                                        <td>Left click</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Aim</strong></td>
-                                        <td>Move your mouse</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Move left</strong></td>
-                                        <td>Press A</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Move right</strong></td>
-                                        <td>Press D</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Reload</strong></td>
-                                        <td>Press R</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Jump</strong></td>
-                                        <td>Press W</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <input
+                                id="nickname"
+                                class="form-control"
+                                placeholder="Enter your nickname..."
+                                autofocus
+                                type="text"
+                            />
                         </div>
-                        <span class="last-updated-at">Last Updated: {{ lastUpdatedAt }}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <button
+                            type="submit"
+                            class="btn btn-success btn-lg btn-block"
+                            id="play-button"
+                        >
+                            Play Now
+                        </button>
                     </div>
                 </div>
-            </form>
-        </div>
-    </section>
-</div>
+
+
+                <br />
+                <label>How To Play</label>
+
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td><strong>Fly</strong></td>
+                            <td>Right click and hold</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Shoot</strong></td>
+                            <td>Left click</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Aim</strong></td>
+                            <td>Move your mouse</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Jump</strong></td>
+                            <td>Press W</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Move left</strong></td>
+                            <td>Press A</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Move right</strong></td>
+                            <td>Press D</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reload</strong></td>
+                            <td>Press R</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <span class="last-updated-at">Last Updated: {{ lastUpdatedAt }}</span>
+        </form>
+    </div>
+</section>
 {% endblock %}
 
 {% block scripts %}
