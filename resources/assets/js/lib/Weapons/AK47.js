@@ -23,9 +23,9 @@ export default class AK47 extends Phaser.Group {
             muzzleFlashX: 102,
             muzzleFlashY: -72
         }
-        this.bulletHeight = 40
+        this.bulletHeight = 3
         this.bulletSpeed = 2300
-        this.bulletWidth = 40
+        this.bulletWidth = 3
         this.damage = 22
         this.fireRate = 140
         this.fx = this.rootScope.game.add.audio('AK47-sound')

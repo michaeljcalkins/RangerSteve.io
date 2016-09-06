@@ -38,7 +38,7 @@ export default function FireRocket() {
     bullet.damage = this.damage
     bullet.weaponId = this.meta.id
     bullet.alpha = 0
-    bullet.body.gravity.y = -1100
+    bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
     bullet.height = 10
     bullet.width = 40
     bullet.reset(x, y)

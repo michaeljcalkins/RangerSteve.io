@@ -25,7 +25,7 @@ export default class RPG extends Phaser.Group {
         }
         this.bulletHeight = 7
         this.bulletSpeed = 2100
-        this.bulletWidth = 40
+        this.bulletWidth = 30
         this.damage = 100
         this.fireRate = 1000
         this.fx = this.rootScope.game.add.audio('RPG-sound')

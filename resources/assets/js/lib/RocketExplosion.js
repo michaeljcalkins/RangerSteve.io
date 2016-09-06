@@ -14,6 +14,8 @@ export default function(data) {
     ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, true)
     ricochet.animations.play('collision', 17, false, true)
 
+    this.camera.shake(0.01, 200, true)
+
     this.fx = this.game.add.audio('RPG-explosion-sound')
     this.fx.volume = this.game.store.getState().game.sfxVolume
     this.fx.play()

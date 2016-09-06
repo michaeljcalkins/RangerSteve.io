@@ -2,45 +2,20 @@ import GameConsts from '../GameConsts'
 import emitPlayerDamaged from '../SocketEvents/emitPlayerDamaged'
 import actions from '../../actions'
 
-const WORLD_WIDTH = 8000
-const WORLD_HEIGHT = 3966
+const WORLD_WIDTH = 6000
+const WORLD_HEIGHT = 2975
 const SPAWN_POINTS = [
-    { x: 815, y: 1730 },
-    { x: 3380, y: 1030 },
-    { x: 4437, y: 1550 },
-    { x: 6690, y: 1860 },
-    { x: 3832, y: 3350 },
-    { x: 3775, y: 2300 },
-    { x: 2420, y: 2900 }
-]
-const LEDGES = [
-    { id: 1, x: 500, y: 500, width: 135, height: 40 },
-    { id: 2, x: 2613, y: 1094, width: 1100, height: 112 },
-    { id: 3, x: 3657, y: 3446, width: 550, height: 600 },
-    { id: 4, x: 5217, y: 1938, width: 380, height: 600 },
-    { id: 5, x: 422, y: 1824, width: 1150, height: 280 },
-    { id: 6, x: 1555, y: 1749, width: 270, height: 730 },
-    { id: 7, x: 1820, y: 1749, width: 470, height: 6 },
-    { id: 8, x: 2275, y: 1749, width: 320, height: 630 },
-    { id: 9, x: 2595, y: 1667, width: 1120, height: 110 },
-    { id: 10, x: 4304, y: 1621, width: 375, height: 1280 },
-    { id: 11, x: 1825, y: 2298, width: 160, height: 152 },
-    { id: 12, x: 5644, y: 1573, width: 330, height: 20 },
-    { id: 13, x: 4673, y: 2017, width: 570, height: 500 },
-    { id: 14, x: 2948, y: 3137, width: 380, height: 340 },
-    { id: 15, x: 3983, y: 2028, width: 341, height: 820 },
-    { id: 16, x: 1912, y: 2967, width: 1045, height: 500 },
-    { id: 17, x: 6628, y: 1590, width: 385, height: 37 },
-    { id: 18, x: 6628, y: 1178, width: 385, height: 37 },
-    { id: 19, x: 5590, y: 2038, width: 350, height: 600 },
-    { id: 20, x: 6984, y: 1989, width: 450, height: 167 },
-    { id: 21, x: 3672, y: 2401, width: 330, height: 470 },
-    { id: 22, x: 3303, y: 2599, width: 400, height: 250 },
-    { id: 23, x: 5940, y: 2018, width: 1050, height: 600 },
-    { id: 24, x: 2147, y: 2066, width: 160, height: 40 },
-    { id: 25, x: 2595, y: 1767, width: 1070, height: 220 },
-    { id: 26, x: 2595, y: 2160, width: 510, height: 220 },
-    { id: 27, x: 2595, y: 1960, width: 710, height: 220 }
+    { x: 2900, y: 2500 },
+    { x: 2300, y: 2300 },
+    { x: 1500, y: 2150 },
+    { x: 2600, y: 1900 },
+    { x: 2900, y: 1700 },
+    { x: 3100, y: 1450 },
+    { x: 2300, y: 1700 },
+    { x: 1400, y: 1650 },
+    { x: 1650, y: 1470 },
+    { x: 4350, y: 1100 },
+    { x: 5100, y: 800 },
 ]
 
 export function getRandomSpawnPoint() {
@@ -51,26 +26,22 @@ export function preload() {
     this.load.image('background', '/images/maps/high-rule-jungle/background.png', true)
     this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png', true)
     this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png', true)
+    this.load.tilemap('tilemap', '/maps/high-rule-jungle/high-rule-jungle.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
 }
 
 export function createOverlays() {
-    this.bridge = this.add.sprite(1751, 1655, 'bridge')
-    this.towerRail = this.add.sprite(5643, 1525, 'tower-rail')
+    this.bridge = this.add.sprite(1313, 1240, 'bridge')
+    this.towerRail = this.add.sprite(4230, 1140, 'tower-rail')
 }
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
     this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
-    this.platforms = this.add.group()
-    this.platforms.enableBody = true
-    createLedges.call(this)
-    this.platforms.setAll('body.immovable', true)
-    this.platforms.setAll('body.allowGravity', false)
-
-    this.groundSprite = this.add.sprite(0, 3964, 'ground')
+    this.groundSprite = this.add.sprite(0, WORLD_HEIGHT - 10, 'ground')
     this.groundSprite.alpha = 0
-    this.groundSprite.width = this.game.world.width
+    this.groundSprite.width = WORLD_WIDTH
     this.groundSprite.height = 10
     this.physics.arcade.enable(this.groundSprite)
     this.game.physics.enable(this.groundSprite, Phaser.Physics.ARCADE)
@@ -78,25 +49,24 @@ export function create() {
     this.groundSprite.physicsBodyType = Phaser.Physics.ARCADE
     this.groundSprite.body.immovable = true
     this.groundSprite.body.allowGravity = false
+
+    // Add the demo tilemap and attach a tilesheet for its collision layer
+    this.map = this.add.tilemap('tilemap')
+    this.map.addTilesetImage('collision', 'ninja-tiles24')
+
+    // Create a TilemapLayer object from the collision layer of the map
+    this.ground = this.map.createLayer('collision')
+    if (! GameConsts.DEBUG) this.ground.alpha = 0
+
+    // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
+    // preparing slope data for each of tile in the layer
+    this.game.slopes.convertTilemapLayer(this.ground, GameConsts.SLOPE_TILES)
+
+    // Enable collision between tile indexes 2 and 34
+    this.map.setCollisionBetween(2, 34, true, 'collision')
 }
 
 export function createLedges() {
-    LEDGES.forEach((ledge) => {
-        if (GameConsts.DEBUG) {
-            let newLedge = this.platforms.create(ledge.x, ledge.y, 'ground')
-            newLedge.alpha = 0.4
-            newLedge.height = ledge.height
-            newLedge.width = ledge.width
-            let style = { font: "20px Arial", fill: "#ff0044", align: "center", backgroundColor: "#ffff00" }
-            let text = this.game.add.text(ledge.x, ledge.y, ledge.id, style)
-            text.alpha = 0.2
-            return
-        }
-
-        let newLedge = this.platforms.create(ledge.x, ledge.y)
-        newLedge.height = ledge.height
-        newLedge.width = ledge.width
-    })
 }
 
 export function update() {

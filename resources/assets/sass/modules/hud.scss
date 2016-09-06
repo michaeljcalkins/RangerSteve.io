@@ -1,27 +1,28 @@
 .hud-item {
-    background-size: 26px;
     background: rgba(80, 79, 77, 1) no-repeat 10px;
+    background-size: 24px;
     box-shadow: 0px 1px 2px 0 #202021;
     color: #E3DFD4;
     font-family: Righteous;
-    font-size: 29px;
-    line-height: 27px;
-    padding: 10px 10px 0 0;
+    font-size: 24px;
+    line-height: 22px;
     position: absolute;
     text-align: right;
+    width: 115px;
+    padding: 10px 15px 10px 50px;
 }
 
 .hud-settings {
     background: url(/images/icons/cog-32-white.png) #504F4D center no-repeat;
-    background-size: 26px;
+    background-size: 20px;
     border: 0;
     padding: 10px;
     cursor: pointer;
     padding: 0;
     right: 230px;
     top: 0;
-    height: 48px;
-    width: 48px;
+    height: 36px;
+    width: 36px;
 }
 
 .hud-kill-log {
@@ -77,15 +78,14 @@
 
 .hud-jump-jet {
     background-image: url(/images/icons/gas-32-white.png);
-    background-size: 26px;
-    height: 48px;
-    padding: 14px 0 0 45px;
+    padding: 11px 0 11px 45px;
     right: 0;
     bottom: 0;
     width: 175px;
 
     .progress {
         max-width: 115px;
+        margin: 0;
     }
 
     .progress-bar {
@@ -95,20 +95,15 @@
 
 .hud-score {
     background-image: url(/images/icons/trophy-32-white.png);
-    background-size: 26px;
-    height: 48px;
     left: 0;
+    padding: 10px 15px 10px 70px;
     top: 0;
-    width: 120px;
 }
 
 .hud-health {
     background-image: url(/images/icons/plus-4-32-white.png);
-    background-size: 26px;
     bottom: 0;
-    height: 48px;
     left: 0;
-    width: 120px;
 }
 
 .hud-leaderboard {
@@ -164,17 +159,8 @@
 
 .hud-ammo {
     background-image: url(/images/icons/ammo-tin-32-white.png);
-    background-size: 26px;
-    background-position: 10px 11px;
     bottom: 0px;
-    height: 48px;
-    font-size: 29px;
     right: 185px;
-    width: 90px;
-
-    i {
-        font-size: 25px;
-    }
 }
 
 .hud-kill-confirmed {
@@ -263,14 +249,9 @@
 
 .hud-timer {
     background-image: url(/images/icons/time-32-white.png);
-    background-size: 26px;
-    height: 48px;
     left: 50%;
     margin-left: -60px;
     top: 0;
-    width: 120px;
-    padding-left: 45px;
-    text-align: left;
 }
 
 .end-of-round-leaderboard {

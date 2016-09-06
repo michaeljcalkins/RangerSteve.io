@@ -20,7 +20,7 @@ export default function FireShotgunShell() {
         bullet.weaponId = this.meta.id
         bullet.height = 2
         bullet.width = 40
-        bullet.body.gravity.y = -1150
+        bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
         bullet.reset(x, y)
 
         let socketPointerAngle = null
@@ -69,9 +69,9 @@ export default function FireShotgunShell() {
         : store.getState().player.secondaryAmmoRemaining
 
     if (
-        currentAmmoRemaining <= 0 && 
+        currentAmmoRemaining <= 0 &&
         (
-            (store.getState().player.currentWeapon === 'primaryWeapon' && ! store.getState().player.isPrimaryReloading) || 
+            (store.getState().player.currentWeapon === 'primaryWeapon' && ! store.getState().player.isPrimaryReloading) ||
             (store.getState().player.currentWeapon === 'secondaryWeapon' && ! store.getState().player.isSecondaryReloading)
         )
     ) {

@@ -1,25 +1,14 @@
 import GameConsts from '../GameConsts'
 
-const WORLD_WIDTH = 3500
-const WORLD_HEIGHT = 1500
-const BG_WIDTH = WORLD_WIDTH
-const BG_HEIGHT = WORLD_HEIGHT
+const WORLD_WIDTH = 2625
+const WORLD_HEIGHT = 1125
 
 const SPAWN_POINTS = [
-    { x: 3000, y: 460 },
-    { x: 2800, y: 460 },
-    { x: 2580, y: 930 },
-    { x: 2500, y: 1200 },
-    { x: 2860, y: 880 },
-    { x: 2180, y: 1050 },
-    { x: 990, y: 1200 },
-    { x: 650, y: 1150 },
-    { x: 900, y: 930 },
-    { x: 540, y: 900 },
-    { x: 375, y: 710 },
-    { x: 550, y: 890 },
-    { x: 680, y: 350 },
-    { x: 440, y: 390 }
+    { x: 1900, y: 900 },
+    { x: 1650, y: 770 },
+    { x: 1750, y: 550 },
+    { x: 2150, y: 650 },
+    { x: 1250, y: 380 },
 ]
 
 export function getRandomSpawnPoint() {
@@ -29,7 +18,7 @@ export function getRandomSpawnPoint() {
 export function preload() {
     this.load.image('background', '/images/maps/dark-forest/background.png', true)
     this.load.tilemap('tilemap', '/maps/dark-forest/dark-forest.json', null, Phaser.Tilemap.TILED_JSON);
-    this.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 32, 32)
+    this.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
 }
 
 export function createOverlays() {
@@ -37,11 +26,11 @@ export function createOverlays() {
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-    this.game.add.tileSprite(0, 0, BG_WIDTH, BG_HEIGHT, 'background')
+    this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
     this.map = this.add.tilemap('tilemap')
-    this.map.addTilesetImage('collision', 'ninja-tiles32')
+    this.map.addTilesetImage('collision', 'ninja-tiles24')
 
     // Create a TilemapLayer object from the collision layer of the map
     this.ground = this.map.createLayer('collision')

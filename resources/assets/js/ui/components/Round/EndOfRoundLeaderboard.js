@@ -81,6 +81,20 @@ export default class EndOfRoundLeaderboard extends React.Component {
                         <span>Next round starting in { this.state.elapsed } seconds...</span>
                     </div>
                 </div>
+                <div className="row">
+                    <div className="col-sm-3">
+                        Most Shots Fired
+                    </div>
+                    <div className="col-sm-3">
+                        Most Accurate
+                    </div>
+                    <div className="col-sm-3">
+                        Most Movement
+                    </div>
+                    <div className="col-sm-3">
+                        Lived the longest
+                    </div>
+                </div>
             </div>
         )
     }

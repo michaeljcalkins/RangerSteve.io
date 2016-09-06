@@ -25,7 +25,7 @@ export default class SilverBaller extends Phaser.Group {
         }
         this.bulletHeight = 2
         this.bulletSpeed = 2300
-        this.bulletWidth = 40
+        this.bulletWidth = 30
         this.bulletAlpha = 0
         this.damage = 38
         this.fireRate = 250

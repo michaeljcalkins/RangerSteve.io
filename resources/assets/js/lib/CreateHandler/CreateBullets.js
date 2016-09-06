@@ -6,8 +6,8 @@ export default function() {
 
     this.physics.arcade.enable(this.bullets)
     this.bullets.forEach(function(bullet) {
-        bullet.body.height = 20
-        bullet.body.width = 20
+        bullet.body.height = 15
+        bullet.body.width = 15
         bullet.height = 2
         bullet.width = 40
     }, this)
@@ -21,8 +21,8 @@ export default function() {
 
     this.physics.arcade.enable(this.enemyBullets)
     this.enemyBullets.forEach(function(bullet) {
-        bullet.body.height = 20
-        bullet.body.width = 20
+        bullet.body.height = 15
+        bullet.body.width = 15
         bullet.height = 2
         bullet.width = 40
     }, this)

@@ -25,7 +25,7 @@ export default class AUG extends Phaser.Group {
         }
         this.bulletHeight = 2
         this.bulletSpeed = 2300
-        this.bulletWidth = 40
+        this.bulletWidth = 30
         this.damage = 18
         this.fireRate = 140
         this.fx = this.rootScope.game.add.audio('AUG-sound')

@@ -5,11 +5,12 @@ const GameConsts = {
 
     // Physics
     MAX_VELOCITY_X: 650,
-    MAX_VELOCITY_Y: 2000,
+    MAX_VELOCITY_Y: 1800,
     ACCELERATION: 1200,
     DRAG: 3000,
-    GRAVITY: 1200,
+    GRAVITY: 1000,
     JUMP_SPEED: -550,
+    BULLET_GRAVITY: -950,
 
     // Jump Jet
     JUMP_JET_SPEED: -1500,
@@ -26,8 +27,8 @@ const GameConsts = {
     STARTING_SECONDARY_ID: 'DesertEagle',
     PLAYER_SCALE: .27,
     PLAYER_ANCHOR: .5,
-    PLAYER_SPRITE_WIDTH: 94,
-    PLAYER_SPRITE_HEIGHT: 91,
+    PLAYER_SPRITE_WIDTH: 71,
+    PLAYER_SPRITE_HEIGHT: 68,
     PLAYER_BODY_WIDTH: 105,
     PLAYER_BODY_HEIGHT: 280,
     PLAYER_SLOPE_FRICTION_X: 2000,
@@ -41,7 +42,27 @@ const GameConsts = {
             image: '/images/guns/Spr_AK47.png',
             minScore: 0,
             ammo: 30,
-            reloadTime: 2000
+            reloadTime: 2000,
+            bullet: {
+                fireRate: 140,
+                height: 40,
+                speed: 2300,
+                width: 40,
+                damage: 22
+            },
+            position: {
+                rotation: 80.20,
+                scale: 1.4,
+
+                leftFaceX: -7,
+                leftFaceY: 30,
+
+                rightFaceX: -7,
+                rightFaceY: 19,
+
+                muzzleFlashX: 102,
+                muzzleFlashY: -72
+            }
         },
         G43: {
             id: 'G43',

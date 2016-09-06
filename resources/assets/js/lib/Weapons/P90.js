@@ -25,7 +25,7 @@ export default class P90 extends Phaser.Group {
         }
         this.bulletHeight = 2
         this.bulletSpeed = 2300
-        this.bulletWidth = 40
+        this.bulletWidth = 30
         this.damage = 17
         this.fireRate = 100
         this.fx = this.rootScope.game.add.audio('P90-sound')
