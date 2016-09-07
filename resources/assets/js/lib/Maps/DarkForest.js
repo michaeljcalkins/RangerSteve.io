@@ -8,7 +8,9 @@ const SPAWN_POINTS = [
     { x: 1650, y: 770 },
     { x: 1750, y: 550 },
     { x: 2150, y: 650 },
-    { x: 1250, y: 380 }
+    { x: 1250, y: 380 },
+    { x: 1500, y: 400 },
+    { x: 280, y: 530 },
 ]
 
 export function getRandomSpawnPoint() {
