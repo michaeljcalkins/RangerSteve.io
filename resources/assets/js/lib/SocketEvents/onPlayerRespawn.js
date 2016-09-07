@@ -52,8 +52,8 @@ export default function onPlayerRespawn(data) {
     this.player.y = spawnPoint.y
 
     store.dispatch(actions.player.setPrimaryIsReloading(false))
-    store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[state.player.selectedPrimaryWeaponId].ammo))
+    store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.selectedPrimaryWeaponId].ammo))
 
     store.dispatch(actions.player.setSecondaryIsReloading(false))
-    store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[state.player.selectedSecondaryWeaponId].ammo))
+    store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.selectedSecondaryWeaponId].ammo))
 }

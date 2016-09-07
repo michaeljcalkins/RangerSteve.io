@@ -1,9 +1,12 @@
 import actions from '../actions'
+import GameConsts from './GameConsts.js'
 
-export function playerFaceLeft() {    
+export function playerFaceLeft() {
     if (this.game.store.getState().player.facing !== 'left') {
         this.game.store.dispatch(actions.player.setFacing('left'))
         const player = this.game.store.getState().player
+        const currentWeaponId = player.currentWeapon === 'primaryWeapon' ? player.selectedPrimaryWeaponId : player.selectedSecondaryWeaponId
+        const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
         this.rightArmGroup.x = 25
         this.rightArmGroup.y = -65
@@ -24,8 +27,8 @@ export function playerFaceLeft() {
         this.rightArmSprite.y = 10
 
         this.currentWeaponSprite.scale.y *= -1
-        this.currentWeaponSprite.x = player[player.currentWeapon].meta.leftFaceX
-        this.currentWeaponSprite.y = player[player.currentWeapon].meta.leftFaceY
+        this.currentWeaponSprite.x = currentWeapon.position.leftFaceX
+        this.currentWeaponSprite.y = currentWeapon.position.leftFaceY
     }
 }
 
@@ -33,6 +36,8 @@ export function playerFaceRight() {
     if (this.game.store.getState().player.facing !== 'right') {
         this.game.store.dispatch(actions.player.setFacing('right'))
         const player = this.game.store.getState().player
+        const currentWeaponId = player.currentWeapon === 'primaryWeapon' ? player.selectedPrimaryWeaponId : player.selectedSecondaryWeaponId
+        const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
         this.rightArmGroup.x = -25
         this.rightArmGroup.y = -65
@@ -53,7 +58,7 @@ export function playerFaceRight() {
         this.rightArmSprite.y = 0
 
         this.currentWeaponSprite.scale.y *= -1
-        this.currentWeaponSprite.x = player[player.currentWeapon].meta.rightFaceX
-        this.currentWeaponSprite.y = player[player.currentWeapon].meta.rightFaceY
+        this.currentWeaponSprite.x = currentWeapon.position.rightFaceX
+        this.currentWeaponSprite.y = currentWeapon.position.rightFaceY
     }
 }

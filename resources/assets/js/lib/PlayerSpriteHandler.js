@@ -67,18 +67,20 @@ export default function PlayerSpriteHandler() {
     this.leftArmGroup.add(this.leftArmSprite)
 
     // Gun
+    const primaryWeaponId = this.game.store.getState().player.selectedPrimaryWeaponId
+    const selectedPrimaryWeapon = GameConsts.WEAPONS[primaryWeaponId]
+    const secondaryWeaponId = this.game.store.getState().player.selectedSecondaryWeaponId
+    const selectedSecondaryWeapon = GameConsts.WEAPONS[secondaryWeaponId]
+
     this.currentWeaponSprite = this.game.add.sprite(
-        this.game.store.getState().player.primaryWeapon.meta.spriteX,
-        this.game.store.getState().player.primaryWeapon.meta.spriteY,
-        this.game.store.getState().player.selectedPrimaryWeaponId
+        selectedPrimaryWeapon.position.spriteX,
+        selectedPrimaryWeapon.position.spriteY,
+        selectedPrimaryWeapon.id
     )
-    this.currentWeaponSprite.scale.setTo(this.game.store.getState().player.primaryWeapon.meta.scale)
-    this.currentWeaponSprite.rotation = this.game.store.getState().player.primaryWeapon.meta.rotation
+    this.currentWeaponSprite.scale.setTo(selectedPrimaryWeapon.position.scale)
+    this.currentWeaponSprite.rotation = selectedPrimaryWeapon.position.rotation
 
-    const selectedPrimaryWeapon = GameConsts.PRIMARY_WEAPONS[this.game.store.getState().player.selectedPrimaryWeaponId]
     this.game.store.dispatch(actions.player.setPrimaryAmmoRemaining(selectedPrimaryWeapon.ammo))
-
-    const selectedSecondaryWeapon = GameConsts.SECONDARY_WEAPONS[this.game.store.getState().player.selectedSecondaryWeaponId]
     this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
 
     // Right arm

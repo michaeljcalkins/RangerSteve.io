@@ -13,8 +13,8 @@ export default function ChooseSecondaryMenu({
     }
 
     function renderWeapons() {
-        return Object.keys(GameConsts.SECONDARY_WEAPONS).map(function(weaponId, index) {
-            const weapon = GameConsts.SECONDARY_WEAPONS[weaponId]
+        return GameConsts.SECONDARY_WEAPON_IDS.map(function(weaponId, index) {
+            const weapon = GameConsts.WEAPONS[weaponId]
 
             return (
                 <div

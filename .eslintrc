@@ -6,6 +6,7 @@
         "es6": true
     },
     "globals": {
+        "mixpanel": true,
         "Phaser": true,
         "$": true,
         "io": true,
