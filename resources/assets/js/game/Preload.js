@@ -14,12 +14,12 @@ export default function Preload() {
     this.load.spritesheet('rocket', '/images/air-explosion.png', 904, 598, 15)
 
     // Weapons
-    Object.keys(GameConsts.PRIMARY_WEAPONS).forEach((weaponId) => {
-        this.load.image(weaponId, GameConsts.PRIMARY_WEAPONS[weaponId].image)
+    Object.keys(GameConsts.WEAPONS).forEach((weaponId) => {
+        this.load.image(weaponId, GameConsts.WEAPONS[weaponId].image)
     })
 
-    Object.keys(GameConsts.SECONDARY_WEAPONS).forEach((weaponId) => {
-        this.load.image(weaponId, GameConsts.SECONDARY_WEAPONS[weaponId].image)
+    Object.keys(GameConsts.WEAPONS).forEach((weaponId) => {
+        this.load.image(weaponId, GameConsts.WEAPONS[weaponId].image)
     })
 
     this.load.image('right-arm', '/images/body/right-arm.png')
@@ -29,18 +29,18 @@ export default function Preload() {
 
     this.load.audio('jumpjet', '/audio/jumpjet.mp3')
 
-    this.load.audio('AK47-sound', '/audio/AK47.mp3')
-    this.load.audio('M500-sound', '/audio/M500.mp3')
-    this.load.audio('Skorpion-sound', '/audio/Skorpion.mp3')
-    this.load.audio('AUG-sound', '/audio/AUG.mp3')
-    this.load.audio('G43-sound', '/audio/G43.mp3')
-    this.load.audio('P90-sound', '/audio/P90.mp3')
-    this.load.audio('M4A1-sound', '/audio/M4A1.mp3')
-    this.load.audio('BarretM90-sound', '/audio/BarretM90.mp3')
+    this.load.audio('AK47', '/audio/AK47.mp3')
+    this.load.audio('M500', '/audio/M500.mp3')
+    this.load.audio('Skorpion', '/audio/Skorpion.mp3')
+    this.load.audio('AUG', '/audio/AUG.mp3')
+    this.load.audio('G43', '/audio/G43.mp3')
+    this.load.audio('P90', '/audio/P90.mp3')
+    this.load.audio('M4A1', '/audio/M4A1.mp3')
+    this.load.audio('BarretM90', '/audio/BarretM90.mp3')
 
-    this.load.audio('DesertEagle-sound', '/audio/DesertEagle.mp3')
-    this.load.audio('SilverBaller-sound', '/audio/SilverBaller.mp3')
-    this.load.audio('RPG-sound', '/audio/RPG.mp3')
+    this.load.audio('DesertEagle', '/audio/DesertEagle.mp3')
+    this.load.audio('SilverBaller', '/audio/SilverBaller.mp3')
+    this.load.audio('RPG', '/audio/RPG.mp3')
     this.load.audio('RPG-explosion-sound', '/audio/RPGExplosion.mp3')
 
     this.load.audio('triplekill', '/audio/killingSpree/triplekill_ultimate.mp3')

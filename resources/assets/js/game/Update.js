@@ -3,6 +3,9 @@ import CollisionHandler from '../lib/CollisionHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
+import FireStandardBullet from '../lib/FireStandardBullet'
+import FireShotgunShell from '../lib/FireShotgunShell'
+import FireRocket from '../lib/FireRocket'
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 import Maps from '../lib/Maps'
 import InitEvents from '../lib/CreateHandler/CreateEvents'
@@ -18,7 +21,6 @@ export default function Update() {
     }
 
     const state = this.game.store.getState()
-    const currentWeapon = state.player.currentWeapon
 
     if (this.audioPlayer) {
         this.audioPlayer.volume = state.game.musicVolume
@@ -54,38 +56,67 @@ export default function Update() {
     CollisionHandler.call(this)
     Maps[state.room.map].update.call(this)
 
+    /**
+     * User related movement and sprite angles
+     */
     if (state.player.health > 0) {
         PlayerMovementHandler.call(this)
         PlayerJumpHandler.call(this)
         PlayerAngleHandler.call(this)
     }
 
+    /**
+     * Fire current weapon
+     */
     if (this.game.input.activePointer.leftButton.isDown) {
+        const player = this.game.store.getState().player
+        const currentWeaponId = player.currentWeapon === 'primaryWeapon' ? player.selectedPrimaryWeaponId : player.selectedSecondaryWeaponId
+        const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
+
+        // Check if primary gun has ammo and is selected
         if (
-            this.game.store.getState().player.currentWeapon === 'primaryWeapon' &&
+            player.currentWeapon === 'primaryWeapon' &&
             (
-                this.game.store.getState().player.isPrimaryReloading ||
-                this.game.store.getState().player.primaryAmmoRemaining <= 0
+                player.isPrimaryReloading ||
+                player.primaryAmmoRemaining <= 0
             )
         ) return
 
+        // Check if secondary gun has ammo and is selected
         if (
-            this.game.store.getState().player.currentWeapon === 'secondaryWeapon' &&
+            player.currentWeapon === 'secondaryWeapon' &&
             (
-                this.game.store.getState().player.isSecondaryReloading ||
-                this.game.store.getState().player.secondaryAmmoRemaining <= 0
+                player.isSecondaryReloading ||
+                player.secondaryAmmoRemaining <= 0
             )
         ) return
 
-        this.game.store.getState().player[currentWeapon].fire()
+        switch(currentWeapon.bulletType) {
+            case 'rocket':
+                FireRocket.call(this, currentWeaponId)
+                break;
+
+            case 'shotgun':
+                FireShotgunShell.call(this, currentWeaponId)
+                break
+
+            default:
+                FireStandardBullet.call(this, currentWeaponId)
+        }
     }
 
+    /**
+     * Fade in or out the hurt border sprite
+     */
     if (state.player.health < 100) {
         this.hurtBorderSprite.alpha = ((100 - state.player.health) / 100).toFixed(2)
     } else {
         this.hurtBorderSprite.alpha = 0
     }
 
+    /**
+     * Emit player's latest position on the map
+     */
     if (state.room.id && state.player.health > 0 && state.room.state !== 'ended' && state.player.facing !== null) {
         let newPlayerData = {
             roomId: state.room.id,

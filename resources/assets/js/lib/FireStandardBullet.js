@@ -3,54 +3,51 @@ import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from './GameConsts'
 import actions from '../actions'
 
-export default function FireStandardBullet() {
-    const store = this.rootScope.game.store
+let muzzleFlashHandler = null
+let nextFire = null
+
+export default function FireStandardBullet(currentWeaponId) {
+    const store = this.game.store
     const state = store.getState()
+    const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
-    let x = this.rootScope.player.x
-    let y = this.rootScope.player.y - 10
+    if (this.game.time.now < nextFire || this.bullets.countDead() <= 0)
+        return
 
-    let bullet = this.rootScope.bullets.getFirstDead()
+    nextFire = this.game.time.now + currentWeapon.fireRate
 
-    // Define some shortcuts to some useful objects
-    var body = bullet.body
+    let x = this.player.x
+    let y = this.player.y - 10
 
-    // Update player body properties
-    body.drag.x = GameConsts.SLOPE_FEATURES.dragX
-    body.drag.y = GameConsts.SLOPE_FEATURES.dragY
-    body.bounce.x = GameConsts.SLOPE_FEATURES.bounceX
-    body.bounce.y = GameConsts.SLOPE_FEATURES.bounceY
-
-    // Update player body Arcade Slopes properties
-    body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
-    body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
-    body.slopes.preferY    = GameConsts.SLOPE_FEATURES.minimumOffsetY
-    body.slopes.pullUp     = GameConsts.SLOPE_FEATURES.pullUp
-    body.slopes.pullDown   = GameConsts.SLOPE_FEATURES.pullDown
-    body.slopes.pullLeft   = GameConsts.SLOPE_FEATURES.pullLeft
-    body.slopes.pullRight  = GameConsts.SLOPE_FEATURES.pullRight
-    body.slopes.snapUp     = GameConsts.SLOPE_FEATURES.snapUp
-    body.slopes.snapDown   = GameConsts.SLOPE_FEATURES.snapDown
-    body.slopes.snapLeft   = GameConsts.SLOPE_FEATURES.snapLeft
-    body.slopes.snapRight  = GameConsts.SLOPE_FEATURES.snapRight
-
+    let bullet = this.bullets.getFirstDead()
     bullet.bulletId = Guid()
-    bullet.damage = this.damage
-    bullet.weaponId = this.meta.id
+    bullet.damage = currentWeapon.damage
+    bullet.weaponId = currentWeaponId
     bullet.alpha = 0
     bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
     bullet.height = 2
     bullet.width = 40
     bullet.reset(x, y)
-    let pointerAngle = this.rootScope.game.physics.arcade.moveToPointer(bullet, this.bulletSpeed)
+    let pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
     bullet.rotation = pointerAngle
 
+    // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
+    this.muzzleFlash.visible = true
+    clearTimeout(muzzleFlashHandler)
+    muzzleFlashHandler = setTimeout(() => {
+        this.muzzleFlash.visible = false
+    }, 80)
+
+    // Shake camera for gun recoil
+    this.camera.shake(0.0015, 100, true)
+
+    // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
     setTimeout(() => {
         bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
     }, 60)
 
-    this.fx.volume = state.game.sfxVolume
-    this.fx.play()
+    this.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
+    this.weaponSoundEffects[currentWeaponId].play()
 
     if (store.getState().player.currentWeapon === 'primaryWeapon') {
         store.dispatch(actions.player.decrementPrimaryAmmoRemaining())
@@ -58,16 +55,16 @@ export default function FireStandardBullet() {
         store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
     }
 
-    emitBulletFired.call(this.rootScope, {
+    emitBulletFired.call(this, {
         roomId: state.room.id,
         bulletId: bullet.bulletId,
         playerId: '/#' + window.socket.id,
-        weaponId: this.meta.id,
+        weaponId: currentWeaponId,
         x,
         y,
         pointerAngle,
-        bulletSpeed: this.bulletSpeed,
-        damage: this.damage
+        bulletSpeed: currentWeapon.bulletSpeed,
+        damage: currentWeapon.damage
     })
 
     // Get ammo remaining in current gun
@@ -91,20 +88,18 @@ export default function FireStandardBullet() {
 
         // Get reload time in seconds
         const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
-            ? GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
-            : GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
+            ? GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
+            : GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
 
-        const currentWeaponId = this.meta.id
-        const currentWeapon = store.getState().player.currentWeapon
         setTimeout(() => {
             if (currentWeapon === 'primaryWeapon') {
                 store.dispatch(actions.player.setPrimaryIsReloading(false))
-                store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[currentWeaponId].ammo))
+                store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[currentWeaponId].ammo))
                 return
             }
 
             store.dispatch(actions.player.setSecondaryIsReloading(false))
-            store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[currentWeaponId].ammo))
+            store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[currentWeaponId].ammo))
         }, reloadTime)
         return
     }

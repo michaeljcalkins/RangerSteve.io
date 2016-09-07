@@ -64,9 +64,9 @@ export default class RespawnModal extends React.Component {
 
         let weaponImage = '/images/guns/Spr_M500.png'
         if (player.damageStats.weaponId) {
-            weaponImage = GameConsts.PRIMARY_WEAPONS[player.damageStats.weaponId]
-                ? GameConsts.PRIMARY_WEAPONS[player.damageStats.weaponId].image
-                : GameConsts.SECONDARY_WEAPONS[player.damageStats.weaponId].image
+            weaponImage = GameConsts.WEAPONS[player.damageStats.weaponId]
+                ? GameConsts.WEAPONS[player.damageStats.weaponId].image
+                : GameConsts.WEAPONS[player.damageStats.weaponId].image
         }
 
         if (! _.get(player, 'damageStats.attackingPlayerId')) {

@@ -18,8 +18,8 @@ export default function() {
      */
     this.input.keyboard.addKey(store.getState().game.keyboardControls.reload).onUp.add(() => {
         const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
-            ? GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
-            : GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
+            ? GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
+            : GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
 
         if (store.getState().player.currentWeapon === 'primaryWeapon') {
             store.dispatch(actions.player.setPrimaryIsReloading(true))
@@ -31,12 +31,12 @@ export default function() {
         setTimeout(() => {
             if (store.getState().player.currentWeapon === 'primaryWeapon') {
                 store.dispatch(actions.player.setPrimaryIsReloading(false))
-                store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.PRIMARY_WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo))
+                store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo))
                 return
             }
 
             store.dispatch(actions.player.setSecondaryIsReloading(false))
-            store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.SECONDARY_WEAPONS[store.getState().player.selectedSecondaryWeaponId].ammo))
+            store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].ammo))
         }, reloadTime)
     })
 

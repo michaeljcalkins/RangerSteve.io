@@ -5,6 +5,7 @@
     color: #E3DFD4;
     font-family: Righteous;
     font-size: 24px;
+    height: 42px;
     line-height: 22px;
     position: absolute;
     text-align: right;
@@ -110,6 +111,7 @@
     font: 14px "Open Sans", Arial, sans-serif;
     font-size: 14px;
     line-height: 18px;
+    height: auto;
     padding: 10px;
     right: 0;
     text-align: left;
@@ -258,6 +260,7 @@
     position: absolute;
     left: 50%;
     top: 50%;
+    height: auto;
     transform: translate(-50%, -50%);
     width: 600px;
     padding: 10px;
