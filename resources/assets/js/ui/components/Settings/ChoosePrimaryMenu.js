@@ -13,7 +13,7 @@ export default function ChoosePrimaryMenu({
     }
 
     function renderWeapons() {
-        return Object.keys(GameConsts.WEAPONS).map(function(weaponId, index) {
+        return GameConsts.PRIMARY_WEAPON_IDS.map(function(weaponId, index) {
             const weapon = GameConsts.WEAPONS[weaponId]
 
             return (

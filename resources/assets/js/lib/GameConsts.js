@@ -86,6 +86,9 @@ const GameConsts = {
         34: 'HALF_LEFT'
     },
 
+    PRIMARY_WEAPON_IDS: ['AK47', 'G43', 'M500', 'AUG', 'Skorpion', 'P90', 'M4A1', 'Barrett'],
+    SECONDARY_WEAPON_IDS: ['DesertEagle', 'SilverBaller', 'RPG'],
+
     // Weapons
     WEAPONS: {
         AK47: {
