@@ -102,20 +102,16 @@ export default function FireShotgunShell(currentWeaponId) {
         }
 
         // Get reload time in seconds
-        const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
-            ? GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
-            : GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
-
         setTimeout(() => {
-            if (currentWeapon === 'primaryWeapon') {
+            if (store.getState().player.currentWeapon === 'primaryWeapon') {
                 store.dispatch(actions.player.setPrimaryIsReloading(false))
-                store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[currentWeaponId].ammo))
+                store.dispatch(actions.player.setPrimaryAmmoRemaining(currentWeapon.ammo))
                 return
             }
 
             store.dispatch(actions.player.setSecondaryIsReloading(false))
-            store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[currentWeaponId].ammo))
-        }, reloadTime)
+            store.dispatch(actions.player.setSecondaryAmmoRemaining(currentWeapon.ammo))
+        }, currentWeapon.reloadTime)
         return
     }
 }
