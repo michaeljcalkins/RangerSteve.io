@@ -75,8 +75,8 @@ export function createLedges() {
 export function update() {
     const store = this.game.store
 
-    this.physics.arcade.collide(this.player, this.groundSprite, () => {
-        if (store.getState().player.health <= 0 || this.player.y < 3900) return
+    this.physics.arcade.overlap(this.player, this.groundSprite, () => {
+        if (store.getState().player.health <= 0) return
 
         // this.game.input.enabled = false
         this.player.body.acceleration.x = 0
