@@ -23,7 +23,7 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/images/maps/high-rule-jungle/background.png', true)
+    this.load.image('background', '/images/maps/high-rule-jungle/background.jpg', true)
     this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png', true)
     this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png', true)
     this.load.tilemap('tilemap', '/maps/high-rule-jungle/high-rule-jungle.json', null, Phaser.Tilemap.TILED_JSON);
