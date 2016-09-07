@@ -1,6 +1,5 @@
 import { PropTypes } from 'react'
 
-import Weapons from '../Weapons'
 import Maps from '../Maps'
 import PlayerById from '../PlayerById'
 import actions from '../../actions'

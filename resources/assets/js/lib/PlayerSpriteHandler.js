@@ -1,5 +1,4 @@
 import GameConsts from './GameConsts'
-import Weapons from './Weapons'
 import Maps from './Maps'
 import actions from '../actions'
 
