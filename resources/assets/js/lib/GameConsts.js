@@ -9,7 +9,7 @@ const GameConsts = {
     ACCELERATION: 1200,
     DRAG: 3000,
     GRAVITY: 1000,
-    JUMP_SPEED: -550,
+    JUMP_SPEED: -450,
     BULLET_GRAVITY: -950,
 
     // Jump Jet

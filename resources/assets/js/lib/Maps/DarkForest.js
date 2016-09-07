@@ -9,6 +9,8 @@ const SPAWN_POINTS = [
     { x: 1750, y: 550 },
     { x: 2150, y: 650 },
     { x: 1250, y: 380 },
+    { x: 1500, y: 400 },
+    { x: 280, y: 530 },
 ]
 
 export function getRandomSpawnPoint() {
@@ -16,7 +18,7 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/images/maps/dark-forest/background.png', true)
+    this.load.image('background', '/images/maps/dark-forest/background.jpg', true)
     this.load.tilemap('tilemap', '/maps/dark-forest/dark-forest.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
 }

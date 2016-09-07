@@ -19,6 +19,7 @@
                                 autofocus
                                 type="text"
                             />
+                            <span class="help-block pointer" style="margin-bottom: 0;" id="toggle-how-to-button">Show how to play</span>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -32,44 +33,44 @@
                     </div>
                 </div>
 
+                <div style="display: none" id="how-to-container">
+                    <br />
+                    <label>How To Play</label>
 
-                <br />
-                <label>How To Play</label>
-
-                <table class="table table-condensed">
-                    <tbody>
-                        <tr>
-                            <td><strong>Fly</strong></td>
-                            <td>Right click and hold</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Shoot</strong></td>
-                            <td>Left click</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Aim</strong></td>
-                            <td>Move your mouse</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Jump</strong></td>
-                            <td>Press W</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Move left</strong></td>
-                            <td>Press A</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Move right</strong></td>
-                            <td>Press D</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Reload</strong></td>
-                            <td>Press R</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><strong>Fly</strong></td>
+                                <td>Right click and hold</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Shoot</strong></td>
+                                <td>Left click</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Aim</strong></td>
+                                <td>Move your mouse</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jump</strong></td>
+                                <td>Press W</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Move left</strong></td>
+                                <td>Press A</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Move right</strong></td>
+                                <td>Press D</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reload</strong></td>
+                                <td>Press R</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <span class="last-updated-at">Last Updated: {{ lastUpdatedAt }}</span>
         </form>
     </div>
 </section>
@@ -84,6 +85,10 @@ try {
 
 $('#nickname').on('keyup', function(evt) {
     localStorage.setItem('nickname', JSON.stringify(evt.target.value))
+})
+
+$('#toggle-how-to-button').on('click', function() {
+    $('#how-to-container').slideToggle()
 })
 
 {% if isProduction %}

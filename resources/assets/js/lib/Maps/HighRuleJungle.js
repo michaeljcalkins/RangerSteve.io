@@ -11,11 +11,14 @@ const SPAWN_POINTS = [
     { x: 2600, y: 1900 },
     { x: 2900, y: 1700 },
     { x: 3100, y: 1450 },
-    { x: 2300, y: 1700 },
+    { x: 2300, y: 1100 },
     { x: 1400, y: 1650 },
     { x: 1650, y: 1470 },
     { x: 4350, y: 1100 },
+    { x: 1000, y: 1300 },
     { x: 5100, y: 800 },
+    { x: 5500, y: 1400 },
+    { x: 1990, y: 730 },
 ]
 
 export function getRandomSpawnPoint() {
@@ -23,7 +26,7 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/images/maps/high-rule-jungle/background.png', true)
+    this.load.image('background', '/images/maps/high-rule-jungle/background.jpg', true)
     this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png', true)
     this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png', true)
     this.load.tilemap('tilemap', '/maps/high-rule-jungle/high-rule-jungle.json', null, Phaser.Tilemap.TILED_JSON);
@@ -72,8 +75,8 @@ export function createLedges() {
 export function update() {
     const store = this.game.store
 
-    this.physics.arcade.collide(this.player, this.groundSprite, () => {
-        if (store.getState().player.health <= 0 || this.player.y < 3900) return
+    this.physics.arcade.overlap(this.player, this.groundSprite, () => {
+        if (store.getState().player.health <= 0) return
 
         // this.game.input.enabled = false
         this.player.body.acceleration.x = 0
