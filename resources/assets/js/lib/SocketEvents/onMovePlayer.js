@@ -1,7 +1,7 @@
 import { PropTypes } from 'react'
 import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
-import WeaponConsts from '../WeaponConsts'
+import GameConsts from '../GameConsts'
 
 const propTypes = {
     id: PropTypes.string.isRequired,
@@ -65,8 +65,8 @@ export default function onMovePlayer(data) {
 
     if (movePlayer.currentWeaponSprite.id !== data.weaponId) {
         movePlayer.currentWeaponSprite.loadTexture(data.weaponId)
-        movePlayer.currentWeaponSprite.rotation = WeaponConsts[data.weaponId].rotation
-        movePlayer.currentWeaponSprite.scale.setTo(WeaponConsts[data.weaponId].scale)
+        movePlayer.currentWeaponSprite.rotation = GameConsts.WEAPONS[data.weaponId].position.rotation
+        movePlayer.currentWeaponSprite.scale.setTo(GameConsts.WEAPONS[data.weaponId].position.scale)
     }
 
     movePlayer.lastPosition.x = movePlayer.x

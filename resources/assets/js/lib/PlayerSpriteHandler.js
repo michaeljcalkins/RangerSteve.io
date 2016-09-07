@@ -5,6 +5,10 @@ import actions from '../actions'
 export default function PlayerSpriteHandler() {
     const state = this.game.store.getState()
     const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
+    const primaryWeaponId = this.game.store.getState().player.selectedPrimaryWeaponId
+    const selectedPrimaryWeapon = GameConsts.WEAPONS[primaryWeaponId]
+    const secondaryWeaponId = this.game.store.getState().player.selectedSecondaryWeaponId
+    const selectedSecondaryWeapon = GameConsts.WEAPONS[secondaryWeaponId]
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.width = GameConsts.PLAYER_SPRITE_WIDTH
@@ -40,8 +44,8 @@ export default function PlayerSpriteHandler() {
     this.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
     this.player.animations.add('death', GameConsts.ANIMATION_DEATH, 20, false)
 
-    this.game.store.dispatch(actions.player.setPrimaryWeapon(new Weapons[this.game.store.getState().player.selectedPrimaryWeaponId](this)))
-    this.game.store.dispatch(actions.player.setSecondaryWeapon(new Weapons[this.game.store.getState().player.selectedSecondaryWeaponId](this)))
+    this.game.store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[primaryWeaponId]))
+    this.game.store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[secondaryWeaponId]))
 
     this.leftArmGroup = this.game.add.group()
     this.rightArmGroup = this.game.add.group()
@@ -66,11 +70,6 @@ export default function PlayerSpriteHandler() {
     this.leftArmGroup.add(this.leftArmSprite)
 
     // Gun
-    const primaryWeaponId = this.game.store.getState().player.selectedPrimaryWeaponId
-    const selectedPrimaryWeapon = GameConsts.WEAPONS[primaryWeaponId]
-    const secondaryWeaponId = this.game.store.getState().player.selectedSecondaryWeaponId
-    const selectedSecondaryWeapon = GameConsts.WEAPONS[secondaryWeaponId]
-
     this.currentWeaponSprite = this.game.add.sprite(
         selectedPrimaryWeapon.position.spriteX,
         selectedPrimaryWeapon.position.spriteY,

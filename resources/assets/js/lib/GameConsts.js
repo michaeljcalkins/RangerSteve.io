@@ -193,7 +193,7 @@ const GameConsts = {
             bulletSpeed: 2300,
             damage: 20,
             fireRate: 100,
-            posittion: {
+            position: {
                 rotation: 80.20,
                 scale: 1.3,
 
@@ -308,7 +308,7 @@ const GameConsts = {
             bulletSpeed: 2300,
             damage: 38,
             fireRate: 250,
-            positin: {
+            position: {
                 rotation: 80.15,
                 scale: 1.4,
 

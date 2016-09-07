@@ -57,21 +57,22 @@ export default function() {
         }
 
         const newCurrentWeapon = store.getState().player.currentWeapon
+        const currentWeaponId = newCurrentWeapon === 'primaryWeapon' ? store.getState().player.selectedPrimaryWeaponId : store.getState().player.selectedSecondaryWeaponId
 
-        this.currentWeaponSprite.loadTexture(store.getState().player[newCurrentWeapon].meta.id)
-        this.currentWeaponSprite.scale.setTo(store.getState().player[newCurrentWeapon].meta.scale)
-        this.currentWeaponSprite.rotation = store.getState().player[newCurrentWeapon].meta.rotation
+        this.currentWeaponSprite.loadTexture(currentWeaponId)
+        this.currentWeaponSprite.scale.setTo(GameConsts.WEAPONS[currentWeaponId].position.scale)
+        this.currentWeaponSprite.rotation = GameConsts.WEAPONS[currentWeaponId].position.rotation
 
         if (store.getState().player.facing === 'left') {
-            this.currentWeaponSprite.x = store.getState().player[newCurrentWeapon].meta.leftFaceX
-            this.currentWeaponSprite.y = store.getState().player[newCurrentWeapon].meta.leftFaceY
+            this.currentWeaponSprite.x = GameConsts.WEAPONS[currentWeaponId].position.leftFaceX
+            this.currentWeaponSprite.y = GameConsts.WEAPONS[currentWeaponId].position.leftFaceY
             this.currentWeaponSprite.scale.y *= -1
         } else {
-            this.currentWeaponSprite.x = store.getState().player[newCurrentWeapon].meta.rightFaceX
-            this.currentWeaponSprite.y = store.getState().player[newCurrentWeapon].meta.rightFaceY
+            this.currentWeaponSprite.x = GameConsts.WEAPONS[currentWeaponId].position.rightFaceX
+            this.currentWeaponSprite.y = GameConsts.WEAPONS[currentWeaponId].position.rightFaceY
         }
 
-        this.muzzleFlash.x = store.getState().player[newCurrentWeapon].meta.muzzleFlashX
-        this.muzzleFlash.y = store.getState().player[newCurrentWeapon].meta.muzzleFlashY
+        this.muzzleFlash.x = GameConsts.WEAPONS[currentWeaponId].position.muzzleFlashX
+        this.muzzleFlash.y = GameConsts.WEAPONS[currentWeaponId].position.muzzleFlashY
     })
 }

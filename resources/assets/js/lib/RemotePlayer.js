@@ -1,6 +1,5 @@
 import { PropTypes } from 'react'
 import GameConsts from './GameConsts'
-import WeaponConsts from './WeaponConsts'
 
 const propTypes = {
     x: PropTypes.number.isRequired,
@@ -58,8 +57,8 @@ export default function RemotePlayer(player) {
     // Current weapon
     newRemotePlayer.currentWeaponSprite = this.game.add.sprite(0, 0, player.meta.weaponId)
     newRemotePlayer.currentWeaponSprite.id = player.meta.weaponId
-    newRemotePlayer.currentWeaponSprite.rotation = WeaponConsts[player.meta.weaponId].rotation
-    newRemotePlayer.currentWeaponSprite.scale.setTo(WeaponConsts[player.meta.weaponId].scale)
+    newRemotePlayer.currentWeaponSprite.rotation = GameConsts.WEAPONS[player.meta.weaponId].position.rotation
+    newRemotePlayer.currentWeaponSprite.scale.setTo(GameConsts.WEAPONS[player.meta.weaponId].position.scale)
 
     // Right arm
     newRemotePlayer.rightArmGroup.add(newRemotePlayer.currentWeaponSprite)
