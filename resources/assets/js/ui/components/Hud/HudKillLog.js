@@ -7,10 +7,8 @@ export default function HudKillLog({
 }) {
     function renderMessages() {
         return messages.slice(-5).map(function(message, index) {
-            let selectedWeapon = _.find(GameConsts.WEAPONS, { id: message.weaponId })
-            if (! selectedWeapon) {
-                selectedWeapon = _.find(GameConsts.WEAPONS, { id: message.weaponId })
-            }
+            const selectedWeapon = GameConsts.WEAPONS[message.weaponId]
+            if (! selectedWeapon) return
 
             if (! message.attackerNickname) {
                 return (

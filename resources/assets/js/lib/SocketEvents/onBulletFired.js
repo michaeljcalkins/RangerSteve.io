@@ -66,7 +66,7 @@ export default function onBulletFired(data) {
      */
     if (soundThrottle) return
     soundThrottle = true
-    soundboard[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
-    soundboard[bullet.weaponId].play()
+    this.weaponSoundEffects[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
+    this.weaponSoundEffects[bullet.weaponId].play()
     setTimeout(() => soundThrottle = false, 100)
 }
