@@ -77,3 +77,15 @@ body.main {
     font-weight: bold;
     text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
 }
+
+@media only screen and (max-device-width: 480px) {
+    input.form-control {
+        margin-bottom: 10px;
+    }
+
+    div.main-header {
+        line-height: 80px !important;
+        font-size: 60px !important;
+        margin-bottom: 10px !important;
+    }
+}
