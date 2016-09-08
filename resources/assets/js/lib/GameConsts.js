@@ -5,7 +5,7 @@ const GameConsts = {
 
     // Physics
     MAX_VELOCITY_X: 650,
-    MAX_VELOCITY_Y: 1800,
+    MAX_VELOCITY_Y: 1100,
     ACCELERATION: 1200,
     DRAG: 3000,
     GRAVITY: 1000,
@@ -334,7 +334,7 @@ const GameConsts = {
             fireRate: 1000,
             position: {
                 rotation: 80.20,
-                scale: 1.3,
+                scale: 1.4,
 
                 leftFaceX: 33,
                 leftFaceY: 90,
@@ -342,7 +342,7 @@ const GameConsts = {
                 rightFaceX: -50,
                 rightFaceY: 90,
 
-                muzzleFlashX: 102,
+                muzzleFlashX: 172,
                 muzzleFlashY: -72
             }
         }
