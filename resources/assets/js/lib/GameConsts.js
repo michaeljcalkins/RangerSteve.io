@@ -5,7 +5,7 @@ const GameConsts = {
 
     // Physics
     MAX_VELOCITY_X: 650,
-    MAX_VELOCITY_Y: 1100,
+    MAX_VELOCITY_Y: 1300,
     ACCELERATION: 1200,
     DRAG: 3000,
     GRAVITY: 1000,

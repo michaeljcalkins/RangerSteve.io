@@ -39,7 +39,7 @@ export default function FireRocket(currentWeaponId) {
     }, 80)
 
     // Shake camera for gun recoil
-    this.camera.shake(0.0015, 100, true)
+    this.camera.shake(0.01, 150, true)
 
     // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
     setTimeout(() => {
