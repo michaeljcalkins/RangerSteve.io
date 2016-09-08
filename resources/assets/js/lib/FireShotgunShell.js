@@ -45,16 +45,6 @@ export default function FireShotgunShell(currentWeaponId) {
             socketPointerAngle = randomPointerAngle
         }
 
-        // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
-        this.muzzleFlash.visible = true
-        clearTimeout(muzzleFlashHandler)
-        muzzleFlashHandler = setTimeout(() => {
-            this.muzzleFlash.visible = false
-        }, 80)
-
-        // Shake camera for gun recoil
-        this.camera.shake(0.0015, 100, true)
-
         // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
         setTimeout(function() {
             bullet.alpha = 1
@@ -72,6 +62,17 @@ export default function FireShotgunShell(currentWeaponId) {
             damage: currentWeapon.damage
         })
     }
+
+    // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
+    this.muzzleFlash.visible = true
+    clearTimeout(muzzleFlashHandler)
+    muzzleFlashHandler = setTimeout(() => {
+        this.muzzleFlash.visible = false
+    }, 80)
+
+
+    // Shake camera for gun recoil
+    this.camera.shake(0.0015, 100, true)
 
     this.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
     this.weaponSoundEffects[currentWeaponId].play()

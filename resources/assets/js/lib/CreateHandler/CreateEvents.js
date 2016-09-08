@@ -21,7 +21,9 @@ export default function() {
             ? GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
             : GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
 
-        if (store.getState().player.currentWeapon === 'primaryWeapon') {
+        const currentWeaponType = store.getState().player.currentWeapon
+
+        if (currentWeaponType === 'primaryWeapon') {
             store.dispatch(actions.player.setPrimaryIsReloading(true))
         } else {
             if (store.getState().player.selectedSecondaryWeaponId === 'RPG') return
@@ -29,7 +31,7 @@ export default function() {
         }
 
         setTimeout(() => {
-            if (store.getState().player.currentWeapon === 'primaryWeapon') {
+            if (currentWeaponType === 'primaryWeapon') {
                 store.dispatch(actions.player.setPrimaryIsReloading(false))
                 store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo))
                 return

@@ -22,8 +22,8 @@ export default function PlayerSpriteHandler() {
     this.game.slopes.enable(this.player)
 
     // Add a touch of tile padding for the collision detection
-    this.player.body.tilePadding.x = 10
-    this.player.body.tilePadding.y = 10
+    this.player.body.tilePadding.x = 100
+    this.player.body.tilePadding.y = 100
 
     this.player.body.slopes.friction.x = GameConsts.PLAYER_SLOPE_FRICTION_X
     this.player.body.slopes.friction.y = GameConsts.PLAYER_SLOPE_FRICTION_Y
