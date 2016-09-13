@@ -5,7 +5,7 @@ const GameConsts = {
 
     // Physics
     MAX_VELOCITY_X: 650,
-    MAX_VELOCITY_Y: 1500, // Max velocity before player starts going through the ground.
+    MAX_VELOCITY_Y: 1400, // Max velocity before player starts going through the ground.
     ACCELERATION: 1200,
     DRAG: 3000,
     GRAVITY: 1000,

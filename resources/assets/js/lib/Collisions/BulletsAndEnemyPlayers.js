@@ -28,7 +28,7 @@ export default function() {
         emitPlayerDamaged.call(this, {
             roomId: state.room.id,
             damage: state.player[currentWeapon].damage,
-            weaponId: state.player[currentWeapon].name,
+            weaponId: state.player[currentWeapon].id,
             damagedPlayerId: enemy.id,
             attackingPlayerId: '/#' + window.socket.id
         })

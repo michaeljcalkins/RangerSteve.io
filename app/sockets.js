@@ -28,7 +28,6 @@ function setEventHandlers() {
 
 function respawnPlayer(player, attackingPlayer, socketId, roomId) {
     setTimeout(() => {
-        console.log('respawning player')
         player.meta.health = PLAYER_FULL_HEALTH
 
         io.to(roomId).emit('player respawn', {
