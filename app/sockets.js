@@ -14,7 +14,7 @@ let io = null
 
 const MAX_ROOM_SIZE = 7
 const RESPAWN_TIME = 4000
-const ROUND_LENGTH_MINUTES = 50
+const ROUND_LENGTH_MINUTES = 5
 const PLAYER_FULL_HEALTH = 100
 
 function sockets(ioInstance) {
