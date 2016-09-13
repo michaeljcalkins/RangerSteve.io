@@ -191,6 +191,7 @@ function onNewPlayer (data) {
 
     // Specified room id and room has not been created
     if (data.roomId && ! rooms[data.roomId]) {
+        util.log('Specified room does not exist and is being created')
         rooms[data.roomId] = new Room({
             id: data.roomId,
             player: newPlayer,
@@ -213,12 +214,17 @@ function onNewPlayer (data) {
             io.to(data.roomId).emit('update players', {
                 room: rooms[data.roomId]
             })
-        }, 1000)
+        }, 3000)
         return
     }
 
     // Specified room id and room has been created
-    if (data.roomId && rooms[data.roomId] && rooms[data.roomId].players.length < MAX_ROOM_SIZE) {
+    if (
+        data.roomId &&
+        rooms[data.roomId] &&
+        Object.keys(rooms[data.roomId].players).length < MAX_ROOM_SIZE
+    ) {
+        util.log('Specified room does existing and has room for player')
         rooms[data.roomId].players[this.id] = newPlayer
 
         this.join(data.roomId)
@@ -231,7 +237,7 @@ function onNewPlayer (data) {
             io.to(data.roomId).emit('update players', {
                 room: rooms[data.roomId]
             })
-        }, 1000)
+        }, 3000)
         return
     }
 
@@ -241,8 +247,9 @@ function onNewPlayer (data) {
         return Object.keys(rooms[room].players).length < MAX_ROOM_SIZE
     })
 
+    // No available rooms were found so we create one.
     if (availableRooms.length <= 0) {
-        // No available rooms were found so we create one.
+        util.log('No rooms available, creating new room to add player')
         let newRoomId = hri.random()
         rooms[newRoomId] = new Room({
             id: newRoomId,
@@ -260,22 +267,23 @@ function onNewPlayer (data) {
             io.to(newRoomId).emit('update players', {
                 room: rooms[newRoomId]
             })
-        }, 1000)
-    } else {
-        util.log('Adding player to', availableRooms[0])
-        rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
-        this.join(availableRooms[0])
-
-        setTimeout(() => {
-            io.to(rooms[availableRooms[0]].id).emit('load game', {
-                room: rooms[availableRooms[0]]
-            })
-
-            io.to(availableRooms[0]).emit('update players', {
-                room: rooms[availableRooms[0]]
-            })
-        }, 1000)
+        }, 3000)
+        return
     }
+
+    util.log('Adding player to first available room')
+    rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
+    this.join(availableRooms[0])
+
+    setTimeout(() => {
+        io.to(rooms[availableRooms[0]].id).emit('load game', {
+            room: rooms[availableRooms[0]]
+        })
+
+        io.to(availableRooms[0]).emit('update players', {
+            room: rooms[availableRooms[0]]
+        })
+    }, 3000)
 }
 
 // Player has moved
