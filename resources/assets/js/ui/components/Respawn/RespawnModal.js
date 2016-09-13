@@ -40,9 +40,13 @@ export default class RespawnModal extends React.Component {
 
         if (! _.get(player, 'attackingDamageStats.attackingDamage')) return null
 
+        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
+        const defendingHits = _.get(player, 'attackingDamageStats.attackingHits')
+        const defendingDamage = _.get(player, 'attackingDamageStats.attackingDamage')
+
         return (
             <div>
-                Damage given: <strong>{ player.attackingDamageStats.attackingDamage }</strong> in <strong>{ player.attackingDamageStats.attackingHits } hits</strong> to { room.players[player.damageStats.attackingPlayerId].meta.nickname }
+                Damage given: <strong>{ defendingDamage }</strong> in <strong>{ defendingHits } hits</strong> to { attackingPlayerName }
             </div>
         )
     }
@@ -52,16 +56,21 @@ export default class RespawnModal extends React.Component {
 
         if (! player.damageStats) return null
 
+        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
+        const attackingHits = _.get(player, 'damageStats.attackingHits')
+        const attackingDamage = _.get(player, 'damageStats.attackingDamage')
+
         return (
             <div>
-                Damage taken: <strong>{ player.damageStats.attackingDamage }</strong> in <strong>{ player.damageStats.attackingHits } hits</strong> from { room.players[player.damageStats.attackingPlayerId].meta.nickname }<br />
+                Damage taken: <strong>{ attackingDamage }</strong> in <strong>{ attackingHits } hits</strong> from { attackingPlayerName }
+                <br />
             </div>
         )
     }
 
     renderCauseOfDeath() {
         const { player, room } = this.props
-        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`)
+        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
         const selectedWeapon = _.get(GameConsts, `WEAPONS[${player.damageStats.weaponId}]`)
         const attackingPlayerId = _.get(player, 'damageStats.attackingPlayerId', false)
 

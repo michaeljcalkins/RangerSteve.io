@@ -42,8 +42,6 @@ export default function onPlayerRespawn(data) {
     else
         this.currentWeaponSprite.loadTexture(state.player.selectedPrimaryWeaponId)
 
-    store.dispatch(actions.player.setHealth(data.health))
-
     // Hide child groups
     this.leftArmGroup.visible = true
     this.rightArmGroup.visible = true
@@ -55,4 +53,11 @@ export default function onPlayerRespawn(data) {
 
     store.dispatch(actions.player.setSecondaryIsReloading(false))
     store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.selectedSecondaryWeaponId].ammo))
+
+    // Allow Phaser to move the player
+    // so that the map doesn't
+    // kill them again.
+    setTimeout(() => {
+        store.dispatch(actions.player.setHealth(data.health))
+    }, 100)
 }

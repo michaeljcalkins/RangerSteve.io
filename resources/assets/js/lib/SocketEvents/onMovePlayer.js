@@ -19,6 +19,7 @@ export default function onMovePlayer(data) {
 
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
+
     if (data.id === ('/#' + window.socket.id)) return
 
     let movePlayer = PlayerById.call(this, data.id)
@@ -39,6 +40,13 @@ export default function onMovePlayer(data) {
     movePlayer.headGroup.visible = true
     movePlayer.torsoGroup.visible = true
 
+    // Control jump jet visibility
+    movePlayer.rightJumpjet.visible = data.flying
+    movePlayer.leftJumpjet.visible = data.flying
+
+    // Control muzzle flash visibility
+    movePlayer.muzzleFlash.visible = data.shooting
+
     // Update player angles
     movePlayer.rightArmGroup.angle = data.rightArmAngle
     movePlayer.leftArmGroup.angle = data.leftArmAngle
@@ -49,9 +57,9 @@ export default function onMovePlayer(data) {
         playerFaceLeft(movePlayer)
     }
 
-    if (movePlayer.x > movePlayer.lastPosition.x) {
+    if (movePlayer.x > movePlayer.lastPosition.x && ! data.flying) {
         movePlayer.animations.play('right')
-    } else if (movePlayer.x < movePlayer.lastPosition.x) {
+    } else if (movePlayer.x < movePlayer.lastPosition.x && ! data.flying) {
         movePlayer.animations.play('left')
     } else {
         movePlayer.animations.stop()

@@ -83,6 +83,36 @@ export default function RemotePlayer(player) {
     newRemotePlayer.rightArmGroup.x = -25
     newRemotePlayer.rightArmGroup.y = -65
 
+    // Muzzle Flash
+    newRemotePlayer.muzzleFlash = this.game.make.sprite(0, 0, 'muzzle-flash')
+    newRemotePlayer.muzzleFlash.scale.setTo(.6)
+    newRemotePlayer.muzzleFlash.animations.add('flash', [0,1,2,3,4,5], 20, true)
+    newRemotePlayer.muzzleFlash.animations.play('flash')
+    newRemotePlayer.muzzleFlash.y = -72
+    newRemotePlayer.muzzleFlash.x = 102
+    newRemotePlayer.muzzleFlash.visible = false
+    newRemotePlayer.currentWeaponSprite.addChild(newRemotePlayer.muzzleFlash)
+
+    newRemotePlayer.leftJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
+    newRemotePlayer.leftJumpjet.anchor.setTo(0)
+    newRemotePlayer.leftJumpjet.scale.setTo(.4)
+    newRemotePlayer.leftJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
+    newRemotePlayer.leftJumpjet.animations.play('thrust')
+    newRemotePlayer.leftJumpjet.y = 130
+    newRemotePlayer.leftJumpjet.x = -78
+    newRemotePlayer.leftJumpjet.visible = false
+    newRemotePlayer.addChild(newRemotePlayer.leftJumpjet)
+
+    newRemotePlayer.rightJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
+    newRemotePlayer.rightJumpjet.anchor.setTo(0)
+    newRemotePlayer.rightJumpjet.scale.setTo(.4)
+    newRemotePlayer.rightJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
+    newRemotePlayer.rightJumpjet.animations.play('thrust')
+    newRemotePlayer.rightJumpjet.y = 130
+    newRemotePlayer.rightJumpjet.x = -7
+    newRemotePlayer.rightJumpjet.visible = false
+    newRemotePlayer.addChild(newRemotePlayer.rightJumpjet)
+
     newRemotePlayer.meta = player.meta
 
     return newRemotePlayer

@@ -18,11 +18,6 @@ let io = socketIo()
 app.io = io
 SocketHandler.init(io)
 
-let poet = require('poet')(app, {
-    posts: 'resources/posts'
-})
-poet.init()
-
 app.set('views', path.join(__dirname, 'resources/views'))
 app.set('view engine', 'nunjucks');
 
@@ -47,29 +42,6 @@ app.use(express.static(path.join(__dirname, 'public'), {
 }));
 
 app.use('/', routes)
-
-poet.addRoute('/blog', function (req, res) {
-    var posts = poet.helpers.getPosts(req.params.post)
-    if (posts) {
-        res.render('blog', { posts: posts })
-    } else {
-        res.send(404)
-    }
-});
-
-poet.addRoute('/blog/:post', function (req, res) {
-    var post = poet.helpers.getPost(req.params.post)
-    var posts = poet.helpers.getPosts(req.params.post)
-
-    if (post) {
-        res.render('post', {
-            post: post,
-            posts: posts
-        })
-    } else {
-        res.send(404)
-    }
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -29,25 +29,3 @@ const store = createStore(rootReducer)
 
 ui(store)
 game(store)
-
-/**
- * If the user has this game in the background websockets
- * stop listening for events.  Check for the current
- * state of the game until the game is loaded.
- */
-let gameLoader = null
-gameLoader = setInterval(() => {
-    if (store.getState().game.state === 'loading') {
-        window.socket.emit('new player', {
-            roomId: getParameterByName('roomId'),
-            map: getParameterByName('map'),
-            x: 0,
-            y: 0,
-            weaponId: store.getState().player.currentWeapon === 'primaryWeapon' ? store.getState().player.selectedPrimaryWeaponId : store.getState().player.selectedSecondaryWeaponId,
-            nickname: store.getState().player.nickname
-        })
-        return
-    }
-
-    clearInterval(gameLoader)
-}, 2000)

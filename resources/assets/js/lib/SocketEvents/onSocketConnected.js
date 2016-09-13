@@ -1,10 +1,16 @@
-export default function onSocketConnected() {
-    // const state = this.game.store.getState()
+import getParameterByName from '../GetParameterByName.js'
 
-    // window.socket.emit('new player', {
-    //     x: 0,
-    //     y: 0,
-    //     weaponId: state.player.currentWeapon === 'primaryWeapon' ? state.player.selectedPrimaryWeaponId : state.player.selectedSecondaryWeaponId,
-    //     nickname: state.player.nickname
-    // })
+export default function onSocketConnected() {
+    const { store } = this.game
+
+    window.socket.emit('new player', {
+        roomId: getParameterByName('roomId'),
+        map: getParameterByName('map'),
+        x: 0,
+        y: 0,
+        weaponId: store.getState().player.currentWeapon === 'primaryWeapon'
+            ? store.getState().player.selectedPrimaryWeaponId
+            : store.getState().player.selectedSecondaryWeaponId,
+        nickname: store.getState().player.nickname
+    })
 }

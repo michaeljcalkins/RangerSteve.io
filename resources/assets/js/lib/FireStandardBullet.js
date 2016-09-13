@@ -55,8 +55,6 @@ export default function FireStandardBullet(currentWeaponId) {
         store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
     }
 
-
-
     emitBulletFired.call(this, {
         roomId: state.room.id,
         bulletId: bullet.bulletId,

@@ -10,6 +10,8 @@ export default function PlayerSpriteHandler() {
     const secondaryWeaponId = this.game.store.getState().player.selectedSecondaryWeaponId
     const selectedSecondaryWeapon = GameConsts.WEAPONS[secondaryWeaponId]
 
+    this.jumpjetFx = this.game.add.audio('jumpjet')
+
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.width = GameConsts.PLAYER_SPRITE_WIDTH
     this.player.height = GameConsts.PLAYER_SPRITE_HEIGHT

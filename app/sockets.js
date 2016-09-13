@@ -1,29 +1,43 @@
 'use strict'
 
-let util = require('util')
-let hri = require('human-readable-ids').hri
-let _ = require('lodash')
-let moment = require('moment')
+const util = require('util')
+const hri = require('human-readable-ids').hri
+const _ = require('lodash')
+const moment = require('moment')
 
-let Player = require('./services/Player')
-let PlayerById = require('./services/PlayerById')
-let CreateRoom = require('./services/CreateRoom')
+const Player = require('./services/Player')
+const PlayerById = require('./services/PlayerById')
+const Room = require('./services/Room')
 
 let rooms = {}
 let io = null
 
 const MAX_ROOM_SIZE = 7
-const RESPAWN_TIME = 4000
+const RESPAWN_TIME_SECONDS = 4
 const ROUND_LENGTH_MINUTES = 5
 const PLAYER_FULL_HEALTH = 100
 
-function sockets(ioInstance) {
+function init(ioInstance) {
     io = ioInstance
-    setEventHandlers()
-}
+    io.on('connection', (socket) => {
+        util.log('New connection from ' + socket.request.connection.remoteAddress)
 
-function setEventHandlers() {
-    io.on('connection', onSocketConnection.bind(this))
+        socket.on('disconnect', onClientDisconnect)
+        socket.on('new player', onNewPlayer)
+        socket.on('move player', onMovePlayer)
+
+        socket.on('player damaged', onPlayerDamaged)
+        socket.on('player full health', onPlayerFullHealth)
+        socket.on('player healing', onPlayerHealing)
+        socket.on('player adjust score', onPlayerAdjustScore)
+        socket.on('player update nickname', onPlayerUpdateNickname)
+
+        socket.on('message send', onMessageSend)
+
+        socket.on('bullet fired', onBulletFired)
+        socket.on('kick player', onKickPlayer)
+        socket.on('load complete', onLoadComplete)
+    })
 }
 
 function respawnPlayer(player, attackingPlayer, socketId, roomId) {
@@ -45,7 +59,7 @@ function respawnPlayer(player, attackingPlayer, socketId, roomId) {
             attackingPlayer.meta.damageStats.attackingDamage = 0
             attackingPlayer.meta.damageStats.attackingHits = 0
         }
-    }, RESPAWN_TIME)
+    }, RESPAWN_TIME_SECONDS * 1000)
 }
 
 setInterval(function() {
@@ -54,7 +68,7 @@ setInterval(function() {
             util.log('Restarting round for', roomId)
             const previousMap = rooms[roomId].map
 
-            rooms[roomId] = CreateRoom({
+            rooms[roomId] = new Room({
                 id: roomId,
                 players: rooms[roomId].players,
                 roundLength: ROUND_LENGTH_MINUTES
@@ -67,8 +81,6 @@ setInterval(function() {
             } else if (previousMap === 'DarkForest') {
                 rooms[roomId].map = 'HighRuleJungle'
             }
-
-            rooms[roomId].map = 'HighRuleJungle'
 
             util.log(rooms[roomId].map, 'has been selected for ', roomId)
 
@@ -89,34 +101,13 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].roundStartTime = moment().add(12, 'seconds').unix()
+            rooms[roomId].roundStartTime = moment().add(10, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })
         }
     })
 }, 1000)
-
-// New socket connection
-function onSocketConnection(socket) {
-    util.log('New connection from ' + socket.request.connection.remoteAddress)
-
-    socket.on('disconnect', onClientDisconnect)
-    socket.on('new player', onNewPlayer)
-    socket.on('move player', onMovePlayer)
-
-    socket.on('player damaged', onPlayerDamaged)
-    socket.on('player full health', onPlayerFullHealth)
-    socket.on('player healing', onPlayerHealing)
-    socket.on('player adjust score', onPlayerAdjustScore)
-    socket.on('player update nickname', onPlayerUpdateNickname)
-
-    socket.on('message send', onMessageSend)
-
-    socket.on('bullet fired', onBulletFired)
-    socket.on('kick player', onKickPlayer)
-    socket.on('load complete', onLoadComplete)
-}
 
 function onLoadComplete(data) {
     io.to(data.roomId).emit('update players', {
@@ -178,19 +169,14 @@ function onPlayerUpdateNickname(data) {
 
 // New player has joined
 function onNewPlayer (data) {
-    util.log('Creating new player...', data)
+    util.log('Creating new player...', data, this.id)
 
+    // Check for duplicate players
     var player = PlayerById(data.roomId, this.id, rooms)
-    if (player) {
-        util.log('Player already in room: ' + this.id)
-        return
-    }
-
-    util.log('Player id is', this.id)
+    if (player) return util.log('Player already in room: ' + this.id)
 
     // Create a new player
-    var newPlayer = Player(data.x, data.y)
-    newPlayer.id = this.id
+    var newPlayer = new Player(this.id, data.x, data.y)
 
     newPlayer.meta = {
         health: PLAYER_FULL_HEALTH,
@@ -203,55 +189,92 @@ function onNewPlayer (data) {
         weaponId: data.weaponId
     }
 
-    if (data.roomId) {
-        if (! rooms[data.roomId]) {
-            util.log("Creating room on new player")
-            rooms[data.roomId] = CreateRoom({
-                id: data.roomId,
-                player: newPlayer
-            })
+    // Specified room id and room has not been created
+    if (data.roomId && ! rooms[data.roomId]) {
+        rooms[data.roomId] = new Room({
+            id: data.roomId,
+            player: newPlayer,
+            roundLength: ROUND_LENGTH_MINUTES
+        })
 
-            if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest'].indexOf(data.map) > -1) {
-                rooms[data.roomId].map = data.map
-            }
+        if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest'].indexOf(data.map) > -1) {
+            rooms[data.roomId].map = data.map
         }
 
         rooms[data.roomId].players[this.id] = newPlayer
+
         this.join(data.roomId)
 
-        io.to(data.roomId).emit('load game', {
-            room: rooms[data.roomId]
-        })
+        setTimeout(() => {
+            io.to(data.roomId).emit('load game', {
+                room: rooms[data.roomId]
+            })
+
+            io.to(data.roomId).emit('update players', {
+                room: rooms[data.roomId]
+            })
+        }, 1000)
         return
     }
 
+    // Specified room id and room has been created
+    if (data.roomId && rooms[data.roomId] && rooms[data.roomId].players.length <= MAX_ROOM_SIZE) {
+        rooms[data.roomId].players[this.id] = newPlayer
+
+        this.join(data.roomId)
+
+        setTimeout(() => {
+            io.to(data.roomId).emit('load game', {
+                room: rooms[data.roomId]
+            })
+
+            io.to(data.roomId).emit('update players', {
+                room: rooms[data.roomId]
+            })
+        }, 1000)
+        return
+    }
+
+    // Find available room with space for player
     let availableRooms = Object.keys(rooms).filter(function(room) {
         if (! rooms[room].players) return true
         return Object.keys(rooms[room].players).length <= MAX_ROOM_SIZE
     })
 
     if (availableRooms.length <= 0) {
+        // No available rooms were found so we create one.
         let newRoomId = hri.random()
-        util.log("Creating room on new player with no rooms available")
-        rooms[newRoomId] = CreateRoom({
+        rooms[newRoomId] = new Room({
             id: newRoomId,
-            player: newPlayer
+            player: newPlayer,
+            roundLength: ROUND_LENGTH_MINUTES
         })
 
-        util.log('Created new room', newRoomId)
         this.join(newRoomId)
 
-        io.to(newRoomId).emit('load game', {
-            room: rooms[newRoomId]
-        })
+        setTimeout(() => {
+            io.to(newRoomId).emit('load game', {
+                room: rooms[newRoomId]
+            })
+
+            io.to(newRoomId).emit('update players', {
+                room: rooms[newRoomId]
+            })
+        }, 1000)
     } else {
         util.log('Adding player to', availableRooms[0])
         rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
         this.join(availableRooms[0])
 
-        io.to(rooms[availableRooms[0]].id).emit('load game', {
-            room: rooms[availableRooms[0]]
-        })
+        setTimeout(() => {
+            io.to(rooms[availableRooms[0]].id).emit('load game', {
+                room: rooms[availableRooms[0]]
+            })
+
+            io.to(availableRooms[0]).emit('update players', {
+                room: rooms[availableRooms[0]]
+            })
+        }, 1000)
     }
 }
 
@@ -263,15 +286,6 @@ function onMovePlayer (data) {
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
 
-    // Player not found
-    if (! movePlayer) {
-        util.log('Player not found when moving: ' + this.id)
-        io.to(data.roomid).emit('update players', {
-            room: rooms[data.roomid]
-        })
-        return
-    }
-
     // Update player position
     movePlayer.x = data.x
     movePlayer.y = data.y
@@ -282,12 +296,14 @@ function onMovePlayer (data) {
 
     // Broadcast updated position to connected socket clients
     io.to(data.roomId).emit('move player', {
-        id: movePlayer.id,
+        id: this.id,
         x: data.x,
         y: data.y,
         rightArmAngle: data.rightArmAngle,
         leftArmAngle: data.leftArmAngle,
         facing: data.facing,
+        flying: data.flying,
+        shooting: data.shooting,
         lastMovement: data.lastMovement,
         health: movePlayer.meta.health,
         weaponId: data.weaponId
@@ -370,7 +386,7 @@ function onPlayerDamaged(data) {
         player.meta.health = 0
         player.meta.killingSpree = 0
         player.meta.deaths++
-        player.meta.canRespawnTimestamp = moment().add(5, 'seconds').unix()
+        player.meta.canRespawnTimestamp = moment().add(RESPAWN_TIME_SECONDS, 'seconds').unix()
 
         // Falling to your death causes a score loss
         if (data.damage === 1000) {
@@ -442,5 +458,4 @@ function onBulletFired(data) {
     io.to(data.roomId).emit('bullet fired', data)
 }
 
-module.exports.rooms = rooms
-module.exports.init = sockets
+module.exports.init = init

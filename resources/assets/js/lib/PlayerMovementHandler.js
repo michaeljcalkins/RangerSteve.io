@@ -4,7 +4,6 @@ import { leftInputIsActive, rightInputIsActive } from './InputHelpers'
 
 export default function PlayerMovementHandler() {
     const state = this.game.store.getState()
-    const onTheGround = this.player.body.touching.down
 
     if (state.player.health <= 0) return
 

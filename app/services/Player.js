@@ -1,13 +1,11 @@
 'use strict'
 
-let Player = function(startX, startY) {
-    let playerObj = {
+const Player = function(id, startX, startY) {
+    return {
         x: startX,
         y: startY,
-        id: null
+        id: id
     }
-
-    return playerObj
 }
 
 module.exports = Player

@@ -3,6 +3,7 @@ import KillCurrentPlayer from '../KillCurrentPlayer.js'
 
 const WORLD_WIDTH = 6000
 const WORLD_HEIGHT = 2975
+const GROUND_POSITION_Y = WORLD_HEIGHT - 10
 const SPAWN_POINTS = [
     { x: 2900, y: 2500 },
     { x: 2300, y: 2300 },
