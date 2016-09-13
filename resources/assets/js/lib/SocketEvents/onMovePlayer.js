@@ -67,6 +67,7 @@ export default function onMovePlayer(data) {
         movePlayer.currentWeaponSprite.loadTexture(data.weaponId)
         movePlayer.currentWeaponSprite.rotation = GameConsts.WEAPONS[data.weaponId].position.rotation
         movePlayer.currentWeaponSprite.scale.setTo(GameConsts.WEAPONS[data.weaponId].position.scale)
+        movePlayer.currentWeaponSprite.id = data.weaponId
     }
 
     movePlayer.lastPosition.x = movePlayer.x
