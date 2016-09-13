@@ -132,7 +132,6 @@ export default class GameUi extends React.Component {
 
         return (
             <div>
-                { game.state === 'loading' && <LoadingScreen /> }
                 <HudAmmo
                     ammoRemaining={ currentAmmoRemaining }
                     currentWeapon={ player.currentWeapon }
