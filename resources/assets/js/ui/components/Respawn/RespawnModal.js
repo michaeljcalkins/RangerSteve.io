@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import moment from 'moment'
 import _ from 'lodash'
+import GoogleAd from 'react-google-ad'
 
 import GameConsts from '../../../lib/GameConsts'
 
@@ -136,6 +137,10 @@ export default class RespawnModal extends React.Component {
                                     readOnly
                                     type="text"
                                 />
+
+                                <hr />
+
+                                <GoogleAd client="ca-pub-2986206357433139" slot="6468182005" format="auto" />
                             </div>
                         </div>
                     </div>
