@@ -13,7 +13,7 @@ let rooms = {}
 let io = null
 
 const MAX_ROOM_SIZE = 7
-const RESPAWN_TIME = 4000
+const RESPAWN_TIME_SECONDS = 4
 const ROUND_LENGTH_MINUTES = 5
 const PLAYER_FULL_HEALTH = 100
 
@@ -45,7 +45,7 @@ function respawnPlayer(player, attackingPlayer, socketId, roomId) {
             attackingPlayer.meta.damageStats.attackingDamage = 0
             attackingPlayer.meta.damageStats.attackingHits = 0
         }
-    }, RESPAWN_TIME)
+    }, RESPAWN_TIME_SECONDS * 1000)
 }
 
 setInterval(function() {
@@ -68,8 +68,6 @@ setInterval(function() {
                 rooms[roomId].map = 'HighRuleJungle'
             }
 
-            rooms[roomId].map = 'HighRuleJungle'
-
             util.log(rooms[roomId].map, 'has been selected for ', roomId)
 
             Object.keys(rooms[roomId].players).forEach((playerId) => {
@@ -89,7 +87,7 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].roundStartTime = moment().add(12, 'seconds').unix()
+            rooms[roomId].roundStartTime = moment().add(10, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })
@@ -208,7 +206,8 @@ function onNewPlayer (data) {
             util.log("Creating room on new player")
             rooms[data.roomId] = CreateRoom({
                 id: data.roomId,
-                player: newPlayer
+                player: newPlayer,
+                roundLength: ROUND_LENGTH_MINUTES
             })
 
             if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest'].indexOf(data.map) > -1) {
@@ -235,7 +234,8 @@ function onNewPlayer (data) {
         util.log("Creating room on new player with no rooms available")
         rooms[newRoomId] = CreateRoom({
             id: newRoomId,
-            player: newPlayer
+            player: newPlayer,
+            roundLength: ROUND_LENGTH_MINUTES
         })
 
         util.log('Created new room', newRoomId)
@@ -370,7 +370,7 @@ function onPlayerDamaged(data) {
         player.meta.health = 0
         player.meta.killingSpree = 0
         player.meta.deaths++
-        player.meta.canRespawnTimestamp = moment().add(5, 'seconds').unix()
+        player.meta.canRespawnTimestamp = moment().add(RESPAWN_TIME_SECONDS, 'seconds').unix()
 
         // Falling to your death causes a score loss
         if (data.damage === 1000) {

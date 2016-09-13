@@ -13,7 +13,7 @@ let CreateRoom = function(data) {
     } else {
         playersObj = data.players
     }
-
+    console.log(data.roundLength)
     return {
         id: data.id,
         players: playersObj,
