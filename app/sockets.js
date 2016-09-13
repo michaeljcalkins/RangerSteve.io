@@ -13,6 +13,8 @@ let rooms = {}
 let io = null
 
 const MAX_ROOM_SIZE = 7
+const RESPAWN_TIME = 4000
+const PLAYER_FULL_HEALTH = 100
 
 function sockets(ioInstance) {
     io = ioInstance
@@ -26,12 +28,12 @@ function setEventHandlers() {
 function respawnPlayer(player, attackingPlayer, socketId, roomId) {
     setTimeout(() => {
         console.log('respawning player')
-        player.meta.health = 100
+        player.meta.health = PLAYER_FULL_HEALTH
 
         io.to(roomId).emit('player respawn', {
             id: socketId,
             damagedPlayerId: player.id,
-            health: 100
+            health: PLAYER_FULL_HEALTH
         })
 
         player.meta.damageStats.attackingPlayerId = null
@@ -43,7 +45,7 @@ function respawnPlayer(player, attackingPlayer, socketId, roomId) {
             attackingPlayer.meta.damageStats.attackingDamage = 0
             attackingPlayer.meta.damageStats.attackingHits = 0
         }
-    }, 5000)
+    }, RESPAWN_TIME)
 }
 
 setInterval(function() {
@@ -70,7 +72,7 @@ setInterval(function() {
             util.log(rooms[roomId].map, 'has been selected for ', roomId)
 
             Object.keys(rooms[roomId].players).forEach((playerId) => {
-                rooms[roomId].players[playerId].meta.health = 100
+                rooms[roomId].players[playerId].meta.health = PLAYER_FULL_HEALTH
                 rooms[roomId].players[playerId].meta.deaths = 0
                 rooms[roomId].players[playerId].meta.kills = 0
                 rooms[roomId].players[playerId].meta.bestKillingSpree = 0
@@ -190,7 +192,7 @@ function onNewPlayer (data) {
     newPlayer.id = this.id
 
     newPlayer.meta = {
-        health: 100,
+        health: PLAYER_FULL_HEALTH,
         kills: 0,
         deaths: 0,
         bestKillingSpree: 0,
