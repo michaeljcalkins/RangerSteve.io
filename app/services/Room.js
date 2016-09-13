@@ -4,7 +4,7 @@ const moment = require('moment')
 const _ = require('lodash')
 const util = require('util')
 
-let CreateRoom = function(data) {
+const Room = function(data) {
     util.log('Creating room', data.id)
 
     let playersObj = {}
@@ -13,7 +13,7 @@ let CreateRoom = function(data) {
     } else {
         playersObj = data.players
     }
-    console.log(data.roundLength)
+
     return {
         id: data.id,
         players: playersObj,
@@ -23,4 +23,4 @@ let CreateRoom = function(data) {
     }
 }
 
-module.exports = CreateRoom
+module.exports = Room

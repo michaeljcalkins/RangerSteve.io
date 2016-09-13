@@ -1,10 +1,10 @@
 'use strict'
 
-let Player = function(startX, startY) {
+const Player = function(id, startX, startY) {
     return {
         x: startX,
         y: startY,
-        id: null
+        id: id
     }
 }
 

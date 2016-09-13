@@ -1,13 +1,13 @@
 'use strict'
 
-let util = require('util')
-let hri = require('human-readable-ids').hri
-let _ = require('lodash')
-let moment = require('moment')
+const util = require('util')
+const hri = require('human-readable-ids').hri
+const _ = require('lodash')
+const moment = require('moment')
 
-let Player = require('./services/Player')
-let PlayerById = require('./services/PlayerById')
-let CreateRoom = require('./services/CreateRoom')
+const Player = require('./services/Player')
+const PlayerById = require('./services/PlayerById')
+const Room = require('./services/Room')
 
 let rooms = {}
 let io = null
@@ -68,7 +68,7 @@ setInterval(function() {
             util.log('Restarting round for', roomId)
             const previousMap = rooms[roomId].map
 
-            rooms[roomId] = CreateRoom({
+            rooms[roomId] = new Room({
                 id: roomId,
                 players: rooms[roomId].players,
                 roundLength: ROUND_LENGTH_MINUTES
@@ -171,17 +171,12 @@ function onPlayerUpdateNickname(data) {
 function onNewPlayer (data) {
     util.log('Creating new player...', data, this.id)
 
+    // Check for duplicate players
     var player = PlayerById(data.roomId, this.id, rooms)
-    if (player) {
-        util.log('Player already in room: ' + this.id)
-        return
-    }
-
-    util.log('Player id is', this.id)
+    if (player) return util.log('Player already in room: ' + this.id)
 
     // Create a new player
-    var newPlayer = Player(data.x, data.y)
-    newPlayer.id = this.id
+    var newPlayer = new Player(this.id, data.x, data.y)
 
     newPlayer.meta = {
         health: PLAYER_FULL_HEALTH,
@@ -194,20 +189,16 @@ function onNewPlayer (data) {
         weaponId: data.weaponId
     }
 
-    if (data.roomId) {
-        util.log('Has room id', data.roomId)
+    // Specified room id and room has not been created
+    if (data.roomId && ! rooms[data.roomId]) {
+        rooms[data.roomId] = new Room({
+            id: data.roomId,
+            player: newPlayer,
+            roundLength: ROUND_LENGTH_MINUTES
+        })
 
-        if (! rooms[data.roomId]) {
-            util.log("Creating room on new player")
-            rooms[data.roomId] = CreateRoom({
-                id: data.roomId,
-                player: newPlayer,
-                roundLength: ROUND_LENGTH_MINUTES
-            })
-
-            if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest'].indexOf(data.map) > -1) {
-                rooms[data.roomId].map = data.map
-            }
+        if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest'].indexOf(data.map) > -1) {
+            rooms[data.roomId].map = data.map
         }
 
         rooms[data.roomId].players[this.id] = newPlayer
@@ -226,21 +217,39 @@ function onNewPlayer (data) {
         return
     }
 
+    // Specified room id and room has been created
+    if (data.roomId && rooms[data.roomId] && rooms[data.roomId].players.length <= MAX_ROOM_SIZE) {
+        rooms[data.roomId].players[this.id] = newPlayer
+
+        this.join(data.roomId)
+
+        setTimeout(() => {
+            io.to(data.roomId).emit('load game', {
+                room: rooms[data.roomId]
+            })
+
+            io.to(data.roomId).emit('update players', {
+                room: rooms[data.roomId]
+            })
+        }, 1000)
+        return
+    }
+
+    // Find available room with space for player
     let availableRooms = Object.keys(rooms).filter(function(room) {
         if (! rooms[room].players) return true
         return Object.keys(rooms[room].players).length <= MAX_ROOM_SIZE
     })
 
     if (availableRooms.length <= 0) {
+        // No available rooms were found so we create one.
         let newRoomId = hri.random()
-        util.log("Creating room on new player with no rooms available")
-        rooms[newRoomId] = CreateRoom({
+        rooms[newRoomId] = new Room({
             id: newRoomId,
             player: newPlayer,
             roundLength: ROUND_LENGTH_MINUTES
         })
 
-        util.log('Created new room', newRoomId)
         this.join(newRoomId)
 
         setTimeout(() => {
