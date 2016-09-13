@@ -2,6 +2,7 @@ import Preload from './game/Preload'
 import Update from './game/Update'
 import Create from './game/Create'
 import Render from './game/Render'
+import setEventHandlers from './lib/SocketEvents/setEventHandlers'
 
 export default function(store) {
     const gameWidth = window.innerWidth
@@ -14,5 +15,7 @@ export default function(store) {
         this.create = Create
         this.update = Update
         this.render = Render
+
+        setEventHandlers.call(this)
     })
 }

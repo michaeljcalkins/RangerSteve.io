@@ -1,14 +1,10 @@
 import actions from '../actions'
-import SetEventHandlers from '../lib/SocketEvents/SetEventHandlers'
+import setEventHandlers from '../lib/SocketEvents/setEventHandlers'
 
 export default function Create() {
     this.game.store.dispatch(actions.game.setState('loading'))
-
     this.game.renderer.renderSession.roundPixels = true
     this.game.stage.disableVisibilityChange = true
-    this.jumpjetFx = this.game.add.audio('jumpjet')
-
-    SetEventHandlers.call(this)
 
     window.Meta = {
         kickPlayerByUsername: (nickname) => {
