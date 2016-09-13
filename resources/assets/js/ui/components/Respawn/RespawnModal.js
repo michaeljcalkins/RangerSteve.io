@@ -137,10 +137,11 @@ export default class RespawnModal extends React.Component {
                                     readOnly
                                     type="text"
                                 />
-
+                                {/*
                                 <hr />
 
                                 <GoogleAd width={ 336 } height={ 280 } slot="8444442803" />
+                                */}
                             </div>
                         </div>
                     </div>
