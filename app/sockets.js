@@ -288,6 +288,8 @@ function onMovePlayer (data) {
         rightArmAngle: data.rightArmAngle,
         leftArmAngle: data.leftArmAngle,
         facing: data.facing,
+        flying: data.flying,
+        shooting: data.shooting,
         lastMovement: data.lastMovement,
         health: movePlayer.meta.health,
         weaponId: data.weaponId

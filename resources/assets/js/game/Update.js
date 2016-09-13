@@ -125,6 +125,8 @@ export default function Update() {
             rightArmAngle: this.rightArmGroup.angle,
             leftArmAngle: this.leftArmGroup.angle,
             facing: state.player.facing,
+            flying: this.rightJumpjet.visible && this.leftJumpjet.visible,
+            shooting: this.muzzleFlash.visible,
             weaponId: state.player.currentWeapon === 'primaryWeapon' ? state.player.selectedPrimaryWeaponId : state.player.selectedSecondaryWeaponId
         }
 
