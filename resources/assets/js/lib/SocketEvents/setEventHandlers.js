@@ -11,7 +11,6 @@ import onMessageReceived from './onMessageReceived'
 import onPlayerKillLog from './onPlayerKillLog'
 import onKickPlayer from './onKickPlayer'
 import onLoadGame from './onLoadGame'
-import onReloadWindow from './onReloadWindow'
 
 export default function() {
     window.socket.on('connect', onSocketConnected.bind(this))
