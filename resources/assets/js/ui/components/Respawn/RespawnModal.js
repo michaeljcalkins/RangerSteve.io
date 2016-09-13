@@ -40,9 +40,13 @@ export default class RespawnModal extends React.Component {
 
         if (! _.get(player, 'attackingDamageStats.attackingDamage')) return null
 
+        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
+        const defendingHits = _.get(player, 'attackingDamageStats.attackingHits')
+        const defendingDamage = _.get(player, 'attackingDamageStats.attackingDamage')
+
         return (
             <div>
-                Damage given: <strong>{ player.attackingDamageStats.attackingDamage }</strong> in <strong>{ player.attackingDamageStats.attackingHits } hits</strong> to { room.players[player.damageStats.attackingPlayerId].meta.nickname }
+                Damage given: <strong>{ defendingDamage }</strong> in <strong>{ defendingHits } hits</strong> to { attackingPlayerName }
             </div>
         )
     }
