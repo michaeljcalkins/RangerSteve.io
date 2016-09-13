@@ -42,6 +42,8 @@ setInterval(function() {
                 rooms[roomId].map = 'HighRuleJungle'
             }
 
+            rooms[roomId].map = 'HighRuleJungle'
+
             util.log(rooms[roomId].map, 'has been selected for ', roomId)
 
             Object.keys(rooms[roomId].players).forEach((playerId) => {
