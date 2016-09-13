@@ -19,6 +19,7 @@ export default function onMovePlayer(data) {
 
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
+
     if (data.id === ('/#' + window.socket.id)) return
 
     let movePlayer = PlayerById.call(this, data.id)

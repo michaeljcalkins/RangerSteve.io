@@ -119,6 +119,7 @@ export default function Update() {
      */
     if (state.room.id && state.player.health > 0 && state.room.state !== 'ended' && state.player.facing !== null) {
         let newPlayerData = {
+            id: ('/#' + window.socket.id),
             roomId: state.room.id,
             x: this.player.x,
             y: this.player.y,

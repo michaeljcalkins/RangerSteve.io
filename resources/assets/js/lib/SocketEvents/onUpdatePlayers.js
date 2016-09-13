@@ -31,11 +31,11 @@ export default function onUpdatePlayers(data) {
     this.enemies = this.game.add.group()
 
     _.values(store.getState().room.players).forEach((player) => {
-        if (player.id === ('/#' + window.socket.id)) {
-            store.dispatch(actions.player.setScore(player.meta.score))
-            store.dispatch(actions.player.setHealth(player.meta.health))
-            return
-        }
+        // if (player.id === ('/#' + window.socket.id)) {
+        //     store.dispatch(actions.player.setScore(player.meta.score))
+        //     store.dispatch(actions.player.setHealth(player.meta.health))
+        //     return
+        // }
 
         let newRemotePlayer = RemotePlayer.call(this, player)
         let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unnamed Ranger'

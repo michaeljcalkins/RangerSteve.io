@@ -17,28 +17,26 @@ const RESPAWN_TIME_SECONDS = 4
 const ROUND_LENGTH_MINUTES = 5
 const PLAYER_FULL_HEALTH = 100
 
-function sockets(ioInstance) {
+function init(ioInstance) {
     io = ioInstance
     io.on('connection', (socket) => {
         util.log('New connection from ' + socket.request.connection.remoteAddress)
 
-        this.socket = socket
+        socket.on('disconnect', onClientDisconnect)
+        socket.on('new player', onNewPlayer)
+        socket.on('move player', onMovePlayer)
 
-        socket.on('disconnect', onClientDisconnect.bind(this))
-        socket.on('new player', onNewPlayer.bind(this))
-        socket.on('move player', onMovePlayer.bind(this))
+        socket.on('player damaged', onPlayerDamaged)
+        socket.on('player full health', onPlayerFullHealth)
+        socket.on('player healing', onPlayerHealing)
+        socket.on('player adjust score', onPlayerAdjustScore)
+        socket.on('player update nickname', onPlayerUpdateNickname)
 
-        socket.on('player damaged', onPlayerDamaged.bind(this))
-        socket.on('player full health', onPlayerFullHealth.bind(this))
-        socket.on('player healing', onPlayerHealing.bind(this))
-        socket.on('player adjust score', onPlayerAdjustScore.bind(this))
-        socket.on('player update nickname', onPlayerUpdateNickname.bind(this))
+        socket.on('message send', onMessageSend)
 
-        socket.on('message send', onMessageSend.bind(this))
-
-        socket.on('bullet fired', onBulletFired.bind(this))
-        socket.on('kick player', onKickPlayer.bind(this))
-        socket.on('load complete', onLoadComplete.bind(this))
+        socket.on('bullet fired', onBulletFired)
+        socket.on('kick player', onKickPlayer)
+        socket.on('load complete', onLoadComplete)
     })
 }
 
@@ -135,7 +133,7 @@ function onMessageSend(data) {
 }
 
 function onPlayerAdjustScore(data) {
-    var player = PlayerById(data.roomId, this.socket.id, rooms)
+    var player = PlayerById(data.roomId, this.id, rooms)
 
     if (! player) {
         util.log('Player not found when adjust score', data)
@@ -152,10 +150,10 @@ function onPlayerAdjustScore(data) {
 
 function onPlayerUpdateNickname(data) {
     let nickname = data.nickname
-    var player = PlayerById(data.roomId, this.socket.id, rooms)
+    var player = PlayerById(data.roomId, this.id, rooms)
 
     if (! player) {
-        util.log('Player not found when updating nickname: ' + this.socket.id)
+        util.log('Player not found when updating nickname: ' + this.id)
         return
     }
 
@@ -171,19 +169,19 @@ function onPlayerUpdateNickname(data) {
 
 // New player has joined
 function onNewPlayer (data) {
-    util.log('Creating new player...', data, this.socket.id)
+    util.log('Creating new player...', data, this.id)
 
-    var player = PlayerById(data.roomId, this.socket.id, rooms)
+    var player = PlayerById(data.roomId, this.id, rooms)
     if (player) {
-        util.log('Player already in room: ' + this.socket.id)
+        util.log('Player already in room: ' + this.id)
         return
     }
 
-    util.log('Player id is', this.socket.id)
+    util.log('Player id is', this.id)
 
     // Create a new player
     var newPlayer = Player(data.x, data.y)
-    newPlayer.id = this.socket.id
+    newPlayer.id = this.id
 
     newPlayer.meta = {
         health: PLAYER_FULL_HEALTH,
@@ -212,13 +210,16 @@ function onNewPlayer (data) {
             }
         }
 
-        rooms[data.roomId].players[this.socket.id] = newPlayer
+        rooms[data.roomId].players[this.id] = newPlayer
 
-        this.socket.join(data.roomId)
+        this.join(data.roomId)
 
         setTimeout(() => {
-            util.log('joining')
             io.to(data.roomId).emit('load game', {
+                room: rooms[data.roomId]
+            })
+
+            io.to(data.roomId).emit('update players', {
                 room: rooms[data.roomId]
             })
         }, 1000)
@@ -240,19 +241,31 @@ function onNewPlayer (data) {
         })
 
         util.log('Created new room', newRoomId)
-        this.socket.join(newRoomId)
+        this.join(newRoomId)
 
-        io.to(newRoomId).emit('load game', {
-            room: rooms[newRoomId]
-        })
+        setTimeout(() => {
+            io.to(newRoomId).emit('load game', {
+                room: rooms[newRoomId]
+            })
+
+            io.to(newRoomId).emit('update players', {
+                room: rooms[newRoomId]
+            })
+        }, 1000)
     } else {
         util.log('Adding player to', availableRooms[0])
         rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
-        this.socket.join(availableRooms[0])
+        this.join(availableRooms[0])
 
-        io.to(rooms[availableRooms[0]].id).emit('load game', {
-            room: rooms[availableRooms[0]]
-        })
+        setTimeout(() => {
+            io.to(rooms[availableRooms[0]].id).emit('load game', {
+                room: rooms[availableRooms[0]]
+            })
+
+            io.to(availableRooms[0]).emit('update players', {
+                room: rooms[availableRooms[0]]
+            })
+        }, 1000)
     }
 }
 
@@ -260,18 +273,9 @@ function onNewPlayer (data) {
 function onMovePlayer (data) {
     if (! rooms[data.roomId]) return
 
-    var movePlayer = rooms[data.roomId].players[this.socket.id]
+    var movePlayer = rooms[data.roomId].players[this.id]
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
-
-    // Player not found
-    if (! movePlayer) {
-        util.log('Player not found when moving: ' + this.socket.id)
-        io.to(data.roomid).emit('update players', {
-            room: rooms[data.roomid]
-        })
-        return
-    }
 
     // Update player position
     movePlayer.x = data.x
@@ -283,7 +287,7 @@ function onMovePlayer (data) {
 
     // Broadcast updated position to connected socket clients
     io.to(data.roomId).emit('move player', {
-        id: movePlayer.id,
+        id: this.id,
         x: data.x,
         y: data.y,
         rightArmAngle: data.rightArmAngle,
@@ -299,26 +303,26 @@ function onMovePlayer (data) {
 
 // Socket client has disconnected
 function onClientDisconnect() {
-    util.log('Player has disconnected: ' + this.socket.id)
+    util.log('Player has disconnected: ' + this.id)
 
     let selectedRoomId = null
     Object.keys(rooms).forEach((roomId) => {
-        if (_.find(rooms[roomId].players, { id: this.socket.id })) {
+        if (_.find(rooms[roomId].players, { id: this.id })) {
             selectedRoomId = roomId
         }
     })
 
-    var removePlayer = PlayerById(selectedRoomId, this.socket.id, rooms)
+    var removePlayer = PlayerById(selectedRoomId, this.id, rooms)
 
     // Player not found
     if (! removePlayer) {
-        util.log('Player not found when disconnecting: ' + this.socket.id)
+        util.log('Player not found when disconnecting: ' + this.id)
         return
     }
 
     // Remove player from players array
     Object.keys(rooms).forEach((roomId) => {
-        delete rooms[roomId].players[this.socket.id]
+        delete rooms[roomId].players[this.id]
     })
 
     // Broadcast removed player to connected socket clients
@@ -328,24 +332,24 @@ function onClientDisconnect() {
 }
 
 function onPlayerFullHealth(data) {
-    let player = PlayerById(data.roomId, this.socket.id, rooms)
+    let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health = PLAYER_FULL_HEALTH
 
     io.to(data.roomId).emit('player health update', {
-        id: this.socket.id,
+        id: this.id,
         health: player.meta.health
     })
 }
 
 function onPlayerHealing(data) {
-    let player = PlayerById(data.roomId, this.socket.id, rooms)
+    let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health += 10
 
     if (player.meta.health > PLAYER_FULL_HEALTH)
         player.meta.health = PLAYER_FULL_HEALTH
 
     io.to(data.roomId).emit('player health update', {
-        id: this.socket.id,
+        id: this.id,
         health: player.meta.health
     })
 }
@@ -414,7 +418,7 @@ function onPlayerDamaged(data) {
             : {}
 
         io.to(data.roomId).emit('player damaged', {
-            id: this.socket.id,
+            id: this.id,
             damagedPlayerId: data.damagedPlayerId,
             damage: data.damage,
             health: player.meta.health,
@@ -422,7 +426,7 @@ function onPlayerDamaged(data) {
             attackingDamageStats
         })
 
-        respawnPlayer(player, attackingPlayer, this.socket.id, data.roomId)
+        respawnPlayer(player, attackingPlayer, this.id, data.roomId)
 
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]
@@ -431,7 +435,7 @@ function onPlayerDamaged(data) {
     }
 
     io.to(data.roomId).emit('player damaged', {
-        id: this.socket.id,
+        id: this.id,
         damagedPlayerId: data.damagedPlayerId,
         damage: data.damage,
         health: player.meta.health,
@@ -441,9 +445,8 @@ function onPlayerDamaged(data) {
 }
 
 function onBulletFired(data) {
-    data.id = this.socket.id
+    data.id = this.id
     io.to(data.roomId).emit('bullet fired', data)
 }
 
-module.exports.rooms = rooms
-module.exports.init = sockets
+module.exports.init = init
