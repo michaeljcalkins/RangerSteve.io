@@ -43,8 +43,8 @@ export default function onPlayerDamaged(data) {
         }, 5000)
     }
 
+    // Wait 5 seconds to begin healing process
     if (store.getState().player.health > 0 && store.getState().player.health <= 55) {
-        // Wait 5 seconds to begin healing process
         clearTimeout(damageTimeout)
         clearInterval(healingInterval)
         damageTimeout = setTimeout(() => {

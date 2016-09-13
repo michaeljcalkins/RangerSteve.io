@@ -1,6 +1,5 @@
 import GameConsts from '../GameConsts'
-import emitPlayerDamaged from '../SocketEvents/emitPlayerDamaged'
-import actions from '../../actions'
+import KillCurrentPlayer from '../KillCurrentPlayer.js'
 
 const WORLD_WIDTH = 6000
 const WORLD_HEIGHT = 2975
@@ -18,7 +17,7 @@ const SPAWN_POINTS = [
     { x: 1000, y: 1300 },
     { x: 5100, y: 800 },
     { x: 5500, y: 1400 },
-    { x: 1990, y: 730 },
+    { x: 1990, y: 730 }
 ]
 
 export function getRandomSpawnPoint() {
@@ -75,26 +74,9 @@ export function createLedges() {
 export function update() {
     const store = this.game.store
 
+    if (store.getState().player.health <= 0) return
+
     this.physics.arcade.overlap(this.player, this.groundSprite, () => {
-        if (store.getState().player.health <= 0) return
-
-        // this.game.input.enabled = false
-        this.player.body.acceleration.x = 0
-        this.player.body.acceleration.y = 0
-        store.dispatch(actions.player.setHealth(0))
-
-        this.leftArmGroup.visible = false
-        this.rightArmGroup.visible = false
-        this.headGroup.visible = false
-        this.torsoGroup.visible = false
-
-        emitPlayerDamaged.call(this, {
-            roomId: store.getState().room.id,
-            damage: 1000,
-            damagedPlayerId: '/#' + window.socket.id,
-            attackingPlayerId: null
-        })
-
-        this.player.animations.play('death')
+        KillCurrentPlayer.call(this)
     })
 }

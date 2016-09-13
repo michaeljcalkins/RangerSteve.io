@@ -26,6 +26,11 @@ export default function onPlayerRespawn(data) {
         return
     }
 
+    // Create and set the new spawn point
+    const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
+    this.player.x = spawnPoint.x
+    this.player.y = spawnPoint.y
+
     this.player.body.acceleration.x = 0
     this.player.body.acceleration.y = 0
 
@@ -44,11 +49,6 @@ export default function onPlayerRespawn(data) {
     this.rightArmGroup.visible = true
     this.headGroup.visible = true
     this.torsoGroup.visible = true
-
-    // Create and set the new spawn point
-    const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
-    this.player.x = spawnPoint.x
-    this.player.y = spawnPoint.y
 
     store.dispatch(actions.player.setPrimaryIsReloading(false))
     store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.selectedPrimaryWeaponId].ammo))

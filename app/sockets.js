@@ -13,6 +13,9 @@ let rooms = {}
 let io = null
 
 const MAX_ROOM_SIZE = 7
+const RESPAWN_TIME = 4000
+const ROUND_LENGTH_MINUTES = 50
+const PLAYER_FULL_HEALTH = 100
 
 function sockets(ioInstance) {
     io = ioInstance
@@ -23,6 +26,28 @@ function setEventHandlers() {
     io.on('connection', onSocketConnection.bind(this))
 }
 
+function respawnPlayer(player, attackingPlayer, socketId, roomId) {
+    setTimeout(() => {
+        player.meta.health = PLAYER_FULL_HEALTH
+
+        io.to(roomId).emit('player respawn', {
+            id: socketId,
+            damagedPlayerId: player.id,
+            health: PLAYER_FULL_HEALTH
+        })
+
+        player.meta.damageStats.attackingPlayerId = null
+        player.meta.damageStats.attackingDamage = 0
+        player.meta.damageStats.attackingHits = 0
+
+        if (_.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id) {
+            attackingPlayer.meta.damageStats.attackingPlayerId = null
+            attackingPlayer.meta.damageStats.attackingDamage = 0
+            attackingPlayer.meta.damageStats.attackingHits = 0
+        }
+    }, RESPAWN_TIME)
+}
+
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
@@ -31,7 +56,8 @@ setInterval(function() {
 
             rooms[roomId] = CreateRoom({
                 id: roomId,
-                players: rooms[roomId].players
+                players: rooms[roomId].players,
+                roundLength: ROUND_LENGTH_MINUTES
             })
 
             if (previousMap === 'HighRuleJungle') {
@@ -42,10 +68,12 @@ setInterval(function() {
                 rooms[roomId].map = 'HighRuleJungle'
             }
 
+            rooms[roomId].map = 'HighRuleJungle'
+
             util.log(rooms[roomId].map, 'has been selected for ', roomId)
 
             Object.keys(rooms[roomId].players).forEach((playerId) => {
-                rooms[roomId].players[playerId].meta.health = 100
+                rooms[roomId].players[playerId].meta.health = PLAYER_FULL_HEALTH
                 rooms[roomId].players[playerId].meta.deaths = 0
                 rooms[roomId].players[playerId].meta.kills = 0
                 rooms[roomId].players[playerId].meta.bestKillingSpree = 0
@@ -165,7 +193,7 @@ function onNewPlayer (data) {
     newPlayer.id = this.id
 
     newPlayer.meta = {
-        health: 100,
+        health: PLAYER_FULL_HEALTH,
         kills: 0,
         deaths: 0,
         bestKillingSpree: 0,
@@ -298,7 +326,7 @@ function onClientDisconnect() {
 
 function onPlayerFullHealth(data) {
     let player = PlayerById(data.roomId, this.id, rooms)
-    player.meta.health = 100
+    player.meta.health = PLAYER_FULL_HEALTH
 
     io.to(data.roomId).emit('player health update', {
         id: this.id,
@@ -310,8 +338,8 @@ function onPlayerHealing(data) {
     let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health += 10
 
-    if (player.meta.health > 100)
-        player.meta.health = 100
+    if (player.meta.health > PLAYER_FULL_HEALTH)
+        player.meta.health = PLAYER_FULL_HEALTH
 
     io.to(data.roomId).emit('player health update', {
         id: this.id,
@@ -391,25 +419,7 @@ function onPlayerDamaged(data) {
             attackingDamageStats
         })
 
-        setTimeout(() => {
-            player.meta.health = 100
-
-            io.to(data.roomId).emit('player respawn', {
-                id: this.id,
-                damagedPlayerId: data.damagedPlayerId,
-                health: 100
-            })
-
-            player.meta.damageStats.attackingPlayerId = null
-            player.meta.damageStats.attackingDamage = 0
-            player.meta.damageStats.attackingHits = 0
-
-            if (_.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id) {
-                attackingPlayer.meta.damageStats.attackingPlayerId = null
-                attackingPlayer.meta.damageStats.attackingDamage = 0
-                attackingPlayer.meta.damageStats.attackingHits = 0
-            }
-        }, 5000)
+        respawnPlayer(player, attackingPlayer, this.id, data.roomId)
 
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]

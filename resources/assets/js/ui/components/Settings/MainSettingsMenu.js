@@ -87,23 +87,17 @@ export default class MainSettingsMenu extends React.Component {
     renderPrimaryWeaponImage() {
         const primaryWeapon = this.primaryWeapon()
 
-        if (! primaryWeapon)
-            return null
+        if (! primaryWeapon) return null
 
-        return (
-            <img src={ primaryWeapon.image } />
-        )
+        return <img src={ '/images/guns/' + primaryWeapon.image } />
     }
 
     renderSecondaryWeaponImage() {
         const secondaryWeapon = this.secondaryWeapon()
 
-        if (! secondaryWeapon)
-            return null
+        if (! secondaryWeapon) return null
 
-        return (
-            <img src={ secondaryWeapon.image } />
-        )
+        return <img src={ '/images/guns/' + secondaryWeapon.image } />
     }
 
     render() {

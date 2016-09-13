@@ -8,7 +8,7 @@ export default function HudAmmo({
 }) {
     function renderAmmoCount() {
         if (
-            (currentWeapon === 'primaryWeapon' && isPrimaryReloading) || 
+            (currentWeapon === 'primaryWeapon' && isPrimaryReloading) ||
             (currentWeapon === 'secondaryWeapon' && isSecondaryReloading)
         ) {
             return <i className="fa fa-refresh fa-spin"></i>
@@ -27,5 +27,8 @@ export default function HudAmmo({
 }
 
 HudAmmo.propTypes = {
-    ammoRemaining: PropTypes.number
+    ammoRemaining: PropTypes.number,
+    currentWeapon: PropTypes.string,
+    isPrimaryReloading: PropTypes.bool,
+    isSecondaryReloading: PropTypes.bool
 }

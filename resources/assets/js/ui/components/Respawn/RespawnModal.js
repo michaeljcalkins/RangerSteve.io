@@ -61,15 +61,11 @@ export default class RespawnModal extends React.Component {
 
     renderCauseOfDeath() {
         const { player, room } = this.props
+        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`)
+        const selectedWeapon = _.get(GameConsts, `WEAPONS[${player.damageStats.weaponId}]`)
+        const attackingPlayerId = _.get(player, 'damageStats.attackingPlayerId', false)
 
-        let weaponImage = '/images/guns/Spr_M500.png'
-        if (player.damageStats.weaponId) {
-            weaponImage = GameConsts.WEAPONS[player.damageStats.weaponId]
-                ? GameConsts.WEAPONS[player.damageStats.weaponId].image
-                : GameConsts.WEAPONS[player.damageStats.weaponId].image
-        }
-
-        if (! _.get(player, 'damageStats.attackingPlayerId')) {
+        if (! attackingPlayerId) {
             return (
                 <div className="media">
                     <div className="media-left">
@@ -85,16 +81,14 @@ export default class RespawnModal extends React.Component {
         return (
             <div className="media">
                 <div className="media-left">
-                    { weaponImage &&
-                        <img
-                            className="media-object"
-                            src={ weaponImage }
-                        />
-                    }
+                    <img
+                        className="media-object"
+                        src={ '/images/guns/' + selectedWeapon.image }
+                    />
                 </div>
                 <div className="media-body">
-                    <h4 className="media-heading">{ room.players[player.damageStats.attackingPlayerId].meta.nickname }</h4>
-                    <strong><span className="text-danger">Killed you with their</span> <span className="text-primary">{ player.damageStats.weaponId }</span></strong><br />
+                    <h4 className="media-heading">{ attackingPlayerName }</h4>
+                    <strong><span className="text-danger">Killed you with their</span> <span className="text-primary">{ selectedWeapon.name }</span></strong><br />
                     { this.renderDamageTaken() }
                     { this.renderDamageGiven() }
                 </div>
@@ -126,7 +120,7 @@ export default class RespawnModal extends React.Component {
 
                                 <hr />
 
-                                <p className="text-center">Share this link to invite friends to the current game.</p>
+                                <p className="text-center">Share this link to play with friends.</p>
                                 <input
                                     className="form-control text-center"
                                     defaultValue={ shareLink }

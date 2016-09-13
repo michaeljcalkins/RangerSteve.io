@@ -15,11 +15,7 @@ export default function Preload() {
 
     // Weapons
     Object.keys(GameConsts.WEAPONS).forEach((weaponId) => {
-        this.load.image(weaponId, GameConsts.WEAPONS[weaponId].image)
-    })
-
-    Object.keys(GameConsts.WEAPONS).forEach((weaponId) => {
-        this.load.image(weaponId, GameConsts.WEAPONS[weaponId].image)
+        this.load.image(weaponId, '/images/guns/' + GameConsts.WEAPONS[weaponId].image)
     })
 
     this.load.image('right-arm', '/images/body/right-arm.png')
