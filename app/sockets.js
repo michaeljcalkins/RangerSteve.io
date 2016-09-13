@@ -23,6 +23,29 @@ function setEventHandlers() {
     io.on('connection', onSocketConnection.bind(this))
 }
 
+function respawnPlayer(player, attackingPlayer, socketId, roomId) {
+    setTimeout(() => {
+        console.log('respawning player')
+        player.meta.health = 100
+
+        io.to(roomId).emit('player respawn', {
+            id: socketId,
+            damagedPlayerId: player.id,
+            health: 100
+        })
+
+        player.meta.damageStats.attackingPlayerId = null
+        player.meta.damageStats.attackingDamage = 0
+        player.meta.damageStats.attackingHits = 0
+
+        if (_.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id) {
+            attackingPlayer.meta.damageStats.attackingPlayerId = null
+            attackingPlayer.meta.damageStats.attackingDamage = 0
+            attackingPlayer.meta.damageStats.attackingHits = 0
+        }
+    }, 5000)
+}
+
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
@@ -393,25 +416,7 @@ function onPlayerDamaged(data) {
             attackingDamageStats
         })
 
-        setTimeout(() => {
-            player.meta.health = 100
-
-            io.to(data.roomId).emit('player respawn', {
-                id: this.id,
-                damagedPlayerId: data.damagedPlayerId,
-                health: 100
-            })
-
-            player.meta.damageStats.attackingPlayerId = null
-            player.meta.damageStats.attackingDamage = 0
-            player.meta.damageStats.attackingHits = 0
-
-            if (_.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id) {
-                attackingPlayer.meta.damageStats.attackingPlayerId = null
-                attackingPlayer.meta.damageStats.attackingDamage = 0
-                attackingPlayer.meta.damageStats.attackingHits = 0
-            }
-        }, 5000)
+        respawnPlayer(player, attackingPlayer, this.id, data.roomId)
 
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId]

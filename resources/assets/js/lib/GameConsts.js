@@ -5,7 +5,7 @@ const GameConsts = {
 
     // Physics
     MAX_VELOCITY_X: 650,
-    MAX_VELOCITY_Y: 1600, // Max velocity before player starts going through the ground.
+    MAX_VELOCITY_Y: 1500, // Max velocity before player starts going through the ground.
     ACCELERATION: 1200,
     DRAG: 3000,
     GRAVITY: 1000,
@@ -96,7 +96,7 @@ const GameConsts = {
             damage: 22,
             fireRate: 140,
             id: 'AK47',
-            image: '/images/guns/Spr_AK47.png',
+            image: 'Spr_AK47.png',
             name: 'AK-47',
             reloadTime: 2000,
             bulletSpeed: 2300,
@@ -117,7 +117,7 @@ const GameConsts = {
         G43: {
             id: 'G43',
             name: 'G43',
-            image: '/images/guns/Spr_g43.png',
+            image: 'Spr_g43.png',
             ammo: 10,
             reloadTime: 2000,
             bulletSpeed: 2500,
@@ -140,7 +140,7 @@ const GameConsts = {
         M500: {
             id: 'M500',
             name: 'M500',
-            image: '/images/guns/Spr_M500.png',
+            image: 'Spr_M500.png',
             bulletType: 'shotgun',
             ammo: 6,
             reloadTime: 3000,
@@ -164,7 +164,7 @@ const GameConsts = {
         AUG: {
             id: 'AUG',
             name: 'AUG',
-            image: '/images/guns/Spr_Aug.png',
+            image: 'Spr_Aug.png',
             ammo: 30,
             reloadTime: 2000,
             damage: 18,
@@ -187,7 +187,7 @@ const GameConsts = {
         Skorpion: {
             id: 'Skorpion',
             name: 'Skorpion',
-            image: '/images/guns/Spr_Skorpion.png',
+            image: 'Spr_Skorpion.png',
             ammo: 20,
             reloadTime: 2000,
             bulletSpeed: 2300,
@@ -210,7 +210,7 @@ const GameConsts = {
         P90: {
             id: 'P90',
             name: 'P90',
-            image: '/images/guns/Spr_p90.png',
+            image: 'Spr_p90.png',
             ammo: 50,
             reloadTime: 2000,
             bulletSpeed: 2300,
@@ -233,7 +233,7 @@ const GameConsts = {
         M4A1: {
             id: 'M4A1',
             name: 'M4A1',
-            image: '/images/guns/Spr_M4A1.png',
+            image: 'Spr_M4A1.png',
             ammo: 30,
             reloadTime: 2000,
             bulletSpeed: 2400,
@@ -256,7 +256,7 @@ const GameConsts = {
         Barrett: {
             id: 'Barrett',
             name: 'Barrett',
-            image: '/images/guns/Spr_Barrett.png',
+            image: 'Spr_Barrett.png',
             ammo: 10,
             reloadTime: 3000,
             bulletSpeed: 3435,
@@ -279,7 +279,7 @@ const GameConsts = {
         DesertEagle: {
             id: 'DesertEagle',
             name: 'Desert Eagle',
-            image: '/images/guns/Spr_DesertEagle.png',
+            image: 'Spr_DesertEagle.png',
             ammo: 9,
             reloadTime: 2000,
             bulletSpeed: 2300,
@@ -302,7 +302,7 @@ const GameConsts = {
         SilverBaller: {
             id: 'SilverBaller',
             name: 'Silenced Beretta',
-            image: '/images/guns/Spr_SilverBaller.png',
+            image: 'Spr_SilverBaller.png',
             ammo: 15,
             reloadTime: 2000,
             bulletSpeed: 2300,
@@ -325,7 +325,7 @@ const GameConsts = {
         RPG: {
             id: 'RPG',
             name: 'RPG',
-            image: '/images/guns/Spr_RPG.png',
+            image: 'Spr_RPG.png',
             ammo: 1,
             bulletType: 'rocket',
             reloadTime: 500000,

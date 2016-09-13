@@ -72,6 +72,10 @@ export function createLedges() {
 }
 
 export function update() {
+    const store = this.game.store
+
+    if (store.getState().player.health <= 0) return
+
     this.physics.arcade.overlap(this.player, this.groundSprite, () => {
         KillCurrentPlayer.call(this)
     })

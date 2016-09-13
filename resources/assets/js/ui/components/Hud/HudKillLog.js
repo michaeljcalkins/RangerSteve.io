@@ -20,7 +20,7 @@ export default function HudKillLog({
 
             return (
                 <li key={ index }>
-                    { message.attackerNickname } <img src={ selectedWeapon.image } /> { message.deadNickname }
+                    { message.attackerNickname } <img src={ '/images/guns/' + selectedWeapon.image } /> { message.deadNickname }
                 </li>
             )
         })

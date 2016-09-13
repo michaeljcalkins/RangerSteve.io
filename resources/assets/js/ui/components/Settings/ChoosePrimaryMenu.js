@@ -23,7 +23,7 @@ export default function ChoosePrimaryMenu({
                     onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
                     <div>
-                        <img src={ weapon.image } />
+                        <img src={ '/images/guns/' + weapon.image } />
                     </div>
                     <span className="option-name">{ weapon.name }</span>
                 </div>

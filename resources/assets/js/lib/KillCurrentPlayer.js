@@ -4,8 +4,6 @@ import actions from '../actions'
 export default function() {
     const store = this.game.store
 
-    if (store.getState().player.health <= 0) return
-
     // this.game.input.enabled = false
     this.player.body.acceleration.x = 0
     this.player.body.acceleration.y = 0
