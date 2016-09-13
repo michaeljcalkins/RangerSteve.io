@@ -61,14 +61,11 @@ export default class RespawnModal extends React.Component {
 
     renderCauseOfDeath() {
         const { player, room } = this.props
-        const attackingPlayerName = room.players[player.damageStats.attackingPlayerId].meta.nickname
+        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`)
+        const selectedWeapon = _.get(GameConsts, `WEAPONS[${player.damageStats.weaponId}]`)
+        const attackingPlayerId = _.get(player, 'damageStats.attackingPlayerId', false)
 
-        let selectedWeapon
-        if (player.damageStats.weaponId) {
-            selectedWeapon = GameConsts.WEAPONS[player.damageStats.weaponId]
-        }
-
-        if (! _.has(player, 'damageStats.attackingPlayerId')) {
+        if (! attackingPlayerId) {
             return (
                 <div className="media">
                     <div className="media-left">

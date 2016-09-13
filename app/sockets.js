@@ -14,6 +14,7 @@ let io = null
 
 const MAX_ROOM_SIZE = 7
 const RESPAWN_TIME = 4000
+const ROUND_LENGTH_MINUTES = 50
 const PLAYER_FULL_HEALTH = 100
 
 function sockets(ioInstance) {
@@ -56,7 +57,8 @@ setInterval(function() {
 
             rooms[roomId] = CreateRoom({
                 id: roomId,
-                players: rooms[roomId].players
+                players: rooms[roomId].players,
+                roundLength: ROUND_LENGTH_MINUTES
             })
 
             if (previousMap === 'HighRuleJungle') {
@@ -325,7 +327,7 @@ function onClientDisconnect() {
 
 function onPlayerFullHealth(data) {
     let player = PlayerById(data.roomId, this.id, rooms)
-    player.meta.health = 100
+    player.meta.health = PLAYER_FULL_HEALTH
 
     io.to(data.roomId).emit('player health update', {
         id: this.id,
@@ -337,8 +339,8 @@ function onPlayerHealing(data) {
     let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health += 10
 
-    if (player.meta.health > 100)
-        player.meta.health = 100
+    if (player.meta.health > PLAYER_FULL_HEALTH)
+        player.meta.health = PLAYER_FULL_HEALTH
 
     io.to(data.roomId).emit('player health update', {
         id: this.id,
