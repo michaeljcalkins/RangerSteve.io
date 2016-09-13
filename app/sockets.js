@@ -218,7 +218,7 @@ function onNewPlayer (data) {
     }
 
     // Specified room id and room has been created
-    if (data.roomId && rooms[data.roomId] && rooms[data.roomId].players.length <= MAX_ROOM_SIZE) {
+    if (data.roomId && rooms[data.roomId] && rooms[data.roomId].players.length < MAX_ROOM_SIZE) {
         rooms[data.roomId].players[this.id] = newPlayer
 
         this.join(data.roomId)
@@ -238,7 +238,7 @@ function onNewPlayer (data) {
     // Find available room with space for player
     let availableRooms = Object.keys(rooms).filter(function(room) {
         if (! rooms[room].players) return true
-        return Object.keys(rooms[room].players).length <= MAX_ROOM_SIZE
+        return Object.keys(rooms[room].players).length < MAX_ROOM_SIZE
     })
 
     if (availableRooms.length <= 0) {
