@@ -125,6 +125,10 @@ export default function PlayerSpriteHandler() {
     this.muzzleFlash.animations.play('flash')
     this.muzzleFlash.y = -72
     this.muzzleFlash.x = 102
+
+    this.muzzleFlash.x = selectedPrimaryWeapon.position.muzzleFlashX
+    this.muzzleFlash.y = selectedPrimaryWeapon.position.muzzleFlashY
+
     this.muzzleFlash.visible = false
     this.currentWeaponSprite.addChild(this.muzzleFlash)
 
