@@ -32,7 +32,7 @@
         mixpanel.init("9a3caa3ce107d5e648874ff167b4d090");</script>
         <!-- end Mixpanel -->
 
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        {#<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>#}
     {% else %}
         <script>window.mixpanel = { track: function() {} }</script>
     {% endif %}
