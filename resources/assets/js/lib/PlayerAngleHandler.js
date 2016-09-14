@@ -8,46 +8,46 @@ export default function PlayerAngleHandler() {
     if (state.player.facing === 'right') {
         // User is aiming up and to the right
         if (angleInDegrees <= 81 && angleInDegrees >= 71) {
-            leftAngle -= 8
-            rightAngle -= 2
+            leftAngle -= 10
+            rightAngle -= -2
         } else if (angleInDegrees < 71 && angleInDegrees >= 61) {
-            leftAngle -= 15
+            leftAngle -= 20
             rightAngle -= 2
         } else if (angleInDegrees < 61 && angleInDegrees >= 51) {
-            leftAngle -= 25
+            leftAngle -= 30
             rightAngle -= 2
         } else if (angleInDegrees < 51 && angleInDegrees >= 41) {
-            leftAngle -= 35
-            rightAngle -= 2
-        } else if (angleInDegrees < 41 && angleInDegrees >= 31) {
             leftAngle -= 40
             rightAngle -= 2
-        } else if (angleInDegrees < 31 && angleInDegrees >= 21) {
+        } else if (angleInDegrees < 41 && angleInDegrees >= 31) {
             leftAngle -= 50
-            rightAngle -= 3
-        } else if (angleInDegrees < 21 && angleInDegrees >= 11) {
+            rightAngle -= 2
+        } else if (angleInDegrees < 31 && angleInDegrees >= 21) {
             leftAngle -= 60
             rightAngle -= 3
-        } else if (angleInDegrees < 11 && angleInDegrees >= 0) {
+        } else if (angleInDegrees < 21 && angleInDegrees >= 11) {
             leftAngle -= 70
+            rightAngle -= 3
+        } else if (angleInDegrees < 11 && angleInDegrees >= 0) {
+            leftAngle -= 80
             rightAngle -= 3
         }
 
         // User is aiming down and to the right
         if (angleInDegrees >= 82 && angleInDegrees <= 91 ) {
-            leftAngle += 10
+            leftAngle += 5
             rightAngle -= 1
         } else if (angleInDegrees > 91 && angleInDegrees <= 99) {
-            leftAngle += 20
+            leftAngle += 15
             rightAngle -= 1
         } else if (angleInDegrees > 99 && angleInDegrees <= 109) {
-            leftAngle += 30
+            leftAngle += 35
             rightAngle -= 1
         } else if (angleInDegrees > 109 && angleInDegrees <= 119) {
-            leftAngle += 40
+            leftAngle += 45
             rightAngle -= 3
         } else if (angleInDegrees > 119 && angleInDegrees <= 129) {
-            leftAngle += 50
+            leftAngle += 55
             rightAngle -= 4
         } else if (angleInDegrees > 129 && angleInDegrees <= 139) {
             leftAngle += 60
