@@ -117,6 +117,17 @@ export default function Update() {
     }
 
     /**
+     * Rotate bullets according to trajectory
+     */
+    this.bullets.forEach((bullet) => {
+        bullet.rotation = Math.atan2(bullet.body.velocity.y, bullet.body.velocity.x)
+    })
+
+    this.enemyBullets.forEach((bullet) => {
+        bullet.rotation = Math.atan2(bullet.body.velocity.y, bullet.body.velocity.x)
+    })
+
+    /**
      * Emit player's latest position on the map
      */
     if (state.room.id && state.player.health > 0 && state.room.state !== 'ended' && state.player.facing !== null) {
