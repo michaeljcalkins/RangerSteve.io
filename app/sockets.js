@@ -214,7 +214,7 @@ function onNewPlayer (data) {
             io.to(data.roomId).emit('update players', {
                 room: rooms[data.roomId]
             })
-        }, 3000)
+        }, 1000)
         return
     }
 
@@ -237,7 +237,7 @@ function onNewPlayer (data) {
             io.to(data.roomId).emit('update players', {
                 room: rooms[data.roomId]
             })
-        }, 3000)
+        }, 1000)
         return
     }
 
@@ -267,7 +267,7 @@ function onNewPlayer (data) {
             io.to(newRoomId).emit('update players', {
                 room: rooms[newRoomId]
             })
-        }, 3000)
+        }, 1000)
         return
     }
 
@@ -283,7 +283,7 @@ function onNewPlayer (data) {
         io.to(availableRooms[0]).emit('update players', {
             room: rooms[availableRooms[0]]
         })
-    }, 3000)
+    }, 1000)
 }
 
 // Player has moved
