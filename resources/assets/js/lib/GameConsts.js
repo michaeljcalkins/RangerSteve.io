@@ -25,7 +25,7 @@ const GameConsts = {
     // Physics
     MAX_VELOCITY_X: 500,
     MAX_VELOCITY_Y: 1000, // Max velocity before player starts going through the ground.
-    BULLET_GRAVITY: -850,
+    BULLET_GRAVITY: -950,
 
     // Slope Plugin
     SLOPE_FEATURES: {

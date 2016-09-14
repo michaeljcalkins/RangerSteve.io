@@ -29,7 +29,6 @@ export default function FireShotgunShell(currentWeaponId) {
         bullet.weaponId = currentWeaponId
         bullet.height = 2
         bullet.width = 40
-        bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
         bullet.reset(x, y)
 
         let socketPointerAngle = null

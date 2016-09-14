@@ -25,7 +25,6 @@ export default function FireStandardBullet(currentWeaponId) {
     bullet.damage = currentWeapon.damage
     bullet.weaponId = currentWeaponId
     bullet.alpha = 0
-    bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
     bullet.height = 2
     bullet.width = 40
     bullet.reset(x, y)
@@ -45,7 +44,7 @@ export default function FireStandardBullet(currentWeaponId) {
     // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
     setTimeout(() => {
         bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
-    }, 60)
+    }, 40)
 
     this.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
     this.weaponSoundEffects[currentWeaponId].play()

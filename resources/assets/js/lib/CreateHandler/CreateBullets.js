@@ -18,14 +18,15 @@ export default function() {
         var body = bullet.body
 
         // Update player body properties
-        body.drag.x = GameConsts.SLOPE_FEATURES.dragX
-        body.drag.y = GameConsts.SLOPE_FEATURES.dragY
-        body.bounce.x = GameConsts.SLOPE_FEATURES.bounceX
-        body.bounce.y = GameConsts.SLOPE_FEATURES.bounceY
+        body.drag.x = 0
+        body.drag.y = 0
+        body.bounce.x = 0
+        body.bounce.y = 0
+        body.gravity.y = GameConsts.BULLET_GRAVITY
 
         // Update player body Arcade Slopes properties
-        body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
-        body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
+        body.slopes.friction.x = 0
+        body.slopes.friction.y = 0
         body.slopes.preferY    = GameConsts.SLOPE_FEATURES.minimumOffsetY
         body.slopes.pullUp     = GameConsts.SLOPE_FEATURES.pullUp
         body.slopes.pullDown   = GameConsts.SLOPE_FEATURES.pullDown
