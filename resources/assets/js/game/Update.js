@@ -70,7 +70,9 @@ export default function Update() {
      */
     if (this.game.input.activePointer.leftButton.isDown) {
         const player = this.game.store.getState().player
-        const currentWeaponId = player.currentWeapon === 'primaryWeapon' ? player.selectedPrimaryWeaponId : player.selectedSecondaryWeaponId
+        const currentWeaponId = player.currentWeapon === 'primaryWeapon'
+            ? player.selectedPrimaryWeaponId
+            : player.selectedSecondaryWeaponId
         const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
         // Check if primary gun has ammo and is selected

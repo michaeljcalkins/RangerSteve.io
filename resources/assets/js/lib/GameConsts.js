@@ -24,7 +24,7 @@ const GameConsts = {
 
     // Physics
     MAX_VELOCITY_X: 500,
-    MAX_VELOCITY_Y: 1200, // Max velocity before player starts going through the ground.
+    MAX_VELOCITY_Y: 1000, // Max velocity before player starts going through the ground.
     BULLET_GRAVITY: -850,
 
     // Slope Plugin
@@ -33,13 +33,13 @@ const GameConsts = {
         bounceX: 0,
         bounceY: 0,
         debug: 0,
-        dragX: 1300,
-        dragY: 0,
+        dragX: 1000,
+        dragY: 100,
         enableGravity: true,
         frictionX: 0,
         frictionY: 0,
         gravity: 1100,
-        jump: 400,
+        jump: 450,
         minimumOffsetY: 1,
         pullDown: 0,
         pullLeft: 0,

@@ -17,13 +17,12 @@ export default function() {
      * Reload current gun
      */
     this.input.keyboard.addKey(store.getState().game.keyboardControls.reload).onUp.add(() => {
-        const reloadTime = store.getState().player.currentWeapon === 'primaryWeapon'
+        const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
+        const reloadTime = isPrimarySelected
             ? GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
             : GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
 
-        const currentWeaponType = store.getState().player.currentWeapon
-
-        if (currentWeaponType === 'primaryWeapon') {
+        if (isPrimarySelected) {
             store.dispatch(actions.player.setPrimaryIsReloading(true))
         } else {
             if (store.getState().player.selectedSecondaryWeaponId === 'RPG') return
@@ -31,7 +30,7 @@ export default function() {
         }
 
         setTimeout(() => {
-            if (currentWeaponType === 'primaryWeapon') {
+            if (isPrimarySelected) {
                 store.dispatch(actions.player.setPrimaryIsReloading(false))
                 store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo))
                 return
@@ -59,7 +58,9 @@ export default function() {
         }
 
         const newCurrentWeapon = store.getState().player.currentWeapon
-        const currentWeaponId = newCurrentWeapon === 'primaryWeapon' ? store.getState().player.selectedPrimaryWeaponId : store.getState().player.selectedSecondaryWeaponId
+        const currentWeaponId = newCurrentWeapon === 'primaryWeapon'
+            ? store.getState().player.selectedPrimaryWeaponId
+            : store.getState().player.selectedSecondaryWeaponId
 
         this.currentWeaponSprite.loadTexture(currentWeaponId)
         this.currentWeaponSprite.scale.setTo(GameConsts.WEAPONS[currentWeaponId].position.scale)

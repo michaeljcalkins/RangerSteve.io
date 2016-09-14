@@ -11,6 +11,7 @@ export default function FireShotgunShell(currentWeaponId) {
     const store = this.game.store
     const state = store.getState()
     const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
+    const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
 
     if (this.game.time.now < nextFire || this.bullets.countDead() <= 0)
         return
@@ -77,26 +78,26 @@ export default function FireShotgunShell(currentWeaponId) {
     this.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
     this.weaponSoundEffects[currentWeaponId].play()
 
-    if (store.getState().player.currentWeapon === 'primaryWeapon') {
+    if (isPrimarySelected) {
         store.dispatch(actions.player.decrementPrimaryAmmoRemaining())
     } else {
         store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
     }
 
     // Get ammo remaining in current gun
-    const currentAmmoRemaining = store.getState().player.currentWeapon === 'primaryWeapon'
+    const currentAmmoRemaining = isPrimarySelected
         ? store.getState().player.primaryAmmoRemaining
         : store.getState().player.secondaryAmmoRemaining
 
     if (
         currentAmmoRemaining <= 0 &&
         (
-            (store.getState().player.currentWeapon === 'primaryWeapon' && ! store.getState().player.isPrimaryReloading) ||
-            (store.getState().player.currentWeapon === 'secondaryWeapon' && ! store.getState().player.isSecondaryReloading)
+            (isPrimarySelected && ! store.getState().player.isPrimaryReloading) ||
+            (! isPrimarySelected && ! store.getState().player.isSecondaryReloading)
         )
     ) {
         // If empty set current gun to reloading
-        if (store.getState().player.currentWeapon === 'primaryWeapon') {
+        if (isPrimarySelected) {
             store.dispatch(actions.player.setPrimaryIsReloading(true))
         } else {
             store.dispatch(actions.player.setSecondaryIsReloading(true))
@@ -104,7 +105,7 @@ export default function FireShotgunShell(currentWeaponId) {
 
         // Get reload time in seconds
         setTimeout(() => {
-            if (store.getState().player.currentWeapon === 'primaryWeapon') {
+            if (isPrimarySelected) {
                 store.dispatch(actions.player.setPrimaryIsReloading(false))
                 store.dispatch(actions.player.setPrimaryAmmoRemaining(currentWeapon.ammo))
                 return
