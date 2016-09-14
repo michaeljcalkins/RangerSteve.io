@@ -8,7 +8,6 @@ export default function HudKillLog({
     function renderMessages() {
         return messages.slice(-5).map(function(message, index) {
             const selectedWeapon = GameConsts.WEAPONS[message.weaponId]
-            if (! selectedWeapon) return
 
             if (! message.attackerNickname) {
                 return (
@@ -17,6 +16,8 @@ export default function HudKillLog({
                     </li>
                 )
             }
+
+            if (! selectedWeapon) return
 
             return (
                 <li key={ index }>

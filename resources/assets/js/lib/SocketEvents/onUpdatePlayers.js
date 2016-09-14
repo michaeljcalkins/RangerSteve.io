@@ -41,7 +41,7 @@ export default function onUpdatePlayers(data) {
         let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unnamed Ranger'
 
         let style = {
-            font: "40px Arial",
+            font: "50px Arial",
             fill: "#fff",
             align: "center",
             stroke: "black",

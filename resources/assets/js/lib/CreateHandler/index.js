@@ -8,7 +8,6 @@ import CreateMusic from './CreateMusic'
 import CreateDetectIdleUser from './CreateDetectIdleUser'
 import CreateKillingSpreeAudio from './CreateKillingSpreeAudio'
 import actions from '../../actions'
-import getParameterByName from '../GetParameterByName'
 
 export default function() {
     const store = this.game.store
