@@ -9,7 +9,7 @@ export default function PlayerMovementHandler() {
 
     if (leftInputIsActive.call(this, state.game.keyboardControls.left)) {
         // If the LEFT key is down, set the player velocity to move left
-        this.player.body.acceleration.x = -GameConsts.ACCELERATION
+        this.player.body.acceleration.x = -GameConsts.SLOPE_FEATURES.acceleration
 
         // Left facing head needs to be set only once
         if (this.game.input.worldX > this.player.x) {
@@ -31,7 +31,7 @@ export default function PlayerMovementHandler() {
         }
     } else if (rightInputIsActive.call(this, state.game.keyboardControls.right)) {
         // If the RIGHT key is down, set the player velocity to move right
-        this.player.body.acceleration.x = GameConsts.ACCELERATION
+        this.player.body.acceleration.x = GameConsts.SLOPE_FEATURES.acceleration
 
         if (this.game.input.worldX > this.player.x) {
             playerFaceRight.call(this)

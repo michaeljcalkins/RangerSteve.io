@@ -3,15 +3,6 @@ const GameConsts = {
     STARTING_SFX_VOLUME: .1,
     STARTING_MUSIC_VOLUME: .2,
 
-    // Physics
-    MAX_VELOCITY_X: 650,
-    MAX_VELOCITY_Y: 1400, // Max velocity before player starts going through the ground.
-    ACCELERATION: 1200,
-    DRAG: 3000,
-    GRAVITY: 1000,
-    JUMP_SPEED: -450,
-    BULLET_GRAVITY: -850,
-
     // Jump Jet
     JUMP_JET_SPEED: -1500,
     JUMP_JET_SPEED_REGENERATION: -1400,
@@ -25,28 +16,30 @@ const GameConsts = {
     ANIMATION_FRAMERATE: 10,
     STARTING_PRIMARY_ID: 'AK47',
     STARTING_SECONDARY_ID: 'DesertEagle',
-    PLAYER_SCALE: .27,
     PLAYER_ANCHOR: .5,
     PLAYER_SPRITE_WIDTH: 71,
     PLAYER_SPRITE_HEIGHT: 68,
     PLAYER_BODY_WIDTH: 105,
     PLAYER_BODY_HEIGHT: 280,
-    PLAYER_SLOPE_FRICTION_X: 2000,
-    PLAYER_SLOPE_FRICTION_Y: 2200,
+
+    // Physics
+    MAX_VELOCITY_X: 500,
+    MAX_VELOCITY_Y: 1200, // Max velocity before player starts going through the ground.
+    BULLET_GRAVITY: -850,
 
     // Slope Plugin
     SLOPE_FEATURES: {
-        acceleration: 2000,
+        acceleration: 1500,
         bounceX: 0,
         bounceY: 0,
         debug: 0,
-        dragX: 1200,
+        dragX: 1300,
         dragY: 0,
         enableGravity: true,
         frictionX: 0,
         frictionY: 0,
-        gravity: 1000,
-        jump: 500,
+        gravity: 1100,
+        jump: 400,
         minimumOffsetY: 1,
         pullDown: 0,
         pullLeft: 0,

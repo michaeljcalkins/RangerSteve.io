@@ -15,7 +15,6 @@ export default function PlayerSpriteHandler() {
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
     this.player.width = GameConsts.PLAYER_SPRITE_WIDTH
     this.player.height = GameConsts.PLAYER_SPRITE_HEIGHT
-    // this.player.scale.setTo(GameConsts.PLAYER_SCALE)
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
     //  We need to enable physics on the player
@@ -23,20 +22,34 @@ export default function PlayerSpriteHandler() {
     this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT, 105, 10)
     this.game.slopes.enable(this.player)
 
-    // Add a touch of tile padding for the collision detection
-    this.player.body.tilePadding.x = 100
-    this.player.body.tilePadding.y = 100
+    const body = this.player.body
 
-    this.player.body.slopes.friction.x = GameConsts.PLAYER_SLOPE_FRICTION_X
-    this.player.body.slopes.friction.y = GameConsts.PLAYER_SLOPE_FRICTION_Y
+    this.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
+
+    // Add a touch of tile padding for the collision detection
+    body.tilePadding.x = 1
+    body.tilePadding.y = 1
 
     // Set player minimum and maximum movement speed
-    this.player.body.maxVelocity.x = GameConsts.MAX_VELOCITY_X
-    this.player.body.maxVelocity.y = GameConsts.MAX_VELOCITY_Y
+    body.maxVelocity.x = GameConsts.MAX_VELOCITY_X
+    body.maxVelocity.y = GameConsts.MAX_VELOCITY_Y
 
     // Add drag to the player that slows them down when they are not accelerating
-    this.player.body.drag.x = GameConsts.DRAG
-    this.player.body.drag.y = 0
+    body.drag.x = GameConsts.SLOPE_FEATURES.dragX
+    body.drag.y = GameConsts.SLOPE_FEATURES.dragY
+
+    // Update player body Arcade Slopes properties
+    body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
+    body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
+    body.slopes.preferY    = GameConsts.SLOPE_FEATURES.minimumOffsetY
+    body.slopes.pullUp     = GameConsts.SLOPE_FEATURES.pullUp
+    body.slopes.pullDown   = GameConsts.SLOPE_FEATURES.pullDown
+    body.slopes.pullLeft   = GameConsts.SLOPE_FEATURES.pullLeft
+    body.slopes.pullRight  = GameConsts.SLOPE_FEATURES.pullRight
+    body.slopes.snapUp     = GameConsts.SLOPE_FEATURES.snapUp
+    body.slopes.snapDown   = GameConsts.SLOPE_FEATURES.snapDown
+    body.slopes.snapLeft   = GameConsts.SLOPE_FEATURES.snapLeft
+    body.slopes.snapRight  = GameConsts.SLOPE_FEATURES.snapRight
 
     // Make player collide with world boundaries so he doesn't leave the stage
     this.player.body.collideWorldBounds = true

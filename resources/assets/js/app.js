@@ -1,7 +1,6 @@
 import { createStore } from 'redux'
 import storage from 'store'
 
-import getParameterByName from './lib/GetParameterByName.js'
 import rootReducer from './reducers'
 import Check from './lib/Check'
 import ui from './ui'

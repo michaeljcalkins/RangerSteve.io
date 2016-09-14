@@ -206,15 +206,13 @@ function onNewPlayer (data) {
 
         this.join(data.roomId)
 
-        setTimeout(() => {
-            io.to(data.roomId).emit('load game', {
-                room: rooms[data.roomId]
-            })
+        io.to(data.roomId).emit('load game', {
+            room: rooms[data.roomId]
+        })
 
-            io.to(data.roomId).emit('update players', {
-                room: rooms[data.roomId]
-            })
-        }, 1000)
+        io.to(data.roomId).emit('update players', {
+            room: rooms[data.roomId]
+        })
         return
     }
 
@@ -229,15 +227,13 @@ function onNewPlayer (data) {
 
         this.join(data.roomId)
 
-        setTimeout(() => {
-            io.to(data.roomId).emit('load game', {
-                room: rooms[data.roomId]
-            })
+        io.to(data.roomId).emit('load game', {
+            room: rooms[data.roomId]
+        })
 
-            io.to(data.roomId).emit('update players', {
-                room: rooms[data.roomId]
-            })
-        }, 1000)
+        io.to(data.roomId).emit('update players', {
+            room: rooms[data.roomId]
+        })
         return
     }
 
@@ -259,15 +255,13 @@ function onNewPlayer (data) {
 
         this.join(newRoomId)
 
-        setTimeout(() => {
-            io.to(newRoomId).emit('load game', {
-                room: rooms[newRoomId]
-            })
+        io.to(newRoomId).emit('load game', {
+            room: rooms[newRoomId]
+        })
 
-            io.to(newRoomId).emit('update players', {
-                room: rooms[newRoomId]
-            })
-        }, 1000)
+        io.to(newRoomId).emit('update players', {
+            room: rooms[newRoomId]
+        })
         return
     }
 
@@ -396,18 +390,8 @@ function onPlayerDamaged(data) {
         player.meta.deaths++
         player.meta.canRespawnTimestamp = moment().add(RESPAWN_TIME_SECONDS, 'seconds').unix()
 
-        // Falling to your death causes a score loss
-        if (data.damage === 1000) {
-            if (player.meta.score >= 10) {
-                player.meta.score -= 10
-            }
+        const attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
 
-            io.to(data.roomId).emit('player kill log', {
-                deadNickname: player.meta.nickname
-            })
-        }
-
-        let attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
             attackingPlayer.meta.kills++
@@ -427,6 +411,14 @@ function onPlayerDamaged(data) {
                 deadNickname: player.meta.nickname,
                 attackerNickname: attackingPlayer.meta.nickname,
                 weaponId: data.weaponId
+            })
+        } else {
+            if (player.meta.score >= 10) {
+                player.meta.score -= 10
+            }
+
+            io.to(data.roomId).emit('player kill log', {
+                deadNickname: player.meta.nickname
             })
         }
 

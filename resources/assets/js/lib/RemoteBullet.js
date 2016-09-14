@@ -1,5 +1,7 @@
 import { PropTypes } from 'react'
 
+import GameConsts from './GameConsts'
+
 const propTypes = {
     bulletId: PropTypes.string.isRequired,
     playerId: PropTypes.string.isRequired,
@@ -23,7 +25,7 @@ export default function RemoteBullet(data) {
     bullet.rotation = data.pointerAngle
     bullet.height = data.height
     bullet.width = data.width
-    bullet.body.gravity.y = -1800
+    bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
 
     return bullet
 }

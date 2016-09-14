@@ -11,7 +11,7 @@ export default function PlayerJumpHandler() {
 
     // Jump!
     if (upInputIsActive.call(this, 5, store.getState().game.keyboardControls.up) && onTheGround) {
-        this.player.body.velocity.y = GameConsts.JUMP_SPEED
+        this.player.body.velocity.y = -GameConsts.SLOPE_FEATURES.jump
         store.dispatch(actions.player.setJumping(true))
     }
 

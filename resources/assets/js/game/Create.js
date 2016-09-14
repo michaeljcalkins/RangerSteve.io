@@ -1,7 +1,6 @@
 import actions from '../actions'
 
 export default function Create() {
-    this.game.store.dispatch(actions.game.setState('loading'))
     this.game.renderer.renderSession.roundPixels = true
     this.game.stage.disableVisibilityChange = true
 
