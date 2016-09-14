@@ -6,7 +6,8 @@ const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
     health: PropTypes.number.isRequired,
     damageStats: PropTypes.object.isRequired,
-    attackingDamageStats: PropTypes.object.isRequired
+    attackingDamageStats: PropTypes.object.isRequired,
+    canRespawnTimestamp: PropTypes.number.isRequired
 }
 
 let damageTimeout = null
@@ -29,7 +30,7 @@ export default function onPlayerDamaged(data) {
     store.dispatch(actions.player.setAttackingDamageStats(data.attackingDamageStats))
 
     if (data.health <= 0) {
-        const newRespawnTime = moment().add(5, 'seconds').valueOf()
+        const newRespawnTime = data.canRespawnTimestamp * 1000
         store.dispatch(actions.player.setRespawnTime(newRespawnTime))
     }
 
