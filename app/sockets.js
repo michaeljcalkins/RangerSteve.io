@@ -206,15 +206,13 @@ function onNewPlayer (data) {
 
         this.join(data.roomId)
 
-        setTimeout(() => {
-            io.to(data.roomId).emit('load game', {
-                room: rooms[data.roomId]
-            })
+        io.to(data.roomId).emit('load game', {
+            room: rooms[data.roomId]
+        })
 
-            io.to(data.roomId).emit('update players', {
-                room: rooms[data.roomId]
-            })
-        }, 1000)
+        io.to(data.roomId).emit('update players', {
+            room: rooms[data.roomId]
+        })
         return
     }
 
@@ -229,15 +227,13 @@ function onNewPlayer (data) {
 
         this.join(data.roomId)
 
-        setTimeout(() => {
-            io.to(data.roomId).emit('load game', {
-                room: rooms[data.roomId]
-            })
+        io.to(data.roomId).emit('load game', {
+            room: rooms[data.roomId]
+        })
 
-            io.to(data.roomId).emit('update players', {
-                room: rooms[data.roomId]
-            })
-        }, 1000)
+        io.to(data.roomId).emit('update players', {
+            room: rooms[data.roomId]
+        })
         return
     }
 
@@ -259,15 +255,13 @@ function onNewPlayer (data) {
 
         this.join(newRoomId)
 
-        setTimeout(() => {
-            io.to(newRoomId).emit('load game', {
-                room: rooms[newRoomId]
-            })
+        io.to(newRoomId).emit('load game', {
+            room: rooms[newRoomId]
+        })
 
-            io.to(newRoomId).emit('update players', {
-                room: rooms[newRoomId]
-            })
-        }, 1000)
+        io.to(newRoomId).emit('update players', {
+            room: rooms[newRoomId]
+        })
         return
     }
 

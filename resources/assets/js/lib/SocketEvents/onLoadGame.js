@@ -2,6 +2,7 @@ import actions from '../../actions'
 import CreateHandler from '../CreateHandler'
 import Maps from '../Maps'
 import { PropTypes } from 'react'
+import getParameterByName from '../GetParameterByName'
 
 const propTypes = {
     room: PropTypes.shape({
@@ -23,6 +24,7 @@ export default function onLoadGame(data) {
 
     this.load.onLoadComplete.add(() => {
         CreateHandler.call(this)
+
         window.socket.emit('load complete', {
             roomId: store.getState().room.id
         })
