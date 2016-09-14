@@ -34,7 +34,7 @@ const GameConsts = {
         bounceY: 0,
         debug: 0,
         dragX: 1000,
-        dragY: 100,
+        dragY: 50,
         enableGravity: true,
         frictionX: 0,
         frictionY: 0,

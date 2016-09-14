@@ -432,7 +432,8 @@ function onPlayerDamaged(data) {
             damage: data.damage,
             health: player.meta.health,
             damageStats: player.meta.damageStats,
-            attackingDamageStats
+            attackingDamageStats,
+            canRespawnTimestamp: player.meta.canRespawnTimestamp
         })
 
         respawnPlayer(player, attackingPlayer, this.id, data.roomId)
