@@ -202,7 +202,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td>Jump and when in the air fly with jump jet</td>
+                                <td>Jump</td>
                             </tr>
                             <tr>
                                 <td>
@@ -216,7 +216,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td>Switch between primary and secondary weapons</td>
+                                <td>Switch weapons</td>
                             </tr>
                             <tr>
                                 <td>

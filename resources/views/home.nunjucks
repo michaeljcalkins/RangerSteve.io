@@ -26,7 +26,7 @@
                                         style="margin-bottom: 0;"
                                         id="toggle-how-to-button"
                                     >
-                                        Show how to play
+                                        Learn how to play
                                     </span>
                                 </div>
                             </div>
@@ -74,6 +74,14 @@
                                     <tr>
                                         <td><strong>Reload</strong></td>
                                         <td>Press R</td>
+                                    </tr>
+                                     <tr>
+                                        <td><strong>Switch weapons</strong></td>
+                                        <td>Press Q</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Write chat message</strong></td>
+                                        <td>Press T</td>
                                     </tr>
                                 </tbody>
                             </table>
