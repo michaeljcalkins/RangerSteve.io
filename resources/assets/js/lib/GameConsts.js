@@ -1,5 +1,5 @@
 const GameConsts = {
-    DEBUG: false,
+    DEBUG: true,
     STARTING_SFX_VOLUME: .1,
     STARTING_MUSIC_VOLUME: .2,
 
