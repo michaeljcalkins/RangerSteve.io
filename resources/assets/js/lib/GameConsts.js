@@ -144,10 +144,10 @@ const GameConsts = {
                 rotation: 80.20,
                 scale: 1.4,
 
-                leftFaceX: -19,
+                leftFaceX: -13,
                 leftFaceY: 34,
 
-                rightFaceX: 1,
+                rightFaceX: 8,
                 rightFaceY: 24,
 
                 muzzleFlashX: 102,
