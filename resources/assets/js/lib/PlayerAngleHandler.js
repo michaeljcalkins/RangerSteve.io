@@ -9,7 +9,7 @@ export default function PlayerAngleHandler() {
         // User is aiming up and to the right
         if (angleInDegrees <= 81 && angleInDegrees >= 71) {
             leftAngle -= 10
-            rightAngle -= -2
+            rightAngle -= 1
         } else if (angleInDegrees < 71 && angleInDegrees >= 61) {
             leftAngle -= 20
             rightAngle -= 2
