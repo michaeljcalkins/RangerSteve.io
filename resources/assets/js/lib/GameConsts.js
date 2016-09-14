@@ -165,13 +165,13 @@ const GameConsts = {
             bulletSpeed: 2300,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
+                scale: 1.3,
 
-                leftFaceX: -7,
-                leftFaceY: 30,
+                leftFaceX: 0,
+                leftFaceY: 48,
 
-                rightFaceX: -7,
-                rightFaceY: 19,
+                rightFaceX: -14,
+                rightFaceY: 34,
 
                 muzzleFlashX: 102,
                 muzzleFlashY: -72
@@ -188,16 +188,16 @@ const GameConsts = {
             fireRate: 100,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
+                scale: 1.2,
 
                 leftFaceX: -7,
-                leftFaceY: 30,
+                leftFaceY: -20,
 
                 rightFaceX: -7,
-                rightFaceY: 19,
+                rightFaceY: -30,
 
-                muzzleFlashX: 102,
-                muzzleFlashY: -72
+                muzzleFlashX: 35,
+                muzzleFlashY: -75
             }
         },
         P90: {
@@ -219,8 +219,8 @@ const GameConsts = {
                 rightFaceX: -7,
                 rightFaceY: 19,
 
-                muzzleFlashX: 102,
-                muzzleFlashY: -72
+                muzzleFlashX: 71,
+                muzzleFlashY: -58
             }
         },
         M4A1: {
@@ -233,14 +233,14 @@ const GameConsts = {
             damage: 19,
             fireRate: 130,
             position: {
-                rotation: 80.06,
-                scale: 1.4,
+                rotation: 80.1,
+                scale: 1.45,
 
-                leftFaceX: -7,
-                leftFaceY: 30,
+                leftFaceX: 10,
+                leftFaceY: 40,
 
-                rightFaceX: -7,
-                rightFaceY: 19,
+                rightFaceX: -10,
+                rightFaceY: 40,
 
                 muzzleFlashX: 102,
                 muzzleFlashY: -72
