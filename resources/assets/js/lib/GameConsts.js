@@ -39,7 +39,7 @@ const GameConsts = {
         frictionX: 0,
         frictionY: 0,
         gravity: 1100,
-        jump: 550,
+        jump: 400,
         minimumOffsetY: 1,
         pullDown: 0,
         pullLeft: 0,
