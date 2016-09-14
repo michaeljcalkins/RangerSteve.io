@@ -8,36 +8,37 @@
         <div class="main-header">Ranger Steve</div>
 
         <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
+            <div class="col-sm-6 col-md-6 col-lg-4 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
                 <form action="/game" method="GET">
                     <div class="well">
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <input
                                         id="nickname"
                                         class="form-control"
                                         placeholder="Enter your nickname..."
                                         autofocus
+                                        style="margin-bottom: 15px"
                                         type="text"
                                     />
-                                    <span
-                                        class="help-block hidden-xs pointer"
-                                        style="margin-bottom: 0;"
-                                        id="toggle-how-to-button"
-                                    >
-                                        Learn how to play
-                                    </span>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
                                 <button
                                     type="submit"
                                     class="btn btn-success btn-lg btn-block"
+                                    style="margin-bottom: 15px"
                                     id="play-button"
                                 >
                                     Play Now
                                 </button>
+
+                                <span
+                                    class="help-block pointer"
+                                    style="margin: 0;"
+                                    id="toggle-how-to-button"
+                                >
+                                    Learn how to play
+                                </span>
                             </div>
                         </div>
 
@@ -93,6 +94,8 @@
                                 <a href="https://www.facebook.com/rangerstevegame/" target="_blank" style="color: white;">Facebook</a>
                                 |
                                 <a href="https://twitter.com/michaeljcalkins" target="_blank" style="color: white;">Twitter</a>
+                                |
+                                <a href="/credits" style="color: white;">Credits</a>
                             </strong>
                         </div>
                     </div>

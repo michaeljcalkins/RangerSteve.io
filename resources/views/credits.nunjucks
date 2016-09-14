@@ -29,21 +29,21 @@
     <div class="row">
         <div class="col-sm-12">
             <h3>LavaEagle, Game Design, Website, and Programming</h3>
-            <h2>Michael Calkins</h2>
+            <h2><a href="https://michaeljcalkins.com" target="_blank">Michael Calkins</a></h2>
         </div>
     </div>
 
     <div class="row">
         <div class="col-sm-12">
             <h3>High Rule Temple Illustration and Design</h3>
-            <h2><a href="https://www.behance.net/federicosarria">Federico Sarría</a></h2>
+            <h2><a href="https://www.behance.net/federicosarria" target="_blank">Federico Sarría</a></h2>
         </div>
     </div>
 
     <div class="row">
         <div class="col-sm-12">
             <h3>Dark Forest Illustration and Design</h3>
-            <h2><a href="https://www.behance.net/juandiaz">Juan Manuel Diaz</a></h2>
+            <h2><a href="https://www.behance.net/juandiaz" target="_blank">Juan Manuel Diaz</a></h2>
         </div>
     </div>
 
@@ -54,6 +54,7 @@
             <h2>Nishelle Dawsey</h2>
             <h2><a target="_blank" href="https://twitter.com/AndrewDelPrete">Andrew Del Prete</a></h2>
             <h2><a target="_blank" href="http://ryogenic.com">Ryogenic</a></h2>
+            <h2><a target="_blank" href="https://twitter.com/Hex72">Hexus</a></h2>
         </div>
     </div>
 
@@ -64,14 +65,15 @@
             <h2><a target="_blank" href="https://facebook.github.io/react/">ReactJS</a></h2>
             <h2><a target="_blank" href="http://expressjs.com/">ExpressJS</a></h2>
             <h2><a target="_blank" href="https://github.com/socketio/socket.io">Socket.io</a></h2>
+            <h2><a target="_blank" href="https://github.com/hexus/phaser-arcade-slopes">Arcade Slopes Plugin</a></h2>
         </div>
     </div>
 
     <div class="row">
         <div class="col-sm-12">
             <h1>Thanks For Playing!</h1>
-            <h3><a href="https://twitter.com/michaeljcalkins">@michaeljcalkins</a></h3>
-            <h3><a href="http://www.rangersteve.io">www.RangerSteve.io</a></h3>
+            <h3><a href="https://twitter.com/michaeljcalkins" target="_blank">@michaeljcalkins</a></h3>
+            <h3><a href="/">RangerSteve.io</a></h3>
         </div>
     </div>
 </div>
