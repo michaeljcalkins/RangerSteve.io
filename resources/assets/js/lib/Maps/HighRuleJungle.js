@@ -1,24 +1,31 @@
 import GameConsts from '../GameConsts'
 import KillCurrentPlayer from '../KillCurrentPlayer.js'
+import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 
 const WORLD_WIDTH = 6000
 const WORLD_HEIGHT = 2975
-const GROUND_POSITION_Y = WORLD_HEIGHT - 10
+
 const SPAWN_POINTS = [
     { x: 2900, y: 2500 },
-    { x: 2300, y: 2300 },
-    { x: 1500, y: 2150 },
-    { x: 2600, y: 1900 },
+    { x: 2300, y: 2260 },
+    { x: 1500, y: 2140 },
+    { x: 2600, y: 1850 },
     { x: 2900, y: 1700 },
-    { x: 3100, y: 1450 },
-    { x: 2300, y: 1100 },
-    { x: 1400, y: 1650 },
-    { x: 1650, y: 1470 },
-    { x: 4350, y: 1100 },
-    { x: 1000, y: 1300 },
+    { x: 3100, y: 1420 },
+    { x: 3730, y: 1420 },
+    { x: 3330, y: 1120 },
+    { x: 2300, y: 1150 },
+    { x: 1420, y: 1640 },
+    { x: 1650, y: 1460 },
+    { x: 4350, y: 1090 },
+    { x: 1000, y: 1270 },
+    { x: 1500, y: 1220 },
+    { x: 400, y: 1270 },
     { x: 5100, y: 800 },
+    { x: 5100, y: 1110 },
     { x: 5500, y: 1400 },
-    { x: 1990, y: 730 }
+    { x: 4900, y: 1420 },
+    { x: 2290, y: 730 }
 ]
 
 export function getRandomSpawnPoint() {
@@ -67,6 +74,8 @@ export function create() {
 
     // Enable collision between tile indexes 2 and 34
     this.map.setCollisionBetween(2, 34, true, 'collision')
+
+    if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
 }
 
 export function createLedges() {

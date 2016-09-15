@@ -1,16 +1,24 @@
 import GameConsts from '../GameConsts'
+import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 
 const WORLD_WIDTH = 2625
 const WORLD_HEIGHT = 1125
 
 const SPAWN_POINTS = [
-    { x: 1900, y: 900 },
+    { x: 1900, y: 890 },
     { x: 1650, y: 770 },
     { x: 1750, y: 550 },
     { x: 2150, y: 650 },
-    { x: 1250, y: 380 },
-    { x: 1500, y: 400 },
-    { x: 280, y: 530 }
+    { x: 1250, y: 370 },
+    { x: 1500, y: 390 },
+    { x: 280, y: 530 },
+    { x: 540, y: 630 },
+    { x: 700, y: 900 },
+    { x: 850, y: 570 },
+    { x: 350, y: 280 },
+    { x: 2160, y: 310 },
+    { x: 1130, y: 730 },
+    { x: 375, y: 840 },
 ]
 
 export function getRandomSpawnPoint() {
@@ -44,6 +52,8 @@ export function create() {
 
     // Enable collision between tile indexes 2 and 34
     this.map.setCollisionBetween(2, 34, true, 'collision')
+
+    if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
 }
 
 export function update() {
