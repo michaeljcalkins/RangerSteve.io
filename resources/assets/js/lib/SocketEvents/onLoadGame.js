@@ -34,7 +34,7 @@ export default function onLoadGame(data) {
 
     setInterval(() => {
         mixpanel.track('map:' + store.getState().room.map)
-    }, 1000)
+    }, 10000)
 
     this.load.start()
 }
