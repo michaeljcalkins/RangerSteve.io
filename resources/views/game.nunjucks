@@ -34,7 +34,12 @@
 
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     {% else %}
-        <script>window.mixpanel = { track: function() {} }</script>
+        <script>
+            window.mixpanel = {
+                track: function() { },
+                time_event: function() { }
+            }
+        </script>
     {% endif %}
 </head>
 <body class="game" oncontextmenu="return false">
