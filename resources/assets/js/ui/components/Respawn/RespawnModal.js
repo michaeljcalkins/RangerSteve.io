@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import moment from 'moment'
 import _ from 'lodash'
 
-import GoogleAd from '../GoogleAd/GoogleAd'
 import GameConsts from '../../../lib/GameConsts'
 
 export default class RespawnModal extends React.Component {
@@ -136,14 +135,6 @@ export default class RespawnModal extends React.Component {
                                     defaultValue={ shareLink }
                                     readOnly
                                     type="text"
-                                />
-
-                                <hr />
-
-                                <GoogleAd
-                                    width={ 336 }
-                                    height={ 280 }
-                                    slot="6348600808"
                                 />
                             </div>
                         </div>
