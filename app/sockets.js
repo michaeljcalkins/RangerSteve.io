@@ -219,8 +219,7 @@ function onNewPlayer (data) {
     // Specified room id and room has been created
     if (
         data.roomId &&
-        rooms[data.roomId] &&
-        Object.keys(rooms[data.roomId].players).length < MAX_ROOM_SIZE
+        rooms[data.roomId]
     ) {
         util.log('Specified room does existing and has room for player')
         rooms[data.roomId].players[this.id] = newPlayer
