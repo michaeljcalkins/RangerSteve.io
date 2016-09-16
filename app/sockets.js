@@ -13,7 +13,7 @@ let rooms = {}
 let io = null
 
 const MAX_ROOM_SIZE = 7
-const RESPAWN_TIME_SECONDS = 4
+const RESPAWN_TIME_SECONDS = 5
 const ROUND_LENGTH_MINUTES = 5
 const PLAYER_FULL_HEALTH = 100
 
