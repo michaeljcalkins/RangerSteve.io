@@ -143,7 +143,7 @@ export default class RespawnModal extends React.Component {
                                 <GoogleAd
                                     width={ 336 }
                                     height={ 280 }
-                                    slot="8444442803"
+                                    slot="6348600808"
                                 />
                             </div>
                         </div>
