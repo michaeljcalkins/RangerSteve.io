@@ -37,10 +37,10 @@ export default function onPlayerRespawn(data) {
     store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
     store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId]))
 
-    if (currentWeapon === 'secondaryWeapon')
-        this.currentWeaponSprite.loadTexture(state.player.selectedSecondaryWeaponId)
+    if (currentWeapon === 'primaryWeapon')
+        this.currentWeaponSprite.loadTexture(state.player.nextSelectedPrimaryWeaponId)
     else
-        this.currentWeaponSprite.loadTexture(state.player.selectedPrimaryWeaponId)
+        this.currentWeaponSprite.loadTexture(state.player.nextSelectedSecondaryWeaponId)
 
     // Hide child groups
     this.leftArmGroup.visible = true
@@ -49,10 +49,10 @@ export default function onPlayerRespawn(data) {
     this.torsoGroup.visible = true
 
     store.dispatch(actions.player.setPrimaryIsReloading(false))
-    store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.selectedPrimaryWeaponId].ammo))
+    store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))
 
     store.dispatch(actions.player.setSecondaryIsReloading(false))
-    store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.selectedSecondaryWeaponId].ammo))
+    store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].ammo))
 
     // Allow Phaser to move the player
     // so that the map doesn't
