@@ -32,7 +32,7 @@ export default function Preload() {
     this.load.audio('G43', '/audio/G43.mp3')
     this.load.audio('P90', '/audio/P90.mp3')
     this.load.audio('M4A1', '/audio/M4A1.mp3')
-    this.load.audio('BarretM90', '/audio/BarretM90.mp3')
+    this.load.audio('Barrett', '/audio/BarrettM90.mp3')
 
     this.load.audio('DesertEagle', '/audio/DesertEagle.mp3')
     this.load.audio('SilverBaller', '/audio/SilverBaller.mp3')

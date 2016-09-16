@@ -21,9 +21,11 @@ export default function onUpdatePlayers(data) {
 
     store.dispatch(actions.room.setRoom(data.room))
 
+    // Allows you to share the url with your friends to play
     const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + store.getState().room.id
     window.history.pushState({ path: newurl }, '', newurl)
 
+    // TODO Instead of destroying all enemies look for the differences and adjust accordingly.
     this.enemies.forEach(function (enemy) {
         enemy.kill()
     })
@@ -58,15 +60,20 @@ export default function onUpdatePlayers(data) {
 
         this.enemies.add(newRemotePlayer)
     })
+    // ENDTODO
 
+    // Round has ended so pause the game
     if (store.getState().room.state === 'ended') {
         this.game.paused = true
+        mixpanel.track('map:' + store.getState.room.map)
     }
 
+    // Round has restarted and the user will rejoin on a new map
     if (store.getState().room.state === 'active' && lastRoomState === 'ended') {
         window.location.reload()
         return
     }
 
+    // Used to detect the round went active -> ended -> active
     lastRoomState = store.getState().room.state
 }
