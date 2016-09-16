@@ -3,6 +3,10 @@ import getParameterByName from '../GetParameterByName.js'
 export default function onSocketConnected() {
     const { store } = this.game
 
+    if (getParameterByName('roomId')) {
+        mixpanel.track('player:joinedByRoomId')
+    }
+
     window.socket.emit('new player', {
         roomId: getParameterByName('roomId'),
         map: getParameterByName('map'),

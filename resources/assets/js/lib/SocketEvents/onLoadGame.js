@@ -19,6 +19,8 @@ export default function onLoadGame(data) {
     if (store.getState().game.state !== 'loading') return
 
     store.dispatch(actions.room.setRoom(data.room))
+
+    mixpanel.time_event('map:' + store.getState().room.map)
     Maps[store.getState().room.map].preload.call(this)
     this.currentMap = store.getState().room.map
 
@@ -29,6 +31,10 @@ export default function onLoadGame(data) {
             roomId: store.getState().room.id
         })
     }, this)
+
+    setInterval(() => {
+        mixpanel.track('map:' + store.getState().room.map)
+    }, 1000)
 
     this.load.start()
 }
