@@ -1,3 +1,17 @@
+export const setNextSelectedPrimaryWeaponId = (value) => {
+    return {
+        type: 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID',
+        value
+    }
+}
+
+export const setNextSelectedSecondaryWeaponId = (value) => {
+    return {
+        type: 'SET_NEXT_SELECTED_SECONDARY_WEAPON_ID',
+        value
+    }
+}
+
 export const setPrimaryIsReloading = (value) => {
     return {
         type: 'SET_PRIMARY_IS_RELOADING',

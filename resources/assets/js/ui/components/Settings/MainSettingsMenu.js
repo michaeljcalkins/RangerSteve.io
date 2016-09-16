@@ -60,24 +60,26 @@ export default class MainSettingsMenu extends React.Component {
         this.props.onViewChange('chooseCharacter')
     }
 
+    // TODO This function is no longer needed
     primaryWeapon() {
-        const { selectedPrimaryWeaponId } = this.props.player
-        const weapon = GameConsts.WEAPONS[selectedPrimaryWeaponId]
+        const { nextSelectedPrimaryWeaponId } = this.props.player
+        const weapon = GameConsts.WEAPONS[nextSelectedPrimaryWeaponId]
 
         if (! weapon) {
-            console.error('Could not find primary weapon.', selectedPrimaryWeaponId)
+            console.error('Could not find primary weapon.', nextSelectedPrimaryWeaponId)
             return null
         }
 
         return weapon
     }
 
+    // TODO This function is no longer needed
     secondaryWeapon() {
-        const { selectedSecondaryWeaponId } = this.props.player
-        const weapon = GameConsts.WEAPONS[selectedSecondaryWeaponId]
+        const { nextSelectedSecondaryWeaponId } = this.props.player
+        const weapon = GameConsts.WEAPONS[nextSelectedSecondaryWeaponId]
 
         if (! weapon) {
-            console.error('Could not find secondary weapon.', selectedSecondaryWeaponId)
+            console.error('Could not find secondary weapon.', nextSelectedSecondaryWeaponId)
             return null
         }
 
