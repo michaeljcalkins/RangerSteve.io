@@ -18,13 +18,27 @@ const initialState = {
     secondaryAmmoRemaining: 0,
     secondaryWeapon: null,
     selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
-    selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle')
+    selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
+    nextSelectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
+    nextSelectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
 }
 
 storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID':
+            return {
+                ...state,
+                nextSelectedPrimaryWeaponId: action.value
+            }
+
+        case 'SET_NEXT_SELECTED_SECONDARY_WEAPON_ID':
+            return {
+                ...state,
+                nextSelectedSecondaryWeaponId: action.value
+            }
+
         case 'SET_PRIMARY_IS_RELOADING':
             return {
                 ...state,
