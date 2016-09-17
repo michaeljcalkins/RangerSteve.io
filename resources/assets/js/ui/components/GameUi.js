@@ -123,6 +123,7 @@ export default class GameUi extends React.Component {
                 { (game.leaderboardModalIsOpen || this.props.room.state === 'ended') &&
                     <Leaderboard
                         players={ this.props.room.players }
+                        room={ this.props.room }
                         roundStartTime={ this.props.room.roundStartTime }
                     />
                 }

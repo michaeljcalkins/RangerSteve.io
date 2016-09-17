@@ -23,7 +23,9 @@ export default class EndOfRoundLeaderboard extends React.Component {
     }
 
     tick() {
-        let timeRemaining = this.props.roundStartTime - moment().unix()
+        const { room } = this.props
+
+        let timeRemaining = room.roundStartTime - moment().unix()
         var minutes = Math.floor(timeRemaining / 60)
         var seconds = timeRemaining - minutes * 60
 
@@ -35,7 +37,9 @@ export default class EndOfRoundLeaderboard extends React.Component {
     }
 
     renderPlayers() {
-        return _.values(this.props.players)
+        const { room } = this.props
+
+        return _.values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map(function(player, key) {
                 let kdRatio = player.meta.deaths > 0 ? player.meta.kills / player.meta.deaths : player.meta.kills
@@ -74,11 +78,13 @@ export default class EndOfRoundLeaderboard extends React.Component {
                         { this.renderPlayers() }
                     </tbody>
                 </table>
-                <div className="row">
-                    <div className="col-sm-12 text-center">
-                        <span>Next round starting in { this.state.elapsed } seconds...</span>
+                { this.props.room.state === 'ended' &&
+                    <div className="row">
+                        <div className="col-sm-12 text-center">
+                            <span>Next round starting in { this.state.elapsed } seconds...</span>
+                        </div>
                     </div>
-                </div>
+                }
                 {/*<div className="row">
                     <div className="col-sm-3">
                         Most Shots Fired
@@ -97,6 +103,5 @@ export default class EndOfRoundLeaderboard extends React.Component {
 }
 
 EndOfRoundLeaderboard.propTypes = {
-    players: PropTypes.object,
-    roundStartTime: PropTypes.number
+    room: PropTypes.object
 }
