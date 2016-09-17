@@ -44,7 +44,7 @@ export default function() {
     bmd.ctx.rect(0, 0, width, height)
     bmd.ctx.fillStyle = '#ffffff'
     bmd.ctx.fill()
-    this.hudJumpJetBar = this.game.add.sprite(this.camera.width - 125, this.camera.height - 33, bmd)
+    this.hudJumpJetBar = this.game.add.sprite(this.camera.width - 125, this.camera.height - 32, bmd)
     this.hudJumpJetBar.fixedToCamera = true
 
     this.hudJumpJetIcon = this.game.add.sprite(this.camera.width - 165, this.camera.height - 34,  'hudGasIcon')
