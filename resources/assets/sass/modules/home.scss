@@ -34,8 +34,8 @@ body.main {
         font-size: 110px;
         font-weight: 300;
         letter-spacing: 2px;
-        line-height: 70px;
-        margin-bottom: 30px;
+        line-height: 110px;
+        margin-bottom: 10px;
         text-shadow: 0 6px rgba(0,0,0,.1);
         text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
     }
@@ -78,14 +78,46 @@ body.main {
     text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
 }
 
-@media only screen and (max-device-width: 480px) {
+.home-content {
+    margin: 0 auto;
+    width: 450px;
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    div.main-header {
+        line-height: 90px !important;
+        font-size: 90px !important;
+    }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
     input.form-control {
         margin-bottom: 10px;
     }
 
     div.main-header {
-        line-height: 80px !important;
+        line-height: 60px !important;
         font-size: 60px !important;
-        margin-bottom: 10px !important;
     }
+
+    .home-content {
+        width: 100%;
+    }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+
 }
