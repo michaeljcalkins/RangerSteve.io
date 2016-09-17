@@ -7,7 +7,7 @@ const propTypes = {
     health: PropTypes.number.isRequired,
     damageStats: PropTypes.object.isRequired,
     attackingDamageStats: PropTypes.object.isRequired,
-    canRespawnTimestamp: PropTypes.number.isRequired
+    canRespawnTimestamp: PropTypes.number
 }
 
 let damageTimeout = null
