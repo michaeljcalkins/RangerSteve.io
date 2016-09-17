@@ -4,6 +4,8 @@ export default function Preload() {
     // Map
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet', '/images/bullet.png')
+    this.load.image('leftHudBg', '/images/leftHudBg.png', true)
+    this.load.image('rightHudBg', '/images/rightHudBg.png', true)
 
     this.load.spritesheet('hurt-border', '/images/hurt-border.png')
     this.load.spritesheet('muzzle-flash', '/images/muzzle-flash.png', 447, 271)
