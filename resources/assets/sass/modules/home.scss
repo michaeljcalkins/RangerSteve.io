@@ -35,7 +35,7 @@ body.main {
         font-weight: 300;
         letter-spacing: 2px;
         line-height: 110px;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
         text-shadow: 0 6px rgba(0,0,0,.1);
         text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
     }
@@ -85,6 +85,7 @@ body.main {
 
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
+
 }
 
 /* Medium Devices, Desktops */
@@ -109,7 +110,6 @@ body.main {
     div.main-header {
         line-height: 60px !important;
         font-size: 60px !important;
-        margin-bottom: 10px !important;
     }
 
     .home-content {
