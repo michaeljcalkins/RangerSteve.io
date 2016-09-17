@@ -65,7 +65,7 @@ export default function onUpdatePlayers(data) {
     // Round has ended so pause the game
     if (store.getState().room.state === 'ended') {
         this.game.paused = true
-        mixpanel.track('map:' + store.getState.room.map)
+        mixpanel.track('map:' + store.getState().room.map)
     }
 
     // Round has restarted and the user will rejoin on a new map

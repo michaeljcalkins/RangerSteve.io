@@ -142,7 +142,6 @@ export default class GameUi extends React.Component {
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
-                <HudHealth health={ player.health } />
                 <HudScore score={ player.score } />
                 <HudTimer roundEndTime={ room.roundEndTime } />
                 <HudLeaderboard players={ room.players } />
