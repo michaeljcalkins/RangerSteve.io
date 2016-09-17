@@ -1,4 +1,6 @@
 import _ from 'lodash'
+import moment from 'moment'
+
 import CollisionHandler from '../lib/CollisionHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
@@ -11,6 +13,7 @@ import Maps from '../lib/Maps'
 import InitEvents from '../lib/CreateHandler/CreateEvents'
 import actions from '../actions'
 import GameConsts from '../lib/GameConsts'
+import RemainingFuelPercent from '../lib/RemainingFuelPercent'
 
 let lastPlayerData = {}
 
@@ -22,12 +25,45 @@ export default function Update() {
 
     const state = this.game.store.getState()
 
+    if (state.game.state !== 'active' || ! state.room) return
+
+
+    this.hudHealthText.setText(state.player.health)
+
+    const currentAmmoRemaining = state.player.currentWeapon === 'primaryWeapon'
+        ? state.player.primaryAmmoRemaining
+        : state.player.secondaryAmmoRemaining
+
+    if (
+        (state.player.currentWeapon === 'primaryWeapon' && state.player.isPrimaryReloading) ||
+        (state.player.currentWeapon === 'secondaryWeapon' && state.player.isSecondaryReloading)
+    ) {
+        this.hudAmmoText.setText('--')
+    } else {
+        this.hudAmmoText.setText(currentAmmoRemaining)
+    }
+
+    // Timer HUD
+    let timeRemaining = state.room.roundEndTime - moment().unix()
+    var minutes = Math.floor(timeRemaining / 60)
+    var seconds = timeRemaining - minutes * 60
+    seconds = `0${seconds}`.substr(-2)
+
+    if (isNaN(minutes) || isNaN(seconds) || minutes < 0) {
+        this.hudTimerText.setText('0:00')
+    } else {
+        this.hudTimerText.setText(`${minutes}:${seconds}`)
+    }
+
+    // Jump Jet HUD
+    const widthPercent = RemainingFuelPercent(state.player.jumpJetCounter)
+    this.hudJumpJetBar.width = widthPercent
+
     if (this.audioPlayer) {
         this.audioPlayer.volume = state.game.musicVolume
     }
 
-    if (state.game.state !== 'active' || ! state.room) return
-
+    // Pause controls so user can't do anything in the background accidentally
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen
     this.game.input.enabled = !isPaused
 

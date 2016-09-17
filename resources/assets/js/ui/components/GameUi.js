@@ -60,9 +60,10 @@ export default class GameUi extends React.Component {
     }
 
     handleSendMessage(message) {
+        this.props.onCloseChatModal()
+
         if (message.length === 0) return
 
-        this.props.onCloseChatModal()
         this.props.onReduceToMaxChatMessages()
 
         emitMessageSend.call(this, {
@@ -128,24 +129,13 @@ export default class GameUi extends React.Component {
             onSettingsViewChange
         } = this.props
 
-        const currentAmmoRemaining = player.currentWeapon === 'primaryWeapon' ? player.primaryAmmoRemaining : player.secondaryAmmoRemaining
-
         return (
             <div>
                 { game.state === 'loading' && <LoadingScreen /> }
-                <HudAmmo
-                    ammoRemaining={ currentAmmoRemaining }
-                    currentWeapon={ player.currentWeapon }
-                    isPrimaryReloading={ player.isPrimaryReloading }
-                    isSecondaryReloading={ player.isSecondaryReloading }
-                />
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
-                <HudScore score={ player.score } />
-                <HudTimer roundEndTime={ room.roundEndTime } />
                 <HudLeaderboard players={ room.players } />
-                <HudJumpJet jumpJetCounter={ player.jumpJetCounter } />
                 <HudSettingsButton onButtonClick={ onOpenSettingsModal } />
                 <HudNewChatMessage
                     isOpen={ game.chatModalIsOpen }

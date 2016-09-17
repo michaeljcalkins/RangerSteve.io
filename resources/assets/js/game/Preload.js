@@ -4,8 +4,12 @@ export default function Preload() {
     // Map
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet', '/images/bullet.png')
-    this.load.image('leftHudBg', '/images/leftHudBg.png', true)
-    this.load.image('rightHudBg', '/images/rightHudBg.png', true)
+    this.load.image('leftHudBg', '/images/leftHudBg.png')
+    this.load.image('rightHudBg', '/images/rightHudBg.png')
+    this.load.image('centerHudBg', '/images/centerHudBg.png')
+    this.load.image('hudHealthIcon', '/images/icons/cross-24.png')
+    this.load.image('hudAmmoIcon', '/images/icons/ammo-tin-24.png')
+    this.load.image('hudGasIcon', '/images/icons/gas-24.png')
 
     this.load.spritesheet('hurt-border', '/images/hurt-border.png')
     this.load.spritesheet('muzzle-flash', '/images/muzzle-flash.png', 447, 271)
