@@ -27,9 +27,10 @@ export default function Update() {
 
     if (state.game.state !== 'active' || ! state.room) return
 
-
+    // Health HUD
     this.hudHealthText.setText(state.player.health)
 
+    // Ammo Hud
     const currentAmmoRemaining = state.player.currentWeapon === 'primaryWeapon'
         ? state.player.primaryAmmoRemaining
         : state.player.secondaryAmmoRemaining

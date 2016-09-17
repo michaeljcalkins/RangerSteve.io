@@ -16,6 +16,7 @@ const initialState = {
     },
     musicVolume: storage.get('musicVolume', GameConsts.STARTING_MUSIC_VOLUME),
     settingsModalIsOpen: !storage.has('nickname'),
+    leaderboardModalIsOpen: false,
     settingsView: 'main',
     sfxVolume: storage.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME),
     showKillConfirmed: false,
@@ -25,6 +26,18 @@ const initialState = {
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'OPEN_LEADERBOARD_MODAL':
+            return {
+                ...state,
+                leaderboardModalIsOpen: action.value
+            }
+
+        case 'CLOSE_LEADERBOARD_MODAL':
+            return {
+                ...state,
+                leaderboardModalIsOpen: action.value
+            }
+
         case 'SET_RESET_EVENTS_FLAG':
             return {
                 ...state,
