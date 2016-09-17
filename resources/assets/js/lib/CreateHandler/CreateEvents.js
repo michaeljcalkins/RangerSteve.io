@@ -10,7 +10,11 @@ export default function() {
      * Open settings modal
      */
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
-        store.dispatch(actions.game.openSettingsModal())
+        store.dispatch(actions.game.openLeaderboardModal())
+    })
+
+    this.input.keyboard.addKey(Phaser.Keyboard.TAB).onUp.add(() => {
+        store.dispatch(actions.game.closeLeaderboardModal())
     })
 
     /**

@@ -7,6 +7,7 @@ import CreateBullets from './CreateBullets'
 import CreateMusic from './CreateMusic'
 import CreateDetectIdleUser from './CreateDetectIdleUser'
 import CreateKillingSpreeAudio from './CreateKillingSpreeAudio'
+import CreateUI from './CreateUI'
 import actions from '../../actions'
 
 export default function() {
@@ -40,6 +41,7 @@ export default function() {
     CreateKillingSpreeAudio.call(this)
     CreateDetectIdleUser()
     CreateBullets.call(this)
+    CreateUI.call(this)
 
     store.dispatch(actions.game.setState('active'))
 }

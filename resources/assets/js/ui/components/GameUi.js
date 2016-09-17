@@ -3,18 +3,13 @@ import storage from 'store'
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudNewChatMessage from './Hud/HudNewChatMessage'
-import HudHealth from './Hud/HudHealth'
-import HudJumpJet from './Hud/HudJumpJet'
 import HudKillConfirmed from './Hud/HudKillConfirmed'
 import HudKillLog from './Hud/HudKillLog'
 import HudLeaderboard from './Hud/HudLeaderboard'
-import HudAmmo from './Hud/HudAmmo'
-import HudScore from './Hud/HudScore'
-import HudTimer from './Hud/HudTimer'
 import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
 import SettingsModal from './Settings/SettingsModal'
-import EndOfRoundLeaderboard from './Round/EndOfRoundLeaderboard'
+import Leaderboard from './Leaderboard/Leaderboard'
 import RespawnModal from './Respawn/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
@@ -28,7 +23,6 @@ export default class GameUi extends React.Component {
         this.handleSoundEffectVolumeChange = this.handleSoundEffectVolumeChange.bind(this)
         this.handleViewChange = this.handleViewChange.bind(this)
         this.handleMusicVolumeChange = this.handleMusicVolumeChange.bind(this)
-        this.renderEndOfRoundLeaderboard = this.renderEndOfRoundLeaderboard.bind(this)
         this.handlePrimaryGunClick = this.handlePrimaryGunClick.bind(this)
         this.handleSecondaryGunClick = this.handleSecondaryGunClick.bind(this)
     }
@@ -51,18 +45,14 @@ export default class GameUi extends React.Component {
                 e.preventDefault()
                 this.props.onOpenChatModal()
             }
-
-            if (e.keyCode === Phaser.Keyboard.TAB && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
-                e.preventDefault()
-                this.props.onOpenSettingsModal()
-            }
         })
     }
 
     handleSendMessage(message) {
+        this.props.onCloseChatModal()
+
         if (message.length === 0) return
 
-        this.props.onCloseChatModal()
         this.props.onReduceToMaxChatMessages()
 
         emitMessageSend.call(this, {
@@ -106,18 +96,6 @@ export default class GameUi extends React.Component {
         this.props.onSecondaryWeaponIdChange(weapon.id)
     }
 
-    renderEndOfRoundLeaderboard() {
-        if (this.props.room.state !== 'ended')
-            return null
-
-        return (
-            <EndOfRoundLeaderboard
-                players={ this.props.room.players }
-                roundStartTime={ this.props.room.roundStartTime }
-            />
-        )
-    }
-
     render() {
         const {
             player,
@@ -128,32 +106,26 @@ export default class GameUi extends React.Component {
             onSettingsViewChange
         } = this.props
 
-        const currentAmmoRemaining = player.currentWeapon === 'primaryWeapon' ? player.primaryAmmoRemaining : player.secondaryAmmoRemaining
-
         return (
             <div>
                 { game.state === 'loading' && <LoadingScreen /> }
-                <HudAmmo
-                    ammoRemaining={ currentAmmoRemaining }
-                    currentWeapon={ player.currentWeapon }
-                    isPrimaryReloading={ player.isPrimaryReloading }
-                    isSecondaryReloading={ player.isSecondaryReloading }
-                />
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
-                <HudHealth health={ player.health } />
-                <HudScore score={ player.score } />
-                <HudTimer roundEndTime={ room.roundEndTime } />
                 <HudLeaderboard players={ room.players } />
-                <HudJumpJet jumpJetCounter={ player.jumpJetCounter } />
                 <HudSettingsButton onButtonClick={ onOpenSettingsModal } />
                 <HudNewChatMessage
                     isOpen={ game.chatModalIsOpen }
                     onSendMessage={ this.handleSendMessage }
                 />
                 <HudChatHistory messages={ game.chatMessages } />
-                { this.renderEndOfRoundLeaderboard() }
+
+                { (game.leaderboardModalIsOpen || this.props.room.state === 'ended') &&
+                    <Leaderboard
+                        players={ this.props.room.players }
+                        roundStartTime={ this.props.room.roundStartTime }
+                    />
+                }
 
                 { player.health <= 0 && room.state !== 'ended' &&
                     <RespawnModal player={ player } room={ room } />

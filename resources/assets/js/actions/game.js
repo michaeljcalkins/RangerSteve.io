@@ -1,3 +1,17 @@
+export const openLeaderboardModal = () => {
+    return {
+        type: 'OPEN_LEADERBOARD_MODAL',
+        value: true
+    }
+}
+
+export const closeLeaderboardModal = () => {
+    return {
+        type: 'CLOSE_LEADERBOARD_MODAL',
+        value: false
+    }
+}
+
 export const setResetEventsFlag = (value) => {
     return {
         type: 'SET_RESET_EVENTS_FLAG',
