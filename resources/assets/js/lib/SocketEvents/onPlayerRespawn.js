@@ -35,7 +35,9 @@ export default function onPlayerRespawn(data) {
     this.player.body.acceleration.y = 0
 
     store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
+    store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
     store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId]))
+    store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
 
     if (currentWeapon === 'primaryWeapon')
         this.currentWeaponSprite.loadTexture(state.player.nextSelectedPrimaryWeaponId)
