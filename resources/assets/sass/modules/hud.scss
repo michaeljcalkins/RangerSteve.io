@@ -77,36 +77,6 @@
     -webkit-animation-timing-function: linear;
 }
 
-.hud-jump-jet {
-    background-image: url(/images/icons/gas-32-white.png);
-    padding: 11px 0 11px 45px;
-    right: 0;
-    bottom: 0;
-    width: 175px;
-
-    .progress {
-        max-width: 115px;
-        margin: 0;
-    }
-
-    .progress-bar {
-        background: #E0B302;
-    }
-}
-
-.hud-score {
-    background-image: url(/images/icons/trophy-32-white.png);
-    left: 0;
-    padding: 10px 15px 10px 70px;
-    top: 0;
-}
-
-.hud-health {
-    background-image: url(/images/icons/plus-4-32-white.png);
-    bottom: 0;
-    left: 0;
-}
-
 .hud-leaderboard {
     font: 14px "Open Sans", Arial, sans-serif;
     font-size: 14px;
@@ -122,7 +92,7 @@
         margin-bottom: 0;
 
         tr:first-child td {
-            border-top: 1px solid #ddd !important;
+            border-top: 1px solid rgba(101, 100, 97, 1) !important;
             padding-top: 8px !important;
         }
 
@@ -157,12 +127,6 @@
         margin: 0 0 0 17px;
         padding: 0;
     }
-}
-
-.hud-ammo {
-    background-image: url(/images/icons/ammo-tin-32-white.png);
-    bottom: 0px;
-    right: 185px;
 }
 
 .hud-kill-confirmed {
@@ -247,13 +211,6 @@
 
 .hud-settings-modal {
     cursor: default;
-}
-
-.hud-timer {
-    background-image: url(/images/icons/time-32-white.png);
-    left: 50%;
-    margin-left: -60px;
-    top: 0;
 }
 
 .end-of-round-leaderboard {
