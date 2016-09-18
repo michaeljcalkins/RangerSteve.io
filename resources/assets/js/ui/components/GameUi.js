@@ -112,7 +112,7 @@ export default class GameUi extends React.Component {
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
-                <HudLeaderboard players={ room.players } />
+                {/* <HudLeaderboard players={ room.players } /> */}
                 <HudSettingsButton onButtonClick={ onOpenSettingsModal } />
                 <HudNewChatMessage
                     isOpen={ game.chatModalIsOpen }

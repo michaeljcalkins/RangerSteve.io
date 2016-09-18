@@ -11,3 +11,13 @@
     font-family: myFirstFont;
     src: url(/fonts/KeepCalm-Medium.ttf);
 }
+
+@font-face {
+    font-family: 'Keep Calm';
+    src: url('/fonts/KeepCalm-Medium.eot');
+    src: url('/fonts/KeepCalm-Medium#iefix') format('embedded-opentype'),
+         url('/fonts/KeepCalm-Medium.woff') format('woff'),
+         url('/fonts/KeepCalm-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

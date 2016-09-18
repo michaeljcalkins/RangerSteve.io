@@ -20,7 +20,7 @@ export default function() {
 
     // Health
     this.hudHealthText.x = 60
-    this.hudHealthText.y = this.camera.height - 39
+    this.hudHealthText.y = this.camera.height - 34
     this.hudHealthText.fixedToCamera = true
 
     // Health Icon
@@ -30,7 +30,7 @@ export default function() {
 
     // Ammo
     this.hudAmmoText.x = this.camera.width - 230
-    this.hudAmmoText.y = this.camera.height - 39
+    this.hudAmmoText.y = this.camera.height - 34
     this.hudAmmoText.fixedToCamera = true
 
     this.hudAmmoIcon.x = this.camera.width - 270
@@ -47,7 +47,7 @@ export default function() {
     this.hudJumpJetIcon.fixedToCamera = true
 
     // Timer
-    this.hudTimerText.y = this.camera.height - 39
+    this.hudTimerText.y = this.camera.height - 34
     this.hudTimerText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
     this.hudTimerText.fixedToCamera = true
 
