@@ -74,13 +74,14 @@ setInterval(function() {
                 roundLength: ROUND_LENGTH_MINUTES
             })
 
-            if (previousMap === 'HighRuleJungle') {
-                rooms[roomId].map = 'PunkFallout'
-            } else if (previousMap === 'PunkFallout') {
-                rooms[roomId].map = 'DarkForest'
-            } else if (previousMap === 'DarkForest') {
-                rooms[roomId].map = 'HighRuleJungle'
-            }
+            const potentialNextMaps = [
+                'PunkFallout',
+                'HighRuleJungle',
+                'DarkForest',
+                'PunkCity'
+            ].filter(map => map !== previousMap)
+
+            rooms[roomId].map = _.sample(potentialNextMaps)
 
             util.log(rooms[roomId].map, 'has been selected for ', roomId)
 
