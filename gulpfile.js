@@ -58,7 +58,7 @@ gulp.task('buildcss', function () {
             sourceMappingURLPrefix: '/css'
         }))
         .pipe(gulp.dest(DIST + '/css'))
-        .pipe(notify({message: 'SCSS Complete.'}))
+        .pipe(gulpif(! isProduction, notify({message: 'SCSS Complete.'})))
 });
 
 gulp.task('buildjs', function() {
@@ -92,7 +92,7 @@ gulp.task('buildjs', function() {
             .pipe(gulpif(isProduction, streamify(uglify({ mangle: false }))))
             // .pipe(gulpif(isProduction, streamify(obfuscator())))
             .pipe(gulp.dest(DIST + 'js'))
-            .pipe(notify({ message: 'JS Compiled!' }))
+            .pipe(gulpif(! isProduction, notify({ message: 'JS Compiled!' })))
             .on('end', function() {
                 if (isProduction) process.exit()
             })
