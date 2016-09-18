@@ -14,7 +14,7 @@ let io = null
 
 const MAX_ROOM_SIZE = 7
 const RESPAWN_TIME_SECONDS = 5
-const ROUND_LENGTH_MINUTES = 5
+const ROUND_LENGTH_MINUTES = 5000
 const PLAYER_FULL_HEALTH = 100
 
 function init(ioInstance) {
@@ -198,7 +198,7 @@ function onNewPlayer (data) {
             roundLength: ROUND_LENGTH_MINUTES
         })
 
-        if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest'].indexOf(data.map) > -1) {
+        if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest', 'PunkCity'].indexOf(data.map) > -1) {
             rooms[data.roomId].map = data.map
         }
 

@@ -1,8 +1,8 @@
 import GameConsts from '../GameConsts'
 import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 
-const WORLD_WIDTH = 400
-const WORLD_HEIGHT = 400
+const WORLD_WIDTH = 4800
+const WORLD_HEIGHT = 1200
 
 const SPAWN_POINTS = [
     { x: 1, y: 1 },
