@@ -233,7 +233,7 @@ const GameConsts = {
             damage: 19,
             fireRate: 130,
             position: {
-                rotation: 80.1,
+                rotation: 80.18,
                 scale: 1.45,
 
                 leftFaceX: 10,

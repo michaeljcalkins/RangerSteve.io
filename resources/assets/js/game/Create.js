@@ -1,5 +1,3 @@
-import actions from '../actions'
-
 export default function Create() {
     this.game.renderer.renderSession.roundPixels = true
     this.game.stage.disableVisibilityChange = true

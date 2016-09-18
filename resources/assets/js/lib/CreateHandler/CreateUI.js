@@ -37,8 +37,8 @@ export default function() {
     this.hudAmmoIcon.fixedToCamera = true
 
     // Jump Jet
-    var width = 100 // example;
-    var height = 20 // example;
+    var width = 100
+    var height = 20
     var bmd = this.game.add.bitmapData(width, height);
     bmd.ctx.beginPath()
     bmd.ctx.rect(0, 0, width, height)
