@@ -2,10 +2,8 @@ import React, { PropTypes } from 'react'
 import storage from 'store'
 
 import HudChatHistory from './Hud/HudChatHistory'
-import HudNewChatMessage from './Hud/HudNewChatMessage'
 import HudKillConfirmed from './Hud/HudKillConfirmed'
 import HudKillLog from './Hud/HudKillLog'
-import HudLeaderboard from './Hud/HudLeaderboard'
 import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
 import SettingsModal from './Settings/SettingsModal'
@@ -112,13 +110,12 @@ export default class GameUi extends React.Component {
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
-                {/* <HudLeaderboard players={ room.players } /> */}
                 <HudSettingsButton onButtonClick={ onOpenSettingsModal } />
-                <HudNewChatMessage
+                <HudChatHistory
                     isOpen={ game.chatModalIsOpen }
+                    messages={ game.chatMessages }
                     onSendMessage={ this.handleSendMessage }
                 />
-                <HudChatHistory messages={ game.chatMessages } />
 
                 { (game.leaderboardModalIsOpen || this.props.room.state === 'ended') &&
                     <Leaderboard

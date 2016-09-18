@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import _ from 'lodash'
 import moment from 'moment'
+import cs from 'classnames'
 
 export default class EndOfRoundLeaderboard extends React.Component {
     constructor(props) {
@@ -42,9 +43,13 @@ export default class EndOfRoundLeaderboard extends React.Component {
         return _.values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map(function(player, key) {
-                let kdRatio = player.meta.deaths > 0 ? player.meta.kills / player.meta.deaths : player.meta.kills
+                const kdRatio = player.meta.deaths > 0 ? player.meta.kills / player.meta.deaths : player.meta.kills
+                const classes = cs({
+                    info: player.id === ('/#' + window.socket.id)
+                })
+
                 return (
-                    <tr key={ key }>
+                    <tr key={ key } className={ classes }>
                         <td>
                             { player.meta.nickname
                                 ? player.meta.nickname
@@ -79,24 +84,26 @@ export default class EndOfRoundLeaderboard extends React.Component {
                     </tbody>
                 </table>
                 { this.props.room.state === 'ended' &&
-                    <div className="row">
-                        <div className="col-sm-12 text-center">
-                            <span>Next round starting in { this.state.elapsed } seconds...</span>
+                    <div>
+                        <div className="row">
+                            <div className="col-sm-3">
+                                Most Shots Fired
+                            </div>
+                            <div className="col-sm-3">
+                                Most Accurate
+                            </div>
+                            <div className="col-sm-3">
+                                Most Movement
+                            </div>
+                            <th>Best Killing Spree</th>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-12 text-center">
+                                <span>Next round starting in { this.state.elapsed } seconds...</span>
+                            </div>
                         </div>
                     </div>
                 }
-                {/*<div className="row">
-                    <div className="col-sm-3">
-                        Most Shots Fired
-                    </div>
-                    <div className="col-sm-3">
-                        Most Accurate
-                    </div>
-                    <div className="col-sm-3">
-                        Most Movement
-                    </div>
-                    <th>Best Killing Spree</th>
-                </div>*/}
             </div>
         )
     }
