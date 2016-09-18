@@ -211,6 +211,12 @@
 
 .hud-settings-modal {
     cursor: default;
+
+    .modal-body {
+        max-height: 490px !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important
+    }
 }
 
 .end-of-round-leaderboard {

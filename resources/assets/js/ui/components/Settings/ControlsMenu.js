@@ -157,40 +157,25 @@ export default function ControlsMenu({
                     <table className="table">
                         <thead>
                             <tr>
-                                <th className="col-sm-2">Controls</th>
+                                <th className="col-sm-4">Controls</th>
                                 <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-                                    <select
-                                        className="form-control"
-                                        defaultValue={ game.keyboardControls['left'] }
-                                        id="control-left"
-                                        name="left"
-                                        onChange={ handleControlChange }
-                                    >
-                                        { renderKeyboardCodes('left') }
-                                    </select>
-                                </td>
-                                <td>Run left</td>
+                                <td>Fly</td>
+                                <td>Right click and hold</td>
                             </tr>
                             <tr>
-                                <td>
-                                    <select
-                                        className="form-control"
-                                        defaultValue={ game.keyboardControls['right'] }
-                                        id="control-right"
-                                        name="right"
-                                        onChange={ handleControlChange }
-                                    >
-                                        { renderKeyboardCodes() }
-                                    </select>
-                                </td>
-                                <td>Run right</td>
+                                <td>Shoot</td>
+                                <td>Left click</td>
                             </tr>
                             <tr>
+                                <td>Aim</td>
+                                <td>Move your mouse</td>
+                            </tr>
+                            <tr>
+                                <td>Jump</td>
                                 <td>
                                     <select
                                         className="form-control"
@@ -202,9 +187,51 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td>Jump</td>
                             </tr>
                             <tr>
+                                <td>Move left</td>
+                                <td>
+                                    <select
+                                        className="form-control"
+                                        defaultValue={ game.keyboardControls['left'] }
+                                        id="control-left"
+                                        name="left"
+                                        onChange={ handleControlChange }
+                                    >
+                                        { renderKeyboardCodes('left') }
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Move right</td>
+                                <td>
+                                    <select
+                                        className="form-control"
+                                        defaultValue={ game.keyboardControls['right'] }
+                                        id="control-right"
+                                        name="right"
+                                        onChange={ handleControlChange }
+                                    >
+                                        { renderKeyboardCodes() }
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Reload</td>
+                                <td>
+                                    <select
+                                        className="form-control"
+                                        defaultValue={ game.keyboardControls['reload'] }
+                                        id="control-reload"
+                                        name="reload"
+                                        onChange={ handleControlChange }
+                                    >
+                                        { renderKeyboardCodes() }
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Switch weapons</td>
                                 <td>
                                     <select
                                         className="form-control"
@@ -216,9 +243,9 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td>Switch weapons</td>
                             </tr>
                             <tr>
+                                <td>Write chat message</td>
                                 <td>
                                     <select
                                         className="form-control"
@@ -230,7 +257,6 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td>Open new chat message</td>
                             </tr>
                         </tbody>
                     </table>
