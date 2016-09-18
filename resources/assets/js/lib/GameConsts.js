@@ -184,7 +184,7 @@ const GameConsts = {
             ammo: 20,
             reloadTime: 2000,
             bulletSpeed: 2300,
-            damage: 20,
+            damage: 17,
             fireRate: 100,
             position: {
                 rotation: 80.20,
