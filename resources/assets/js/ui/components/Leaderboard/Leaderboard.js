@@ -85,7 +85,7 @@ export default class EndOfRoundLeaderboard extends React.Component {
                 </table>
                 { this.props.room.state === 'ended' &&
                     <div>
-                        <div className="row">
+                        {/*<div className="row">
                             <div className="col-sm-3">
                                 Most Shots Fired
                             </div>
@@ -96,7 +96,7 @@ export default class EndOfRoundLeaderboard extends React.Component {
                                 Most Movement
                             </div>
                             <th>Best Killing Spree</th>
-                        </div>
+                        </div>*/}
                         <div className="row">
                             <div className="col-sm-12 text-center">
                                 <span>Next round starting in { this.state.elapsed } seconds...</span>
