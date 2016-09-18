@@ -39,7 +39,7 @@ export default class GameUi extends React.Component {
                 this.props.onCloseChatModal()
             }
 
-            if (e.keyCode === this.props.game.keyboardControls.newChatMessage && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
+            if (e.keyCode === parseInt(this.props.game.keyboardControls.newChatMessage) && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
                 e.preventDefault()
                 this.props.onOpenChatModal()
             }
@@ -115,6 +115,7 @@ export default class GameUi extends React.Component {
                     isOpen={ game.chatModalIsOpen }
                     messages={ game.chatMessages }
                     onSendMessage={ this.handleSendMessage }
+                    newChatMessageCharacter={ game.keyboardControls.newChatMessage }
                 />
 
                 { (game.leaderboardModalIsOpen || this.props.room.state === 'ended') &&
