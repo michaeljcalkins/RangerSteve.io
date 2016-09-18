@@ -29,7 +29,7 @@ export default class HudNewChatMessage extends React.Component {
             return null
 
         return (
-            <div className="hud-chat-message hud-item">
+            <li className="hud-chat-message">
                 <input
                     onKeyPress={ this.handleKepressSendMessage }
                     placeholder="Push enter to send..."
@@ -42,7 +42,7 @@ export default class HudNewChatMessage extends React.Component {
                 >
                     Send
                 </button>
-            </div>
+            </li>
         )
     }
 }

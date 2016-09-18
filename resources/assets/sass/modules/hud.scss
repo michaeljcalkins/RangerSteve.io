@@ -14,7 +14,7 @@
 }
 
 .hud-settings {
-    background: url(/images/icons/cog-32-white.png) #504F4D center no-repeat;
+    background: url(/images/icons/cog-32-white.png) rgba(0, 0, 0, .4) center no-repeat;
     background-size: 20px;
     border: 0;
     padding: 10px;
@@ -144,13 +144,40 @@
     top: 50%;
 }
 
+.hud-chat {
+    background: -webkit-linear-gradient(left, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* Standard syntax (must be last) */
+    width: 300px;
+    position: absolute;
+    left: 0;
+    bottom: 60px;
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        color: #fff;
+        font-size: 12px;
+        padding: 6px 10px;
+        margin: 0;
+
+        strong {
+            color: #bbb;
+        }
+    }
+}
+
 .hud-chat-message {
     cursor: pointer;
     left: 0;
     bottom: 53px;
     font-family: 'Open Sans', Arial;
     width: 300px;
-    padding: 4px 3px;
+    padding: 0px 10px !important;
     font-size: inherit;
 
     input {
@@ -159,7 +186,7 @@
         border: 0;
         border-radius: 0;
         color: white;
-        padding: 6px 9px;
+        padding: 4px 0px;
         font-size: 12px;
         width: 80%;
         float: left;
@@ -183,34 +210,14 @@
     }
 }
 
-.hud-chat {
-    background: -webkit-linear-gradient(left, rgba(90, 89, 87, 1), rgba(90, 89, 87, 0)); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(right, rgba(90, 89, 87, 1), rgba(90, 89, 87, 0)); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(right, rgba(90, 89, 87, 1), rgba(90, 89, 87, 0)); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to right, rgba(90, 89, 87, 1), rgba(90, 89, 87, 0)); /* Standard syntax (must be last) */
-    width: 300px;
-    position: absolute;
-    left: 0;
-    bottom: 105px;
-
-    ul {
-        margin: 0;
-        padding: 0;
-    }
-
-    li {
-        color: #fff;
-        font-size: 12px;
-        padding: 4px 10px;
-
-        strong {
-            color: #bbb;
-        }
-    }
-}
-
 .hud-settings-modal {
     cursor: default;
+
+    .modal-body {
+        max-height: 490px !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important
+    }
 }
 
 .end-of-round-leaderboard {
