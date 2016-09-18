@@ -11,11 +11,10 @@ export default function() {
      * Emit player's latest position on the map
      */
     if (
-        ! _.has(state, 'room.id') ||
-        ! _.has('state', 'player.health') ||
+        ! state.room.id ||
         state.player.health <= 0 ||
         state.room.state !== 'active' ||
-        state.player.facing !== null
+        state.player.facing === null
     ) return
 
     const currentWeaponId = state.player.currentWeapon === 'primaryWeapon'
