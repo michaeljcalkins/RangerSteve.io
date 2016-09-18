@@ -13,6 +13,7 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
+    this.load.image('background', '/maps/punk-city/background.png')
     this.load.tilemap('tilemap', '/maps/punk-city/punk-city.json', null, Phaser.Tilemap.TILED_JSON)
     this.load.spritesheet('tiles', '/maps/punk-city/tiles.png', 24, 24)
     this.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
@@ -23,6 +24,9 @@ export function createOverlays() {
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
+
+    this.game.stage.backgroundColor = "#6e688a";
+    this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, 1080, "background")
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
     this.map = this.add.tilemap('tilemap')

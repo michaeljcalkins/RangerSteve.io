@@ -1,3 +1,5 @@
 node_modules
 .DS_Store
 .idea
+/public/js/app.js
+/public/js/app.js.map

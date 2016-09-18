@@ -22,23 +22,51 @@
                                     type="text"
                                 />
                             </div>
-                            <button
-                                type="submit"
-                                class="btn btn-success btn-lg btn-block"
-                                style="margin-bottom: 15px"
-                                id="play-button"
-                            >
-                                Play Now
-                            </button>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button
+                                        type="submit"
+                                        class="btn btn-success btn-lg btn-block"
+                                        style="margin-bottom: 15px"
+                                        id="play-button"
+                                    >
+                                        Play Now
+                                    </button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button
+                                        type="button"
+                                        class="btn btn-danger btn-lg btn-block"
+                                        style="margin-bottom: 15px"
+                                        id="preorder-button"
+                                    >
+                                        Pre-order Now!
+                                    </button>
+                                </div>
+                            </div>
 
                             <span
                                 class="help-block pointer"
                                 style="margin: 0;"
-                                id="toggle-how-to-button"
+                                id="how-to-button"
                             >
                                 Learn how to play
                             </span>
                         </div>
+                    </div>
+
+                    <div style="display: none" id="preorder-container">
+                        <br />
+                        <iframe
+                            src="https://www.humblebundle.com/widget/v2/product/ranger_steve_preorder/NvLMeIzNtJ?theme=light"
+                            width="500"
+                            height="330"
+                            style="border: none;"
+                            scrolling="no"
+                            frameborder="0"
+                            style="width: 100%;"
+                        ></iframe>
                     </div>
 
                     <div style="display: none" id="how-to-container">
@@ -115,13 +143,21 @@ $('#nickname').on('keyup', function(evt) {
     localStorage.setItem('nickname', JSON.stringify(evt.target.value))
 })
 
-$('#toggle-how-to-button').on('click', function() {
+$('#how-to-button').on('click', function() {
     $('#how-to-container').slideToggle()
+})
+
+$('#preorder-button').on('click', function() {
+    $('#preorder-container').slideToggle()
 })
 
 {% if isProduction %}
     $('#play-button').on('click', function(evt) {
         mixpanel.track('playButton:click')
+    })
+
+    $('#preorder-button').on('click', function(evt) {
+        mixpanel.track('preOrderButton:click')
     })
 {% endif %}
 </script>

@@ -36,7 +36,7 @@ var handleError = function (err) {
 // ****************************************************
 // CSS Tasks
 // ****************************************************
-gulp.task('scss', function () {
+gulp.task('buildcss', function () {
     return gulp.src(SRC + 'sass/app.scss')
         .pipe(sourcemaps.init())
         .pipe(sass({
@@ -60,8 +60,6 @@ gulp.task('scss', function () {
         .pipe(gulp.dest(DIST + '/css'))
         .pipe(notify({message: 'SCSS Complete.'}))
 });
-
-gulp.task('buildcss', ['scss'])
 
 gulp.task('buildjs', function() {
     var customOpts = {
@@ -94,7 +92,10 @@ gulp.task('buildjs', function() {
             .pipe(gulpif(isProduction, streamify(uglify({ mangle: false }))))
             // .pipe(gulpif(isProduction, streamify(obfuscator())))
             .pipe(gulp.dest(DIST + 'js'))
-            .pipe(notify({message: 'JS Compiled!'}))
+            .pipe(notify({ message: 'JS Compiled!' }))
+            .on('end', function() {
+                if (isProduction) process.exit()
+            })
     }
 
     bundler.on('update', rebundle)
@@ -107,5 +108,5 @@ gulp.task('build', ['buildcss', 'buildjs'])
 gulp.task('default', ['build'], function() {
     gulp.watch([
         SRC + 'sass/**/*.scss'
-    ], ['scss'])
+    ], ['buildcss'])
 })
