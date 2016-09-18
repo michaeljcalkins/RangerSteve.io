@@ -45,7 +45,7 @@ export default class EndOfRoundLeaderboard extends React.Component {
             .map(function(player, key) {
                 const kdRatio = player.meta.deaths > 0 ? player.meta.kills / player.meta.deaths : player.meta.kills
                 const classes = cs({
-                    info: player.id === ('/#' + window.socket.id)
+                    'active-player': player.id === ('/#' + window.socket.id)
                 })
 
                 return (

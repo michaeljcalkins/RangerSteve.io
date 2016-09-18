@@ -254,13 +254,20 @@
         }
     }
 
+    tr.active-player {
+        td {
+            background: white;
+            color: #333;
+        }
+    }
+
     td {
         &:first-child {
             text-align: left;
         }
 
-        font-size: 14px;
         font-family: 'Open Sans', Arial;
+        font-size: 14px;
     }
 
     span {
