@@ -58,10 +58,40 @@ gulp.task('buildcss', function () {
             sourceMappingURLPrefix: '/css'
         }))
         .pipe(gulp.dest(DIST + '/css'))
-        .pipe(gulpif(! isProduction, notify({message: 'SCSS Complete.'})))
+        .pipe(gulpif(! isProduction, notify({ message: 'SCSS Complete.' })))
 });
 
 gulp.task('buildjs', function() {
+    var opts = {
+        debug: true,
+        entries: SRC + 'js/app.js',
+        plugin: []
+    }
+
+    browserify(opts)
+        .transform("babelify", {
+            global: true,
+            ignore: /\/node_modules\//,
+            extensions: [".js"],
+            presets: ["es2015", "react"],
+            plugins: ["transform-object-rest-spread"]
+        })
+        .transform("browserify-shim", {
+            global: true,
+            ignore: /\/node_modules\//,
+            extensions: [".js"]
+        })
+        .bundle()
+        .on('error', handleError)
+        .pipe(source('app.js'))
+        .pipe(streamify(uglify({ mangle: false })))
+        .pipe(gulp.dest(DIST + 'js'))
+        .on('end', function() {
+            console.log('JS Compiled!')
+        })
+})
+
+gulp.task('watchjs', function() {
     var customOpts = {
         debug: true,
         entries: SRC + 'js/app.js',
@@ -92,10 +122,7 @@ gulp.task('buildjs', function() {
             .pipe(gulpif(isProduction, streamify(uglify({ mangle: false }))))
             // .pipe(gulpif(isProduction, streamify(obfuscator())))
             .pipe(gulp.dest(DIST + 'js'))
-            .pipe(gulpif(! isProduction, notify({ message: 'JS Compiled!' })))
-            .on('end', function() {
-                if (isProduction) process.exit()
-            })
+            .pipe(notify({ message: 'JS Compiled!' }))
     }
 
     bundler.on('update', rebundle)
@@ -105,7 +132,7 @@ gulp.task('buildjs', function() {
 
 gulp.task('build', ['buildcss', 'buildjs'])
 
-gulp.task('default', ['build'], function() {
+gulp.task('default', ['buildcss', 'watchjs'], function() {
     gulp.watch([
         SRC + 'sass/**/*.scss'
     ], ['buildcss'])
