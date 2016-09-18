@@ -3,13 +3,14 @@ import React, { PropTypes } from 'react'
 import HudNewChatMessage from './HudNewChatMessage'
 
 export default function HudChatHistory({
-    messages,
     isOpen,
+    messages,
+    newChatMessageCharacter,
     onSendMessage
 }) {
     function renderMessages() {
         if (messages.length === 0 && ! isOpen)
-            return (<li>Press T to chat</li>)
+            return (<li>Press { String.fromCharCode(newChatMessageCharacter) } to chat</li>)
 
         return messages.map(function(message, index) {
             return (
@@ -38,5 +39,8 @@ HudChatHistory.defaultProps = {
 }
 
 HudChatHistory.propTypes = {
-    messages: PropTypes.array
+    isOpen: PropTypes.bool,
+    messages: PropTypes.array,
+    newChatMessageCharacter: PropTypes.string,
+    onSendMessage: PropTypes.func
 }
