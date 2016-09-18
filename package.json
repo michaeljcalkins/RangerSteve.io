@@ -1,8 +1,5 @@
 {
     "name": "rangersteve",
-    "engines": {
-        "node": "6.2.0"
-    },
     "version": "0.0.0",
     "private": true,
     "build": "gulp build --production",
