@@ -16,6 +16,7 @@ const MAX_ROOM_SIZE = 7
 const RESPAWN_TIME_SECONDS = 5
 const ROUND_LENGTH_MINUTES = 5
 const PLAYER_FULL_HEALTH = 100
+const MAP_IDS = ['PunkFallout', 'HighRuleJungle', 'DarkForest', 'PunkCity', 'PunkLoop']
 
 function init(ioInstance) {
     io = ioInstance
@@ -78,7 +79,8 @@ setInterval(function() {
                 'PunkFallout',
                 'HighRuleJungle',
                 'DarkForest',
-                'PunkCity'
+                'PunkCity',
+                'PunkLoop'
             ].filter(map => map !== previousMap)
 
             rooms[roomId].map = _.sample(potentialNextMaps)
@@ -199,7 +201,7 @@ function onNewPlayer (data) {
             roundLength: ROUND_LENGTH_MINUTES
         })
 
-        if (data.map && ['PunkFallout', 'HighRuleJungle', 'DarkForest', 'PunkCity'].indexOf(data.map) > -1) {
+        if (data.map && MAP_IDS.indexOf(data.map) > -1) {
             rooms[data.roomId].map = data.map
         }
 

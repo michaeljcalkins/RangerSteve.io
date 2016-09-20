@@ -1,24 +1,11 @@
 import GameConsts from '../GameConsts'
 import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 
-const WORLD_WIDTH = 2625
-const WORLD_HEIGHT = 1125
+const WORLD_WIDTH = 100 * 24
+const WORLD_HEIGHT = 75 * 24
 
 const SPAWN_POINTS = [
-    { x: 1900, y: 890 },
-    { x: 1650, y: 770 },
-    { x: 1750, y: 550 },
-    { x: 2150, y: 650 },
-    { x: 1250, y: 370 },
-    { x: 1500, y: 390 },
-    { x: 280, y: 530 },
-    { x: 540, y: 630 },
-    { x: 700, y: 900 },
-    { x: 850, y: 570 },
-    { x: 350, y: 280 },
-    { x: 2160, y: 310 },
-    { x: 1130, y: 730 },
-    { x: 375, y: 840 },
+    { x: 650, y: 420 },
 ]
 
 export function getRandomSpawnPoint() {
@@ -26,8 +13,9 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/images/maps/dark-forest/background.jpg', true)
-    this.load.tilemap('tilemap', '/maps/dark-forest/dark-forest.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.image('background', '/maps/punk-loop/background.png')
+    this.load.tilemap('tilemap', '/maps/punk-loop/punk-loop.json', null, Phaser.Tilemap.TILED_JSON)
+    this.load.spritesheet('tiles', '/maps/punk-loop/tiles2.png', 24, 24)
     this.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
 }
 
@@ -36,13 +24,16 @@ export function createOverlays() {
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-    this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
+
+    this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, "background")
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
     this.map = this.add.tilemap('tilemap')
+    this.map.addTilesetImage('tiles', 'tiles')
     this.map.addTilesetImage('collision', 'ninja-tiles24')
 
     // Create a TilemapLayer object from the collision layer of the map
+    this.tiles = this.map.createLayer('tiles')
     this.ground = this.map.createLayer('collision')
     this.ground.renderSettings.enableScrollDelta = false
     if (! GameConsts.DEBUG) this.ground.alpha = 0
@@ -55,7 +46,21 @@ export function create() {
     this.map.setCollisionBetween(2, 34, true, 'collision')
 
     if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
+
+    this.groundSprite = this.add.sprite(0, WORLD_HEIGHT - 10, 'ground')
+    this.groundSprite.alpha = 0
+    this.groundSprite.width = WORLD_WIDTH
+    this.groundSprite.height = 10
+    this.physics.arcade.enable(this.groundSprite)
+    this.game.physics.enable(this.groundSprite, Phaser.Physics.ARCADE)
+    this.groundSprite.enableBody = true
+    this.groundSprite.physicsBodyType = Phaser.Physics.ARCADE
+    this.groundSprite.body.immovable = true
+    this.groundSprite.body.allowGravity = false
 }
 
 export function update() {
+    this.physics.arcade.overlap(this.player, this.groundSprite, () => {
+        this.player.y = 10
+    }, null, this)
 }
