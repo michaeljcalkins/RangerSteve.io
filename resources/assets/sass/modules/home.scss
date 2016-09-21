@@ -72,10 +72,21 @@ body.main {
     }
 }
 
-.last-updated-at {
-    color: white;
-    font-weight: bold;
-    text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+.buy-section {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    width: 600px;
+}
+
+.well-section {
+    background: white;
+    box-shadow: none;
+    border-radius: 3px;
+    border: 0;
+    padding: 30px;
 }
 
 .home-content {

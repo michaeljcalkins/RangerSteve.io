@@ -46,21 +46,7 @@ export function create() {
     this.map.setCollisionBetween(2, 34, true, 'collision')
 
     if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
-
-    this.groundSprite = this.add.sprite(0, WORLD_HEIGHT - 10, 'ground')
-    this.groundSprite.alpha = 0
-    this.groundSprite.width = WORLD_WIDTH
-    this.groundSprite.height = 10
-    this.physics.arcade.enable(this.groundSprite)
-    this.game.physics.enable(this.groundSprite, Phaser.Physics.ARCADE)
-    this.groundSprite.enableBody = true
-    this.groundSprite.physicsBodyType = Phaser.Physics.ARCADE
-    this.groundSprite.body.immovable = true
-    this.groundSprite.body.allowGravity = false
 }
 
 export function update() {
-    this.physics.arcade.overlap(this.player, this.groundSprite, () => {
-        this.player.y = 10
-    }, null, this)
 }
