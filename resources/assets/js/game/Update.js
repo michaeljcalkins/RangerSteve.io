@@ -26,7 +26,7 @@ export default function Update() {
     UpdateHudPositions.call(this)
 
     // Pause controls so user can't do anything in the background accidentally
-    const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen
+    const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
     this.game.input.enabled = !isPaused
 
     CollisionHandler.call(this)
@@ -83,8 +83,6 @@ export default function Update() {
         }
     }
 
-    UpdateHurtBorder.call(this)
-
     /**
      * Rotate bullets according to trajectory
      */
@@ -97,4 +95,5 @@ export default function Update() {
     })
 
     UpdatePlayerPosition.call(this)
+    UpdateHurtBorder.call(this)
 }

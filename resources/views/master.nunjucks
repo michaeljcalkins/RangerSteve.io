@@ -10,7 +10,7 @@
     <meta property="og:title" content="RangerSteve.io">
     <meta property="og:site_name" content="RangerSteve.io">
     <meta property="og:description" content="Explosive multiplayer shooter game that lets you instantly play with your friends.">
-    <meta property="og:url" content="https://rangersteve.io/">
+    <meta property="og:image" content="https://rangersteve.io/images/homebg.png">
 
     <link rel="manifest" href="/manifest.json">
     <link rel="shortcut icon" href="/images/favicon.ico">
