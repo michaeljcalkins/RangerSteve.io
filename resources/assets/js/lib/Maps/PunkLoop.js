@@ -5,7 +5,19 @@ const WORLD_WIDTH = 100 * 24
 const WORLD_HEIGHT = 75 * 24
 
 const SPAWN_POINTS = [
-    { x: 650, y: 420 },
+    { x: 600, y: 340 },
+    { x: 1110, y: 500 },
+    { x: 1850, y: 340 },
+    { x: 1310, y: 470 },
+    { x: 2070, y: 900 },
+    { x: 1200, y: 1130 },
+    { x: 270, y: 800 },
+    { x: 550, y: 1300 },
+    { x: 1880, y: 1280 },
+    { x: 1240, y: 1490 },
+    { x: 1680, y: 1660 },
+    { x: 660, y: 1660 },
+    { x: 430, y: 1500 },
 ]
 
 export function getRandomSpawnPoint() {
