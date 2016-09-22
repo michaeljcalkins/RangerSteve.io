@@ -5,7 +5,19 @@ const WORLD_WIDTH = 4800
 const WORLD_HEIGHT = 1680
 
 const SPAWN_POINTS = [
-    { x: 1, y: 1 },
+    { x: 650, y: 420 },
+    { x: 1440, y: 480 },
+    { x: 470, y: 650 },
+    { x: 470, y: 870 },
+    { x: 880, y: 650 },
+    { x: 880, y: 870 },
+
+    { x: 4090, y: 420 },
+    { x: 3430, y: 480 },
+    { x: 4290, y: 650 },
+    { x: 4290, y: 870 },
+    { x: 3940, y: 650 },
+    { x: 3940, y: 870 },
 ]
 
 export function getRandomSpawnPoint() {
@@ -13,7 +25,7 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/maps/punk-city/background.png')
+    this.load.image('background', '/maps/punk-city/concrete_wall.png')
     this.load.tilemap('tilemap', '/maps/punk-city/punk-city.json', null, Phaser.Tilemap.TILED_JSON)
     this.load.spritesheet('tiles', '/maps/punk-city/tiles.png', 24, 24)
     this.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
@@ -25,8 +37,7 @@ export function createOverlays() {
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
 
-    this.game.stage.backgroundColor = "#6e688a";
-    this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, 1080, "background")
+    this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, "background")
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
     this.map = this.add.tilemap('tilemap')
@@ -36,6 +47,7 @@ export function create() {
     // Create a TilemapLayer object from the collision layer of the map
     this.tiles = this.map.createLayer('tiles')
     this.ground = this.map.createLayer('collision')
+    this.ground.renderSettings.enableScrollDelta = false
     if (! GameConsts.DEBUG) this.ground.alpha = 0
 
     // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,

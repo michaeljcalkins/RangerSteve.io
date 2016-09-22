@@ -11,10 +11,10 @@ export default function FireRocket(currentWeaponId) {
     const state = store.getState()
     const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
-    if (this.game.time.now < nextFire || this.bullets.countDead() <= 0)
+    if (this.game.time.time < nextFire || this.bullets.countDead() <= 0)
         return
 
-    nextFire = this.game.time.now + currentWeapon.fireRate
+    nextFire = this.game.time.time + currentWeapon.fireRate
 
     let x = this.player.x
     let y = this.player.y - 10

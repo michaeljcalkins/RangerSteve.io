@@ -66,6 +66,7 @@ export function create() {
 
     // Create a TilemapLayer object from the collision layer of the map
     this.ground = this.map.createLayer('collision')
+    this.ground.renderSettings.enableScrollDelta = false
     if (! GameConsts.DEBUG) this.ground.alpha = 0
 
     // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,

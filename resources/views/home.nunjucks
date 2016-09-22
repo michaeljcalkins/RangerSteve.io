@@ -24,7 +24,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <button
                                         type="submit"
                                         class="btn btn-success btn-lg btn-block"
@@ -34,39 +34,30 @@
                                         Play Now
                                     </button>
                                 </div>
-                                <div class="col-sm-6">
-                                    <button
-                                        type="button"
-                                        class="btn btn-danger btn-lg btn-block"
-                                        style="margin-bottom: 15px"
-                                        id="preorder-button"
-                                    >
-                                        Pre-order Now!
-                                    </button>
-                                </div>
                             </div>
 
-                            <span
-                                class="help-block pointer"
-                                style="margin: 0;"
-                                id="how-to-button"
-                            >
-                                Learn how to play
-                            </span>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <span
+                                        class="help-block pointer"
+                                        style="margin: 0;"
+                                        id="how-to-button"
+                                    >
+                                        Learn how to play
+                                    </span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a
+                                        class="help-block pointer"
+                                        href="https://github.com/michaeljcalkins/rangersteve-ideas/issues"
+                                        style="margin: 0;"
+                                        target="_blank"
+                                    >
+                                        Bugs and Ideas
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div style="display: none" id="preorder-container">
-                        <br />
-                        <iframe
-                            src="https://www.humblebundle.com/widget/v2/product/ranger_steve_preorder/NvLMeIzNtJ?theme=light"
-                            width="500"
-                            height="330"
-                            style="border: none;"
-                            scrolling="no"
-                            frameborder="0"
-                            style="width: 100%;"
-                        ></iframe>
                     </div>
 
                     <div style="display: none" id="how-to-container">
@@ -134,31 +125,23 @@
 
 {% block scripts %}
 <script>
-try {
-    var localNickname = JSON.parse(localStorage.getItem('nickname'))
-    $('#nickname').val(localNickname)
-} catch (e) {}
+    try {
+        var localNickname = JSON.parse(localStorage.getItem('nickname'))
+        $('#nickname').val(localNickname)
+    } catch (e) {}
 
-$('#nickname').on('keyup', function(evt) {
-    localStorage.setItem('nickname', JSON.stringify(evt.target.value))
-})
-
-$('#how-to-button').on('click', function() {
-    $('#how-to-container').slideToggle()
-})
-
-$('#preorder-button').on('click', function() {
-    $('#preorder-container').slideToggle()
-})
-
-{% if isProduction %}
-    $('#play-button').on('click', function(evt) {
-        mixpanel.track('playButton:click')
+    $('#nickname').on('keyup', function(evt) {
+        localStorage.setItem('nickname', JSON.stringify(evt.target.value))
     })
 
-    $('#preorder-button').on('click', function(evt) {
-        mixpanel.track('preOrderButton:click')
+    $('#how-to-button').on('click', function() {
+        $('#how-to-container').slideToggle()
     })
-{% endif %}
+
+    {% if isProduction %}
+        $('#play-button').on('click', function(evt) {
+            mixpanel.track('playButton:click')
+        })
+    {% endif %}
 </script>
 {% endblock %}

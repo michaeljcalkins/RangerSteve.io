@@ -8,7 +8,7 @@ export default function(store) {
     const gameWidth = window.innerWidth
     const gameHeight = window.innerHeight
 
-    const game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'ranger-steve-game', function() {
+    const game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'ranger-steve-game', function() {
         this.game = game
         this.game.store = store
         this.preload = Preload
