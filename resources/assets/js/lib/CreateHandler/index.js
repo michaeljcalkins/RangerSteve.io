@@ -14,7 +14,6 @@ export default function() {
 
     // Scale game on window resize
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
-    this.game.scale.setShowAll()
     this.game.scale.refresh()
 
     // Enables advanced profiling features when debugging

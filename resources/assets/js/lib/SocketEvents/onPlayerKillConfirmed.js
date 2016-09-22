@@ -42,7 +42,7 @@ export default function onPlayerKillConfirmed(data) {
     const movePlayer = PlayerById.call(this, data.damagedPlayerId)
     if (movePlayer && movePlayer.meta.health && ! deathAnimations[movePlayer.id]) {
         movePlayer.alpha = 0
-        let ricochet = this.add.sprite(movePlayer.x, movePlayer.y, 'commando')
+        let ricochet = this.add.sprite(movePlayer.x, movePlayer.y, 'player')
         ricochet.anchor.setTo(GameConsts.PLAYER_ANCHOR)
         ricochet.height = 91
         ricochet.width = 94

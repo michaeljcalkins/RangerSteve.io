@@ -12,15 +12,16 @@ export default function PlayerSpriteHandler() {
 
     this.jumpjetFx = this.game.add.audio('jumpjet')
 
-    this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'commando')
+    this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'player')
     this.player.width = GameConsts.PLAYER_SPRITE_WIDTH
     this.player.height = GameConsts.PLAYER_SPRITE_HEIGHT
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
-    this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT, 105, 10)
+    this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
     this.game.slopes.enable(this.player)
+    this.player.body.offset.setTo(0, -100);
 
     const body = this.player.body
 
@@ -68,19 +69,19 @@ export default function PlayerSpriteHandler() {
     this.torsoGroup = this.game.add.group()
 
     // Torso
-    this.torsoSprite = this.game.add.sprite(-37, -105, 'torso')
-    this.torsoSprite.scale.setTo(1.8)
+    this.torsoSprite = this.game.add.sprite(-530, -230, 'torso')
+    this.torsoSprite.scale.setTo(2.2)
     this.torsoGroup.add(this.torsoSprite)
 
     // Head
-    this.headSprite = this.game.add.sprite(0, -148, 'head')
-    this.headSprite.scale.setTo(1.8)
+    this.headSprite = this.game.add.sprite(0, -280, 'head')
+    this.headSprite.scale.setTo(2.2)
     this.headGroup.add(this.headSprite)
 
     // Left arm
     this.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
     this.leftArmSprite.anchor.setTo(.2, .2)
-    this.leftArmSprite.scale.setTo(1.6)
+    this.leftArmSprite.scale.setTo(2.2)
     this.leftArmSprite.rotation = 80.16
     this.leftArmGroup.add(this.leftArmSprite)
 
@@ -100,7 +101,7 @@ export default function PlayerSpriteHandler() {
     this.rightArmGroup.add(this.currentWeaponSprite)
     this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm')
     this.rightArmSprite.anchor.setTo(.2, .24)
-    this.rightArmSprite.scale.setTo(1.7)
+    this.rightArmSprite.scale.setTo(2.2)
     this.rightArmSprite.rotation = 80.1
     this.rightArmGroup.add(this.rightArmSprite)
 

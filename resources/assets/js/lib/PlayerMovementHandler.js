@@ -24,9 +24,9 @@ export default function PlayerMovementHandler() {
             this.player.animations.play('left')
         } else {
             if (this.game.input.worldX > this.player.x) {
-                this.player.frame = 7
+                this.player.frame = GameConsts.STANDING_RIGHT_FRAME
             } else {
-                this.player.frame = 6
+                this.player.frame = GameConsts.STANDING_LEFT_FRAME
             }
         }
     } else if (rightInputIsActive.call(this, state.game.keyboardControls.right)) {
@@ -45,9 +45,9 @@ export default function PlayerMovementHandler() {
             this.player.animations.play('right')
         } else {
             if (this.game.input.worldX > this.player.x) {
-                this.player.frame = 7
+                this.player.frame = GameConsts.STANDING_RIGHT_FRAME
             } else {
-                this.player.frame = 6
+                this.player.frame = GameConsts.STANDING_LEFT_FRAME
             }
         }
     } else {
@@ -56,12 +56,12 @@ export default function PlayerMovementHandler() {
         this.player.animations.stop()
 
         if (this.game.input.worldX > this.player.x) {
-            this.player.frame = 7
+            this.player.frame = GameConsts.STANDING_RIGHT_FRAME
             playerFaceRight.call(this)
         }
 
         if (this.game.input.worldX < this.player.x) {
-            this.player.frame = 6
+            this.player.frame = GameConsts.STANDING_LEFT_FRAME
             playerFaceLeft.call(this)
         }
     }

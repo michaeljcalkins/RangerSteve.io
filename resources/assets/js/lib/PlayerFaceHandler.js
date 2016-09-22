@@ -9,16 +9,16 @@ export function playerFaceLeft() {
         const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
         this.rightArmGroup.x = 25
-        this.rightArmGroup.y = -65
+        this.rightArmGroup.y = -175
 
         this.leftArmGroup.x = -40
-        this.leftArmGroup.y = -70
+        this.leftArmGroup.y = -180
 
         this.headSprite.scale.x *= -1
         this.headSprite.x = 12
 
         this.torsoSprite.scale.x *= -1
-        this.torsoSprite.x = 49
+        this.torsoSprite.x = 53
 
         this.leftArmSprite.scale.y *= -1
         this.leftArmSprite.y = 5
@@ -40,16 +40,16 @@ export function playerFaceRight() {
         const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
         this.rightArmGroup.x = -25
-        this.rightArmGroup.y = -65
+        this.rightArmGroup.y = -175
 
         this.leftArmGroup.x = 45
-        this.leftArmGroup.y = -70
+        this.leftArmGroup.y = -180
 
         this.headSprite.scale.x *= -1
         this.headSprite.x = 0
 
         this.torsoSprite.scale.x *= -1
-        this.torsoSprite.x = -37
+        this.torsoSprite.x = -50
 
         this.leftArmSprite.scale.y *= -1
         this.leftArmSprite.y = 0
