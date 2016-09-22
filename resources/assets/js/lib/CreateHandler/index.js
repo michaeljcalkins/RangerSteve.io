@@ -2,7 +2,6 @@ import GameConsts from '../GameConsts'
 import CreateEvents from './CreateEvents'
 import CreateHurtBorder from './CreateHurtBorder'
 import CreateMapAndPlayer from './CreateMapAndPlayer'
-import CreateWindowEvents from './CreateWindowEvents'
 import CreateBullets from './CreateBullets'
 import CreateMusic from './CreateMusic'
 import CreateDetectIdleUser from './CreateDetectIdleUser'
@@ -36,12 +35,20 @@ export default function() {
     CreateMapAndPlayer.call(this)
     CreateEvents.call(this)
     CreateHurtBorder.call(this)
-    CreateWindowEvents.call(this)
     CreateMusic.call(this)
     CreateKillingSpreeAudio.call(this)
     CreateDetectIdleUser()
     CreateBullets.call(this)
     CreateUI.call(this)
+
+    window.addEventListener('resize', () => {
+        // this.game.scale.refresh()
+        // this.game.width = window.innerWidth
+        // this.game.height = window.innerHeight
+
+        this.hurtBorderSprite.width = window.innerWidth
+        this.hurtBorderSprite.height = window.innerHeight
+    })
 
     store.dispatch(actions.game.setState('active'))
 }

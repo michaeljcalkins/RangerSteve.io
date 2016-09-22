@@ -83,8 +83,6 @@ export default function Update() {
         }
     }
 
-    UpdateHurtBorder.call(this)
-
     /**
      * Rotate bullets according to trajectory
      */
@@ -97,4 +95,5 @@ export default function Update() {
     })
 
     UpdatePlayerPosition.call(this)
+    UpdateHurtBorder.call(this)
 }
