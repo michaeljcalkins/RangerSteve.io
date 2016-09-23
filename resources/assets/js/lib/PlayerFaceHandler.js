@@ -8,17 +8,17 @@ export function playerFaceLeft() {
         const currentWeaponId = player.currentWeapon === 'primaryWeapon' ? player.selectedPrimaryWeaponId : player.selectedSecondaryWeaponId
         const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
-        this.rightArmGroup.x = 25
-        this.rightArmGroup.y = -175
+        this.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
+        this.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
 
-        this.leftArmGroup.x = -40
-        this.leftArmGroup.y = -180
+        this.leftArmGroup.x = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_X
+        this.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
 
         this.headSprite.scale.x *= -1
-        this.headSprite.x = 12
+        this.headSprite.x = 5
 
         this.torsoSprite.scale.x *= -1
-        this.torsoSprite.x = 53
+        this.torsoSprite.x = 59
 
         this.leftArmSprite.scale.y *= -1
         this.leftArmSprite.y = 5
@@ -39,17 +39,17 @@ export function playerFaceRight() {
         const currentWeaponId = player.currentWeapon === 'primaryWeapon' ? player.selectedPrimaryWeaponId : player.selectedSecondaryWeaponId
         const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
-        this.rightArmGroup.x = -25
-        this.rightArmGroup.y = -175
+        this.rightArmGroup.x = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_X
+        this.rightArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_Y
 
-        this.leftArmGroup.x = 45
-        this.leftArmGroup.y = -180
+        this.leftArmGroup.x = GameConsts.PLAYER_FACE.RIGHT.LEFT_ARM_X
+        this.leftArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.LEFT_ARM_Y
 
         this.headSprite.scale.x *= -1
-        this.headSprite.x = 0
+        this.headSprite.x = -5
 
         this.torsoSprite.scale.x *= -1
-        this.torsoSprite.x = -50
+        this.torsoSprite.x = -59
 
         this.leftArmSprite.scale.y *= -1
         this.leftArmSprite.y = 0

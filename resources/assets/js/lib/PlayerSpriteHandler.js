@@ -21,7 +21,7 @@ export default function PlayerSpriteHandler() {
     this.physics.arcade.enable(this.player)
     this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
     this.game.slopes.enable(this.player)
-    this.player.body.offset.setTo(0, -100);
+    this.player.body.offset.setTo(15, -150)
 
     const body = this.player.body
 
@@ -70,7 +70,7 @@ export default function PlayerSpriteHandler() {
 
     // Torso
     this.torsoSprite = this.game.add.sprite(-530, -230, 'torso')
-    this.torsoSprite.scale.setTo(2.2)
+    this.torsoSprite.scale.setTo(2.3, 2.2)
     this.torsoGroup.add(this.torsoSprite)
 
     // Head

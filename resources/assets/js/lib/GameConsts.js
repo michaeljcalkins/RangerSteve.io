@@ -19,10 +19,27 @@ const GameConsts = {
     STARTING_PRIMARY_ID: 'AK47',
     STARTING_SECONDARY_ID: 'DesertEagle',
     PLAYER_ANCHOR: 1,
-    PLAYER_SPRITE_WIDTH: 38,
-    PLAYER_SPRITE_HEIGHT: 40,
-    PLAYER_BODY_WIDTH: 105,
-    PLAYER_BODY_HEIGHT: 280,
+    PLAYER_SPRITE_WIDTH: 35,
+    PLAYER_SPRITE_HEIGHT: 35,
+    PLAYER_BODY_WIDTH: 130,
+    PLAYER_BODY_HEIGHT: 330,
+
+    PLAYER_FACE: {
+        LEFT: {
+            RIGHT_ARM_X: 25,
+            RIGHT_ARM_Y: -175,
+
+            LEFT_ARM_X: -40,
+            LEFT_ARM_Y: -180
+        },
+        RIGHT: {
+            RIGHT_ARM_X: -40,
+            RIGHT_ARM_Y: -180,
+
+            LEFT_ARM_X: 50,
+            LEFT_ARM_Y: -180
+        }
+    },
 
     // Physics
     MAX_VELOCITY_X: 500,
