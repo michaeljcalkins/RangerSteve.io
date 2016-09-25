@@ -1,3 +1,4 @@
+import actions from '../../actions'
 import GameConsts from '../GameConsts'
 import CreateEvents from './CreateEvents'
 import CreateHurtBorder from './CreateHurtBorder'
@@ -7,14 +8,24 @@ import CreateMusic from './CreateMusic'
 import CreateDetectIdleUser from './CreateDetectIdleUser'
 import CreateKillingSpreeAudio from './CreateKillingSpreeAudio'
 import CreateUI from './CreateUI'
-import actions from '../../actions'
 
 export default function() {
     const store = this.game.store
 
     // Scale game on window resize
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
+    this.game.renderer.renderSession.roundPixels = true
+    this.game.stage.disableVisibilityChange = true
     this.game.scale.refresh()
+
+    // this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE
+    // var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
+    // this.scale.setUserScale(scale, scale)
+
+    // window.onresize = () => {
+    //     var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
+    //     this.scale.setUserScale(scale, scale)
+    // }
 
     // Enables advanced profiling features when debugging
     this.time.advancedTiming = true

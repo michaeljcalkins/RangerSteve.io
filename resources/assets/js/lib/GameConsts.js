@@ -340,7 +340,7 @@ const GameConsts = {
             image: 'Spr_RPG.png',
             ammo: 1,
             bulletType: 'rocket',
-            reloadTime: 500000,
+            reloadTime: 15000,
             bulletSpeed: 2100,
             damage: 100,
             fireRate: 1000,

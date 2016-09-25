@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "ricochet_0001.png",
+	"frame": {"x":276,"y":1,"w":182,"h":148},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":40,"y":28,"w":182,"h":148},
+	"sourceSize": {"w":274,"h":185}
+},
+{
+	"filename": "ricochet_0002.png",
+	"frame": {"x":270,"y":214,"w":236,"h":185},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":20,"y":0,"w":236,"h":185},
+	"sourceSize": {"w":274,"h":185}
+},
+{
+	"filename": "ricochet_0003.png",
+	"frame": {"x":1,"y":182,"w":267,"h":185},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":0,"w":267,"h":185},
+	"sourceSize": {"w":274,"h":185}
+},
+{
+	"filename": "ricochet_0004.png",
+	"frame": {"x":1,"y":1,"w":273,"h":179},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":273,"h":179},
+	"sourceSize": {"w":274,"h":185}
+},
+{
+	"filename": "ricochet_0005.png",
+	"frame": {"x":276,"y":151,"w":158,"h":61},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":63,"w":158,"h":61},
+	"sourceSize": {"w":274,"h":185}
+},
+{
+	"filename": "ricochet_0006.png",
+	"frame": {"x":460,"y":1,"w":10,"h":11},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":144,"y":111,"w":10,"h":11},
+	"sourceSize": {"w":274,"h":185}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ricochet.png",
+	"format": "RGBA8888",
+	"size": {"w":507,"h":400},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a1ed6ece604e988e6d8a8d397bbd4d48:bd81524147452f3c98f30456c9b11281:3b7ce9bd08e22b2b1ed88fe9faed1eec$"
+}
+}

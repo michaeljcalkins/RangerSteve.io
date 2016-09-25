@@ -1,6 +1,18 @@
 import GameConsts from '../GameConsts.js'
 
 export default function() {
+    this.rpgExplosions = this.game.add.group()
+    this.rpgExplosions.createMultiple(10, 'rpgExplosion')
+    this.rpgExplosions.forEach((rpgExplosion) => {
+        rpgExplosion.animations.add('collision')
+    })
+
+    this.ricochets = this.game.add.group()
+    this.ricochets.createMultiple(30, 'ricochet')
+    this.ricochets.forEach((ricochet) => {
+        ricochet.animations.add('collision')
+    })
+
     this.bullets = this.game.add.group()
     this.bullets.createMultiple(30, 'bullet')
     this.bullets.setAll('checkWorldBounds', true)
@@ -28,14 +40,6 @@ export default function() {
         body.slopes.friction.x = 0
         body.slopes.friction.y = 0
         body.slopes.preferY    = GameConsts.SLOPE_FEATURES.minimumOffsetY
-        body.slopes.pullUp     = GameConsts.SLOPE_FEATURES.pullUp
-        body.slopes.pullDown   = GameConsts.SLOPE_FEATURES.pullDown
-        body.slopes.pullLeft   = GameConsts.SLOPE_FEATURES.pullLeft
-        body.slopes.pullRight  = GameConsts.SLOPE_FEATURES.pullRight
-        body.slopes.snapUp     = GameConsts.SLOPE_FEATURES.snapUp
-        body.slopes.snapDown   = GameConsts.SLOPE_FEATURES.snapDown
-        body.slopes.snapLeft   = GameConsts.SLOPE_FEATURES.snapLeft
-        body.slopes.snapRight  = GameConsts.SLOPE_FEATURES.snapRight
     }, this)
 
     this.enemyBullets = this.game.add.group()

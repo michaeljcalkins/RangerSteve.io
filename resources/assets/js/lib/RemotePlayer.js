@@ -10,7 +10,7 @@ const propTypes = {
 export default function RemotePlayer(player) {
     check(player, propTypes)
 
-    let newRemotePlayer = this.game.add.sprite(player.x, player.y, 'commando')
+    let newRemotePlayer = this.game.add.sprite(player.x, player.y, 'player')
     newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     newRemotePlayer.facing = 'right'
     newRemotePlayer.width = GameConsts.PLAYER_SPRITE_WIDTH
