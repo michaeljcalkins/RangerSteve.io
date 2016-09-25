@@ -84,7 +84,8 @@ gulp.task('buildjs', function() {
         .bundle()
         .on('error', handleError)
         .pipe(source('app.js'))
-        .pipe(streamify(uglify({ mangle: false })))
+        .pipe(gulpif(isProduction, streamify(uglify({ mangle: false }))))
+        .pipe(gulpif(isProduction, streamify(obfuscator())))
         .pipe(gulp.dest(DIST + 'js'))
         .on('end', function() {
             console.log('JS Compiled!')
@@ -120,7 +121,7 @@ gulp.task('watchjs', function() {
             .on('error', handleError)
             .pipe(source('app.js'))
             .pipe(gulpif(isProduction, streamify(uglify({ mangle: false }))))
-            // .pipe(gulpif(isProduction, streamify(obfuscator())))
+            .pipe(gulpif(isProduction, streamify(obfuscator())))
             .pipe(gulp.dest(DIST + 'js'))
             .pipe(notify({ message: 'JS Compiled!' }))
     }

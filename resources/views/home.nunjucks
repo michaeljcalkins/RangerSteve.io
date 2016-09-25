@@ -37,7 +37,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <span
                                         class="help-block pointer"
                                         style="margin: 0;"
@@ -46,9 +46,19 @@
                                         Learn how to play
                                     </span>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <a
-                                        class="help-block pointer"
+                                        class="help-block"
+                                        href="https://discord.gg/GqKgsmy"
+                                        target="_blank"
+                                        style="margin: 0;"
+                                    >
+                                        Join us on Discord!
+                                    </a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a
+                                        class="help-block"
                                         href="https://github.com/michaeljcalkins/rangersteve-ideas/issues"
                                         style="margin: 0;"
                                         target="_blank"
