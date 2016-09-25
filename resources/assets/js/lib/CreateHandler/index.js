@@ -19,13 +19,13 @@ export default function() {
     this.game.scale.refresh()
 
     // this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE
-    // var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
-    // this.scale.setUserScale(scale, scale)
+    var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
+    this.scale.setUserScale(scale, scale)
 
-    // window.onresize = () => {
-    //     var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
-    //     this.scale.setUserScale(scale, scale)
-    // }
+    window.onresize = () => {
+        var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
+        this.scale.setUserScale(scale, scale)
+    }
 
     // Enables advanced profiling features when debugging
     this.time.advancedTiming = true
