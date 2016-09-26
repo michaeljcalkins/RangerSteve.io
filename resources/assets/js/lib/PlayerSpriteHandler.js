@@ -138,7 +138,7 @@ export default function PlayerSpriteHandler() {
     this.leftJumpjet.scale.setTo(.4)
     this.leftJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     this.leftJumpjet.animations.play('thrust')
-    this.leftJumpjet.y = 130
+    this.leftJumpjet.y = 95
     this.leftJumpjet.x = -78
     this.leftJumpjet.visible = false
     this.player.addChild(this.leftJumpjet)
@@ -148,7 +148,7 @@ export default function PlayerSpriteHandler() {
     this.rightJumpjet.scale.setTo(.4)
     this.rightJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     this.rightJumpjet.animations.play('thrust')
-    this.rightJumpjet.y = 130
+    this.rightJumpjet.y = 95
     this.rightJumpjet.x = -7
     this.rightJumpjet.visible = false
     this.player.addChild(this.rightJumpjet)

@@ -114,7 +114,7 @@ const GameConsts = {
             bulletSpeed: 2500,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
+                scale: 1.7,
 
                 leftFaceX: -7,
                 leftFaceY: 30,
@@ -122,8 +122,8 @@ const GameConsts = {
                 rightFaceX: -7,
                 rightFaceY: 19,
 
-                muzzleFlashX: 102,
-                muzzleFlashY: -72
+                muzzleFlashX: 108,
+                muzzleFlashY: -75
             }
         },
         G43: {
@@ -137,7 +137,7 @@ const GameConsts = {
             fireRate: 700,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
+                scale: 1.6,
 
                 leftFaceX: -14,
                 leftFaceY: 61,
@@ -161,7 +161,7 @@ const GameConsts = {
             fireRate: 1300,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
+                scale: 1.6,
 
                 leftFaceX: -13,
                 leftFaceY: 34,
@@ -184,7 +184,7 @@ const GameConsts = {
             bulletSpeed: 2500,
             position: {
                 rotation: 80.20,
-                scale: 1.3,
+                scale: 1.5,
 
                 leftFaceX: 0,
                 leftFaceY: 48,
@@ -207,7 +207,7 @@ const GameConsts = {
             fireRate: 100,
             position: {
                 rotation: 80.20,
-                scale: 1.2,
+                scale: 1.4,
 
                 leftFaceX: -7,
                 leftFaceY: -20,
@@ -230,7 +230,7 @@ const GameConsts = {
             fireRate: 120,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
+                scale: 1.6,
 
                 leftFaceX: -7,
                 leftFaceY: 30,
@@ -253,7 +253,7 @@ const GameConsts = {
             fireRate: 120,
             position: {
                 rotation: 80.18,
-                scale: 1.45,
+                scale: 1.65,
 
                 leftFaceX: 10,
                 leftFaceY: 40,
@@ -276,7 +276,7 @@ const GameConsts = {
             fireRate: 2000,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
+                scale: 1.6,
 
                 leftFaceX: 7,
                 leftFaceY: 35,
@@ -299,7 +299,7 @@ const GameConsts = {
             fireRate: 267,
             position: {
                 rotation: 80.15,
-                scale: 1.4,
+                scale: 1.6,
 
                 leftFaceX: -12,
                 leftFaceY: -20,
@@ -322,7 +322,7 @@ const GameConsts = {
             fireRate: 250,
             position: {
                 rotation: 80.15,
-                scale: 1.4,
+                scale: 1.6,
 
                 leftFaceX: -12,
                 leftFaceY: -20,
@@ -346,7 +346,7 @@ const GameConsts = {
             fireRate: 1000,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
+                scale: 1.7,
 
                 leftFaceX: 33,
                 leftFaceY: 90,

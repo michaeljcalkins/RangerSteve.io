@@ -18,15 +18,15 @@ export default function FireStandardBullet(currentWeaponId) {
     nextFire = this.game.time.time + currentWeapon.fireRate
 
     let x = this.player.x
-    let y = this.player.y - 10
+    let y = this.player.y - 25
 
     let bullet = this.bullets.getFirstDead()
     bullet.bulletId = Guid()
     bullet.damage = currentWeapon.damage
     bullet.weaponId = currentWeaponId
     bullet.alpha = 0
-    bullet.height = 2
-    bullet.width = 40
+    bullet.height = 3
+    bullet.width = 20
     bullet.reset(x, y)
     let pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
     bullet.rotation = pointerAngle

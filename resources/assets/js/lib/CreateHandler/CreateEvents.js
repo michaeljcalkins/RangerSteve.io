@@ -29,7 +29,6 @@ export default function() {
         if (isPrimarySelected) {
             store.dispatch(actions.player.setPrimaryIsReloading(true))
         } else {
-            if (store.getState().player.selectedSecondaryWeaponId === 'RPG') return
             store.dispatch(actions.player.setSecondaryIsReloading(true))
         }
 
