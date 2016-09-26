@@ -27,6 +27,7 @@ export default function FireShotgunShell(currentWeaponId) {
         bullet.bulletId = Guid()
         bullet.damage = currentWeapon.damage
         bullet.weaponId = currentWeaponId
+        bullet.alpha = 0
         bullet.height = 2
         bullet.width = 40
         bullet.reset(x, y)
@@ -48,7 +49,7 @@ export default function FireShotgunShell(currentWeaponId) {
         // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
         setTimeout(function() {
             bullet.alpha = 1
-        }, 60)
+        }, 40)
 
         emitBulletFired.call(this, {
             roomId: state.room.id,

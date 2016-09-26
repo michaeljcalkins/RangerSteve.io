@@ -145,8 +145,8 @@ const GameConsts = {
                 rightFaceX: -5,
                 rightFaceY: 48,
 
-                muzzleFlashX: 132,
-                muzzleFlashY: -72
+                muzzleFlashX: 165,
+                muzzleFlashY: -76
             }
         },
         M500: {
@@ -169,7 +169,7 @@ const GameConsts = {
                 rightFaceX: 8,
                 rightFaceY: 24,
 
-                muzzleFlashX: 102,
+                muzzleFlashX: 122,
                 muzzleFlashY: -72
             }
         },
@@ -192,7 +192,7 @@ const GameConsts = {
                 rightFaceX: -14,
                 rightFaceY: 34,
 
-                muzzleFlashX: 102,
+                muzzleFlashX: 112,
                 muzzleFlashY: -72
             }
         },
@@ -261,8 +261,8 @@ const GameConsts = {
                 rightFaceX: -10,
                 rightFaceY: 40,
 
-                muzzleFlashX: 102,
-                muzzleFlashY: -72
+                muzzleFlashX: 100,
+                muzzleFlashY: -65
             }
         },
         Barrett: {
@@ -284,8 +284,8 @@ const GameConsts = {
                 rightFaceX: -18,
                 rightFaceY: 17,
 
-                muzzleFlashX: 162,
-                muzzleFlashY: -72
+                muzzleFlashX: 165,
+                muzzleFlashY: -65
             }
         },
         DesertEagle: {
