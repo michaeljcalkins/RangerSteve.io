@@ -114,8 +114,8 @@ export default class GameUi extends React.Component {
                 <HudChatHistory
                     isOpen={ game.chatModalIsOpen }
                     messages={ game.chatMessages }
+                    newChatMessageCharacter={ +game.keyboardControls.newChatMessage }
                     onSendMessage={ this.handleSendMessage }
-                    newChatMessageCharacter={ game.keyboardControls.newChatMessage }
                 />
 
                 { (game.leaderboardModalIsOpen || this.props.room.state === 'ended') &&

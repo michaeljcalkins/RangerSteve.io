@@ -65,9 +65,9 @@ export default function onMovePlayer(data) {
         movePlayer.animations.stop()
 
         if (movePlayer.facing === 'right') {
-            movePlayer.frame = 7
+            movePlayer.frame = GameConsts.STANDING_RIGHT_FRAME
         } else {
-            movePlayer.frame = 6
+            movePlayer.frame = GameConsts.STANDING_LEFT_FRAME
         }
     }
 

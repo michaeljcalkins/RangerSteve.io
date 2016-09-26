@@ -41,6 +41,6 @@ HudChatHistory.defaultProps = {
 HudChatHistory.propTypes = {
     isOpen: PropTypes.bool,
     messages: PropTypes.array,
-    newChatMessageCharacter: PropTypes.string,
+    newChatMessageCharacter: PropTypes.number,
     onSendMessage: PropTypes.func
 }

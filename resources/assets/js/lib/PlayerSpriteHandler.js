@@ -21,11 +21,10 @@ export default function PlayerSpriteHandler() {
     this.physics.arcade.enable(this.player)
     this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
     this.game.slopes.enable(this.player)
-    this.player.body.offset.setTo(15, -150)
+    this.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
 
     const body = this.player.body
-
-    this.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
+    body.offset.setTo(15, -150)
 
     // Add a touch of tile padding for the collision detection
     body.tilePadding.x = 1
@@ -43,14 +42,6 @@ export default function PlayerSpriteHandler() {
     body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
     body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
     body.slopes.preferY    = GameConsts.SLOPE_FEATURES.minimumOffsetY
-    body.slopes.pullUp     = GameConsts.SLOPE_FEATURES.pullUp
-    body.slopes.pullDown   = GameConsts.SLOPE_FEATURES.pullDown
-    body.slopes.pullLeft   = GameConsts.SLOPE_FEATURES.pullLeft
-    body.slopes.pullRight  = GameConsts.SLOPE_FEATURES.pullRight
-    body.slopes.snapUp     = GameConsts.SLOPE_FEATURES.snapUp
-    body.slopes.snapDown   = GameConsts.SLOPE_FEATURES.snapDown
-    body.slopes.snapLeft   = GameConsts.SLOPE_FEATURES.snapLeft
-    body.slopes.snapRight  = GameConsts.SLOPE_FEATURES.snapRight
 
     // Make player collide with world boundaries so he doesn't leave the stage
     this.player.body.collideWorldBounds = true
@@ -69,12 +60,12 @@ export default function PlayerSpriteHandler() {
     this.torsoGroup = this.game.add.group()
 
     // Torso
-    this.torsoSprite = this.game.add.sprite(-530, -230, 'torso')
+    this.torsoSprite = this.game.add.sprite(GameConsts.PLAYER_BODY.TORSO_X, GameConsts.PLAYER_BODY.TORSO_Y, 'torso')
     this.torsoSprite.scale.setTo(2.3, 2.2)
     this.torsoGroup.add(this.torsoSprite)
 
     // Head
-    this.headSprite = this.game.add.sprite(0, -280, 'head')
+    this.headSprite = this.game.add.sprite(GameConsts.PLAYER_BODY.HEAD_X, GameConsts.PLAYER_BODY.HEAD_Y, 'head')
     this.headSprite.scale.setTo(2.2)
     this.headGroup.add(this.headSprite)
 
@@ -108,8 +99,8 @@ export default function PlayerSpriteHandler() {
     this.player.addChild(this.leftArmGroup)
     this.leftArmGroup.pivot.x = 0
     this.leftArmGroup.pivot.y = 0
-    this.leftArmGroup.x = 45
-    this.leftArmGroup.y = -70
+    this.leftArmGroup.x = GameConsts.PLAYER_BODY.LEFT_ARM_X
+    this.leftArmGroup.y = GameConsts.PLAYER_BODY.LEFT_ARM_Y
 
     this.player.addChild(this.torsoGroup)
     this.player.addChild(this.headGroup)
@@ -117,15 +108,15 @@ export default function PlayerSpriteHandler() {
     this.player.addChild(this.rightArmGroup)
     this.rightArmGroup.pivot.x = 0
     this.rightArmGroup.pivot.y = 0
-    this.rightArmGroup.x = -25
-    this.rightArmGroup.y = -65
+    this.rightArmGroup.x = GameConsts.PLAYER_BODY.RIGHT_ARM_X
+    this.rightArmGroup.y = GameConsts.PLAYER_BODY.RIGHT_ARM_Y
 
     this.muzzleFlash = this.game.make.sprite(0, 0, 'muzzle-flash')
     this.muzzleFlash.scale.setTo(.6)
     this.muzzleFlash.animations.add('flash', [0,1,2,3,4,5], 20, true)
     this.muzzleFlash.animations.play('flash')
-    this.muzzleFlash.y = -72
-    this.muzzleFlash.x = 102
+    this.muzzleFlash.y = GameConsts.PLAYER_BODY.MUZZLE_FLASH_X
+    this.muzzleFlash.x = GameConsts.PLAYER_BODY.MUZZLE_FLASH_Y
 
     this.muzzleFlash.x = selectedPrimaryWeapon.position.muzzleFlashX
     this.muzzleFlash.y = selectedPrimaryWeapon.position.muzzleFlashY
@@ -138,8 +129,8 @@ export default function PlayerSpriteHandler() {
     this.leftJumpjet.scale.setTo(.4)
     this.leftJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     this.leftJumpjet.animations.play('thrust')
-    this.leftJumpjet.y = 95
-    this.leftJumpjet.x = -78
+    this.leftJumpjet.y = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_X
+    this.leftJumpjet.x = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_Y
     this.leftJumpjet.visible = false
     this.player.addChild(this.leftJumpjet)
 
@@ -148,8 +139,8 @@ export default function PlayerSpriteHandler() {
     this.rightJumpjet.scale.setTo(.4)
     this.rightJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     this.rightJumpjet.animations.play('thrust')
-    this.rightJumpjet.y = 95
-    this.rightJumpjet.x = -7
+    this.rightJumpjet.y = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_X
+    this.rightJumpjet.x = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_Y
     this.rightJumpjet.visible = false
     this.player.addChild(this.rightJumpjet)
 

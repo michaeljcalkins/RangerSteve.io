@@ -24,6 +24,29 @@ const GameConsts = {
     PLAYER_BODY_WIDTH: 130,
     PLAYER_BODY_HEIGHT: 330,
 
+    PLAYER_BODY: {
+        TORSO_X: -530,
+        TORSO_Y: -230,
+
+        HEAD_X: 0,
+        HEAD_Y: -280,
+
+        LEFT_ARM_X: 45,
+        LEFT_ARM_Y: -70,
+
+        RIGHT_ARM_X: -25,
+        RIGHT_ARM_Y: -65,
+
+        MUZZLE_FLASH_X: -72,
+        MUZZLE_FLASH_Y: 102,
+
+        LEFT_JUMP_JET_X: 95,
+        LEFT_JUMP_JET_Y: -78,
+
+        RIGHT_JUMP_JET_X: 95,
+        RIGHT_JUMP_JET_Y: -7
+    },
+
     PLAYER_FACE: {
         LEFT: {
             RIGHT_ARM_X: 25,
