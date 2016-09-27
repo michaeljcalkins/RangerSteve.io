@@ -24,9 +24,9 @@ export default function RemotePlayer(player) {
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(newRemotePlayer)
-    newRemotePlayer.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT, 105, 10)
+    newRemotePlayer.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
     this.game.slopes.enable(newRemotePlayer)
-    newRemotePlayer.body.offset.setTo(15, -150)
+    newRemotePlayer.body.offset.setTo(15, -140)
 
     // This stops the effect of gravity on remote players
     newRemotePlayer.body.gravity.y = undefined
@@ -40,18 +40,6 @@ export default function RemotePlayer(player) {
 
     newRemotePlayer.leftArmGroup = this.game.add.group()
     newRemotePlayer.rightArmGroup = this.game.add.group()
-    newRemotePlayer.headGroup = this.game.add.group()
-    newRemotePlayer.torsoGroup = this.game.add.group()
-
-    // Torso
-    newRemotePlayer.torsoSprite = this.game.add.sprite(GameConsts.PLAYER_BODY.TORSO_X, GameConsts.PLAYER_BODY.TORSO_Y, 'torso')
-    newRemotePlayer.torsoSprite.scale.setTo(2.3, 2.2)
-    newRemotePlayer.torsoGroup.add(newRemotePlayer.torsoSprite)
-
-    // Head
-    newRemotePlayer.headSprite = this.game.add.sprite(GameConsts.PLAYER_BODY.HEAD_X, GameConsts.PLAYER_BODY.HEAD_Y, 'head')
-    newRemotePlayer.headSprite.scale.setTo(2.2)
-    newRemotePlayer.headGroup.add(newRemotePlayer.headSprite)
 
     // Left arm
     newRemotePlayer.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
@@ -80,9 +68,6 @@ export default function RemotePlayer(player) {
     newRemotePlayer.leftArmGroup.pivot.y = 0
     newRemotePlayer.leftArmGroup.x = GameConsts.PLAYER_BODY.LEFT_ARM_X
     newRemotePlayer.leftArmGroup.y = GameConsts.PLAYER_BODY.LEFT_ARM_Y
-
-    newRemotePlayer.addChild(newRemotePlayer.torsoGroup)
-    newRemotePlayer.addChild(newRemotePlayer.headGroup)
 
     newRemotePlayer.addChild(newRemotePlayer.rightArmGroup)
     newRemotePlayer.rightArmGroup.pivot.x = 0

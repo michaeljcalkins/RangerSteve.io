@@ -47,8 +47,6 @@ export default function onPlayerRespawn(data) {
     // Hide child groups
     this.leftArmGroup.visible = true
     this.rightArmGroup.visible = true
-    this.headGroup.visible = true
-    this.torsoGroup.visible = true
 
     store.dispatch(actions.player.setPrimaryIsReloading(false))
     store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))

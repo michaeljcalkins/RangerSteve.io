@@ -37,8 +37,6 @@ export default function onMovePlayer(data) {
     movePlayer.alpha = 1
     movePlayer.rightArmGroup.visible = true
     movePlayer.leftArmGroup.visible = true
-    movePlayer.headGroup.visible = true
-    movePlayer.torsoGroup.visible = true
 
     // Control jump jet visibility
     movePlayer.rightJumpjet.visible = data.flying

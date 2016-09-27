@@ -11,8 +11,6 @@ export default function() {
 
     this.leftArmGroup.visible = false
     this.rightArmGroup.visible = false
-    this.headGroup.visible = false
-    this.torsoGroup.visible = false
 
     emitPlayerDamaged.call(this, {
         roomId: store.getState().room.id,

@@ -1,5 +1,5 @@
 const GameConsts = {
-    DEBUG: false,
+    DEBUG: true,
     STARTING_SFX_VOLUME: .1,
     STARTING_MUSIC_VOLUME: .2,
 
@@ -14,8 +14,8 @@ const GameConsts = {
     ANIMATION_RIGHT: _.range(30, 35, 1),
     ANIMATION_DEATH: _.range(0, 21, 1),
     ANIMATION_FRAMERATE: 10,
-    STANDING_LEFT_FRAME: 28,
-    STANDING_RIGHT_FRAME: 35,
+    STANDING_LEFT_FRAME: 6,
+    STANDING_RIGHT_FRAME: 13,
     STARTING_PRIMARY_ID: 'AK47',
     STARTING_SECONDARY_ID: 'DesertEagle',
     PLAYER_ANCHOR: 1,
@@ -25,42 +25,30 @@ const GameConsts = {
     PLAYER_BODY_HEIGHT: 330,
 
     PLAYER_BODY: {
-        TORSO_X: -530,
-        TORSO_Y: -230,
-
-        HEAD_X: 0,
-        HEAD_Y: -280,
-
-        LEFT_ARM_X: 45,
-        LEFT_ARM_Y: -70,
-
-        RIGHT_ARM_X: -25,
-        RIGHT_ARM_Y: -65,
-
         MUZZLE_FLASH_X: -72,
         MUZZLE_FLASH_Y: 102,
 
-        LEFT_JUMP_JET_X: 95,
-        LEFT_JUMP_JET_Y: -78,
+        LEFT_JUMP_JET_X: 92,
+        LEFT_JUMP_JET_Y: -89,
 
-        RIGHT_JUMP_JET_X: 95,
-        RIGHT_JUMP_JET_Y: -7
+        RIGHT_JUMP_JET_X: 92,
+        RIGHT_JUMP_JET_Y: 3
     },
 
     PLAYER_FACE: {
         LEFT: {
-            RIGHT_ARM_X: 25,
-            RIGHT_ARM_Y: -175,
+            RIGHT_ARM_X: 8,
+            RIGHT_ARM_Y: -25,
 
-            LEFT_ARM_X: -40,
-            LEFT_ARM_Y: -180
+            LEFT_ARM_X: -35,
+            LEFT_ARM_Y: -20
         },
         RIGHT: {
-            RIGHT_ARM_X: -40,
-            RIGHT_ARM_Y: -180,
+            RIGHT_ARM_X: -10,
+            RIGHT_ARM_Y: -23,
 
-            LEFT_ARM_X: 50,
-            LEFT_ARM_Y: -180
+            LEFT_ARM_X: 30,
+            LEFT_ARM_Y: -20
         }
     },
 

@@ -13,18 +13,19 @@ export default function PlayerSpriteHandler() {
     this.jumpjetFx = this.game.add.audio('jumpjet')
 
     this.player = this.add.sprite(spawnPoint.x, spawnPoint.y, 'player')
-    this.player.width = GameConsts.PLAYER_SPRITE_WIDTH
-    this.player.height = GameConsts.PLAYER_SPRITE_HEIGHT
+    // this.player.width = GameConsts.PLAYER_SPRITE_WIDTH
+    // this.player.height = GameConsts.PLAYER_SPRITE_HEIGHT
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
+    // this.player.scale.setTo(.5)
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
-    this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
+    // this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
     this.game.slopes.enable(this.player)
     this.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
 
     const body = this.player.body
-    body.offset.setTo(15, -150)
+    // body.offset.setTo(15, -150)
 
     // Add a touch of tile padding for the collision detection
     body.tilePadding.x = 1
@@ -47,33 +48,24 @@ export default function PlayerSpriteHandler() {
     this.player.body.collideWorldBounds = true
 
     //  Our two animations, walking left and right.
-    this.player.animations.add('left', GameConsts.ANIMATION_LEFT, GameConsts.ANIMATION_FRAMERATE, true)
-    this.player.animations.add('right', GameConsts.ANIMATION_RIGHT, GameConsts.ANIMATION_FRAMERATE, true)
-    this.player.animations.add('death', GameConsts.ANIMATION_DEATH, 20, false)
+    this.player.animations.add('runRight-faceRight', [0,1,2,3,4,5], GameConsts.ANIMATION_FRAMERATE, true)
+    this.player.animations.add('runLeft-faceLeft', [7,8,9,10,11,12], GameConsts.ANIMATION_FRAMERATE, true)
+    this.player.animations.add('runRight-faceLeft', [14,15,16,17,18,19], GameConsts.ANIMATION_FRAMERATE, true)
+    this.player.animations.add('runLeft-faceRight', [21,22,23,24,25,26], GameConsts.ANIMATION_FRAMERATE, true)
+    // this.player.animations.add('death', GameConsts.ANIMATION_DEATH, 20, false)
 
     this.game.store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[primaryWeaponId]))
     this.game.store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[secondaryWeaponId]))
 
     this.leftArmGroup = this.game.add.group()
     this.rightArmGroup = this.game.add.group()
-    this.headGroup = this.game.add.group()
-    this.torsoGroup = this.game.add.group()
-
-    // Torso
-    this.torsoSprite = this.game.add.sprite(GameConsts.PLAYER_BODY.TORSO_X, GameConsts.PLAYER_BODY.TORSO_Y, 'torso')
-    this.torsoSprite.scale.setTo(2.3, 2.2)
-    this.torsoGroup.add(this.torsoSprite)
-
-    // Head
-    this.headSprite = this.game.add.sprite(GameConsts.PLAYER_BODY.HEAD_X, GameConsts.PLAYER_BODY.HEAD_Y, 'head')
-    this.headSprite.scale.setTo(2.2)
-    this.headGroup.add(this.headSprite)
 
     // Left arm
-    this.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
-    this.leftArmSprite.anchor.setTo(.2, .2)
-    this.leftArmSprite.scale.setTo(2.2)
-    this.leftArmSprite.rotation = 80.16
+    this.leftArmSprite = this.game.add.sprite(0, 0, 'player-body-parts')
+    this.leftArmSprite.anchor.setTo(.8, .2)
+    this.leftArmSprite.scale.setTo(1)
+    this.leftArmSprite.rotation = 83
+    this.leftArmSprite.animations.frame = 0
     this.leftArmGroup.add(this.leftArmSprite)
 
     // Gun
@@ -89,27 +81,35 @@ export default function PlayerSpriteHandler() {
     this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
 
     // Right arm
-    this.rightArmGroup.add(this.currentWeaponSprite)
-    this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm')
-    this.rightArmSprite.anchor.setTo(.2, .24)
-    this.rightArmSprite.scale.setTo(2.2)
-    this.rightArmSprite.rotation = 80.1
-    this.rightArmGroup.add(this.rightArmSprite)
+    // this.rightArmGroup.add(this.currentWeaponSprite)
+    this.rightArmFaceLeftSprite = this.game.add.sprite(0, 0, 'player-body-parts')
+    this.rightArmFaceLeftSprite.anchor.setTo(.8, .2)
+    this.rightArmFaceLeftSprite.scale.setTo(1)
+    this.rightArmFaceLeftSprite.rotation = 83.4
+    this.rightArmFaceLeftSprite.animations.frame = 2
+    this.rightArmGroup.add(this.rightArmFaceLeftSprite)
 
-    this.player.addChild(this.leftArmGroup)
+    this.rightArmFaceRightSprite = this.game.add.sprite(0, 0, 'player-body-parts')
+    this.rightArmFaceRightSprite.anchor.setTo(.2, .2)
+    this.rightArmFaceRightSprite.scale.setTo(1)
+    this.rightArmFaceRightSprite.rotation = 83.2
+    this.rightArmFaceRightSprite.alpha = 0
+    this.rightArmFaceRightSprite.animations.frame = 3
+    this.rightArmFaceRightSprite.scale.y *= -1
+    this.rightArmFaceRightSprite.scale.x *= -1
+    this.rightArmGroup.add(this.rightArmFaceRightSprite)
+
+    // this.player.addChild(this.leftArmGroup)
     this.leftArmGroup.pivot.x = 0
     this.leftArmGroup.pivot.y = 0
-    this.leftArmGroup.x = GameConsts.PLAYER_BODY.LEFT_ARM_X
-    this.leftArmGroup.y = GameConsts.PLAYER_BODY.LEFT_ARM_Y
-
-    this.player.addChild(this.torsoGroup)
-    this.player.addChild(this.headGroup)
+    this.leftArmGroup.x = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_X
+    this.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
 
     this.player.addChild(this.rightArmGroup)
     this.rightArmGroup.pivot.x = 0
     this.rightArmGroup.pivot.y = 0
-    this.rightArmGroup.x = GameConsts.PLAYER_BODY.RIGHT_ARM_X
-    this.rightArmGroup.y = GameConsts.PLAYER_BODY.RIGHT_ARM_Y
+    this.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
+    this.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
 
     this.muzzleFlash = this.game.make.sprite(0, 0, 'muzzle-flash')
     this.muzzleFlash.scale.setTo(.6)

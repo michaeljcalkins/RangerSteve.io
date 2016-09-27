@@ -1,0 +1,44 @@
+{"frames": [
+
+{
+	"filename": "left-arm-facing-left.png",
+	"frame": {"x":1,"y":51,"w":50,"h":43},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":43},
+	"sourceSize": {"w":50,"h":43}
+},
+{
+	"filename": "left-arm-facing-right.png",
+	"frame": {"x":50,"y":1,"w":50,"h":43},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":43},
+	"sourceSize": {"w":50,"h":43}
+},
+{
+	"filename": "right-arm-facing-left.png",
+	"frame": {"x":1,"y":1,"w":47,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":47,"h":48},
+	"sourceSize": {"w":47,"h":48}
+},
+{
+	"filename": "right-arm-facing-right.png",
+	"frame": {"x":53,"y":46,"w":47,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":47,"h":48},
+	"sourceSize": {"w":47,"h":48}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "player-body-parts.png",
+	"format": "RGBA8888",
+	"size": {"w":101,"h":95},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:2b090d767b2bbf85e25f53e01f11fd4c:2d7e68f850d3960a3411a522e348068b:a6984c34a99411471e285d5f0b508809$"
+}
+}

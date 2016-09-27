@@ -15,20 +15,16 @@ export default function Preload() {
     this.load.spritesheet('muzzle-flash', '/images/muzzle-flash.png', 447, 271)
     this.load.spritesheet('jumpjet', '/images/jumpjet.png', 214, 418)
     this.load.spritesheet('blood', '/images/blood.png', 440, 256)
+    this.load.spritesheet('player', '/sprites/player.png', 127, 190)
 
-    this.load.atlas('player', '/sprites/player.png', '/sprites/player.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     this.load.atlas('rpgExplosion', '/sprites/rpgExplosion.png', '/sprites/rpgExplosion.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     this.load.atlas('ricochet', '/sprites/ricochet.png', '/sprites/ricochet.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+    this.load.atlas('player-body-parts', '/sprites/player-body-parts.png', '/sprites/player-body-parts.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
 
     // Weapons
     Object.keys(GameConsts.WEAPONS).forEach((weaponId) => {
         this.load.image(weaponId, '/images/guns/' + GameConsts.WEAPONS[weaponId].image)
     })
-
-    this.load.image('right-arm', '/images/body/right-arm.png')
-    this.load.image('left-arm', '/images/body/left-arm.png')
-    this.load.image('head', '/images/body/head.png')
-    this.load.image('torso', '/images/body/torso.png')
 
     this.load.audio('jumpjet', '/audio/jumpjet.mp3')
 

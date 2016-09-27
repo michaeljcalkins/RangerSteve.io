@@ -68,8 +68,6 @@ export default function onPlayerDamaged(data) {
     if (store.getState().player.health <= 0) {
         this.rightArmGroup.visible = false
         this.leftArmGroup.visible = false
-        this.headGroup.visible = false
-        this.torsoGroup.visible = false
-        this.player.animations.play('death')
+        // this.player.animations.play('death')
     }
 }
