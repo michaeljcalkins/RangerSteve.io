@@ -37,16 +37,16 @@ export default function PlayerMovementHandler() {
     }
 
     if (isRunningLeftAndFacingLeft(isMovingLeft, isMovingRight, this.game.input.worldX, this.player.x)) {
-        this.player.animations.play('runLeft-faceLeft')
+        this.playerSprite.animations.play('runLeft-faceLeft')
     }
     else if (isRunningLeftAndFacingRight(isMovingLeft, isMovingRight, this.game.input.worldX, this.player.x)) {
-        this.player.animations.play('runLeft-faceRight')
+        this.playerSprite.animations.play('runLeft-faceRight')
     }
     else if (isRunningRightAndFacingLeft(isMovingLeft, isMovingRight, this.game.input.worldX, this.player.x)) {
-        this.player.animations.play('runRight-faceLeft')
+        this.playerSprite.animations.play('runRight-faceLeft')
     }
     else if (isRunningRightAndFacingRight(isMovingLeft, isMovingRight, this.game.input.worldX, this.player.x)) {
-        this.player.animations.play('runRight-faceRight')
+        this.playerSprite.animations.play('runRight-faceRight')
     }
 
     // Standing still and facing right
@@ -54,7 +54,7 @@ export default function PlayerMovementHandler() {
         (isNotMoving(isMovingLeft, isMovingRight) || this.game.input.activePointer.rightButton.isDown) &&
         this.game.input.worldX < this.player.x
     ) {
-        this.player.frame = GameConsts.STANDING_RIGHT_FRAME
+        this.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
     }
 
     // Standing still and facing left
@@ -62,7 +62,7 @@ export default function PlayerMovementHandler() {
         (isNotMoving(isMovingLeft, isMovingRight) || this.game.input.activePointer.rightButton.isDown) &&
         this.game.input.worldX > this.player.x
     ) {
-        this.player.frame = GameConsts.STANDING_LEFT_FRAME
+        this.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
     }
 
     // If the LEFT key is down, set the player velocity to move left
@@ -78,6 +78,6 @@ export default function PlayerMovementHandler() {
     // Stand still
     if (isNotMoving(isMovingLeft, isMovingRight)) {
         this.player.body.acceleration.x = 0
-        this.player.animations.stop()
+        this.playerSprite.animations.stop()
     }
 }

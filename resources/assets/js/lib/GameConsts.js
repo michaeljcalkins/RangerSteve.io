@@ -1,5 +1,5 @@
 const GameConsts = {
-    DEBUG: true,
+    DEBUG: false,
     STARTING_SFX_VOLUME: .1,
     STARTING_MUSIC_VOLUME: .2,
 
@@ -21,34 +21,34 @@ const GameConsts = {
     PLAYER_ANCHOR: 1,
     PLAYER_SPRITE_WIDTH: 35,
     PLAYER_SPRITE_HEIGHT: 35,
-    PLAYER_BODY_WIDTH: 130,
-    PLAYER_BODY_HEIGHT: 330,
+    PLAYER_BODY_WIDTH: 32,
+    PLAYER_BODY_HEIGHT: 60,
 
     PLAYER_BODY: {
         MUZZLE_FLASH_X: -72,
         MUZZLE_FLASH_Y: 102,
 
-        LEFT_JUMP_JET_X: 92,
-        LEFT_JUMP_JET_Y: -89,
+        LEFT_JUMP_JET_X: 25,
+        LEFT_JUMP_JET_Y: -15,
 
-        RIGHT_JUMP_JET_X: 92,
-        RIGHT_JUMP_JET_Y: 3
+        RIGHT_JUMP_JET_X: 25,
+        RIGHT_JUMP_JET_Y: -1
     },
 
     PLAYER_FACE: {
         LEFT: {
-            RIGHT_ARM_X: 8,
-            RIGHT_ARM_Y: -25,
+            RIGHT_ARM_X: 6,
+            RIGHT_ARM_Y: -14,
 
-            LEFT_ARM_X: -35,
-            LEFT_ARM_Y: -20
+            LEFT_ARM_X: -5,
+            LEFT_ARM_Y: -14
         },
         RIGHT: {
-            RIGHT_ARM_X: -10,
-            RIGHT_ARM_Y: -23,
+            RIGHT_ARM_X: -6,
+            RIGHT_ARM_Y: -14,
 
-            LEFT_ARM_X: 30,
-            LEFT_ARM_Y: -20
+            LEFT_ARM_X: 5,
+            LEFT_ARM_Y: -14
         }
     },
 
@@ -109,7 +109,8 @@ const GameConsts = {
         34: 'HALF_LEFT'
     },
 
-    PRIMARY_WEAPON_IDS: ['AK47', 'G43', 'M500', 'AUG', 'Skorpion', 'P90', 'M4A1', 'Barrett'],
+    // PRIMARY_WEAPON_IDS: ['AK47', 'G43', 'M500', 'AUG', 'Skorpion', 'P90', 'M4A1', 'Barrett'],
+    PRIMARY_WEAPON_IDS: ['AK47'],
     SECONDARY_WEAPON_IDS: ['DesertEagle', 'SilverBaller', 'RPG'],
 
     // Weapons
@@ -125,16 +126,16 @@ const GameConsts = {
             bulletSpeed: 2500,
             position: {
                 rotation: 80.20,
-                scale: 1.7,
+                scale: 0.65,
 
-                leftFaceX: -7,
-                leftFaceY: 30,
+                leftFaceX: -2,
+                leftFaceY: 5,
 
-                rightFaceX: -7,
-                rightFaceY: 19,
+                rightFaceX: 1,
+                rightFaceY: 5,
 
-                muzzleFlashX: 108,
-                muzzleFlashY: -75
+                muzzleFlashX: 55,
+                muzzleFlashY: -17
             }
         },
         G43: {
@@ -148,10 +149,10 @@ const GameConsts = {
             fireRate: 700,
             position: {
                 rotation: 80.20,
-                scale: 1.6,
+                scale: 0.25,
 
                 leftFaceX: -14,
-                leftFaceY: 61,
+                leftFaceY: 28,
 
                 rightFaceX: -5,
                 rightFaceY: 48,
@@ -172,7 +173,7 @@ const GameConsts = {
             fireRate: 1300,
             position: {
                 rotation: 80.20,
-                scale: 1.6,
+                scale: 0.3,
 
                 leftFaceX: -13,
                 leftFaceY: 34,
@@ -195,7 +196,7 @@ const GameConsts = {
             bulletSpeed: 2500,
             position: {
                 rotation: 80.20,
-                scale: 1.5,
+                scale: 0.4,
 
                 leftFaceX: 0,
                 leftFaceY: 48,
@@ -218,7 +219,7 @@ const GameConsts = {
             fireRate: 100,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
+                scale: 0.3,
 
                 leftFaceX: -7,
                 leftFaceY: -20,
@@ -241,7 +242,7 @@ const GameConsts = {
             fireRate: 120,
             position: {
                 rotation: 80.20,
-                scale: 1.6,
+                scale: 0.4,
 
                 leftFaceX: -7,
                 leftFaceY: 30,
@@ -264,7 +265,7 @@ const GameConsts = {
             fireRate: 120,
             position: {
                 rotation: 80.18,
-                scale: 1.65,
+                scale: 0.45,
 
                 leftFaceX: 10,
                 leftFaceY: 40,
@@ -287,7 +288,7 @@ const GameConsts = {
             fireRate: 2000,
             position: {
                 rotation: 80.20,
-                scale: 1.6,
+                scale: 0.4,
 
                 leftFaceX: 7,
                 leftFaceY: 35,
@@ -310,16 +311,16 @@ const GameConsts = {
             fireRate: 267,
             position: {
                 rotation: 80.15,
-                scale: 1.6,
+                scale: 0.5,
 
-                leftFaceX: -12,
-                leftFaceY: -20,
+                leftFaceX: -1,
+                leftFaceY: -5,
 
-                rightFaceX: 9,
-                rightFaceY: -29,
+                rightFaceX: 3,
+                rightFaceY: -3,
 
-                muzzleFlashX: 5,
-                muzzleFlashY: -75
+                muzzleFlashX: 19,
+                muzzleFlashY: -16
             }
         },
         SilverBaller: {
@@ -333,7 +334,7 @@ const GameConsts = {
             fireRate: 250,
             position: {
                 rotation: 80.15,
-                scale: 1.6,
+                scale: 0.4,
 
                 leftFaceX: -12,
                 leftFaceY: -20,
@@ -357,7 +358,7 @@ const GameConsts = {
             fireRate: 1000,
             position: {
                 rotation: 80.20,
-                scale: 1.7,
+                scale: 0.4,
 
                 leftFaceX: 33,
                 leftFaceY: 90,

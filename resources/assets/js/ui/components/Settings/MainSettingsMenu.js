@@ -91,7 +91,7 @@ export default class MainSettingsMenu extends React.Component {
 
         if (! primaryWeapon) return null
 
-        return <img src={ '/images/guns/' + primaryWeapon.image } />
+        return <img src={ '/images/guns/large/' + primaryWeapon.image } />
     }
 
     renderSecondaryWeaponImage() {
@@ -99,7 +99,7 @@ export default class MainSettingsMenu extends React.Component {
 
         if (! secondaryWeapon) return null
 
-        return <img src={ '/images/guns/' + secondaryWeapon.image } />
+        return <img src={ '/images/guns/large/' + secondaryWeapon.image } />
     }
 
     render() {

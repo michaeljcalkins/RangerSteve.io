@@ -15,7 +15,7 @@ export default function Preload() {
     this.load.spritesheet('muzzle-flash', '/images/muzzle-flash.png', 447, 271)
     this.load.spritesheet('jumpjet', '/images/jumpjet.png', 214, 418)
     this.load.spritesheet('blood', '/images/blood.png', 440, 256)
-    this.load.spritesheet('player', '/sprites/player.png', 127, 190)
+    this.load.spritesheet('player', '/sprites/player.png', 62, 62)
 
     this.load.atlas('rpgExplosion', '/sprites/rpgExplosion.png', '/sprites/rpgExplosion.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     this.load.atlas('ricochet', '/sprites/ricochet.png', '/sprites/ricochet.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
