@@ -52,10 +52,8 @@ export default class EndOfRoundLeaderboard extends React.Component {
                     ? player.meta.nickname
                     : 'Unnamed Ranger'
 
-                playerNickname = player.id === ('/#' + window.socket.id) ? '*' + playerNickname : playerNickname
-
                 return (
-                    <tr key={ key + 'leaderboard' }>
+                    <tr key={ key + 'leaderboard' } className={ classes }>
                         <td>
                             { playerNickname }
                         </td>
