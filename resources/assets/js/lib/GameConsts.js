@@ -38,17 +38,17 @@ const GameConsts = {
     PLAYER_FACE: {
         LEFT: {
             RIGHT_ARM_X: 6,
-            RIGHT_ARM_Y: -14,
+            RIGHT_ARM_Y: -17,
 
             LEFT_ARM_X: -5,
-            LEFT_ARM_Y: -14
+            LEFT_ARM_Y: -17
         },
         RIGHT: {
             RIGHT_ARM_X: -6,
-            RIGHT_ARM_Y: -14,
+            RIGHT_ARM_Y: -17,
 
             LEFT_ARM_X: 5,
-            LEFT_ARM_Y: -14
+            LEFT_ARM_Y: -17
         }
     },
 
@@ -109,8 +109,7 @@ const GameConsts = {
         34: 'HALF_LEFT'
     },
 
-    // PRIMARY_WEAPON_IDS: ['AK47', 'G43', 'M500', 'AUG', 'Skorpion', 'P90', 'M4A1', 'Barrett'],
-    PRIMARY_WEAPON_IDS: ['AK47'],
+    PRIMARY_WEAPON_IDS: ['AK47', 'G43', 'M500', 'AUG', 'Skorpion', 'P90', 'M4A1', 'Barrett'],
     SECONDARY_WEAPON_IDS: ['DesertEagle', 'SilverBaller', 'RPG'],
 
     // Weapons
@@ -124,16 +123,10 @@ const GameConsts = {
             name: 'AK-47',
             reloadTime: 2000,
             bulletSpeed: 2500,
+            frame: 18,
             position: {
                 rotation: 80.20,
                 scale: 0.65,
-
-                leftFaceX: -2,
-                leftFaceY: 5,
-
-                rightFaceX: 1,
-                rightFaceY: 5,
-
                 muzzleFlashX: 55,
                 muzzleFlashY: -17
             }
@@ -147,16 +140,10 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 55,
             fireRate: 700,
+            frame: 6,
             position: {
                 rotation: 80.20,
-                scale: 0.25,
-
-                leftFaceX: -14,
-                leftFaceY: 28,
-
-                rightFaceX: -5,
-                rightFaceY: 48,
-
+                scale: 0.5,
                 muzzleFlashX: 165,
                 muzzleFlashY: -76
             }
@@ -171,18 +158,12 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 22,
             fireRate: 1300,
+            frame: 2,
             position: {
                 rotation: 80.20,
-                scale: 0.3,
-
-                leftFaceX: -13,
-                leftFaceY: 34,
-
-                rightFaceX: 8,
-                rightFaceY: 24,
-
+                scale: 0.46,
                 muzzleFlashX: 122,
-                muzzleFlashY: -72
+                muzzleFlashY: 0
             }
         },
         AUG: {
@@ -194,16 +175,10 @@ const GameConsts = {
             damage: 15,
             fireRate: 140,
             bulletSpeed: 2500,
+            frame: 19,
             position: {
                 rotation: 80.20,
                 scale: 0.4,
-
-                leftFaceX: 0,
-                leftFaceY: 48,
-
-                rightFaceX: -14,
-                rightFaceY: 34,
-
                 muzzleFlashX: 112,
                 muzzleFlashY: -72
             }
@@ -217,16 +192,10 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 14,
             fireRate: 100,
+            frame: 16,
             position: {
                 rotation: 80.20,
                 scale: 0.3,
-
-                leftFaceX: -7,
-                leftFaceY: -20,
-
-                rightFaceX: -7,
-                rightFaceY: -30,
-
                 muzzleFlashX: 35,
                 muzzleFlashY: -75
             }
@@ -240,16 +209,10 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 17,
             fireRate: 120,
+            frame: 9,
             position: {
                 rotation: 80.20,
                 scale: 0.4,
-
-                leftFaceX: -7,
-                leftFaceY: 30,
-
-                rightFaceX: -7,
-                rightFaceY: 19,
-
                 muzzleFlashX: 71,
                 muzzleFlashY: -58
             }
@@ -263,16 +226,10 @@ const GameConsts = {
             bulletSpeed: 2600,
             damage: 19,
             fireRate: 120,
+            frame: 10,
             position: {
                 rotation: 80.18,
                 scale: 0.45,
-
-                leftFaceX: 10,
-                leftFaceY: 40,
-
-                rightFaceX: -10,
-                rightFaceY: 40,
-
                 muzzleFlashX: 100,
                 muzzleFlashY: -65
             }
@@ -286,16 +243,10 @@ const GameConsts = {
             bulletSpeed: 3435,
             damage: 80,
             fireRate: 2000,
+            frame: 15,
             position: {
                 rotation: 80.20,
                 scale: 0.4,
-
-                leftFaceX: 7,
-                leftFaceY: 35,
-
-                rightFaceX: -18,
-                rightFaceY: 17,
-
                 muzzleFlashX: 165,
                 muzzleFlashY: -65
             }
@@ -309,16 +260,10 @@ const GameConsts = {
             bulletSpeed: 2400,
             damage: 34,
             fireRate: 267,
+            frame: 17,
             position: {
                 rotation: 80.15,
                 scale: 0.5,
-
-                leftFaceX: -1,
-                leftFaceY: -5,
-
-                rightFaceX: 3,
-                rightFaceY: -3,
-
                 muzzleFlashX: 19,
                 muzzleFlashY: -16
             }
@@ -332,16 +277,10 @@ const GameConsts = {
             bulletSpeed: 2400,
             damage: 24,
             fireRate: 250,
+            frame: 8,
             position: {
                 rotation: 80.15,
                 scale: 0.4,
-
-                leftFaceX: -12,
-                leftFaceY: -20,
-
-                rightFaceX: 9,
-                rightFaceY: -29,
-
                 muzzleFlashX: 35,
                 muzzleFlashY: -80
             }
@@ -356,21 +295,17 @@ const GameConsts = {
             bulletSpeed: 2100,
             damage: 100,
             fireRate: 1000,
+            frame: 0,
             position: {
                 rotation: 80.20,
                 scale: 0.4,
-
-                leftFaceX: 33,
-                leftFaceY: 90,
-
-                rightFaceX: -50,
-                rightFaceY: 90,
-
                 muzzleFlashX: 172,
                 muzzleFlashY: -72
             }
         }
     }
 }
+
+window.GameConsts = GameConsts
 
 export default GameConsts

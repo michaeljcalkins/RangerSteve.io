@@ -3,7 +3,7 @@
 const util = require('util')
 const hri = require('human-readable-ids').hri
 const _ = require('lodash')
-const moment = require('moment-timezone')
+const moment = require('moment')
 
 const Player = require('./services/Player')
 const PlayerById = require('./services/PlayerById')
@@ -17,8 +17,6 @@ const RESPAWN_TIME_SECONDS = 5
 const ROUND_LENGTH_MINUTES = 5
 const PLAYER_FULL_HEALTH = 100
 const MAP_IDS = ['PunkFallout', 'HighRuleJungle', 'DarkForest', 'PunkCity', 'PunkLoop']
-
-moment.tz.setDefault('America/Los_Angeles')
 
 function init(ioInstance) {
     io = ioInstance

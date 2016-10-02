@@ -65,19 +65,7 @@ export default function() {
             ? store.getState().player.selectedPrimaryWeaponId
             : store.getState().player.selectedSecondaryWeaponId
 
-        this.currentWeaponSprite.loadTexture(currentWeaponId)
-        this.currentWeaponSprite.scale.setTo(GameConsts.WEAPONS[currentWeaponId].position.scale)
-        this.currentWeaponSprite.rotation = GameConsts.WEAPONS[currentWeaponId].position.rotation
-
-        if (store.getState().player.facing === 'left') {
-            this.currentWeaponSprite.x = GameConsts.WEAPONS[currentWeaponId].position.leftFaceX
-            this.currentWeaponSprite.y = GameConsts.WEAPONS[currentWeaponId].position.leftFaceY
-            this.currentWeaponSprite.scale.y *= -1
-        } else {
-            this.currentWeaponSprite.x = GameConsts.WEAPONS[currentWeaponId].position.rightFaceX
-            this.currentWeaponSprite.y = GameConsts.WEAPONS[currentWeaponId].position.rightFaceY
-        }
-
+        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
         this.muzzleFlash.x = GameConsts.WEAPONS[currentWeaponId].position.muzzleFlashX
         this.muzzleFlash.y = GameConsts.WEAPONS[currentWeaponId].position.muzzleFlashY
     })

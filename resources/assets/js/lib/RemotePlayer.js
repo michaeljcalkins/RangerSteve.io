@@ -48,17 +48,11 @@ export default function RemotePlayer(player) {
     newRemotePlayer.leftArmSprite.rotation = 80.16
     newRemotePlayer.leftArmGroup.add(newRemotePlayer.leftArmSprite)
 
-    // Current weapon
-    newRemotePlayer.currentWeaponSprite = this.game.add.sprite(0, 0, player.meta.weaponId)
-    newRemotePlayer.currentWeaponSprite.id = player.meta.weaponId
-    newRemotePlayer.currentWeaponSprite.scale.setTo(GameConsts.WEAPONS[player.meta.weaponId].position.scale)
-    newRemotePlayer.currentWeaponSprite.rotation = GameConsts.WEAPONS[player.meta.weaponId].position.rotation
-
     // Right arm
-    newRemotePlayer.rightArmGroup.add(newRemotePlayer.currentWeaponSprite)
-    newRemotePlayer.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm')
+    newRemotePlayer.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
     newRemotePlayer.rightArmSprite.anchor.setTo(.2, .24)
     newRemotePlayer.rightArmSprite.scale.setTo(1.7)
+    newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[player.meta.weaponId].frame
     newRemotePlayer.rightArmSprite.rotation = 80.1
     newRemotePlayer.rightArmGroup.add(newRemotePlayer.rightArmSprite)
 
@@ -83,7 +77,7 @@ export default function RemotePlayer(player) {
     newRemotePlayer.muzzleFlash.y = GameConsts.PLAYER_BODY.MUZZLE_FLASH_X
     newRemotePlayer.muzzleFlash.x = GameConsts.PLAYER_BODY.MUZZLE_FLASH_Y
     newRemotePlayer.muzzleFlash.visible = false
-    newRemotePlayer.currentWeaponSprite.addChild(newRemotePlayer.muzzleFlash)
+    newRemotePlayer.rightArmGroup.addChild(newRemotePlayer.muzzleFlash)
 
     newRemotePlayer.leftJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
     newRemotePlayer.leftJumpjet.anchor.setTo(0)

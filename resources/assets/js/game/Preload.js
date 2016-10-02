@@ -1,7 +1,4 @@
-import GameConsts from '../lib/GameConsts'
-
 export default function Preload() {
-    // Map
     this.load.image('ground', '/images/platform.png')
     this.load.image('bullet', '/images/bullet.png')
     this.load.image('leftHudBg', '/images/leftHudBg.png')
@@ -10,21 +7,17 @@ export default function Preload() {
     this.load.image('hudHealthIcon', '/images/icons/cross-24.png')
     this.load.image('hudAmmoIcon', '/images/icons/ammo-tin-24.png')
     this.load.image('hudGasIcon', '/images/icons/gas-24.png')
+    this.load.image('left-arm', '/images/body/left-arm.png')
 
     this.load.spritesheet('hurt-border', '/images/hurt-border.png')
     this.load.spritesheet('muzzle-flash', '/images/muzzle-flash.png', 447, 271)
     this.load.spritesheet('jumpjet', '/images/jumpjet.png', 214, 418)
     this.load.spritesheet('blood', '/images/blood.png', 440, 256)
     this.load.spritesheet('player', '/sprites/player.png', 62, 62)
+    this.load.spritesheet('right-arm-and-weapons', '/sprites/right-arm-and-weapons.png', 237, 69)
 
-    this.load.atlas('rpgExplosion', '/sprites/rpgExplosion.png', '/sprites/rpgExplosion.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-    this.load.atlas('ricochet', '/sprites/ricochet.png', '/sprites/ricochet.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-    this.load.atlas('player-body-parts', '/sprites/player-body-parts.png', '/sprites/player-body-parts.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-
-    // Weapons
-    Object.keys(GameConsts.WEAPONS).forEach((weaponId) => {
-        this.load.image(weaponId, '/images/guns/' + GameConsts.WEAPONS[weaponId].image)
-    })
+    this.load.atlas('rpgExplosion', '/sprites/rpgExplosion.png', '/sprites/rpgExplosion.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH)
+    this.load.atlas('ricochet', '/sprites/ricochet.png', '/sprites/ricochet.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH)
 
     this.load.audio('jumpjet', '/audio/jumpjet.mp3')
 

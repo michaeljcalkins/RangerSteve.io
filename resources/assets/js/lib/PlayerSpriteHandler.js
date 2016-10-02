@@ -90,30 +90,20 @@ export default function PlayerSpriteHandler() {
     this.game.store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[secondaryWeaponId]))
 
     // Left arm
-    this.leftArmSprite = this.game.add.sprite(0, 0, 'player-body-parts')
+    this.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
     this.leftArmSprite.anchor.setTo(.8, .2)
-    this.leftArmSprite.scale.setTo(.3)
+    this.leftArmSprite.scale.setTo(.37)
     this.leftArmSprite.rotation = 83
     this.leftArmSprite.animations.frame = 0
     this.leftArmSprite.scale.y *= -1
     this.leftArmGroup.add(this.leftArmSprite)
 
-    // Gun
-    this.currentWeaponSprite = this.game.add.sprite(
-        selectedPrimaryWeapon.position.spriteX,
-        selectedPrimaryWeapon.position.spriteY,
-        selectedPrimaryWeapon.id
-    )
-    this.currentWeaponSprite.scale.setTo(selectedPrimaryWeapon.position.scale)
-    this.currentWeaponSprite.rotation = selectedPrimaryWeapon.position.rotation
-
     // Right arm
-    this.rightArmGroup.add(this.currentWeaponSprite)
-    this.rightArmSprite = this.game.add.sprite(0, 0, 'player-body-parts')
-    this.rightArmSprite.anchor.setTo(.8, .2)
-    this.rightArmSprite.scale.setTo(.3)
+    this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
+    this.rightArmSprite.anchor.setTo(.71, .21)
+    this.rightArmSprite.scale.setTo(.37)
     this.rightArmSprite.rotation = 83.4
-    this.rightArmSprite.animations.frame = 2
+    this.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
     this.rightArmSprite.scale.y *= -1
     this.rightArmGroup.add(this.rightArmSprite)
 
@@ -123,6 +113,7 @@ export default function PlayerSpriteHandler() {
     this.leftArmGroup.x = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_X
     this.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
 
+    // So that the left arm is behind the player
     this.player.addChild(this.playerSprite)
 
     this.player.addChild(this.rightArmGroup)
@@ -132,17 +123,14 @@ export default function PlayerSpriteHandler() {
     this.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
 
     this.muzzleFlash = this.game.make.sprite(0, 0, 'muzzle-flash')
+    this.muzzleFlash.anchor.setTo(.5)
     this.muzzleFlash.scale.setTo(.15)
     this.muzzleFlash.animations.add('flash', [0,1,2,3,4,5], 20, true)
     this.muzzleFlash.animations.play('flash')
-    this.muzzleFlash.y = GameConsts.PLAYER_BODY.MUZZLE_FLASH_X
-    this.muzzleFlash.x = GameConsts.PLAYER_BODY.MUZZLE_FLASH_Y
-
     this.muzzleFlash.x = selectedPrimaryWeapon.position.muzzleFlashX
     this.muzzleFlash.y = selectedPrimaryWeapon.position.muzzleFlashY
-
     this.muzzleFlash.visible = false
-    this.currentWeaponSprite.addChild(this.muzzleFlash)
+    this.rightArmGroup.addChild(this.muzzleFlash)
 
     this.player.anchor.set(.5)
 

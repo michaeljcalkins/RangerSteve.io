@@ -5,7 +5,7 @@ import Render from './game/Render'
 import setEventHandlers from './lib/SocketEvents/setEventHandlers'
 
 export default function(store) {
-    const game = new Phaser.Game('100%', '100%', Phaser.CANVAS, 'ranger-steve-game', function() {
+    const game = new Phaser.Game('100%', '100%', Phaser.AUTO, 'ranger-steve-game', function() {
         this.game = game
         this.game.store = store
         this.preload = Preload

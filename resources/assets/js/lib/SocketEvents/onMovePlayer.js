@@ -69,23 +69,6 @@ export default function onMovePlayer(data) {
         }
     }
 
-    if (movePlayer.currentWeaponSprite.id !== data.weaponId) {
-        movePlayer.currentWeaponSprite.loadTexture(data.weaponId)
-        movePlayer.currentWeaponSprite.scale.setTo(GameConsts.WEAPONS[data.weaponId].position.scale)
-        movePlayer.currentWeaponSprite.rotation = GameConsts.WEAPONS[data.weaponId].position.rotation
-
-        if (movePlayer.facing === 'left') {
-            movePlayer.currentWeaponSprite.x = GameConsts.WEAPONS[data.weaponId].position.leftFaceX
-            movePlayer.currentWeaponSprite.y = GameConsts.WEAPONS[data.weaponId].position.leftFaceY
-            movePlayer.currentWeaponSprite.scale.y *= -1
-        } else {
-            movePlayer.currentWeaponSprite.x = GameConsts.WEAPONS[data.weaponId].position.rightFaceX
-            movePlayer.currentWeaponSprite.y = GameConsts.WEAPONS[data.weaponId].position.rightFaceY
-        }
-
-        movePlayer.currentWeaponSprite.id = data.weaponId
-    }
-
     movePlayer.lastPosition.x = movePlayer.x
     movePlayer.lastPosition.y = movePlayer.y
 }
