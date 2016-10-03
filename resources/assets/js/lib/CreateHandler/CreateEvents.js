@@ -66,7 +66,5 @@ export default function() {
             : store.getState().player.selectedSecondaryWeaponId
 
         this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
-        this.muzzleFlash.x = GameConsts.WEAPONS[currentWeaponId].position.muzzleFlashX
-        this.muzzleFlash.y = GameConsts.WEAPONS[currentWeaponId].position.muzzleFlashY
     })
 }

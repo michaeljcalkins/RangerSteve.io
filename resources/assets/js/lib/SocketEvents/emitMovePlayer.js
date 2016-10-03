@@ -8,7 +8,7 @@ const propTypes = {
     leftArmAngle: PropTypes.number.isRequired,
     facing: PropTypes.string.isRequired,
     flying: PropTypes.bool.isRequired,
-    shooting: PropTypes.bool.isRequired
+    // shooting: PropTypes.bool.isRequired
 }
 
 export default function(data) {

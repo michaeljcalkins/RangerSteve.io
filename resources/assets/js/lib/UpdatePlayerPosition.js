@@ -30,7 +30,7 @@ export default function() {
         leftArmAngle: this.leftArmGroup.angle,
         facing: state.player.facing,
         flying: this.rightJumpjet.visible && this.leftJumpjet.visible,
-        shooting: this.muzzleFlash.visible,
+        // shooting: this.muzzleFlashSprite.visible,
         weaponId: currentWeaponId
     }
 

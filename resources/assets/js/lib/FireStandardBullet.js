@@ -32,11 +32,11 @@ export default function FireStandardBullet(currentWeaponId) {
     bullet.rotation = pointerAngle
 
     // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
-    this.muzzleFlash.visible = true
+    this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
     clearTimeout(muzzleFlashHandler)
     muzzleFlashHandler = setTimeout(() => {
-        this.muzzleFlash.visible = false
-    }, 80)
+        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+    }, 60)
 
     // Shake camera for gun recoil
     this.camera.shake(0.0015, 100, true)

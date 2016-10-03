@@ -25,9 +25,6 @@ const GameConsts = {
     PLAYER_BODY_HEIGHT: 60,
 
     PLAYER_BODY: {
-        MUZZLE_FLASH_X: -72,
-        MUZZLE_FLASH_Y: 102,
-
         LEFT_JUMP_JET_X: 25,
         LEFT_JUMP_JET_Y: -15,
 
@@ -38,17 +35,17 @@ const GameConsts = {
     PLAYER_FACE: {
         LEFT: {
             RIGHT_ARM_X: 6,
-            RIGHT_ARM_Y: -17,
+            RIGHT_ARM_Y: -14,
 
             LEFT_ARM_X: -5,
-            LEFT_ARM_Y: -17
+            LEFT_ARM_Y: -14
         },
         RIGHT: {
             RIGHT_ARM_X: -6,
-            RIGHT_ARM_Y: -17,
+            RIGHT_ARM_Y: -14,
 
             LEFT_ARM_X: 5,
-            LEFT_ARM_Y: -17
+            LEFT_ARM_Y: -14
         }
     },
 
@@ -123,12 +120,13 @@ const GameConsts = {
             name: 'AK-47',
             reloadTime: 2000,
             bulletSpeed: 2500,
-            frame: 18,
+            frame: 17,
+            shootingFrame: 37,
             position: {
                 rotation: 80.20,
                 scale: 0.65,
-                muzzleFlashX: 55,
-                muzzleFlashY: -17
+                muzzleFlashX: 12,
+                muzzleFlashY: -49
             }
         },
         G43: {
@@ -296,6 +294,7 @@ const GameConsts = {
             damage: 100,
             fireRate: 1000,
             frame: 0,
+            shootingFrame: 20,
             position: {
                 rotation: 80.20,
                 scale: 0.4,

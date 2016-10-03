@@ -41,6 +41,7 @@ export default function() {
     this.enemies.physicsBodyType = Phaser.Physics.ARCADE
     this.physics.arcade.enable(this.enemies)
     this.game.physics.enable(this.enemies, Phaser.Physics.ARCADE)
+    this.jumpjetFx = this.game.add.audio('jumpjet')
 
     CreateMapAndPlayer.call(this)
     CreateEvents.call(this)

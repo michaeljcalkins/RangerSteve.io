@@ -43,7 +43,7 @@ export default function onMovePlayer(data) {
     movePlayer.leftJumpjet.visible = data.flying
 
     // Control muzzle flash visibility
-    movePlayer.muzzleFlash.visible = data.shooting
+    // movePlayer.muzzleFlash.visible = data.shooting
 
     // Update player angles
     movePlayer.rightArmGroup.angle = data.rightArmAngle

@@ -13,42 +13,34 @@ export default function PlayerSpriteHandler() {
     this.game.store.dispatch(actions.player.setPrimaryAmmoRemaining(selectedPrimaryWeapon.ammo))
     this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
 
-    this.jumpjetFx = this.game.add.audio('jumpjet')
     this.playerGroup = this.game.add.group()
     this.leftArmGroup = this.game.add.group()
     this.rightArmGroup = this.game.add.group()
 
     // Player
-    this.player = this.add.sprite(spawnPoint.x, spawnPoint.y)
+    this.player = this.game.add.sprite(spawnPoint.x, spawnPoint.y, 'player-placeholder')
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
-    //  We need to enable physics on the player
     this.physics.arcade.enable(this.player)
-    this.player.width = GameConsts.PLAYER_SPRITE_WIDTH
-    this.player.height = GameConsts.PLAYER_SPRITE_HEIGHT
-    this.player.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
     this.game.slopes.enable(this.player)
     this.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
 
-    const body = this.player.body
-    body.offset.setTo(0, -14)
-
     // Add a touch of tile padding for the collision detection
-    body.tilePadding.x = 1
-    body.tilePadding.y = 1
+    this.player.body.tilePadding.x = 1
+    this.player.body.tilePadding.y = 1
 
     // Set player minimum and maximum movement speed
-    body.maxVelocity.x = GameConsts.MAX_VELOCITY_X
-    body.maxVelocity.y = GameConsts.MAX_VELOCITY_Y
+    this.player.body.maxVelocity.x = GameConsts.MAX_VELOCITY_X
+    this.player.body.maxVelocity.y = GameConsts.MAX_VELOCITY_Y
 
     // Add drag to the player that slows them down when they are not accelerating
-    body.drag.x = GameConsts.SLOPE_FEATURES.dragX
-    body.drag.y = GameConsts.SLOPE_FEATURES.dragY
+    this.player.body.drag.x = GameConsts.SLOPE_FEATURES.dragX
+    this.player.body.drag.y = GameConsts.SLOPE_FEATURES.dragY
 
     // Update player body Arcade Slopes properties
-    body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
-    body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
-    body.slopes.preferY    = GameConsts.SLOPE_FEATURES.minimumOffsetY
+    this.player.body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
+    this.player.body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
+    this.player.body.slopes.preferY    = GameConsts.SLOPE_FEATURES.minimumOffsetY
 
     // Make player collide with world boundaries so he doesn't leave the stage
     this.player.body.collideWorldBounds = true
@@ -75,7 +67,9 @@ export default function PlayerSpriteHandler() {
     this.rightJumpjet.visible = false
     this.player.addChild(this.rightJumpjet)
 
-   // Player sprite
+    /**
+     * Player sprite
+     */
     this.playerSprite = this.add.sprite(0, 0, 'player')
     this.playerSprite.anchor.setTo(.5)
 
@@ -84,29 +78,21 @@ export default function PlayerSpriteHandler() {
     this.playerSprite.animations.add('runLeft-faceLeft', [7,8,9,10,11,12], GameConsts.ANIMATION_FRAMERATE, true)
     this.playerSprite.animations.add('runRight-faceLeft', [14,15,16,17,18,19], GameConsts.ANIMATION_FRAMERATE, true)
     this.playerSprite.animations.add('runLeft-faceRight', [21,22,23,24,25,26], GameConsts.ANIMATION_FRAMERATE, true)
-    // this.player.animations.add('death', GameConsts.ANIMATION_DEATH, 20, false)
 
     this.game.store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[primaryWeaponId]))
     this.game.store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[secondaryWeaponId]))
 
-    // Left arm
+    /**
+     * Left arm
+     */
     this.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
-    this.leftArmSprite.anchor.setTo(.8, .2)
-    this.leftArmSprite.scale.setTo(.37)
+    this.leftArmSprite.anchor.setTo(0.8, .2)
+    this.leftArmSprite.scale.setTo(0.2)
     this.leftArmSprite.rotation = 83
-    this.leftArmSprite.animations.frame = 0
     this.leftArmSprite.scale.y *= -1
     this.leftArmGroup.add(this.leftArmSprite)
 
-    // Right arm
-    this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
-    this.rightArmSprite.anchor.setTo(.71, .21)
-    this.rightArmSprite.scale.setTo(.37)
-    this.rightArmSprite.rotation = 83.4
-    this.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
-    this.rightArmSprite.scale.y *= -1
-    this.rightArmGroup.add(this.rightArmSprite)
-
+    // Add left arm to player as child then offset it
     this.player.addChild(this.leftArmGroup)
     this.leftArmGroup.pivot.x = 0
     this.leftArmGroup.pivot.y = 0
@@ -116,23 +102,24 @@ export default function PlayerSpriteHandler() {
     // So that the left arm is behind the player
     this.player.addChild(this.playerSprite)
 
+    /**
+     * Right arm
+     */
+    this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
+    this.rightArmSprite.anchor.setTo(0.62, 0.4)
+    this.rightArmSprite.scale.setTo(0.37)
+    this.rightArmSprite.rotation = 83.4
+    this.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
+    this.rightArmSprite.scale.y *= -1
+    this.rightArmGroup.add(this.rightArmSprite)
+
+    // Add right arm to player as child then offset it
     this.player.addChild(this.rightArmGroup)
     this.rightArmGroup.pivot.x = 0
     this.rightArmGroup.pivot.y = 0
     this.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
     this.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
-
-    this.muzzleFlash = this.game.make.sprite(0, 0, 'muzzle-flash')
-    this.muzzleFlash.anchor.setTo(.5)
-    this.muzzleFlash.scale.setTo(.15)
-    this.muzzleFlash.animations.add('flash', [0,1,2,3,4,5], 20, true)
-    this.muzzleFlash.animations.play('flash')
-    this.muzzleFlash.x = selectedPrimaryWeapon.position.muzzleFlashX
-    this.muzzleFlash.y = selectedPrimaryWeapon.position.muzzleFlashY
-    this.muzzleFlash.visible = false
-    this.rightArmGroup.addChild(this.muzzleFlash)
-
-    this.player.anchor.set(.5)
+    this.player.anchor.set(0.5)
 
     /**
      * Camera Settings
