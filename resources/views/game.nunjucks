@@ -49,10 +49,7 @@
     <div id="ui-app">
         <game-ui-container></game-ui-container>
     </div>
-    <audio loop>
-        <source src="/audio/ost.ogg" type="audio/ogg">
-        <source src="/audio/ost.mp3" type="audio/mpeg">
-    </audio>
+
     <script src="/js/jquery.min.js"></script>
     <script src="/js/lodash.min.js"></script>
     <script src="/js/phaser.min.js"></script>

@@ -178,19 +178,6 @@ export default class MainSettingsMenu extends React.Component {
                             />
                         </div>
                     </div>
-                    <div className="col-sm-6">
-                        <div className="form-group">
-                            <label>Music Volume</label>
-                            <input
-                                defaultValue={ this.state.musicVolume }
-                                max=".3"
-                                min="0"
-                                onChange={ this.handleMusicVolumeChange }
-                                step=".01"
-                                type="range"
-                            />
-                        </div>
-                    </div>
                 </div>
             </div>
         )
