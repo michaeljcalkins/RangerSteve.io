@@ -17,10 +17,11 @@ export default function PlayerSpriteHandler() {
     this.leftArmGroup = this.game.add.group()
     this.rightArmGroup = this.game.add.group()
 
-    // Player
+    // Player sprite
     this.player = this.game.add.sprite(spawnPoint.x, spawnPoint.y, 'player-placeholder')
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
+    // Physics
     this.physics.arcade.enable(this.player)
     this.game.slopes.enable(this.player)
     this.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
@@ -67,9 +68,7 @@ export default function PlayerSpriteHandler() {
     this.rightJumpjet.visible = false
     this.player.addChild(this.rightJumpjet)
 
-    /**
-     * Player sprite
-     */
+    // Player sprite
     this.playerSprite = this.add.sprite(0, 0, 'player')
     this.playerSprite.anchor.setTo(.5)
 
@@ -82,12 +81,10 @@ export default function PlayerSpriteHandler() {
     this.game.store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[primaryWeaponId]))
     this.game.store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[secondaryWeaponId]))
 
-    /**
-     * Left arm
-     */
+    // Left arm
     this.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
     this.leftArmSprite.anchor.setTo(0.8, .2)
-    this.leftArmSprite.scale.setTo(0.2)
+    this.leftArmSprite.scale.setTo(0.37)
     this.leftArmSprite.rotation = 83
     this.leftArmSprite.scale.y *= -1
     this.leftArmGroup.add(this.leftArmSprite)
@@ -102,9 +99,7 @@ export default function PlayerSpriteHandler() {
     // So that the left arm is behind the player
     this.player.addChild(this.playerSprite)
 
-    /**
-     * Right arm
-     */
+    // Right arm
     this.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
     this.rightArmSprite.anchor.setTo(0.62, 0.4)
     this.rightArmSprite.scale.setTo(0.37)

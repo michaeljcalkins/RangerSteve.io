@@ -10,9 +10,7 @@ const propTypes = {
 export default function RemotePlayer(player) {
     check(player, propTypes)
 
-    const newRemotePlayer = this.game.add.sprite(player.x, player.y)
-    newRemotePlayer.width = GameConsts.PLAYER_SPRITE_WIDTH
-    newRemotePlayer.height = GameConsts.PLAYER_SPRITE_HEIGHT
+    const newRemotePlayer = this.game.add.sprite(player.x, player.y, 'player-placeholder')
     newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     newRemotePlayer.facing = 'right'
     newRemotePlayer.alive = true
@@ -22,7 +20,7 @@ export default function RemotePlayer(player) {
         y: player.y
     }
 
-    //  We need to enable physics on the player
+    //  Physics
     this.physics.arcade.enable(newRemotePlayer)
     newRemotePlayer.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
     this.game.slopes.enable(newRemotePlayer)
@@ -61,7 +59,7 @@ export default function RemotePlayer(player) {
     newRemotePlayer.addChild(newRemotePlayer.rightJumpjet)
 
     // Player sprite
-    newRemotePlayer.playerSprite = this.game.add.sprite(player.x, player.y, 'player')
+    newRemotePlayer.playerSprite = this.game.add.sprite(0, 0, 'player')
     newRemotePlayer.playerSprite.anchor.setTo(0.5)
 
     //  Our two animations, walking left and right.
@@ -78,16 +76,7 @@ export default function RemotePlayer(player) {
     newRemotePlayer.leftArmSprite.scale.y *= -1
     newRemotePlayer.leftArmGroup.add(newRemotePlayer.leftArmSprite)
 
-    // Right arm
-    newRemotePlayer.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
-    newRemotePlayer.rightArmSprite.anchor.setTo(0.71, 0.21)
-    newRemotePlayer.rightArmSprite.scale.setTo(0.37)
-    newRemotePlayer.rightArmSprite.rotation = 83.4
-    newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[player.meta.weaponId].frame
-    newRemotePlayer.rightArmSprite.scale.y *= -1
-    newRemotePlayer.rightArmGroup.add(newRemotePlayer.rightArmSprite)
-
-    // Add left arm to player as child then offset it
+   // Add left arm to player as child then offset it
     newRemotePlayer.addChild(newRemotePlayer.leftArmGroup)
     newRemotePlayer.leftArmGroup.pivot.x = 0
     newRemotePlayer.leftArmGroup.pivot.y = 0
@@ -97,13 +86,21 @@ export default function RemotePlayer(player) {
     // So that the left arm is behind the player
     newRemotePlayer.addChild(newRemotePlayer.playerSprite)
 
+    // Right arm
+    newRemotePlayer.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
+    newRemotePlayer.rightArmSprite.anchor.setTo(0.62, 0.4)
+    newRemotePlayer.rightArmSprite.scale.setTo(0.37)
+    newRemotePlayer.rightArmSprite.rotation = 83.4
+    newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[player.meta.weaponId].frame
+    newRemotePlayer.rightArmSprite.scale.y *= -1
+    newRemotePlayer.rightArmGroup.add(newRemotePlayer.rightArmSprite)
+
     // Add right arm to player as child then offset it
     newRemotePlayer.addChild(newRemotePlayer.rightArmGroup)
     newRemotePlayer.rightArmGroup.pivot.x = 0
     newRemotePlayer.rightArmGroup.pivot.y = 0
     newRemotePlayer.rightArmGroup.x = GameConsts.PLAYER_BODY.RIGHT_ARM_X
     newRemotePlayer.rightArmGroup.y = GameConsts.PLAYER_BODY.RIGHT_ARM_Y
-
     newRemotePlayer.anchor.set(0.5)
 
     newRemotePlayer.meta = player.meta
