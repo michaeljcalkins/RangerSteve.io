@@ -1,8 +1,13 @@
 import _ from 'lodash'
 
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
+import GameConsts from '../lib/GameConsts'
 
 let lastPlayerData = {}
+
+function isPlayerShooting(weaponId, rightArmSprite) {
+    return GameConsts.WEAPONS[weaponId].shootingFrame === rightArmSprite.frame
+}
 
 export default function() {
     const state = this.game.store.getState()
@@ -30,7 +35,7 @@ export default function() {
         leftArmAngle: this.leftArmGroup.angle,
         facing: state.player.facing,
         flying: this.rightJumpjet.visible && this.leftJumpjet.visible,
-        // shooting: this.muzzleFlashSprite.visible,
+        shooting: isPlayerShooting(currentWeaponId, this.rightArmSprite),
         weaponId: currentWeaponId
     }
 

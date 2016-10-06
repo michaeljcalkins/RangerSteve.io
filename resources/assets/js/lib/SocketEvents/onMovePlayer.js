@@ -11,7 +11,12 @@ const propTypes = {
     leftArmAngle: PropTypes.number.isRequired,
     facing: PropTypes.string.isRequired,
     health: PropTypes.number.isRequired,
-    weaponId: PropTypes.string.isRequired
+    weaponId: PropTypes.string.isRequired,
+    shooting: PropTypes.bool.isRequired
+}
+
+function isNotMoving(movePlayer) {
+    return movePlayer.x === movePlayer.lastPosition.x && movePlayer.y === movePlayer.lastPosition.y
 }
 
 export default function onMovePlayer(data) {
@@ -42,8 +47,14 @@ export default function onMovePlayer(data) {
     movePlayer.rightJumpjet.visible = data.flying
     movePlayer.leftJumpjet.visible = data.flying
 
+    movePlayer.meta.weaponId = data.weaponId
+
     // Control muzzle flash visibility
-    // movePlayer.muzzleFlash.visible = data.shooting
+    if (data.shooting) {
+        movePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[movePlayer.meta.weaponId].shootingFrame
+    } else {
+        movePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[movePlayer.meta.weaponId].frame
+    }
 
     // Update player angles
     movePlayer.rightArmGroup.angle = data.rightArmAngle
@@ -55,18 +66,46 @@ export default function onMovePlayer(data) {
         playerFaceLeft(movePlayer)
     }
 
-    if (movePlayer.x > movePlayer.lastPosition.x && ! data.flying) {
-        movePlayer.animations.play('right')
-    } else if (movePlayer.x < movePlayer.lastPosition.x && ! data.flying) {
-        movePlayer.animations.play('left')
-    } else {
-        movePlayer.animations.stop()
+    if (
+        movePlayer.x > movePlayer.lastPosition.x &&
+        data.facing === 'right' &&
+        ! data.flying
+    ) {
+        movePlayer.playerSprite.animations.play('runRight-faceRight')
+    }
+    else if (
+        movePlayer.x < movePlayer.lastPosition.x &&
+        data.facing === 'left' &&
+        ! data.flying
+    ) {
+        movePlayer.playerSprite.animations.play('runLeft-faceLeft')
+    } else if (
+        movePlayer.x < movePlayer.lastPosition.x &&
+        data.facing === 'right' &&
+        ! data.flying
+    ) {
+        movePlayer.playerSprite.animations.play('runLeft-faceRight')
+    } else if (
+        movePlayer.x > movePlayer.lastPosition.x &&
+        data.facing === 'left' &&
+        ! data.flying
+    ) {
+        movePlayer.playerSprite.animations.play('runRight-faceLeft')
+    }
 
-        if (movePlayer.facing === 'right') {
-            movePlayer.frame = GameConsts.STANDING_RIGHT_FRAME
-        } else {
-            movePlayer.frame = GameConsts.STANDING_LEFT_FRAME
-        }
+    // Is the player moving
+    if (isNotMoving(movePlayer)) {
+        movePlayer.playerSprite.animations.stop()
+    }
+
+    // Standing still and facing right
+    if (isNotMoving(movePlayer) && movePlayer.facing === 'right') {
+        movePlayer.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
+    }
+
+    // Standing still and facing left
+    if (isNotMoving(movePlayer) && movePlayer.facing === 'left') {
+        movePlayer.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
     }
 
     movePlayer.lastPosition.x = movePlayer.x

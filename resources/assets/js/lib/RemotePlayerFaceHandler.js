@@ -1,29 +1,29 @@
+import GameConsts from './GameConsts'
+
 export function playerFaceLeft(remotePlayer) {
-    if (remotePlayer.facing !== 'left') {
-        remotePlayer.facing = 'left'
+    if (remotePlayer.facing === 'left') return
 
-        remotePlayer.rightArmGroup.x = 25
-        remotePlayer.rightArmGroup.y = -65
+    remotePlayer.facing = 'left'
 
-        remotePlayer.leftArmGroup.x = -40
-        remotePlayer.leftArmGroup.y = -70
+    remotePlayer.rightArmSprite.scale.y *= -1
+    remotePlayer.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
+    remotePlayer.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
 
-        remotePlayer.leftArmSprite.y = 5
-        remotePlayer.rightArmSprite.y = 10
-    }
+    remotePlayer.leftArmSprite.scale.y *= -1
+    remotePlayer.leftArmGroup.x = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_X
+    remotePlayer.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
 }
 
 export function playerFaceRight(remotePlayer) {
-    if (remotePlayer.facing !== 'right') {
-        remotePlayer.facing = 'right'
+    if (remotePlayer.facing === 'right') return
 
-        remotePlayer.rightArmGroup.x = -25
-        remotePlayer.rightArmGroup.y = -65
+    remotePlayer.facing = 'right'
 
-        remotePlayer.leftArmGroup.x = 45
-        remotePlayer.leftArmGroup.y = -70
+    remotePlayer.rightArmSprite.scale.y *= -1
+    remotePlayer.rightArmGroup.x = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_X
+    remotePlayer.rightArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_Y
 
-        remotePlayer.leftArmSprite.y = 0
-        remotePlayer.rightArmSprite.y = 0
-    }
+    remotePlayer.leftArmSprite.scale.y *= -1
+    remotePlayer.leftArmGroup.x = GameConsts.PLAYER_FACE.RIGHT.LEFT_ARM_X
+    remotePlayer.leftArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.LEFT_ARM_Y
 }
