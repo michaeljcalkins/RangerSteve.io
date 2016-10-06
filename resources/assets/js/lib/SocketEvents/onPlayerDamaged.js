@@ -1,6 +1,7 @@
 import { PropTypes } from 'react'
-import moment from 'moment'
+
 import actions from '../../actions'
+import PlayPlayerDeathAnimation from '../PlayPlayerDeathAnimation'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -68,6 +69,9 @@ export default function onPlayerDamaged(data) {
     if (store.getState().player.health <= 0) {
         this.rightArmGroup.visible = false
         this.leftArmGroup.visible = false
-        // this.player.animations.play('death')
+        PlayPlayerDeathAnimation.call(this, {
+            x: this.player.x,
+            y: this.player.y
+        })
     }
 }

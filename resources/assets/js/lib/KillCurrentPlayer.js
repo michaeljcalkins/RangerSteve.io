@@ -1,5 +1,6 @@
 import emitPlayerDamaged from './SocketEvents/emitPlayerDamaged'
 import actions from '../actions'
+import PlayPlayerDeathAnimation from './PlayPlayerDeathAnimation'
 
 export default function() {
     const store = this.game.store
@@ -19,5 +20,8 @@ export default function() {
         attackingPlayerId: null
     })
 
-    this.player.animations.play('death')
+    PlayPlayerDeathAnimation.call(this, {
+        x: this.player.x,
+        y: this.player.y
+    })
 }

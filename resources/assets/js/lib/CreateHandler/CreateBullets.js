@@ -13,6 +13,12 @@ export default function() {
         ricochet.animations.add('collision')
     })
 
+    this.playerDeaths = this.game.add.group()
+    this.playerDeaths.createMultiple(6, 'player-death')
+    this.playerDeaths.forEach((playerDeath) => {
+        playerDeath.animations.add('death')
+    })
+
     this.bullets = this.game.add.group()
     this.bullets.createMultiple(30, 'bullet')
     this.bullets.setAll('checkWorldBounds', true)
