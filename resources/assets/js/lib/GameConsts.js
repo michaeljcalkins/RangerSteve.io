@@ -106,8 +106,8 @@ const GameConsts = {
         34: 'HALF_LEFT'
     },
 
-    PRIMARY_WEAPON_IDS: ['AK47', 'G43', 'M500', 'AUG', 'Skorpion', 'P90', 'M4A1', 'Barrett'],
-    SECONDARY_WEAPON_IDS: ['DesertEagle', 'SilverBaller', 'RPG'],
+    PRIMARY_WEAPON_IDS: ['AK47', 'M4A1', 'Skorpion', 'P90', 'M500', 'Barrett'],
+    SECONDARY_WEAPON_IDS: ['DesertEagle', 'RPG'],
 
     // Weapons
     WEAPONS: {
@@ -156,6 +156,7 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 22,
             fireRate: 1300,
+            shootingFrame: 22,
             frame: 2,
             position: {
                 rotation: 80.20,
@@ -190,7 +191,8 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 14,
             fireRate: 100,
-            frame: 16,
+            shootingFrame: 35,
+            frame: 15,
             position: {
                 rotation: 80.20,
                 scale: 0.3,
@@ -207,6 +209,7 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 17,
             fireRate: 120,
+            shootingFrame: 29,
             frame: 9,
             position: {
                 rotation: 80.20,
@@ -224,6 +227,7 @@ const GameConsts = {
             bulletSpeed: 2600,
             damage: 19,
             fireRate: 120,
+            shootingFrame: 30,
             frame: 10,
             position: {
                 rotation: 80.18,
@@ -241,7 +245,8 @@ const GameConsts = {
             bulletSpeed: 3435,
             damage: 80,
             fireRate: 2000,
-            frame: 15,
+            shootingFrame: 39,
+            frame: 19,
             position: {
                 rotation: 80.20,
                 scale: 0.4,
@@ -258,6 +263,7 @@ const GameConsts = {
             bulletSpeed: 2400,
             damage: 34,
             fireRate: 267,
+            shootingFrame: 36,
             frame: 17,
             position: {
                 rotation: 80.15,
