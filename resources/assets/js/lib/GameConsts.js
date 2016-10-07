@@ -1,7 +1,6 @@
 const GameConsts = {
     DEBUG: false,
     STARTING_SFX_VOLUME: .1,
-    STARTING_MUSIC_VOLUME: .2,
 
     // Jump Jet
     JUMP_JET_SPEED: -1500,

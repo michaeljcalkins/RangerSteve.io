@@ -102,13 +102,6 @@ export const setSettingsView = (value) => {
     }
 }
 
-export const setMusicVolume = (value) => {
-    return {
-        type: 'SET_MUSIC_VOLUME',
-        value
-    }
-}
-
 export const setSfxVolume = (value) => {
     return {
         type: 'SET_SFX_VOLUME',

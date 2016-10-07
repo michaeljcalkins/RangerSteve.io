@@ -17,7 +17,6 @@ const mapDispatchToProps = (dispatch) => {
     const gameActions = bindActionCreators(actions.game, dispatch)
 
     return {
-        onSetMusicVolume: gameActions.setMusicVolume,
         onSetSfxVolume: gameActions.setSfxVolume,
         onSetNickname: playerActions.setNickname,
         onReduceToMaxChatMessages: gameActions.reduceToMaxChatMessages,
@@ -25,7 +24,6 @@ const mapDispatchToProps = (dispatch) => {
         onOpenSettingsModal: gameActions.openSettingsModal,
         onCloseChatModal: gameActions.closeChatModal,
         onOpenChatModal: gameActions.openChatModal,
-        onMusicVolumeChange: gameActions.setMusicVolume,
         onNicknameChange: playerActions.setNickname,
         onSfxVolumeChange: gameActions.setSfxVolume,
         onSettingsViewChange: gameActions.setSettingsModalView,
