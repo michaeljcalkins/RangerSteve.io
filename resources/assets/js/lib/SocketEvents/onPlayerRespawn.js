@@ -11,17 +11,15 @@ const propTypes = {
 }
 
 export default function onPlayerRespawn(data) {
-    check(data, propTypes)
-
     const state = this.game.store.getState()
     const store = this.game.store
     const currentWeapon = state.player.currentWeapon
 
     if (store.getState().game.state !== 'active') return
 
-    console.log('onPlayerRespawn', data.damagedPlayerId, ('/#' + window.socket.id))
+    console.log('onPlayerRespawn', data.damagedPlayerId, window.SOCKET_ID)
 
-    if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
+    if (data.damagedPlayerId !== window.SOCKET_ID) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (! enemyPlayer) return
         enemyPlayer.meta.health = 100

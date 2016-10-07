@@ -12,8 +12,6 @@ const propTypes = {
 }
 
 export default function onLoadGame(data) {
-    check(data, propTypes)
-
     const store = this.game.store
 
     if (store.getState().game.state !== 'loading') return

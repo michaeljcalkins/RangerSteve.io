@@ -9,8 +9,6 @@ const propTypes = {
 }
 
 export default function onPlayerKillLog(data) {
-    check(data, propTypes)
-
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
 

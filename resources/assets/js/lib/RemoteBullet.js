@@ -15,8 +15,6 @@ const propTypes = {
 }
 
 export default function RemoteBullet(data) {
-    check(data, propTypes)
-
     let bullet = this.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)
     bullet.bulletId = data.bulletId

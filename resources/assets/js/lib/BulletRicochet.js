@@ -6,8 +6,6 @@ const propTypes = {
 }
 
 export default function(data) {
-    check(data, propTypes)
-
     const ricochet = this.ricochets.getFirstExists(false)
     ricochet.reset(data.bulletX, data.bulletY)
     ricochet.scale.setTo(.1)

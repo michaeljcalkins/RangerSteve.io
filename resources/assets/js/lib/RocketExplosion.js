@@ -6,8 +6,6 @@ const propTypes = {
 }
 
 export default function(data) {
-    check(data, propTypes)
-
     let rpgExplosion = this.rpgExplosions.getFirstExists(false)
     rpgExplosion.reset(data.bulletX, data.bulletY - 50)
     rpgExplosion.scale.setTo(.7)

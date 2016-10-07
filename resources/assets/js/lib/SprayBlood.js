@@ -8,8 +8,6 @@ const propTypes = {
 }
 
 export default function(data) {
-    check(data, propTypes)
-
     let bloodY = data.bulletY
     let bloodX = data.playerX
     let bloodRotation = 0
