@@ -17,8 +17,6 @@ export default function onPlayerRespawn(data) {
 
     if (store.getState().game.state !== 'active') return
 
-    console.log('onPlayerRespawn', data.damagedPlayerId, window.SOCKET_ID)
-
     if (data.damagedPlayerId !== window.SOCKET_ID) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (! enemyPlayer) return
