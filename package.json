@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "postinstall": "gulp build --production",
+    "postinstall": "gulp build",
     "test": "NODE_ENV=test mocha tests/browser.js tests/ui/**/*.test.js tests/lib/**/*.test.js",
     "test-report": "NODE_ENV=test mocha --recursive -R xunit tests/browser.js tests/**/*.test.js > test-reports.xml",
     "test-watch": "nodemon --watch tests/ui/**/*.test.js --watch tests/lib/**/*.test.js --watch resources/assets/js/ui/**/*.js --watch resources/assets/js/lib/Percent.js -q -x 'npm test'"
