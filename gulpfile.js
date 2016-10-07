@@ -15,10 +15,12 @@ var gulp = require('gulp'),
     streamify = require('gulp-streamify'),
     obfuscator = require('gulp-js-obfuscator'),
     uglify = require('gulp-uglify'),
-    watchify = require('watchify'),
-    argv = require('yargs').argv
+    watchify = require('watchify')
 
-const isProduction = argv.production || false
+const config = {
+    env: process.env.NODE_ENV || 'production'
+}
+const isProduction = config.env === 'production'
 
 // ****************************************************
 // Directory Variables
@@ -58,17 +60,16 @@ gulp.task('buildcss', function () {
             sourceMappingURLPrefix: '/css'
         }))
         .pipe(gulp.dest(DIST + '/css'))
-        .pipe(gulpif(! isProduction, notify({ message: 'SCSS Complete.' })))
+        .on('end', function() {
+            console.log('CSS Compiled!')
+        })
 });
 
 gulp.task('buildjs', function() {
-    var opts = {
-        debug: true,
+    browserify({
         entries: SRC + 'js/app.js',
-        plugin: []
-    }
-
-    browserify(opts)
+        debug: !isProduction
+    })
         .transform("babelify", {
             global: true,
             ignore: /\/node_modules\//,
@@ -119,7 +120,9 @@ gulp.task('watchjs', function() {
             .on('error', handleError)
             .pipe(source('app.js'))
             .pipe(gulp.dest(DIST + 'js'))
-            .pipe(notify({ message: 'JS Compiled!' }))
+            .on('end', function() {
+                console.log('JS Compiled!')
+            })
     }
 
     bundler.on('update', rebundle)
