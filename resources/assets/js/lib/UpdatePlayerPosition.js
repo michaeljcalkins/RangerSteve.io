@@ -27,7 +27,7 @@ export default function() {
         : state.player.selectedSecondaryWeaponId
 
     let newPlayerData = {
-        id: ('/#' + window.socket.id),
+        id: window.socket.id,
         roomId: state.room.id,
         x: this.player.x,
         y: this.player.y,
