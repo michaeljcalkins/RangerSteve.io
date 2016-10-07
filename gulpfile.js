@@ -115,13 +115,9 @@ gulp.task('watchjs', function() {
         })
 
     var rebundle = function() {
-        var startDate = new Date();
-        console.log('Update start at ' + startDate.toLocaleString());
         return bundler.bundle()
             .on('error', handleError)
             .pipe(source('app.js'))
-            .pipe(gulpif(isProduction, streamify(uglify({ mangle: false }))))
-            .pipe(gulpif(isProduction, streamify(obfuscator())))
             .pipe(gulp.dest(DIST + 'js'))
             .pipe(notify({ message: 'JS Compiled!' }))
     }
