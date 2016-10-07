@@ -261,7 +261,7 @@ const GameConsts = {
             damage: 34,
             fireRate: 267,
             shootingFrame: 36,
-            frame: 17,
+            frame: 16,
             position: {
                 rotation: 80.15,
                 scale: 0.5,
