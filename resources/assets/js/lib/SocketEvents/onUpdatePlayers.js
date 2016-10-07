@@ -33,6 +33,8 @@ export default function onUpdatePlayers(data) {
     this.enemies = this.game.add.group()
 
     _.values(store.getState().room.players).forEach((player) => {
+        console.log(player.id, '/#' + window.socket.id)
+
         if (player.id === ('/#' + window.socket.id)) {
             store.dispatch(actions.player.setScore(player.meta.score))
             store.dispatch(actions.player.setHealth(player.meta.health))
