@@ -66,9 +66,9 @@ export default function onPlayerDamaged(data) {
         }, 5000)
     }
 
+    // Player has died
     if (store.getState().player.health <= 0) {
-        this.rightArmGroup.visible = false
-        this.leftArmGroup.visible = false
+        this.player.visible = false
         PlayPlayerDeathAnimation.call(this, {
             x: this.player.x,
             y: this.player.y
