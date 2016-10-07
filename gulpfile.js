@@ -58,7 +58,9 @@ gulp.task('buildcss', function () {
             sourceMappingURLPrefix: '/css'
         }))
         .pipe(gulp.dest(DIST + '/css'))
-        .pipe(gulpif(! isProduction, notify({ message: 'SCSS Complete.' })))
+        .on('end', function() {
+            console.log('CSS Compiled!')
+        })
 });
 
 gulp.task('buildjs', function() {
@@ -119,7 +121,9 @@ gulp.task('watchjs', function() {
             .on('error', handleError)
             .pipe(source('app.js'))
             .pipe(gulp.dest(DIST + 'js'))
-            .pipe(notify({ message: 'JS Compiled!' }))
+            .on('end', function() {
+                console.log('JS Compiled!')
+            })
     }
 
     bundler.on('update', rebundle)
