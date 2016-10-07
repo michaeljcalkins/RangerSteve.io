@@ -25,7 +25,7 @@ export default function HudLeaderboard({
 
     return (
         <div className="hud-leaderboard hud-item">
-            <h1>Leaderboard</h1>
+            <h1>Scoreboard</h1>
             <table className="table table-condensed">
                 <tbody>
                     { renderPlayers() }

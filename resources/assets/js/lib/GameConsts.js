@@ -10,9 +10,6 @@ const GameConsts = {
     JUMP_JET_DEAD_ZONE_FUEL: -185000,
 
     // Player Model
-    ANIMATION_LEFT: _.range(23, 28, 1),
-    ANIMATION_RIGHT: _.range(30, 35, 1),
-    ANIMATION_DEATH: _.range(0, 21, 1),
     ANIMATION_FRAMERATE: 10,
     STANDING_LEFT_FRAME: 6,
     STANDING_RIGHT_FRAME: 13,
