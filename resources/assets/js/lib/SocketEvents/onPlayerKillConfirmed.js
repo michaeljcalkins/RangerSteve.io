@@ -18,7 +18,8 @@ export default function onPlayerKillConfirmed(data) {
 
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
-    if (data.id !== ('/#' + window.socket.id)) return
+    console.log('onPlayerKillConfirmed', data.id, ('/#' + window.socket.id))
+    if (data.id !== window.socket.id) return
 
     store.dispatch(actions.player.setShowKillConfirmed(true))
     clearTimeout(killConfirmedHandle)

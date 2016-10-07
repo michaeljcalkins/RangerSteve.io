@@ -19,7 +19,9 @@ export default function onPlayerRespawn(data) {
 
     if (store.getState().game.state !== 'active') return
 
-    if (data.damagedPlayerId !== ('/#' + window.socket.id)) {
+    console.log('onPlayerRespawn', data.damagedPlayerId, ('/#' + window.socket.id))
+
+    if (data.damagedPlayerId !== window.socket.id) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (! enemyPlayer) return
         enemyPlayer.meta.health = 100

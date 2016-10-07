@@ -11,7 +11,8 @@ export default function onPlayerHealthUpdate(data) {
 
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
-    if (data.id !== ('/#' + window.socket.id)) return
+    console.log('onPlayerHealthUpdate', data.id, ('/#' + window.socket.id))
+    if (data.id !== window.socket.id) return
 
     store.dispatch(actions.player.setHealth(data.health))
 }
