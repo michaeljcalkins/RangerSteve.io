@@ -14,12 +14,10 @@ let killConfirmedHandle = null
 let lastKillingSpreeCount = 0
 
 export default function onPlayerKillConfirmed(data) {
-    check(data, propTypes)
-
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
-    console.log('onPlayerKillConfirmed', data.id, ('/#' + window.socket.id))
-    if (data.id !== ('/#' + window.socket.id)) return
+    console.log('onPlayerKillConfirmed', data.id, window.SOCKET_ID)
+    if (data.id !== window.SOCKET_ID) return
 
     store.dispatch(actions.player.setShowKillConfirmed(true))
     clearTimeout(killConfirmedHandle)

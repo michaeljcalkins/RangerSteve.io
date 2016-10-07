@@ -16,7 +16,7 @@ export default function() {
     emitPlayerDamaged.call(this, {
         roomId: store.getState().room.id,
         damage: 100,
-        damagedPlayerId: '/#' + window.socket.id,
+        damagedPlayerId: window.SOCKET_ID,
         attackingPlayerId: null
     })
 

@@ -20,12 +20,10 @@ function isNotMoving(movePlayer) {
 }
 
 export default function onMovePlayer(data) {
-    check(data, propTypes)
-
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
 
-    if (data.id === ('/#' + window.socket.id)) return
+    if (data.id === window.SOCKET_ID) return
 
     let movePlayer = PlayerById.call(this, data.id)
 

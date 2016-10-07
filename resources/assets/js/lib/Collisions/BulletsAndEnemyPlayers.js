@@ -30,7 +30,7 @@ export default function() {
             damage: state.player[currentWeapon].damage,
             weaponId: state.player[currentWeapon].id,
             damagedPlayerId: enemy.id,
-            attackingPlayerId: '/#' + window.socket.id
+            attackingPlayerId: window.SOCKET_ID
         })
     }, null, this)
 }

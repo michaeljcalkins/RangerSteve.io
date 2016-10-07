@@ -16,10 +16,7 @@ let healingInterval = null
 let lastKnownHealth = null
 
 export default function onPlayerDamaged(data) {
-    check(data, propTypes)
-
-    console.log('onPlayerDamaged', data.damagedPlayerId, ('/#' + window.socket.id))
-    if (data.damagedPlayerId !== ('/#' + window.socket.id)) return
+    if (data.damagedPlayerId !== window.SOCKET_ID) return
 
     const store = this.game.store
     if (store.getState().game.state !== 'active') return

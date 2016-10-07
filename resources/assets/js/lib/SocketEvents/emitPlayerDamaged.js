@@ -9,6 +9,5 @@ const propTypes = {
 }
 
 export default function(data) {
-    check(data, propTypes)
     window.socket.emit('player damaged', data)
 }

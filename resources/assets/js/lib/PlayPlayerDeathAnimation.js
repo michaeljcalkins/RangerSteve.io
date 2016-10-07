@@ -6,8 +6,6 @@ const propTypes = {
 }
 
 export default function(data) {
-    check(data, propTypes)
-
     const playerDeath = this.playerDeaths.getFirstExists(false)
     playerDeath.reset(data.x, data.y)
     playerDeath.scale.setTo(.31)

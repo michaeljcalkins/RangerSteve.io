@@ -16,12 +16,10 @@ const propTypes = {
 let soundThrottle = false
 
 export default function onBulletFired(data) {
-    check(data, propTypes)
-
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
 
-    if (data.id === ('/#' + window.socket.id)) return
+    if (data.id === window.SOCKET_ID) return
 
     let bullet = this.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)

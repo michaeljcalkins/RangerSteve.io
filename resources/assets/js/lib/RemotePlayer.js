@@ -8,8 +8,6 @@ const propTypes = {
 }
 
 export default function RemotePlayer(player) {
-    check(player, propTypes)
-
     const newRemotePlayer = this.game.add.sprite(player.x, player.y, 'player-placeholder')
     newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     newRemotePlayer.facing = 'right'
