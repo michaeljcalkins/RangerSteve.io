@@ -18,7 +18,7 @@ export default function FireStandardBullet(currentWeaponId) {
     nextFire = this.game.time.time + currentWeapon.fireRate
 
     let x = this.player.x
-    let y = this.player.y - 25
+    let y = this.player.y - 13
 
     let bullet = this.bullets.getFirstDead()
     bullet.bulletId = Guid()
