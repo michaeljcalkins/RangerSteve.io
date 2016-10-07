@@ -25,8 +25,8 @@ export default function FireStandardBullet(currentWeaponId) {
     bullet.damage = currentWeapon.damage
     bullet.weaponId = currentWeaponId
     bullet.alpha = 0
-    bullet.height = 3
-    bullet.width = 20
+    bullet.height = 2
+    bullet.width = 40
     bullet.reset(x, y)
     let pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
     bullet.rotation = pointerAngle

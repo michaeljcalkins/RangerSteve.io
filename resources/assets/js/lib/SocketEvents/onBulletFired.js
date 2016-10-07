@@ -20,7 +20,8 @@ export default function onBulletFired(data) {
 
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
-    if (data.id === window.socket.id) return
+
+    if (data.id === ('/#' + window.socket.id)) return
 
     let bullet = this.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)
