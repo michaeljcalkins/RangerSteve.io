@@ -6,6 +6,7 @@ import HudKillConfirmed from './Hud/HudKillConfirmed'
 import HudKillLog from './Hud/HudKillLog'
 import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
+import HudLeaderboard from './Hud/HudLeaderboard'
 import SettingsModal from './Settings/SettingsModal'
 import Leaderboard from './Leaderboard/Leaderboard'
 import RespawnModal from './Respawn/RespawnModal'
@@ -111,18 +112,19 @@ export default class GameUi extends React.Component {
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
                 <HudSettingsButton onButtonClick={ onOpenSettingsModal } />
+                <HudLeaderboard players={ room.players } />
                 <HudChatHistory
                     isOpen={ game.chatModalIsOpen }
                     messages={ game.chatMessages }
+                    newChatMessageCharacter={ +game.keyboardControls.newChatMessage }
                     onSendMessage={ this.handleSendMessage }
-                    newChatMessageCharacter={ game.keyboardControls.newChatMessage }
                 />
 
                 { (game.leaderboardModalIsOpen || this.props.room.state === 'ended') &&
                     <Leaderboard
-                        players={ this.props.room.players }
-                        room={ this.props.room }
-                        roundStartTime={ this.props.room.roundStartTime }
+                        players={ room.players }
+                        room={ room }
+                        roundStartTime={ room.roundStartTime }
                     />
                 }
 

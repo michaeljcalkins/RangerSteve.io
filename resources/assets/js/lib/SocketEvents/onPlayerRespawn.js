@@ -40,15 +40,13 @@ export default function onPlayerRespawn(data) {
     store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
 
     if (currentWeapon === 'primaryWeapon')
-        this.currentWeaponSprite.loadTexture(state.player.nextSelectedPrimaryWeaponId)
+        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
     else
-        this.currentWeaponSprite.loadTexture(state.player.nextSelectedSecondaryWeaponId)
+        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
 
     // Hide child groups
     this.leftArmGroup.visible = true
     this.rightArmGroup.visible = true
-    this.headGroup.visible = true
-    this.torsoGroup.visible = true
 
     store.dispatch(actions.player.setPrimaryIsReloading(false))
     store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))

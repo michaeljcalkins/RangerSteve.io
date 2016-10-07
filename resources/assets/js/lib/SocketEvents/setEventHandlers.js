@@ -9,7 +9,6 @@ import onPlayerHealthUpdate from './onPlayerHealthUpdate'
 import onPlayerKillConfirmed from './onPlayerKillConfirmed'
 import onMessageReceived from './onMessageReceived'
 import onPlayerKillLog from './onPlayerKillLog'
-import onKickPlayer from './onKickPlayer'
 import onLoadGame from './onLoadGame'
 
 export default function() {
@@ -28,6 +27,5 @@ export default function() {
     window.socket.on('message received', onMessageReceived.bind(this))
 
     window.socket.on('bullet fired', onBulletFired.bind(this))
-    window.socket.on('kick player', onKickPlayer.bind(this))
     window.socket.on('load game', onLoadGame.bind(this))
 }

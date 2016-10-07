@@ -47,7 +47,10 @@ export function createOverlays() {
 
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-    this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
+    let background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
+    // FireFox allows a max width of 4000px for this image
+    background.scale.y = 1.5
+    background.scale.x = 1.5
 
     this.groundSprite = this.add.sprite(0, WORLD_HEIGHT - 10, 'ground')
     this.groundSprite.alpha = 0

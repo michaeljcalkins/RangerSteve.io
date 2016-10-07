@@ -20,7 +20,7 @@
     padding: 10px;
     cursor: pointer;
     padding: 0;
-    right: 10px;
+    right: 240px;
     top: 10px;
     height: 36px;
     width: 36px;
@@ -78,14 +78,15 @@
 }
 
 .hud-leaderboard {
+    background: rgba(0, 0, 0, .4);
     font: 14px "Open Sans", Arial, sans-serif;
     font-size: 14px;
     line-height: 18px;
     height: auto;
     padding: 10px;
-    right: 0;
+    right: 10px;
     text-align: left;
-    top: 0;
+    top: 10px;
     width: 220px;
 
     table {
@@ -256,8 +257,7 @@
 
     tr.active-player {
         td {
-            background: white;
-            color: #333;
+            color: #f1c40f;
         }
     }
 

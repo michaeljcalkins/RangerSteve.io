@@ -18,25 +18,25 @@ export default function FireStandardBullet(currentWeaponId) {
     nextFire = this.game.time.time + currentWeapon.fireRate
 
     let x = this.player.x
-    let y = this.player.y - 10
+    let y = this.player.y - 25
 
     let bullet = this.bullets.getFirstDead()
     bullet.bulletId = Guid()
     bullet.damage = currentWeapon.damage
     bullet.weaponId = currentWeaponId
     bullet.alpha = 0
-    bullet.height = 2
-    bullet.width = 40
+    bullet.height = 3
+    bullet.width = 20
     bullet.reset(x, y)
     let pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
     bullet.rotation = pointerAngle
 
     // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
-    this.muzzleFlash.visible = true
+    this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
     clearTimeout(muzzleFlashHandler)
     muzzleFlashHandler = setTimeout(() => {
-        this.muzzleFlash.visible = false
-    }, 80)
+        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+    }, 60)
 
     // Shake camera for gun recoil
     this.camera.shake(0.0015, 100, true)

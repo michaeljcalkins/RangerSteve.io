@@ -1,6 +1,9 @@
 import moment from 'moment'
 import RemainingFuelPercent from '../lib/RemainingFuelPercent'
 
+const TEXT_Y_OFFSET = 39
+const ICON_Y_OFFSET = 34
+
 export default function() {
     const state = this.game.store.getState()
 
@@ -20,21 +23,21 @@ export default function() {
 
     // Health
     this.hudHealthText.x = 60
-    this.hudHealthText.y = this.camera.height - 34
+    this.hudHealthText.y = this.camera.height - TEXT_Y_OFFSET
     this.hudHealthText.fixedToCamera = true
 
     // Health Icon
     this.hudHealthIcon.x = 25
-    this.hudHealthIcon.y = this.camera.height - 34
+    this.hudHealthIcon.y = this.camera.height - ICON_Y_OFFSET
     this.hudHealthIcon.fixedToCamera = true
 
     // Ammo
     this.hudAmmoText.x = this.camera.width - 230
-    this.hudAmmoText.y = this.camera.height - 34
+    this.hudAmmoText.y = this.camera.height - TEXT_Y_OFFSET
     this.hudAmmoText.fixedToCamera = true
 
     this.hudAmmoIcon.x = this.camera.width - 270
-    this.hudAmmoIcon.y = this.camera.height - 34
+    this.hudAmmoIcon.y = this.camera.height - ICON_Y_OFFSET
     this.hudAmmoIcon.fixedToCamera = true
 
     // Jump Jet
@@ -43,11 +46,11 @@ export default function() {
     this.hudJumpJetBar.fixedToCamera = true
 
     this.hudJumpJetIcon.x = this.camera.width - 165
-    this.hudJumpJetIcon.y = this.camera.height - 34
+    this.hudJumpJetIcon.y = this.camera.height - ICON_Y_OFFSET
     this.hudJumpJetIcon.fixedToCamera = true
 
     // Timer
-    this.hudTimerText.y = this.camera.height - 34
+    this.hudTimerText.y = this.camera.height - TEXT_Y_OFFSET
     this.hudTimerText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
     this.hudTimerText.fixedToCamera = true
 

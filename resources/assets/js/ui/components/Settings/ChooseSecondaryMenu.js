@@ -23,7 +23,7 @@ export default function ChooseSecondaryMenu({
                     onClick={ handleSelectSecondaryClick.bind(this, weapon) }
                 >
                     <div>
-                        <img src={ '/images/guns/' + weapon.image } />
+                        <img src={ '/images/guns/large/' + weapon.image } />
                     </div>
                     <span className="option-name">{ weapon.name }</span>
                 </div>

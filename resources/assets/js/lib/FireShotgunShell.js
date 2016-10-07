@@ -27,6 +27,7 @@ export default function FireShotgunShell(currentWeaponId) {
         bullet.bulletId = Guid()
         bullet.damage = currentWeapon.damage
         bullet.weaponId = currentWeaponId
+        bullet.alpha = 0
         bullet.height = 2
         bullet.width = 40
         bullet.reset(x, y)
@@ -48,7 +49,7 @@ export default function FireShotgunShell(currentWeaponId) {
         // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
         setTimeout(function() {
             bullet.alpha = 1
-        }, 60)
+        }, 40)
 
         emitBulletFired.call(this, {
             roomId: state.room.id,
@@ -64,12 +65,11 @@ export default function FireShotgunShell(currentWeaponId) {
     }
 
     // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
-    this.muzzleFlash.visible = true
+    this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
     clearTimeout(muzzleFlashHandler)
     muzzleFlashHandler = setTimeout(() => {
-        this.muzzleFlash.visible = false
-    }, 80)
-
+        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+    }, 60)
 
     // Shake camera for gun recoil
     this.camera.shake(0.0015, 100, true)

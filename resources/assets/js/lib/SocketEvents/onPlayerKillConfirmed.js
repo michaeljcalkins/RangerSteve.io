@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 import actions from '../../actions'
 import PlayKillingSpreeSound from '../PlayKillingSpreeSound'
 import PlayerById from '../PlayerById'
-import GameConsts from '../GameConsts'
+import PlayPlayerDeathAnimation from '../PlayPlayerDeathAnimation'
 
 const propTypes = {
     id: PropTypes.string.isRequired,
@@ -12,7 +12,6 @@ const propTypes = {
 
 let killConfirmedHandle = null
 let lastKillingSpreeCount = 0
-let deathAnimations = {}
 
 export default function onPlayerKillConfirmed(data) {
     check(data, propTypes)
@@ -40,16 +39,11 @@ export default function onPlayerKillConfirmed(data) {
 
     // Play enemy death animation
     const movePlayer = PlayerById.call(this, data.damagedPlayerId)
-    if (movePlayer && movePlayer.meta.health && ! deathAnimations[movePlayer.id]) {
+    if (movePlayer && movePlayer.meta.health) {
         movePlayer.alpha = 0
-        let ricochet = this.add.sprite(movePlayer.x, movePlayer.y, 'commando')
-        ricochet.anchor.setTo(GameConsts.PLAYER_ANCHOR)
-        ricochet.height = 91
-        ricochet.width = 94
-        ricochet.animations.add('collision', GameConsts.ANIMATION_DEATH, 20, false, true)
-        ricochet.animations.play('collision')
-        setTimeout(() => {
-            ricochet.kill()
-        }, 5000)
+        PlayPlayerDeathAnimation.call(this, {
+            x: movePlayer.x,
+            y: movePlayer.y
+        })
     }
 }

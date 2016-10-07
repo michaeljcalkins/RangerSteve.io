@@ -10,17 +10,44 @@ const GameConsts = {
     JUMP_JET_DEAD_ZONE_FUEL: -185000,
 
     // Player Model
-    ANIMATION_LEFT: _.range(0, 5, 1),
-    ANIMATION_RIGHT: _.range(8, 13, 1),
-    ANIMATION_DEATH: _.range(14, 35, 1),
+    ANIMATION_LEFT: _.range(23, 28, 1),
+    ANIMATION_RIGHT: _.range(30, 35, 1),
+    ANIMATION_DEATH: _.range(0, 21, 1),
     ANIMATION_FRAMERATE: 10,
+    STANDING_LEFT_FRAME: 6,
+    STANDING_RIGHT_FRAME: 13,
     STARTING_PRIMARY_ID: 'AK47',
     STARTING_SECONDARY_ID: 'DesertEagle',
-    PLAYER_ANCHOR: .5,
-    PLAYER_SPRITE_WIDTH: 71,
-    PLAYER_SPRITE_HEIGHT: 68,
-    PLAYER_BODY_WIDTH: 105,
-    PLAYER_BODY_HEIGHT: 280,
+    PLAYER_ANCHOR: 1,
+    PLAYER_SPRITE_WIDTH: 35,
+    PLAYER_SPRITE_HEIGHT: 35,
+    PLAYER_BODY_WIDTH: 32,
+    PLAYER_BODY_HEIGHT: 60,
+
+    PLAYER_BODY: {
+        LEFT_JUMP_JET_X: 25,
+        LEFT_JUMP_JET_Y: -15,
+
+        RIGHT_JUMP_JET_X: 25,
+        RIGHT_JUMP_JET_Y: -1
+    },
+
+    PLAYER_FACE: {
+        LEFT: {
+            RIGHT_ARM_X: 6,
+            RIGHT_ARM_Y: -14,
+
+            LEFT_ARM_X: -5,
+            LEFT_ARM_Y: -14
+        },
+        RIGHT: {
+            RIGHT_ARM_X: -6,
+            RIGHT_ARM_Y: -14,
+
+            LEFT_ARM_X: 5,
+            LEFT_ARM_Y: -14
+        }
+    },
 
     // Physics
     MAX_VELOCITY_X: 500,
@@ -79,8 +106,8 @@ const GameConsts = {
         34: 'HALF_LEFT'
     },
 
-    PRIMARY_WEAPON_IDS: ['AK47', 'G43', 'M500', 'AUG', 'Skorpion', 'P90', 'M4A1', 'Barrett'],
-    SECONDARY_WEAPON_IDS: ['DesertEagle', 'SilverBaller', 'RPG'],
+    PRIMARY_WEAPON_IDS: ['AK47', 'M4A1', 'Skorpion', 'P90', 'M500', 'Barrett'],
+    SECONDARY_WEAPON_IDS: ['DesertEagle', 'RPG'],
 
     // Weapons
     WEAPONS: {
@@ -93,18 +120,13 @@ const GameConsts = {
             name: 'AK-47',
             reloadTime: 2000,
             bulletSpeed: 2500,
+            frame: 17,
+            shootingFrame: 37,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
-
-                leftFaceX: -7,
-                leftFaceY: 30,
-
-                rightFaceX: -7,
-                rightFaceY: 19,
-
-                muzzleFlashX: 102,
-                muzzleFlashY: -72
+                scale: 0.65,
+                muzzleFlashX: 12,
+                muzzleFlashY: -49
             }
         },
         G43: {
@@ -116,18 +138,12 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 55,
             fireRate: 700,
+            frame: 6,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
-
-                leftFaceX: -14,
-                leftFaceY: 61,
-
-                rightFaceX: -5,
-                rightFaceY: 48,
-
-                muzzleFlashX: 132,
-                muzzleFlashY: -72
+                scale: 0.5,
+                muzzleFlashX: 165,
+                muzzleFlashY: -76
             }
         },
         M500: {
@@ -140,18 +156,13 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 22,
             fireRate: 1300,
+            shootingFrame: 22,
+            frame: 2,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
-
-                leftFaceX: -13,
-                leftFaceY: 34,
-
-                rightFaceX: 8,
-                rightFaceY: 24,
-
-                muzzleFlashX: 102,
-                muzzleFlashY: -72
+                scale: 0.46,
+                muzzleFlashX: 122,
+                muzzleFlashY: 0
             }
         },
         AUG: {
@@ -163,17 +174,11 @@ const GameConsts = {
             damage: 15,
             fireRate: 140,
             bulletSpeed: 2500,
+            frame: 19,
             position: {
                 rotation: 80.20,
-                scale: 1.3,
-
-                leftFaceX: 0,
-                leftFaceY: 48,
-
-                rightFaceX: -14,
-                rightFaceY: 34,
-
-                muzzleFlashX: 102,
+                scale: 0.4,
+                muzzleFlashX: 112,
                 muzzleFlashY: -72
             }
         },
@@ -186,16 +191,11 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 14,
             fireRate: 100,
+            shootingFrame: 35,
+            frame: 15,
             position: {
                 rotation: 80.20,
-                scale: 1.2,
-
-                leftFaceX: -7,
-                leftFaceY: -20,
-
-                rightFaceX: -7,
-                rightFaceY: -30,
-
+                scale: 0.3,
                 muzzleFlashX: 35,
                 muzzleFlashY: -75
             }
@@ -209,16 +209,11 @@ const GameConsts = {
             bulletSpeed: 2500,
             damage: 17,
             fireRate: 120,
+            shootingFrame: 29,
+            frame: 9,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
-
-                leftFaceX: -7,
-                leftFaceY: 30,
-
-                rightFaceX: -7,
-                rightFaceY: 19,
-
+                scale: 0.4,
                 muzzleFlashX: 71,
                 muzzleFlashY: -58
             }
@@ -232,18 +227,13 @@ const GameConsts = {
             bulletSpeed: 2600,
             damage: 19,
             fireRate: 120,
+            shootingFrame: 30,
+            frame: 10,
             position: {
                 rotation: 80.18,
-                scale: 1.45,
-
-                leftFaceX: 10,
-                leftFaceY: 40,
-
-                rightFaceX: -10,
-                rightFaceY: 40,
-
-                muzzleFlashX: 102,
-                muzzleFlashY: -72
+                scale: 0.45,
+                muzzleFlashX: 100,
+                muzzleFlashY: -65
             }
         },
         Barrett: {
@@ -255,18 +245,13 @@ const GameConsts = {
             bulletSpeed: 3435,
             damage: 80,
             fireRate: 2000,
+            shootingFrame: 39,
+            frame: 19,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
-
-                leftFaceX: 7,
-                leftFaceY: 35,
-
-                rightFaceX: -18,
-                rightFaceY: 17,
-
-                muzzleFlashX: 162,
-                muzzleFlashY: -72
+                scale: 0.4,
+                muzzleFlashX: 165,
+                muzzleFlashY: -65
             }
         },
         DesertEagle: {
@@ -278,18 +263,13 @@ const GameConsts = {
             bulletSpeed: 2400,
             damage: 34,
             fireRate: 267,
+            shootingFrame: 36,
+            frame: 17,
             position: {
                 rotation: 80.15,
-                scale: 1.4,
-
-                leftFaceX: -12,
-                leftFaceY: -20,
-
-                rightFaceX: 9,
-                rightFaceY: -29,
-
-                muzzleFlashX: 5,
-                muzzleFlashY: -75
+                scale: 0.5,
+                muzzleFlashX: 19,
+                muzzleFlashY: -16
             }
         },
         SilverBaller: {
@@ -301,16 +281,10 @@ const GameConsts = {
             bulletSpeed: 2400,
             damage: 24,
             fireRate: 250,
+            frame: 8,
             position: {
                 rotation: 80.15,
-                scale: 1.4,
-
-                leftFaceX: -12,
-                leftFaceY: -20,
-
-                rightFaceX: 9,
-                rightFaceY: -29,
-
+                scale: 0.4,
                 muzzleFlashX: 35,
                 muzzleFlashY: -80
             }
@@ -321,25 +295,22 @@ const GameConsts = {
             image: 'Spr_RPG.png',
             ammo: 1,
             bulletType: 'rocket',
-            reloadTime: 500000,
+            reloadTime: 15000,
             bulletSpeed: 2100,
             damage: 100,
             fireRate: 1000,
+            frame: 0,
+            shootingFrame: 20,
             position: {
                 rotation: 80.20,
-                scale: 1.4,
-
-                leftFaceX: 33,
-                leftFaceY: 90,
-
-                rightFaceX: -50,
-                rightFaceY: 90,
-
+                scale: 0.4,
                 muzzleFlashX: 172,
                 muzzleFlashY: -72
             }
         }
     }
 }
+
+window.GameConsts = GameConsts
 
 export default GameConsts

@@ -91,7 +91,7 @@ export default class MainSettingsMenu extends React.Component {
 
         if (! primaryWeapon) return null
 
-        return <img src={ '/images/guns/' + primaryWeapon.image } />
+        return <img src={ '/images/guns/large/' + primaryWeapon.image } />
     }
 
     renderSecondaryWeaponImage() {
@@ -99,7 +99,7 @@ export default class MainSettingsMenu extends React.Component {
 
         if (! secondaryWeapon) return null
 
-        return <img src={ '/images/guns/' + secondaryWeapon.image } />
+        return <img src={ '/images/guns/large/' + secondaryWeapon.image } />
     }
 
     render() {
@@ -173,19 +173,6 @@ export default class MainSettingsMenu extends React.Component {
                                 max=".3"
                                 min="0"
                                 onChange={ this.handleSoundEffectVolumeChange }
-                                step=".01"
-                                type="range"
-                            />
-                        </div>
-                    </div>
-                    <div className="col-sm-6">
-                        <div className="form-group">
-                            <label>Music Volume</label>
-                            <input
-                                defaultValue={ this.state.musicVolume }
-                                max=".3"
-                                min="0"
-                                onChange={ this.handleMusicVolumeChange }
                                 step=".01"
                                 type="range"
                             />

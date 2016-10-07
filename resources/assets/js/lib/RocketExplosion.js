@@ -8,11 +8,11 @@ const propTypes = {
 export default function(data) {
     check(data, propTypes)
 
-    let ricochet = this.add.sprite(data.bulletX, data.bulletY - 50, 'rocket')
-    ricochet.scale.setTo(.5, .5)
-    ricochet.anchor.setTo(.5, .5)
-    ricochet.animations.add('collision', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14], 17, true)
-    ricochet.animations.play('collision', 17, false, true)
+    let rpgExplosion = this.rpgExplosions.getFirstExists(false)
+    rpgExplosion.reset(data.bulletX, data.bulletY - 50)
+    rpgExplosion.scale.setTo(.7)
+    rpgExplosion.anchor.setTo(.5, .5)
+    rpgExplosion.animations.play('collision', 17, false, true)
 
     this.camera.shake(0.01, 200, true)
 

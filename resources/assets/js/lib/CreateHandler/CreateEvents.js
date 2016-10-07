@@ -29,7 +29,6 @@ export default function() {
         if (isPrimarySelected) {
             store.dispatch(actions.player.setPrimaryIsReloading(true))
         } else {
-            if (store.getState().player.selectedSecondaryWeaponId === 'RPG') return
             store.dispatch(actions.player.setSecondaryIsReloading(true))
         }
 
@@ -66,20 +65,6 @@ export default function() {
             ? store.getState().player.selectedPrimaryWeaponId
             : store.getState().player.selectedSecondaryWeaponId
 
-        this.currentWeaponSprite.loadTexture(currentWeaponId)
-        this.currentWeaponSprite.scale.setTo(GameConsts.WEAPONS[currentWeaponId].position.scale)
-        this.currentWeaponSprite.rotation = GameConsts.WEAPONS[currentWeaponId].position.rotation
-
-        if (store.getState().player.facing === 'left') {
-            this.currentWeaponSprite.x = GameConsts.WEAPONS[currentWeaponId].position.leftFaceX
-            this.currentWeaponSprite.y = GameConsts.WEAPONS[currentWeaponId].position.leftFaceY
-            this.currentWeaponSprite.scale.y *= -1
-        } else {
-            this.currentWeaponSprite.x = GameConsts.WEAPONS[currentWeaponId].position.rightFaceX
-            this.currentWeaponSprite.y = GameConsts.WEAPONS[currentWeaponId].position.rightFaceY
-        }
-
-        this.muzzleFlash.x = GameConsts.WEAPONS[currentWeaponId].position.muzzleFlashX
-        this.muzzleFlash.y = GameConsts.WEAPONS[currentWeaponId].position.muzzleFlashY
+        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
     })
 }

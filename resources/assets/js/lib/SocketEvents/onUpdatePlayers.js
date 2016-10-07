@@ -42,14 +42,14 @@ export default function onUpdatePlayers(data) {
         let newRemotePlayer = RemotePlayer.call(this, player)
         let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unnamed Ranger'
 
-        let style = {
-            font: "50px Arial",
+        const style = {
+            font: "10px Arial",
             fill: "#fff",
             align: "center",
             stroke: "black",
-            strokeThickness: 7
+            strokeThickness: 2
         }
-        let text = this.game.add.text(0, -210, enemyPlayerName, style)
+        const text = this.game.add.text(0, -50, enemyPlayerName, style)
         newRemotePlayer.addChild(text)
         text.x = (text.width / 2) * -1
         text.smoothed = true
