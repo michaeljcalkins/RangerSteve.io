@@ -14,7 +14,6 @@ const initialState = {
         newChatMessage: storage.get('keyboardControl.newChatMessage', Phaser.Keyboard.T),
         reload: storage.get('keyboardControl.reload', Phaser.Keyboard.R)
     },
-    musicVolume: storage.get('musicVolume', GameConsts.STARTING_MUSIC_VOLUME),
     settingsModalIsOpen: !storage.has('nickname'),
     leaderboardModalIsOpen: false,
     settingsView: 'main',
@@ -131,12 +130,6 @@ const player = (state = initialState, action) => {
             return {
                 ...state,
                 settingsView: action.value
-            }
-
-        case 'SET_MUSIC_VOLUME':
-            return {
-                ...state,
-                musicVolume: action.value
             }
 
         case 'SET_SFX_VOLUME':

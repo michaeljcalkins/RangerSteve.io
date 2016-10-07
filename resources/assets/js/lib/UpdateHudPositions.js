@@ -86,8 +86,4 @@ export default function() {
     // Jump Jet HUD
     const widthPercent = RemainingFuelPercent(state.player.jumpJetCounter)
     this.hudJumpJetBar.width = widthPercent
-
-    if (this.audioPlayer) {
-        this.audioPlayer.volume = state.game.musicVolume
-    }
 }

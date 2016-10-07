@@ -15,7 +15,6 @@ export default function SettingsModal({
     onPrimaryGunClick,
     onSecondaryGunClick,
     onSfxVolumeChange,
-    onMusicVolumeChange,
     onKeyboardControlChange,
     onSetResetEventsFlag,
     player,
@@ -61,7 +60,6 @@ export default function SettingsModal({
             return (
                 <MainSettingsMenu
                     game={ game }
-                    onMusicVolumeChange={ onMusicVolumeChange }
                     onNicknameChange={ onNicknameChange }
                     onSfxVolumeChange={ onSfxVolumeChange }
                     onViewChange={ onViewChange }

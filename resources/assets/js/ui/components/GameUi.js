@@ -21,7 +21,6 @@ export default class GameUi extends React.Component {
         this.handleNicknameChange = this.handleNicknameChange.bind(this)
         this.handleSoundEffectVolumeChange = this.handleSoundEffectVolumeChange.bind(this)
         this.handleViewChange = this.handleViewChange.bind(this)
-        this.handleMusicVolumeChange = this.handleMusicVolumeChange.bind(this)
         this.handlePrimaryGunClick = this.handlePrimaryGunClick.bind(this)
         this.handleSecondaryGunClick = this.handleSecondaryGunClick.bind(this)
     }
@@ -74,11 +73,6 @@ export default class GameUi extends React.Component {
     handleSoundEffectVolumeChange(volume) {
         storage.set('sfxVolume', volume)
         this.props.onSfxVolumeChange(volume)
-    }
-
-    handleMusicVolumeChange(volume) {
-        storage.set('musicVolume', volume)
-        this.props.onMusicVolumeChange(volume)
     }
 
     handleViewChange(view) {
@@ -137,7 +131,6 @@ export default class GameUi extends React.Component {
                     isOpen={ game.settingsModalIsOpen }
                     onClose={ onCloseSettingsModal }
                     onKeyboardControlChange={ this.props.onKeyboardControlChange }
-                    onMusicVolumeChange={ this.handleMusicVolumeChange }
                     onNicknameChange={ this.handleNicknameChange }
                     onPrimaryGunClick={ this.handlePrimaryGunClick }
                     onSecondaryGunClick={ this.handleSecondaryGunClick }
@@ -156,7 +149,6 @@ GameUi.propTypes = {
     onCloseChatModal: PropTypes.func.isRequired,
     onCloseSettingsModal: PropTypes.func.isRequired,
     onKeyboardControlChange: PropTypes.func.isRequired,
-    onMusicVolumeChange: PropTypes.func.isRequired,
     onNicknameChange: PropTypes.func.isRequired,
     onOpenChatModal: PropTypes.func.isRequired,
     onOpenSettingsModal: PropTypes.func.isRequired,

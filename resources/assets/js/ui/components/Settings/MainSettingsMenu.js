@@ -9,8 +9,7 @@ export default class MainSettingsMenu extends React.Component {
 
         this.state = {
             nickname: props.player.nickname,
-            sfxVolume: props.game.sfxVolume,
-            musicVolume: props.game.musicVolume
+            sfxVolume: props.game.sfxVolume
         }
 
         this.handleNicknameChange = this.handleNicknameChange.bind(this)
@@ -21,7 +20,6 @@ export default class MainSettingsMenu extends React.Component {
         this.primaryWeapon = this.primaryWeapon.bind(this)
         this.secondaryWeapon = this.secondaryWeapon.bind(this)
         this.handleGenerateName = this.handleGenerateName.bind(this)
-        this.handleMusicVolumeChange = this.handleMusicVolumeChange.bind(this)
         this.renderPrimaryWeaponImage = this.renderPrimaryWeaponImage.bind(this)
         this.renderSecondaryWeaponImage = this.renderSecondaryWeaponImage.bind(this)
     }
@@ -38,10 +36,6 @@ export default class MainSettingsMenu extends React.Component {
         const nickname = evt.target.value.slice(0, 100)
         this.setState({ nickname })
         this.props.onNicknameChange(nickname)
-    }
-
-    handleMusicVolumeChange(evt) {
-        this.props.onMusicVolumeChange(Number(evt.target.value))
     }
 
     handleSoundEffectVolumeChange(evt) {
@@ -186,7 +180,6 @@ export default class MainSettingsMenu extends React.Component {
 
 MainSettingsMenu.propTypes = {
     game: PropTypes.object,
-    onMusicVolumeChange: PropTypes.func,
     onNicknameChange: PropTypes.func,
     onSoundEffectVolumeChange: PropTypes.func,
     onViewChange: PropTypes.func,

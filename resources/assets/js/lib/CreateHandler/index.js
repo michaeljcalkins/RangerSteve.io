@@ -4,7 +4,6 @@ import CreateEvents from './CreateEvents'
 import CreateHurtBorder from './CreateHurtBorder'
 import CreateMapAndPlayer from './CreateMapAndPlayer'
 import CreateBullets from './CreateBullets'
-import CreateMusic from './CreateMusic'
 import CreateDetectIdleUser from './CreateDetectIdleUser'
 import CreateKillingSpreeAudio from './CreateKillingSpreeAudio'
 import CreateUI from './CreateUI'
@@ -46,7 +45,6 @@ export default function() {
     CreateMapAndPlayer.call(this)
     CreateEvents.call(this)
     CreateHurtBorder.call(this)
-    CreateMusic.call(this)
     CreateKillingSpreeAudio.call(this)
     CreateDetectIdleUser()
     CreateBullets.call(this)
