@@ -189,6 +189,8 @@ function onNewPlayer (data) {
         score: 0,
         nickname: data.nickname,
         killingSpree: 0,
+        headshots: 0,
+        damageInflicted: 0,
         weaponId: data.weaponId
     }
 
@@ -396,6 +398,8 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.score += 10
             attackingPlayer.meta.kills++
             attackingPlayer.meta.killingSpree++
+            attackingPlayer.meta.damageInflicted += Number(data.damage)
+            if (data.wasHeadshot) attackingPlayer.meta.headshots++
 
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
@@ -404,7 +408,8 @@ function onPlayerDamaged(data) {
             io.to(data.roomId).emit('player kill confirmed', {
                 id: attackingPlayer.id,
                 damagedPlayerId: data.damagedPlayerId,
-                killingSpree: attackingPlayer.meta.killingSpree
+                killingSpree: attackingPlayer.meta.killingSpree,
+                wasHeadshot: data.wasHeadshot
             })
 
             io.to(data.roomId).emit('player kill log', {

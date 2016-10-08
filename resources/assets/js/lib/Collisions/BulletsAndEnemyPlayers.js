@@ -9,7 +9,15 @@ export default function() {
     this.game.physics.arcade.overlap(this.bullets, this.enemies, function(bullet, enemy) {
         if (enemy.meta.health <= 0) return
 
+        const yDiff = enemy.y - bullet.y
+        const headshotTolerance = 20
+        const wasHeadshot = yDiff > headshotTolerance
+
         bullet.kill()
+
+        const bulletDamage = wasHeadshot
+            ? state.player[currentWeapon].damage + 30
+            : state.player[currentWeapon].damage
 
         SprayBlood.call(this, {
             bulletY: bullet.y,
@@ -27,10 +35,11 @@ export default function() {
 
         emitPlayerDamaged.call(this, {
             roomId: state.room.id,
-            damage: state.player[currentWeapon].damage,
+            damage: bulletDamage,
             weaponId: state.player[currentWeapon].id,
             damagedPlayerId: enemy.id,
-            attackingPlayerId: window.SOCKET_ID
+            attackingPlayerId: window.SOCKET_ID,
+            wasHeadshot
         })
     }, null, this)
 }
