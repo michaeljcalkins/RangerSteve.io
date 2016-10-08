@@ -25,14 +25,11 @@ export default function Preload() {
     this.load.audio('AK47', '/audio/AK47.mp3')
     this.load.audio('M500', '/audio/M500.mp3')
     this.load.audio('Skorpion', '/audio/Skorpion.mp3')
-    this.load.audio('AUG', '/audio/AUG.mp3')
-    this.load.audio('G43', '/audio/G43.mp3')
     this.load.audio('P90', '/audio/P90.mp3')
     this.load.audio('M4A1', '/audio/M4A1.mp3')
     this.load.audio('Barrett', '/audio/BarrettM90.mp3')
 
     this.load.audio('DesertEagle', '/audio/DesertEagle.mp3')
-    this.load.audio('SilverBaller', '/audio/SilverBaller.mp3')
     this.load.audio('RPG', '/audio/RPG.mp3')
     this.load.audio('RPG-explosion-sound', '/audio/RPGExplosion.mp3')
 
