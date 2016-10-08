@@ -164,7 +164,7 @@ export default class MainSettingsMenu extends React.Component {
                             <label>Sound Effects Volume</label>
                             <input
                                 defaultValue={ this.state.sfxVolume }
-                                max=".3"
+                                max=".13"
                                 min="0"
                                 onChange={ this.handleSoundEffectVolumeChange }
                                 step=".01"

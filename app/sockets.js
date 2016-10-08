@@ -415,7 +415,8 @@ function onPlayerDamaged(data) {
             io.to(data.roomId).emit('player kill log', {
                 deadNickname: player.meta.nickname,
                 attackerNickname: attackingPlayer.meta.nickname,
-                weaponId: data.weaponId
+                weaponId: data.weaponId,
+                wasHeadshot: data.wasHeadshot
             })
         } else {
             if (player.meta.score >= 10) {

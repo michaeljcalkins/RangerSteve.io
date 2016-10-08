@@ -30,7 +30,8 @@ export default function onMovePlayer(data) {
     if (! movePlayer || (store.getState().room !== null && store.getState().room.state === 'ended')) return
 
     if (movePlayer.meta.health <= 0) {
-        return movePlayer.visible = false
+        movePlayer.visible = false
+        return
     }
 
     // Update player position
