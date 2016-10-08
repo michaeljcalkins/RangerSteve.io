@@ -296,7 +296,6 @@ function onMovePlayer (data) {
     movePlayer.rightArmAngle = data.rightArmAngle
     movePlayer.leftArmAngle = data.leftArmAngle
     movePlayer.facing = data.facing
-    movePlayer.lastMovement = Math.floor(Date.now() / 1000)
 
     // Broadcast updated position to connected socket clients
     io.to(data.roomId).emit('move player', {
@@ -308,7 +307,6 @@ function onMovePlayer (data) {
         facing: data.facing,
         flying: data.flying,
         shooting: data.shooting,
-        lastMovement: data.lastMovement,
         health: movePlayer.meta.health,
         weaponId: data.weaponId
     })
