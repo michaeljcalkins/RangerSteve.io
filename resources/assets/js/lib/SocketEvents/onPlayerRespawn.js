@@ -43,6 +43,8 @@ export default function onPlayerRespawn(data) {
         this.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
 
     this.player.visible = true
+    this.leftArmGroup.visible = true
+    this.rightArmGroup.visible = true
 
     store.dispatch(actions.player.setPrimaryIsReloading(false))
     store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))
