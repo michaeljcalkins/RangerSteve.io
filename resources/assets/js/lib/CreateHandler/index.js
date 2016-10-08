@@ -17,15 +17,6 @@ export default function() {
     this.game.stage.disableVisibilityChange = true
     this.game.scale.refresh()
 
-    // this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE
-    var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
-    this.scale.setUserScale(scale, scale)
-
-    window.onresize = () => {
-        var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
-        this.scale.setUserScale(scale, scale)
-    }
-
     // Enables advanced profiling features when debugging
     this.time.advancedTiming = true
 
@@ -50,10 +41,7 @@ export default function() {
     CreateBullets.call(this)
     CreateUI.call(this)
 
-    window.addEventListener('resize', () => {
-        this.hurtBorderSprite.width = window.innerWidth
-        this.hurtBorderSprite.height = window.innerHeight
-    })
+    console.log('Game initialized...')
 
     store.dispatch(actions.game.setState('active'))
 }

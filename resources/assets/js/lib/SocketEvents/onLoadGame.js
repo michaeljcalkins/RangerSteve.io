@@ -2,7 +2,6 @@ import actions from '../../actions'
 import CreateHandler from '../CreateHandler'
 import Maps from '../Maps'
 import { PropTypes } from 'react'
-import getParameterByName from '../GetParameterByName'
 
 const propTypes = {
     room: PropTypes.shape({
@@ -16,6 +15,8 @@ export default function onLoadGame(data) {
 
     if (store.getState().game.state !== 'loading') return
 
+    console.log('Loading game...')
+
     store.dispatch(actions.room.setRoom(data.room))
 
     mixpanel.time_event('map:' + store.getState().room.map)
@@ -23,6 +24,7 @@ export default function onLoadGame(data) {
     this.currentMap = store.getState().room.map
 
     this.load.onLoadComplete.add(() => {
+        console.log('Load complete, initializing game...')
         CreateHandler.call(this)
 
         window.socket.emit('load complete', {

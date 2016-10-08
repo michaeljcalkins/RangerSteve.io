@@ -9,6 +9,8 @@ export default function onSocketConnected() {
         mixpanel.track('player:joinedByRoomId')
     }
 
+    console.log('Connected to server...')
+
     window.socket.emit('new player', {
         roomId: getParameterByName('roomId'),
         map: getParameterByName('map'),
