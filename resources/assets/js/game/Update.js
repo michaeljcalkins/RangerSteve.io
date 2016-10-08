@@ -96,4 +96,7 @@ export default function Update() {
 
     UpdatePlayerPosition.call(this)
     UpdateHurtBorder.call(this)
+
+    this.hurtBorderSprite.width = window.innerWidth
+    this.hurtBorderSprite.height = window.innerHeight
 }
