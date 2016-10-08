@@ -38,7 +38,7 @@ export default function onPlayerKillConfirmed(data) {
     // Play enemy death animation
     const movePlayer = PlayerById.call(this, data.damagedPlayerId)
     if (movePlayer && movePlayer.meta.health) {
-        movePlayer.alpha = 0
+        movePlayer.visible = false
         PlayPlayerDeathAnimation.call(this, {
             x: movePlayer.x,
             y: movePlayer.y
