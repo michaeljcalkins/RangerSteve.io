@@ -92,7 +92,7 @@ export default class RespawnModal extends React.Component {
                 <div className="media-left">
                     <img
                         className="media-object"
-                        src={ '/images/guns/' + selectedWeapon.image }
+                        src={ '/images/guns/large/' + selectedWeapon.image }
                     />
                 </div>
                 <div className="media-body">
