@@ -10,8 +10,7 @@ export default function() {
     this.player.body.acceleration.y = 0
     store.dispatch(actions.player.setHealth(0))
 
-    this.leftArmGroup.visible = false
-    this.rightArmGroup.visible = false
+    this.player.visible = false
 
     emitPlayerDamaged.call(this, {
         roomId: store.getState().room.id,

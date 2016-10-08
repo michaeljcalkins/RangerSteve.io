@@ -21,6 +21,7 @@ export default function onPlayerRespawn(data) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (! enemyPlayer) return
         enemyPlayer.meta.health = 100
+        enemyPlayer.visible = true
         return
     }
 
@@ -43,8 +44,6 @@ export default function onPlayerRespawn(data) {
         this.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
 
     this.player.visible = true
-    this.leftArmGroup.visible = true
-    this.rightArmGroup.visible = true
 
     store.dispatch(actions.player.setPrimaryIsReloading(false))
     store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))

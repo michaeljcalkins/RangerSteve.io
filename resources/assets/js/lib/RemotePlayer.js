@@ -1,5 +1,7 @@
 import { PropTypes } from 'react'
+
 import GameConsts from './GameConsts'
+import { playerFaceRight, playerFaceLeft } from './RemotePlayerFaceHandler'
 
 const propTypes = {
     x: PropTypes.number.isRequired,
@@ -58,6 +60,7 @@ export default function RemotePlayer(player) {
     // Player sprite
     newRemotePlayer.playerSprite = this.game.add.sprite(0, 0, 'player')
     newRemotePlayer.playerSprite.anchor.setTo(0.5)
+    newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_RIGHT_FRAME
 
     //  Our two animations, walking left and right.
     newRemotePlayer.playerSprite.animations.add('runRight-faceRight', [0,1,2,3,4,5], GameConsts.ANIMATION_FRAMERATE, true)
@@ -77,6 +80,7 @@ export default function RemotePlayer(player) {
     newRemotePlayer.addChild(newRemotePlayer.leftArmGroup)
     newRemotePlayer.leftArmGroup.pivot.x = 0
     newRemotePlayer.leftArmGroup.pivot.y = 0
+    newRemotePlayer.leftArmGroup.angle = 93.67
     newRemotePlayer.leftArmGroup.x = GameConsts.PLAYER_BODY.LEFT_ARM_X
     newRemotePlayer.leftArmGroup.y = GameConsts.PLAYER_BODY.LEFT_ARM_Y
 
@@ -90,6 +94,7 @@ export default function RemotePlayer(player) {
     newRemotePlayer.rightArmSprite.rotation = 83.4
     newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[player.meta.weaponId].frame
     newRemotePlayer.rightArmSprite.scale.y *= -1
+    newRemotePlayer.rightArmGroup.angle = 87.67
     newRemotePlayer.rightArmGroup.add(newRemotePlayer.rightArmSprite)
 
     // Add right arm to player as child then offset it
@@ -98,9 +103,14 @@ export default function RemotePlayer(player) {
     newRemotePlayer.rightArmGroup.pivot.y = 0
     newRemotePlayer.rightArmGroup.x = GameConsts.PLAYER_BODY.RIGHT_ARM_X
     newRemotePlayer.rightArmGroup.y = GameConsts.PLAYER_BODY.RIGHT_ARM_Y
+
     newRemotePlayer.anchor.set(0.5)
 
     newRemotePlayer.meta = player.meta
+
+    playerFaceLeft(newRemotePlayer)
+    playerFaceRight(newRemotePlayer)
+    newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_LEFT_FRAME
 
     return newRemotePlayer
 }
