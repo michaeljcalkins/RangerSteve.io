@@ -36,10 +36,6 @@ export default function onBulletFired(data) {
     bullet.body.velocity.x += newVelocity.x
     bullet.body.velocity.y += newVelocity.y
 
-    if (data.weaponId === 'SilverBaller') {
-        bullet.alpha = 0
-    }
-
     let distanceBetweenBulletAndPlayer = Phaser.Math.distance(this.player.x, this.player.y, data.x, data.y)
     let enemyBulletVolume = distanceBetweenBulletAndPlayer > 0 ? 1 - (distanceBetweenBulletAndPlayer / 3000) : 0
 

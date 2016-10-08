@@ -109,7 +109,7 @@ const GameConsts = {
     WEAPONS: {
         AK47: {
             ammo: 30,
-            damage: 22,
+            damage: 14,
             fireRate: 140,
             id: 'AK47',
             image: 'Spr_AK47.png',
@@ -125,23 +125,6 @@ const GameConsts = {
                 muzzleFlashY: -49
             }
         },
-        G43: {
-            id: 'G43',
-            name: 'G43',
-            image: 'Spr_g43.png',
-            ammo: 10,
-            reloadTime: 2000,
-            bulletSpeed: 2500,
-            damage: 55,
-            fireRate: 700,
-            frame: 6,
-            position: {
-                rotation: 80.20,
-                scale: 0.5,
-                muzzleFlashX: 165,
-                muzzleFlashY: -76
-            }
-        },
         M500: {
             id: 'M500',
             name: 'M500',
@@ -150,7 +133,7 @@ const GameConsts = {
             ammo: 6,
             reloadTime: 3000,
             bulletSpeed: 2500,
-            damage: 22,
+            damage: 16,
             fireRate: 1300,
             shootingFrame: 22,
             frame: 2,
@@ -161,32 +144,15 @@ const GameConsts = {
                 muzzleFlashY: 0
             }
         },
-        AUG: {
-            id: 'AUG',
-            name: 'AUG',
-            image: 'Spr_Aug.png',
-            ammo: 30,
-            reloadTime: 2000,
-            damage: 15,
-            fireRate: 140,
-            bulletSpeed: 2500,
-            frame: 19,
-            position: {
-                rotation: 80.20,
-                scale: 0.4,
-                muzzleFlashX: 112,
-                muzzleFlashY: -72
-            }
-        },
         Skorpion: {
             id: 'Skorpion',
             name: 'Skorpion',
             image: 'Spr_Skorpion.png',
-            ammo: 20,
+            ammo: 10,
             reloadTime: 2000,
             bulletSpeed: 2500,
-            damage: 14,
-            fireRate: 100,
+            damage: 12,
+            fireRate: 80,
             shootingFrame: 35,
             frame: 15,
             position: {
@@ -201,9 +167,9 @@ const GameConsts = {
             name: 'P90',
             image: 'Spr_p90.png',
             ammo: 50,
-            reloadTime: 2000,
+            reloadTime: 2400,
             bulletSpeed: 2500,
-            damage: 17,
+            damage: 13,
             fireRate: 120,
             shootingFrame: 29,
             frame: 9,
@@ -221,7 +187,7 @@ const GameConsts = {
             ammo: 30,
             reloadTime: 2000,
             bulletSpeed: 2600,
-            damage: 19,
+            damage: 17,
             fireRate: 120,
             shootingFrame: 30,
             frame: 10,
@@ -257,7 +223,7 @@ const GameConsts = {
             ammo: 9,
             reloadTime: 2000,
             bulletSpeed: 2400,
-            damage: 34,
+            damage: 28,
             fireRate: 267,
             shootingFrame: 36,
             frame: 16,
@@ -266,23 +232,6 @@ const GameConsts = {
                 scale: 0.5,
                 muzzleFlashX: 19,
                 muzzleFlashY: -16
-            }
-        },
-        SilverBaller: {
-            id: 'SilverBaller',
-            name: 'Silenced Beretta',
-            image: 'Spr_SilverBaller.png',
-            ammo: 15,
-            reloadTime: 2000,
-            bulletSpeed: 2400,
-            damage: 24,
-            fireRate: 250,
-            frame: 8,
-            position: {
-                rotation: 80.15,
-                scale: 0.4,
-                muzzleFlashX: 35,
-                muzzleFlashY: -80
             }
         },
         RPG: {
