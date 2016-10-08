@@ -53,7 +53,7 @@ export default function onUpdatePlayers(data) {
         text.smoothed = true
 
         if (player.meta.health <= 0) {
-            newRemotePlayer.alpha = 0
+            newRemotePlayer.visible = false
         }
 
         this.enemies.add(newRemotePlayer)

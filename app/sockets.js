@@ -189,6 +189,8 @@ function onNewPlayer (data) {
         score: 0,
         nickname: data.nickname,
         killingSpree: 0,
+        headshots: 0,
+        damageInflicted: 0,
         weaponId: data.weaponId
     }
 
@@ -296,7 +298,6 @@ function onMovePlayer (data) {
     movePlayer.rightArmAngle = data.rightArmAngle
     movePlayer.leftArmAngle = data.leftArmAngle
     movePlayer.facing = data.facing
-    movePlayer.lastMovement = Math.floor(Date.now() / 1000)
 
     // Broadcast updated position to connected socket clients
     io.to(data.roomId).emit('move player', {
@@ -308,7 +309,6 @@ function onMovePlayer (data) {
         facing: data.facing,
         flying: data.flying,
         shooting: data.shooting,
-        lastMovement: data.lastMovement,
         health: movePlayer.meta.health,
         weaponId: data.weaponId
     })
@@ -398,6 +398,8 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.score += 10
             attackingPlayer.meta.kills++
             attackingPlayer.meta.killingSpree++
+            attackingPlayer.meta.damageInflicted += Number(data.damage)
+            if (data.wasHeadshot) attackingPlayer.meta.headshots++
 
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
@@ -406,7 +408,8 @@ function onPlayerDamaged(data) {
             io.to(data.roomId).emit('player kill confirmed', {
                 id: attackingPlayer.id,
                 damagedPlayerId: data.damagedPlayerId,
-                killingSpree: attackingPlayer.meta.killingSpree
+                killingSpree: attackingPlayer.meta.killingSpree,
+                wasHeadshot: data.wasHeadshot
             })
 
             io.to(data.roomId).emit('player kill log', {

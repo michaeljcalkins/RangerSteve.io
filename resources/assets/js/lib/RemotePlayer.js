@@ -22,7 +22,6 @@ export default function RemotePlayer(player) {
     this.physics.arcade.enable(newRemotePlayer)
     newRemotePlayer.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
     this.game.slopes.enable(newRemotePlayer)
-    newRemotePlayer.body.offset.setTo(0, -14)
 
     // This stops the effect of gravity on remote players
     newRemotePlayer.body.gravity.y = undefined

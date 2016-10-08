@@ -35,10 +35,16 @@ export default function onPlayerKillConfirmed(data) {
         store.dispatch(actions.player.setKillingSpreeCount(0))
     }, 3000)
 
+    // Play headshot soundeffect
+    if (data.wasHeadshot) {
+        this.headshotSound.volume = store.getState().game.sfxVolume
+        this.headshotSound.play()
+    }
+
     // Play enemy death animation
     const movePlayer = PlayerById.call(this, data.damagedPlayerId)
     if (movePlayer && movePlayer.meta.health) {
-        movePlayer.alpha = 0
+        movePlayer.visible = false
         PlayPlayerDeathAnimation.call(this, {
             x: movePlayer.x,
             y: movePlayer.y
