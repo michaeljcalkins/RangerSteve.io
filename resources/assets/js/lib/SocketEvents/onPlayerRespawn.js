@@ -4,6 +4,7 @@ import Maps from '../Maps'
 import PlayerById from '../PlayerById'
 import actions from '../../actions'
 import GameConsts from '../GameConsts.js'
+import CreateKeyboardBindings from '../Create/CreateKeyboardBindings'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -53,7 +54,8 @@ export default function onPlayerRespawn(data) {
 
     this.player.visible = true
     this.game.input.enabled = true
-    this.game.input.reset(true)
+    this.game.input.reset()
+    CreateKeyboardBindings.call(this)
 
     // Allow Phaser to move the player
     // so that the map doesn't

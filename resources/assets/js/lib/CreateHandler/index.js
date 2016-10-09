@@ -1,6 +1,6 @@
 import actions from '../../actions'
 import GameConsts from '../GameConsts'
-import CreateEvents from './CreateEvents'
+import CreateKeyboardBindings from './CreateKeyboardBindings'
 import CreateHurtBorder from './CreateHurtBorder'
 import CreateMapAndPlayer from './CreateMapAndPlayer'
 import CreateBullets from './CreateBullets'
@@ -36,7 +36,7 @@ export default function() {
     this.headshotSound = this.game.add.audio('headshot')
 
     CreateMapAndPlayer.call(this)
-    CreateEvents.call(this)
+    CreateKeyboardBindings.call(this)
     CreateHurtBorder.call(this)
     CreateKillingSpreeAudio.call(this)
     CreateDetectIdleUser()
