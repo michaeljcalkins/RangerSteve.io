@@ -13,6 +13,14 @@ export default function FireShotgunShell(currentWeaponId) {
     const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
     const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
 
+    if (
+        ! state.room.id ||
+        state.player.health <= 0 ||
+        state.room.state !== 'active' ||
+        this.game.time.time < nextFire ||
+        this.bullets.countDead() <= 0
+    ) return
+
     if (this.game.time.time < nextFire || this.bullets.countDead() <= 0)
         return
 
