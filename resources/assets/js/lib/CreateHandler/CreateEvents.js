@@ -26,6 +26,29 @@ export default function() {
             ? GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
             : GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
 
+
+            if (
+                isPrimarySelected &&
+                (
+                    // Is ammo full already
+                    GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo === store.getState().player.primaryAmmoRemaining ||
+                    // Is reloading already
+                    store.getState().player.isPrimaryReloading
+                )
+            )
+                return
+
+            if (
+                ! isPrimarySelected &&
+                (
+                    // Is ammo full already
+                    GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].ammo === store.getState().player.secondaryAmmoRemaining ||
+                    // Is reloading already
+                    store.getState().player.isSecondaryReloading
+                )
+            )
+                return
+
         if (isPrimarySelected) {
             store.dispatch(actions.player.setPrimaryIsReloading(true))
         } else {
