@@ -30,6 +30,7 @@ export default function onPlayerRespawn(data) {
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
 
+    this.game.input.enabled = true
     this.player.body.acceleration.x = 0
     this.player.body.acceleration.y = 0
 

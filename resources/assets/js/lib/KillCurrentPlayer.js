@@ -5,7 +5,7 @@ import PlayPlayerDeathAnimation from './PlayPlayerDeathAnimation'
 export default function() {
     const store = this.game.store
 
-    // this.game.input.enabled = false
+    this.game.input.enabled = false
     this.player.body.acceleration.x = 0
     this.player.body.acceleration.y = 0
     store.dispatch(actions.player.setHealth(0))
