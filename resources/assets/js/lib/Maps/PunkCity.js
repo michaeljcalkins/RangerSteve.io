@@ -34,10 +34,10 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/maps/punk-city/concrete_wall.png')
-    this.load.tilemap('tilemap', '/maps/punk-city/punk-city.json', null, Phaser.Tilemap.TILED_JSON)
-    this.load.spritesheet('tiles', '/maps/punk-city/tiles.png', 24, 24)
-    this.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
+    this.game.load.image('background', '/maps/punk-city/concrete_wall.png')
+    this.game.load.tilemap('tilemap', '/maps/punk-city/punk-city.json', null, Phaser.Tilemap.TILED_JSON)
+    this.game.load.spritesheet('tiles', '/maps/punk-city/tiles.png', 24, 24)
+    this.game.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
 }
 
 export function createOverlays() {

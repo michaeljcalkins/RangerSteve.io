@@ -26,9 +26,9 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/images/maps/dark-forest/background.jpg', true)
-    this.load.tilemap('tilemap', '/maps/dark-forest/dark-forest.json', null, Phaser.Tilemap.TILED_JSON);
-    this.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
+    this.game.load.image('background', '/images/maps/dark-forest/background.jpg', true)
+    this.game.load.tilemap('tilemap', '/maps/dark-forest/dark-forest.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
 }
 
 export function createOverlays() {

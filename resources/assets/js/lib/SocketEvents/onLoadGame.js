@@ -23,7 +23,7 @@ export default function onLoadGame(data) {
     Maps[store.getState().room.map].preload.call(this)
     this.currentMap = store.getState().room.map
 
-    this.load.onLoadComplete.add(() => {
+    this.game.load.onLoadComplete.add(() => {
         console.log('Load complete, initializing game...')
         CreateHandler.call(this)
 
@@ -36,5 +36,5 @@ export default function onLoadGame(data) {
         mixpanel.track('map:' + store.getState().room.map)
     }, 10000)
 
-    this.load.start()
+    this.game.load.start()
 }
