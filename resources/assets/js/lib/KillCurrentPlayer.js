@@ -5,7 +5,7 @@ export default function() {
     const store = this.game.store
 
     this.game.input.enabled = false
-    this.game.input.reset(true)
+    this.game.input.reset()
     this.player.body.acceleration.x = 0
     this.player.body.acceleration.y = 0
     this.player.body.velocity.x = 0
