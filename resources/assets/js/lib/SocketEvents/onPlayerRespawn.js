@@ -53,6 +53,7 @@ export default function onPlayerRespawn(data) {
 
     this.player.visible = true
     this.game.input.enabled = true
+    this.game.input.reset(true)
 
     // Allow Phaser to move the player
     // so that the map doesn't
