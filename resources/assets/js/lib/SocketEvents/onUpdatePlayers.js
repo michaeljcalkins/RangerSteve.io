@@ -68,7 +68,7 @@ export default function onUpdatePlayers(data) {
 
     // Round has restarted and the user will rejoin on a new map
     if (store.getState().room.state === 'active' && lastRoomState === 'ended') {
-        window.location.reload()
+        window.location.reload(true)
         return
     }
 
