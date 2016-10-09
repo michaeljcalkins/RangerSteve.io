@@ -8,6 +8,8 @@ export default function() {
     this.game.input.enabled = false
     this.player.body.acceleration.x = 0
     this.player.body.acceleration.y = 0
+    this.player.body.velocity.x = 0
+    this.player.body.velocity.y = 0
     store.dispatch(actions.player.setHealth(0))
 
     this.player.visible = false

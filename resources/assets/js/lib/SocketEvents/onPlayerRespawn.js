@@ -30,9 +30,10 @@ export default function onPlayerRespawn(data) {
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
 
-    this.game.input.enabled = true
     this.player.body.acceleration.x = 0
     this.player.body.acceleration.y = 0
+    this.player.body.velocity.x = 0
+    this.player.body.velocity.y = 0
 
     store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
     store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
@@ -44,13 +45,14 @@ export default function onPlayerRespawn(data) {
     else
         this.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
 
-    this.player.visible = true
-
     store.dispatch(actions.player.setPrimaryIsReloading(false))
     store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))
 
     store.dispatch(actions.player.setSecondaryIsReloading(false))
     store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].ammo))
+
+    this.player.visible = true
+    this.game.input.enabled = true
 
     // Allow Phaser to move the player
     // so that the map doesn't
