@@ -33,11 +33,11 @@ export function getRandomSpawnPoint() {
 }
 
 export function preload() {
-    this.load.image('background', '/images/maps/high-rule-jungle/background.jpg', true)
-    this.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png', true)
-    this.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png', true)
-    this.load.tilemap('tilemap', '/maps/high-rule-jungle/high-rule-jungle.json', null, Phaser.Tilemap.TILED_JSON);
-    this.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
+    this.game.load.image('background', '/images/maps/high-rule-jungle/background.jpg', true)
+    this.game.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png', true)
+    this.game.load.image('tower-rail', '/images/maps/high-rule-jungle/tower-rail.png', true)
+    this.game.load.tilemap('tilemap', '/maps/high-rule-jungle/high-rule-jungle.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
 }
 
 export function createOverlays() {
