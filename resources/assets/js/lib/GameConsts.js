@@ -186,9 +186,9 @@ const GameConsts = {
             image: 'Spr_M4A1.png',
             ammo: 30,
             reloadTime: 2000,
-            bulletSpeed: 2600,
-            damage: 17,
-            fireRate: 120,
+            bulletSpeed: 2500,
+            damage: 14,
+            fireRate: 140,
             shootingFrame: 30,
             frame: 10,
             position: {
