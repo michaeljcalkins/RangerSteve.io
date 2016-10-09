@@ -2,6 +2,7 @@ import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from './GameConsts'
 import actions from '../actions'
+import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 
 let muzzleFlashHandler = null
 let nextFire = null
@@ -70,4 +71,6 @@ export default function FireRocket(currentWeaponId) {
         bulletSpeed: currentWeapon.bulletSpeed,
         damage: currentWeapon.damage
     })
+
+    ReloadGunWhenEmpty.call(this, currentWeaponId)
 }

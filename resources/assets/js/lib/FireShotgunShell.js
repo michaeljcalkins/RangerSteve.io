@@ -2,6 +2,7 @@ import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from './GameConsts'
 import actions from '../actions'
+import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 
 const rangeOfVariance = _.range(-.12, .12, .01)
 let muzzleFlashHandler = null
@@ -91,36 +92,5 @@ export default function FireShotgunShell(currentWeaponId) {
         store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
     }
 
-    // Get ammo remaining in current gun
-    const currentAmmoRemaining = isPrimarySelected
-        ? store.getState().player.primaryAmmoRemaining
-        : store.getState().player.secondaryAmmoRemaining
-
-    if (
-        currentAmmoRemaining <= 0 &&
-        (
-            (isPrimarySelected && ! store.getState().player.isPrimaryReloading) ||
-            (! isPrimarySelected && ! store.getState().player.isSecondaryReloading)
-        )
-    ) {
-        // If empty set current gun to reloading
-        if (isPrimarySelected) {
-            store.dispatch(actions.player.setPrimaryIsReloading(true))
-        } else {
-            store.dispatch(actions.player.setSecondaryIsReloading(true))
-        }
-
-        // Get reload time in seconds
-        setTimeout(() => {
-            if (isPrimarySelected) {
-                store.dispatch(actions.player.setPrimaryIsReloading(false))
-                store.dispatch(actions.player.setPrimaryAmmoRemaining(currentWeapon.ammo))
-                return
-            }
-
-            store.dispatch(actions.player.setSecondaryIsReloading(false))
-            store.dispatch(actions.player.setSecondaryAmmoRemaining(currentWeapon.ammo))
-        }, currentWeapon.reloadTime)
-        return
-    }
+    ReloadGunWhenEmpty.call(this, currentWeaponId)
 }
