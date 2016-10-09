@@ -2,6 +2,7 @@ import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from './GameConsts'
 import actions from '../actions'
+import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 
 let muzzleFlashHandler = null
 let nextFire = null
@@ -72,36 +73,5 @@ export default function FireStandardBullet(currentWeaponId) {
         damage: currentWeapon.damage
     })
 
-    // Get ammo remaining in current gun
-    const currentAmmoRemaining = isPrimarySelected
-        ? store.getState().player.primaryAmmoRemaining
-        : store.getState().player.secondaryAmmoRemaining
-
-    if (
-        currentAmmoRemaining <= 0 &&
-        (
-            (isPrimarySelected && ! store.getState().player.isPrimaryReloading) ||
-            (! isPrimarySelected && ! store.getState().player.isSecondaryReloading)
-        )
-    ) {
-        // If empty set current gun to reloading
-        if (isPrimarySelected) {
-            store.dispatch(actions.player.setPrimaryIsReloading(true))
-        } else {
-            store.dispatch(actions.player.setSecondaryIsReloading(true))
-        }
-
-        // Get reload time in seconds
-        setTimeout(() => {
-            if (isPrimarySelected) {
-                store.dispatch(actions.player.setPrimaryIsReloading(false))
-                store.dispatch(actions.player.setPrimaryAmmoRemaining(currentWeapon.ammo))
-                return
-            }
-
-            store.dispatch(actions.player.setSecondaryIsReloading(false))
-            store.dispatch(actions.player.setSecondaryAmmoRemaining(currentWeapon.ammo))
-        }, currentWeapon.reloadTime)
-        return
-    }
+    ReloadGunWhenEmpty.call(this, currentWeaponId)
 }

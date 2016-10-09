@@ -8,7 +8,7 @@ export default function() {
     })
 
     this.ricochets = this.game.add.group()
-    this.ricochets.createMultiple(70, 'ricochet')
+    this.ricochets.createMultiple(100, 'ricochet')
     this.ricochets.forEach((ricochet) => {
         ricochet.animations.add('collision')
     })
@@ -20,7 +20,7 @@ export default function() {
     })
 
     this.bullets = this.game.add.group()
-    this.bullets.createMultiple(70, 'bullet')
+    this.bullets.createMultiple(100, 'bullet')
     this.bullets.setAll('checkWorldBounds', true)
     this.bullets.setAll('outOfBoundsKill', true)
 
@@ -50,7 +50,7 @@ export default function() {
 
     this.enemyBullets = this.game.add.group()
     this.enemyBullets.enableBody = true
-    this.enemyBullets.createMultiple(70, 'bullet')
+    this.enemyBullets.createMultiple(100, 'bullet')
     this.enemyBullets.setAll('checkWorldBounds', true)
     this.enemyBullets.setAll('outOfBoundsKill', true)
 
