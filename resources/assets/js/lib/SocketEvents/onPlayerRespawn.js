@@ -4,7 +4,7 @@ import Maps from '../Maps'
 import PlayerById from '../PlayerById'
 import actions from '../../actions'
 import GameConsts from '../GameConsts.js'
-import CreateKeyboardBindings from '../Create/CreateKeyboardBindings'
+import CreateKeyboardBindings from '../CreateHandler/CreateKeyboardBindings'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
