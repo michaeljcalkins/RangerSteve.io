@@ -12,8 +12,13 @@ export default function FireStandardBullet(currentWeaponId) {
     const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
     const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
 
-    if (this.game.time.time < nextFire || this.bullets.countDead() <= 0)
-        return
+    if (
+        ! state.room.id ||
+        state.player.health <= 0 ||
+        state.room.state !== 'active' ||
+        this.game.time.time < nextFire ||
+        this.bullets.countDead() <= 0
+    ) return
 
     nextFire = this.game.time.time + currentWeapon.fireRate
 

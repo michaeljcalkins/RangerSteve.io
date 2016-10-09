@@ -7,7 +7,12 @@ export default function() {
     const currentWeapon = state.player.currentWeapon
 
     this.game.physics.arcade.overlap(this.bullets, this.enemies, function(bullet, enemy) {
-        if (enemy.meta.health <= 0) return
+        if (
+            ! state.room.id ||
+            state.player.health <= 0 ||
+            state.room.state !== 'active' ||
+            enemy.meta.health <= 0
+        ) return
 
         const yDiff = enemy.y - bullet.y
         const headshotTolerance = 20
