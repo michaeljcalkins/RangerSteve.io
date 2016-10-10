@@ -16,7 +16,14 @@ let healingInterval = null
 let lastKnownHealth = null
 
 export default function onPlayerDamaged(data) {
-    if (data.damagedPlayerId !== window.SOCKET_ID) return
+    // When an enemy is killed play the death animation where they were.
+    if (data.damagedPlayerId !== window.SOCKET_ID) {
+        PlayPlayerDeathAnimation.call(this, {
+            x: data.playerX,
+            y: data.playerY
+        })
+        return
+    }
 
     const store = this.game.store
     if (store.getState().game.state !== 'active') return
