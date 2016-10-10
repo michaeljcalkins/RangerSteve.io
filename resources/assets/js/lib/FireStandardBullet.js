@@ -6,12 +6,20 @@ import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 
 let muzzleFlashHandler = null
 let nextFire = null
+let lastWeaponId = null
 
 export default function FireStandardBullet(currentWeaponId) {
     const store = this.game.store
     const state = store.getState()
     const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
     const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
+
+    // Reset the fire rate if the user switched to a new gun (i.e. Barrett to Desert Eagle)
+    nextFire = lastWeaponId === currentWeaponId
+        ? nextFire
+        : null
+
+    lastWeaponId = currentWeaponId
 
     if (
         ! state.room.id ||
