@@ -21,15 +21,15 @@ export default function() {
     this.game.time.advancedTiming = true
 
     // Start up Arcade Physics
-    this.physics.startSystem(Phaser.Physics.ARCADE)
+    this.game.physics.startSystem(Phaser.Physics.ARCADE)
     this.game.plugins.add(Phaser.Plugin.ArcadeSlopes)
-    this.physics.arcade.gravity.y = GameConsts.GRAVITY
+    this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
     // Enemy remote players
     this.enemies = this.game.add.group()
     this.enemies.enableBody = true
     this.enemies.physicsBodyType = Phaser.Physics.ARCADE
-    this.physics.arcade.enable(this.enemies)
+    this.game.physics.arcade.enable(this.enemies)
     this.game.physics.enable(this.enemies, Phaser.Physics.ARCADE)
 
     this.jumpjetFx = this.game.add.audio('jumpjet')

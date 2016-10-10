@@ -21,7 +21,7 @@ export default function RemotePlayer(player) {
     }
 
     //  Physics
-    this.physics.arcade.enable(newRemotePlayer)
+    this.game.physics.arcade.enable(newRemotePlayer)
     newRemotePlayer.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
     this.game.slopes.enable(newRemotePlayer)
 

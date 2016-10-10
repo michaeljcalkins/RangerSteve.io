@@ -2,7 +2,7 @@ import RocketExplosion from '../RocketExplosion'
 import BulletRicochet from '../BulletRicochet'
 
 export default function() {
-    this.physics.arcade.overlap(this.bullets, this.ground, function(bullet) {
+    this.game.physics.arcade.overlap(this.bullets, this.ground, function(bullet) {
         bullet.kill()
 
         if (bullet.weaponId === 'RPG') {

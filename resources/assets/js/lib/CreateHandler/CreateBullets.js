@@ -24,7 +24,7 @@ export default function() {
     this.bullets.setAll('checkWorldBounds', true)
     this.bullets.setAll('outOfBoundsKill', true)
 
-    this.physics.arcade.enable(this.bullets)
+    this.game.physics.arcade.enable(this.bullets)
     this.game.slopes.enable(this.bullets)
     this.bullets.forEach(function(bullet) {
         bullet.body.height = 15
@@ -54,7 +54,7 @@ export default function() {
     this.enemyBullets.setAll('checkWorldBounds', true)
     this.enemyBullets.setAll('outOfBoundsKill', true)
 
-    this.physics.arcade.enable(this.enemyBullets)
+    this.game.physics.arcade.enable(this.enemyBullets)
     this.enemyBullets.forEach(function(bullet) {
         bullet.body.height = 15
         bullet.body.width = 15
