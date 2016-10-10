@@ -18,7 +18,7 @@ export default function() {
     this.game.scale.refresh()
 
     // Enables advanced profiling features when debugging
-    this.time.advancedTiming = true
+    this.game.time.advancedTiming = true
 
     // Start up Arcade Physics
     this.physics.startSystem(Phaser.Physics.ARCADE)
