@@ -1,23 +1,28 @@
 import GameConsts from '../GameConsts'
 import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 
-const WORLD_WIDTH = 100 * 24
-const WORLD_HEIGHT = 75 * 24
+const WORLD_WIDTH = 100 * 32
+const WORLD_HEIGHT = 75 * 32
 
 const SPAWN_POINTS = [
-    { x: 600, y: 340 },
-    { x: 1110, y: 500 },
-    { x: 1850, y: 340 },
-    { x: 1310, y: 470 },
-    { x: 2070, y: 900 },
-    { x: 1200, y: 1130 },
-    { x: 270, y: 800 },
-    { x: 550, y: 1300 },
-    { x: 1880, y: 1280 },
-    { x: 1240, y: 1490 },
-    { x: 1680, y: 1660 },
-    { x: 660, y: 1660 },
-    { x: 430, y: 1500 },
+    { x: 600, y: 380 },
+    { x: 2760, y: 1030 },
+    { x: 1850, y: 160 },
+    { x: 1310, y: 160 },
+    { x: 2440, y: 390 },
+    { x: 1530, y: 585 },
+    { x: 425, y: 110 },
+    { x: 650, y: 2080 },
+    { x: 1230, y: 2080 },
+    { x: 1770, y: 2080 },
+    { x: 2300, y: 2080 },
+    { x: 2730, y: 2080 },
+    { x: 2380, y: 1640 },
+    { x: 1360, y: 1750 },
+    { x: 1700, y: 1750 },
+    { x: 1600, y: 1030 },
+    { x: 660, y: 1640 },
+    { x: 2730, y: 110 },
 ]
 
 export function getRandomSpawnPoint() {
@@ -27,8 +32,8 @@ export function getRandomSpawnPoint() {
 export function preload() {
     this.game.load.image('background', '/maps/punk-loop/background.png')
     this.game.load.tilemap('tilemap', '/maps/punk-loop/punk-loop.json', null, Phaser.Tilemap.TILED_JSON)
-    this.game.load.spritesheet('tiles', '/maps/punk-loop/tiles2.png', 24, 24)
-    this.game.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
+    this.game.load.spritesheet('tiles', '/maps/punk-loop/tiles.png', 24, 24)
+    this.game.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 24, 24)
 }
 
 export function createOverlays() {
@@ -37,12 +42,13 @@ export function createOverlays() {
 export function create() {
     this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
 
-    this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, "background")
+    this.background = this.game.add.sprite(0, 0, "background")
+    this.background.scale.setTo(3.4)
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
     this.map = this.add.tilemap('tilemap')
     this.map.addTilesetImage('tiles', 'tiles')
-    this.map.addTilesetImage('collision', 'ninja-tiles24')
+    this.map.addTilesetImage('collision', 'ninja-tiles32')
 
     // Create a TilemapLayer object from the collision layer of the map
     this.tiles = this.map.createLayer('tiles')
