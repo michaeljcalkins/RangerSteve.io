@@ -56,7 +56,7 @@ export function create() {
     this.groundSprite.alpha = 0
     this.groundSprite.width = WORLD_WIDTH
     this.groundSprite.height = 10
-    this.physics.arcade.enable(this.groundSprite)
+    this.game.physics.arcade.enable(this.groundSprite)
     this.game.physics.enable(this.groundSprite, Phaser.Physics.ARCADE)
     this.groundSprite.enableBody = true
     this.groundSprite.physicsBodyType = Phaser.Physics.ARCADE
@@ -90,7 +90,7 @@ export function update() {
 
     if (store.getState().player.health <= 0) return
 
-    this.physics.arcade.overlap(this.player, this.groundSprite, () => {
+    this.game.physics.arcade.overlap(this.player, this.groundSprite, () => {
         KillCurrentPlayer.call(this)
     })
 }

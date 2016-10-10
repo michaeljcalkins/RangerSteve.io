@@ -22,9 +22,9 @@ export default function PlayerSpriteHandler() {
     this.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
     // Physics
-    this.physics.arcade.enable(this.player)
+    this.game.physics.arcade.enable(this.player)
     this.game.slopes.enable(this.player)
-    this.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
+    this.game.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
 
     // Add a touch of tile padding for the collision detection
     this.player.body.tilePadding.x = 1
