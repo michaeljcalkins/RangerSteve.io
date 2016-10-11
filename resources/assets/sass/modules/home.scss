@@ -94,6 +94,17 @@ body.main {
     width: 560px;
 }
 
+.home-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+
+    a {
+        color: white;
+    }
+}
+
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
 

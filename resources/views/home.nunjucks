@@ -37,16 +37,16 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <span
                                         class="help-block pointer"
                                         style="margin: 0;"
                                         id="how-to-button"
                                     >
-                                        Learn how to play
+                                        How to play
                                     </span>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <a
                                         class="help-block"
                                         href="https://discord.gg/GqKgsmy"
@@ -54,16 +54,6 @@
                                         style="margin: 0;"
                                     >
                                         Join us on Discord!
-                                    </a>
-                                </div>
-                                <div class="col-sm-4">
-                                    <a
-                                        class="help-block"
-                                        href="https://github.com/michaeljcalkins/rangersteve-ideas/issues"
-                                        style="margin: 0;"
-                                        target="_blank"
-                                    >
-                                        Bugs and Ideas
                                     </a>
                                 </div>
                             </div>
@@ -93,12 +83,8 @@
                                     <td>Press W</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Move left</strong></td>
-                                    <td>Press A</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Move right</strong></td>
-                                    <td>Press D</td>
+                                    <td><strong>Move left and right</strong></td>
+                                    <td>Press A and D</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Reload</strong></td>
@@ -116,21 +102,26 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12" style="color: white;">
-                        <strong>
-                            <a href="https://www.facebook.com/rangerstevegame/" target="_blank" style="color: white;">Facebook</a>
-                            |
-                            <a href="https://twitter.com/michaeljcalkins" target="_blank" style="color: white;">Twitter</a>
-                            |
-                            <a href="/credits" style="color: white;">Credits</a>
-                        </strong>
-                    </div>
-                </div>
             </form>
         </div>
     </div>
 </section>
+
+<div class="row home-footer">
+    <div class="col-sm-12">
+        <strong>
+            <a href="https://www.facebook.com/rangerstevegame/" target="_blank">Facebook</a>
+            |
+            <a href="https://twitter.com/michaeljcalkins" target="_blank">Twitter</a>
+            |
+            <a href="/credits">Credits</a>
+            |
+            <a href="https://www.reddit.com/r/RangerSteveio" target="_blank">Reddit</a>
+            |
+            <a href="https://github.com/michaeljcalkins/rangersteve-ideas/issues" target="_blank">Bugs and Ideas</a>
+        </strong>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
