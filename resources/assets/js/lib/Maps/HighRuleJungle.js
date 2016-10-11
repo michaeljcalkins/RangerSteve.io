@@ -41,8 +41,8 @@ export function preload() {
 }
 
 export function createOverlays() {
-    this.bridge = this.add.sprite(1313, 1240, 'bridge')
-    this.towerRail = this.add.sprite(4230, 1140, 'tower-rail')
+    this.bridge = this.game.add.sprite(1313, 1240, 'bridge')
+    this.towerRail = this.game.add.sprite(4230, 1140, 'tower-rail')
 }
 
 export function create() {
@@ -52,7 +52,7 @@ export function create() {
     background.scale.y = 1.5
     background.scale.x = 1.5
 
-    this.groundSprite = this.add.sprite(0, WORLD_HEIGHT - 10, 'ground')
+    this.groundSprite = this.game.add.sprite(0, WORLD_HEIGHT - 10, 'ground')
     this.groundSprite.alpha = 0
     this.groundSprite.width = WORLD_WIDTH
     this.groundSprite.height = 10
@@ -64,7 +64,7 @@ export function create() {
     this.groundSprite.body.allowGravity = false
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
-    this.map = this.add.tilemap('tilemap')
+    this.map = this.game.add.tilemap('tilemap')
     this.map.addTilesetImage('collision', 'ninja-tiles24')
 
     // Create a TilemapLayer object from the collision layer of the map

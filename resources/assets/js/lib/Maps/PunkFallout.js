@@ -41,7 +41,7 @@ export function create() {
     this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
-    this.map = this.add.tilemap('tilemap')
+    this.map = this.game.add.tilemap('tilemap')
     this.map.addTilesetImage('collision', 'ninja-tiles24')
 
     // Create a TilemapLayer object from the collision layer of the map

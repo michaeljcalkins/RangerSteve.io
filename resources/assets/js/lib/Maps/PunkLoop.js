@@ -46,7 +46,7 @@ export function create() {
     this.background.scale.setTo(3.4)
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
-    this.map = this.add.tilemap('tilemap')
+    this.map = this.game.add.tilemap('tilemap')
     this.map.addTilesetImage('tiles', 'tiles')
     this.map.addTilesetImage('collision', 'ninja-tiles32')
 
