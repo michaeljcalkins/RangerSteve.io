@@ -44,7 +44,7 @@ export function createOverlays() {
 }
 
 export function create() {
-    this.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
+    this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
 
     this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, "background")
 
