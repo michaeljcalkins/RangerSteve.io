@@ -97,7 +97,8 @@ body.main {
 .home-footer {
     position: absolute;
     bottom: 10px;
-    left: 10px;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: white;
 
     a {
