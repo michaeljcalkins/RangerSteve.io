@@ -69,7 +69,7 @@ export default function PlayerSpriteHandler() {
     this.player.addChild(this.rightJumpjet)
 
     // Player sprite
-    this.playerSprite = this.add.sprite(0, 0, 'player')
+    this.playerSprite = this.game.add.sprite(0, 0, 'player')
     this.playerSprite.anchor.setTo(.5)
 
     //  Our two animations, walking left and right.
