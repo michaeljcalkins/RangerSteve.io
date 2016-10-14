@@ -5,12 +5,18 @@ import actions from '../actions'
 
 let jumpjetFxHandle = null
 
+function isJumpInputActive() {
+    const store = this.game.store
+    const userSelectedJumpKey = store.getState().game.keyboardControls.up
+    return upInputIsActive.call(this, 5, userSelectedJumpKey) || this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
+}
+
 export default function PlayerJumpHandler() {
     const store = this.game.store
     const onTheGround = this.player.body.touching.down
 
     // Jump!
-    if (upInputIsActive.call(this, 5, store.getState().game.keyboardControls.up) && onTheGround) {
+    if (isJumpInputActive.call(this) && onTheGround) {
         this.player.body.velocity.y = -GameConsts.SLOPE_FEATURES.jump
         store.dispatch(actions.player.setJumping(true))
     }

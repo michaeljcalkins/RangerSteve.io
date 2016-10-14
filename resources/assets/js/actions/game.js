@@ -46,6 +46,13 @@ export const removeKillLogMessage = (value) => {
     }
 }
 
+export const setChatMessages = (value) => {
+    return {
+        type: 'SET_CHAT_MESSAGES',
+        value
+    }
+}
+
 export const addChatMessage = (value) => {
     return {
         type: 'ADD_CHAT_MESSAGE',
