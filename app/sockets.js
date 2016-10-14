@@ -134,6 +134,7 @@ function onKickPlayer(data) {
 
 function onMessageSend(data) {
     rooms[data.roomId].messages.push(data)
+    rooms[data.roomId].messages = rooms[data.roomId].messages.slice(-5)
     io.to(data.roomId).emit('message received', data)
 }
 
