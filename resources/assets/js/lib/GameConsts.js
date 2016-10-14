@@ -118,7 +118,6 @@ const GameConsts = {
             bulletSpeed: 2500,
             frame: 17,
             shootingFrame: 37,
-            fireRateDescription: 'Fast',
             position: {
                 rotation: 80.20,
                 scale: 0.65,
@@ -138,7 +137,6 @@ const GameConsts = {
             fireRate: 1300,
             shootingFrame: 22,
             frame: 2,
-            fireRateDescription: 'Slow',
             position: {
                 rotation: 80.20,
                 scale: 0.46,
@@ -157,7 +155,6 @@ const GameConsts = {
             fireRate: 80,
             shootingFrame: 35,
             frame: 15,
-            fireRateDescription: 'Very Fast',
             position: {
                 rotation: 80.20,
                 scale: 0.3,
@@ -176,7 +173,6 @@ const GameConsts = {
             fireRate: 120,
             shootingFrame: 29,
             frame: 9,
-            fireRateDescription: 'Very Fast',
             position: {
                 rotation: 80.20,
                 scale: 0.4,
@@ -195,7 +191,6 @@ const GameConsts = {
             fireRate: 140,
             shootingFrame: 30,
             frame: 10,
-            fireRateDescription: 'Fast',
             position: {
                 rotation: 80.18,
                 scale: 0.45,
@@ -214,7 +209,6 @@ const GameConsts = {
             fireRate: 2000,
             shootingFrame: 39,
             frame: 19,
-            fireRateDescription: 'Very Slow',
             position: {
                 rotation: 80.20,
                 scale: 0.4,
@@ -233,7 +227,6 @@ const GameConsts = {
             fireRate: 267,
             shootingFrame: 36,
             frame: 16,
-            fireRateDescription: 'Fast',
             position: {
                 rotation: 80.15,
                 scale: 0.5,
@@ -253,7 +246,6 @@ const GameConsts = {
             fireRate: 1000,
             frame: 0,
             shootingFrame: 20,
-            fireRateDescription: 'Very Slow',
             position: {
                 rotation: 80.20,
                 scale: 0.4,

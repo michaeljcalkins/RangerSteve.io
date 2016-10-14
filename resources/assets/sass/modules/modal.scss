@@ -26,6 +26,18 @@
     }
 }
 
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.close {
+    position: absolute;
+    top: 44px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+}
+
 .modal-header {
     text-align: center;
     border: 0;
@@ -57,12 +69,6 @@
   background-color: darkgrey;
   outline: 1px solid slategrey;
   width: .5em;
-}
-
-.modal-close-btn {
-    position: absolute;
-    bottom: 50px;
-    left: 200px;
 }
 
 .modal-footer {
@@ -140,5 +146,129 @@
 
     .progress {
         margin-top: 5px;
+    }
+}
+
+.modal-leaderboard {
+    .modal-content {
+        background: url(/images/ui/panel/5.png) no-repeat top center;
+        width: 600px;
+        height: 583px;
+        margin: inherit;
+    }
+
+    .modal-title {
+        margin-top: -4px;
+    }
+
+    .winning-player {
+        background: url(/images/ui/panel/4.png) no-repeat center top;
+        background-size: 50%;
+        height: 190px;
+        width: 100%;
+
+        .player-image {
+            background: url(/images/ranger-steve.png) no-repeat 66% 66%;
+            background-size: 40%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .player-name {
+            font-size: 10px;
+            position: absolute;
+            bottom: 0;
+            left: 0; right: 0;
+            width: 100%;
+            font-family: "Keep Calm", Arial, sans-serif;
+            font-size: 14px;
+            text-align: center;
+            color: white;
+            text-shadow: 0 6px rgba(0,0,0,.1);
+            text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+        }
+    }
+
+    .player-achievement {
+        text-align: center;
+        width: 50%;
+        float: left;
+        margin: 0 0 32px;
+
+        img {
+            width: 36px;
+            margin: 0 0 10px;
+        }
+
+        h6 {
+            margin: 0 0 3px;
+            font-family: "Keep Calm", Arial, sans-serif;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        h4 {
+            font-family: "Keep Calm", Arial, sans-serif;
+            font-size: 13px;
+            margin: 0;
+        }
+    }
+
+    h1 {
+        font-family: "Keep Calm";
+        font-size: 26px;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 400;
+        letter-spacing: 2px;
+        margin: 10px 0 30px;
+    }
+
+    table {
+        background: #444;
+        margin-top: 10px;
+    }
+
+    th {
+        color: white;
+        font-size: 14px;
+        font-family: 'Open Sans', Arial;
+    }
+
+    tr {
+        color: white;
+
+        th {
+            text-align: right;
+        }
+
+        th:first-child {
+            text-align: left;
+        }
+    }
+
+    tr.active-player {
+        td {
+            color: #f1c40f;
+        }
+    }
+
+    td {
+        &:first-child {
+            text-align: left;
+        }
+
+        text-align: right;
+        font-family: 'Open Sans', Arial;
+        font-size: 14px;
+    }
+
+    span {
+        font-family: 'Open Sans', Arial;
+        font-size: 12px;
     }
 }

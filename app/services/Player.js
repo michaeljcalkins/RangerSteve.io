@@ -4,7 +4,18 @@ const Player = function(id, startX, startY) {
     return {
         x: startX,
         y: startY,
-        id: id
+        id: id,
+        meta: {
+            health: 100,
+            deaths: 0,
+            kills: 0,
+            bestKillingSpree: 0,
+            killingSpree: 0,
+            movement: 0,
+            bulletsFired: 0,
+            score: 0,
+            headshots: 0
+        }
     }
 }
 
