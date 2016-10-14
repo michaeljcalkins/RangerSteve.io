@@ -7,7 +7,7 @@ export default function HudSettingsButton({
         <div
             className="hud-settings hud-item"
             onClick={ onButtonClick }
-        ></div>
+        >Change Weapons</div>
     )
 }
 

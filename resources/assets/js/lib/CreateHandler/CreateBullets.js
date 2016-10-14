@@ -2,25 +2,25 @@ import GameConsts from '../GameConsts.js'
 
 export default function() {
     this.rpgExplosions = this.game.add.group()
-    this.rpgExplosions.createMultiple(15, 'rpgExplosion')
+    this.rpgExplosions.createMultiple(20, 'rpgExplosion')
     this.rpgExplosions.forEach((rpgExplosion) => {
         rpgExplosion.animations.add('collision')
     })
 
     this.ricochets = this.game.add.group()
-    this.ricochets.createMultiple(100, 'ricochet')
+    this.ricochets.createMultiple(200, 'ricochet')
     this.ricochets.forEach((ricochet) => {
         ricochet.animations.add('collision')
     })
 
     this.playerDeaths = this.game.add.group()
-    this.playerDeaths.createMultiple(15, 'player-death')
+    this.playerDeaths.createMultiple(20, 'player-death')
     this.playerDeaths.forEach((playerDeath) => {
         playerDeath.animations.add('death')
     })
 
     this.bullets = this.game.add.group()
-    this.bullets.createMultiple(100, 'bullet')
+    this.bullets.createMultiple(200, 'bullet')
     this.bullets.setAll('checkWorldBounds', true)
     this.bullets.setAll('outOfBoundsKill', true)
 
@@ -50,7 +50,7 @@ export default function() {
 
     this.enemyBullets = this.game.add.group()
     this.enemyBullets.enableBody = true
-    this.enemyBullets.createMultiple(100, 'bullet')
+    this.enemyBullets.createMultiple(200, 'bullet')
     this.enemyBullets.setAll('checkWorldBounds', true)
     this.enemyBullets.setAll('outOfBoundsKill', true)
 

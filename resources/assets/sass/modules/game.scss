@@ -19,65 +19,77 @@ body.game {
 .option-group {
     background: #4D4D4D;
     cursor: pointer;
+    margin-bottom: 3px;
     position: relative;
+    margin-right: 3px;
+    float: left;
     width: 270px;
-    margin-bottom: 5px;
+    height: 165px;
 
-    .caret {
-        position: absolute;
-        top: 10px;
-        right: 7px;
-        border-top: 10px dashed;
-        border-right: 10px solid transparent;
-        border-left: 10px solid transparent;
+    &.option-group-lg {
+        width: 100%;
+    }
+
+    &:hover {
+        background: #555;
+    }
+
+    &:nth-child(2n + 2) {
+        // margin-right: 0;
     }
 
     img {
-        max-width: 240px;
-    }
-}
-
-.option-weapon-group {
-    height: 90px;
-
-    .option-locked {
-        background: rgba(0, 0, 0, .4);
-        bottom: 0;
-        color: #CD1D24;
-        font-family: 'Black Ops One';
-        font-size: 30px;
-        left: 0;
-        letter-spacing: 2px;
-        line-height: 90px;
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: translate(-50%, 0) scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+        left: 50%;
+        top: 50px;
         position: absolute;
-        right: 0;
-        text-align: center;
-        top: 0;
-        z-index: 1;
+        max-height: 40px;
     }
-}
-
-.option-character-group {
-    height: 230px;
 }
 
 .option-name {
-    position: absolute;
-    top: 7px;
     color: #E3DED3;
-    left: 7px;
-    font-size: 16px;
     font-family: "Keep Calm", Arial, sans-serif;
+    font-size: 14px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    border-bottom: 1px solid #444;
+    padding: 4px 8px;
+    width: 100%;
 }
 
-.options-menu {
-    .option-group {
-        float: left;
-        width: 281px;
+.option-stats {
+    color: #E3DED3;
+    font-family: "Keep Calm", Arial, sans-serif;
+    font-size: 10px;
+    left: 0;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #444;
+    padding: 4px 8px;
+    width: 100%;
+    text-align: center;
 
-        &:nth-child(odd) {
-            margin-right: 5px;
-        }
+    h2 {
+        font-size: 15px;
+        margin: 0 0 5px;
+    }
+
+    h5 {
+        font-size: 10px;
+        text-transform: uppercase;
+        margin: 5px 0;
+    }
+
+    .col-sm-4 {
+        margin: 0;
+        padding: 0;
     }
 }
 

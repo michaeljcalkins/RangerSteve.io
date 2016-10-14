@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 
 import GameConsts from '../../../lib/GameConsts'
 import NameGenerator from '../../../lib/NameGenerator'
+import WeaponStats from './WeaponStats'
 
 export default class MainSettingsMenu extends React.Component {
     constructor(props) {
@@ -99,14 +100,11 @@ export default class MainSettingsMenu extends React.Component {
     render() {
         return (
             <div>
-                <div
-                    className="row"
-                    style={ { marginBottom: '10px' } }
-                >
+                <div className="row">
                     <div className="col-sm-6">
-                        <label>Primary</label>
+                        <label>Primary Weapon</label>
                         <div
-                            className="option-group option-weapon-group align-middle"
+                            className="option-group option-group-lg option-character-group align-middle"
                             id="open-primary-weapon-menu-button"
                             onClick={ this.handlePrimaryViewClick }
                             style={ { marginBottom: '28px' } }
@@ -114,51 +112,46 @@ export default class MainSettingsMenu extends React.Component {
                             <div>
                                 { this.renderPrimaryWeaponImage() }
                             </div>
-                            <span className="caret"></span>
                             <span className="option-name">{ this.primaryWeapon().name }</span>
+                            <WeaponStats weapon={ this.primaryWeapon() } />
                         </div>
-
-                        <label>Secondary</label>
+                    </div>
+                    <div className="col-sm-6">
+                        <label>Secondary Weapon</label>
                         <div
-                            className="option-group option-weapon-group align-middle"
+                            className="option-group option-group-lg option-weapon-group align-middle"
                             id="open-secondary-weapon-menu-button"
                             onClick={ this.handleSecondaryViewClick }
                         >
                             <div>
                                 { this.renderSecondaryWeaponImage() }
                             </div>
-                            <span className="caret"></span>
                             <span className="option-name">{ this.secondaryWeapon().name }</span>
-                        </div>
-                    </div>
-                    <div className="col-sm-6">
-                        <label>Character</label>
-                        <div
-                            className="option-group option-character-group align-middle"
-                            id="open-character-menu-buttom"
-                            onClick={ this.handleCharacterViewClick }
-                        >
-                            <div>
-                                <img src="/images/characters/Ranger-Steve.png" />
-                            </div>
-                            <span className="caret"></span>
-                            <span className="option-name">Ranger Steve</span>
+                            <WeaponStats weapon={ this.secondaryWeapon() } />
                         </div>
                     </div>
                 </div>
 
-                <div className="form-group">
-                    <label>Nickname <span className="pointer" onClick={ this.handleGenerateName }>(Generate Name)</span></label>
-                    <input
-                        className="form-control"
-                        defaultValue={ this.state.nickname }
-                        maxLength="100"
-                        onChange={ this.handleNicknameChange }
-                        ref="nicknameInput"
-                        type="text"
-                    />
-                </div>
                 <div className="row">
+                    <div className="col-sm-6">
+                        <div className="form-group">
+                            <label>Nickname</label>
+                            <input
+                                className="form-control"
+                                defaultValue={ this.state.nickname }
+                                maxLength="100"
+                                onChange={ this.handleNicknameChange }
+                                ref="nicknameInput"
+                                type="text"
+                            />
+                            <button
+                                className="btn btn-primary btn-xs"
+                                onClick={ this.handleGenerateName }
+                            >
+                                Random Nickname
+                            </button>
+                        </div>
+                    </div>
                     <div className="col-sm-6">
                         <div className="form-group">
                             <label>Sound Effects Volume</label>
