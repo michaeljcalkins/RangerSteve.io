@@ -94,7 +94,10 @@ setInterval(function() {
                 rooms[roomId].players[playerId].meta.kills = 0
                 rooms[roomId].players[playerId].meta.bestKillingSpree = 0
                 rooms[roomId].players[playerId].meta.killingSpree = 0
+                rooms[roomId].players[playerId].meta.movement = 0
+                rooms[roomId].players[playerId].meta.bulletsFired = 0
                 rooms[roomId].players[playerId].meta.score = 0
+                rooms[roomId].players[playerId].meta.headshots = 0
             })
 
             io.to(roomId).emit('update players', {
@@ -194,6 +197,8 @@ function onNewPlayer (data) {
         killingSpree: 0,
         headshots: 0,
         damageInflicted: 0,
+        movement: 0,
+        bulletsFired: 0,
         weaponId: data.weaponId
     }
 
@@ -301,6 +306,7 @@ function onMovePlayer (data) {
     movePlayer.rightArmAngle = data.rightArmAngle
     movePlayer.leftArmAngle = data.leftArmAngle
     movePlayer.facing = data.facing
+    movePlayer.meta.movement++
 
     // Broadcast updated position to connected socket clients
     io.to(data.roomId).emit('move player', {
@@ -467,6 +473,12 @@ function onPlayerDamaged(data) {
 
 function onBulletFired(data) {
     data.id = this.id
+
+    const player = PlayerById(data.roomId, data.id, rooms)
+
+    if (! player || player.meta.health <= 0) return
+    player.meta.bulletsFired++
+
     io.to(data.roomId).emit('bullet fired', data)
 }
 

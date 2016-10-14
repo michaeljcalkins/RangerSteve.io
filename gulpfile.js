@@ -75,7 +75,7 @@ gulp.task('buildjs', function() {
             ignore: /\/node_modules\//,
             extensions: [".js"],
             presets: ["es2015", "react"],
-            plugins: ["transform-object-rest-spread"]
+            plugins: ["transform-object-rest-spread", "transform-class-properties"]
         })
         .transform("browserify-shim", {
             global: true,
@@ -107,7 +107,7 @@ gulp.task('watchjs', function() {
             ignore: /\/node_modules\//,
             extensions: [".js"],
             presets: ["es2015", "react"],
-            plugins: ["transform-object-rest-spread"]
+            plugins: ["transform-object-rest-spread", "transform-class-properties"]
         })
         .transform("browserify-shim", {
             global: true,

@@ -7,8 +7,8 @@ import HudKillLog from './Hud/HudKillLog'
 import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
 import HudLeaderboard from './Hud/HudLeaderboard'
-import SettingsModal from './Settings/SettingsModal'
-import Leaderboard from './Leaderboard/Leaderboard'
+import SettingsModal from './SettingsModal/SettingsModal'
+import LeaderboardModal from './LeaderboardModal/LeaderboardModal'
 import RespawnModal from './Respawn/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
@@ -89,15 +89,28 @@ export default class GameUi extends React.Component {
         this.props.onSecondaryWeaponIdChange(weapon.id)
     }
 
+    isLeaderboardModalOpen() {
+         const {
+            props: {
+                room,
+                game
+            }
+        } = this
+
+        return (game.leaderboardModalIsOpen || room.state === 'ended')
+    }
+
     render() {
         const {
-            player,
-            room,
-            game,
-            onCloseSettingsModal,
-            onOpenSettingsModal,
-            onSettingsViewChange
-        } = this.props
+            props: {
+                player,
+                room,
+                game,
+                onCloseSettingsModal,
+                onOpenSettingsModal,
+                onSettingsViewChange
+            }
+        } = this
 
         return (
             <div>
@@ -114,8 +127,9 @@ export default class GameUi extends React.Component {
                     onSendMessage={ this.handleSendMessage }
                 />
 
-                { (game.leaderboardModalIsOpen || this.props.room.state === 'ended') &&
-                    <Leaderboard
+                { this.isLeaderboardModalOpen() &&
+                    <LeaderboardModal
+                        isOpen={ this.isLeaderboardModalOpen }
                         players={ room.players }
                         room={ room }
                         roundStartTime={ room.roundStartTime }

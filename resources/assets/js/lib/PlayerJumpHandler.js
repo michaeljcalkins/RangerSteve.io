@@ -8,7 +8,7 @@ let jumpjetFxHandle = null
 function isJumpInputActive() {
     const store = this.game.store
     const userSelectedJumpKey = store.getState().game.keyboardControls.up
-    return upInputIsActive.call(this, 5, userSelectedJumpKey) || this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
+    return upInputIsActive.call(this, 5, userSelectedJumpKey)
 }
 
 export default function PlayerJumpHandler() {
