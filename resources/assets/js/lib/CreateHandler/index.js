@@ -43,7 +43,5 @@ export default function() {
     CreateBullets.call(this)
     CreateUI.call(this)
 
-    console.log('Game initialized...')
-
     store.dispatch(actions.game.setState('active'))
 }
