@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react'
 import cs from 'classnames'
 
-import MainSettingsMenu from './MainSettingsMenu'
-import ChoosePrimaryMenu from './ChoosePrimaryMenu'
-import ChooseSecondaryMenu from './ChooseSecondaryMenu'
-import ChooseCharacterMenu from './ChooseCharacterMenu'
-import ControlsMenu from './ControlsMenu'
+import DefaultView from './DefaultView'
+import ChoosePrimaryView from './ChoosePrimaryView'
+import ChooseSecondaryView from './ChooseSecondaryView'
+import ControlsView from './ControlsView'
 
 export default function SettingsModal({
     isOpen,
@@ -24,7 +23,7 @@ export default function SettingsModal({
         switch (game.settingsView) {
         case 'choosePrimary':
             return (
-                <ChoosePrimaryMenu
+                <ChoosePrimaryView
                     onPrimaryGunClick={ onPrimaryGunClick }
                     onViewChange={ onViewChange }
                 />
@@ -32,23 +31,15 @@ export default function SettingsModal({
 
         case 'chooseSecondary':
             return (
-                <ChooseSecondaryMenu
+                <ChooseSecondaryView
                     onSecondaryGunClick={ onSecondaryGunClick }
                     onViewChange={ onViewChange }
                 />
             )
 
-        case 'chooseCharacter':
-            return (
-                <ChooseCharacterMenu
-                    onViewChange={ onViewChange }
-                    player={ player }
-                />
-            )
-
         case 'controls':
             return (
-                <ControlsMenu
+                <ControlsView
                     game={ game }
                     onKeyboardControlChange={ onKeyboardControlChange }
                     onSetResetEventsFlag={ onSetResetEventsFlag }
@@ -58,7 +49,7 @@ export default function SettingsModal({
 
         default:
             return (
-                <MainSettingsMenu
+                <DefaultView
                     game={ game }
                     onNicknameChange={ onNicknameChange }
                     onSfxVolumeChange={ onSfxVolumeChange }
@@ -72,7 +63,7 @@ export default function SettingsModal({
     return (
         <div>
             <div
-                className="modal hud-settings-modal"
+                className="modal"
                 style={ { display: isOpen ? 'block' : 'none' } }
             >
                 <div className="modal-dialog">
@@ -85,12 +76,12 @@ export default function SettingsModal({
                             >
                                 <span>&times;</span>
                             </button>
-                            <h4 className="modal-title">Options</h4>
+                            <h4 className="modal-title">Settings</h4>
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                                <div className="col-sm-12">
-                                    <ul className="nav nav-pills" style={ { marginBottom: '15px' } }>
+                                <div className="col-sm-12 text-center">
+                                    <ul className="nav nav-pills" style={ { marginBottom: '15px', display: 'inline-block' } }>
                                         <li
                                             className={ cs({
                                                 pointer: true,

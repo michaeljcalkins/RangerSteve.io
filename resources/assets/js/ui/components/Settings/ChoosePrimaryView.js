@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import GameConsts from '../../../lib/GameConsts'
+import WeaponStats from './WeaponStats'
 
 export default function ChoosePrimaryMenu({
     onViewChange,
@@ -18,7 +19,7 @@ export default function ChoosePrimaryMenu({
 
             return (
                 <div
-                    className="option-group option-weapon-group align-middle"
+                    className="option-group align-middle"
                     key={ index }
                     onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
@@ -26,6 +27,7 @@ export default function ChoosePrimaryMenu({
                         <img src={ '/images/guns/large/' + weapon.image } />
                     </div>
                     <span className="option-name">{ weapon.name }</span>
+                    <WeaponStats weapon={ weapon } />
                 </div>
             )
         })
@@ -34,7 +36,7 @@ export default function ChoosePrimaryMenu({
     return (
         <div className="row">
             <div className="col-sm-12">
-                <label>Select a Primary Weapon</label>
+                <label>Choose Your Primary Weapon</label>
                 <em className="pull-right">(Changes take effect when you respawn)</em>
                 <div className="options-menu">
                     { renderWeapons() }

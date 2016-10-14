@@ -14,16 +14,18 @@
 }
 
 .hud-settings {
-    background: url(/images/icons/cog-32-white.png) rgba(0, 0, 0, .4) center no-repeat;
+    background: url(/images/icons/cog-32-white.png) rgba(0, 0, 0, .4) 8px 10px no-repeat;
     background-size: 20px;
+    font-size: 12px;
     border: 0;
-    padding: 10px;
     cursor: pointer;
-    padding: 0;
+    padding: 8px 10px 8px 35px;
     right: 240px;
     top: 10px;
-    height: 36px;
-    width: 36px;
+    width: auto;
+    height: auto;
+    text-align: center;
+
     z-index: 10000;
 }
 
@@ -210,16 +212,6 @@
             text-decoration: none;
             color: white;
         }
-    }
-}
-
-.hud-settings-modal {
-    cursor: default;
-
-    .modal-body {
-        max-height: 490px !important;
-        overflow-y: auto !important;
-        overflow-x: hidden !important
     }
 }
 
