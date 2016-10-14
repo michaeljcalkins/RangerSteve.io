@@ -18,6 +18,7 @@ export default function onLoadGame(data) {
     console.log('Loading game...')
 
     store.dispatch(actions.room.setRoom(data.room))
+    store.dispatch(actions.game.setChatMessages(data.room.messages.slice(-5)))
 
     mixpanel.time_event('map:' + store.getState().room.map)
     Maps[store.getState().room.map].preload.call(this)

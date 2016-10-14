@@ -58,13 +58,19 @@ const player = (state = initialState, action) => {
                 chatMessages: state.chatMessages.slice(-5)
             }
 
+        case 'SET_CHAT_MESSAGES':
+            return {
+                ...state,
+                chatMessages: action.value
+            }
+
         case 'ADD_CHAT_MESSAGE':
             return {
                 ...state,
                 chatMessages: [
                     ...state.chatMessages,
                     action.value
-                ]
+                ].slice(-5)
             }
 
         case 'REMOVE_CHAT_MESSAGE':

@@ -19,7 +19,8 @@ const Room = function(data) {
         players: playersObj,
         roundEndTime: moment().add(data.roundLength, 'minutes').unix(),
         state: 'active',
-        map: _.sample(['PunkFallout', 'HighRuleJungle', 'DarkForest', 'PunkCity', 'PunkLoop'])
+        map: _.sample(['PunkFallout', 'HighRuleJungle', 'DarkForest', 'PunkCity', 'PunkLoop']),
+        messages: data.messages || []
     }
 }
 
