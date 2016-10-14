@@ -15,8 +15,6 @@ export default function onLoadGame(data) {
 
     if (store.getState().game.state !== 'loading') return
 
-    console.log('Loading game...')
-
     store.dispatch(actions.room.setRoom(data.room))
     store.dispatch(actions.game.setChatMessages(data.room.messages.slice(-5)))
 
@@ -25,7 +23,6 @@ export default function onLoadGame(data) {
     this.currentMap = store.getState().room.map
 
     this.game.load.onLoadComplete.add(() => {
-        console.log('Load complete, initializing game...')
         CreateHandler.call(this)
 
         window.socket.emit('load complete', {
