@@ -94,16 +94,18 @@ setInterval(function() {
                 rooms[roomId].players[playerId].meta.kills = 0
                 rooms[roomId].players[playerId].meta.bestKillingSpree = 0
                 rooms[roomId].players[playerId].meta.killingSpree = 0
-                rooms[roomId].players[playerId].meta.movement = 0
                 rooms[roomId].players[playerId].meta.bulletsFired = 0
                 rooms[roomId].players[playerId].meta.bulletsHit = 0
                 rooms[roomId].players[playerId].meta.score = 0
                 rooms[roomId].players[playerId].meta.headshots = 0
+                rooms[roomId].players[playerId].meta.secondsInRound = 0
             })
 
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })
+
+            return
         }
 
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
@@ -113,7 +115,13 @@ setInterval(function() {
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })
+
+            return
         }
+
+        Object.keys(rooms[roomId].players).forEach((playerId) => {
+            rooms[roomId].players[playerId].meta.secondsInRound++
+        })
     })
 }, 1000)
 
@@ -197,8 +205,8 @@ function onNewPlayer (data) {
         nickname: data.nickname,
         killingSpree: 0,
         headshots: 0,
+        secondsInRound: 0,
         damageInflicted: 0,
-        movement: 0,
         bulletsFired: 0,
         bulletsHit: 0,
         weaponId: data.weaponId
@@ -308,7 +316,6 @@ function onMovePlayer (data) {
     movePlayer.rightArmAngle = data.rightArmAngle
     movePlayer.leftArmAngle = data.leftArmAngle
     movePlayer.facing = data.facing
-    movePlayer.meta.movement++
 
     // Broadcast updated position to connected socket clients
     io.to(data.roomId).emit('move player', {

@@ -67,18 +67,26 @@ export default class Leaderboard extends Component {
 
             // bullets fired / bullets that hit
             const accuracy = room.players[player].meta.bulletsHit / room.players[player].meta.bulletsFired * 100
-            room.players[player].meta.accuracy = accuracy.toFixed(2)
+            room.players[player].meta.accuracy = accuracy.toFixed(1)
 
             if (room.players[player].meta.accuracy > get(playerWithBestAccuracy, 'meta.accuracy', 0)) {
                 playerWithBestAccuracy = room.players[player]
             }
         })
 
-        // Has to wait for the next room update before refreshing values
-        let playerWithBestMovement = {}
+        // 200 seconds tracked in game
+        // 4 kills
+        // 180 / 60 = 3 minutes
+        // 4 kills / 3 minutes
+        let playerWithBestKillsPerMinute = {}
         Object.keys(room.players).forEach((player) => {
-            if (room.players[player].meta.movement > get(playerWithBestMovement, 'meta.movement', 0)) {
-                playerWithBestMovement = room.players[player]
+            if (room.players[player].meta.secondsInRound < 60) return
+
+            const minutesInRound = room.players[player].meta.secondsInRound / 60
+            room.players[player].meta.killsPerMinute = (room.players[player].meta.kills / minutesInRound).toFixed(1)
+
+            if (room.players[player].meta.killsPerMinute > get(playerWithBestKillsPerMinute, 'meta.killsPerMinute', 0)) {
+                playerWithBestKillsPerMinute = room.players[player]
             }
         })
 
@@ -100,9 +108,9 @@ export default class Leaderboard extends Component {
                     <h4>{ playerWithBestKillingSpree.meta ? playerWithBestKillingSpree.meta.nickname : '--' }</h4>
                 </div>
                 <div className="player-achievement">
-                    <img src="/images/icons/movement.png" />
-                    <h6>Most movement</h6>
-                    <h4>{ playerWithBestMovement.meta ? playerWithBestMovement.meta.nickname : '--' }</h4>
+                    <h2>{ playerWithBestKillsPerMinute.meta ? playerWithBestKillsPerMinute.meta.killsPerMinute : '--' }</h2>
+                    <h6>Best Kills per Minute</h6>
+                    <h4>{ playerWithBestKillsPerMinute.meta ? playerWithBestKillsPerMinute.meta.nickname : '--' }</h4>
                 </div>
             </div>
         )
