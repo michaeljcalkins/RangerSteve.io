@@ -396,6 +396,11 @@ function onPlayerDamaged(data) {
     player.meta.damageStats.attackingHits++
     player.meta.damageStats.weaponId = data.weaponId
 
+    const attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
+    if (attackingPlayer) {
+        attackingPlayer.meta.bulletsHit++
+    }
+
     // Player was killed when shot
     if (player.meta.health <= 0) {
         player.meta.health = 0
@@ -403,13 +408,10 @@ function onPlayerDamaged(data) {
         player.meta.deaths++
         player.meta.canRespawnTimestamp = moment().add(RESPAWN_TIME_SECONDS, 'seconds').unix()
 
-        const attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
-
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
             attackingPlayer.meta.kills++
             attackingPlayer.meta.killingSpree++
-            attackingPlayer.meta.bulletsHit++
             attackingPlayer.meta.damageInflicted += Number(data.damage)
 
             if (data.wasHeadshot) attackingPlayer.meta.headshots++
