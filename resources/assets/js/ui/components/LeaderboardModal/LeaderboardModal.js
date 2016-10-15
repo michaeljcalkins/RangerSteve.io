@@ -54,10 +54,13 @@ export default class Leaderboard extends Component {
             }
         })
 
-        let playerWithBestAggresion = {}
+        let playerWithBestAggression = {}
         Object.keys(room.players).forEach((player) => {
-            if (room.players[player].meta.aggression > get(playerWithBestAggresion, 'meta.aggression', 0)) {
-                playerWithBestAggresion = room.players[player]
+            const aggression = room.players[player].meta.movement + room.players[player].meta.damageInflicted + room.players[player].meta.bulletsFired
+            room.players[player].meta.aggression = aggression
+
+            if (room.players[player].meta.aggression > get(playerWithBestAggression, 'meta.aggression', 0)) {
+                playerWithBestAggression = room.players[player]
             }
         })
 
@@ -66,8 +69,8 @@ export default class Leaderboard extends Component {
             if (room.players[player].meta.bulletsFired === 0) return
 
             // bullets fired / bullets that hit
-            const accuracy = room.players[player].meta.bulletsHit / room.players[player].meta.bulletsFired
-            room.players[player].meta.accuracy = accuracy
+            const accuracy = room.players[player].meta.bulletsHit / room.players[player].meta.bulletsFired * 100
+            room.players[player].meta.accuracy = accuracy.toFixed(2)
 
             if (room.players[player].meta.accuracy > get(playerWithBestAccuracy, 'meta.accuracy', 0)) {
                 playerWithBestAccuracy = room.players[player]
@@ -85,19 +88,19 @@ export default class Leaderboard extends Component {
         return (
             <div>
                 <div className="player-achievement">
-                    <img src="/images/icons/headshot.png" />
+                    <h2>{ playerWithBestHeadshots.meta ? playerWithBestHeadshots.meta.headshots : '--' }</h2>
                     <h6>Most headshots</h6>
                     <h4>{ playerWithBestHeadshots.meta ? playerWithBestHeadshots.meta.nickname : '--' }</h4>
                 </div>
                 <div className="player-achievement">
-                    <img src="/images/icons/dog.png" />
-                    <h6>Most aggressive</h6>
-                    <h4>{ playerWithBestAggresion.meta ? playerWithBestAggresion.meta.nickname : '--' }</h4>
+                    <h2>{ playerWithBestAccuracy.meta ? playerWithBestAccuracy.meta.accuracy + '%' : '--' }</h2>
+                    <h6>Most accurate</h6>
+                    <h4>{ playerWithBestAccuracy.meta ? playerWithBestAccuracy.meta.nickname : '--' }</h4>
                 </div>
                 <div className="player-achievement">
                     <img src="/images/icons/dog.png" />
-                    <h6>Most accurate</h6>
-                    <h4>{ playerWithBestAccuracy.meta ? playerWithBestAccuracy.meta.nickname : '--' }</h4>
+                    <h6>Most aggressive</h6>
+                    <h4>{ playerWithBestAggression.meta ? playerWithBestAggression.meta.nickname : '--' }</h4>
                 </div>
                 <div className="player-achievement">
                     <img src="/images/icons/movement.png" />
