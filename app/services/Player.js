@@ -13,6 +13,7 @@ const Player = function(id, startX, startY) {
             killingSpree: 0,
             movement: 0,
             bulletsFired: 0,
+            bulletsHit: 0,
             score: 0,
             headshots: 0
         }

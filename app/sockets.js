@@ -96,6 +96,7 @@ setInterval(function() {
                 rooms[roomId].players[playerId].meta.killingSpree = 0
                 rooms[roomId].players[playerId].meta.movement = 0
                 rooms[roomId].players[playerId].meta.bulletsFired = 0
+                rooms[roomId].players[playerId].meta.bulletsHit = 0
                 rooms[roomId].players[playerId].meta.score = 0
                 rooms[roomId].players[playerId].meta.headshots = 0
             })
@@ -199,6 +200,7 @@ function onNewPlayer (data) {
         damageInflicted: 0,
         movement: 0,
         bulletsFired: 0,
+        bulletsHit: 0,
         weaponId: data.weaponId
     }
 
@@ -407,7 +409,9 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.score += 10
             attackingPlayer.meta.kills++
             attackingPlayer.meta.killingSpree++
+            attackingPlayer.meta.bulletsHit++
             attackingPlayer.meta.damageInflicted += Number(data.damage)
+
             if (data.wasHeadshot) attackingPlayer.meta.headshots++
 
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {

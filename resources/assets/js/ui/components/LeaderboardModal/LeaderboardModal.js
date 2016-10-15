@@ -63,6 +63,12 @@ export default class Leaderboard extends Component {
 
         let playerWithBestAccuracy = {}
         Object.keys(room.players).forEach((player) => {
+            if (room.players[player].meta.bulletsFired === 0) return
+
+            // bullets fired / bullets that hit
+            const accuracy = room.players[player].meta.bulletsHit / room.players[player].meta.bulletsFired
+            room.players[player].meta.accuracy = accuracy
+
             if (room.players[player].meta.accuracy > get(playerWithBestAccuracy, 'meta.accuracy', 0)) {
                 playerWithBestAccuracy = room.players[player]
             }
