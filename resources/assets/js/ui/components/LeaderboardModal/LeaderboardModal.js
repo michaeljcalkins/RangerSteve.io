@@ -54,13 +54,10 @@ export default class Leaderboard extends Component {
             }
         })
 
-        let playerWithBestAggression = {}
+        let playerWithBestKillingSpree = {}
         Object.keys(room.players).forEach((player) => {
-            const aggression = room.players[player].meta.movement + room.players[player].meta.damageInflicted + room.players[player].meta.bulletsFired
-            room.players[player].meta.aggression = aggression
-
-            if (room.players[player].meta.aggression > get(playerWithBestAggression, 'meta.aggression', 0)) {
-                playerWithBestAggression = room.players[player]
+            if (room.players[player].meta.bestKillingSpree > get(playerWithBestKillingSpree, 'meta.bestKillingSpree', 0)) {
+                playerWithBestKillingSpree = room.players[player]
             }
         })
 
@@ -98,9 +95,9 @@ export default class Leaderboard extends Component {
                     <h4>{ playerWithBestAccuracy.meta ? playerWithBestAccuracy.meta.nickname : '--' }</h4>
                 </div>
                 <div className="player-achievement">
-                    <img src="/images/icons/dog.png" />
-                    <h6>Most aggressive</h6>
-                    <h4>{ playerWithBestAggression.meta ? playerWithBestAggression.meta.nickname : '--' }</h4>
+                    <h2>{ playerWithBestKillingSpree.meta ? playerWithBestKillingSpree.meta.bestKillingSpree : '--' }</h2>
+                    <h6>Longest Kill Streak</h6>
+                    <h4>{ playerWithBestKillingSpree.meta ? playerWithBestKillingSpree.meta.nickname : '--' }</h4>
                 </div>
                 <div className="player-achievement">
                     <img src="/images/icons/movement.png" />
@@ -116,8 +113,9 @@ export default class Leaderboard extends Component {
         return values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map((player, key) => {
-                const { meta: { deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger' }, id } = player
+                const { meta: { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger' }, id } = player
                 const kdRatio = deaths > 0 ? (kills / deaths) : kills
+                const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
                 const classes = cs({
                     'active-player': id === window.socket.id
                 })
@@ -133,6 +131,7 @@ export default class Leaderboard extends Component {
                         <td>{ score }</td>
                         <td>{ kills }</td>
                         <td>{ deaths }</td>
+                        <td>{ headshotsPerKill }</td>
                         <td>{ kdRatio.toFixed(2) }</td>
                     </tr>
                 )
@@ -181,6 +180,7 @@ export default class Leaderboard extends Component {
                                             <th>Score</th>
                                             <th>Kills</th>
                                             <th>Deaths</th>
+                                            <th>Headshots per Kill</th>
                                             <th>K/D Ratio</th>
                                         </tr>
                                     </thead>

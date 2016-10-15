@@ -399,6 +399,8 @@ function onPlayerDamaged(data) {
     const attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
     if (attackingPlayer) {
         attackingPlayer.meta.bulletsHit++
+
+        if (data.wasHeadshot) attackingPlayer.meta.headshots++
     }
 
     // Player was killed when shot
@@ -413,8 +415,6 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.kills++
             attackingPlayer.meta.killingSpree++
             attackingPlayer.meta.damageInflicted += Number(data.damage)
-
-            if (data.wasHeadshot) attackingPlayer.meta.headshots++
 
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
