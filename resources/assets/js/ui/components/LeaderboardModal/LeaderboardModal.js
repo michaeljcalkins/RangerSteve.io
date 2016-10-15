@@ -23,6 +23,9 @@ export default class Leaderboard extends Component {
 
     componentDidMount() {
         this.timer = setInterval(() => this.tick, 100)
+        window.socket.emit('refresh room', {
+            roomId: this.props.room.id
+        })
     }
 
     componentWillUnmount() {

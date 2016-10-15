@@ -38,6 +38,14 @@ function init(ioInstance) {
         socket.on('bullet fired', onBulletFired)
         socket.on('kick player', onKickPlayer)
         socket.on('load complete', onLoadComplete)
+
+        socket.on('refresh room', onRefreshRoom)
+    })
+}
+
+function onRefreshRoom(data) {
+    io.to(data.roomId).emit('refresh room', {
+        room: rooms[data.roomId]
     })
 }
 
