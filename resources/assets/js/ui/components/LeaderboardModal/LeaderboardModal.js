@@ -170,7 +170,7 @@ export default class Leaderboard extends Component {
                                 <h4 className="modal-title">Leaderboard</h4>
                             </div>
                             <div className="modal-body">
-                                <div className="row">
+                                <div className="row" style={ { marginBottom: '15px' } }>
                                     <div className="col-sm-5">
                                         <div className="winning-player">
                                             <div className="player-image"></div>
