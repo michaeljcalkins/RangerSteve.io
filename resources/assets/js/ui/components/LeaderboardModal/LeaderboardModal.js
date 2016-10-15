@@ -54,49 +54,63 @@ export default class Leaderboard extends Component {
             }
         })
 
-        let playerWithBestAggresion = {}
+        let playerWithBestKillingSpree = {}
         Object.keys(room.players).forEach((player) => {
-            if (room.players[player].meta.aggression > get(playerWithBestAggresion, 'meta.aggression', 0)) {
-                playerWithBestAggresion = room.players[player]
+            if (room.players[player].meta.bestKillingSpree > get(playerWithBestKillingSpree, 'meta.bestKillingSpree', 0)) {
+                playerWithBestKillingSpree = room.players[player]
             }
         })
 
         let playerWithBestAccuracy = {}
         Object.keys(room.players).forEach((player) => {
+            if (room.players[player].meta.bulletsFired === 0) return
+
+            // bullets fired / bullets that hit
+            const accuracy = room.players[player].meta.bulletsHit / room.players[player].meta.bulletsFired * 100
+            room.players[player].meta.accuracy = accuracy.toFixed(1)
+
             if (room.players[player].meta.accuracy > get(playerWithBestAccuracy, 'meta.accuracy', 0)) {
                 playerWithBestAccuracy = room.players[player]
             }
         })
 
-        // Has to wait for the next room update before refreshing values
-        let playerWithBestMovement = {}
+        // 200 seconds tracked in game
+        // 4 kills
+        // 180 / 60 = 3 minutes
+        // 4 kills / 3 minutes
+        let playerWithBestKillsPerMinute = {}
         Object.keys(room.players).forEach((player) => {
-            if (room.players[player].meta.movement > get(playerWithBestMovement, 'meta.movement', 0)) {
-                playerWithBestMovement = room.players[player]
+            if (room.players[player].meta.secondsInRound < 60) return
+
+            const minutesInRound = room.players[player].meta.secondsInRound / 60
+            room.players[player].meta.killsPerMinute = (room.players[player].meta.kills / minutesInRound).toFixed(1)
+
+            if (room.players[player].meta.killsPerMinute > get(playerWithBestKillsPerMinute, 'meta.killsPerMinute', 0)) {
+                playerWithBestKillsPerMinute = room.players[player]
             }
         })
 
         return (
             <div>
                 <div className="player-achievement">
-                    <img src="/images/icons/headshot.png" />
+                    <h2>{ playerWithBestHeadshots.meta ? playerWithBestHeadshots.meta.headshots : '--' }</h2>
                     <h6>Most headshots</h6>
                     <h4>{ playerWithBestHeadshots.meta ? playerWithBestHeadshots.meta.nickname : '--' }</h4>
                 </div>
                 <div className="player-achievement">
-                    <img src="/images/icons/dog.png" />
-                    <h6>Most aggressive</h6>
-                    <h4>{ playerWithBestAggresion.meta ? playerWithBestAggresion.meta.nickname : '--' }</h4>
-                </div>
-                <div className="player-achievement">
-                    <img src="/images/icons/dog.png" />
+                    <h2>{ playerWithBestAccuracy.meta ? playerWithBestAccuracy.meta.accuracy + '%' : '--' }</h2>
                     <h6>Most accurate</h6>
                     <h4>{ playerWithBestAccuracy.meta ? playerWithBestAccuracy.meta.nickname : '--' }</h4>
                 </div>
                 <div className="player-achievement">
-                    <img src="/images/icons/movement.png" />
-                    <h6>Most movement</h6>
-                    <h4>{ playerWithBestMovement.meta ? playerWithBestMovement.meta.nickname : '--' }</h4>
+                    <h2>{ playerWithBestKillingSpree.meta ? playerWithBestKillingSpree.meta.bestKillingSpree : '--' }</h2>
+                    <h6>Longest Kill Streak</h6>
+                    <h4>{ playerWithBestKillingSpree.meta ? playerWithBestKillingSpree.meta.nickname : '--' }</h4>
+                </div>
+                <div className="player-achievement">
+                    <h2>{ playerWithBestKillsPerMinute.meta ? playerWithBestKillsPerMinute.meta.killsPerMinute : '--' }</h2>
+                    <h6>Best Kills per Minute</h6>
+                    <h4>{ playerWithBestKillsPerMinute.meta ? playerWithBestKillsPerMinute.meta.nickname : '--' }</h4>
                 </div>
             </div>
         )
@@ -107,8 +121,9 @@ export default class Leaderboard extends Component {
         return values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map((player, key) => {
-                const { meta: { deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger' }, id } = player
+                const { meta: { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger' }, id } = player
                 const kdRatio = deaths > 0 ? (kills / deaths) : kills
+                const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
                 const classes = cs({
                     'active-player': id === window.socket.id
                 })
@@ -124,6 +139,7 @@ export default class Leaderboard extends Component {
                         <td>{ score }</td>
                         <td>{ kills }</td>
                         <td>{ deaths }</td>
+                        <td>{ headshotsPerKill }</td>
                         <td>{ kdRatio.toFixed(2) }</td>
                     </tr>
                 )
@@ -154,7 +170,7 @@ export default class Leaderboard extends Component {
                                 <h4 className="modal-title">Leaderboard</h4>
                             </div>
                             <div className="modal-body">
-                                <div className="row">
+                                <div className="row" style={ { marginBottom: '15px' } }>
                                     <div className="col-sm-5">
                                         <div className="winning-player">
                                             <div className="player-image"></div>
@@ -172,6 +188,7 @@ export default class Leaderboard extends Component {
                                             <th>Score</th>
                                             <th>Kills</th>
                                             <th>Deaths</th>
+                                            <th>Headshots per Kill</th>
                                             <th>K/D Ratio</th>
                                         </tr>
                                     </thead>

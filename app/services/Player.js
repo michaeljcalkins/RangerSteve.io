@@ -11,8 +11,9 @@ const Player = function(id, startX, startY) {
             kills: 0,
             bestKillingSpree: 0,
             killingSpree: 0,
-            movement: 0,
             bulletsFired: 0,
+            secondsInRound: 0,
+            bulletsHit: 0,
             score: 0,
             headshots: 0
         }
