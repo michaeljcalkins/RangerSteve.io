@@ -46,7 +46,7 @@ export default class RespawnModal extends React.Component {
 
         return (
             <div>
-                Damage given: <strong>{ defendingDamage }</strong> in <strong>{ defendingHits } hits</strong> to { attackingPlayerName }
+                <strong className="text-success">Damage given:</strong> <strong>{ defendingDamage }</strong> in <strong>{ defendingHits } hits</strong> to { attackingPlayerName }
             </div>
         )
     }
@@ -62,7 +62,7 @@ export default class RespawnModal extends React.Component {
 
         return (
             <div>
-                Damage taken: <strong>{ attackingDamage }</strong> in <strong>{ attackingHits } hits</strong> from { attackingPlayerName }
+                <strong className="text-danger">Damage taken:</strong> <strong>{ attackingDamage }</strong> in <strong>{ attackingHits } hits</strong> from { attackingPlayerName }
                 <br />
             </div>
         )
@@ -88,16 +88,13 @@ export default class RespawnModal extends React.Component {
         }
 
         return (
-            <div className="media">
-                <div className="media-left">
+            <div className="row">
+                <div className="col-sm-12 text-center">
                     <img
-                        className="media-object"
+                        className="weapon-image"
                         src={ '/images/guns/large/' + selectedWeapon.image }
                     />
-                </div>
-                <div className="media-body">
-                    <h4 className="media-heading">{ attackingPlayerName }</h4>
-                    <strong><span className="text-danger">Killed you with their</span> <span className="text-primary">{ selectedWeapon.name }</span></strong><br />
+                    <h4><strong>{ attackingPlayerName }</strong> killed you with their <strong>{ selectedWeapon.name }</strong></h4>
                     { this.renderDamageTaken() }
                     { this.renderDamageGiven() }
                 </div>
@@ -108,14 +105,19 @@ export default class RespawnModal extends React.Component {
     render() {
         const shareLink = window.location.href
 
+        const encodedShareLink = encodeURIComponent(shareLink)
+
         return (
             <div>
                 <div
-                    className="modal respawn-modal"
+                    className="modal modal-respawn"
                     style={ { display: 'block' } }
                 >
                     <div className="modal-dialog">
                         <div className="modal-content">
+                            <div className="modal-header">
+                                <h4 className="modal-title">Respawn</h4>
+                            </div>
                             <div className="modal-body">
                                 <div className="row">
                                     <div className="col-sm-12">
@@ -123,25 +125,46 @@ export default class RespawnModal extends React.Component {
                                     </div>
                                 </div>
 
-                                <hr />
-
                                 <h4 className="text-center">Respawning in { this.state.elapsed } seconds</h4>
 
                                 <hr />
 
-                                <p className="text-center">Share this link to play with friends.</p>
-                                <input
-                                    className="form-control text-center"
-                                    defaultValue={ shareLink }
-                                    readOnly
-                                    type="text"
-                                />
+                                <div className="row">
+                                    <div className="col-sm-12 text-center">
+                                        <p className="text-center">Invite people into this game.</p>
+                                        <a
+                                            href={ 'https://www.facebook.com/sharer/sharer.php?u=' + encodedShareLink }
+                                            target="_blank"
+                                        >
+                                            <img className="social-image" src="/images/icons/facebook-3-128.png" />
+                                        </a>
+                                        &nbsp;
+                                        <a
+                                            href={ 'https://twitter.com/home?status=' + encodedShareLink }
+                                            target="_blank"
+                                        >
+                                            <img className="social-image" src="/images/icons/twitter-3-128.png" />
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-sm-12 text-center">
+                                        <p className="text-center">Direct link to this game.</p>
+                                        <input
+                                            className="form-control text-center"
+                                            defaultValue={ shareLink }
+                                            readOnly
+                                            type="text"
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div
-                    className="modal-backdrop fade in"
+                    className="modal-backdrop"
                     style={ { display: 'block' } }
                 ></div>
             </div>
@@ -150,7 +173,6 @@ export default class RespawnModal extends React.Component {
 }
 
 RespawnModal.propTypes = {
-    isOpen: PropTypes.bool,
     player: PropTypes.object,
     room: PropTypes.object
 }
