@@ -155,7 +155,7 @@ export default class Leaderboard extends Component {
     }
 
     render() {
-        let { state: { elapsed }, props: { room }, renderPlayers, renderAchievements } = this
+        let { state: { elapsed }, renderPlayers, renderAchievements } = this
 
         return (
             <div>

@@ -11,7 +11,7 @@ import HudKillingSpree from './Hud/HudKillingSpree'
 import HudLeaderboard from './Hud/HudLeaderboard'
 import SettingsModal from './SettingsModal/SettingsModal'
 import LeaderboardModal from './LeaderboardModal/LeaderboardModal'
-import RespawnModal from './Respawn/RespawnModal'
+import RespawnModal from './RespawnModal/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import LoadingScreen from './LoadingScreen/LoadingScreen'
 
@@ -129,7 +129,6 @@ export default class GameUi extends React.Component {
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
                 <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
                 <HudKeyboardControlsButton onButtonClick={ this.handleOpenKeyboardControlsButton } />
-
                 <HudLeaderboard players={ room.players } />
                 <HudChatHistory
                     isOpen={ game.chatModalIsOpen }
@@ -140,7 +139,6 @@ export default class GameUi extends React.Component {
 
                 { this.isLeaderboardModalOpen() &&
                     <LeaderboardModal
-                        isOpen={ this.isLeaderboardModalOpen }
                         players={ room.players }
                         room={ room }
                         roundStartTime={ room.roundStartTime }

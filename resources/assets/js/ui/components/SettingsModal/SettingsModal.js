@@ -63,7 +63,7 @@ export default function SettingsModal({
     return (
         <div>
             <div
-                className="modal"
+                className="modal modal-settings"
                 style={ { display: isOpen ? 'block' : 'none' } }
             >
                 <div className="modal-dialog">
