@@ -14,9 +14,9 @@ const initialState = {
         newChatMessage: storage.get('keyboardControl.newChatMessage', Phaser.Keyboard.T),
         reload: storage.get('keyboardControl.reload', Phaser.Keyboard.R)
     },
-    settingsModalIsOpen: !storage.has('nickname'),
+    settingsModalIsOpen: ! storage.has('nickname'),
     leaderboardModalIsOpen: false,
-    settingsView: 'main',
+    settingsView: 'default',
     sfxVolume: storage.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME),
     showKillConfirmed: false,
     state: 'loading',

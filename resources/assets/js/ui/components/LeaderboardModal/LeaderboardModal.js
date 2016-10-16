@@ -22,7 +22,7 @@ export default class Leaderboard extends Component {
     }
 
     componentDidMount() {
-        this.timer = setInterval(() => this.tick, 100)
+        this.timer = setInterval(this.tick.bind(this), 100)
         window.socket.emit('refresh room', {
             roomId: this.props.room.id
         })
@@ -33,19 +33,15 @@ export default class Leaderboard extends Component {
     }
 
     tick() {
-        const { setState, props: { room } } = this
+        const { props: { room } } = this
         let timeRemaining = room.roundStartTime - moment().unix()
         let minutes = Math.floor(timeRemaining / 60)
         let seconds = timeRemaining - minutes * 60
 
-        if (isNaN(minutes) || isNaN(seconds) || minutes < 0) {
-            return '0'
-        }
+        if (isNaN(minutes) || isNaN(seconds) || minutes < 0) return '0'
 
-        setState({ elapsed: `${seconds}` })
+        this.setState({ elapsed: `${seconds}` })
     }
-
-    // { name: 'Most damage inflicted', playerNickname: 'Rick Sanchez', pic: 'path/to/over9000.jpeg' },
 
     renderAchievements() {
         const { props: { room } } = this
@@ -199,7 +195,7 @@ export default class Leaderboard extends Component {
                                         { renderPlayers() }
                                     </tbody>
                                 </table>
-                                { room.state === 'ended' &&
+                                { true &&
                                     <div className="row">
                                         <div className="col-sm-12 text-center">
                                             <h5>Next round starting in { elapsed } seconds...</h5>

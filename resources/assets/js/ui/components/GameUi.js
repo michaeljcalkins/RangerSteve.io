@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react'
 import storage from 'store'
+import autobind from 'react-autobind'
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudKillConfirmed from './Hud/HudKillConfirmed'
 import HudKillLog from './Hud/HudKillLog'
-import HudSettingsButton from './Hud/HudSettingsButton'
+import HudChangeWeaponsButton from './Hud/HudChangeWeaponsButton'
+import HudKeyboardControlsButton from './Hud/HudKeyboardControlsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
 import HudLeaderboard from './Hud/HudLeaderboard'
 import SettingsModal from './SettingsModal/SettingsModal'
@@ -16,13 +18,7 @@ import LoadingScreen from './LoadingScreen/LoadingScreen'
 export default class GameUi extends React.Component {
     constructor(props) {
         super(props)
-
-        this.handleSendMessage = this.handleSendMessage.bind(this)
-        this.handleNicknameChange = this.handleNicknameChange.bind(this)
-        this.handleSoundEffectVolumeChange = this.handleSoundEffectVolumeChange.bind(this)
-        this.handleViewChange = this.handleViewChange.bind(this)
-        this.handlePrimaryGunClick = this.handlePrimaryGunClick.bind(this)
-        this.handleSecondaryGunClick = this.handleSecondaryGunClick.bind(this)
+        autobind(this)
     }
 
     componentDidMount() {
@@ -100,6 +96,20 @@ export default class GameUi extends React.Component {
         return (game.leaderboardModalIsOpen || room.state === 'ended')
     }
 
+    handleOpenKeyboardControlsButton() {
+        const { onOpenSettingsModal, onSettingsViewChange } = this.props
+
+        onOpenSettingsModal()
+        onSettingsViewChange('controls')
+    }
+
+    handleChangeWeaponsButton() {
+        const { onOpenSettingsModal, onSettingsViewChange } = this.props
+
+        onOpenSettingsModal()
+        onSettingsViewChange('default')
+    }
+
     render() {
         const {
             props: {
@@ -107,7 +117,6 @@ export default class GameUi extends React.Component {
                 room,
                 game,
                 onCloseSettingsModal,
-                onOpenSettingsModal,
                 onSettingsViewChange
             }
         } = this
@@ -118,7 +127,9 @@ export default class GameUi extends React.Component {
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
-                <HudSettingsButton onButtonClick={ onOpenSettingsModal } />
+                <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
+                <HudKeyboardControlsButton onButtonClick={ this.handleOpenKeyboardControlsButton } />
+
                 <HudLeaderboard players={ room.players } />
                 <HudChatHistory
                     isOpen={ game.chatModalIsOpen }
