@@ -8,6 +8,7 @@ const initialState = {
     health: 100,
     isPrimaryReloading: false,
     isSecondaryReloading: false,
+    isSwitchingWeapon: false,
     jumping: false,
     jumpJetCounter: 0,
     nickname: storage.get('nickname', NameGenerator()),
@@ -49,6 +50,12 @@ const player = (state = initialState, action) => {
             return {
                 ...state,
                 isSecondaryReloading: action.value
+            }
+
+        case 'SET_IS_SWITCHING_WEAPON':
+            return {
+                ...state,
+                isSwitchingWeapon: action.value
             }
 
         case 'DECREMENT_SECONDARY_AMMO_REMAINING':

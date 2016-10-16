@@ -241,6 +241,7 @@ const GameConsts = {
             ammo: 1,
             bulletType: 'rocket',
             reloadTime: 15000,
+            switchDelay: 1000,
             bulletSpeed: 2100,
             damage: 100,
             fireRate: 1000,
