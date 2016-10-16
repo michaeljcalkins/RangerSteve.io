@@ -2,7 +2,6 @@
  * Standard Modal
  */
 .modal-content {
-    // border-radius: 5px !important;
     background: url(/images/ui/panel/6.png) no-repeat top center;
     background-size: cover;
     border: 0;
@@ -47,7 +46,7 @@
     color: #E3DED3;
     font-weight: 400;
     font-family: "Keep Calm", Arial, sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     letter-spacing: 2px;
     margin: 0;
 }
@@ -90,75 +89,64 @@
 /**
  * Respawn Modal
  */
-.respawn-modal {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    width: 610px;
-}
+.modal-respawn {
+    .modal-content {
+        background: url(/images/ui/panel/3.png) no-repeat center 70px,
+            url(/images/ui/panel/5.png) no-repeat top center;
+        background-size: 30%, 100%;
+        width: 600px;
+        height: 583px;
+        margin: inherit;
 
-.respawn-modal .modal-content {
-    background: #504F4D no-repeat 10px;
-    box-shadow: none !important;
-    border: 0;
-    height: auto;
-    font-size: 13px;
-    z-index: 10;
-
-    .media {
-        margin: 0;
-
-        .media-left {
-            width: 200px;
-            position: absolute;
-            text-align: center;
-            left: 10px;
-            top: 0;
-            -ms-transform: rotate(-7deg); /* IE 9 */
-            -webkit-transform: rotate(-7deg); /* Chrome, Safari, Opera */
-            transform: rotate(-7deg);
-        }
-
-        .media-body {
-            text-align: center;;
-        }
-
-        img {
-            max-width: 100%;
-            margin: 10px auto 0;
+        .modal-body {
+            overflow: hidden;
+            max-height: 500px;
         }
     }
 
-    .text-danger {
-        color: #E25041;
-    }
-
-    .text-primary {
-        color: #D1D5D8;
+    .weapon-image {
+        -webkit-transform: rotate(-25deg);
+        transform: rotate(-25deg);
+        margin-top: 60px;
+        margin-bottom: 55px;
+        max-width: 200px;
+        max-height: 200px;
     }
 
     hr {
-        border-color: rgba(70, 70, 68, 1);
-        margin: 20px -15px;
+        border-color: #4D4D4D;
+        border-width: 2px;
+        margin: 25px auto;
+        width: 80%;
     }
 
-    .progress {
-        margin-top: 5px;
+    .social-image {
+        width: 32px;
+        margin-bottom: 15px;
+    }
+
+    input {
+        max-width: 300px;
+        float: none;
+        display: inline-block;
     }
 }
 
+.modal-settings {
+    .modal-title {
+        margin-top: 4px;
+    }
+}
+
+/**
+ * Leaderboard Modal
+ */
 .modal-leaderboard {
     .modal-content {
         background: url(/images/ui/panel/5.png) no-repeat top center;
         width: 600px;
         height: 583px;
         margin: inherit;
-    }
-
-    .modal-title {
-        margin-top: -4px;
     }
 
     .winning-player {
