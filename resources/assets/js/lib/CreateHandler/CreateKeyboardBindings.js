@@ -73,21 +73,29 @@ export default function() {
     this.input.keyboard.removeKey(lastSwitchWeaponKey)
     lastSwitchWeaponKey = store.getState().game.keyboardControls.switchWeapon
     this.input.keyboard.addKey(store.getState().game.keyboardControls.switchWeapon).onUp.add(() => {
-        if (store.getState().player.health <= 0) return
+        if (
+            store.getState().player.health <= 0 ||
+            store.getState().player.isSwitchingWeapon
+        ) return
 
         const currentWeapon = store.getState().player.currentWeapon
 
-        if (currentWeapon === 'primaryWeapon') {
-            store.dispatch(actions.player.setCurrentWeapon('secondaryWeapon'))
-        } else {
-            store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
-        }
+        const nextWeapon = (currentWeapon === 'primaryWeapon') ? 'secondaryWeapon' : 'primaryWeapon'
+        const nextWeaponConfig = store.getState().player[nextWeapon]
+        const switchDelay = nextWeaponConfig.switchDelay || 0
 
-        const newCurrentWeapon = store.getState().player.currentWeapon
-        const currentWeaponId = newCurrentWeapon === 'primaryWeapon'
-            ? store.getState().player.selectedPrimaryWeaponId
-            : store.getState().player.selectedSecondaryWeaponId
+        store.dispatch(actions.player.setIsSwitchingWeapon(true))
 
-        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+        setTimeout(() => {
+            store.dispatch(actions.player.setCurrentWeapon(nextWeapon))
+            store.dispatch(actions.player.setIsSwitchingWeapon(false))
+
+            const newCurrentWeapon = store.getState().player.currentWeapon
+            const currentWeaponId = newCurrentWeapon === 'primaryWeapon'
+                ? store.getState().player.selectedPrimaryWeaponId
+                : store.getState().player.selectedSecondaryWeaponId
+
+            this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+        }, switchDelay)
     })
 }

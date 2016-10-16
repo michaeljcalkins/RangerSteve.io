@@ -26,6 +26,13 @@ export const setSecondaryIsReloading = (value) => {
     }
 }
 
+export const setIsSwitchingWeapon = (value) => {
+    return {
+        type: 'SET_IS_SWITCHING_WEAPON',
+        value
+    }
+}
+
 export const decrementSecondaryAmmoRemaining = () => {
     return {
         type: 'DECREMENT_SECONDARY_AMMO_REMAINING'

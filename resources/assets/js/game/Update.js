@@ -51,6 +51,8 @@ export default function Update() {
     if (this.game.input.activePointer.leftButton.isDown) {
         const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
+        if (player.isSwitchingWeapon) return
+
         // Check if primary gun has ammo and is selected
         if (
             player.currentWeapon === 'primaryWeapon' &&
