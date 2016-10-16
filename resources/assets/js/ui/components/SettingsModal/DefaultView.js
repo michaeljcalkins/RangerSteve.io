@@ -8,13 +8,12 @@ import WeaponStats from './WeaponStats'
 export default class MainSettingsMenu extends React.Component {
     constructor(props) {
         super(props)
+        autobind(this)
 
         this.state = {
             nickname: props.player.nickname,
             sfxVolume: props.game.sfxVolume
         }
-
-        autobind(this)
     }
 
     handleGenerateName() {
