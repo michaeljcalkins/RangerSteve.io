@@ -85,11 +85,11 @@ export default function SettingsModal({
                                         <li
                                             className={ cs({
                                                 pointer: true,
-                                                active: game.settingsView === 'main'
+                                                active: game.settingsView === 'default'
                                             }) }
                                         >
-                                            <a onClick={ onViewChange.bind(this, 'main') }>
-                                                Main
+                                            <a onClick={ onViewChange.bind(this, 'default') }>
+                                                Weapons and Settings
                                             </a>
                                         </li>
                                         <li

@@ -5,9 +5,11 @@ export default function HudSettingsButton({
 }) {
     return (
         <div
-            className="hud-settings hud-item"
+            className="hud-change-weapons-button hud-item"
             onClick={ onButtonClick }
-        >Change Weapons</div>
+        >
+            Weapons
+        </div>
     )
 }
 
