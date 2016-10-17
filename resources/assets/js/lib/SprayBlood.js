@@ -10,8 +10,7 @@ const propTypes = {
 export default function(data) {
     let bloodY = data.bulletY
     let bloodX = data.playerX
-    let bloodRotation = 0
-    bloodRotation = data.bulletRotation
+    const bloodRotation = data.bulletRotation
     if (data.playerX > data.bulletX) {
         bloodX += 10
         bloodY -= 25
@@ -20,10 +19,9 @@ export default function(data) {
         bloodY += 25
     }
 
-    let blood = this.game.add.sprite(bloodX, bloodY, 'blood')
-    blood.scale.setTo(.14)
-    blood.rotation = bloodRotation
-    blood.animations.add('spray', [0,1,2,3,4,5,6,7,8,9,10,11,12,13], 45, false, true)
-    blood.animations.play('spray')
-    blood.animations.currentAnim.killOnComplete = true
+    const bloodSpray = this.bloodSprays.getFirstExists(false)
+    bloodSpray.reset(bloodX, bloodY)
+    bloodSpray.scale.setTo(.14)
+    bloodSpray.rotation = bloodRotation
+    bloodSpray.animations.play('spray')
 }

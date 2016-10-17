@@ -13,6 +13,12 @@ export default function() {
         ricochet.animations.add('collision')
     })
 
+    this.bloodSprays = this.game.add.group()
+    this.bloodSprays.createMultiple(200, 'blood')
+    this.bloodSprays.forEach((bloodSpray) => {
+        bloodSpray.animations.add('spray', [0,1,2,3,4,5,6,7,8,9,10,11,12,13], 45, false, true)
+    })
+
     this.playerDeaths = this.game.add.group()
     this.playerDeaths.createMultiple(20, 'player-death')
     this.playerDeaths.forEach((playerDeath) => {
