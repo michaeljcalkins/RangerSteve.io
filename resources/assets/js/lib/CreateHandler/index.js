@@ -33,6 +33,7 @@ export default function() {
     this.game.physics.enable(this.enemies, Phaser.Physics.ARCADE)
 
     this.jumpjetFx = this.game.add.audio('jumpjet')
+    this.switchingWeaponsFx = this.game.add.audio('switching-weapons')
     this.headshotSound = this.game.add.audio('headshot')
 
     CreateMapAndPlayer.call(this)
