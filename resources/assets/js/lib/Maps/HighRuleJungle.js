@@ -32,6 +32,10 @@ export function getRandomSpawnPoint() {
     return _.sample(SPAWN_POINTS)
 }
 
+export function getSpawnPoints() {
+    return SPAWN_POINTS
+}
+
 export function preload() {
     this.game.load.image('background', '/images/maps/high-rule-jungle/background.jpg', true)
     this.game.load.image('bridge', '/images/maps/high-rule-jungle/bridge.png', true)

@@ -33,6 +33,10 @@ export function getRandomSpawnPoint() {
     return _.sample(SPAWN_POINTS)
 }
 
+export function getSpawnPoints() {
+    return SPAWN_POINTS
+}
+
 export function preload() {
     this.game.load.image('background', '/maps/punk-city/concrete_wall.png')
     this.game.load.tilemap('tilemap', '/maps/punk-city/punk-city.json', null, Phaser.Tilemap.TILED_JSON)

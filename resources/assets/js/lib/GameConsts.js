@@ -2,6 +2,9 @@ const GameConsts = {
     DEBUG: false,
     STARTING_SFX_VOLUME: .04,
 
+    // Spawn Point
+    SPAWN_POINT_DISTANCE_FROM_ENEMY: 900,
+
     // Jump Jet
     JUMP_JET_SPEED: -1500,
     JUMP_JET_SPEED_REGENERATION: -1400,

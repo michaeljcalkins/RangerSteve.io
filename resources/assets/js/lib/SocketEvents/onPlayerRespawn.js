@@ -5,6 +5,7 @@ import PlayerById from '../PlayerById'
 import actions from '../../actions'
 import GameConsts from '../GameConsts.js'
 import CreateKeyboardBindings from '../CreateHandler/CreateKeyboardBindings'
+import GetSpawnPoint from '../GetSpawnPoint'
 
 const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
@@ -27,7 +28,9 @@ export default function onPlayerRespawn(data) {
     }
 
     // Create and set the new spawn point
-    const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
+    const spawnPoints = Maps[state.room.map].getSpawnPoints()
+    const spawnPoint = GetSpawnPoint(spawnPoints, this.enemies.children)
+
     this.player.x = spawnPoint.x
     this.player.y = spawnPoint.y
 

@@ -25,6 +25,10 @@ export function getRandomSpawnPoint() {
     return _.sample(SPAWN_POINTS)
 }
 
+export function getSpawnPoints() {
+    return SPAWN_POINTS
+}
+
 export function preload() {
     this.game.load.image('background', '/images/maps/dark-forest/background.jpg', true)
     this.game.load.tilemap('tilemap', '/maps/dark-forest/dark-forest.json', null, Phaser.Tilemap.TILED_JSON);

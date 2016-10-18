@@ -1,10 +1,14 @@
 import GameConsts from './GameConsts'
 import Maps from './Maps'
 import actions from '../actions'
+import GetSpawnPoint from './GetSpawnPoint'
 
 export default function PlayerSpriteHandler() {
     const state = this.game.store.getState()
-    const spawnPoint = Maps[state.room.map].getRandomSpawnPoint()
+
+    const spawnPoints = Maps[state.room.map].getSpawnPoints()
+    const spawnPoint = GetSpawnPoint(spawnPoints, this.enemies.children)
+
     const primaryWeaponId = this.game.store.getState().player.selectedPrimaryWeaponId
     const selectedPrimaryWeapon = GameConsts.WEAPONS[primaryWeaponId]
     const secondaryWeaponId = this.game.store.getState().player.selectedSecondaryWeaponId
