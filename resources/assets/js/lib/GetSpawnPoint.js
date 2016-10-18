@@ -9,21 +9,16 @@ export default function GetSpawnPoint(spawnPoints, enemies) {
 function filterSpawnPointsBasedOnEnemyPositions(spawnPoints, enemies) {
     const possibleSpawnPoints = [...spawnPoints]
 
-    for (let i = 0; i < enemies.length; i++) {
-        const enemy = enemies[i]
-
-        for (let j = possibleSpawnPoints.length - 1; j >= 0; j--) {
-            const possibleSpawnPoint = possibleSpawnPoints[j]
+    enemies.forEach((enemy) => {
+        _.remove(possibleSpawnPoints, (possibleSpawnPoint) => {
             const distanceBetweenEnemyAndSpawnPoint = Phaser.Math.distance(
                 enemy.x, enemy.y,
                 possibleSpawnPoint.x, possibleSpawnPoint.y
             )
 
-            if (distanceBetweenEnemyAndSpawnPoint < GameConsts.SPAWN_POINT_DISTANCE_FROM_ENEMY) {
-                possibleSpawnPoints.splice(j, 1)
-            }
-        }
-    }
+            return distanceBetweenEnemyAndSpawnPoint < GameConsts.SPAWN_POINT_DISTANCE_FROM_ENEMY
+        })
+    })
 
     return possibleSpawnPoints
 }
