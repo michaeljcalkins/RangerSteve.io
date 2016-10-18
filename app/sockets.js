@@ -16,7 +16,7 @@ const MAX_ROOM_SIZE = 7
 const RESPAWN_TIME_SECONDS = 5
 const ROUND_LENGTH_MINUTES = 5
 const PLAYER_FULL_HEALTH = 100
-const MAP_IDS = ['PunkFallout', 'HighRuleJungle', 'DarkForest', 'PunkCity', 'PunkLoop']
+const MAP_IDS = ['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop']
 
 function init(ioInstance) {
     io = ioInstance
@@ -84,10 +84,10 @@ setInterval(function() {
                 messages: rooms[roomId].messages
             })
 
+            // Randomly select a map that was not the previous map
             const potentialNextMaps = [
                 'PunkFallout',
                 'HighRuleJungle',
-                'DarkForest',
                 'PunkCity',
                 'PunkLoop'
             ].filter(map => map !== previousMap)
