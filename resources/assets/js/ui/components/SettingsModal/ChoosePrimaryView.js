@@ -14,14 +14,14 @@ export default function ChoosePrimaryMenu({
     }
 
     function renderWeapons() {
-        return GameConsts.PRIMARY_WEAPON_IDS.map(function(weaponId, index) {
+        return GameConsts.PRIMARY_WEAPON_IDS.map(function(weaponId) {
             const weapon = GameConsts.WEAPONS[weaponId]
 
             return (
                 <div
                     className="option-group align-middle"
-                    key={ index }
                     onClick={ handleSelectPrimaryClick.bind(this, weapon) }
+                    key={ 'primary' + weaponId }
                 >
                     <div>
                         <img src={ '/images/guns/large/' + weapon.image } />
