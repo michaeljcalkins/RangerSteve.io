@@ -21,6 +21,7 @@ export default function Preload() {
     this.game.load.atlas('player-death', '/sprites/player-death.png', '/sprites/player-death.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH)
 
     this.game.load.audio('jumpjet', '/audio/jumpjet.mp3')
+    this.game.load.audio('switching-weapons', '/audio/switching-weapons.mp3')
 
     this.game.load.audio('AK47', '/audio/AK47.mp3')
     this.game.load.audio('M500', '/audio/M500.mp3')
