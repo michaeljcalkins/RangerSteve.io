@@ -1,5 +1,10 @@
 import getParameterByName from '../GetParameterByName.js'
 
+// 1. send new player
+// 2. receive load game
+// 3. send load complete
+// 4. receive update players
+
 export default function onSocketConnected() {
     const { store } = this.game
 

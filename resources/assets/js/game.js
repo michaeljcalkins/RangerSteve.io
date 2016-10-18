@@ -4,19 +4,23 @@
 // import Render from './game/Render'
 // import setEventHandlers from './lib/SocketEvents/setEventHandlers'
 
-import LoadingState from './states/LoadingState'
-import DeathmatchState from './states/DeathmatchState'
-import EndedState from './states/EndedState'
+import Boot from './states/Boot'
+import Preloader from './states/Preloader'
+import AssetLoader from './states/AssetLoader'
+import Deathmatch from './states/Deathmatch'
+import EndOfRound from './states/EndOfRound'
 
 export default function(store) {
     const game = new Phaser.Game('100%', '100%', Phaser.AUTO)
     game.store = store
 
-    game.state.add('LoadingState', LoadingState)
-    game.state.add('DeathmatchState', DeathmatchState)
-    game.state.add('EndedState', EndedState)
+    game.state.add('Boot', Boot)
+    game.state.add('Preloader', Preloader)
+    game.state.add('AssetLoader', AssetLoader)
+    game.state.add('Deathmatch', Deathmatch)
+    game.state.add('EndOfRound', EndOfRound)
 
-    game.state.start('LoadingState')
+    game.state.start('Boot')
 }
 
 // const game = new Phaser.Game('100%', '100%', Phaser.AUTO, 'ranger-steve-game', function() {

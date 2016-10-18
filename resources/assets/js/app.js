@@ -8,5 +8,5 @@ window.socket = io.connect()
 
 const store = createStore(rootReducer)
 
-ui(store)
+// ui(store)
 game(store)
