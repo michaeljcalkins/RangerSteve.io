@@ -27,6 +27,10 @@ export function getRandomSpawnPoint() {
     return _.sample(SPAWN_POINTS)
 }
 
+export function getSpawnPoints() {
+    return SPAWN_POINTS
+}
+
 export function preload() {
     this.game.load.image('background', '/images/maps/punk-fallout/background.png', true)
     this.game.load.tilemap('tilemap', '/maps/punk-fallout/punk-fallout.json', null, Phaser.Tilemap.TILED_JSON);
