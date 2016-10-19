@@ -17,13 +17,13 @@
  */
 
 function Boot(game) {
-    console.log('Boot')
     this.game = game
 }
 
 Boot.prototype = {
 
     preload: function() {
+        console.log('Boot')
         this.load.image('ranger-steve', '/images/ranger-steve.png')
     },
 

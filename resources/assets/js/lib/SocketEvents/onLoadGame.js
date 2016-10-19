@@ -17,7 +17,6 @@ export default function onLoadGame(data) {
     store.dispatch(actions.game.setChatMessages(data.room.messages.slice(-5)))
 
     // Maps[store.getState().room.map].preload.call(this)
-    // this.currentMap = store.getState().room.map
 
     // this.game.load.onLoadComplete.add(() => {
     //     CreateHandler.call(this)
@@ -29,5 +28,5 @@ export default function onLoadGame(data) {
 
     // this.game.load.start()
 
-    this.game.state.start('AssetLoader', false)
+    // this.game.state.start('AssetLoader', false)
 }

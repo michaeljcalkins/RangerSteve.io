@@ -1,4 +1,3 @@
-import actions from '../../actions'
 import GameConsts from '../GameConsts'
 import CreateKeyboardBindings from './CreateKeyboardBindings'
 import CreateHurtBorder from './CreateHurtBorder'
@@ -9,8 +8,6 @@ import CreateKillingSpreeAudio from './CreateKillingSpreeAudio'
 import CreateUI from './CreateUI'
 
 export default function() {
-    const store = this.game.store
-
     // Scale game on window resize
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
     this.game.renderer.renderSession.roundPixels = true
@@ -43,6 +40,4 @@ export default function() {
     CreateDetectIdleUser()
     CreateBullets.call(this)
     CreateUI.call(this)
-
-    store.dispatch(actions.game.setState('active'))
 }

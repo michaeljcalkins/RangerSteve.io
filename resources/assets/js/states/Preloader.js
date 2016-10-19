@@ -18,13 +18,13 @@
 import setEventHandlers from '../lib/SocketEvents/setEventHandlers'
 
 function Preloader(game) {
-    console.log('Preloader')
     this.game = game
 }
 
 Preloader.prototype = {
 
     preload: function() {
+        console.log('Preloader')
         this.game.load.image('ground', '/images/platform.png')
         this.game.load.image('bullet', '/images/bullet.png')
         this.game.load.image('leftHudBg', '/images/leftHudBg.png')
@@ -72,7 +72,9 @@ Preloader.prototype = {
     },
 
     create: function() {
-        setEventHandlers.call(this, false)
+        window.socket = io.connect()
+        setEventHandlers.call(this)
+        setTimeout(() => this.game.state.start('Deathmatch', false), 2000)
     }
 
 }
