@@ -15,7 +15,7 @@ let lastKillingSpreeCount = 0
 
 export default function onPlayerKillConfirmed(data) {
     const store = this.game.store
-    if (store.getState().game.state !== 'active') return
+
     if (data.id !== window.SOCKET_ID) return
 
     store.dispatch(actions.player.setShowKillConfirmed(true))

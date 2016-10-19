@@ -26,7 +26,6 @@ export default function onPlayerDamaged(data) {
     }
 
     const store = this.game.store
-    if (store.getState().game.state !== 'active') return
 
     clearTimeout(damageTimeout)
     clearInterval(healingInterval)

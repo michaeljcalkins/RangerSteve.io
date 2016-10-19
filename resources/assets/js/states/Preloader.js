@@ -12,11 +12,12 @@
 // pauseUpdate
 // shutdown
 
+import setEventHandlers from '../lib/SocketEvents/setEventHandlers'
+import GameConsts from '../lib/GameConsts'
+
 /**
  * Load global assets and make socket connection.
  */
-import setEventHandlers from '../lib/SocketEvents/setEventHandlers'
-
 function Preloader(game) {
     this.game = game
 }
@@ -72,9 +73,53 @@ Preloader.prototype = {
     },
 
     create: function() {
+        // Scale game on window resize
+        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
+        this.game.renderer.renderSession.roundPixels = true
+        this.game.stage.disableVisibilityChange = true
+        this.game.scale.refresh()
+
+        // Enables advanced profiling features when debugging
+        this.game.time.advancedTiming = true
+
+        // Start up Arcade Physics
+        this.game.physics.startSystem(Phaser.Physics.ARCADE)
+        this.game.plugins.add(Phaser.Plugin.ArcadeSlopes)
+        this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
+
+        // Enemy remote players
+        this.enemies = this.game.add.group()
+        this.enemies.enableBody = true
+        this.enemies.physicsBodyType = Phaser.Physics.ARCADE
+        this.game.physics.arcade.enable(this.enemies)
+        this.game.physics.enable(this.enemies, Phaser.Physics.ARCADE)
+
+        this.jumpjetFx = this.game.add.audio('jumpjet')
+        this.switchingWeaponsFx = this.game.add.audio('switching-weapons')
+        this.headshotSound = this.game.add.audio('headshot')
+
+        this.enemyBullets = this.game.add.group()
+        this.enemyBullets.enableBody = true
+        this.enemyBullets.createMultiple(200, 'bullet')
+        this.enemyBullets.setAll('checkWorldBounds', true)
+        this.enemyBullets.setAll('outOfBoundsKill', true)
+        this.game.physics.arcade.enable(this.enemyBullets)
+        this.enemyBullets.forEach(function(bullet) {
+            bullet.body.height = 15
+            bullet.body.width = 15
+            bullet.height = 2
+            bullet.width = 40
+        }, this)
+        this.game.slopes.enable(this.enemyBullets)
+
+        this.rpgExplosions = this.game.add.group()
+        this.ricochets = this.game.add.group()
+        this.bloodSprays = this.game.add.group()
+        this.playerDeaths = this.game.add.group()
+        this.bullets = this.game.add.group()
+
         window.socket = io.connect()
         setEventHandlers.call(this)
-        setTimeout(() => this.game.state.start('Deathmatch', false), 2000)
     }
 
 }

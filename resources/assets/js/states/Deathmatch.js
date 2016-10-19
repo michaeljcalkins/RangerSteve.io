@@ -30,7 +30,13 @@ import GameConsts from '../lib/GameConsts'
 import UpdateHudPositions from '../lib/UpdateHudPositions'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
-import CreateHandler from '../lib/CreateHandler'
+import CreateKeyboardBindings from '../lib/Createhandler/CreateKeyboardBindings'
+import CreateHurtBorder from '../lib/Createhandler/CreateHurtBorder'
+import CreateMapAndPlayer from '../lib/Createhandler/CreateMapAndPlayer'
+import CreateBullets from '../lib/Createhandler/CreateBullets'
+import CreateDetectIdleUser from '../lib/Createhandler/CreateDetectIdleUser'
+import CreateKillingSpreeAudio from '../lib/Createhandler/CreateKillingSpreeAudio'
+import CreateUI from '../lib/Createhandler/CreateUI'
 
 function Deathmatch(game) {
     this.game = game
@@ -46,7 +52,15 @@ Deathmatch.prototype = {
     },
 
     create: function() {
-        CreateHandler.call(this)
+        CreateMapAndPlayer.call(this)
+        CreateKeyboardBindings.call(this)
+        CreateHurtBorder.call(this)
+        CreateKillingSpreeAudio.call(this)
+        CreateDetectIdleUser()
+        CreateBullets.call(this)
+        CreateUI.call(this)
+
+        InitEvents.call(this)
     },
 
     update: function() {
@@ -86,6 +100,7 @@ Deathmatch.prototype = {
         /**
          * Fire current weapon
          */
+        // TODO FireWeaponIfActive.call(this)
         if (this.game.input.activePointer.leftButton.isDown) {
             const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
@@ -127,6 +142,7 @@ Deathmatch.prototype = {
         UpdatePlayerPosition.call(this)
         UpdateHurtBorder.call(this)
 
+        // TODO UpdateHurtBorderSize.call(this)
         this.hurtBorderSprite.width = window.innerWidth
         this.hurtBorderSprite.height = window.innerHeight
     },

@@ -1,6 +1,4 @@
 import actions from '../../actions'
-import CreateHandler from '../CreateHandler'
-import Maps from '../Maps'
 import { PropTypes } from 'react'
 
 const propTypes = {
@@ -15,18 +13,5 @@ export default function onLoadGame(data) {
 
     store.dispatch(actions.room.setRoom(data.room))
     store.dispatch(actions.game.setChatMessages(data.room.messages.slice(-5)))
-
-    // Maps[store.getState().room.map].preload.call(this)
-
-    // this.game.load.onLoadComplete.add(() => {
-    //     CreateHandler.call(this)
-
-    //     window.socket.emit('load complete', {
-    //         roomId: store.getState().room.id
-    //     })
-    // }, this)
-
-    // this.game.load.start()
-
-    // this.game.state.start('AssetLoader', false)
+    this.game.state.start('Deathmatch', false)
 }

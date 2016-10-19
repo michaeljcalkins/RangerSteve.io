@@ -21,7 +21,8 @@ function isNotMoving(movePlayer) {
 
 export default function onMovePlayer(data) {
     const store = this.game.store
-    if (store.getState().game.state !== 'active') return
+
+    if (['Boot', 'Preloader'].indexOf(this.game.state.current) > -1) return
 
     if (data.id === window.SOCKET_ID) return
 

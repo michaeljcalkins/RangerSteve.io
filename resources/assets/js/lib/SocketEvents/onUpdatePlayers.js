@@ -15,7 +15,8 @@ let lastRoomState = null
 
 export default function onUpdatePlayers(data) {
     const store = this.game.store
-    if (store.getState().game.state !== 'active') return
+
+    if (['Boot', 'Preloader'].indexOf(this.game.state.current) > -1) return
 
     store.dispatch(actions.room.setRoom(data.room))
 
@@ -24,9 +25,11 @@ export default function onUpdatePlayers(data) {
     window.history.pushState({ path: newurl }, '', newurl)
 
     // TODO Instead of destroying all enemies look for the differences and adjust accordingly.
-    this.enemies.forEach(function (enemy) {
-        enemy.kill()
-    })
+    if (this.enemies) {
+        this.enemies.forEach(function (enemy) {
+            enemy.kill()
+        })
+    }
 
     this.enemies = this.game.add.group()
 
@@ -68,7 +71,7 @@ export default function onUpdatePlayers(data) {
 
     // Round has restarted and the user will rejoin on a new map
     if (store.getState().room.state === 'active' && lastRoomState === 'ended') {
-        document.location.reload(true)
+        this.game.state.start('EndOfRound')
         return
     }
 
