@@ -3,9 +3,9 @@ const path = require('path'),
       webpack = require('webpack'),
       autoprefixer = require('autoprefixer'),
       // plugins
-      HTMLWebpackPlugin = require('html-webpack-plugin')
+      HTMLWebpackPlugin = require('html-webpack-plugin'),
       // config
-      BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc'))
+      BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
       SRC = 'resources/assets/',
       DIST = 'public/'
 
