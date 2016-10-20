@@ -24,7 +24,6 @@ import FireShotgunShell from '../lib/FireShotgunShell'
 import FireRocket from '../lib/FireRocket'
 import RotateBulletsToTrajectory from '../lib/RotateBulletsToTrajectory'
 import Maps from '../lib/Maps'
-import InitEvents from '../lib/CreateHandler/CreateKeyboardBindings'
 import actions from '../actions'
 import GameConsts from '../lib/GameConsts'
 import UpdateHudPositions from '../lib/UpdateHudPositions'
@@ -52,21 +51,44 @@ Deathmatch.prototype = {
     },
 
     create: function() {
+        // Scale game on window resize
+        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
+        this.game.renderer.renderSession.roundPixels = true
+        this.game.stage.disableVisibilityChange = true
+        this.game.scale.refresh()
+
+        // Enables advanced profiling features when debugging
+        this.game.time.advancedTiming = true
+
+        // Start up Arcade Physics
+        this.game.physics.startSystem(Phaser.Physics.ARCADE)
+        this.game.plugins.add(Phaser.Plugin.ArcadeSlopes)
+        this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
+
+        // Enemy remote players
+        RangerSteve.enemies = this.game.add.group()
+        RangerSteve.enemies.enableBody = true
+        RangerSteve.enemies.physicsBodyType = Phaser.Physics.ARCADE
+        this.game.physics.arcade.enable(RangerSteve.enemies)
+        this.game.physics.enable(RangerSteve.enemies, Phaser.Physics.ARCADE)
+
+        RangerSteve.jumpjetFx = this.game.add.audio('jumpjet')
+        RangerSteve.switchingWeaponsFx = this.game.add.audio('switching-weapons')
+        RangerSteve.headshotSound = this.game.add.audio('headshot')
+
         CreateMapAndPlayer.call(this)
-        CreateKeyboardBindings.call(this)
         CreateHurtBorder.call(this)
         CreateKillingSpreeAudio.call(this)
         CreateDetectIdleUser()
         CreateBullets.call(this)
         CreateUI.call(this)
-
-        InitEvents.call(this)
+        CreateKeyboardBindings.call(this)
     },
 
     update: function() {
         if (this.game.store.getState().game.resetEventsFlag) {
             this.game.store.dispatch(actions.game.setResetEventsFlag(false))
-            InitEvents.call(this)
+            CreateKeyboardBindings.call(this)
         }
 
         const state = this.game.store.getState()
@@ -141,24 +163,20 @@ Deathmatch.prototype = {
         RotateBulletsToTrajectory.call(this)
         UpdatePlayerPosition.call(this)
         UpdateHurtBorder.call(this)
-
-        // TODO UpdateHurtBorderSize.call(this)
-        this.hurtBorderSprite.width = window.innerWidth
-        this.hurtBorderSprite.height = window.innerHeight
     },
 
     render() {
-        if (! GameConsts.DEBUG || ! this.player) return
+        if (! GameConsts.DEBUG || ! RangerSteve.player) return
 
         this.game.debug.text('FPS: ' + (this.time.fps || '--'), 10, 20, "#ffffff")
-        this.game.debug.body(this.player)
+        this.game.debug.body(RangerSteve.player)
         this.game.debug.inputInfo(32, 200)
         this.game.debug.cameraInfo(this.camera, 32, 110)
-        this.bullets.forEach((bullet) => {
+        RangerSteve.bullets.forEach((bullet) => {
             this.game.debug.body(bullet)
         })
 
-        this.enemies.forEach((bullet) => {
+        RangerSteve.enemies.forEach((bullet) => {
             this.game.debug.body(bullet)
         })
     }

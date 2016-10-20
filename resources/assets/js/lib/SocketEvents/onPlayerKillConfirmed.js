@@ -37,8 +37,8 @@ export default function onPlayerKillConfirmed(data) {
 
     // Play headshot soundeffect
     if (data.wasHeadshot) {
-        this.headshotSound.volume = store.getState().game.sfxVolume
-        this.headshotSound.play()
+        RangerSteve.headshotSound.volume = store.getState().game.sfxVolume
+        RangerSteve.headshotSound.play()
     }
 
     // Play enemy death animation

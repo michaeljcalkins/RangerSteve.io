@@ -6,7 +6,7 @@ const propTypes = {
 }
 
 export default function(data) {
-    const ricochet = this.ricochets.getFirstExists(false)
+    const ricochet = RangerSteve.ricochets.getFirstExists(false)
     ricochet.reset(data.bulletX, data.bulletY)
     ricochet.scale.setTo(.1)
     ricochet.anchor.setTo(.5, .5)

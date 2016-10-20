@@ -2,11 +2,11 @@
  * Rotate bullets according to trajectory
  */
 export default function() {
-    this.bullets.forEach((bullet) => {
+    RangerSteve.bullets.forEach((bullet) => {
         bullet.rotation = Math.atan2(bullet.body.velocity.y, bullet.body.velocity.x)
     })
 
-    this.enemyBullets.forEach((bullet) => {
+    RangerSteve.enemyBullets.forEach((bullet) => {
         bullet.rotation = Math.atan2(bullet.body.velocity.y, bullet.body.velocity.x)
     })
 }

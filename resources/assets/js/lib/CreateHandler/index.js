@@ -23,15 +23,15 @@ export default function() {
     this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
     // Enemy remote players
-    this.enemies = this.game.add.group()
-    this.enemies.enableBody = true
-    this.enemies.physicsBodyType = Phaser.Physics.ARCADE
-    this.game.physics.arcade.enable(this.enemies)
-    this.game.physics.enable(this.enemies, Phaser.Physics.ARCADE)
+    RangerSteve.enemies = this.game.add.group()
+    RangerSteve.enemies.enableBody = true
+    RangerSteve.enemies.physicsBodyType = Phaser.Physics.ARCADE
+    this.game.physics.arcade.enable(RangerSteve.enemies)
+    this.game.physics.enable(RangerSteve.enemies, Phaser.Physics.ARCADE)
 
-    this.jumpjetFx = this.game.add.audio('jumpjet')
-    this.switchingWeaponsFx = this.game.add.audio('switching-weapons')
-    this.headshotSound = this.game.add.audio('headshot')
+    RangerSteve.jumpjetFx = this.game.add.audio('jumpjet')
+    RangerSteve.switchingWeaponsFx = this.game.add.audio('switching-weapons')
+    RangerSteve.headshotSound = this.game.add.audio('headshot')
 
     CreateMapAndPlayer.call(this)
     CreateKeyboardBindings.call(this)

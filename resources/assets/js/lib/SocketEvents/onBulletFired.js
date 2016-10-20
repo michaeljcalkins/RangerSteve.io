@@ -1,6 +1,7 @@
 import { PropTypes } from 'react'
 
 import GameConsts from '../GameConsts'
+import IsGameActive from '../IsGameActive'
 
 const propTypes = {
     bulletId: PropTypes.string.isRequired,
@@ -18,13 +19,10 @@ let soundThrottle = false
 export default function onBulletFired(data) {
     const store = this.game.store
 
-    if (['Boot', 'Preloader'].indexOf(this.game.state.current) > -1) return
-
+    if (! IsGameActive.call(this)) return
     if (data.id === window.SOCKET_ID) return
 
-    console.log('this.game.enemyBullets', this.game.enemyBullets)
-
-    let bullet = this.enemyBullets.getFirstDead()
+    let bullet = RangerSteve.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)
     bullet.bulletId = data.bulletId
     bullet.playerId = data.playerId
@@ -39,7 +37,7 @@ export default function onBulletFired(data) {
     bullet.body.velocity.x += newVelocity.x
     bullet.body.velocity.y += newVelocity.y
 
-    let distanceBetweenBulletAndPlayer = Phaser.Math.distance(this.player.x, this.player.y, data.x, data.y)
+    let distanceBetweenBulletAndPlayer = Phaser.Math.distance(RangerSteve.player.x, RangerSteve.player.y, data.x, data.y)
     let enemyBulletVolume = distanceBetweenBulletAndPlayer > 0 ? 1 - (distanceBetweenBulletAndPlayer / 3000) : 0
 
     /**
@@ -49,7 +47,7 @@ export default function onBulletFired(data) {
      */
     if (soundThrottle) return
     soundThrottle = true
-    this.weaponSoundEffects[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
-    this.weaponSoundEffects[bullet.weaponId].play()
+    RangerSteve.weaponSoundEffects[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
+    RangerSteve.weaponSoundEffects[bullet.weaponId].play()
     setTimeout(() => soundThrottle = false, 100)
 }

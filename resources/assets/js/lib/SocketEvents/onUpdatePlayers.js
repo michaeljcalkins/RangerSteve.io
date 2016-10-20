@@ -3,6 +3,7 @@ import _ from 'lodash'
 
 import RemotePlayer from '../RemotePlayer'
 import actions from '../../actions'
+import IsGameActive from '../IsGameActive'
 
 const propTypes = {
     room: PropTypes.shape({
@@ -14,9 +15,10 @@ const propTypes = {
 let lastRoomState = null
 
 export default function onUpdatePlayers(data) {
-    const store = this.game.store
+    if (! IsGameActive.call(this)) return
+    console.log('onUpdatePlayers')
 
-    if (['Boot', 'Preloader'].indexOf(this.game.state.current) > -1) return
+    const store = this.game.store
 
     store.dispatch(actions.room.setRoom(data.room))
 
@@ -25,13 +27,13 @@ export default function onUpdatePlayers(data) {
     window.history.pushState({ path: newurl }, '', newurl)
 
     // TODO Instead of destroying all enemies look for the differences and adjust accordingly.
-    if (this.enemies) {
-        this.enemies.forEach(function (enemy) {
+    if (RangerSteve.enemies) {
+        RangerSteve.enemies.forEach(function (enemy) {
             enemy.kill()
         })
     }
 
-    this.enemies = this.game.add.group()
+    RangerSteve.enemies = this.game.add.group()
 
     _.values(store.getState().room.players).forEach((player) => {
         if (player.id === window.SOCKET_ID) {
@@ -59,7 +61,7 @@ export default function onUpdatePlayers(data) {
             newRemotePlayer.visible = false
         }
 
-        this.enemies.add(newRemotePlayer)
+        RangerSteve.enemies.add(newRemotePlayer)
     })
     // ENDTODO
 
