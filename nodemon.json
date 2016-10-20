@@ -12,6 +12,8 @@
   },
   "watch": [
     "bin/",
+    "public/app.js",
+    "resources/assets",
     "app/",
     "app.js"
   ],
