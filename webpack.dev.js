@@ -6,7 +6,7 @@ const path = require('path'),
       BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
       DashboardPlugin = require('webpack-dashboard/plugin'),
       // top keks
-      BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc')),
+      BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
       SRC = 'resources/assets/',
       DIST = 'public/',
       isProduction = process.env.NODE_ENV === 'production'
