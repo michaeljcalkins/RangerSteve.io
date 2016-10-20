@@ -1,9 +1,21 @@
 {
-    "parser": "babel-eslint",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "installedESLint": true,
     "env": {
         "browser": true,
         "node": true,
         "es6": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion":6,
+        "ecmaFeatures": {
+            "jsx": true
+        },
     },
     "globals": {
         "mixpanel": true,
@@ -26,10 +38,9 @@
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],
 
-        # ES6 Rules
+        "no-console":0,
         "no-const-assign": 1,
 
-        # React Rules
         "react/display-name": 0,
         "react/forbid-prop-types": 0,
         "react/jsx-boolean-value": 1,
