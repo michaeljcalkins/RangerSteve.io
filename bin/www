@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+require('nodejs-dashboard')
 var app = require('../app');
 var debug = require('debug')('rangersteve:server');
 var http = require('http');
