@@ -1,7 +1,6 @@
 import GameConsts from './GameConsts'
 
 import { upInputIsActive, upInputReleased } from './InputHelpers'
-import IsGameActive from './IsGameActive'
 import actions from '../actions'
 
 let jumpjetFxHandle = null
@@ -13,7 +12,7 @@ function isJumpInputActive() {
 }
 
 export default function PlayerJumpHandler() {
-    if (! IsGameActive.call(this)) return
+    if (this.game.state.current === 'Boot') return
 
     const store = this.game.store
     const onTheGround = RangerSteve.player.body.touching.down

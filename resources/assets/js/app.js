@@ -6,5 +6,5 @@ import game from './game'
 
 const store = createStore(rootReducer)
 
-// ui(store)
+ui(store)
 game(store)

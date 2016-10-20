@@ -1,7 +1,6 @@
 import { PropTypes } from 'react'
 
 import GameConsts from '../GameConsts'
-import IsGameActive from '../IsGameActive'
 
 const propTypes = {
     bulletId: PropTypes.string.isRequired,
@@ -19,7 +18,7 @@ let soundThrottle = false
 export default function onBulletFired(data) {
     const store = this.game.store
 
-    if (! IsGameActive.call(this)) return
+    if (this.game.state.current === 'Boot') return
     if (data.id === window.SOCKET_ID) return
 
     let bullet = RangerSteve.enemyBullets.getFirstDead()

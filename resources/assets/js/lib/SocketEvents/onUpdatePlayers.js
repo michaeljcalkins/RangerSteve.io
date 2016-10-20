@@ -3,7 +3,6 @@ import _ from 'lodash'
 
 import RemotePlayer from '../RemotePlayer'
 import actions from '../../actions'
-import IsGameActive from '../IsGameActive'
 
 const propTypes = {
     room: PropTypes.shape({
@@ -15,8 +14,7 @@ const propTypes = {
 let lastRoomState = null
 
 export default function onUpdatePlayers(data) {
-    if (! IsGameActive.call(this)) return
-    console.log('onUpdatePlayers')
+    if (this.game.state.current !== 'Boot') return
 
     const store = this.game.store
 

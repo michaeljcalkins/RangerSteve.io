@@ -13,7 +13,7 @@
 // shutdown
 
 /**
- * Setup loading screen and initialize Preloader.
+ * Setup loading screen and initialize Gamemode.
  */
 
 function EndOfRound(game) {
@@ -28,7 +28,6 @@ EndOfRound.prototype = {
 
     create: function() {
         this.stage.backgroundColor = '#2B2825'
-
     }
 
 }

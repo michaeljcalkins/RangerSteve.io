@@ -2,7 +2,6 @@ import { PropTypes } from 'react'
 import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
 import GameConsts from '../GameConsts'
-import IsGameActive from '../IsGameActive'
 
 const propTypes = {
     id: PropTypes.string.isRequired,
@@ -23,7 +22,7 @@ function isNotMoving(movePlayer) {
 export default function onMovePlayer(data) {
     const store = this.game.store
 
-    if (! IsGameActive.call(this)) return
+    if (this.game.state.current !== 'Boot') return
 
     if (data.id === window.SOCKET_ID) return
 
