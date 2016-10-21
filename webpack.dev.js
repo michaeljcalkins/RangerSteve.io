@@ -18,11 +18,23 @@ const path = require('path'),
 // var pixi = path.join(phaserModule, 'build/custom/pixi.js')
 // var p2 = path.join(phaserModule, 'build/custom/p2.js')
 const config = {
-  devtool:'cheap-eval-source-map',
+  devtool:'eval-source-map',
   entry: {
     index: path.join(__dirname, SRC + 'js/app.js')
   },
   module: {
+    preLoaders: [
+    {
+      test: /\.scss$/, 
+      include: [
+        path.join(__dirname, SRC + 'sass') // important for performance!
+      ],
+      loader: ExtractTextPlugin.extract({
+        fallbackLoader: 'style',
+        loader: 'css!sass'
+      }),
+      exclude: /node_modules/
+    }],
     loaders: [
       // { test: /pixi\.js/, include: pixi, loader: 'expose?PIXI' },
       // { test: /phaser-split\.js$/, include: phaser, loader: 'expose?Phaser' },
@@ -32,24 +44,14 @@ const config = {
         include: [
           path.join(__dirname, SRC + 'js') // important for performance!
         ], exclude: [/node_modules/, "index.js"], loader: 'babel',
-        query: Object.assign({cacheDirectory: true}, BABEL_CONFIG), 
-        happy: {id:'js'}
+        query: Object.assign({cacheDirectory: true}, BABEL_CONFIG)
       },
-      {
-        test: /\.scss$/, 
-        include: [
-          path.join(__dirname, SRC + 'sass') // important for performance!
-        ],
-        loader: 'style!css!sass',
-        exclude: /node_modules/, 
-        happy: { id: 'scss' },
-      }
+      
     ],
- 
   },
   output: {
-    path: path.join(__dirname,'public/js'),
-    filename: 'app.js',
+    path: path.join(__dirname,'public'),
+    filename: 'js/app.js',
     publicPath: '/'
   },
   resolve: {
@@ -59,7 +61,7 @@ const config = {
     //   'p2': p2,
     // },
     root: path.resolve(__dirname, "resources/assets"),
-    extensions: ['', '.scss', '.webpack.js', '.web.js', '.js'],
+    extensions: ['', '.scss', '.css', '.webpack.js', '.web.js', '.js'],
     modulesDirectories: ["node_modules"],
   },
   // node: {
@@ -82,13 +84,17 @@ const config = {
         ws: true
       }
     }),
-
+    new ExtractTextPlugin({
+      filename: 'css/app.css',
+      allChunks: true,
+      disable: false
+    }),
     new webpack.DllReferencePlugin({
       context: path.join(__dirname, SRC + 'js/app.js'),
       manifest: require("./dll/vendor-manifest.json")
     }),
-    new HappyPack({ id: 'js', verbose: false, threads: 4 }),  
-    new HappyPack({ id: 'scss', verbose: false, threads: 4 }),
+    // new HappyPack({ id: 'js', verbose: false, threads: 4 }),  
+    // new HappyPack({ id: 'scss', verbose: false, threads: 4 }),
     // new HappyPack({ id: 'json', verbose: false, threads: 4 }),
     new DashboardPlugin(),
   ]
