@@ -74,7 +74,7 @@ const player = (state = initialState, action) => {
             }
 
         case 'REMOVE_CHAT_MESSAGE':
-            var index = state.chatMessages.indexOf(action.value)
+            const index = state.chatMessages.indexOf(action.value)
             return {
                 ...state,
                 chatMessages: [
@@ -93,7 +93,7 @@ const player = (state = initialState, action) => {
             }
 
         case 'REMOVE_KILL_LOG_MESSAGE':
-            var index = state.killLogMessages.indexOf(action.value)
+            const index = state.killLogMessages.indexOf(action.value)
             return {
                 ...state,
                 killLogMessages: [
