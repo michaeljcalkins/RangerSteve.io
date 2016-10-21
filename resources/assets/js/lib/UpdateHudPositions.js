@@ -50,7 +50,7 @@ export default function() {
     this.hudJumpJetIcon.fixedToCamera = true
 
     // Timer
-    this.hudTimerText.y = this.camera.height - TEXT_Y_OFFSET
+    this.hudTimerText.y = 20
     this.hudTimerText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
     this.hudTimerText.fixedToCamera = true
 

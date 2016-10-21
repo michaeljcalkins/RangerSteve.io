@@ -3,6 +3,7 @@ const path = require('path'),
       webpack = require('webpack'),
       // plugins
       HappyPack = require('happypack'),
+      ExtractTextPlugin = require("extract-text-webpack-plugin"),
       BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
       DashboardPlugin = require('webpack-dashboard/plugin'),
       // top keks
@@ -16,15 +17,6 @@ const path = require('path'),
 // var phaser = path.join(phaserModule, 'build/custom/phaser-split.js')
 // var pixi = path.join(phaserModule, 'build/custom/pixi.js')
 // var p2 = path.join(phaserModule, 'build/custom/p2.js')
-
-// const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
-//   template: path.join(__dirname, 'client/index.ejs'),
-//   filename: 'index.html',
-//   // ejs template for dev
-//   dll: '/dll/dll.vendor.js',
-//   inject: 'body'
-// })
-
 const config = {
   devtool:'cheap-eval-source-map',
   entry: {
@@ -44,9 +36,13 @@ const config = {
         happy: {id:'js'}
       },
       {
-        test: /\.scss$/, include: [
-          path.join(__dirname, `${SRC}sass/app.scss`) // important for performance!
-        ], exclude: /node_modules/, loader: "style!css!postcss!sass", happy:{ id: 'scss' },
+        test: /\.scss$/, 
+        include: [
+          path.join(__dirname, SRC + 'sass') // important for performance!
+        ],
+        loader: 'style!css!sass',
+        exclude: /node_modules/, 
+        happy: { id: 'scss' },
       }
     ],
  
@@ -86,6 +82,7 @@ const config = {
         ws: true
       }
     }),
+
     new webpack.DllReferencePlugin({
       context: path.join(__dirname, SRC + 'js/app.js'),
       manifest: require("./dll/vendor-manifest.json")

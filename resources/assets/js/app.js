@@ -1,3 +1,4 @@
+import '../sass/app.scss'
 import { createStore } from 'redux'
 
 import rootReducer from './reducers'
