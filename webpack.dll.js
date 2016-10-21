@@ -3,7 +3,15 @@ const webpack = require("webpack")
 
 module.exports = {
     entry: {
-        vendor: [path.join(__dirname, "vendors.js")]
+        vendor: [
+          "react",
+          "react-autobind",
+          "react-dom",
+          "react-redux",
+          "redux",
+          "store",
+          "classnames"
+        ]
     },
     output: {
         path: path.join(__dirname, "public", "dll"),
