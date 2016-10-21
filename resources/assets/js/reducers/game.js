@@ -74,12 +74,12 @@ const player = (state = initialState, action) => {
             }
 
         case 'REMOVE_CHAT_MESSAGE':
-            const index = state.chatMessages.indexOf(action.value)
+            const chatMessageIndex = state.chatMessages.indexOf(action.value)
             return {
                 ...state,
                 chatMessages: [
-                    ...state.chatMessages.slice(0, index),
-                    ...state.chatMessages.slice(index + 1)
+                    ...state.chatMessages.slice(0, chatMessageIndex),
+                    ...state.chatMessages.slice(chatMessageIndex + 1)
                 ]
             }
 
@@ -93,12 +93,12 @@ const player = (state = initialState, action) => {
             }
 
         case 'REMOVE_KILL_LOG_MESSAGE':
-            const index = state.killLogMessages.indexOf(action.value)
+            const killLogIndex = state.killLogMessages.indexOf(action.value)
             return {
                 ...state,
                 killLogMessages: [
-                    ...state.killLogMessages.slice(0, index),
-                    ...state.killLogMessages.slice(index + 1)
+                    ...state.killLogMessages.slice(0, killLogIndex),
+                    ...state.killLogMessages.slice(killLogIndex + 1)
                 ]
             }
 
