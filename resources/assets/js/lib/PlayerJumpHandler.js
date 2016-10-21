@@ -12,7 +12,7 @@ function isJumpInputActive() {
 }
 
 export default function PlayerJumpHandler() {
-    if (this.game.state.current === 'Boot') return
+    if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     const store = this.game.store
     const onTheGround = RangerSteve.player.body.touching.down

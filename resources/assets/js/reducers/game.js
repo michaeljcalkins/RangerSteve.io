@@ -19,7 +19,7 @@ const initialState = {
     settingsView: 'default',
     sfxVolume: storage.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME),
     showKillConfirmed: false,
-    state: 'loading',
+    state: 'active',
     resetEventsFlag: false
 }
 

@@ -17,7 +17,7 @@ export default function onPlayerRespawn(data) {
     const store = this.game.store
     const currentWeapon = state.player.currentWeapon
 
-    if (this.game.state.current === 'Boot') return
+    if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     if (data.damagedPlayerId !== window.SOCKET_ID) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)

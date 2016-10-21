@@ -14,7 +14,7 @@ const propTypes = {
 let lastRoomState = null
 
 export default function onUpdatePlayers(data) {
-    if (this.game.state.current !== 'Boot') return
+    if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     const store = this.game.store
 
@@ -66,12 +66,14 @@ export default function onUpdatePlayers(data) {
     // Round has ended so pause the game
     if (store.getState().room.state === 'ended') {
         this.game.paused = true
-        mixpanel.track('map:' + store.getState().room.map)
     }
 
     // Round has restarted and the user will rejoin on a new map
     if (store.getState().room.state === 'active' && lastRoomState === 'ended') {
-        this.game.state.start('EndOfRound')
+        lastRoomState = 'active'
+        this.game.paused = false
+        this.game.world.removeAll()
+        this.game.state.start('Preloader', true, false)
         return
     }
 

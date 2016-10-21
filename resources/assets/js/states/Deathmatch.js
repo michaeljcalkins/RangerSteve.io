@@ -1,17 +1,3 @@
-// init
-// preload
-// loadUpdate
-// loadRender
-// create
-// update
-// preRender
-// render
-// resize
-// paused
-// resumed
-// pauseUpdate
-// shutdown
-
 /**
  * Collisions and all game mode related interactions.
  */
@@ -44,13 +30,15 @@ function Deathmatch(game) {
 Deathmatch.prototype = {
 
     preload: function() {
-        console.log('Deathmatch')
         const store = this.game.store
         const mapName = store.getState().room.map
         Maps[mapName].preload.call(this)
     },
 
     create: function() {
+        const store = this.game.store
+        const { room } = store.getState()
+
         // Scale game on window resize
         this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
         this.game.renderer.renderSession.roundPixels = true
@@ -83,6 +71,12 @@ Deathmatch.prototype = {
         CreateBullets.call(this)
         CreateUI.call(this)
         CreateKeyboardBindings.call(this)
+
+        window.socket.emit('refresh players', {
+            roomId: room.id
+        })
+
+        this.game.paused = false
     },
 
     update: function() {
@@ -98,7 +92,7 @@ Deathmatch.prototype = {
             : player.selectedSecondaryWeaponId
 
         if (state.game.state === 'ended' || ! state.room) {
-            this.game.state.start('EndOfRound')
+            this.game.paused = true
         }
 
         UpdateHudPositions.call(this)

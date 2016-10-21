@@ -155,7 +155,7 @@ export default class Leaderboard extends Component {
     }
 
     render() {
-        let { state: { elapsed }, renderPlayers, renderAchievements } = this
+        let { state: { elapsed }, props: { room }, renderPlayers, renderAchievements } = this
 
         return (
             <div>
@@ -195,7 +195,7 @@ export default class Leaderboard extends Component {
                                         { renderPlayers() }
                                     </tbody>
                                 </table>
-                                { true &&
+                                { room.state === 'ended' &&
                                     <div className="row">
                                         <div className="col-sm-12 text-center">
                                             <h5>Next round starting in { elapsed } seconds...</h5>
