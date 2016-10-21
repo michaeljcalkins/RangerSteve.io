@@ -10,6 +10,8 @@ const path = require('path'),
       DIST = 'public/'
 
 const config = {
+  // uncomment if you want source-maps in production
+  // devtool: "source-map", 
   entry: {
     index: path.join(__dirname, SRC + 'js/app.js')
   },
