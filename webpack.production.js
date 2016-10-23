@@ -1,11 +1,11 @@
 const path = require('path'),
       fs = require('fs'),
       webpack = require('webpack'),
-      autoprefixer = require('autoprefixer'),
+      // autoprefixer = require('autoprefixer'),
       ExtractTextPlugin = require("extract-text-webpack-plugin"),
-      
+
       // plugins
-      HTMLWebpackPlugin = require('html-webpack-plugin'),
+      // HTMLWebpackPlugin = require('html-webpack-plugin'),
       // config
       BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
       SRC = 'resources/assets/',
@@ -13,13 +13,13 @@ const path = require('path'),
 
 const config = {
   // uncomment if you want source-maps in production
-  // devtool: "source-map", 
+  // devtool: "source-map",
   entry: {
     index: path.join(__dirname, SRC + 'js/app.js')
   },
   output: {
-    path: path.join(__dirname,'public/js'),
-    filename: 'app.js', // if you want cache busting, set string to [name]-hash.js;; if not wanted, leave be!
+    path: path.join(__dirname,'public'),
+    filename: 'js/app.js', // if you want cache busting, set string to [name]-hash.js;; if not wanted, leave be!
     publicPath: '/'
   },
   plugins: [
@@ -38,6 +38,7 @@ const config = {
     // HTMLWebpackPluginConfig,
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
+      mangle: true,
       minimize: true,
       compressor: {
         warnings: false,
@@ -57,7 +58,7 @@ const config = {
       {
         test: /\.scss$/, include: [
           path.join(__dirname, `${SRC}sass/app.scss`) // important for performance!
-        ], exclude: /node_modules/, 
+        ], exclude: /node_modules/,
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style',
           loader: 'css!sass'
@@ -65,14 +66,14 @@ const config = {
       }
     ]
   },
-  postcss: [ 
-    autoprefixer({ 
-    //************************
-      browsers: ['last 3 versions']
-    })
-  ],
+  // postcss: [
+  //   autoprefixer({
+  //   //************************
+  //     browsers: ['last 3 versions']
+  //   })
+  // ],
   resolve: {
-    extensions: ['', '.scss', '.webpack.js', '.web.js', '.js'],
+    extensions: ['.scss', '.webpack.js', '.web.js', '.js'],
   },
 }
 
