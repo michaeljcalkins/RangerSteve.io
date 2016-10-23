@@ -8,7 +8,7 @@ export default function() {
     this.rightHudBg.fixedToCamera = true
 
     const centerHudX = this.camera.width / 2 - 250
-    this.centerHudBg = this.game.add.tileSprite(centerHudX, this.camera.height - 45, 500, 100, 'centerHudBg')
+    this.centerHudBg = this.game.add.tileSprite(centerHudX, -55, 500, 100, 'centerHudBg')
     this.centerHudBg.fixedToCamera = true
 
     const style = {
@@ -51,7 +51,7 @@ export default function() {
     this.hudJumpJetIcon.fixedToCamera = true
 
     // Timer
-    this.hudTimerText = this.game.add.text(this.camera.width / 2, this.camera.height - 39, '4:30', style)
+    this.hudTimerText = this.game.add.text(this.camera.width / 2, 6, '--', style)
     this.hudTimerText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
     this.hudTimerText.smoothed = true
     this.hudTimerText.fixedToCamera = true

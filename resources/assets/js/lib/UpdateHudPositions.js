@@ -10,7 +10,7 @@ export default function() {
     // HUD Backgrounds
     const centerHudX = this.camera.width / 2 - 250
     this.centerHudBg.x = centerHudX
-    this.centerHudBg.y = this.camera.height - 45
+    this.centerHudBg.y = -55
     this.centerHudBg.fixedToCamera = true
 
     this.leftHudBg.x = -100
@@ -50,7 +50,7 @@ export default function() {
     this.hudJumpJetIcon.fixedToCamera = true
 
     // Timer
-    this.hudTimerText.y = 20
+    this.hudTimerText.y = 6
     this.hudTimerText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
     this.hudTimerText.fixedToCamera = true
 
