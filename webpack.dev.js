@@ -1,16 +1,16 @@
 const path = require('path'),
-      fs = require('fs'),
-      webpack = require('webpack'),
-      // plugins
-      HappyPack = require('happypack'),
-      ExtractTextPlugin = require("extract-text-webpack-plugin"),
-      BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
-      DashboardPlugin = require('webpack-dashboard/plugin'),
-      // top keks
-      BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
-      SRC = 'resources/assets/',
-      DIST = 'public/',
-      isProduction = process.env.NODE_ENV === 'production'
+  fs = require('fs'),
+  webpack = require('webpack'),
+  // plugins
+  HappyPack = require('happypack'),
+  ExtractTextPlugin = require("extract-text-webpack-plugin"),
+  BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
+  DashboardPlugin = require('webpack-dashboard/plugin'),
+  // top keks
+  BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
+  SRC = 'resources/assets/',
+  DIST = 'public/',
+  isProduction = process.env.NODE_ENV === 'production'
 
 // // Phaser webpack config
 // var phaserModule = path.join(__dirname, 'node_modules/phaser/')
@@ -18,7 +18,7 @@ const path = require('path'),
 // var pixi = path.join(phaserModule, 'build/custom/pixi.js')
 // var p2 = path.join(phaserModule, 'build/custom/p2.js')
 const config = {
-  devtool:'cheap-eval-source-map',
+  devtool: 'cheap-eval-source-map',
   entry: {
     index: path.join(__dirname, SRC + 'js/app.js')
   },
@@ -39,17 +39,16 @@ const config = {
       // { test: /phaser-split\.js$/, include: phaser, loader: 'expose?Phaser' },
       // { test: /p2\.js/, include: p2, loader: 'expose?p2' },
       {
-        test:/\.(js|jsx)$/,
+        test: /\.(js|jsx)$/,
         include: [
           path.join(__dirname, SRC + 'js') // important for performance!
         ], exclude: [/node_modules/, "index.js"], loader: 'babel',
-        query: Object.assign({cacheDirectory: true}, BABEL_CONFIG)
+        query: Object.assign({ cacheDirectory: true }, BABEL_CONFIG)
       },
-
     ],
   },
   output: {
-    path: path.join(__dirname,'public'),
+    path: path.join(__dirname, 'public'),
     filename: 'js/app.js',
     publicPath: '/'
   },
@@ -59,9 +58,11 @@ const config = {
     //   'pixi': pixi,
     //   'p2': p2,
     // },
-    mainFiles: [path.resolve(__dirname, "resources/assets")],
     // extensions: ['', '.scss', '.css', '.webpack.js', '.web.js', '.js'],
-    modules: ["node_modules"],
+    modules: [
+      path.resolve(__dirname, "resources/assets"),
+      "node_modules"
+    ],
   },
   // node: {
   //   console: true,

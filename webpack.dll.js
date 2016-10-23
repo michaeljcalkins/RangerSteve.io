@@ -4,13 +4,13 @@ const webpack = require("webpack")
 module.exports = {
     entry: {
         vendor: [
-          "react",
-          "react-autobind",
-          "react-dom",
-          "react-redux",
-          "redux",
-          "store",
-          "classnames"
+            "react",
+            "react-autobind",
+            "react-dom",
+            "react-redux",
+            "redux",
+            "store",
+            "classnames"
         ]
     },
     output: {
@@ -33,15 +33,17 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin()
     ],
     resolve: {
-      mainFiles: [path.resolve(__dirname, "resources/assets")],
-      modules: ["node_modules"]
+        modules: [
+            path.resolve(__dirname, "resources/assets"),
+            "node_modules"
+        ]
     },
     node: {
-      // console: true,
-      child_process: 'empty',
-      fs: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      dns: 'empty',
+        // console: true,
+        child_process: 'empty',
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty',
+        dns: 'empty',
     },
-};
+}
