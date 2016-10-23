@@ -1,6 +1,6 @@
 export default function PlayerAngleHandler() {
     const state = this.game.store.getState()
-    const angleInDegrees = (this.game.physics.arcade.angleToPointer(this.player) * 180 / Math.PI) + 90
+    const angleInDegrees = (this.game.physics.arcade.angleToPointer(RangerSteve.player) * 180 / Math.PI) + 90
 
     let leftAngle = angleInDegrees
     let rightAngle = angleInDegrees
@@ -132,6 +132,6 @@ export default function PlayerAngleHandler() {
         }
     }
 
-    this.leftArmGroup.angle = leftAngle
-    this.rightArmGroup.angle = rightAngle
+    RangerSteve.leftArmGroup.angle = leftAngle
+    RangerSteve.rightArmGroup.angle = rightAngle
 }

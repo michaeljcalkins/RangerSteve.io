@@ -14,8 +14,9 @@ const propTypes = {
 let lastRoomState = null
 
 export default function onUpdatePlayers(data) {
+    if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
+
     const store = this.game.store
-    if (store.getState().game.state !== 'active') return
 
     store.dispatch(actions.room.setRoom(data.room))
 
@@ -24,11 +25,13 @@ export default function onUpdatePlayers(data) {
     window.history.pushState({ path: newurl }, '', newurl)
 
     // TODO Instead of destroying all enemies look for the differences and adjust accordingly.
-    this.enemies.forEach(function (enemy) {
-        enemy.kill()
-    })
+    if (RangerSteve.enemies) {
+        RangerSteve.enemies.forEach(function (enemy) {
+            enemy.kill()
+        })
+    }
 
-    this.enemies = this.game.add.group()
+    RangerSteve.enemies = this.game.add.group()
 
     _.values(store.getState().room.players).forEach((player) => {
         if (player.id === window.SOCKET_ID) {
@@ -56,19 +59,21 @@ export default function onUpdatePlayers(data) {
             newRemotePlayer.visible = false
         }
 
-        this.enemies.add(newRemotePlayer)
+        RangerSteve.enemies.add(newRemotePlayer)
     })
     // ENDTODO
 
     // Round has ended so pause the game
     if (store.getState().room.state === 'ended') {
         this.game.paused = true
-        mixpanel.track('map:' + store.getState().room.map)
     }
 
     // Round has restarted and the user will rejoin on a new map
     if (store.getState().room.state === 'active' && lastRoomState === 'ended') {
-        document.location.reload(true)
+        lastRoomState = 'active'
+        this.game.paused = false
+        this.game.world.removeAll()
+        this.game.state.start('Preloader', true, false)
         return
     }
 

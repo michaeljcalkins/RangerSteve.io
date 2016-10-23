@@ -26,7 +26,6 @@ export default function onPlayerDamaged(data) {
     }
 
     const store = this.game.store
-    if (store.getState().game.state !== 'active') return
 
     clearTimeout(damageTimeout)
     clearInterval(healingInterval)
@@ -73,10 +72,10 @@ export default function onPlayerDamaged(data) {
 
     // Player has died
     if (store.getState().player.health <= 0) {
-        this.player.visible = false
+        RangerSteve.player.visible = false
         PlayPlayerDeathAnimation.call(this, {
-            x: this.player.x,
-            y: this.player.y
+            x: RangerSteve.player.x,
+            y: RangerSteve.player.y
         })
     }
 }

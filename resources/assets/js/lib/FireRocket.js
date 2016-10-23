@@ -17,15 +17,15 @@ export default function FireRocket(currentWeaponId) {
         state.player.health <= 0 ||
         state.room.state !== 'active' ||
         this.game.time.time < nextFire ||
-        this.bullets.countDead() <= 0
+        RangerSteve.bullets.countDead() <= 0
     ) return
 
     nextFire = this.game.time.time + currentWeapon.fireRate
 
-    let x = this.player.x
-    let y = this.player.y - 10
+    let x = RangerSteve.player.x
+    let y = RangerSteve.player.y - 10
 
-    let bullet = this.bullets.getFirstDead()
+    let bullet = RangerSteve.bullets.getFirstDead()
     bullet.bulletId = Guid()
     bullet.damage = this.damage
     bullet.weaponId = currentWeaponId
@@ -37,10 +37,10 @@ export default function FireRocket(currentWeaponId) {
     bullet.rotation = pointerAngle
 
     // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
-    this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+    RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
     clearTimeout(muzzleFlashHandler)
     muzzleFlashHandler = setTimeout(() => {
-        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+        RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
     }, 60)
 
     // Shake camera for gun recoil
@@ -51,8 +51,8 @@ export default function FireRocket(currentWeaponId) {
         bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
     }, 60)
 
-    this.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
-    this.weaponSoundEffects[currentWeaponId].play()
+    RangerSteve.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
+    RangerSteve.weaponSoundEffects[currentWeaponId].play()
 
     if (store.getState().player.currentWeapon === 'primaryWeapon') {
         store.dispatch(actions.player.decrementPrimaryAmmoRemaining())

@@ -13,7 +13,6 @@ import SettingsModal from './SettingsModal/SettingsModal'
 import LeaderboardModal from './LeaderboardModal/LeaderboardModal'
 import RespawnModal from './RespawnModal/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
-import LoadingScreen from './LoadingScreen/LoadingScreen'
 
 export default class GameUi extends React.Component {
     constructor(props) {
@@ -123,7 +122,6 @@ export default class GameUi extends React.Component {
 
         return (
             <div>
-                { game.state === 'loading' && <LoadingScreen /> }
                 <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />

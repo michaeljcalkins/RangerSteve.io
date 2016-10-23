@@ -5,10 +5,6 @@ import BulletsAndPlatforms from './Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from './Collisions/EnemyBulletsAndPlatforms'
 
 export default function CollisionHandler() {
-    const state = this.game.store.getState()
-
-    if (state.game.state !== 'active') return
-
     PlayerAndPlatforms.call(this)
     PlayerAndEnemyBullets.call(this)
     BulletsAndEnemyPlayers.call(this)

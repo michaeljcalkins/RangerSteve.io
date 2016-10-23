@@ -94,7 +94,7 @@ export function update() {
 
     if (store.getState().player.health <= 0) return
 
-    this.game.physics.arcade.overlap(this.player, this.groundSprite, () => {
+    this.game.physics.arcade.overlap(RangerSteve.player, this.groundSprite, () => {
         KillCurrentPlayer.call(this)
     })
 }

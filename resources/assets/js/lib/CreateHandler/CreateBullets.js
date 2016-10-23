@@ -1,38 +1,38 @@
 import GameConsts from '../GameConsts.js'
 
 export default function() {
-    this.rpgExplosions = this.game.add.group()
-    this.rpgExplosions.createMultiple(20, 'rpgExplosion')
-    this.rpgExplosions.forEach((rpgExplosion) => {
+    RangerSteve.rpgExplosions = this.game.add.group()
+    RangerSteve.rpgExplosions.createMultiple(20, 'rpgExplosion')
+    RangerSteve.rpgExplosions.forEach((rpgExplosion) => {
         rpgExplosion.animations.add('collision')
     })
 
-    this.ricochets = this.game.add.group()
-    this.ricochets.createMultiple(200, 'ricochet')
-    this.ricochets.forEach((ricochet) => {
+    RangerSteve.ricochets = this.game.add.group()
+    RangerSteve.ricochets.createMultiple(200, 'ricochet')
+    RangerSteve.ricochets.forEach((ricochet) => {
         ricochet.animations.add('collision')
     })
 
-    this.bloodSprays = this.game.add.group()
-    this.bloodSprays.createMultiple(200, 'blood')
-    this.bloodSprays.forEach((bloodSpray) => {
+    RangerSteve.bloodSprays = this.game.add.group()
+    RangerSteve.bloodSprays.createMultiple(200, 'blood')
+    RangerSteve.bloodSprays.forEach((bloodSpray) => {
         bloodSpray.animations.add('spray', [0,1,2,3,4,5,6,7,8,9,10,11,12,13], 45, false, true)
     })
 
-    this.playerDeaths = this.game.add.group()
-    this.playerDeaths.createMultiple(20, 'player-death')
-    this.playerDeaths.forEach((playerDeath) => {
+    RangerSteve.playerDeaths = this.game.add.group()
+    RangerSteve.playerDeaths.createMultiple(20, 'player-death')
+    RangerSteve.playerDeaths.forEach((playerDeath) => {
         playerDeath.animations.add('death')
     })
 
-    this.bullets = this.game.add.group()
-    this.bullets.createMultiple(200, 'bullet')
-    this.bullets.setAll('checkWorldBounds', true)
-    this.bullets.setAll('outOfBoundsKill', true)
+    RangerSteve.bullets = this.game.add.group()
+    RangerSteve.bullets.createMultiple(200, 'bullet')
+    RangerSteve.bullets.setAll('checkWorldBounds', true)
+    RangerSteve.bullets.setAll('outOfBoundsKill', true)
 
-    this.game.physics.arcade.enable(this.bullets)
-    this.game.slopes.enable(this.bullets)
-    this.bullets.forEach(function(bullet) {
+    this.game.physics.arcade.enable(RangerSteve.bullets)
+    this.game.slopes.enable(RangerSteve.bullets)
+    RangerSteve.bullets.forEach(function(bullet) {
         bullet.body.height = 15
         bullet.body.width = 15
         bullet.height = 2
@@ -54,18 +54,18 @@ export default function() {
         body.slopes.preferY    = GameConsts.SLOPE_FEATURES.minimumOffsetY
     }, this)
 
-    this.enemyBullets = this.game.add.group()
-    this.enemyBullets.enableBody = true
-    this.enemyBullets.createMultiple(200, 'bullet')
-    this.enemyBullets.setAll('checkWorldBounds', true)
-    this.enemyBullets.setAll('outOfBoundsKill', true)
+    RangerSteve.enemyBullets = this.game.add.group()
+    RangerSteve.enemyBullets.enableBody = true
+    RangerSteve.enemyBullets.createMultiple(200, 'bullet')
+    RangerSteve.enemyBullets.setAll('checkWorldBounds', true)
+    RangerSteve.enemyBullets.setAll('outOfBoundsKill', true)
 
-    this.game.physics.arcade.enable(this.enemyBullets)
-    this.enemyBullets.forEach(function(bullet) {
+    this.game.physics.arcade.enable(RangerSteve.enemyBullets)
+    RangerSteve.enemyBullets.forEach(function(bullet) {
         bullet.body.height = 15
         bullet.body.width = 15
         bullet.height = 2
         bullet.width = 40
     }, this)
-    this.game.slopes.enable(this.enemyBullets)
+    this.game.slopes.enable(RangerSteve.enemyBullets)
 }

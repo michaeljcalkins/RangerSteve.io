@@ -15,7 +15,7 @@ let lastKillingSpreeCount = 0
 
 export default function onPlayerKillConfirmed(data) {
     const store = this.game.store
-    if (store.getState().game.state !== 'active') return
+
     if (data.id !== window.SOCKET_ID) return
 
     store.dispatch(actions.player.setShowKillConfirmed(true))
@@ -37,8 +37,8 @@ export default function onPlayerKillConfirmed(data) {
 
     // Play headshot soundeffect
     if (data.wasHeadshot) {
-        this.headshotSound.volume = store.getState().game.sfxVolume
-        this.headshotSound.play()
+        RangerSteve.headshotSound.volume = store.getState().game.sfxVolume
+        RangerSteve.headshotSound.play()
     }
 
     // Play enemy death animation

@@ -9,4 +9,7 @@ export default function() {
     } else {
         this.hurtBorderSprite.alpha = 0
     }
+
+    this.hurtBorderSprite.width = window.innerWidth
+    this.hurtBorderSprite.height = window.innerHeight
 }

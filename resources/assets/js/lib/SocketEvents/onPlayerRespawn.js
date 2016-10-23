@@ -17,7 +17,7 @@ export default function onPlayerRespawn(data) {
     const store = this.game.store
     const currentWeapon = state.player.currentWeapon
 
-    if (store.getState().game.state !== 'active') return
+    if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     if (data.damagedPlayerId !== window.SOCKET_ID) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
@@ -29,15 +29,15 @@ export default function onPlayerRespawn(data) {
 
     // Create and set the new spawn point
     const spawnPoints = Maps[state.room.map].getSpawnPoints()
-    const spawnPoint = GetSpawnPoint(spawnPoints, this.enemies.children)
+    const spawnPoint = GetSpawnPoint(spawnPoints, RangerSteve.enemies.children)
 
-    this.player.x = spawnPoint.x
-    this.player.y = spawnPoint.y
+    RangerSteve.player.x = spawnPoint.x
+    RangerSteve.player.y = spawnPoint.y
 
-    this.player.body.acceleration.x = 0
-    this.player.body.acceleration.y = 0
-    this.player.body.velocity.x = 0
-    this.player.body.velocity.y = 0
+    RangerSteve.player.body.acceleration.x = 0
+    RangerSteve.player.body.acceleration.y = 0
+    RangerSteve.player.body.velocity.x = 0
+    RangerSteve.player.body.velocity.y = 0
 
     store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
     store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
@@ -45,9 +45,9 @@ export default function onPlayerRespawn(data) {
     store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
 
     if (currentWeapon === 'primaryWeapon')
-        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
+        RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
     else
-        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
+        RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
 
     store.dispatch(actions.player.setPrimaryIsReloading(false))
     store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))
@@ -55,7 +55,7 @@ export default function onPlayerRespawn(data) {
     store.dispatch(actions.player.setSecondaryIsReloading(false))
     store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].ammo))
 
-    this.player.visible = true
+    RangerSteve.player.visible = true
     this.game.input.enabled = true
     this.game.input.reset()
     CreateKeyboardBindings.call(this)
