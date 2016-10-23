@@ -46,7 +46,6 @@ function init(ioInstance) {
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
-        util.log('rooms[roomId].state', rooms[roomId].state)
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
             util.log('Restarting round for', roomId)
             const previousMap = rooms[roomId].map

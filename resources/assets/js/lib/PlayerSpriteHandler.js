@@ -6,8 +6,6 @@ import GetSpawnPoint from './GetSpawnPoint'
 export default function PlayerSpriteHandler() {
     const state = this.game.store.getState()
 
-    console.log(this.game.state.current)
-
     const spawnPoints = Maps[state.room.map].getSpawnPoints()
     const spawnPoint = GetSpawnPoint(spawnPoints, RangerSteve.enemies.children)
 
