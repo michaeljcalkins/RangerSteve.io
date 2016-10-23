@@ -29,7 +29,7 @@ export default function onPlayerRespawn(data) {
 
     // Create and set the new spawn point
     const spawnPoints = Maps[state.room.map].getSpawnPoints()
-    const spawnPoint = GetSpawnPoint(spawnPoints, this.enemies.children)
+    const spawnPoint = GetSpawnPoint(spawnPoints, RangerSteve.enemies.children)
 
     RangerSteve.player.x = spawnPoint.x
     RangerSteve.player.y = spawnPoint.y
