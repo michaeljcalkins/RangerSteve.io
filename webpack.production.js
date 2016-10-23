@@ -2,6 +2,8 @@ const path = require('path'),
       fs = require('fs'),
       webpack = require('webpack'),
       autoprefixer = require('autoprefixer'),
+      ExtractTextPlugin = require("extract-text-webpack-plugin"),
+      
       // plugins
       HTMLWebpackPlugin = require('html-webpack-plugin'),
       // config
@@ -25,6 +27,11 @@ const config = {
       'process.env': {
           'NODE_ENV': `"production"`
       },
+    }),
+    new ExtractTextPlugin({
+      filename: 'css/app.css',
+      allChunks: true,
+      disable: false
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -50,7 +57,11 @@ const config = {
       {
         test: /\.scss$/, include: [
           path.join(__dirname, `${SRC}sass/app.scss`) // important for performance!
-        ], exclude: /node_modules/, loader: "style!css!postcss!sass"
+        ], exclude: /node_modules/, 
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style',
+          loader: 'css!sass'
+        }),
       }
     ]
   },
