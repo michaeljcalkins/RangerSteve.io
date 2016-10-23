@@ -10,7 +10,7 @@
     "start": "nodejs-dashboard -- nodemon ./bin/www",
     "watch": "webpack-dashboard -p 9839 -- webpack -w --config webpack.dev.js",
     "build:dll": "webpack --config webpack.dll.js",
-    "postinstall": "npm run build:dll",
+    "postinstall": "webpack --config ./webpack.production.js",
     "production": "NODE_ENV='production' && webpack --config ./webpack.production.js",
     "test": "NODE_ENV=test mocha tests/browser.js tests/ui/**/*.test.js tests/lib/**/*.test.js",
     "test-report": "NODE_ENV=test mocha --recursive -R xunit tests/browser.js tests/**/*.test.js > test-reports.xml",
