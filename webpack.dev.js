@@ -18,7 +18,7 @@ const path = require('path'),
 // var pixi = path.join(phaserModule, 'build/custom/pixi.js')
 // var p2 = path.join(phaserModule, 'build/custom/p2.js')
 const config = {
-  devtool: 'cheap-eval-source-map',
+  devtool: 'eval-source-map',
   entry: {
     index: path.join(__dirname, SRC + 'js/app.js')
   },
