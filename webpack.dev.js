@@ -23,19 +23,18 @@ const config = {
     index: path.join(__dirname, SRC + 'js/app.js')
   },
   module: {
-    preLoaders: [
-    {
-      test: /\.scss$/, 
-      include: [
-        path.join(__dirname, SRC + 'sass') // important for performance!
-      ],
-      loader: ExtractTextPlugin.extract({
-        fallbackLoader: 'style',
-        loader: 'css!sass'
-      }),
-      exclude: /node_modules/
-    }],
     loaders: [
+      {
+        test: /\.scss$/,
+        include: [
+          path.join(__dirname, SRC + 'sass') // important for performance!
+        ],
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style',
+          loader: 'css!sass'
+        }),
+        exclude: /node_modules/
+      },
       // { test: /pixi\.js/, include: pixi, loader: 'expose?PIXI' },
       // { test: /phaser-split\.js$/, include: phaser, loader: 'expose?Phaser' },
       // { test: /p2\.js/, include: p2, loader: 'expose?p2' },
@@ -46,7 +45,7 @@ const config = {
         ], exclude: [/node_modules/, "index.js"], loader: 'babel',
         query: Object.assign({cacheDirectory: true}, BABEL_CONFIG)
       },
-      
+
     ],
   },
   output: {
@@ -60,9 +59,9 @@ const config = {
     //   'pixi': pixi,
     //   'p2': p2,
     // },
-    root: path.resolve(__dirname, "resources/assets"),
-    extensions: ['', '.scss', '.css', '.webpack.js', '.web.js', '.js'],
-    modulesDirectories: ["node_modules"],
+    mainFiles: [path.resolve(__dirname, "resources/assets")],
+    // extensions: ['', '.scss', '.css', '.webpack.js', '.web.js', '.js'],
+    modules: ["node_modules"],
   },
   // node: {
   //   console: true,
@@ -93,7 +92,7 @@ const config = {
       context: path.join(__dirname, SRC + 'js/app.js'),
       manifest: require("./dll/vendor-manifest.json")
     }),
-    // new HappyPack({ id: 'js', verbose: false, threads: 4 }),  
+    // new HappyPack({ id: 'js', verbose: false, threads: 4 }),
     // new HappyPack({ id: 'scss', verbose: false, threads: 4 }),
     // new HappyPack({ id: 'json', verbose: false, threads: 4 }),
     new DashboardPlugin(),

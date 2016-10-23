@@ -33,8 +33,8 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin()
     ],
     resolve: {
-      root: path.resolve(__dirname, "resources/assets"),
-      modulesDirectories: ["node_modules"]
+      mainFiles: [path.resolve(__dirname, "resources/assets")],
+      modules: ["node_modules"]
     },
     node: {
       // console: true,
