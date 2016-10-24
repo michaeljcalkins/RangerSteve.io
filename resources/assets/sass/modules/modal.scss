@@ -91,7 +91,7 @@
  */
 .modal-respawn {
     .modal-content {
-        background: url(/images/ui/panel/3.png) no-repeat center 70px,
+        background: url(/images/ui/panel/3.png) no-repeat center 75px,
             url(/images/ui/panel/5.png) no-repeat top center;
         background-size: 30%, 100%;
         width: 600px;
@@ -102,13 +102,23 @@
             overflow: hidden;
             max-height: 500px;
         }
+
+        &.modal-content-suicide {
+            background: url(/images/ui/panel/4.png) no-repeat center 75px,
+                url(/images/ui/panel/5.png) no-repeat top center;
+            background-size: 30%, 100%;
+
+            .modal-body {
+                padding-top: 180px;
+            }
+        }
     }
 
     .weapon-image {
         -webkit-transform: rotate(-25deg);
         transform: rotate(-25deg);
-        margin-top: 60px;
-        margin-bottom: 55px;
+        margin-top: 70px;
+        margin-bottom: 70px;
         max-width: 200px;
         max-height: 200px;
     }
