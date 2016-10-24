@@ -27,7 +27,7 @@ export default function onUpdatePlayers(data) {
     // TODO Instead of destroying all enemies look for the differences and adjust accordingly.
     if (RangerSteve.enemies) {
         RangerSteve.enemies.forEach(function (enemy) {
-            enemy.kill()
+            enemy.destroy()
         })
     }
 

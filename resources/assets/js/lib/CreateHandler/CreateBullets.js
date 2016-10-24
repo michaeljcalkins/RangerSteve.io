@@ -3,27 +3,19 @@ import GameConsts from '../GameConsts.js'
 export default function() {
     RangerSteve.rpgExplosions = this.game.add.group()
     RangerSteve.rpgExplosions.createMultiple(20, 'rpgExplosion')
-    RangerSteve.rpgExplosions.forEach((rpgExplosion) => {
-        rpgExplosion.animations.add('collision')
-    })
+    RangerSteve.rpgExplosions.forEach(rpgExplosion => rpgExplosion.animations.add('collision'))
 
     RangerSteve.ricochets = this.game.add.group()
     RangerSteve.ricochets.createMultiple(200, 'ricochet')
-    RangerSteve.ricochets.forEach((ricochet) => {
-        ricochet.animations.add('collision')
-    })
+    RangerSteve.ricochets.forEach(ricochet => ricochet.animations.add('collision'))
 
     RangerSteve.bloodSprays = this.game.add.group()
     RangerSteve.bloodSprays.createMultiple(200, 'blood')
-    RangerSteve.bloodSprays.forEach((bloodSpray) => {
-        bloodSpray.animations.add('spray', [0,1,2,3,4,5,6,7,8,9,10,11,12,13], 45, false, true)
-    })
+    RangerSteve.bloodSprays.forEach(bloodSpray => bloodSpray.animations.add('spray'))
 
     RangerSteve.playerDeaths = this.game.add.group()
     RangerSteve.playerDeaths.createMultiple(20, 'player-death')
-    RangerSteve.playerDeaths.forEach((playerDeath) => {
-        playerDeath.animations.add('death')
-    })
+    RangerSteve.playerDeaths.forEach(playerDeath => playerDeath.animations.add('death'))
 
     RangerSteve.bullets = this.game.add.group()
     RangerSteve.bullets.createMultiple(200, 'bullet')

@@ -23,5 +23,5 @@ export default function(data) {
     bloodSpray.reset(bloodX, bloodY)
     bloodSpray.scale.setTo(.14)
     bloodSpray.rotation = bloodRotation
-    bloodSpray.animations.play('spray')
+    bloodSpray.animations.play('spray', 45, false, true)
 }

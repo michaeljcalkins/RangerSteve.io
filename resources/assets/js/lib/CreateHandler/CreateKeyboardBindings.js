@@ -86,7 +86,7 @@ export default function() {
         store.dispatch(actions.player.setIsSwitchingWeapon(true))
 
         // This is used because the sound file is fairly quiet compared to the rest of our sound effects.
-        const volumeGain = 15
+        const volumeGain = 17
 
         // Audio cue to let the user know their gun is switching
         RangerSteve.switchingWeaponsFx.volume = store.getState().game.sfxVolume * volumeGain
