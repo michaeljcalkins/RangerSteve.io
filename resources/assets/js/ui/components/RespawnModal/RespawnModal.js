@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import moment from 'moment'
 import _ from 'lodash'
+import cs from 'classnames'
 
 import GameConsts from '../../../lib/GameConsts'
 
@@ -76,12 +77,9 @@ export default class RespawnModal extends React.Component {
 
         if (! attackingPlayerId) {
             return (
-                <div className="media">
-                    <div className="media-left">
-                        <img className="media-object" src="/images/icons/skull-32-black.png" />
-                    </div>
-                    <div className="media-body">
-                        <h4 className="media-heading" style={ { margin: '15px 0 0' } }>You killed yourself...</h4>
+                <div className="row">
+                    <div className="col-sm-12 text-center">
+                        <h4>You killed yourself...</h4>
                     </div>
                 </div>
             )
@@ -103,9 +101,13 @@ export default class RespawnModal extends React.Component {
     }
 
     render() {
+        const { player } = this.props
+        const attackingPlayerId = _.get(player, 'damageStats.attackingPlayerId', false)
         const shareLink = window.location.href
-
         const encodedShareLink = encodeURIComponent(shareLink)
+        const modalContentClasses = cs('modal-content', {
+            'modal-content-suicide': ! attackingPlayerId
+        })
 
         return (
             <div>
@@ -114,7 +116,7 @@ export default class RespawnModal extends React.Component {
                     style={ { display: 'block' } }
                 >
                     <div className="modal-dialog">
-                        <div className="modal-content">
+                        <div className={ modalContentClasses }>
                             <div className="modal-header">
                                 <h4 className="modal-title">Respawn</h4>
                             </div>
