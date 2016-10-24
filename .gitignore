@@ -37,7 +37,6 @@ npm-debug.log*
 bower_components
 
 # other
-assets
 .sass-cache
 .idea
 public/js/app.js
