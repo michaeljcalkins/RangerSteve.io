@@ -16,7 +16,7 @@ const MAX_ROOM_SIZE = 7
 const RESPAWN_TIME_SECONDS = 5
 const ROUND_LENGTH_MINUTES = 5
 const PLAYER_FULL_HEALTH = 100
-const MAP_IDS = ['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop']
+const MAP_IDS = ['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop', 'DeathCycle']
 
 function init(ioInstance) {
     io = ioInstance
@@ -40,35 +40,8 @@ function init(ioInstance) {
         socket.on('load complete', onLoadComplete)
 
         socket.on('refresh room', onRefreshRoom)
+        socket.on('refresh players', onRefreshPlayers)
     })
-}
-
-function onRefreshRoom(data) {
-    io.to(data.roomId).emit('refresh room', {
-        room: rooms[data.roomId]
-    })
-}
-
-function respawnPlayer(player, attackingPlayer, socketId, roomId) {
-    setTimeout(() => {
-        player.meta.health = PLAYER_FULL_HEALTH
-
-        io.to(roomId).emit('player respawn', {
-            id: socketId,
-            damagedPlayerId: player.id,
-            health: PLAYER_FULL_HEALTH
-        })
-
-        player.meta.damageStats.attackingPlayerId = null
-        player.meta.damageStats.attackingDamage = 0
-        player.meta.damageStats.attackingHits = 0
-
-        if (_.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id) {
-            attackingPlayer.meta.damageStats.attackingPlayerId = null
-            attackingPlayer.meta.damageStats.attackingDamage = 0
-            attackingPlayer.meta.damageStats.attackingHits = 0
-        }
-    }, RESPAWN_TIME_SECONDS * 1000)
 }
 
 setInterval(function() {
@@ -85,12 +58,7 @@ setInterval(function() {
             })
 
             // Randomly select a map that was not the previous map
-            const potentialNextMaps = [
-                'PunkFallout',
-                'HighRuleJungle',
-                'PunkCity',
-                'PunkLoop'
-            ].filter(map => map !== previousMap)
+            const potentialNextMaps = MAP_IDS.filter(map => map !== previousMap)
 
             rooms[roomId].map = _.sample(potentialNextMaps)
 
@@ -123,7 +91,6 @@ setInterval(function() {
             io.to(roomId).emit('update players', {
                 room: rooms[roomId]
             })
-
             return
         }
 
@@ -132,6 +99,40 @@ setInterval(function() {
         })
     })
 }, 1000)
+
+function onRefreshPlayers(data) {
+    io.to(data.roomId).emit('update players', {
+        room: rooms[data.roomId]
+    })
+}
+
+function onRefreshRoom(data) {
+    io.to(data.roomId).emit('refresh room', {
+        room: rooms[data.roomId]
+    })
+}
+
+function respawnPlayer(player, attackingPlayer, socketId, roomId) {
+    setTimeout(() => {
+        player.meta.health = PLAYER_FULL_HEALTH
+
+        io.to(roomId).emit('player respawn', {
+            id: socketId,
+            damagedPlayerId: player.id,
+            health: PLAYER_FULL_HEALTH
+        })
+
+        player.meta.damageStats.attackingPlayerId = null
+        player.meta.damageStats.attackingDamage = 0
+        player.meta.damageStats.attackingHits = 0
+
+        if (_.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id) {
+            attackingPlayer.meta.damageStats.attackingPlayerId = null
+            attackingPlayer.meta.damageStats.attackingDamage = 0
+            attackingPlayer.meta.damageStats.attackingHits = 0
+        }
+    }, RESPAWN_TIME_SECONDS * 1000)
+}
 
 function onLoadComplete(data) {
     io.to(data.roomId).emit('update players', {

@@ -3,7 +3,15 @@ const webpack = require("webpack")
 
 module.exports = {
     entry: {
-        vendor: [path.join(__dirname, "vendors.js")]
+        vendor: [
+            "react",
+            "react-autobind",
+            "react-dom",
+            "react-redux",
+            "redux",
+            "store",
+            "classnames"
+        ]
     },
     output: {
         path: path.join(__dirname, "public", "dll"),
@@ -25,15 +33,17 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin()
     ],
     resolve: {
-      root: path.resolve(__dirname, "resources/assets"),
-      modulesDirectories: ["node_modules"]
+        modules: [
+            path.resolve(__dirname, "resources/assets"),
+            "node_modules"
+        ]
     },
     node: {
-      // console: true,
-      child_process: 'empty',
-      fs: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      dns: 'empty',
+        // console: true,
+        child_process: 'empty',
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty',
+        dns: 'empty',
     },
-};
+}

@@ -26,7 +26,6 @@ export default function() {
             ? GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].reloadTime
             : GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].reloadTime
 
-
             if (
                 isPrimarySelected &&
                 (
@@ -86,9 +85,12 @@ export default function() {
 
         store.dispatch(actions.player.setIsSwitchingWeapon(true))
 
+        // This is used because the sound file is fairly quiet compared to the rest of our sound effects.
+        const volumeGain = 17
+
         // Audio cue to let the user know their gun is switching
-        this.switchingWeaponsFx.volume = store.getState().game.sfxVolume
-        this.switchingWeaponsFx.play()
+        RangerSteve.switchingWeaponsFx.volume = store.getState().game.sfxVolume * volumeGain
+        RangerSteve.switchingWeaponsFx.play()
 
         setTimeout(() => {
             store.dispatch(actions.player.setCurrentWeapon(nextWeapon))
@@ -99,10 +101,10 @@ export default function() {
                 ? store.getState().player.selectedPrimaryWeaponId
                 : store.getState().player.selectedSecondaryWeaponId
 
-            this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+            RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
 
             // The sound effect is two seconds long so stop it once switching guns is complete.
-            this.switchingWeaponsFx.stop()
+            RangerSteve.switchingWeaponsFx.stop()
         }, switchDelay)
     })
 }

@@ -19,20 +19,20 @@ export default function FireShotgunShell(currentWeaponId) {
         state.player.health <= 0 ||
         state.room.state !== 'active' ||
         this.game.time.time < nextFire ||
-        this.bullets.countDead() <= 0
+        RangerSteve.bullets.countDead() <= 0
     ) return
 
-    if (this.game.time.time < nextFire || this.bullets.countDead() <= 0)
+    if (this.game.time.time < nextFire || RangerSteve.bullets.countDead() <= 0)
         return
 
     nextFire = this.game.time.time + currentWeapon.fireRate
 
-    let x = this.player.x
-    let y = this.player.y - 10
+    let x = RangerSteve.player.x
+    let y = RangerSteve.player.y - 10
 
     let pointerAngle = null
     for (var i = 0; i < 4; i++) {
-        let bullet = this.bullets.getFirstDead()
+        let bullet = RangerSteve.bullets.getFirstDead()
         bullet.bulletId = Guid()
         bullet.damage = currentWeapon.damage
         bullet.weaponId = currentWeaponId
@@ -74,17 +74,17 @@ export default function FireShotgunShell(currentWeaponId) {
     }
 
     // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
-    this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+    RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
     clearTimeout(muzzleFlashHandler)
     muzzleFlashHandler = setTimeout(() => {
-        this.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+        RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
     }, 60)
 
     // Shake camera for gun recoil
     this.camera.shake(0.0015, 100, true)
 
-    this.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
-    this.weaponSoundEffects[currentWeaponId].play()
+    RangerSteve.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
+    RangerSteve.weaponSoundEffects[currentWeaponId].play()
 
     if (isPrimarySelected) {
         store.dispatch(actions.player.decrementPrimaryAmmoRemaining())

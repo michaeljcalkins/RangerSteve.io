@@ -29,13 +29,13 @@ export default function() {
     let newPlayerData = {
         id: window.socket.id,
         roomId: state.room.id,
-        x: this.player.x,
-        y: this.player.y,
-        rightArmAngle: this.rightArmGroup.angle,
-        leftArmAngle: this.leftArmGroup.angle,
+        x: RangerSteve.player.x,
+        y: RangerSteve.player.y,
+        rightArmAngle: RangerSteve.rightArmGroup.angle,
+        leftArmAngle: RangerSteve.leftArmGroup.angle,
         facing: state.player.facing,
-        flying: this.rightJumpjet.visible && this.leftJumpjet.visible,
-        shooting: isPlayerShooting(currentWeaponId, this.rightArmSprite),
+        flying: RangerSteve.rightJumpjet.visible && RangerSteve.leftJumpjet.visible,
+        shooting: isPlayerShooting(currentWeaponId, RangerSteve.rightArmSprite),
         weaponId: currentWeaponId
     }
 

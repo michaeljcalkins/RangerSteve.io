@@ -18,6 +18,7 @@
         },
     },
     "globals": {
+        "RangerSteve": true,
         "mixpanel": true,
         "Phaser": true,
         "$": true,

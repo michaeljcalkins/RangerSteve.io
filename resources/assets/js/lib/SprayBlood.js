@@ -19,9 +19,9 @@ export default function(data) {
         bloodY += 25
     }
 
-    const bloodSpray = this.bloodSprays.getFirstExists(false)
+    const bloodSpray = RangerSteve.bloodSprays.getFirstExists(false)
     bloodSpray.reset(bloodX, bloodY)
     bloodSpray.scale.setTo(.14)
     bloodSpray.rotation = bloodRotation
-    bloodSpray.animations.play('spray')
+    bloodSpray.animations.play('spray', 45, false, true)
 }

@@ -6,7 +6,7 @@ const propTypes = {
 }
 
 export default function(data) {
-    let rpgExplosion = this.rpgExplosions.getFirstExists(false)
+    let rpgExplosion = RangerSteve.rpgExplosions.getFirstExists(false)
     rpgExplosion.reset(data.bulletX, data.bulletY - 50)
     rpgExplosion.scale.setTo(.7)
     rpgExplosion.anchor.setTo(.5, .5)
