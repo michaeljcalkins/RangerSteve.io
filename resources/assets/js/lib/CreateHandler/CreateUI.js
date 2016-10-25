@@ -59,7 +59,7 @@ export default function() {
     this.hudTimerText.strokeThickness = 3
 
     // Gamemode
-    this.hudGamemodeText = this.game.add.text(this.camera.width / 2, 40, 'DEATHMATCH', {
+    this.hudGamemodeText = this.game.add.text(0, 0, 'DEATHMATCH', {
         font: "12px Keep Calm",
         fill: "#fff"
     })
@@ -67,5 +67,18 @@ export default function() {
     this.hudGamemodeText.smoothed = true
     this.hudGamemodeText.fixedToCamera = true
     this.hudGamemodeText.stroke = '#000'
-    this.hudGamemodeText.strokeThickness = 3
+    this.hudGamemodeText.strokeThickness = 2
+
+    // Kill confirmed
+    this.hudKillConfirmed = this.game.add.text(0, 0, '+10', {
+        font: "24px Keep Calm",
+        fill: "#fff"
+    })
+    this.hudKillConfirmed.x = (this.camera.width / 2) - (this.hudKillConfirmed.width / 2)
+    this.hudKillConfirmed.y = (this.camera.height / 2) - (this.hudKillConfirmed.height / 2) - 100
+    this.hudKillConfirmed.smoothed = true
+    this.hudKillConfirmed.fixedToCamera = true
+    this.hudKillConfirmed.stroke = '#000'
+    this.hudKillConfirmed.strokeThickness = 3
+    this.hudKillConfirmed.visible = false
 }
