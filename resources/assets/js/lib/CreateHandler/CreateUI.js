@@ -57,4 +57,15 @@ export default function() {
     this.hudTimerText.fixedToCamera = true
     this.hudTimerText.stroke = '#000'
     this.hudTimerText.strokeThickness = 3
+
+    // Gamemode
+    this.hudGamemodeText = this.game.add.text(this.camera.width / 2, 40, 'DEATHMATCH', {
+        font: "12px Keep Calm",
+        fill: "#fff"
+    })
+    this.hudGamemodeText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
+    this.hudGamemodeText.smoothed = true
+    this.hudGamemodeText.fixedToCamera = true
+    this.hudGamemodeText.stroke = '#000'
+    this.hudGamemodeText.strokeThickness = 3
 }

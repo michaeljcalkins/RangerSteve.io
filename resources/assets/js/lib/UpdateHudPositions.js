@@ -50,9 +50,14 @@ export default function() {
     this.hudJumpJetIcon.fixedToCamera = true
 
     // Timer
-    this.hudTimerText.y = 6
+    this.hudTimerText.y = 10
     this.hudTimerText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
     this.hudTimerText.fixedToCamera = true
+
+    // Gamemode
+    this.hudGamemodeText.y = 40
+    this.hudGamemodeText.x = (this.camera.width / 2) - (this.hudGamemodeText.width / 2)
+    this.hudGamemodeText.fixedToCamera = true
 
     // Health HUD
     this.hudHealthText.setText(state.player.health)
