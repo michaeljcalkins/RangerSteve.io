@@ -47,21 +47,20 @@
             }
         </script>
     {% endif %}
+    </head>
+    <body class="game" oncontextmenu="return false">
+        <div id="ui-app">
+        </div>
 
-    {% if not isProduction %}
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/lodash.min.js"></script>
+        <script src="/js/phaser.min.js"></script>
+        <script src="/js/socket.io.min.js"></script>
+        {% if isProduction !== true %}
         <!-- Dynamic-link library bundle -->
         <script type="text/javascript" src="/dll/dll.vendor.js"></script>
-    {% endif %}
-</head>
-<body class="game" oncontextmenu="return false">
-    <div id="ui-app">
-    </div>
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/lodash.min.js"></script>
-    <script src="/js/phaser.min.js"></script>
-    <script src="/js/socket.io.min.js"></script>
-    <script src="/js/app.js?v={{ lastModifiedTime }}"></script>
-    <script src="/js/phaser-arcade-slopes.min.js"></script>
-</body>
+        {% endif %}
+        <script src="/js/app.js?v={{ lastModifiedTime }}"></script>
+        <script src="/js/phaser-arcade-slopes.min.js"></script>
+    </body>
 </html>
