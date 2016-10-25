@@ -28,6 +28,7 @@ export default function onUpdatePlayers(data) {
     if (RangerSteve.enemies) {
         RangerSteve.enemies.forEach(function (enemy) {
             enemy.kill()
+            enemy.destroy()
         })
     }
 

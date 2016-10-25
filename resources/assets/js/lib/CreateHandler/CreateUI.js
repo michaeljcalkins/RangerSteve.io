@@ -7,9 +7,9 @@ export default function() {
     this.rightHudBg = this.game.add.tileSprite(this.camera.width - 400, this.camera.height - 45, 500, 100, 'rightHudBg')
     this.rightHudBg.fixedToCamera = true
 
-    const centerHudX = this.camera.width / 2 - 250
-    this.centerHudBg = this.game.add.tileSprite(centerHudX, -55, 500, 100, 'centerHudBg')
-    this.centerHudBg.fixedToCamera = true
+    // const centerHudX = this.camera.width / 2 - 250
+    // this.centerHudBg = this.game.add.tileSprite(centerHudX, -55, 500, 100, 'centerHudBg')
+    // this.centerHudBg.fixedToCamera = true
 
     const style = {
         font: "24px Keep Calm",
@@ -51,8 +51,21 @@ export default function() {
     this.hudJumpJetIcon.fixedToCamera = true
 
     // Timer
-    this.hudTimerText = this.game.add.text(this.camera.width / 2, 6, '--', style)
+    this.hudTimerText = this.game.add.text(this.camera.width / 2, 10, '--', style)
     this.hudTimerText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
     this.hudTimerText.smoothed = true
     this.hudTimerText.fixedToCamera = true
+    this.hudTimerText.stroke = '#000'
+    this.hudTimerText.strokeThickness = 3
+
+    // Gamemode
+    this.hudGamemodeText = this.game.add.text(this.camera.width / 2, 40, 'DEATHMATCH', {
+        font: "12px Keep Calm",
+        fill: "#fff"
+    })
+    this.hudGamemodeText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
+    this.hudGamemodeText.smoothed = true
+    this.hudGamemodeText.fixedToCamera = true
+    this.hudGamemodeText.stroke = '#000'
+    this.hudGamemodeText.strokeThickness = 3
 }
