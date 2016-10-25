@@ -61,7 +61,7 @@ export default function() {
 
     // Kill confirmed
     this.hudKillConfirmed.x = (this.camera.width / 2) - (this.hudKillConfirmed.width / 2)
-    this.hudKillConfirmed.y = (this.camera.height / 2) - (this.hudKillConfirmed.height / 2) - 100
+    this.hudKillConfirmed.y = (this.camera.height / 2) - (this.hudKillConfirmed.height / 2) - 110
     this.hudKillConfirmed.fixedToCamera = true
     this.hudKillConfirmed.visible = state.game.showKillConfirmed
 

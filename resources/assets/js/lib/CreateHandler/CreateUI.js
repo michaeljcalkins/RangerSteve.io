@@ -52,7 +52,6 @@ export default function() {
 
     // Timer
     this.hudTimerText = this.game.add.text(this.camera.width / 2, 10, '--', style)
-    this.hudTimerText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
     this.hudTimerText.smoothed = true
     this.hudTimerText.fixedToCamera = true
     this.hudTimerText.stroke = '#000'
@@ -63,7 +62,6 @@ export default function() {
         font: "12px Keep Calm",
         fill: "#fff"
     })
-    this.hudGamemodeText.x = (this.camera.width / 2) - (this.hudTimerText.width / 2)
     this.hudGamemodeText.smoothed = true
     this.hudGamemodeText.fixedToCamera = true
     this.hudGamemodeText.stroke = '#000'
@@ -74,8 +72,6 @@ export default function() {
         font: "24px Keep Calm",
         fill: "#fff"
     })
-    this.hudKillConfirmed.x = (this.camera.width / 2) - (this.hudKillConfirmed.width / 2)
-    this.hudKillConfirmed.y = (this.camera.height / 2) - (this.hudKillConfirmed.height / 2) - 100
     this.hudKillConfirmed.smoothed = true
     this.hudKillConfirmed.fixedToCamera = true
     this.hudKillConfirmed.stroke = '#000'
