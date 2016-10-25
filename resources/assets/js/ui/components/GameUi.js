@@ -84,7 +84,7 @@ export default class GameUi extends React.Component {
     }
 
     isLeaderboardModalOpen() {
-         const {
+        const {
             props: {
                 room,
                 game
