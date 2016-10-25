@@ -3,7 +3,6 @@ import storage from 'store'
 import autobind from 'react-autobind'
 
 import HudChatHistory from './Hud/HudChatHistory'
-import HudKillConfirmed from './Hud/HudKillConfirmed'
 import HudKillLog from './Hud/HudKillLog'
 import HudChangeWeaponsButton from './Hud/HudChangeWeaponsButton'
 import HudKeyboardControlsButton from './Hud/HudKeyboardControlsButton'
@@ -85,7 +84,7 @@ export default class GameUi extends React.Component {
     }
 
     isLeaderboardModalOpen() {
-         const {
+        const {
             props: {
                 room,
                 game
@@ -122,7 +121,6 @@ export default class GameUi extends React.Component {
 
         return (
             <div>
-                <HudKillConfirmed showKillConfirmed={ game.showKillConfirmed } />
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
                 <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
