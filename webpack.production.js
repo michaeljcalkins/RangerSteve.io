@@ -2,9 +2,9 @@ const path = require('path'),
       fs = require('fs'),
       webpack = require('webpack'),
       // autoprefixer = require('autoprefixer'),
-      ExtractTextPlugin = require("extract-text-webpack-plugin"),
-
       // plugins
+      ExtractTextPlugin = require("extract-text-webpack-plugin"),
+      JavaScriptObfuscator = require('webpack-obfuscator'),
       // HTMLWebpackPlugin = require('html-webpack-plugin'),
       // config
       BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
@@ -44,7 +44,8 @@ const config = {
         warnings: false,
         screw_ie8: true,
       }
-    })
+    }),
+    new JavaScriptObfuscator(),
   ],
   module: {
     loaders: [
