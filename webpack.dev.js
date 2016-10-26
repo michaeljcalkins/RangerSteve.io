@@ -1,16 +1,16 @@
 const path = require('path'),
-  fs = require('fs'),
-  webpack = require('webpack'),
-  // plugins
-  HappyPack = require('happypack'),
-  ExtractTextPlugin = require("extract-text-webpack-plugin"),
-  BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
-  DashboardPlugin = require('webpack-dashboard/plugin'),
-  // top keks
-  BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
-  SRC = 'resources/assets/',
-  DIST = 'public/',
-  isProduction = process.env.NODE_ENV === 'production'
+      fs = require('fs'),
+      webpack = require('webpack'),
+      HappyPack = require('happypack'),
+      // plugins
+      ExtractTextPlugin = require("extract-text-webpack-plugin"),
+      BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
+      DashboardPlugin = require('webpack-dashboard/plugin'),
+      // config options
+      BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
+      SRC = 'resources/assets/',
+      DIST = 'public/',
+      isProduction = process.env.NODE_ENV === 'production'
 
 // // Phaser webpack config
 // var phaserModule = path.join(__dirname, 'node_modules/phaser/')
@@ -35,6 +35,7 @@ const config = {
         }),
         exclude: /node_modules/
       },
+
       // { test: /pixi\.js/, include: pixi, loader: 'expose?PIXI' },
       // { test: /phaser-split\.js$/, include: phaser, loader: 'expose?Phaser' },
       // { test: /p2\.js/, include: p2, loader: 'expose?p2' },
@@ -101,8 +102,3 @@ const config = {
 }
 
 module.exports = config
-
-// Just make sure it has:
-// - a build function I can tell heroku to run
-// - same build function should sourcemap, minify and obfuscate js
-// - dev build that watches and builds unminified
