@@ -40,10 +40,10 @@ Deathmatch.prototype = {
         const { room } = store.getState()
 
         // Scale game on window resize
-        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
-        this.game.renderer.renderSession.roundPixels = true
-        this.game.stage.disableVisibilityChange = true
-        this.game.scale.refresh()
+        // this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
+        // this.game.renderer.renderSession.roundPixels = true
+        // this.game.stage.disableVisibilityChange = true
+        // this.game.scale.refresh()
 
         // Enables advanced profiling features when debugging
         this.game.time.advancedTiming = true
@@ -76,14 +76,29 @@ Deathmatch.prototype = {
             roomId: room.id
         })
 
-        this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE
-        var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
-        this.scale.setUserScale(scale, scale)
+        this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
 
         window.onresize = () => {
-            var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
-            this.scale.setUserScale(scale, scale)
+            const qualities = [1200, 600, 300]
+            const scaleFactor = qualities[0]
+            const innerWidth = window.innerWidth
+            const innerHeight = window.innerHeight
+            const gameRatio = innerWidth / innerHeight
+
+            $("#ui-app").css({
+                transform: "scale(" + Math.min(innerWidth / 1200, 1) + ")",
+                "transform-origin": "top right"
+            })
+
+            this.game.scale.setGameSize(Math.ceil(scaleFactor * gameRatio), scaleFactor)
         }
+
+        const qualities = [1200, 600, 300]
+        const scaleFactor = qualities[0]
+        const innerWidth = window.innerWidth
+        const innerHeight = window.innerHeight
+        const gameRatio = innerWidth / innerHeight
+        this.game.scale.setGameSize(Math.ceil(scaleFactor * gameRatio), scaleFactor)
 
         this.game.paused = false
     },
