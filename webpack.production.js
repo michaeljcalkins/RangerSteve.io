@@ -45,7 +45,9 @@ const config = {
         screw_ie8: true,
       }
     }),
-    new JavaScriptObfuscator(),
+    new JavaScriptObfuscator({
+      selfDefending: true
+    }),
   ],
   module: {
     loaders: [
