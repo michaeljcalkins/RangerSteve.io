@@ -76,6 +76,15 @@ Deathmatch.prototype = {
             roomId: room.id
         })
 
+        this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE
+        var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
+        this.scale.setUserScale(scale, scale)
+
+        window.onresize = () => {
+            var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height)
+            this.scale.setUserScale(scale, scale)
+        }
+
         this.game.paused = false
     },
 
