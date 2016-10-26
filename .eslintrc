@@ -34,7 +34,6 @@
         "jsx": true
     },
     "plugins": [ "react" ],
-    "extends": "eslint:recommended",
     "esversion": 6,
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],

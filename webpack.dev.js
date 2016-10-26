@@ -1,8 +1,8 @@
 const path = require('path'),
   fs = require('fs'),
   webpack = require('webpack'),
-  // plugins
   HappyPack = require('happypack'),
+  // plugins
   ExtractTextPlugin = require("extract-text-webpack-plugin"),
   BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
   DashboardPlugin = require('webpack-dashboard/plugin'),
@@ -35,6 +35,7 @@ const config = {
         }),
         exclude: /node_modules/
       },
+
       // { test: /pixi\.js/, include: pixi, loader: 'expose?PIXI' },
       // { test: /phaser-split\.js$/, include: phaser, loader: 'expose?Phaser' },
       // { test: /p2\.js/, include: p2, loader: 'expose?p2' },
