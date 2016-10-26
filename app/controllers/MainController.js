@@ -13,6 +13,7 @@ let MainController = {
 
         res.render('game', {
             lastModifiedTime: lastModifiedTime,
+            // check for production status
             isProduction: process.env.NODE_ENV === "production"
                 ? true
                 : false
