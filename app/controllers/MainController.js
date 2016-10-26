@@ -12,7 +12,9 @@ let MainController = {
         let lastModifiedTime = moment(fileStat.mtime).unix()
 
         res.render('game', {
-            lastModifiedTime: lastModifiedTime
+            lastModifiedTime: lastModifiedTime,
+            // check for production status
+            isProduction: process.env.NODE_ENV === "production"
         })
     },
     credits: function(req, res) {
