@@ -34,3 +34,11 @@ section {
 .pointer {
     cursor: pointer;
 }
+
+#game {
+    height: 100%;
+}
+
+.phaser-debug #game {
+    height: calc(100% - 35px);
+}

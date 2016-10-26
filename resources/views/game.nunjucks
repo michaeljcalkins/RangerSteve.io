@@ -52,6 +52,9 @@
         <div id="ui-app">
         </div>
 
+        <div id="game">
+        </div>
+
         <script src="/js/jquery.min.js"></script>
         <script src="/js/lodash.min.js"></script>
         <script src="/js/phaser.min.js"></script>

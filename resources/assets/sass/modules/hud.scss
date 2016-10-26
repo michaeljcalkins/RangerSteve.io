@@ -175,6 +175,10 @@
     }
 }
 
+.phaser-debug .hud-chat {
+    bottom: 95px;
+}
+
 .hud-chat-message {
     cursor: pointer;
     left: 0;
@@ -212,4 +216,8 @@
             color: white;
         }
     }
+}
+
+.phaser-debug .hud-chat-message {
+    bottom: 88px;
 }

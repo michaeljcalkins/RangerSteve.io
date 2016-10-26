@@ -6,6 +6,7 @@ const path = require('path'),
       ExtractTextPlugin = require("extract-text-webpack-plugin"),
       BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
       DashboardPlugin = require('webpack-dashboard/plugin'),
+      phaserDebugPlugin = path.join(__dirname, '/node_modules/phaser-debug/dist/phaser-debug.js'),
       // config options
       BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
       SRC = 'resources/assets/',
@@ -23,6 +24,9 @@ const config = {
     index: path.join(__dirname, SRC + 'js/app.js')
   },
   module: {
+    noParse: [
+      /phaser-debug\.js$/
+    ],
     loaders: [
       {
         test: /\.scss$/,
@@ -54,11 +58,12 @@ const config = {
     publicPath: '/'
   },
   resolve: {
-    // alias: {
-    //   'phaser': phaser,
-    //   'pixi': pixi,
-    //   'p2': p2,
-    // },
+    alias: {
+      // 'phaser': phaser,
+      // 'pixi': pixi,
+      // 'p2': p2,
+      'phaser-debug': phaserDebugPlugin
+    },
     // extensions: ['', '.scss', '.css', '.webpack.js', '.web.js', '.js'],
     modules: [
       path.resolve(__dirname, "resources/assets"),
