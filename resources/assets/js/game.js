@@ -3,7 +3,7 @@ import Preloader from './states/Preloader'
 import Deathmatch from './states/Deathmatch'
 
 export default function(store) {
-    const game = new Phaser.Game('100%', '100%', Phaser.AUTO)
+    const game = new Phaser.Game('100%', '100%', Phaser.AUTO, 'game')
     game.store = store
 
     window.RangerSteve = {

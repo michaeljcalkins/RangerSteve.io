@@ -1,5 +1,6 @@
 const GameConsts = {
     DEBUG: false,
+    PHASER_DEBUG: false,
     STARTING_SFX_VOLUME: .04,
 
     // Spawn Point
