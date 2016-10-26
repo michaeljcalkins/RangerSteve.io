@@ -59,6 +59,12 @@ export default function() {
     this.hudGamemodeText.x = (this.camera.width / 2) - (this.hudGamemodeText.width / 2)
     this.hudGamemodeText.fixedToCamera = true
 
+    // Kill confirmed
+    this.hudKillConfirmed.x = (this.camera.width / 2) - (this.hudKillConfirmed.width / 2)
+    this.hudKillConfirmed.y = (this.camera.height / 2) - (this.hudKillConfirmed.height / 2) - 110
+    this.hudKillConfirmed.fixedToCamera = true
+    this.hudKillConfirmed.visible = state.game.showKillConfirmed
+
     // Health HUD
     this.hudHealthText.setText(state.player.health)
 

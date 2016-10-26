@@ -24,14 +24,7 @@ export default function onUpdatePlayers(data) {
     const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + store.getState().room.id
     window.history.pushState({ path: newurl }, '', newurl)
 
-    // TODO Instead of destroying all enemies look for the differences and adjust accordingly.
-    if (RangerSteve.enemies) {
-        RangerSteve.enemies.forEach(function (enemy) {
-            enemy.kill()
-            enemy.destroy()
-        })
-    }
-
+    if (RangerSteve.enemies) RangerSteve.enemies.destroy(true)
     RangerSteve.enemies = this.game.add.group()
 
     _.values(store.getState().room.players).forEach((player) => {
@@ -62,7 +55,6 @@ export default function onUpdatePlayers(data) {
 
         RangerSteve.enemies.add(newRemotePlayer)
     })
-    // ENDTODO
 
     // Round has ended so pause the game
     if (store.getState().room.state === 'ended') {
