@@ -6,7 +6,6 @@ const path = require('path'),
       ExtractTextPlugin = require("extract-text-webpack-plugin"),
       JavaScriptObfuscator = require('webpack-obfuscator'),
       // HTMLWebpackPlugin = require('html-webpack-plugin'),
-      phaserDebugPlugin = path.join(__dirname, '/node_modules/phaser-debug/dist/phaser-debug.js'),
       // config
       BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
       SRC = 'resources/assets/',
@@ -52,7 +51,7 @@ const config = {
   ],
   module: {
     noParse: [
-        /phaser-debug\.js$/
+        /phaser-debug/
     ],
     loaders: [
       {
@@ -81,9 +80,6 @@ const config = {
   // ],
   resolve: {
     extensions: ['.scss', '.webpack.js', '.web.js', '.js'],
-    alias: {
-      'phaser-debug': phaserDebugPlugin
-    },
   },
 }
 
