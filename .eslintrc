@@ -37,9 +37,11 @@
     "esversion": 6,
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],
-
-        "no-console":0,
+        
+        "comma-dangle": ["error", "always-multiline"],
+        "no-console": 0,
         "no-const-assign": 1,
+
 
         "react/display-name": 0,
         "react/forbid-prop-types": 0,
