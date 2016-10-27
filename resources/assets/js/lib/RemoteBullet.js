@@ -15,7 +15,7 @@ const propTypes = {
 }
 
 export default function RemoteBullet(data) {
-    let bullet = RangerSteve.enemyBullets.getFirstDead()
+    let bullet = RS.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)
     bullet.bulletId = data.bulletId
     bullet.playerId = data.playerId

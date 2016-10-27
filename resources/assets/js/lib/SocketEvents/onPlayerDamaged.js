@@ -72,10 +72,10 @@ export default function onPlayerDamaged(data) {
 
     // Player has died
     if (store.getState().player.health <= 0) {
-        RangerSteve.player.visible = false
+        RS.player.visible = false
         PlayPlayerDeathAnimation.call(this, {
-            x: RangerSteve.player.x,
-            y: RangerSteve.player.y
+            x: RS.player.x,
+            y: RS.player.y
         })
     }
 }

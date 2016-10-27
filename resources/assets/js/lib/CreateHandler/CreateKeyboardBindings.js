@@ -89,8 +89,8 @@ export default function() {
         const volumeGain = 17
 
         // Audio cue to let the user know their gun is switching
-        RangerSteve.switchingWeaponsFx.volume = store.getState().game.sfxVolume * volumeGain
-        RangerSteve.switchingWeaponsFx.play()
+        RS.switchingWeaponsFx.volume = store.getState().game.sfxVolume * volumeGain
+        RS.switchingWeaponsFx.play()
 
         setTimeout(() => {
             store.dispatch(actions.player.setCurrentWeapon(nextWeapon))
@@ -101,10 +101,10 @@ export default function() {
                 ? store.getState().player.selectedPrimaryWeaponId
                 : store.getState().player.selectedSecondaryWeaponId
 
-            RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+            RS.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
 
             // The sound effect is two seconds long so stop it once switching guns is complete.
-            RangerSteve.switchingWeaponsFx.stop()
+            RS.switchingWeaponsFx.stop()
         }, switchDelay)
     })
 }

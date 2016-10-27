@@ -1,6 +1,3 @@
-/**
- * Collisions and all game mode related interactions.
- */
 import CollisionHandler from '../lib/CollisionHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
@@ -14,6 +11,7 @@ import actions from '../actions'
 import GameConsts from '../lib/GameConsts'
 import UpdateHudPositions from '../lib/UpdateHudPositions'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
+import UpdateGameScale from '../lib/UpdateGameScale'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
 import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
 import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
@@ -23,6 +21,9 @@ import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateUI from '../lib/CreateHandler/CreateUI'
 
+/**
+ * Collisions and all game mode related interactions.
+ */
 function Deathmatch(game) {
     this.game = game
 }
@@ -40,29 +41,29 @@ Deathmatch.prototype = {
         const { room } = store.getState()
 
         // Scale game on window resize
-        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
-        this.game.renderer.renderSession.roundPixels = true
-        this.game.stage.disableVisibilityChange = true
-        this.game.scale.refresh()
+        // this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
+        // this.game.renderer.renderSession.roundPixels = true
+        // this.game.stage.disableVisibilityChange = true
+        // this.game.scale.refresh()
 
         // Enables advanced profiling features when debugging
         this.game.time.advancedTiming = true
 
-        // Start up Arcade Physics
+        // Adds slopes and other useful tiles to AABB collisions
         this.game.physics.startSystem(Phaser.Physics.ARCADE)
         this.game.plugins.add(Phaser.Plugin.ArcadeSlopes)
         this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
         // Enemy remote players
-        RangerSteve.enemies = this.game.add.group()
-        RangerSteve.enemies.enableBody = true
-        RangerSteve.enemies.physicsBodyType = Phaser.Physics.ARCADE
-        this.game.physics.arcade.enable(RangerSteve.enemies)
-        this.game.physics.enable(RangerSteve.enemies, Phaser.Physics.ARCADE)
+        RS.enemies = this.game.add.group()
+        RS.enemies.enableBody = true
+        RS.enemies.physicsBodyType = Phaser.Physics.ARCADE
+        this.game.physics.arcade.enable(RS.enemies)
+        this.game.physics.enable(RS.enemies, Phaser.Physics.ARCADE)
 
-        RangerSteve.jumpjetFx = this.game.add.audio('jumpjet')
-        RangerSteve.switchingWeaponsFx = this.game.add.audio('switching-weapons')
-        RangerSteve.headshotSound = this.game.add.audio('headshot')
+        RS.jumpjetFx = this.game.add.audio('jumpjet')
+        RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
+        RS.headshotSound = this.game.add.audio('headshot')
 
         CreateMapAndPlayer.call(this)
         CreateHurtBorder.call(this)
@@ -75,6 +76,11 @@ Deathmatch.prototype = {
         window.socket.emit('refresh players', {
             roomId: room.id
         })
+
+        this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
+
+        window.onresize = UpdateGameScale.bind(this)
+        UpdateGameScale.call(this)
 
         this.game.paused = false
     },
@@ -160,17 +166,17 @@ Deathmatch.prototype = {
     },
 
     render() {
-        if (! GameConsts.DEBUG || ! RangerSteve.player) return
+        if (! GameConsts.DEBUG || ! RS.player) return
 
         this.game.debug.text('FPS: ' + (this.time.fps || '--'), 10, 20, "#ffffff")
-        this.game.debug.body(RangerSteve.player)
+        this.game.debug.body(RS.player)
         this.game.debug.inputInfo(32, 200)
         this.game.debug.cameraInfo(this.camera, 32, 110)
-        RangerSteve.bullets.forEach((bullet) => {
+        RS.bullets.forEach((bullet) => {
             this.game.debug.body(bullet)
         })
 
-        RangerSteve.enemies.forEach((bullet) => {
+        RS.enemies.forEach((bullet) => {
             this.game.debug.body(bullet)
         })
     }

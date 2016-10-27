@@ -24,8 +24,8 @@ export default function onUpdatePlayers(data) {
     const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + store.getState().room.id
     window.history.pushState({ path: newurl }, '', newurl)
 
-    if (RangerSteve.enemies) RangerSteve.enemies.destroy(true)
-    RangerSteve.enemies = this.game.add.group()
+    if (RS.enemies) RS.enemies.destroy(true)
+    RS.enemies = this.game.add.group()
 
     _.values(store.getState().room.players).forEach((player) => {
         if (player.id === window.SOCKET_ID) {
@@ -53,7 +53,7 @@ export default function onUpdatePlayers(data) {
             newRemotePlayer.visible = false
         }
 
-        RangerSteve.enemies.add(newRemotePlayer)
+        RS.enemies.add(newRemotePlayer)
     })
 
     // Round has ended so pause the game

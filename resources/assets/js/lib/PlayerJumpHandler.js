@@ -15,11 +15,11 @@ export default function PlayerJumpHandler() {
     if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     const store = this.game.store
-    const onTheGround = RangerSteve.player.body.touching.down
+    const onTheGround = RS.player.body.touching.down
 
     // Jump!
     if (isJumpInputActive.call(this) && onTheGround) {
-        RangerSteve.player.body.velocity.y = -GameConsts.SLOPE_FEATURES.jump
+        RS.player.body.velocity.y = -GameConsts.SLOPE_FEATURES.jump
         store.dispatch(actions.player.setJumping(true))
     }
 
@@ -35,21 +35,21 @@ export default function PlayerJumpHandler() {
         if (! jumpjetFxHandle && this.game.store.getState().player.jumpJetCounter > GameConsts.JUMP_JET_DEAD_ZONE_FUEL) {
             // Limits the sound to only be started once
             jumpjetFxHandle = true
-            RangerSteve.jumpjetFx.volume = store.getState().game.sfxVolume
-            RangerSteve.jumpjetFx.loopFull()
+            RS.jumpjetFx.volume = store.getState().game.sfxVolume
+            RS.jumpjetFx.loopFull()
 
-            RangerSteve.rightJumpjet.visible = true
-            RangerSteve.leftJumpjet.visible = true
+            RS.rightJumpjet.visible = true
+            RS.leftJumpjet.visible = true
         }
 
-        RangerSteve.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
+        RS.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
         store.dispatch(actions.player.incrementJumpJetCounter(GameConsts.JUMP_JET_SPEED))
     } else {
         jumpjetFxHandle = false
-        RangerSteve.player.body.acceleration.y = 0
-        RangerSteve.jumpjetFx.stop()
-        RangerSteve.rightJumpjet.visible = false
-        RangerSteve.leftJumpjet.visible = false
+        RS.player.body.acceleration.y = 0
+        RS.jumpjetFx.stop()
+        RS.rightJumpjet.visible = false
+        RS.leftJumpjet.visible = false
         if (store.getState().player.jumpJetCounter < 0) {
             store.dispatch(actions.player.decrementJumpJetCounter(GameConsts.JUMP_JET_SPEED_REGENERATION))
         } else {
@@ -59,7 +59,7 @@ export default function PlayerJumpHandler() {
 
     // Reduce the number of available jumps if the jump input is released
     if (onTheGround && upInputReleased.call(this, store.getState().game.keyboardControls.up)) {
-        RangerSteve.player.body.acceleration.x = 0
-        RangerSteve.player.body.acceleration.y = 0
+        RS.player.body.acceleration.x = 0
+        RS.player.body.acceleration.y = 0
     }
 }

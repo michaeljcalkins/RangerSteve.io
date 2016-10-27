@@ -5,11 +5,11 @@ const propTypes = {
 }
 
 export default function PlayerById(id) {
-    if (! RangerSteve.enemies) return
+    if (! RS.enemies) return
 
-    for (let i = 0; i < RangerSteve.enemies.children.length; i++) {
-        if (RangerSteve.enemies.children[i].id === id) {
-            return RangerSteve.enemies.children[i]
+    for (let i = 0; i < RS.enemies.children.length; i++) {
+        if (RS.enemies.children[i].id === id) {
+            return RS.enemies.children[i]
         }
     }
 

@@ -1,27 +1,27 @@
 export default function(killingSpreeCount, sfxVolume) {
     if (killingSpreeCount === 3) {
-        RangerSteve.triplekillSound.volume = sfxVolume
-        RangerSteve.triplekillSound.play()
+        RS.triplekillSound.volume = sfxVolume
+        RS.triplekillSound.play()
     } else if (killingSpreeCount === 4) {
-        RangerSteve.multikillSound.volume = sfxVolume
-        RangerSteve.multikillSound.play()
+        RS.multikillSound.volume = sfxVolume
+        RS.multikillSound.play()
     } else if (killingSpreeCount === 6) {
-        RangerSteve.ultrakillSound.volume = sfxVolume
-        RangerSteve.ultrakillSound.play()
+        RS.ultrakillSound.volume = sfxVolume
+        RS.ultrakillSound.play()
     } else if (killingSpreeCount === 8) {
-        RangerSteve.killingspreeSound.volume = sfxVolume
-        RangerSteve.killingspreeSound.play()
+        RS.killingspreeSound.volume = sfxVolume
+        RS.killingspreeSound.play()
     } else if (killingSpreeCount === 10) {
-        RangerSteve.unstoppableSound.volume = sfxVolume
-        RangerSteve.unstoppableSound.play()
+        RS.unstoppableSound.volume = sfxVolume
+        RS.unstoppableSound.play()
     } else if (killingSpreeCount === 12) {
-        RangerSteve.ludicrouskillSound.volume = sfxVolume
-        RangerSteve.ludicrouskillSound.play()
+        RS.ludicrouskillSound.volume = sfxVolume
+        RS.ludicrouskillSound.play()
     } else if (killingSpreeCount === 14) {
-        RangerSteve.rampagekillSound.volume = sfxVolume
-        RangerSteve.rampagekillSound.play()
+        RS.rampagekillSound.volume = sfxVolume
+        RS.rampagekillSound.play()
     } else if (killingSpreeCount === 15) {
-        RangerSteve.monsterkillSound.volume = sfxVolume
-        RangerSteve.monsterkillSound.play()
+        RS.monsterkillSound.volume = sfxVolume
+        RS.monsterkillSound.play()
     }
 }

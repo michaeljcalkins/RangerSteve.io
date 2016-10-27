@@ -29,15 +29,15 @@ export default function onPlayerRespawn(data) {
 
     // Create and set the new spawn point
     const spawnPoints = Maps[state.room.map].getSpawnPoints()
-    const spawnPoint = GetSpawnPoint(spawnPoints, RangerSteve.enemies.children)
+    const spawnPoint = GetSpawnPoint(spawnPoints, RS.enemies.children)
 
-    RangerSteve.player.x = spawnPoint.x
-    RangerSteve.player.y = spawnPoint.y
+    RS.player.x = spawnPoint.x
+    RS.player.y = spawnPoint.y
 
-    RangerSteve.player.body.acceleration.x = 0
-    RangerSteve.player.body.acceleration.y = 0
-    RangerSteve.player.body.velocity.x = 0
-    RangerSteve.player.body.velocity.y = 0
+    RS.player.body.acceleration.x = 0
+    RS.player.body.acceleration.y = 0
+    RS.player.body.velocity.x = 0
+    RS.player.body.velocity.y = 0
 
     store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
     store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
@@ -45,9 +45,9 @@ export default function onPlayerRespawn(data) {
     store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
 
     if (currentWeapon === 'primaryWeapon')
-        RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
+        RS.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
     else
-        RangerSteve.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
+        RS.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
 
     store.dispatch(actions.player.setPrimaryIsReloading(false))
     store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))
@@ -55,7 +55,7 @@ export default function onPlayerRespawn(data) {
     store.dispatch(actions.player.setSecondaryIsReloading(false))
     store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].ammo))
 
-    RangerSteve.player.visible = true
+    RS.player.visible = true
     this.game.input.enabled = true
     this.game.input.reset()
     CreateKeyboardBindings.call(this)

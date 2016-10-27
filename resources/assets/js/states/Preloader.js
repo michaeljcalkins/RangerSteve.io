@@ -73,15 +73,15 @@ Preloader.prototype = {
         this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
         // Enemy remote players
-        RangerSteve.enemies = this.game.add.group()
-        RangerSteve.enemies.enableBody = true
-        RangerSteve.enemies.physicsBodyType = Phaser.Physics.ARCADE
-        this.game.physics.arcade.enable(RangerSteve.enemies)
-        this.game.physics.enable(RangerSteve.enemies, Phaser.Physics.ARCADE)
+        RS.enemies = this.game.add.group()
+        RS.enemies.enableBody = true
+        RS.enemies.physicsBodyType = Phaser.Physics.ARCADE
+        this.game.physics.arcade.enable(RS.enemies)
+        this.game.physics.enable(RS.enemies, Phaser.Physics.ARCADE)
 
-        RangerSteve.jumpjetFx = this.game.add.audio('jumpjet')
-        RangerSteve.switchingWeaponsFx = this.game.add.audio('switching-weapons')
-        RangerSteve.headshotSound = this.game.add.audio('headshot')
+        RS.jumpjetFx = this.game.add.audio('jumpjet')
+        RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
+        RS.headshotSound = this.game.add.audio('headshot')
 
         this.stage.backgroundColor = '#2B2825'
 
