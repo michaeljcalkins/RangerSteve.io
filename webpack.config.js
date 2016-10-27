@@ -14,7 +14,7 @@ const path = require('path'),
       // HTMLWebpackPlugin = require('html-webpack-plugin'),
       // config
       BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
-      isProduction = process.argv[2] === '-p'
+      isProduction = process.argv[2] === '-p',
       SRC = 'resources/assets/',
       DIST = 'public/'
       
@@ -79,12 +79,8 @@ if (!isProduction) {
   config.resolve.alias = {
     'phaser-debug': phaserDebugPlugin
   }
-
-  config.plugins.concat([
-    // new NpmInstallPlugin({
-    //   dev: false,
-    //   peerDependencies: true,
-    // }),
+  // place browser-sync at position 0
+  config.plugins.unshift(
     new BrowserSyncPlugin({
       host: 'localhost',
       port: 3000,
@@ -92,7 +88,14 @@ if (!isProduction) {
         target: "http://localhost:3000",
         ws: true
       }
-    }),
+    })
+  )
+  config.plugins.concat([
+    // new NpmInstallPlugin({
+    //   dev: false,
+    //   peerDependencies: true,
+    // }),
+    ,
     new webpack.DllReferencePlugin({
       context: path.join(__dirname, SRC + 'js/app.js'),
       manifest: require("./dll/vendor-manifest.json")
