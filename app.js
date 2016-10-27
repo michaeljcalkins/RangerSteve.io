@@ -14,7 +14,7 @@ let routes = require('./app/routes')
 let locals = require('./app/middleware/locals')
 
 let app = express()
-let io = socketIo()
+let io = socketIo(1280, { wsEngine: 'uws' })
 app.io = io
 SocketHandler.init(io)
 
