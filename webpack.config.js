@@ -1,21 +1,22 @@
 'use strict'
 
-const 
+const
     path = require('path'),
     fs = require('fs'),
     webpack = require('webpack'),
-    // HappyPack = require('happypack'),
-    // autoprefixer = require('autoprefixer'),
-            // dev plugins
+
+    // Development Plugins
     BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
     DashboardPlugin = require('webpack-dashboard/plugin'),
     phaserDebugPlugin = path.join(__dirname, '/node_modules/phaser-debphaser-debug.js'),
-            // production plugins
+
+    // Production Plugins
     JavaScriptObfuscator = require('webpack-obfuscator'),
-            // shared plugins
+
+    // Shared Plugins
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
-    // HTMLWebpackPlugin = require('html-webpack-plugin'),
-            // config
+
+    // Config
     BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
     isProduction = process.argv[2] === '-p',
     SRC = 'resources/assets',
@@ -62,12 +63,6 @@ let sharedConfig = {
             },
         ],
     },
-    // postcss: [
-    //   autoprefixer({
-    //   //************************
-    //     browsers: ['last 3 versions']
-    //   })
-    // ],
     resolve: {
         extensions: ['.scss', '.webpack.js', '.web.js', '.js'],
     },
@@ -75,16 +70,20 @@ let sharedConfig = {
 
 let config = Object.assign({}, sharedConfig)
 
-if (!isProduction) {
+if (! isProduction) {
+    /**
+     * Development
+     */
     config.resolve.modules = [
         path.resolve(__dirname, "resources/assets"),
         "node_modules",
     ]
+
     config.resolve.alias = {
         'phaser-debug': phaserDebugPlugin,
     }
-    // place browser-sync at position 0
-    config.plugins.unshift(
+
+    config.plugins = [
         new BrowserSyncPlugin({
             host: 'localhost',
             port: 3000,
@@ -92,37 +91,38 @@ if (!isProduction) {
                 target: "http://localhost:3000",
                 ws: true,
             },
-        })
-    )
-    config.plugins.concat([
-        // new NpmInstallPlugin({
-        //   dev: false,
-        //   peerDependencies: true,
-        // }),
+        }),
+        new ExtractTextPlugin({
+            filename: 'css/app.css',
+            allChunks: true,
+            disable: false,
+        }),
         new webpack.DllReferencePlugin({
             context: path.join(__dirname, APP),
             manifest: require("./dll/vendor-manifest.json"),
         }),
-        // new HappyPack({ id: 'js', verbose: false, threads: 4 }),
-        // new HappyPack({ id: 'scss', verbose: false, threads: 4 }),
-        // new HappyPack({ id: 'json', verbose: false, threads: 4 }),
         new DashboardPlugin(),
-    ])
-
+    ]
 } else {
- // **** PRODUCTION BUILD ****
+    /**
+     * Production
+     */
     config.devtool = "source-map"
-    config.plugins.concat([
+    config.plugins = [
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': `"production"`,
             },
         }),
+        new ExtractTextPlugin({
+            filename: 'css/app.css',
+            allChunks: true,
+            disable: false,
+        }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        // HTMLWebpackPluginConfig,
         new webpack.optimize.UglifyJsPlugin({
-            sourceMap: false,
+            sourceMap: true,
             mangle: true,
             minimize: true,
             compressor: {
@@ -133,7 +133,7 @@ if (!isProduction) {
         new JavaScriptObfuscator({
             selfDefending: true,
         }),
-    ])
+    ]
 }
 
 module.exports = config
