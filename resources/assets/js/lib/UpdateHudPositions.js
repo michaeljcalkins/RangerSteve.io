@@ -8,11 +8,6 @@ export default function() {
     const state = this.game.store.getState()
 
     // HUD Backgrounds
-    // const centerHudX = this.camera.width / 2 - 250
-    // this.centerHudBg.x = centerHudX
-    // this.centerHudBg.y = -55
-    // this.centerHudBg.fixedToCamera = true
-
     this.leftHudBg.x = -100
     this.leftHudBg.y = this.camera.height - 45
     this.leftHudBg.fixedToCamera = true

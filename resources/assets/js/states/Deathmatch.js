@@ -19,7 +19,7 @@ import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
 import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
-import CreateUI from '../lib/CreateHandler/CreateUI'
+import CreateHud from '../lib/CreateHandler/CreateHud'
 
 /**
  * Collisions and all game mode related interactions.
@@ -70,7 +70,7 @@ Deathmatch.prototype = {
         CreateKillingSpreeAudio.call(this)
         CreateDetectIdleUser()
         CreateBullets.call(this)
-        CreateUI.call(this)
+        CreateHud.call(this)
         CreateKeyboardBindings.call(this)
 
         window.socket.emit('refresh players', {

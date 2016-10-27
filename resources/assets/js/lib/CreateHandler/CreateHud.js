@@ -7,13 +7,9 @@ export default function() {
     this.rightHudBg = this.game.add.tileSprite(this.camera.width - 400, this.camera.height - 45, 500, 100, 'rightHudBg')
     this.rightHudBg.fixedToCamera = true
 
-    // const centerHudX = this.camera.width / 2 - 250
-    // this.centerHudBg = this.game.add.tileSprite(centerHudX, -55, 500, 100, 'centerHudBg')
-    // this.centerHudBg.fixedToCamera = true
-
     const style = {
         font: "24px Keep Calm",
-        fill: "#fff"
+        fill: "#fff",
     }
 
     // Health
@@ -60,7 +56,7 @@ export default function() {
     // Gamemode
     this.hudGamemodeText = this.game.add.text(0, 0, 'DEATHMATCH', {
         font: "12px Keep Calm",
-        fill: "#fff"
+        fill: "#fff",
     })
     this.hudGamemodeText.smoothed = true
     this.hudGamemodeText.fixedToCamera = true
@@ -70,7 +66,7 @@ export default function() {
     // Kill confirmed
     this.hudKillConfirmed = this.game.add.text(0, 0, '+10', {
         font: "24px Keep Calm",
-        fill: "#fff"
+        fill: "#fff",
     })
     this.hudKillConfirmed.smoothed = true
     this.hudKillConfirmed.fixedToCamera = true
