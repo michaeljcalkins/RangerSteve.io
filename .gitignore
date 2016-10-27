@@ -40,5 +40,6 @@ bower_components
 .sass-cache
 .idea
 public/js/app.js
+public/js/app.js.map
 public/css/app.css
 public/css/app.css.map
