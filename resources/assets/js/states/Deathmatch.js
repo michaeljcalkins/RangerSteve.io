@@ -79,7 +79,7 @@ Deathmatch.prototype = {
         this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
 
         window.onresize = () => {
-            const qualities = [1200, 600, 300]
+            const qualities = [1100, 600, 300]
             const scaleFactor = qualities[0]
             const innerWidth = window.innerWidth
             const innerHeight = window.innerHeight
@@ -93,7 +93,7 @@ Deathmatch.prototype = {
             this.game.scale.setGameSize(Math.ceil(scaleFactor * gameRatio), scaleFactor)
         }
 
-        const qualities = [1200, 600, 300]
+        const qualities = [1000, 600, 300]
         const scaleFactor = qualities[0]
         const innerWidth = window.innerWidth
         const innerHeight = window.innerHeight
