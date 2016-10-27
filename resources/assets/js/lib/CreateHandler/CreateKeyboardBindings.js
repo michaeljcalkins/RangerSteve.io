@@ -10,6 +10,7 @@ export default function() {
      * Open settings modal
      */
     this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
+        console.log('test')
         store.dispatch(actions.game.openLeaderboardModal())
     })
 

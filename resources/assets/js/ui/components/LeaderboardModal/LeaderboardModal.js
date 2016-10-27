@@ -124,7 +124,7 @@ export default class Leaderboard extends Component {
                 const kdRatio = deaths > 0 ? (kills / deaths) : kills
                 const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
                 const classes = cs({
-                    'active-player': id === window.socket.id
+                    'active-player': id === window.socket.id,
                 })
 
                 return (
@@ -132,9 +132,8 @@ export default class Leaderboard extends Component {
                         className={ classes }
                         key={ 'leaderboard-' + key + playerNickname }
                     >
-                        <td>
-                            { playerNickname }
-                        </td>
+                        <td>{ key }</td>
+                        <td>{ playerNickname }</td>
                         <td>{ score }</td>
                         <td>{ kills }</td>
                         <td>{ deaths }</td>

@@ -12,9 +12,9 @@ export default function() {
 
     $("#ui-app").css({
         transform: "scale(" + Math.min(innerWidth / 1100, 1) + ")",
-        "transform-origin": "top right"
+        "transform-origin": "top right",
     })
 
     this.game.scale.setGameSize(widthScaleFactor, heightScaleFactor)
-    this.tiles.resize(widthScaleFactor, heightScaleFactor)
+    RS.tiles && RS.tiles.resize(widthScaleFactor, heightScaleFactor)
 }

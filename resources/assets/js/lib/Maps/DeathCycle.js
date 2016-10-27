@@ -54,7 +54,7 @@ export function create() {
     this.map.addTilesetImage('collision', 'ninja-tiles32')
 
     // Create a TilemapLayer object from the collision layer of the map
-    this.tiles = this.map.createLayer('tiles')
+    RS.tiles = this.map.createLayer('tiles')
     this.ground = this.map.createLayer('collision')
     this.ground.renderSettings.enableScrollDelta = false
     if (! GameConsts.DEBUG) this.ground.alpha = 0
