@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 import CollisionHandler from '../lib/CollisionHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
@@ -13,6 +11,7 @@ import actions from '../actions'
 import GameConsts from '../lib/GameConsts'
 import UpdateHudPositions from '../lib/UpdateHudPositions'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
+import UpdateGameScale from '../lib/UpdateGameScale'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
 import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
 import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
@@ -80,30 +79,8 @@ Deathmatch.prototype = {
 
         this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
 
-        window.onresize = () => {
-            const qualities = [1100, 600, 300]
-            const scaleFactor = qualities[0]
-            const innerWidth = window.innerWidth
-            const innerHeight = window.innerHeight
-            const gameRatio = innerWidth / innerHeight
-
-            $("#ui-app").css({
-                transform: "scale(" + Math.min(innerWidth / 1200, 1) + ")",
-                "transform-origin": "top right"
-            })
-
-            this.game.scale.setGameSize(Math.ceil(scaleFactor * gameRatio), scaleFactor)
-            this.tiles.resize(scaleFactor * gameRatio, scaleFactor)
-
-            console.log(this.map)
-        }
-
-        const qualities = [1000, 600, 300]
-        const scaleFactor = qualities[0]
-        const innerWidth = window.innerWidth
-        const innerHeight = window.innerHeight
-        const gameRatio = innerWidth / innerHeight
-        this.game.scale.setGameSize(Math.ceil(scaleFactor * gameRatio), scaleFactor)
+        window.onresize = UpdateGameScale.bind(this)
+        UpdateGameScale.call(this)
 
         this.game.paused = false
     },
