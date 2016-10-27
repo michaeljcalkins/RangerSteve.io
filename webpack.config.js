@@ -81,12 +81,8 @@ if (!isProduction) {
   config.resolve.alias = {
     'phaser-debug': phaserDebugPlugin
   }
-
-  config.plugins.concat([
-    // new NpmInstallPlugin({
-    //   dev: false,
-    //   peerDependencies: true,
-    // }),
+  // place browser-sync at position 0
+  config.plugins.unshift(
     new BrowserSyncPlugin({
       host: 'localhost',
       port: 3000,
@@ -94,7 +90,14 @@ if (!isProduction) {
         target: "http://localhost:3000",
         ws: true
       }
-    }),
+    })
+  )
+  config.plugins.concat([
+    // new NpmInstallPlugin({
+    //   dev: false,
+    //   peerDependencies: true,
+    // }),
+    ,
     new webpack.DllReferencePlugin({
       context: path.join(__dirname, SRC + 'js/app.js'),
       manifest: require("./dll/vendor-manifest.json")
