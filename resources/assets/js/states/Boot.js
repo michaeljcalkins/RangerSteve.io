@@ -16,14 +16,14 @@ Boot.prototype = {
         window.socket = io.connect()
         setEventHandlers.call(this)
 
-        if (GameConsts.PHASER_DEBUG) {
-            const phaserDebug = require('phaser-debug')
-            this.add.plugin(phaserDebug)
+        // if (GameConsts.PHASER_DEBUG) {
+        //     const phaserDebug = require('phaser-debug')
+        //     this.add.plugin(phaserDebug)
 
-            // needed to correctly style other elements in css
-            $('body').addClass('phaser-debug')
-        }
-    }
+        //     // needed to correctly style other elements in css
+        //     $('body').addClass('phaser-debug')
+        // }
+    },
 
 }
 

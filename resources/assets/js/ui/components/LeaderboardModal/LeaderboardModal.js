@@ -9,7 +9,7 @@ const { object } = PropTypes
 
 export default class Leaderboard extends Component {
     static propTypes = {
-        room: object.isRequired
+        room: object.isRequired,
     }
 
     constructor(props) {
@@ -18,13 +18,13 @@ export default class Leaderboard extends Component {
     }
 
     state = {
-        elapsed: 0
+        elapsed: 0,
     }
 
     componentDidMount() {
         this.timer = setInterval(this.tick.bind(this), 100)
         window.socket.emit('refresh room', {
-            roomId: this.props.room.id
+            roomId: this.props.room.id,
         })
     }
 
@@ -45,6 +45,8 @@ export default class Leaderboard extends Component {
 
     renderAchievements() {
         const { props: { room } } = this
+
+        if (! room.players) return null
 
         let playerWithBestHeadshots = {}
         Object.keys(room.players).forEach((player) => {
@@ -117,6 +119,9 @@ export default class Leaderboard extends Component {
 
     renderPlayers() {
         const { room } = this.props
+
+        if (! room.players) return null
+
         return values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map((player, key) => {
@@ -124,7 +129,7 @@ export default class Leaderboard extends Component {
                 const kdRatio = deaths > 0 ? (kills / deaths) : kills
                 const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
                 const classes = cs({
-                    'active-player': id === window.socket.id
+                    'active-player': id === window.socket.id,
                 })
 
                 return (
@@ -132,9 +137,8 @@ export default class Leaderboard extends Component {
                         className={ classes }
                         key={ 'leaderboard-' + key + playerNickname }
                     >
-                        <td>
-                            { playerNickname }
-                        </td>
+                        <td className="text-right">{ key + 1 }</td>
+                        <td>{ playerNickname }</td>
                         <td>{ score }</td>
                         <td>{ kills }</td>
                         <td>{ deaths }</td>
@@ -148,6 +152,8 @@ export default class Leaderboard extends Component {
     renderFirstPlacePlayerName() {
         const { room } = this.props
 
+        if (! room.players) return null
+
         const players = values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
 
@@ -155,7 +161,12 @@ export default class Leaderboard extends Component {
     }
 
     render() {
-        let { state: { elapsed }, props: { room }, renderPlayers, renderAchievements } = this
+        const {
+            state: { elapsed },
+            props: { room },
+            renderPlayers,
+            renderAchievements,
+        } = this
 
         return (
             <div>
@@ -183,6 +194,7 @@ export default class Leaderboard extends Component {
                                 <table className="table table-condensed">
                                     <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Player</th>
                                             <th>Score</th>
                                             <th>Kills</th>

@@ -27,6 +27,10 @@ export default function onUpdatePlayers(data) {
     if (RS.enemies) RS.enemies.destroy(true)
     RS.enemies = this.game.add.group()
 
+    const rankedPlayers = _.values(store.getState().room.players)
+        .sort((a, b) => a.meta.score < b.meta.score)
+        .map(player => player)
+
     _.values(store.getState().room.players).forEach((player) => {
         if (player.id === window.SOCKET_ID) {
             store.dispatch(actions.player.setScore(player.meta.score))
@@ -37,12 +41,16 @@ export default function onUpdatePlayers(data) {
         let newRemotePlayer = RemotePlayer.call(this, player)
         let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unnamed Ranger'
 
+        if (rankedPlayers[0] && rankedPlayers[0].id === player.id) enemyPlayerName = `#1 ${enemyPlayerName}`
+        if (rankedPlayers[1] && rankedPlayers[1].id === player.id) enemyPlayerName = `#2 ${enemyPlayerName}`
+        if (rankedPlayers[2] && rankedPlayers[2].id === player.id) enemyPlayerName = `#3 ${enemyPlayerName}`
+
         const style = {
             font: "10px Arial",
             fill: "#fff",
             align: "center",
             stroke: "black",
-            strokeThickness: 2
+            strokeThickness: 2,
         }
         const text = this.game.add.text(0, -50, enemyPlayerName, style)
         newRemotePlayer.addChild(text)
