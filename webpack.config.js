@@ -1,3 +1,5 @@
+'use strict'
+
 const path = require('path'),
       fs = require('fs'),
       webpack = require('webpack'),
@@ -14,10 +16,10 @@ const path = require('path'),
       // HTMLWebpackPlugin = require('html-webpack-plugin'),
       // config
       BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
-      isProduction = process.argv[2] === '-p'
+      isProduction = process.argv[2] === '-p',
       SRC = 'resources/assets/',
       DIST = 'public/'
-      
+
 let sharedConfig = {
   devtool: "cheap-eval-source-map",
   entry: {
@@ -101,7 +103,7 @@ if (!isProduction) {
     // new HappyPack({ id: 'scss', verbose: false, threads: 4 }),
     // new HappyPack({ id: 'json', verbose: false, threads: 4 }),
     new DashboardPlugin(),
-  ]) 
+  ])
 
 } else {
  // **** PRODUCTION BUILD ****
