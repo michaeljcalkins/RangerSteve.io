@@ -3,8 +3,8 @@
 {% block title %}Credits{% endblock %}
 
 {% block head %}
-<meta property="og:url" content="https://rangersteve.io/credits">
-<link rel="canonical" href="https://rangersteve.io/credits">
+<meta property="og:url" content="https://RS.io/credits">
+<link rel="canonical" href="https://RS.io/credits">
 {% endblock %}
 
 {% block content %}
@@ -65,7 +65,7 @@
         <div class="col-sm-12">
             <h1>Thanks For Playing!</h1>
             <h3><a href="https://twitter.com/michaeljcalkins" target="_blank">@michaeljcalkins</a></h3>
-            <h3><a href="/">RangerSteve.io</a></h3>
+            <h3><a href="/">RS.io</a></h3>
         </div>
     </div>
 </div>

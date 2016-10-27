@@ -19,7 +19,7 @@ export default function(data) {
         bloodY += 25
     }
 
-    const bloodSpray = RangerSteve.bloodSprays.getFirstExists(false)
+    const bloodSpray = RS.bloodSprays.getFirstExists(false)
     bloodSpray.reset(bloodX, bloodY)
     bloodSpray.scale.setTo(.14)
     bloodSpray.rotation = bloodRotation

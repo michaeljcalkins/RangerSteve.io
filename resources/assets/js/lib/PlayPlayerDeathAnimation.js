@@ -6,7 +6,7 @@ const propTypes = {
 }
 
 export default function(data) {
-    const playerDeath = RangerSteve.playerDeaths.getFirstExists(false)
+    const playerDeath = RS.playerDeaths.getFirstExists(false)
     playerDeath.reset(data.x, data.y)
     playerDeath.scale.setTo(.31)
     playerDeath.anchor.setTo(.5)

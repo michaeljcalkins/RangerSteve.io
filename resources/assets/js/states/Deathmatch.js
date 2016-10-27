@@ -55,15 +55,15 @@ Deathmatch.prototype = {
         this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
         // Enemy remote players
-        RangerSteve.enemies = this.game.add.group()
-        RangerSteve.enemies.enableBody = true
-        RangerSteve.enemies.physicsBodyType = Phaser.Physics.ARCADE
-        this.game.physics.arcade.enable(RangerSteve.enemies)
-        this.game.physics.enable(RangerSteve.enemies, Phaser.Physics.ARCADE)
+        RS.enemies = this.game.add.group()
+        RS.enemies.enableBody = true
+        RS.enemies.physicsBodyType = Phaser.Physics.ARCADE
+        this.game.physics.arcade.enable(RS.enemies)
+        this.game.physics.enable(RS.enemies, Phaser.Physics.ARCADE)
 
-        RangerSteve.jumpjetFx = this.game.add.audio('jumpjet')
-        RangerSteve.switchingWeaponsFx = this.game.add.audio('switching-weapons')
-        RangerSteve.headshotSound = this.game.add.audio('headshot')
+        RS.jumpjetFx = this.game.add.audio('jumpjet')
+        RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
+        RS.headshotSound = this.game.add.audio('headshot')
 
         CreateMapAndPlayer.call(this)
         CreateHurtBorder.call(this)
@@ -166,17 +166,17 @@ Deathmatch.prototype = {
     },
 
     render() {
-        if (! GameConsts.DEBUG || ! RangerSteve.player) return
+        if (! GameConsts.DEBUG || ! RS.player) return
 
         this.game.debug.text('FPS: ' + (this.time.fps || '--'), 10, 20, "#ffffff")
-        this.game.debug.body(RangerSteve.player)
+        this.game.debug.body(RS.player)
         this.game.debug.inputInfo(32, 200)
         this.game.debug.cameraInfo(this.camera, 32, 110)
-        RangerSteve.bullets.forEach((bullet) => {
+        RS.bullets.forEach((bullet) => {
             this.game.debug.body(bullet)
         })
 
-        RangerSteve.enemies.forEach((bullet) => {
+        RS.enemies.forEach((bullet) => {
             this.game.debug.body(bullet)
         })
     }

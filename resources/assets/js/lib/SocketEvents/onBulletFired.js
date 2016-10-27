@@ -21,7 +21,7 @@ export default function onBulletFired(data) {
     if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
     if (data.id === window.SOCKET_ID) return
 
-    let bullet = RangerSteve.enemyBullets.getFirstDead()
+    let bullet = RS.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)
     bullet.bulletId = data.bulletId
     bullet.playerId = data.playerId
@@ -36,7 +36,7 @@ export default function onBulletFired(data) {
     bullet.body.velocity.x += newVelocity.x
     bullet.body.velocity.y += newVelocity.y
 
-    let distanceBetweenBulletAndPlayer = Phaser.Math.distance(RangerSteve.player.x, RangerSteve.player.y, data.x, data.y)
+    let distanceBetweenBulletAndPlayer = Phaser.Math.distance(RS.player.x, RS.player.y, data.x, data.y)
     let enemyBulletVolume = distanceBetweenBulletAndPlayer > 0 ? 1 - (distanceBetweenBulletAndPlayer / 3000) : 0
 
     /**
@@ -46,7 +46,7 @@ export default function onBulletFired(data) {
      */
     if (soundThrottle) return
     soundThrottle = true
-    RangerSteve.weaponSoundEffects[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
-    RangerSteve.weaponSoundEffects[bullet.weaponId].play()
+    RS.weaponSoundEffects[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
+    RS.weaponSoundEffects[bullet.weaponId].play()
     setTimeout(() => soundThrottle = false, 100)
 }

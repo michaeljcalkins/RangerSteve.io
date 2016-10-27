@@ -6,7 +6,7 @@ export default function() {
     const state = this.game.store.getState()
     const currentWeapon = state.player.currentWeapon
 
-    this.game.physics.arcade.overlap(RangerSteve.bullets, RangerSteve.enemies, function(bullet, enemy) {
+    this.game.physics.arcade.overlap(RS.bullets, RS.enemies, function(bullet, enemy) {
         if (
             ! state.room.id ||
             state.player.health <= 0 ||
