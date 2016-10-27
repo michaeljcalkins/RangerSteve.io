@@ -6,16 +6,25 @@ export default function HudLeaderboard({
 }) {
     function renderPlayers() {
         if (! players) return null
+
+
+
         return _.values(players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map(function(player, key) {
+                let playerNickname = player.meta.nickname
+                    ? player.meta.nickname
+                    : 'Unnamed Ranger'
+
+                const killingSpreeCount = player.meta.killingSpree > 1
+                    ? `${player.meta.killingSpree}x `
+                    : null
+
                 return (
                     <tr key={ key }>
                         <td>
-                            { player.meta.nickname
-                                ? player.meta.nickname
-                                : 'Unnamed Ranger'
-                            }
+                            <strong>{ killingSpreeCount }</strong>
+                            { playerNickname }
                         </td>
                         <td>{ player.meta.score }</td>
                     </tr>

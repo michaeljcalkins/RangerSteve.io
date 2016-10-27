@@ -61,7 +61,7 @@ export default class GameUi extends React.Component {
         this.props.onNicknameChange(nickname)
         window.socket.emit('player update nickname', {
             roomId: this.props.room.id,
-            nickname
+            nickname,
         })
     }
 
@@ -88,8 +88,8 @@ export default class GameUi extends React.Component {
         const {
             props: {
                 room,
-                game
-            }
+                game,
+            },
         } = this
 
         return (game.leaderboardModalIsOpen || room.state === 'ended')
@@ -116,8 +116,8 @@ export default class GameUi extends React.Component {
                 room,
                 game,
                 onCloseSettingsModal,
-                onSettingsViewChange
-            }
+                onSettingsViewChange,
+            },
         } = this
 
         return (
@@ -179,5 +179,5 @@ GameUi.propTypes = {
     onSettingsViewChange: PropTypes.func.isRequired,
     onSfxVolumeChange: PropTypes.func.isRequired,
     player: PropTypes.object.isRequired,
-    room: PropTypes.object.isRequired
+    room: PropTypes.object.isRequired,
 }
