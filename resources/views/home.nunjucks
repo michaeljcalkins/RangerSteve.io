@@ -108,17 +108,17 @@
 </section>
 
 <div class="row home-footer">
-    <div class="col-sm-12">
+    <div class="col-sm-12 text-center">
         <strong>
             <a href="https://www.facebook.com/rangerstevegame/" target="_blank">Facebook</a>
             |
             <a href="https://twitter.com/michaeljcalkins" target="_blank">Twitter</a>
             |
-            <a href="/credits">Credits</a>
-            |
             <a href="https://www.reddit.com/r/RangerSteveio" target="_blank">Reddit</a>
             |
             <a href="https://github.com/michaeljcalkins/rangersteve-ideas/issues" target="_blank">Bugs and Ideas</a>
+            |
+            <a href="/credits">Credits</a>
         </strong>
     </div>
 </div>
