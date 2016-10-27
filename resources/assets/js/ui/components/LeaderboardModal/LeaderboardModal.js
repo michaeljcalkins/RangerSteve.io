@@ -137,7 +137,7 @@ export default class Leaderboard extends Component {
                         className={ classes }
                         key={ 'leaderboard-' + key + playerNickname }
                     >
-                        <td>{ key + 1 }.</td>
+                        <td className="text-right">{ key + 1 }</td>
                         <td>{ playerNickname }</td>
                         <td>{ score }</td>
                         <td>{ kills }</td>
