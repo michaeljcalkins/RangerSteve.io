@@ -8,6 +8,6 @@ export default function() {
         ? ((100 - state.player.health) / 100).toFixed(2)
         : 0
 
-    this.hurtBorderSprite.width = window.innerWidth
-    this.hurtBorderSprite.height = window.innerHeight
+    this.hurtBorderSprite.width = this.camera.width
+    this.hurtBorderSprite.height = this.camera.height
 }
