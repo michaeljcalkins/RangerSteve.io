@@ -19,11 +19,11 @@ const
     BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
     isProduction = process.argv[2] === '-p',
     SRC = 'resources/assets',
-    APP = `${SRC}/app.js`,
+    APP = `${SRC}/js/app.js`,
     DIST = 'public';
 
 let sharedConfig = {
-    devtool: "cheap-eval-source-map",
+    devtool: "eval-source-map",
     entry: {
         index: path.join(__dirname, APP),
     },
