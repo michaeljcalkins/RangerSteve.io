@@ -1,6 +1,6 @@
 {% extends 'master.nunjucks' %}
 
-{% block title %}RS.io{% endblock %}
+{% block title %}RangerSteve.io{% endblock %}
 
 {% block content %}
 <div class="container">
