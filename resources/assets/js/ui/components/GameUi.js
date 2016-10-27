@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
+import $ from 'jquery'
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudKillLog from './Hud/HudKillLog'

@@ -1,6 +1,5 @@
-/**
- * Collisions and all game mode related interactions.
- */
+import $ from 'jquery'
+
 import CollisionHandler from '../lib/CollisionHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
@@ -23,6 +22,9 @@ import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateUI from '../lib/CreateHandler/CreateUI'
 
+/**
+ * Collisions and all game mode related interactions.
+ */
 function Deathmatch(game) {
     this.game = game
 }
@@ -48,7 +50,7 @@ Deathmatch.prototype = {
         // Enables advanced profiling features when debugging
         this.game.time.advancedTiming = true
 
-        // Start up Arcade Physics
+        // Adds slopes and other useful tiles to AABB collisions
         this.game.physics.startSystem(Phaser.Physics.ARCADE)
         this.game.plugins.add(Phaser.Plugin.ArcadeSlopes)
         this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
@@ -91,6 +93,9 @@ Deathmatch.prototype = {
             })
 
             this.game.scale.setGameSize(Math.ceil(scaleFactor * gameRatio), scaleFactor)
+            this.tiles.resize(scaleFactor * gameRatio, scaleFactor)
+
+            console.log(this.map)
         }
 
         const qualities = [1000, 600, 300]
