@@ -6,11 +6,11 @@ export function playerFaceLeft() {
 
     this.game.store.dispatch(actions.player.setFacing('left'))
 
-    RS.rightArmSprite.scale.y *= -1
+    RS.rightArmSprite.scale.y = 0.37
     RS.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
     RS.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
 
-    RS.leftArmSprite.scale.y *= -1
+    RS.leftArmSprite.scale.y = 0.37
     RS.leftArmGroup.x = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_X
     RS.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
 }
@@ -20,11 +20,11 @@ export function playerFaceRight() {
 
     this.game.store.dispatch(actions.player.setFacing('right'))
 
-    RS.rightArmSprite.scale.y *= -1
+    RS.rightArmSprite.scale.y = -0.37
     RS.rightArmGroup.x = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_X
     RS.rightArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_Y
 
-    RS.leftArmSprite.scale.y *= -1
+    RS.leftArmSprite.scale.y = -0.37
     RS.leftArmGroup.x = GameConsts.PLAYER_FACE.RIGHT.LEFT_ARM_X
     RS.leftArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.LEFT_ARM_Y
 }

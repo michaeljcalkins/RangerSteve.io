@@ -98,12 +98,12 @@ export default function onMovePlayer(data) {
 
     // Standing still and facing right
     if (isNotMoving(movePlayer) && movePlayer.facing === 'right') {
-        movePlayer.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
+        movePlayer.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
     }
 
     // Standing still and facing left
     if (isNotMoving(movePlayer) && movePlayer.facing === 'left') {
-        movePlayer.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
+        movePlayer.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
     }
 
     movePlayer.lastPosition.x = movePlayer.x

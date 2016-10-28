@@ -81,6 +81,7 @@ export default function PlayerSpriteHandler() {
     RS.playerSprite.animations.add('runLeft-faceLeft', [7,8,9,10,11,12], GameConsts.ANIMATION_FRAMERATE, true)
     RS.playerSprite.animations.add('runRight-faceLeft', [14,15,16,17,18,19], GameConsts.ANIMATION_FRAMERATE, true)
     RS.playerSprite.animations.add('runLeft-faceRight', [21,22,23,24,25,26], GameConsts.ANIMATION_FRAMERATE, true)
+    RS.playerSprite.animations.frame = GameConsts.STANDING_RIGHT_FRAME
 
     this.game.store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[primaryWeaponId]))
     this.game.store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[secondaryWeaponId]))
@@ -88,9 +89,8 @@ export default function PlayerSpriteHandler() {
     // Left arm
     RS.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
     RS.leftArmSprite.anchor.setTo(0.8, .2)
-    RS.leftArmSprite.scale.setTo(0.37)
+    RS.leftArmSprite.scale.setTo(0.37, -0.37)
     RS.leftArmSprite.rotation = 83
-    RS.leftArmSprite.scale.y *= -1
     RS.leftArmGroup.add(RS.leftArmSprite)
 
     // Add left arm to player as child then offset it
@@ -106,10 +106,9 @@ export default function PlayerSpriteHandler() {
     // Right arm
     RS.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
     RS.rightArmSprite.anchor.setTo(0.62, 0.4)
-    RS.rightArmSprite.scale.setTo(0.37)
+    RS.rightArmSprite.scale.setTo(0.37, -0.37)
     RS.rightArmSprite.rotation = 83.4
     RS.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
-    RS.rightArmSprite.scale.y *= -1
     RS.rightArmGroup.add(RS.rightArmSprite)
 
     // Add right arm to player as child then offset it
