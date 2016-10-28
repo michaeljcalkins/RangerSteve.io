@@ -262,14 +262,6 @@
 
     tr {
         color: white;
-
-        th {
-            text-align: right;
-        }
-
-        th:first-child {
-            text-align: left;
-        }
     }
 
     tr.active-player {
@@ -280,10 +272,10 @@
 
     td {
         &:first-child {
-            text-align: left;
+            text-align: right;
+            width: 30px;
         }
 
-        text-align: right;
         font-family: 'Open Sans', Arial;
         font-size: 14px;
     }
