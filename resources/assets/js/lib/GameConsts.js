@@ -1,4 +1,13 @@
 const GameConsts = {
+    // Server Settings
+    MAX_ROOM_SIZE: 7,
+    RESPAWN_TIME_SECONDS: 5,
+    ROUND_LENGTH_MINUTES: 5,
+    PLAYER_FULL_HEALTH: 100,
+    MAPS: ['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop', 'DeathCycle'],
+    GAMEMODES: ['Deathmatch', 'TeamDeathmatch'],
+
+    // Client Stetings
     DEBUG: false,
     PHASER_DEBUG: false,
     STARTING_SFX_VOLUME: .04,
@@ -255,12 +264,10 @@ const GameConsts = {
                 rotation: 80.20,
                 scale: 0.4,
                 muzzleFlashX: 172,
-                muzzleFlashY: -72
-            }
-        }
-    }
+                muzzleFlashY: -72,
+            },
+        },
+    },
 }
 
-window.GameConsts = GameConsts
-
-export default GameConsts
+module.exports = GameConsts

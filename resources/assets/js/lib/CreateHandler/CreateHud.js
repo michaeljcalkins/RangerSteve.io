@@ -54,7 +54,7 @@ export default function() {
     this.hudTimerText.strokeThickness = 3
 
     // Gamemode
-    this.hudGamemodeText = this.game.add.text(0, 0, 'DEATHMATCH', {
+    this.hudGamemodeText = this.game.add.text(0, 0, state.room.gamemode, {
         font: "12px Keep Calm",
         fill: "#fff",
     })

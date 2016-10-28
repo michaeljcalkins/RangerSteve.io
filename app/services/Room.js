@@ -4,6 +4,8 @@ const moment = require('moment')
 const _ = require('lodash')
 const util = require('util')
 
+const GameConsts = require('../../resources/assets/js/lib/GameConsts')
+
 const Room = function(data) {
     util.log('Creating room', data.id)
 
@@ -17,10 +19,11 @@ const Room = function(data) {
     return {
         id: data.id,
         players: playersObj,
-        roundEndTime: moment().add(data.roundLength, 'minutes').unix(),
+        roundEndTime: moment().add(GameConsts.ROUND_LENGTH_MINUTES, 'minutes').unix(),
         state: 'active',
-        map: _.sample(['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop']),
-        messages: data.messages || []
+        map: _.sample(GameConsts.MAPS),
+        gamemode: _.sample(GameConsts.GAMEMODES),
+        messages: data.messages || [],
     }
 }
 

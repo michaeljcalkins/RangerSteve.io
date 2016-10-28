@@ -8,15 +8,10 @@ const moment = require('moment')
 const Player = require('./services/Player')
 const PlayerById = require('./services/PlayerById')
 const Room = require('./services/Room')
+const GameConsts = require('../resources/assets/js/lib/GameConsts')
 
 let rooms = {}
 let io = null
-
-const MAX_ROOM_SIZE = 7
-const RESPAWN_TIME_SECONDS = 5
-const ROUND_LENGTH_MINUTES = 5
-const PLAYER_FULL_HEALTH = 100
-const MAP_IDS = ['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop', 'DeathCycle']
 
 function init(ioInstance) {
     io = ioInstance
@@ -53,19 +48,19 @@ setInterval(function() {
             rooms[roomId] = new Room({
                 id: roomId,
                 players: rooms[roomId].players,
-                roundLength: ROUND_LENGTH_MINUTES,
-                messages: rooms[roomId].messages
+                roundLength: GameConsts.ROUND_LENGTH_MINUTES,
+                messages: rooms[roomId].messages,
             })
 
             // Randomly select a map that was not the previous map
-            const potentialNextMaps = MAP_IDS.filter(map => map !== previousMap)
+            const potentialNextMaps = GameConsts.MAPS.filter(map => map !== previousMap)
 
             rooms[roomId].map = _.sample(potentialNextMaps)
 
             util.log(rooms[roomId].map, 'has been selected for ', roomId)
 
             Object.keys(rooms[roomId].players).forEach((playerId) => {
-                rooms[roomId].players[playerId].meta.health = PLAYER_FULL_HEALTH
+                rooms[roomId].players[playerId].meta.health = GameConsts.PLAYER_FULL_HEALTH
                 rooms[roomId].players[playerId].meta.deaths = 0
                 rooms[roomId].players[playerId].meta.kills = 0
                 rooms[roomId].players[playerId].meta.bestKillingSpree = 0
@@ -114,12 +109,12 @@ function onRefreshRoom(data) {
 
 function respawnPlayer(player, attackingPlayer, socketId, roomId) {
     setTimeout(() => {
-        player.meta.health = PLAYER_FULL_HEALTH
+        player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
         io.to(roomId).emit('player respawn', {
             id: socketId,
             damagedPlayerId: player.id,
-            health: PLAYER_FULL_HEALTH
+            health: GameConsts.PLAYER_FULL_HEALTH
         })
 
         player.meta.damageStats.attackingPlayerId = null
@@ -131,7 +126,7 @@ function respawnPlayer(player, attackingPlayer, socketId, roomId) {
             attackingPlayer.meta.damageStats.attackingDamage = 0
             attackingPlayer.meta.damageStats.attackingHits = 0
         }
-    }, RESPAWN_TIME_SECONDS * 1000)
+    }, GameConsts.RESPAWN_TIME_SECONDS * 1000)
 }
 
 function onLoadComplete(data) {
@@ -206,7 +201,7 @@ function onNewPlayer (data) {
     var newPlayer = new Player(this.id, data.x, data.y)
 
     newPlayer.meta = {
-        health: PLAYER_FULL_HEALTH,
+        health: GameConsts.PLAYER_FULL_HEALTH,
         kills: 0,
         deaths: 0,
         bestKillingSpree: 0,
@@ -218,7 +213,7 @@ function onNewPlayer (data) {
         damageInflicted: 0,
         bulletsFired: 0,
         bulletsHit: 0,
-        weaponId: data.weaponId
+        weaponId: data.weaponId,
     }
 
     // Specified room id and room has not been created
@@ -227,10 +222,10 @@ function onNewPlayer (data) {
         rooms[data.roomId] = new Room({
             id: data.roomId,
             player: newPlayer,
-            roundLength: ROUND_LENGTH_MINUTES
+            roundLength: GameConsts.ROUND_LENGTH_MINUTES,
         })
 
-        if (data.map && MAP_IDS.indexOf(data.map) > -1) {
+        if (data.map && GameConsts.MAPS.indexOf(data.map) > -1) {
             rooms[data.roomId].map = data.map
         }
 
@@ -239,11 +234,11 @@ function onNewPlayer (data) {
         this.join(data.roomId)
 
         io.to(data.roomId).emit('load game', {
-            room: rooms[data.roomId]
+            room: rooms[data.roomId],
         })
 
         io.to(data.roomId).emit('update players', {
-            room: rooms[data.roomId]
+            room: rooms[data.roomId],
         })
         return
     }
@@ -271,7 +266,7 @@ function onNewPlayer (data) {
     // Find available room with space for player
     let availableRooms = Object.keys(rooms).filter(function(room) {
         if (! rooms[room].players) return true
-        return Object.keys(rooms[room].players).length < MAX_ROOM_SIZE
+        return Object.keys(rooms[room].players).length < GameConsts.MAX_ROOM_SIZE
     })
 
     // No available rooms were found so we create one.
@@ -281,7 +276,7 @@ function onNewPlayer (data) {
         rooms[newRoomId] = new Room({
             id: newRoomId,
             player: newPlayer,
-            roundLength: ROUND_LENGTH_MINUTES
+            roundLength: GameConsts.ROUND_LENGTH_MINUTES
         })
 
         this.join(newRoomId)
@@ -373,7 +368,7 @@ function onClientDisconnect() {
 
 function onPlayerFullHealth(data) {
     let player = PlayerById(data.roomId, this.id, rooms)
-    player.meta.health = PLAYER_FULL_HEALTH
+    player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
     io.to(data.roomId).emit('player health update', {
         id: this.id,
@@ -385,8 +380,8 @@ function onPlayerHealing(data) {
     let player = PlayerById(data.roomId, this.id, rooms)
     player.meta.health += 10
 
-    if (player.meta.health > PLAYER_FULL_HEALTH)
-        player.meta.health = PLAYER_FULL_HEALTH
+    if (player.meta.health > GameConsts.PLAYER_FULL_HEALTH)
+        player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
     io.to(data.roomId).emit('player health update', {
         id: this.id,
@@ -424,7 +419,7 @@ function onPlayerDamaged(data) {
         player.meta.health = 0
         player.meta.killingSpree = 0
         player.meta.deaths++
-        player.meta.canRespawnTimestamp = moment().add(RESPAWN_TIME_SECONDS, 'seconds').unix()
+        player.meta.canRespawnTimestamp = moment().add(GameConsts.RESPAWN_TIME_SECONDS, 'seconds').unix()
 
         if (attackingPlayer) {
             attackingPlayer.meta.score += 10
