@@ -20,12 +20,15 @@ export default function HudLeaderboard({
                     : null
 
                 const classes = cs({
-                    'text-danger': player.meta.team === 'red' && room.gamemode === 'TeamDeathmatch',
-                    'text-info': player.meta.team === 'blue' && room.gamemode === 'TeamDeathmatch',
+                    'text-red': player.meta.team === 'red' && room.gamemode === 'TeamDeathmatch',
+                    'text-blue': player.meta.team === 'blue' && room.gamemode === 'TeamDeathmatch',
                 })
 
                 return (
-                    <tr className={ classes } key={ player.meta.id }>
+                    <tr
+                        className={ classes }
+                        key={ player.meta.id }
+                    >
                         <td title="Player's nickname" style={ { width: '120px', overflow: 'hidden' } }>{ playerNickname }</td>
                         <td title="Player's current killing spree" style={ { width: '20px' } }><strong>{ killingSpreeCount }</strong></td>
                         <td title="Player's current score" style={ { width: '20px' } }>{ player.meta.score }</td>

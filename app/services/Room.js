@@ -23,6 +23,8 @@ const Room = function(data) {
         state: 'active',
         map: _.sample(GameConsts.MAPS),
         gamemode: _.sample(GameConsts.GAMEMODES),
+        redTeamScore: 0,
+        blueTeamScore: 0,
         messages: data.messages || [],
     }
 }

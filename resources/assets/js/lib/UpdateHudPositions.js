@@ -93,15 +93,15 @@ export default function() {
     const widthPercent = RemainingFuelPercent(state.player.jumpJetCounter)
     RS.hudJumpJetBar.width = widthPercent
 
-
     if (state.room.gamemode === 'TeamDeathmatch') {
         RS.redTeamScore.y = 25
         RS.redTeamScore.x = (this.camera.width / 2) - (RS.redTeamScore.width / 2) - 100
         RS.redTeamScore.fixedToCamera = true
+        RS.redTeamScore.setText(state.room.redTeamScore)
 
         RS.blueTeamScore.y = 25
         RS.blueTeamScore.x = (this.camera.width / 2) - (RS.blueTeamScore.width / 2) + 100
         RS.blueTeamScore.fixedToCamera = true
+        RS.redTeamScore.setText(state.room.blueTeamScore)
     }
-
 }

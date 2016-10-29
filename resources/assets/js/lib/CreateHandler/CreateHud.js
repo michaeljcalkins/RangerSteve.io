@@ -75,7 +75,7 @@ export default function() {
     RS.hudKillConfirmed.visible = false
 
     if (state.room.gamemode === 'TeamDeathmatch') {
-        RS.redTeamScore = this.game.add.text(0, 0, 220, {
+        RS.redTeamScore = this.game.add.text(0, 0, state.room.redTeamScore, {
             font: "24px Keep Calm",
             fill: "#FF2525",
         })
@@ -84,7 +84,7 @@ export default function() {
         RS.redTeamScore.stroke = '#000'
         RS.redTeamScore.strokeThickness = 1
 
-        RS.blueTeamScore = this.game.add.text(0, 0, 120, {
+        RS.blueTeamScore = this.game.add.text(0, 0, state.room.blueTeamScore, {
             font: "24px Keep Calm",
             fill: "#2578FF",
         })

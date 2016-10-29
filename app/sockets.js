@@ -428,6 +428,14 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.killingSpree++
             attackingPlayer.meta.damageInflicted += Number(data.damage)
 
+            if (attackingPlayer.meta.team === 'red') {
+                rooms[data.roomId].redTeamScore += 10
+            }
+
+            if (attackingPlayer.meta.team === 'blue') {
+                rooms[data.roomId].blueTeamScore += 10
+            }
+
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
             }
@@ -436,14 +444,14 @@ function onPlayerDamaged(data) {
                 id: attackingPlayer.id,
                 damagedPlayerId: data.damagedPlayerId,
                 killingSpree: attackingPlayer.meta.killingSpree,
-                wasHeadshot: data.wasHeadshot
+                wasHeadshot: data.wasHeadshot,
             })
 
             io.to(data.roomId).emit('player kill log', {
                 deadNickname: player.meta.nickname,
                 attackerNickname: attackingPlayer.meta.nickname,
                 weaponId: data.weaponId,
-                wasHeadshot: data.wasHeadshot
+                wasHeadshot: data.wasHeadshot,
             })
         } else {
             if (player.meta.score >= 10) {
@@ -451,7 +459,7 @@ function onPlayerDamaged(data) {
             }
 
             io.to(data.roomId).emit('player kill log', {
-                deadNickname: player.meta.nickname
+                deadNickname: player.meta.nickname,
             })
         }
 
@@ -468,13 +476,13 @@ function onPlayerDamaged(data) {
             attackingDamageStats,
             canRespawnTimestamp: player.meta.canRespawnTimestamp,
             playerX: player.x,
-            playerY: player.y
+            playerY: player.y,
         })
 
         respawnPlayer(player, attackingPlayer, this.id, data.roomId)
 
         io.to(data.roomId).emit('update players', {
-            room: rooms[data.roomId]
+            room: rooms[data.roomId],
         })
         return
     }
