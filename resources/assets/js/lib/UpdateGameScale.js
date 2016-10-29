@@ -1,7 +1,7 @@
 // import $ from 'jquery'
 
 export default function() {
-    const qualities = [1050, 600, 300]
+    const qualities = [1000, 600, 300]
     const scaleFactor = qualities[0]
     const innerWidth = window.innerWidth
     const innerHeight = window.innerHeight

@@ -73,7 +73,7 @@ setInterval(function() {
             })
 
             io.to(roomId).emit('update players', {
-                room: rooms[roomId]
+                room: rooms[roomId],
             })
 
             return
@@ -97,13 +97,13 @@ setInterval(function() {
 
 function onRefreshPlayers(data) {
     io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId]
+        room: rooms[data.roomId],
     })
 }
 
 function onRefreshRoom(data) {
     io.to(data.roomId).emit('refresh room', {
-        room: rooms[data.roomId]
+        room: rooms[data.roomId],
     })
 }
 
@@ -114,7 +114,7 @@ function respawnPlayer(player, attackingPlayer, socketId, roomId) {
         io.to(roomId).emit('player respawn', {
             id: socketId,
             damagedPlayerId: player.id,
-            health: GameConsts.PLAYER_FULL_HEALTH
+            health: GameConsts.PLAYER_FULL_HEALTH,
         })
 
         player.meta.damageStats.attackingPlayerId = null
@@ -131,7 +131,7 @@ function respawnPlayer(player, attackingPlayer, socketId, roomId) {
 
 function onLoadComplete(data) {
     io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId]
+        room: rooms[data.roomId],
     })
 }
 
@@ -144,7 +144,7 @@ function onKickPlayer(data) {
 
     io.to(data.roomId).emit('kick player', {
         id: player.id,
-        roomId: data.roomId
+        roomId: data.roomId,
     })
 }
 
@@ -166,7 +166,7 @@ function onPlayerAdjustScore(data) {
     player.meta.score = player.meta.score <= 0 ? 0 : player.meta.score
 
     io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId]
+        room: rooms[data.roomId],
     })
 }
 
@@ -185,7 +185,7 @@ function onPlayerUpdateNickname(data) {
     player.meta.nickname = nickname
 
     io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId]
+        room: rooms[data.roomId],
     })
 }
 
@@ -214,6 +214,7 @@ function onNewPlayer (data) {
         bulletsFired: 0,
         bulletsHit: 0,
         weaponId: data.weaponId,
+        team: 'red',
     }
 
     // Specified room id and room has not been created
@@ -254,11 +255,11 @@ function onNewPlayer (data) {
         this.join(data.roomId)
 
         io.to(data.roomId).emit('load game', {
-            room: rooms[data.roomId]
+            room: rooms[data.roomId],
         })
 
         io.to(data.roomId).emit('update players', {
-            room: rooms[data.roomId]
+            room: rooms[data.roomId],
         })
         return
     }

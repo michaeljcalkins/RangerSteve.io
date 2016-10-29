@@ -15,8 +15,9 @@ const Player = function(id, startX, startY) {
             secondsInRound: 0,
             bulletsHit: 0,
             score: 0,
-            headshots: 0
-        }
+            headshots: 0,
+            team: 'red',
+        },
     }
 }
 
