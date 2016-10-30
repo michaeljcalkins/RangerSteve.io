@@ -1,4 +1,3 @@
-import CollisionHandler from '../lib/CollisionHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
@@ -21,11 +20,11 @@ import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
 import UpdateTeamColors from '../lib/UpdateTeamColors'
-import PlayerAndPlatforms from './Collisions/PlayerAndPlatforms'
-import PlayerAndEnemyBullets from './Collisions/PlayerAndEnemyBullets'
-import BulletsAndEnemyPlayers from './Collisions/BulletsAndEnemyPlayers'
-import BulletsAndPlatforms from './Collisions/BulletsAndPlatforms'
-import EnemyBulletsAndPlatforms from './Collisions/EnemyBulletsAndPlatforms'
+import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
+import PlayerAndEnemyTeamBullets from '../lib/Collisions/PlayerAndEnemyTeamBullets'
+import BulletsAndEnemyTeamPlayers from '../lib/Collisions/BulletsAndEnemyTeamPlayers'
+import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
+import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 
 /**
  * Collisions and all game mode related interactions.
@@ -45,12 +44,6 @@ TeamDeathmatch.prototype = {
     create: function() {
         const store = this.game.store
         const { room } = store.getState()
-
-        // Scale game on window resize
-        // this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
-        // this.game.renderer.renderSession.roundPixels = true
-        // this.game.stage.disableVisibilityChange = true
-        // this.game.scale.refresh()
 
         // Enables advanced profiling features when debugging
         this.game.time.advancedTiming = true
@@ -114,8 +107,8 @@ TeamDeathmatch.prototype = {
         this.game.input.enabled = !isPaused
 
         PlayerAndPlatforms.call(this)
-        PlayerAndEnemyBullets.call(this)
-        BulletsAndEnemyPlayers.call(this)
+        PlayerAndEnemyTeamBullets.call(this)
+        BulletsAndEnemyTeamPlayers.call(this)
         EnemyBulletsAndPlatforms.call(this)
         BulletsAndPlatforms.call(this)
         Maps[state.room.map].update.call(this)

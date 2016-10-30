@@ -1,4 +1,3 @@
-import CollisionHandler from '../lib/CollisionHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
@@ -20,11 +19,11 @@ import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
-import PlayerAndPlatforms from './Collisions/PlayerAndPlatforms'
-import PlayerAndEnemyBullets from './Collisions/PlayerAndEnemyBullets'
-import BulletsAndEnemyPlayers from './Collisions/BulletsAndEnemyPlayers'
-import BulletsAndPlatforms from './Collisions/BulletsAndPlatforms'
-import EnemyBulletsAndPlatforms from './Collisions/EnemyBulletsAndPlatforms'
+import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
+import PlayerAndEnemyBullets from '../lib/Collisions/PlayerAndEnemyBullets'
+import BulletsAndEnemyPlayers from '../lib/Collisions/BulletsAndEnemyPlayers'
+import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
+import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 
 /**
  * Collisions and all game mode related interactions.
