@@ -10,7 +10,6 @@ import actions from '../actions'
 import GameConsts from '../lib/GameConsts'
 import UpdateHudPositions from '../lib/UpdateHudPositions'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
-import UpdateGameScale from '../lib/UpdateGameScale'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
 import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
 import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
@@ -44,12 +43,6 @@ Deathmatch.prototype = {
         const store = this.game.store
         const { room } = store.getState()
 
-        // Scale game on window resize
-        // this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
-        // this.game.renderer.renderSession.roundPixels = true
-        // this.game.stage.disableVisibilityChange = true
-        // this.game.scale.refresh()
-
         // Enables advanced profiling features when debugging
         this.game.time.advancedTiming = true
 
@@ -78,13 +71,8 @@ Deathmatch.prototype = {
         CreateKeyboardBindings.call(this)
 
         window.socket.emit('refresh players', {
-            roomId: room.id
+            roomId: room.id,
         })
-
-        this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
-
-        window.onresize = UpdateGameScale.bind(this)
-        UpdateGameScale.call(this)
 
         this.game.paused = false
     },

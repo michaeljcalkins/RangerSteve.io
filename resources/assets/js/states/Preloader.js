@@ -59,12 +59,6 @@ Preloader.prototype = {
     create: function() {
         const state = this.game.store.getState()
 
-        // Scale game on window resize
-        this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
-        this.game.renderer.renderSession.roundPixels = true
-        this.game.stage.disableVisibilityChange = true
-        this.game.scale.refresh()
-
         // Enables advanced profiling features when debugging
         this.game.time.advancedTiming = true
 
