@@ -2,6 +2,7 @@ import $ from 'jquery'
 
 import GameConsts from '../lib/GameConsts'
 import setEventHandlers from '../lib/SocketEvents/setEventHandlers'
+import UpdateGameScale from '../lib/UpdateGameScale'
 
 /**
  * Connect to the server and start Preloader.
@@ -17,6 +18,15 @@ Boot.prototype = {
     },
 
     create: function() {
+        // Smooths sprite rendering
+        this.game.renderer.renderSession.roundPixels = true
+        // Prevents game from pausing when tab loses focus
+        this.game.stage.disableVisibilityChange = true
+
+        this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
+        window.onresize = UpdateGameScale.bind(this)
+        UpdateGameScale.call(this)
+
         // Loading screen
         this.game.stage.backgroundColor = '#2B2825'
         RS.rangerSteveSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'ranger-steve')
@@ -30,6 +40,9 @@ Boot.prototype = {
         text.anchor.set(0.5)
         text.smoothed = true
 
+        // Initializes the socket connection and
+        // when connected the next game
+        // state will be started.
         window.socket = io.connect()
         setEventHandlers.call(this)
 

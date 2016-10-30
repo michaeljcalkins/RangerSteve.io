@@ -10,7 +10,6 @@ import actions from '../actions'
 import GameConsts from '../lib/GameConsts'
 import UpdateHudPositions from '../lib/UpdateHudPositions'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
-import UpdateGameScale from '../lib/UpdateGameScale'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
 import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
 import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
@@ -75,11 +74,6 @@ TeamDeathmatch.prototype = {
         window.socket.emit('refresh players', {
             roomId: room.id,
         })
-
-        this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
-
-        window.onresize = UpdateGameScale.bind(this)
-        UpdateGameScale.call(this)
 
         this.game.paused = false
     },
