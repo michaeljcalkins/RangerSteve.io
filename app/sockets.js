@@ -410,19 +410,19 @@ function onPlayerDamaged(data) {
     player.meta.damageStats.attackingHits++
     player.meta.damageStats.weaponId = data.weaponId
 
-    if (player.meta.team === 'red') {
-        rooms[data.roomId].blueTeamScore += 10
-    }
-
-    if (player.meta.team === 'blue') {
-        rooms[data.roomId].redTeamScore += 10
-    }
-
     const attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
     if (attackingPlayer) {
         attackingPlayer.meta.bulletsHit++
 
         if (data.wasHeadshot) attackingPlayer.meta.headshots++
+
+        if (player.meta.team === 'red') {
+            rooms[data.roomId].blueTeamScore += 10
+        }
+
+        if (player.meta.team === 'blue') {
+            rooms[data.roomId].redTeamScore += 10
+        }
     }
 
     // Player was killed when shot
