@@ -11,7 +11,6 @@ export default function() {
     }
 
     function resetTimer() {
-        console.log('test')
         clearTimeout(t)
         t = setTimeout(playerIsIdle, GameConsts.MAX_IDLE_SECONDS * 1000)
     }
