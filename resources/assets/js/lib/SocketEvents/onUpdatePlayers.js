@@ -7,7 +7,7 @@ import actions from '../../actions'
 const propTypes = {
     room: PropTypes.shape({
         id: PropTypes.string.isRequired,
-        players: PropTypes.object.isRequired
+        players: PropTypes.object.isRequired,
     })
 }
 

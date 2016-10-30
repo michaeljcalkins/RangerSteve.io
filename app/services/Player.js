@@ -1,5 +1,7 @@
 'use strict'
 
+const _ = require('lodash')
+
 const Player = function(id, startX, startY) {
     return {
         x: startX,
@@ -15,8 +17,9 @@ const Player = function(id, startX, startY) {
             secondsInRound: 0,
             bulletsHit: 0,
             score: 0,
-            headshots: 0
-        }
+            headshots: 0,
+            team: _.sample(['red', 'blue']),
+        },
     }
 }
 

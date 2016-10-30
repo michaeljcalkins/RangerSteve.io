@@ -126,7 +126,7 @@ export default class GameUi extends React.Component {
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
                 <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
                 <HudKeyboardControlsButton onButtonClick={ this.handleOpenKeyboardControlsButton } />
-                <HudLeaderboard players={ room.players } />
+                <HudLeaderboard room={ room } />
                 <HudChatHistory
                     isOpen={ game.chatModalIsOpen }
                     messages={ game.chatMessages }

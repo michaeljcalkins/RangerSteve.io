@@ -1,17 +1,16 @@
 import React, { PropTypes } from 'react'
 import _ from 'lodash'
+import cs from 'classnames'
 
 export default function HudLeaderboard({
-    players,
+    room,
 }) {
     function renderPlayers() {
-        if (! players) return null
+        if (! room.players) return null
 
-
-
-        return _.values(players)
+        return _.values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
-            .map(function(player, key) {
+            .map(function(player) {
                 let playerNickname = player.meta.nickname
                     ? player.meta.nickname
                     : 'Unnamed Ranger'
@@ -20,11 +19,32 @@ export default function HudLeaderboard({
                     ? `${player.meta.killingSpree}x `
                     : null
 
+                const classes = cs({
+                    'text-red': player.meta.team === 'red' && room.gamemode === 'TeamDeathmatch',
+                    'text-blue': player.meta.team === 'blue' && room.gamemode === 'TeamDeathmatch',
+                })
+
                 return (
-                    <tr key={ key }>
-                        <td title="Player's nickname" style={ { width: '120px', overflow: 'hidden' } }>{ playerNickname }</td>
-                        <td title="Player's current killing spree" style={ { width: '20px' } }><strong>{ killingSpreeCount }</strong></td>
-                        <td title="Player's current score" style={ { width: '20px' } }>{ player.meta.score }</td>
+                    <tr key={ player.id }>
+                        <td
+                            className={ classes }
+                            style={ { width: '120px', overflow: 'hidden' } }
+                            title="Player's nickname"
+                        >
+                            { playerNickname }
+                        </td>
+                        <td
+                            style={ { width: '20px' } }
+                            title="Player's current killing spree"
+                        >
+                            <strong>{ killingSpreeCount }</strong>
+                        </td>
+                        <td
+                            style={ { width: '20px' } }
+                            title="Player's current score"
+                        >
+                            { player.meta.score }
+                        </td>
                     </tr>
                 )
             })
@@ -43,5 +63,5 @@ export default function HudLeaderboard({
 }
 
 HudLeaderboard.propTypes = {
-    players: PropTypes.object
+    room: PropTypes.object
 }

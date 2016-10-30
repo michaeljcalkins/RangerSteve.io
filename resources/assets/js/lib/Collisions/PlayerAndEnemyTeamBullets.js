@@ -9,7 +9,8 @@ export default function() {
         if (
             ! bullet.weaponId ||
             ! window.socket.id ||
-            state.player.health <= 0
+            state.player.health <= 0 ||
+            state.room.players[bullet.playerId].meta.team === state.room.players[window.SOCKET_ID].meta.team
         ) return
 
         bullet.kill()

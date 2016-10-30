@@ -7,11 +7,6 @@ import GameConsts from '../GameConsts.js'
 import CreateKeyboardBindings from '../CreateHandler/CreateKeyboardBindings'
 import GetSpawnPoint from '../GetSpawnPoint'
 
-const propTypes = {
-    damagedPlayerId: PropTypes.string.isRequired,
-    health: PropTypes.number.isRequired
-}
-
 export default function onPlayerRespawn(data) {
     const state = this.game.store.getState()
     const store = this.game.store
@@ -23,7 +18,7 @@ export default function onPlayerRespawn(data) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
         if (! enemyPlayer) return
         enemyPlayer.meta.health = 100
-        enemyPlayer.visible = true
+        // enemyPlayer.visible = true
         return
     }
 

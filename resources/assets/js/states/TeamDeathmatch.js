@@ -19,20 +19,21 @@ import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
+import UpdateTeamColors from '../lib/UpdateTeamColors'
 import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
-import PlayerAndEnemyBullets from '../lib/Collisions/PlayerAndEnemyBullets'
-import BulletsAndEnemyPlayers from '../lib/Collisions/BulletsAndEnemyPlayers'
+import PlayerAndEnemyTeamBullets from '../lib/Collisions/PlayerAndEnemyTeamBullets'
+import BulletsAndEnemyTeamPlayers from '../lib/Collisions/BulletsAndEnemyTeamPlayers'
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 
 /**
  * Collisions and all game mode related interactions.
  */
-function Deathmatch(game) {
+function TeamDeathmatch(game) {
     this.game = game
 }
 
-Deathmatch.prototype = {
+TeamDeathmatch.prototype = {
 
     preload: function() {
         const store = this.game.store
@@ -43,12 +44,6 @@ Deathmatch.prototype = {
     create: function() {
         const store = this.game.store
         const { room } = store.getState()
-
-        // Scale game on window resize
-        // this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
-        // this.game.renderer.renderSession.roundPixels = true
-        // this.game.stage.disableVisibilityChange = true
-        // this.game.scale.refresh()
 
         // Enables advanced profiling features when debugging
         this.game.time.advancedTiming = true
@@ -78,7 +73,7 @@ Deathmatch.prototype = {
         CreateKeyboardBindings.call(this)
 
         window.socket.emit('refresh players', {
-            roomId: room.id
+            roomId: room.id,
         })
 
         this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
@@ -109,11 +104,11 @@ Deathmatch.prototype = {
 
         // Pause controls so user can't do anything in the background accidentally
         const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
-        this.game.input.enabled = ! isPaused
+        this.game.input.enabled = !isPaused
 
         PlayerAndPlatforms.call(this)
-        PlayerAndEnemyBullets.call(this)
-        BulletsAndEnemyPlayers.call(this)
+        PlayerAndEnemyTeamBullets.call(this)
+        BulletsAndEnemyTeamPlayers.call(this)
         EnemyBulletsAndPlatforms.call(this)
         BulletsAndPlatforms.call(this)
         Maps[state.room.map].update.call(this)
@@ -171,6 +166,7 @@ Deathmatch.prototype = {
         RotateBulletsToTrajectory.call(this)
         UpdatePlayerPosition.call(this)
         UpdateHurtBorder.call(this)
+        UpdateTeamColors.call(this)
     },
 
     render() {
@@ -187,8 +183,8 @@ Deathmatch.prototype = {
         RS.enemies.forEach((bullet) => {
             this.game.debug.body(bullet)
         })
-    }
+    },
 
 }
 
-export default Deathmatch
+export default TeamDeathmatch

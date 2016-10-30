@@ -11,7 +11,8 @@ export default function() {
             ! state.room.id ||
             state.player.health <= 0 ||
             state.room.state !== 'active' ||
-            enemy.meta.health <= 0
+            enemy.meta.health <= 0 ||
+            state.room.players[enemy.id].meta.team === state.room.players[window.SOCKET_ID].meta.team
         ) return
 
         const yDiff = enemy.y - bullet.y

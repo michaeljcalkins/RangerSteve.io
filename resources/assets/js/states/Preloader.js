@@ -10,7 +10,6 @@ function Preloader(game) {
 Preloader.prototype = {
 
     preload: function() {
-        this.load.image('ranger-steve', '/images/ranger-steve.png')
         this.game.load.image('ground', '/images/platform.png')
         this.game.load.image('bullet', '/images/bullet.png')
         this.game.load.image('leftHudBg', '/images/leftHudBg.png')
@@ -58,6 +57,8 @@ Preloader.prototype = {
     },
 
     create: function() {
+        const state = this.game.store.getState()
+
         // Scale game on window resize
         this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
         this.game.renderer.renderSession.roundPixels = true
@@ -83,21 +84,8 @@ Preloader.prototype = {
         RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
         RS.headshotSound = this.game.add.audio('headshot')
 
-        this.stage.backgroundColor = '#2B2825'
-
-        this.rangerSteveSprite = this.add.sprite(this.world.centerX, this.world.centerY, 'ranger-steve')
-        this.rangerSteveSprite.anchor.setTo(0.5)
-
-        const style = {
-            font: "35px Bangers",
-            fill: "#fff"
-        }
-        let text = this.game.add.text(this.rangerSteveSprite.x - 20, this.rangerSteveSprite.y + 110, 'Loading...', style)
-        text.anchor.set(0.5)
-        text.smoothed = true
-
-        this.game.state.start('Deathmatch')
-    }
+        this.game.state.start(state.room.gamemode)
+    },
 
 }
 

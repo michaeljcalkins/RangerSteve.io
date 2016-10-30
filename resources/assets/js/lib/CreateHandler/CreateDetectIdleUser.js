@@ -1,3 +1,5 @@
+import GameConsts from '../GameConsts'
+
 export default function() {
     let t
     window.onload = resetTimer
@@ -5,11 +7,11 @@ export default function() {
     document.onkeypress = resetTimer
 
     function playerIsIdle() {
-        window.location.href = '/'
+        document.location.href = '/'
     }
 
     function resetTimer() {
         clearTimeout(t)
-        t = setTimeout(playerIsIdle, 6000000)
+        t = setTimeout(playerIsIdle, GameConsts.MAX_IDLE_SECONDS * 1000)
     }
 }
