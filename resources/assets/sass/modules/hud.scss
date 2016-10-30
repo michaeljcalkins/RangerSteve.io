@@ -63,14 +63,13 @@
         letter-spacing: 2px;
         text-transform: uppercase;
         text-align: center;
-        margin: 0 0 10px;
+        margin: 0;
     }
 
     table {
         margin-bottom: 0;
 
         tr:first-child td {
-            border-top: 1px solid rgba(101, 100, 97, 1) !important;
             padding-top: 8px !important;
         }
 
