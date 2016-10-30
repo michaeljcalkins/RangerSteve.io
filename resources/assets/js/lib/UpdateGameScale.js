@@ -10,7 +10,7 @@ export default function() {
     const widthScaleFactor = Math.ceil(scaleFactor * gameRatio)
     const heightScaleFactor = scaleFactor
 
-    // $("#ui-app").css({
+    // $(".hud-item").css({
     //     transform: "scale(" + Math.min(innerWidth / 1100, 1) + ")",
     //     "transform-origin": "top right",
     // })

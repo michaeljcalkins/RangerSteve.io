@@ -1,6 +1,6 @@
 const GameConsts = {
     // Server Settings
-    MAX_ROOM_SIZE: 7,
+    MAX_ROOM_SIZE: 8,
     RESPAWN_TIME_SECONDS: 5,
     ROUND_LENGTH_MINUTES: 5,
     PLAYER_FULL_HEALTH: 100,
