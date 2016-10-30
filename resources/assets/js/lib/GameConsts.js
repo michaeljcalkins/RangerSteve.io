@@ -1,6 +1,6 @@
 const GameConsts = {
     // Server Settings
-    MAX_ROOM_SIZE: 7,
+    MAX_ROOM_SIZE: 8,
     RESPAWN_TIME_SECONDS: 5,
     ROUND_LENGTH_MINUTES: 5,
     PLAYER_FULL_HEALTH: 100,
@@ -11,6 +11,7 @@ const GameConsts = {
     DEBUG: false,
     PHASER_DEBUG: false,
     STARTING_SFX_VOLUME: .04,
+    MAX_IDLE_SECONDS: 50,
 
     // Spawn Point
     SPAWN_POINT_DISTANCE_FROM_ENEMY: 900,
