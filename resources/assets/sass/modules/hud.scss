@@ -20,9 +20,9 @@
     border: 0;
     cursor: pointer;
     padding: 5px 10px 5px 35px;
-    right: 231px;
+    right: 5px;
     top: 5px;
-    width: auto;
+    width: 107px;
     height: auto;
     text-align: center;
     z-index: 10000;
@@ -35,30 +35,12 @@
     border: 0;
     cursor: pointer;
     padding: 5px 10px 5px 35px;
-    right: 335px;
+    right: 118px;
     top: 5px;
-    width: auto;
+    width: 107px;
     height: auto;
     text-align: center;
     z-index: 10000;
-}
-
-.hud-kill-log {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-
-    li {
-        color: #fff;
-        text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
-        font-size: 12px;
-        padding: 4px 3px;
-
-        img {
-            height: 20px;
-            margin: 0 10px;
-        }
-    }
 }
 
 .hud-leaderboard {
@@ -70,9 +52,19 @@
     padding: 10px;
     right: 5px;
     text-align: left;
-    top: 5px;
+    top: 42px;
     width: 220px;
     z-index: 10000;
+
+    h1 {
+        font-size: 16px;
+        font-family: "Keep Calm";
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-align: center;
+        margin: 0 0 10px;
+    }
 
     table {
         margin-bottom: 0;
@@ -99,19 +91,27 @@
         }
     }
 
-    h1 {
-        font-size: 16px;
-        font-family: "Keep Calm";
-        font-weight: 400;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        text-align: center;
-        margin: 4px 0 8px;
-    }
-
     ol {
         margin: 0 0 0 17px;
         padding: 0;
+    }
+}
+
+.hud-kill-log {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+
+    li {
+        color: #fff;
+        text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+        font-size: 12px;
+        padding: 4px 3px;
+
+        img {
+            height: 20px;
+            margin: 0 10px;
+        }
     }
 }
 
