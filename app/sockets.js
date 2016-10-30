@@ -405,7 +405,7 @@ function onPlayerHealing(data) {
 
     io.to(data.roomId).emit('player health update', {
         id: this.id,
-        health: player.meta.health
+        health: player.meta.health,
     })
 }
 
@@ -430,16 +430,7 @@ function onPlayerDamaged(data) {
     const attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
     if (attackingPlayer) {
         attackingPlayer.meta.bulletsHit++
-
         if (data.wasHeadshot) attackingPlayer.meta.headshots++
-
-        if (player.meta.team === 'red') {
-            rooms[data.roomId].blueTeamScore += 10
-        }
-
-        if (player.meta.team === 'blue') {
-            rooms[data.roomId].redTeamScore += 10
-        }
     }
 
     // Player was killed when shot
@@ -454,6 +445,14 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.kills++
             attackingPlayer.meta.killingSpree++
             attackingPlayer.meta.damageInflicted += Number(data.damage)
+
+            if (player.meta.team === 'red') {
+                rooms[data.roomId].blueTeamScore += 10
+            }
+
+            if (player.meta.team === 'blue') {
+                rooms[data.roomId].redTeamScore += 10
+            }
 
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
