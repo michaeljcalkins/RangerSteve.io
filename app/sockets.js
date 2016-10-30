@@ -220,20 +220,28 @@ function onNewPlayer (data) {
     }
 
     /**
-     * Add the player to the team
-     * with the lowest number
-     * of players.
+     * Add the player to the blue team
+     * if it has less players
+     * or the same number of players but is losing.
      */
     if (rooms[data.roomId] && rooms[data.roomId].gamemode === 'TeamDeathmatch') {
-        const redPlayerCount = Object.keys(rooms[data.roomId].players)
-            .filter(id => rooms[data.roomId].players[id].meta && rooms[data.roomId].players[id].meta.team === 'red')
-            .length
-        const bluePlayerCount = Object.keys(rooms[data.roomId].players)
-            .filter(id => rooms[data.roomId].players[id].meta && rooms[data.roomId].players[id].meta.team === 'blue')
-            .length
-        newPlayer.meta.team = redPlayerCount > bluePlayerCount
-            ? 'blue'
-            : 'red'
+        const players = rooms[data.roomId].players
+        const redTeamScore = rooms[data.roomId].redTeamScore
+        const blueTeamScore = rooms[data.roomId].blueTeamScore
+
+        const playersByTeamCount = _.countBy(players, 'meta.team')
+        const redPlayerCount = _.get(playersByTeamCount, 'red', 0)
+        const bluePlayerCount = _.get(playersByTeamCount, 'blue', 0)
+
+        if (
+            redPlayerCount > bluePlayerCount ||
+            (
+                redPlayerCount === bluePlayerCount &&
+                redTeamScore > blueTeamScore
+            )
+        ) {
+            newPlayer.meta.team = 'blue'
+        }
     }
 
     // Specified room id and room has not been created
