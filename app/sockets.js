@@ -216,7 +216,24 @@ function onNewPlayer (data) {
         bulletsFired: 0,
         bulletsHit: 0,
         weaponId: data.weaponId,
-        team: _.sample(['red', 'blue']),
+        team: 'red', // If the room doesn't exist yet simply add them to red by default
+    }
+
+    /**
+     * Add the player to the team
+     * with the lowest number
+     * of players.
+     */
+    if (rooms[data.roomId] && rooms[data.roomId].gamemode === 'TeamDeathmatch') {
+        const redPlayerCount = Object.keys(rooms[data.roomId].players)
+            .filter(id => rooms[data.roomId].players[id].meta && rooms[data.roomId].players[id].meta.team === 'red')
+            .length
+        const bluePlayerCount = Object.keys(rooms[data.roomId].players)
+            .filter(id => rooms[data.roomId].players[id].meta && rooms[data.roomId].players[id].meta.team === 'blue')
+            .length
+        newPlayer.meta.team = redPlayerCount > bluePlayerCount
+            ? 'blue'
+            : 'red'
     }
 
     // Specified room id and room has not been created
