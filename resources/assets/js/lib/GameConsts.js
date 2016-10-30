@@ -11,6 +11,7 @@ const GameConsts = {
     DEBUG: false,
     PHASER_DEBUG: false,
     STARTING_SFX_VOLUME: .04,
+    MAX_IDLE_SECONDS: 50,
 
     // Spawn Point
     SPAWN_POINT_DISTANCE_FROM_ENEMY: 900,
