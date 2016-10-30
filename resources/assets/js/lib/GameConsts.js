@@ -5,7 +5,7 @@ const GameConsts = {
     ROUND_LENGTH_MINUTES: 5,
     PLAYER_FULL_HEALTH: 100,
     MAPS: ['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop', 'DeathCycle'],
-    GAMEMODES: ['TeamDeathmatch'],
+    GAMEMODES: ['Deathmatch', 'TeamDeathmatch'],
 
     // Client Stetings
     DEBUG: false,
