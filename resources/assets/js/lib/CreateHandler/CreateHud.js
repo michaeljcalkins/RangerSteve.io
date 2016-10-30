@@ -54,7 +54,10 @@ export default function() {
     RS.hudTimerText.strokeThickness = 3
 
     // Gamemode
-    RS.hudGamemodeText = this.game.add.text(0, 0, state.room.gamemode, {
+    let gamemodeText = state.room.gamemode === 'Deathmatch' ? 'DEATHMATCH' : null
+    gamemodeText = state.room.gamemode === 'TeamDeathmatch' ? 'TEAM DEATHMATCH': gamemodeText
+
+    RS.hudGamemodeText = this.game.add.text(0, 0, gamemodeText, {
         font: "12px Keep Calm",
         fill: "#fff",
     })

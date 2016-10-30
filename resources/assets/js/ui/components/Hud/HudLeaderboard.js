@@ -25,13 +25,26 @@ export default function HudLeaderboard({
                 })
 
                 return (
-                    <tr
-                        className={ classes }
-                        key={ player.meta.id }
-                    >
-                        <td title="Player's nickname" style={ { width: '120px', overflow: 'hidden' } }>{ playerNickname }</td>
-                        <td title="Player's current killing spree" style={ { width: '20px' } }><strong>{ killingSpreeCount }</strong></td>
-                        <td title="Player's current score" style={ { width: '20px' } }>{ player.meta.score }</td>
+                    <tr key={ player.id }>
+                        <td
+                            className={ classes }
+                            style={ { width: '120px', overflow: 'hidden' } }
+                            title="Player's nickname"
+                        >
+                            { playerNickname }
+                        </td>
+                        <td
+                            style={ { width: '20px' } }
+                            title="Player's current killing spree"
+                        >
+                            <strong>{ killingSpreeCount }</strong>
+                        </td>
+                        <td
+                            style={ { width: '20px' } }
+                            title="Player's current score"
+                        >
+                            { player.meta.score }
+                        </td>
                     </tr>
                 )
             })

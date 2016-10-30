@@ -50,6 +50,8 @@ setInterval(function() {
                 players: rooms[roomId].players,
                 roundLength: GameConsts.ROUND_LENGTH_MINUTES,
                 messages: rooms[roomId].messages,
+                redTeamScore: 0,
+                blueTeamScore: 0,
             })
 
             // Randomly select a map that was not the previous map
@@ -84,7 +86,7 @@ setInterval(function() {
             rooms[roomId].state = 'ended'
             rooms[roomId].roundStartTime = moment().add(10, 'seconds').unix()
             io.to(roomId).emit('update players', {
-                room: rooms[roomId]
+                room: rooms[roomId],
             })
             return
         }
@@ -214,7 +216,7 @@ function onNewPlayer (data) {
         bulletsFired: 0,
         bulletsHit: 0,
         weaponId: data.weaponId,
-        team: 'red',
+        team: _.sample(['red', 'blue']),
     }
 
     // Specified room id and room has not been created
@@ -277,17 +279,17 @@ function onNewPlayer (data) {
         rooms[newRoomId] = new Room({
             id: newRoomId,
             player: newPlayer,
-            roundLength: GameConsts.ROUND_LENGTH_MINUTES
+            roundLength: GameConsts.ROUND_LENGTH_MINUTES,
         })
 
         this.join(newRoomId)
 
         io.to(newRoomId).emit('load game', {
-            room: rooms[newRoomId]
+            room: rooms[newRoomId],
         })
 
         io.to(newRoomId).emit('update players', {
-            room: rooms[newRoomId]
+            room: rooms[newRoomId],
         })
         return
     }
@@ -298,11 +300,11 @@ function onNewPlayer (data) {
 
     setTimeout(() => {
         io.to(rooms[availableRooms[0]].id).emit('load game', {
-            room: rooms[availableRooms[0]]
+            room: rooms[availableRooms[0]],
         })
 
         io.to(availableRooms[0]).emit('update players', {
-            room: rooms[availableRooms[0]]
+            room: rooms[availableRooms[0]],
         })
     }, 1000)
 }
@@ -333,7 +335,7 @@ function onMovePlayer (data) {
         flying: data.flying,
         shooting: data.shooting,
         health: movePlayer.meta.health,
-        weaponId: data.weaponId
+        weaponId: data.weaponId,
     })
 }
 
@@ -363,7 +365,7 @@ function onClientDisconnect() {
 
     // Broadcast removed player to connected socket clients
     io.to(selectedRoomId).emit('update players', {
-        room: rooms[selectedRoomId]
+        room: rooms[selectedRoomId],
     })
 }
 
@@ -373,7 +375,7 @@ function onPlayerFullHealth(data) {
 
     io.to(data.roomId).emit('player health update', {
         id: this.id,
-        health: player.meta.health
+        health: player.meta.health,
     })
 }
 
@@ -408,6 +410,14 @@ function onPlayerDamaged(data) {
     player.meta.damageStats.attackingHits++
     player.meta.damageStats.weaponId = data.weaponId
 
+    if (player.meta.team === 'red') {
+        rooms[data.roomId].blueTeamScore += 10
+    }
+
+    if (player.meta.team === 'blue') {
+        rooms[data.roomId].redTeamScore += 10
+    }
+
     const attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
     if (attackingPlayer) {
         attackingPlayer.meta.bulletsHit++
@@ -427,14 +437,6 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.kills++
             attackingPlayer.meta.killingSpree++
             attackingPlayer.meta.damageInflicted += Number(data.damage)
-
-            if (attackingPlayer.meta.team === 'red') {
-                rooms[data.roomId].redTeamScore += 10
-            }
-
-            if (attackingPlayer.meta.team === 'blue') {
-                rooms[data.roomId].blueTeamScore += 10
-            }
 
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
