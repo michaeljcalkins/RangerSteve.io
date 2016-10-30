@@ -58,6 +58,8 @@ Preloader.prototype = {
     },
 
     create: function() {
+        const state = this.game.store.getState()
+
         // Scale game on window resize
         this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE
         this.game.renderer.renderSession.roundPixels = true
@@ -90,14 +92,14 @@ Preloader.prototype = {
 
         const style = {
             font: "35px Bangers",
-            fill: "#fff"
+            fill: "#fff",
         }
         let text = this.game.add.text(this.rangerSteveSprite.x - 20, this.rangerSteveSprite.y + 110, 'Loading...', style)
         text.anchor.set(0.5)
         text.smoothed = true
 
-        this.game.state.start('Deathmatch')
-    }
+        this.game.state.start(state.room.gamemode)
+    },
 
 }
 

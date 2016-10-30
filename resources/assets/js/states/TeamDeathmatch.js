@@ -20,6 +20,12 @@ import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
+import UpdateTeamColors from '../lib/UpdateTeamColors'
+import PlayerAndPlatforms from './Collisions/PlayerAndPlatforms'
+import PlayerAndEnemyBullets from './Collisions/PlayerAndEnemyBullets'
+import BulletsAndEnemyPlayers from './Collisions/BulletsAndEnemyPlayers'
+import BulletsAndPlatforms from './Collisions/BulletsAndPlatforms'
+import EnemyBulletsAndPlatforms from './Collisions/EnemyBulletsAndPlatforms'
 
 /**
  * Collisions and all game mode related interactions.
@@ -74,7 +80,7 @@ TeamDeathmatch.prototype = {
         CreateKeyboardBindings.call(this)
 
         window.socket.emit('refresh players', {
-            roomId: room.id
+            roomId: room.id,
         })
 
         this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
@@ -107,7 +113,11 @@ TeamDeathmatch.prototype = {
         const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
         this.game.input.enabled = !isPaused
 
-        CollisionHandler.call(this)
+        PlayerAndPlatforms.call(this)
+        PlayerAndEnemyBullets.call(this)
+        BulletsAndEnemyPlayers.call(this)
+        EnemyBulletsAndPlatforms.call(this)
+        BulletsAndPlatforms.call(this)
         Maps[state.room.map].update.call(this)
 
         /**
@@ -163,6 +173,7 @@ TeamDeathmatch.prototype = {
         RotateBulletsToTrajectory.call(this)
         UpdatePlayerPosition.call(this)
         UpdateHurtBorder.call(this)
+        UpdateTeamColors.call(this)
     },
 
     render() {

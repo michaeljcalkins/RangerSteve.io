@@ -20,6 +20,11 @@ import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
+import PlayerAndPlatforms from './Collisions/PlayerAndPlatforms'
+import PlayerAndEnemyBullets from './Collisions/PlayerAndEnemyBullets'
+import BulletsAndEnemyPlayers from './Collisions/BulletsAndEnemyPlayers'
+import BulletsAndPlatforms from './Collisions/BulletsAndPlatforms'
+import EnemyBulletsAndPlatforms from './Collisions/EnemyBulletsAndPlatforms'
 
 /**
  * Collisions and all game mode related interactions.
@@ -105,9 +110,13 @@ Deathmatch.prototype = {
 
         // Pause controls so user can't do anything in the background accidentally
         const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
-        this.game.input.enabled = !isPaused
+        this.game.input.enabled = ! isPaused
 
-        CollisionHandler.call(this)
+        PlayerAndPlatforms.call(this)
+        PlayerAndEnemyBullets.call(this)
+        BulletsAndEnemyPlayers.call(this)
+        EnemyBulletsAndPlatforms.call(this)
+        BulletsAndPlatforms.call(this)
         Maps[state.room.map].update.call(this)
 
         /**
