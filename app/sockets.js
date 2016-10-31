@@ -234,17 +234,11 @@ function onNewPlayer (data) {
             rooms[data.roomId].map = data.map
         }
 
-        rooms[data.roomId].players[this.id] = newPlayer
-
-        this.join(data.roomId)
         roomIdPlayerWillJoin = data.roomId
     }
     // Specified room id and room has been created
     else if (data.roomId && rooms[data.roomId]) {
         util.log('Specified room does existing and has room for player')
-        rooms[data.roomId].players[this.id] = newPlayer
-
-        this.join(data.roomId)
         roomIdPlayerWillJoin = data.roomId
     }
     // Either find a room to put the user in or create one
@@ -266,13 +260,9 @@ function onNewPlayer (data) {
                 roundLength: GameConsts.ROUND_LENGTH_MINUTES,
             })
 
-            this.join(newRoomId)
             roomIdPlayerWillJoin = newRoomId
         } else {
             util.log('Adding player to first available room')
-
-            rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
-            this.join(availableRooms[0])
             roomIdPlayerWillJoin = availableRooms[0]
         }
     }
@@ -288,8 +278,8 @@ function onNewPlayer (data) {
         const blueTeamScore = rooms[roomIdPlayerWillJoin].blueTeamScore
 
         const playersByTeamCount = _.countBy(players, 'meta.team')
-        const redPlayerCount = _.get(playersByTeamCount, 'red', 0)
-        const bluePlayerCount = _.get(playersByTeamCount, 'blue', 0)
+        const redPlayerCount = +_.get(playersByTeamCount, 'red', 0)
+        const bluePlayerCount = +_.get(playersByTeamCount, 'blue', 0)
 
         // Ensure each team has one player first
         if (redPlayerCount === 0) {
@@ -298,20 +288,33 @@ function onNewPlayer (data) {
         else if (bluePlayerCount === 0) {
             newPlayer.meta.team = 'blue'
         }
+        else if (redTeamScore === blueTeamScore) {
+            newPlayer.meta.team = bluePlayerCount > redPlayerCount
+                ? 'red'
+                : 'blue'
+        }
         // Red team is losing so help them
-        else if (redTeamScore < blueTeamScore) {
+        else if (redTeamScore <= blueTeamScore) {
             newPlayer.meta.team = 'red'
         }
         // Blue team is losing so help them
         else {
             newPlayer.meta.team = 'blue'
         }
+
+        util.log('Player added to team: ', newPlayer.meta.team)
     }
 
+    // User to the room
+    rooms[roomIdPlayerWillJoin].players[this.id] = newPlayer
+    this.join(roomIdPlayerWillJoin)
+
+    // Tell the user's client to load the game
     io.to(roomIdPlayerWillJoin).emit('load game', {
         room: rooms[roomIdPlayerWillJoin],
     })
 
+    // Tell everyone about the new player
     io.to(roomIdPlayerWillJoin).emit('update players', {
         room: rooms[roomIdPlayerWillJoin],
     })
@@ -508,7 +511,7 @@ function onPlayerDamaged(data) {
         damage: data.damage,
         health: player.meta.health,
         damageStats: {},
-        attackingDamageStats: {}
+        attackingDamageStats: {},
     })
 }
 
