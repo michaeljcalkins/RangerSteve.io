@@ -8,6 +8,7 @@ const moment = require('moment')
 const Player = require('./services/Player')
 const PlayerById = require('./services/PlayerById')
 const Room = require('./services/Room')
+const getTeam = require('./services/getTeam')
 const GameConsts = require('../resources/assets/js/lib/GameConsts')
 
 let rooms = {}
@@ -44,6 +45,7 @@ setInterval(function() {
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
             util.log('Restarting round for', roomId)
             const previousMap = rooms[roomId].map
+            const previousGamemode = rooms[roomId].gamemode
 
             rooms[roomId] = new Room({
                 id: roomId,
@@ -56,10 +58,12 @@ setInterval(function() {
 
             // Randomly select a map that was not the previous map
             const potentialNextMaps = GameConsts.MAPS.filter(map => map !== previousMap)
+            const potentialNextGamemodes = GameConsts.GAMEMODES.filter(gamemode => gamemode !== previousGamemode)
 
             rooms[roomId].map = _.sample(potentialNextMaps)
+            rooms[roomId].gamemode = _.sample(potentialNextGamemodes)
 
-            util.log(rooms[roomId].map, 'has been selected for ', roomId)
+            util.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} for room ${roomId}`)
 
             Object.keys(rooms[roomId].players).forEach((playerId) => {
                 rooms[roomId].players[playerId].meta.health = GameConsts.PLAYER_FULL_HEALTH
@@ -84,7 +88,7 @@ setInterval(function() {
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
-            rooms[roomId].roundStartTime = moment().add(10, 'seconds').unix()
+            rooms[roomId].roundStartTime = moment().add(GameConsts.END_OF_ROUND_BREAK_SECONDS, 'seconds').unix()
             io.to(roomId).emit('update players', {
                 room: rooms[roomId],
             })
@@ -277,30 +281,7 @@ function onNewPlayer (data) {
         const redTeamScore = rooms[roomIdPlayerWillJoin].redTeamScore
         const blueTeamScore = rooms[roomIdPlayerWillJoin].blueTeamScore
 
-        const playersByTeamCount = _.countBy(players, 'meta.team')
-        const redPlayerCount = +_.get(playersByTeamCount, 'red', 0)
-        const bluePlayerCount = +_.get(playersByTeamCount, 'blue', 0)
-
-        // Ensure each team has one player first
-        if (redPlayerCount === 0) {
-            newPlayer.meta.team = 'red'
-        }
-        else if (bluePlayerCount === 0) {
-            newPlayer.meta.team = 'blue'
-        }
-        else if (redTeamScore === blueTeamScore) {
-            newPlayer.meta.team = bluePlayerCount > redPlayerCount
-                ? 'red'
-                : 'blue'
-        }
-        // Red team is losing so help them
-        else if (redTeamScore <= blueTeamScore) {
-            newPlayer.meta.team = 'red'
-        }
-        // Blue team is losing so help them
-        else {
-            newPlayer.meta.team = 'blue'
-        }
+        newPlayer.meta.team = getTeam(players, redTeamScore, blueTeamScore)
 
         util.log('Player added to team: ', newPlayer.meta.team)
     }

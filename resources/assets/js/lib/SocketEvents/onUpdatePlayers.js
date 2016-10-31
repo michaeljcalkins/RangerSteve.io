@@ -24,6 +24,10 @@ export default function onUpdatePlayers(data) {
     const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + store.getState().room.id
     window.history.pushState({ path: newurl }, '', newurl)
 
+    if (this.game.state.current !== data.room.gamemode) {
+        document.location.reload(true)
+    }
+
     if (RS.enemies) RS.enemies.destroy(true)
     RS.enemies = this.game.add.group()
 
