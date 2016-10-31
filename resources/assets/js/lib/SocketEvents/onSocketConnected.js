@@ -22,6 +22,6 @@ export default function onSocketConnected() {
         weaponId: store.getState().player.currentWeapon === 'primaryWeapon'
             ? store.getState().player.selectedPrimaryWeaponId
             : store.getState().player.selectedSecondaryWeaponId,
-        nickname: store.getState().player.nickname
+        nickname: store.getState().player.nickname,
     })
 }

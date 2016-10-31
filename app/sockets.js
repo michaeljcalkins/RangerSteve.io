@@ -216,27 +216,10 @@ function onNewPlayer (data) {
         bulletsFired: 0,
         bulletsHit: 0,
         weaponId: data.weaponId,
-        team: _.sample(['red', 'blue']), // If the room doesn't exist yet simply add them to red by default
+        team: null,
     }
 
-    /**
-     * Add the player to the blue team
-     * if it has less players
-     * or the same number of players but is losing.
-     */
-    if (rooms[data.roomId] && rooms[data.roomId].gamemode === 'TeamDeathmatch') {
-        const players = rooms[data.roomId].players
-        // const redTeamScore = rooms[data.roomId].redTeamScore
-        // const blueTeamScore = rooms[data.roomId].blueTeamScore
-
-        const playersByTeamCount = _.countBy(players, 'meta.team')
-        const redPlayerCount = _.get(playersByTeamCount, 'red', 0)
-        const bluePlayerCount = _.get(playersByTeamCount, 'blue', 0)
-
-        newPlayer.meta.team = redPlayerCount > bluePlayerCount
-            ? 'blue'
-            : 'red'
-    }
+    let roomIdPlayerWillJoin = null
 
     // Specified room id and room has not been created
     if (data.roomId && ! rooms[data.roomId]) {
@@ -254,78 +237,84 @@ function onNewPlayer (data) {
         rooms[data.roomId].players[this.id] = newPlayer
 
         this.join(data.roomId)
-
-        io.to(data.roomId).emit('load game', {
-            room: rooms[data.roomId],
-        })
-
-        io.to(data.roomId).emit('update players', {
-            room: rooms[data.roomId],
-        })
-        return
+        roomIdPlayerWillJoin = data.roomId
     }
-
     // Specified room id and room has been created
-    if (
-        data.roomId &&
-        rooms[data.roomId]
-    ) {
+    else if (data.roomId && rooms[data.roomId]) {
         util.log('Specified room does existing and has room for player')
         rooms[data.roomId].players[this.id] = newPlayer
 
         this.join(data.roomId)
-
-        io.to(data.roomId).emit('load game', {
-            room: rooms[data.roomId],
+        roomIdPlayerWillJoin = data.roomId
+    }
+    // Either find a room to put the user in or create one
+    else {
+        // Find available room with space for player
+        let availableRooms = Object.keys(rooms).filter(function(room) {
+            if (! rooms[room].players) return true
+            return Object.keys(rooms[room].players).length < GameConsts.MAX_ROOM_SIZE
         })
 
-        io.to(data.roomId).emit('update players', {
-            room: rooms[data.roomId],
-        })
-        return
+        // No available rooms were found so we create one.
+        if (availableRooms.length <= 0) {
+            util.log('No rooms available, creating new room to add player')
+
+            let newRoomId = hri.random()
+            rooms[newRoomId] = new Room({
+                id: newRoomId,
+                player: newPlayer,
+                roundLength: GameConsts.ROUND_LENGTH_MINUTES,
+            })
+
+            this.join(newRoomId)
+            roomIdPlayerWillJoin = newRoomId
+        } else {
+            util.log('Adding player to first available room')
+
+            rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
+            this.join(availableRooms[0])
+            roomIdPlayerWillJoin = availableRooms[0]
+        }
     }
 
-    // Find available room with space for player
-    let availableRooms = Object.keys(rooms).filter(function(room) {
-        if (! rooms[room].players) return true
-        return Object.keys(rooms[room].players).length < GameConsts.MAX_ROOM_SIZE
+    /**
+     * Add the player to the blue team
+     * if it has less players
+     * or the same number of players but is losing.
+     */
+    if (rooms[data.roomId] && rooms[roomIdPlayerWillJoin].gamemode === 'TeamDeathmatch') {
+        const players = rooms[roomIdPlayerWillJoin].players
+        const redTeamScore = rooms[roomIdPlayerWillJoin].redTeamScore
+        const blueTeamScore = rooms[roomIdPlayerWillJoin].blueTeamScore
+
+        const playersByTeamCount = _.countBy(players, 'meta.team')
+        const redPlayerCount = _.get(playersByTeamCount, 'red', 0)
+        const bluePlayerCount = _.get(playersByTeamCount, 'blue', 0)
+
+        // Ensure each team has one player first
+        if (redPlayerCount === 0) {
+            newPlayer.meta.team = 'red'
+        }
+        else if (bluePlayerCount === 0) {
+            newPlayer.meta.team = 'blue'
+        }
+        // Red team is losing so help them
+        else if (redTeamScore < blueTeamScore) {
+            newPlayer.meta.team = 'red'
+        }
+        // Blue team is losing so help them
+        else {
+            newPlayer.meta.team = 'blue'
+        }
+    }
+
+    io.to(roomIdPlayerWillJoin).emit('load game', {
+        room: rooms[roomIdPlayerWillJoin],
     })
 
-    // No available rooms were found so we create one.
-    if (availableRooms.length <= 0) {
-        util.log('No rooms available, creating new room to add player')
-        let newRoomId = hri.random()
-        rooms[newRoomId] = new Room({
-            id: newRoomId,
-            player: newPlayer,
-            roundLength: GameConsts.ROUND_LENGTH_MINUTES,
-        })
-
-        this.join(newRoomId)
-
-        io.to(newRoomId).emit('load game', {
-            room: rooms[newRoomId],
-        })
-
-        io.to(newRoomId).emit('update players', {
-            room: rooms[newRoomId],
-        })
-        return
-    }
-
-    util.log('Adding player to first available room')
-    rooms[availableRooms[0]].players[newPlayer.id] = newPlayer
-    this.join(availableRooms[0])
-
-    setTimeout(() => {
-        io.to(rooms[availableRooms[0]].id).emit('load game', {
-            room: rooms[availableRooms[0]],
-        })
-
-        io.to(availableRooms[0]).emit('update players', {
-            room: rooms[availableRooms[0]],
-        })
-    }, 1000)
+    io.to(roomIdPlayerWillJoin).emit('update players', {
+        room: rooms[roomIdPlayerWillJoin],
+    })
 }
 
 // Player has moved
