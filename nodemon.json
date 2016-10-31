@@ -13,7 +13,8 @@
   "watch": [
     "bin/",
     "app/",
-    "app.js"
+    "app.js",
+    "resources/assets/js/lib/GameConsts.js"
   ],
   "env": {
     "NODE_ENV": "development"
