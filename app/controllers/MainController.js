@@ -13,8 +13,7 @@ let MainController = {
 
         res.render('game', {
             lastModifiedTime: lastModifiedTime,
-            // check for production status
-            isProduction: process.env.NODE_ENV === "production"
+            isProduction: process.env.NODE_ENV === "production",
         })
     },
     credits: function(req, res) {
@@ -22,7 +21,7 @@ let MainController = {
     },
     buy: function(req, res) {
         res.render('buy')
-    }
+    },
 }
 
 module.exports = MainController

@@ -226,24 +226,16 @@ function onNewPlayer (data) {
      */
     if (rooms[data.roomId] && rooms[data.roomId].gamemode === 'TeamDeathmatch') {
         const players = rooms[data.roomId].players
-        const redTeamScore = rooms[data.roomId].redTeamScore
-        const blueTeamScore = rooms[data.roomId].blueTeamScore
+        // const redTeamScore = rooms[data.roomId].redTeamScore
+        // const blueTeamScore = rooms[data.roomId].blueTeamScore
 
         const playersByTeamCount = _.countBy(players, 'meta.team')
         const redPlayerCount = _.get(playersByTeamCount, 'red', 0)
         const bluePlayerCount = _.get(playersByTeamCount, 'blue', 0)
 
-        if (
-            redPlayerCount > bluePlayerCount ||
-            (
-                redPlayerCount === bluePlayerCount &&
-                redTeamScore > blueTeamScore
-            )
-        ) {
-            newPlayer.meta.team = 'blue'
-        } else {
-            newPlayer.meta.team = 'red'
-        }
+        newPlayer.meta.team = redPlayerCount > bluePlayerCount
+            ? 'blue'
+            : 'red'
     }
 
     // Specified room id and room has not been created
