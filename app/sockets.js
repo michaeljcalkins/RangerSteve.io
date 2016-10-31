@@ -272,7 +272,7 @@ function onNewPlayer (data) {
      * if it has less players
      * or the same number of players but is losing.
      */
-    if (rooms[data.roomId] && rooms[roomIdPlayerWillJoin].gamemode === 'TeamDeathmatch') {
+    if (rooms[roomIdPlayerWillJoin] && rooms[roomIdPlayerWillJoin].gamemode === 'TeamDeathmatch') {
         const players = rooms[roomIdPlayerWillJoin].players
         const redTeamScore = rooms[roomIdPlayerWillJoin].redTeamScore
         const blueTeamScore = rooms[roomIdPlayerWillJoin].blueTeamScore
