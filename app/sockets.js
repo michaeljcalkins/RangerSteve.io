@@ -8,6 +8,7 @@ const moment = require('moment')
 const Player = require('./services/Player')
 const PlayerById = require('./services/PlayerById')
 const Room = require('./services/Room')
+const getTeam = require('./services/getTeam')
 const GameConsts = require('../resources/assets/js/lib/GameConsts')
 
 let rooms = {}
@@ -277,30 +278,7 @@ function onNewPlayer (data) {
         const redTeamScore = rooms[roomIdPlayerWillJoin].redTeamScore
         const blueTeamScore = rooms[roomIdPlayerWillJoin].blueTeamScore
 
-        const playersByTeamCount = _.countBy(players, 'meta.team')
-        const redPlayerCount = +_.get(playersByTeamCount, 'red', 0)
-        const bluePlayerCount = +_.get(playersByTeamCount, 'blue', 0)
-
-        // Ensure each team has one player first
-        if (redPlayerCount === 0) {
-            newPlayer.meta.team = 'red'
-        }
-        else if (bluePlayerCount === 0) {
-            newPlayer.meta.team = 'blue'
-        }
-        else if (redTeamScore === blueTeamScore) {
-            newPlayer.meta.team = bluePlayerCount > redPlayerCount
-                ? 'red'
-                : 'blue'
-        }
-        // Red team is losing so help them
-        else if (redTeamScore <= blueTeamScore) {
-            newPlayer.meta.team = 'red'
-        }
-        // Blue team is losing so help them
-        else {
-            newPlayer.meta.team = 'blue'
-        }
+        newPlayer.meta.team = getTeam(players, redTeamScore, blueTeamScore)
 
         util.log('Player added to team: ', newPlayer.meta.team)
     }
