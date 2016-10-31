@@ -17,7 +17,7 @@ const
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
 
     // Config
-    BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc.json')),
+    BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc')),
     isProduction = process.argv[2] === '-p',
     SRC = 'resources/assets',
     APP = `${SRC}/js/app.js`,
