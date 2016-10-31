@@ -45,6 +45,7 @@ setInterval(function() {
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
             util.log('Restarting round for', roomId)
             const previousMap = rooms[roomId].map
+            const previousGamemode = rooms[roomId].gamemode
 
             rooms[roomId] = new Room({
                 id: roomId,
@@ -57,10 +58,12 @@ setInterval(function() {
 
             // Randomly select a map that was not the previous map
             const potentialNextMaps = GameConsts.MAPS.filter(map => map !== previousMap)
+            const potentialNextGamemodes = GameConsts.GAMEMODES.filter(gamemode => gamemode !== previousGamemode)
 
             rooms[roomId].map = _.sample(potentialNextMaps)
+            rooms[roomId].gamemode = _.sample(potentialNextGamemodes)
 
-            util.log(rooms[roomId].map, 'has been selected for ', roomId)
+            util.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} for room ${roomId}`)
 
             Object.keys(rooms[roomId].players).forEach((playerId) => {
                 rooms[roomId].players[playerId].meta.health = GameConsts.PLAYER_FULL_HEALTH
