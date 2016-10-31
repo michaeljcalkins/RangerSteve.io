@@ -148,7 +148,7 @@ const GameConsts = {
             reloadTime: 3000,
             bulletSpeed: 2500,
             damage: 16,
-            fireRate: 1300,
+            fireRate: 1000,
             shootingFrame: 22,
             frame: 2,
             position: {
@@ -183,7 +183,7 @@ const GameConsts = {
             ammo: 50,
             reloadTime: 2400,
             bulletSpeed: 2500,
-            damage: 13,
+            damage: 12,
             fireRate: 120,
             shootingFrame: 29,
             frame: 9,
@@ -227,8 +227,8 @@ const GameConsts = {
                 rotation: 80.20,
                 scale: 0.4,
                 muzzleFlashX: 165,
-                muzzleFlashY: -65
-            }
+                muzzleFlashY: -65,
+            },
         },
         DesertEagle: {
             id: 'DesertEagle',
