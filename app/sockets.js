@@ -216,7 +216,7 @@ function onNewPlayer (data) {
         bulletsFired: 0,
         bulletsHit: 0,
         weaponId: data.weaponId,
-        team: 'red', // If the room doesn't exist yet simply add them to red by default
+        team: _.sample(['red', 'blue']), // If the room doesn't exist yet simply add them to red by default
     }
 
     /**
@@ -241,6 +241,8 @@ function onNewPlayer (data) {
             )
         ) {
             newPlayer.meta.team = 'blue'
+        } else {
+            newPlayer.meta.team = 'red'
         }
     }
 

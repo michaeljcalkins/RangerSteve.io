@@ -66,7 +66,7 @@ TeamDeathmatch.prototype = {
         CreateMapAndPlayer.call(this)
         CreateHurtBorder.call(this)
         CreateKillingSpreeAudio.call(this)
-        CreateDetectIdleUser()
+        // CreateDetectIdleUser()
         CreateBullets.call(this)
         CreateHud.call(this)
         CreateKeyboardBindings.call(this)
