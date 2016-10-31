@@ -10,9 +10,9 @@
     "build:dll": "webpack --config webpack.dll.js",
     "postinstall": "npm run production",
     "production": "NODE_ENV='production' && webpack -p",
-    "test": "NODE_ENV=test mocha tests/browser.js tests/ui/**/*.test.js tests/lib/**/*.test.js",
+    "test": "NODE_ENV=test mocha --require babel-core/register app/services/**/*.test.js",
     "test-report": "NODE_ENV=test mocha --recursive -R xunit tests/browser.js tests/**/*.test.js > test-reports.xml",
-    "test-watch": "nodemon --watch tests/ui/**/*.test.js --watch tests/lib/**/*.test.js --watch resources/assets/js/ui/**/*.js --watch resources/assets/js/lib/Percent.js -q -x 'npm test'"
+    "test-watch": "nodemon --watch app/services/**/*.js -q -x 'npm test'"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
