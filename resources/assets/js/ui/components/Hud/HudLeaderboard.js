@@ -51,7 +51,7 @@ export default function HudLeaderboard({
     }
 
     return (
-        <div className="hud-leaderboard hud-item">
+        <div className="hud-leaderboard hud-item no-pointer-events">
             <h1>Scoreboard</h1>
             <table className="table table-condensed">
                 <tbody>
