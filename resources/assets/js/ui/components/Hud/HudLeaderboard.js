@@ -63,5 +63,5 @@ export default function HudLeaderboard({
 }
 
 HudLeaderboard.propTypes = {
-    room: PropTypes.object
+    room: PropTypes.object,
 }
