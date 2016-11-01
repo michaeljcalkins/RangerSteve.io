@@ -3,16 +3,18 @@ import React, { PropTypes } from 'react'
 import GameConsts from '../../../lib/GameConsts'
 
 export default function HudKillLog({
-    messages
+    messages,
 }) {
     function renderMessages() {
         return messages.slice(-5).map(function(message, index) {
             const selectedWeapon = GameConsts.WEAPONS[message.weaponId]
+            const attackingPlayerNickname = message.attackerNickname ? message.attackerNickname : 'Unnamed Ranger'
+            const deadPlayerNickname = message.deadNickname ? message.deadNickname : 'Unnamed Ranger'
 
-            if (! message.attackerNickname) {
+            if (message.attackerNickname === undefined) {
                 return (
                     <li key={ index }>
-                         { message.deadNickname } <img height="32" src="/images/icons/skull-32-black.png" />
+                         { deadPlayerNickname } <img height="32" src="/images/icons/skull-32-black.png" />
                     </li>
                 )
             }
@@ -21,11 +23,15 @@ export default function HudKillLog({
 
             return (
                 <li key={ index }>
-                    { message.attackerNickname } <img src={ '/images/guns/' + selectedWeapon.image } />
+                    { attackingPlayerNickname } <img src={ '/images/guns/' + selectedWeapon.image } />
                     { message.wasHeadshot &&
-                        <img style={ { marginLeft: 0 } } height="38" src="/images/icons/headshot.png" />
+                        <img
+                            height="38"
+                            src="/images/icons/headshot.png"
+                            style={ { marginLeft: 0 } }
+                        />
                     }
-                    { message.deadNickname }
+                    { deadPlayerNickname }
                 </li>
             )
         })
