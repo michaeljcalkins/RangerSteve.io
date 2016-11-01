@@ -166,7 +166,7 @@ export default function ControlsMenu({
                             <tr>
                                 <td>Fly</td>
                                 <td>Right click and hold</td>
-                                <td>Press and hold Spacebar</td>
+                                <td>Press and hold SHIFT</td>
                             </tr>
                             <tr>
                                 <td>Shoot</td>
