@@ -1,9 +1,13 @@
-// probably should copy and paste into your own text editor
-import autobind from 'react-autobind' // import decorator
-import React, { Component, PropTypes } from 'react' // trailing commas are removed by babel;; good convention to adopt
-import { get, values } from 'lodash'
+import autobind from 'react-autobind'
+import React, { Component, PropTypes } from 'react'
+import _ from 'lodash'
 import moment from 'moment'
 import cs from 'classnames'
+
+import getPlayerWithBestAccuracy from '../../../lib/getPlayerWithBestAccuracy'
+import getPlayerWithBestHeadshots from '../../../lib/getPlayerWithBestHeadshots'
+import getPlayerWithBestKillingSpree from '../../../lib/getPlayerWithBestKillingSpree'
+import getPlayerWithBestKillsPerMinute from '../../../lib/getPlayerWithBestKillsPerMinute'
 
 const { object } = PropTypes
 
@@ -43,86 +47,12 @@ export default class Leaderboard extends Component {
         this.setState({ elapsed: `${seconds}` })
     }
 
-    renderAchievements() {
-        const { props: { room } } = this
-
-        if (! room.players) return null
-
-        let playerWithBestHeadshots = {}
-        Object.keys(room.players).forEach((player) => {
-            if (room.players[player].meta.headshots > get(playerWithBestHeadshots, 'meta.headshots', 0)) {
-                playerWithBestHeadshots = room.players[player]
-            }
-        })
-
-        let playerWithBestKillingSpree = {}
-        Object.keys(room.players).forEach((player) => {
-            if (room.players[player].meta.bestKillingSpree > get(playerWithBestKillingSpree, 'meta.bestKillingSpree', 0)) {
-                playerWithBestKillingSpree = room.players[player]
-            }
-        })
-
-        let playerWithBestAccuracy = {}
-        Object.keys(room.players).forEach((player) => {
-            if (room.players[player].meta.bulletsFired === 0) return
-
-            // bullets fired / bullets that hit
-            const accuracy = room.players[player].meta.bulletsHit / room.players[player].meta.bulletsFired * 100
-            room.players[player].meta.accuracy = accuracy.toFixed(1)
-
-            if (room.players[player].meta.accuracy > get(playerWithBestAccuracy, 'meta.accuracy', 0)) {
-                playerWithBestAccuracy = room.players[player]
-            }
-        })
-
-        // 200 seconds tracked in game
-        // 4 kills
-        // 180 / 60 = 3 minutes
-        // 4 kills / 3 minutes
-        let playerWithBestKillsPerMinute = {}
-        Object.keys(room.players).forEach((player) => {
-            if (room.players[player].meta.secondsInRound < 60) return
-
-            const minutesInRound = room.players[player].meta.secondsInRound / 60
-            room.players[player].meta.killsPerMinute = (room.players[player].meta.kills / minutesInRound).toFixed(1)
-
-            if (room.players[player].meta.killsPerMinute > get(playerWithBestKillsPerMinute, 'meta.killsPerMinute', 0)) {
-                playerWithBestKillsPerMinute = room.players[player]
-            }
-        })
-
-        return (
-            <div>
-                <div className="player-achievement">
-                    <h2>{ playerWithBestHeadshots.meta ? playerWithBestHeadshots.meta.headshots : '--' }</h2>
-                    <h6>Most headshots</h6>
-                    <h4>{ playerWithBestHeadshots.meta ? playerWithBestHeadshots.meta.nickname : '--' }</h4>
-                </div>
-                <div className="player-achievement">
-                    <h2>{ playerWithBestAccuracy.meta ? playerWithBestAccuracy.meta.accuracy + '%' : '--' }</h2>
-                    <h6>Most accurate</h6>
-                    <h4>{ playerWithBestAccuracy.meta ? playerWithBestAccuracy.meta.nickname : '--' }</h4>
-                </div>
-                <div className="player-achievement">
-                    <h2>{ playerWithBestKillingSpree.meta ? playerWithBestKillingSpree.meta.bestKillingSpree : '--' }</h2>
-                    <h6>Longest Kill Streak</h6>
-                    <h4>{ playerWithBestKillingSpree.meta ? playerWithBestKillingSpree.meta.nickname : '--' }</h4>
-                </div>
-                <div className="player-achievement">
-                    <h2>{ playerWithBestKillsPerMinute.meta ? playerWithBestKillsPerMinute.meta.killsPerMinute : '--' }</h2>
-                    <h6>Best Kills per Minute</h6>
-                    <h4>{ playerWithBestKillsPerMinute.meta ? playerWithBestKillsPerMinute.meta.nickname : '--' }</h4>
-                </div>
-            </div>
-        )
-    }
-
     renderPlayers() {
         const { room } = this.props
 
         if (! room.players) return null
 
-        return values(room.players)
+        return _.values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map((player, key) => {
                 const { meta: { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger' }, id } = player
@@ -154,19 +84,45 @@ export default class Leaderboard extends Component {
 
         if (! room.players) return null
 
-        const players = values(room.players)
+        const players = _.values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
 
-        return get(players, '[0].meta.nickname')
+        return _.get(players, '[0].meta.nickname')
+    }
+
+    renderPlayerAchievement(playerMeta, award) {
+        if (! playerMeta) {
+            return (
+                <div className="player-achievement">
+                    <h2>--</h2>
+                    <h6>{ award }</h6>
+                    <h4>--</h4>
+                </div>
+            )
+        }
+
+        const score = playerMeta.score
+        const nickname = playerMeta.nickname ? playerMeta.nickname : 'Unnamed Ranger'
+
+        return (
+            <div className="player-achievement">
+                <h2>{ score }</h2>
+                <h6>{ award }</h6>
+                <h4>{ nickname }</h4>
+            </div>
+        )
     }
 
     render() {
         const {
             state: { elapsed },
             props: { room },
-            renderPlayers,
-            renderAchievements,
         } = this
+
+        const playerWithBestAccuracy = getPlayerWithBestAccuracy(room)
+        const playerWithBestHeadshots = getPlayerWithBestHeadshots(room)
+        const playerWithKillingSpree = getPlayerWithBestKillingSpree(room)
+        const playerWithBestKillsPerMinute = getPlayerWithBestKillsPerMinute(room)
 
         return (
             <div>
@@ -188,7 +144,10 @@ export default class Leaderboard extends Component {
                                         </div>
                                     </div>
                                     <div className="col-sm-7">
-                                        { renderAchievements() }
+                                        { this.renderPlayerAchievement(playerWithBestHeadshots, 'Most headshots') }
+                                        { this.renderPlayerAchievement(playerWithBestAccuracy, 'Most accurate') }
+                                        { this.renderPlayerAchievement(playerWithKillingSpree, 'Longest kill streak') }
+                                        { this.renderPlayerAchievement(playerWithBestKillsPerMinute, 'Best kills per minute') }
                                     </div>
                                 </div>
                                 <table className="table table-condensed">
@@ -204,7 +163,7 @@ export default class Leaderboard extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        { renderPlayers() }
+                                        { this.renderPlayers() }
                                     </tbody>
                                 </table>
                                 { room.state === 'ended' &&
