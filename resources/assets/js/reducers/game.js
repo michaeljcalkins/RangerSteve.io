@@ -12,7 +12,7 @@ const initialState = {
         up: storage.get('keyboardControl.up', Phaser.Keyboard.W),
         switchWeapon: storage.get('keyboardControl.switchWeapon', Phaser.Keyboard.Q),
         newChatMessage: storage.get('keyboardControl.newChatMessage', Phaser.Keyboard.T),
-        reload: storage.get('keyboardControl.reload', Phaser.Keyboard.R)
+        reload: storage.get('keyboardControl.reload', Phaser.Keyboard.R),
     },
     settingsModalIsOpen: ! storage.has('nickname'),
     leaderboardModalIsOpen: false,
@@ -20,7 +20,7 @@ const initialState = {
     sfxVolume: storage.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME),
     showKillConfirmed: false,
     state: 'active',
-    resetEventsFlag: false
+    resetEventsFlag: false,
 }
 
 const player = (state = initialState, action) => {

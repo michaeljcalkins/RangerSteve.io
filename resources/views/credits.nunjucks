@@ -3,8 +3,8 @@
 {% block title %}Credits{% endblock %}
 
 {% block head %}
-<meta property="og:url" content="https://RangerSteve.io/credits">
-<link rel="canonical" href="https://RangerSteve.io/credits">
+<meta property="og:url" content="https://rangersteve.io/credits">
+<link rel="canonical" href="https://rangersteve.io/credits">
 {% endblock %}
 
 {% block content %}

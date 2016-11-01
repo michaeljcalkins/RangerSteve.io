@@ -5,8 +5,14 @@ let moment = require('moment')
 
 let MainController = {
     home: function(req, res) {
-        res.render('home')
+        let fileStat = fs.statSync('public/css/app.css')
+        let lastModifiedTime = moment(fileStat.mtime).unix()
+
+        res.render('home', {
+            lastModifiedTime: lastModifiedTime,
+        })
     },
+
     game: function(req, res) {
         let fileStat = fs.statSync('public/js/app.js')
         let lastModifiedTime = moment(fileStat.mtime).unix()
@@ -16,11 +22,14 @@ let MainController = {
             isProduction: process.env.NODE_ENV === "production",
         })
     },
+
     credits: function(req, res) {
-        res.render('credits')
-    },
-    buy: function(req, res) {
-        res.render('buy')
+        let fileStat = fs.statSync('public/css/app.css')
+        let lastModifiedTime = moment(fileStat.mtime).unix()
+
+        res.render('credits', {
+            lastModifiedTime: lastModifiedTime,
+        })
     },
 }
 
