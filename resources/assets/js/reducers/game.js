@@ -21,7 +21,7 @@ const initialState = {
     sfxVolume: storage.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME),
     showKillConfirmed: false,
     state: 'active',
-    resetEventsFlag: false
+    resetEventsFlag: false,
 }
 
 const player = (state = initialState, action) => {

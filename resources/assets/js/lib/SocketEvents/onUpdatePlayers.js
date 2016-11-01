@@ -70,6 +70,9 @@ export default function onUpdatePlayers(data) {
 
     // Round has ended so pause the game
     if (store.getState().room.state === 'ended') {
+        RS.jumpjetFx.stop()
+        this.game.input.enabled = false
+        this.game.input.reset()
         this.game.paused = true
     }
 
