@@ -3,9 +3,9 @@
 {% block title %}RangerSteve.io{% endblock %}
 
 {% block content %}
-<section class="main-section text-center">
+<section class="main-section">
     <div class="col-xs-12">
-        <div class="main-header">
+        <div class="main-header text-center">
             Ranger Steve
             <span>Alpha</span>
         </div>
@@ -40,18 +40,9 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <span
-                                        class="help-block pointer"
-                                        style="margin: 0;"
-                                        id="how-to-button"
-                                    >
-                                        How to play
-                                    </span>
-                                </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <a
-                                        class="help-block"
+                                        class="help-block text-center"
                                         href="https://discord.gg/GqKgsmy"
                                         target="_blank"
                                         style="margin: 0;"
@@ -63,44 +54,58 @@
                         </div>
                     </div>
 
-                    <div style="display: none" id="how-to-container">
-                        <br />
-                        <label>How To Play</label>
+                    <div id="how-to-container" class="panel panel-default">
+                        <div class="panel-heading text-center">How To Play</div>
 
                         <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Control</th>
+                                <th>Alt. Control</th>
+                            </tr>
+                            </thead>
                             <tbody>
-                                <tr>
-                                    <td><strong>Fly</strong></td>
-                                    <td>Right click and hold</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Shoot</strong></td>
-                                    <td>Left click</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Aim</strong></td>
-                                    <td>Move your mouse</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Jump</strong></td>
-                                    <td>Press W</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Move left and right</strong></td>
-                                    <td>Press A and D</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Reload</strong></td>
-                                    <td>Press R</td>
-                                </tr>
-                                    <tr>
-                                    <td><strong>Switch weapons</strong></td>
-                                    <td>Press Q</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Write chat message</strong></td>
-                                    <td>Press T</td>
-                                </tr>
+                            <tr>
+                                <td><strong>Fly</strong></td>
+                                <td>Right click and hold</td>
+                                <td>Press and hold SHIFT</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Shoot</strong></td>
+                                <td>Left click</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Aim</strong></td>
+                                <td>Move your mouse</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jump</strong></td>
+                                <td>Press W</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Move left and right</strong></td>
+                                <td>Press A and D</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reload</strong></td>
+                                <td>Press R</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Switch weapons</strong></td>
+                                <td>Press Q</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Write chat message</strong></td>
+                                <td>Press T</td>
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
