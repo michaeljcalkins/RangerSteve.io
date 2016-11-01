@@ -90,10 +90,6 @@ TeamDeathmatch.prototype = {
             ? player.selectedPrimaryWeaponId
             : player.selectedSecondaryWeaponId
 
-        if (state.game.state === 'ended' || ! state.room) {
-            this.game.paused = true
-        }
-
         UpdateHudPositions.call(this)
 
         // Pause controls so user can't do anything in the background accidentally

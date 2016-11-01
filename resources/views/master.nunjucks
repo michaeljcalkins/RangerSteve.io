@@ -10,18 +10,18 @@
     <meta property="og:title" content="RangerSteve.io">
     <meta property="og:site_name" content="RangerSteve.io">
     <meta property="og:description" content="Explosive multiplayer shooter em' up that lets you instantly play with your friends.">
-    <meta property="og:image" content="https://RangerSteve.io/images/ogimage.png">
+    <meta property="og:image" content="https://rangersteve.io/images/ogimage.png">
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="700" />
     <meta property="og:image:height" content="262" />
-    <meta property="og:url" content="https://RangerSteve.io" />
+    <meta property="og:url" content="https://rangersteve.io" />
     <meta property="og:type" content="website" />
 
     <link rel="manifest" href="/manifest.json">
     <link rel="shortcut icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css">
     <link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/app.css?v={{ lastModifiedTime }}">
     {% if isProduction %}
         <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
