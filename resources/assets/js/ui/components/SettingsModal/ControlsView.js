@@ -157,22 +157,26 @@ export default function ControlsMenu({
                     <table className="table">
                         <thead>
                             <tr>
-                                <th className="col-sm-4">Controls</th>
-                                <th>Description</th>
+                                <th className="col-sm-4">Action</th>
+                                <th>Control</th>
+                                <th>Alt. Control</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Fly</td>
                                 <td>Right click and hold</td>
+                                <td>Press and hold Spacebar</td>
                             </tr>
                             <tr>
                                 <td>Shoot</td>
                                 <td>Left click</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>Aim</td>
                                 <td>Move your mouse</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>Jump</td>
@@ -187,6 +191,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>Move left</td>
@@ -198,9 +203,10 @@ export default function ControlsMenu({
                                         name="left"
                                         onChange={ handleControlChange }
                                     >
-                                        { renderKeyboardCodes('left') }
+                                        { renderKeyboardCodes() }
                                     </select>
                                 </td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>Move right</td>
@@ -215,6 +221,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>Reload</td>
@@ -229,6 +236,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>Switch weapons</td>
@@ -243,6 +251,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>Write chat message</td>
@@ -257,6 +266,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
