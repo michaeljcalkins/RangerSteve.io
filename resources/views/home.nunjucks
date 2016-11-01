@@ -63,7 +63,7 @@
                         </div>
                     </div>
 
-                    <div style="display: none" id="how-to-container">
+                    <div id="how-to-container">
                         <br />
                         <label>How To Play</label>
 
