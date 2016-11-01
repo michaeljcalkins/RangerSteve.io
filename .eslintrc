@@ -33,7 +33,7 @@
     "ecmaFeatures": {
         "jsx": true
     },
-    "plugins": [ "react" ],
+    "plugins": [ "react", "import" ],
     "esversion": 6,
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],
@@ -42,6 +42,8 @@
         "no-console": 0,
         "no-const-assign": 1,
 
+        # prevent accidentally importing constants that don’t exist to your reducers
+        "import/named": 2, 
 
         "react/display-name": 0,
         "react/forbid-prop-types": 0,
