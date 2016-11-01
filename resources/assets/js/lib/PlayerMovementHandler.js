@@ -1,5 +1,6 @@
 import GameConsts from './GameConsts'
 import { playerFaceLeft, playerFaceRight } from './PlayerFaceHandler'
+import { isJumpJetInputActive } from './InputHelpers'
 
 function isRunningLeftAndFacingLeft(isMovingLeft, isMovingRight, mouseX, playerX) {
     return isMovingLeft && ! isMovingRight && mouseX < playerX
@@ -51,7 +52,11 @@ export default function PlayerMovementHandler() {
 
     // Standing still and facing right
     if (
-        (isNotMoving(isMovingLeft, isMovingRight) || this.game.input.activePointer.rightButton.isDown) &&
+        (
+            isNotMoving(isMovingLeft, isMovingRight) ||
+            this.game.input.activePointer.rightButton.isDown ||
+            isJumpJetInputActive.call(this)
+        ) &&
         this.game.input.worldX >= RS.player.x
     ) {
         RS.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
@@ -59,7 +64,10 @@ export default function PlayerMovementHandler() {
 
     // Standing still and facing left
     if (
-        (isNotMoving(isMovingLeft, isMovingRight) || this.game.input.activePointer.rightButton.isDown) &&
+        (isNotMoving(isMovingLeft, isMovingRight) ||
+        this.game.input.activePointer.rightButton.isDown ||
+        isJumpJetInputActive.call(this)
+        ) &&
         this.game.input.worldX < RS.player.x
     ) {
         RS.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME

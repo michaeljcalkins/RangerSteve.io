@@ -1,6 +1,6 @@
 import GameConsts from './GameConsts'
 
-import { upInputIsActive, upInputReleased } from './InputHelpers'
+import { upInputIsActive, upInputReleased, isJumpJetInputActive } from './InputHelpers'
 import actions from '../actions'
 
 let jumpjetFxHandle = null
@@ -25,7 +25,10 @@ export default function PlayerJumpHandler() {
 
     // Jump Jet!
     if (
-        this.game.input.activePointer.rightButton.isDown &&
+        (
+            this.game.input.activePointer.rightButton.isDown ||
+            isJumpJetInputActive.call(this)
+        ) &&
         store.getState().player.health > 0 &&
         this.game.store.getState().player.jumpJetCounter > GameConsts.JUMP_JET_STARTING_FUEL
     ) {

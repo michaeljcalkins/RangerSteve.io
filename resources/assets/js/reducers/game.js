@@ -12,7 +12,8 @@ const initialState = {
         up: storage.get('keyboardControl.up', Phaser.Keyboard.W),
         switchWeapon: storage.get('keyboardControl.switchWeapon', Phaser.Keyboard.Q),
         newChatMessage: storage.get('keyboardControl.newChatMessage', Phaser.Keyboard.T),
-        reload: storage.get('keyboardControl.reload', Phaser.Keyboard.R)
+        reload: storage.get('keyboardControl.reload', Phaser.Keyboard.R),
+        fly: storage.get('keyboardControl.fly', Phaser.Keyboard.SPACEBAR),
     },
     settingsModalIsOpen: ! storage.has('nickname'),
     leaderboardModalIsOpen: false,

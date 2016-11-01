@@ -23,3 +23,9 @@ export function upInputIsActive(duration, keycode) {
 export function upInputReleased(keycode) {
     return this.game.input.keyboard.upDuration(keycode)
 }
+
+export function isJumpJetInputActive() {
+    const store = this.game.store
+    const userSelectedJumpJetKey = store.getState().game.keyboardControls.fly
+    return this.game.input.keyboard.isDown(userSelectedJumpJetKey)
+}
