@@ -5,7 +5,10 @@
 {% block content %}
 <section class="main-section text-center">
     <div class="col-xs-12">
-        <div class="main-header">Ranger Steve</div>
+        <div class="main-header">
+            Ranger Steve
+            <span>Alpha</span>
+        </div>
 
         <div class="home-content">
             <form action="/game" method="GET">
