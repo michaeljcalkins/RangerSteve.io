@@ -156,6 +156,7 @@
     position: absolute;
     left: 0;
     bottom: 60px;
+    z-index: 10000;
 
     ul {
         margin: 0;
@@ -186,6 +187,7 @@
     width: 300px;
     padding: 0px 10px !important;
     font-size: inherit;
+    z-index: 10000;
 
     input {
         background: none;
