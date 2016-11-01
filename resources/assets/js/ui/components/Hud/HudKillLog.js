@@ -38,7 +38,7 @@ export default function HudKillLog({
     }
 
     return (
-        <div className="hud-kill-log">
+        <div className="hud-kill-log no-pointer-events">
             <ul className="list-unstyled">
                 { renderMessages() }
             </ul>

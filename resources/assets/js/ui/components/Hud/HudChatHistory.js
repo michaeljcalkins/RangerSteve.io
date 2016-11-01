@@ -6,7 +6,7 @@ export default function HudChatHistory({
     isOpen,
     messages,
     newChatMessageCharacter,
-    onSendMessage
+    onSendMessage,
 }) {
     function renderMessages() {
         if (messages.length === 0 && ! isOpen)
@@ -22,7 +22,7 @@ export default function HudChatHistory({
     }
 
     return (
-        <div className="hud-chat">
+        <div className="hud-chat no-pointer-events">
             <ul className="list-unstyled">
                 { renderMessages() }
                 <HudNewChatMessage

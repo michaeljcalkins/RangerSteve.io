@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 export default function HudKillingSpree({
-    killingSpreeCount
+    killingSpreeCount,
 }) {
     function renderMessage() {
         let message = null
@@ -28,16 +28,16 @@ export default function HudKillingSpree({
     }
 
     return (
-        <div className="hud-killing-spree">
+        <div className="hud-killing-spree no-pointer-events">
             { renderMessage() }
         </div>
     )
 }
 
 HudKillingSpree.defaultProps = {
-    killingSpreeCount: 0
+    killingSpreeCount: 0,
 }
 
 HudKillingSpree.propTypes = {
-    killingSpreeCount: PropTypes.number.isRequired
+    killingSpreeCount: PropTypes.number.isRequired,
 }
