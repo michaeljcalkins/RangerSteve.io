@@ -373,8 +373,7 @@ function onPlayerFullHealth(data) {
     let player = getPlayerById(data.roomId, this.id, rooms)
     player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
-    io.to(data.roomId).emit('player health update', {
-        id: this.id,
+    io.to(this.id).emit('player health update', {
         health: player.meta.health,
     })
 }
