@@ -322,7 +322,7 @@ function onMovePlayer(data) {
     movePlayer.facing = data.facing
 
     // Broadcast updated position to connected socket clients
-    io.to(data.roomId).emit('move player', {
+    io.to(roomId).emit('move player', {
         id: this.id,
         x: data.x,
         y: data.y,
