@@ -16,6 +16,9 @@ const
     // Shared Plugins
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
 
+    // Analysis Plugins
+    // BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin,
+
     // Config
     BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc')),
     isProduction = process.argv[2] === '-p',
@@ -101,6 +104,8 @@ if (! isProduction) {
             context: path.join(__dirname, APP),
             manifest: require("./dll/vendor-manifest.json"),
         }),
+        // uncomment to analyze webpack bundle size
+        // new BundleAnalyzerPlugin(),
         new DashboardPlugin(),
     ]
 } else {
