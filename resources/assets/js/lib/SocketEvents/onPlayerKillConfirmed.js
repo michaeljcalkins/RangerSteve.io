@@ -1,22 +1,13 @@
-import { PropTypes } from 'react'
 import actions from '../../actions'
 import PlayKillingSpreeSound from '../PlayKillingSpreeSound'
 import PlayerById from '../PlayerById'
 import PlayPlayerDeathAnimation from '../PlayPlayerDeathAnimation'
-
-const propTypes = {
-    id: PropTypes.string.isRequired,
-    damagedPlayerId: PropTypes.string.isRequired,
-    killingSpree: PropTypes.number.isRequired
-}
 
 let killConfirmedHandle = null
 let lastKillingSpreeCount = 0
 
 export default function onPlayerKillConfirmed(data) {
     const store = this.game.store
-
-    if (data.id !== window.SOCKET_ID) return
 
     store.dispatch(actions.player.setShowKillConfirmed(true))
     clearTimeout(killConfirmedHandle)
