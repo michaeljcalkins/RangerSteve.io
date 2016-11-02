@@ -141,13 +141,13 @@
         localStorage.setItem('nickname', JSON.stringify(evt.target.value))
     })
 
-    $('#how-to-button').on('click', function() {
-        $('#how-to-container').slideToggle()
-    })
-
     {% if isProduction %}
         $('#play-button').on('click', function(evt) {
             mixpanel.track('playButton:click')
+        })
+
+        $('#discord-button').on('click', function(evt) {
+            mixpanel.track('discordButton:click')
         })
     {% endif %}
 </script>
