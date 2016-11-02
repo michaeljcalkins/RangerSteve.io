@@ -10,6 +10,7 @@ const createPlayer = require('./services/createPlayer')
 const getPlayerById = require('./services/getPlayerById')
 const getTeam = require('./services/getTeam')
 const createRoom = require('./services/createRoom')
+const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
 
 let rooms = {}
 let io = null
@@ -305,9 +306,11 @@ function onNewPlayer(data) {
 
 // Player has moved
 function onMovePlayer(data) {
-    if (! rooms[data.roomId]) return
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
 
-    var movePlayer = rooms[data.roomId].players[this.id]
+    if (! rooms[roomId]) return
+
+    var movePlayer = rooms[roomId].players[this.id]
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
 

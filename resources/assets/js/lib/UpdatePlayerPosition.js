@@ -27,8 +27,6 @@ export default function() {
         : state.player.selectedSecondaryWeaponId
 
     let newPlayerData = {
-        id: window.socket.id,
-        roomId: state.room.id,
         x: RS.player.x,
         y: RS.player.y,
         rightArmAngle: RS.rightArmGroup.angle,
@@ -36,7 +34,7 @@ export default function() {
         facing: state.player.facing,
         flying: RS.rightJumpjet.visible && RS.leftJumpjet.visible,
         shooting: isPlayerShooting(currentWeaponId, RS.rightArmSprite),
-        weaponId: currentWeaponId
+        weaponId: currentWeaponId,
     }
 
     if (_.isEqual(lastPlayerData, newPlayerData)) return
