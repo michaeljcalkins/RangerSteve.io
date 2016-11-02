@@ -198,7 +198,7 @@ function onPlayerUpdateNickname(data) {
 }
 
 // New player has joined
-function onNewPlayer (data) {
+function onNewPlayer(data) {
     util.log('Creating new player...', data, this.id)
 
     // Check for duplicate players
@@ -304,7 +304,7 @@ function onNewPlayer (data) {
 }
 
 // Player has moved
-function onMovePlayer (data) {
+function onMovePlayer(data) {
     if (! rooms[data.roomId]) return
 
     var movePlayer = rooms[data.roomId].players[this.id]
@@ -386,8 +386,7 @@ function onPlayerHealing(data) {
     if (player.meta.health > GameConsts.PLAYER_FULL_HEALTH)
         player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
-    io.to(data.roomId).emit('player health update', {
-        id: this.id,
+    io.to(this.id).emit('player health update', {
         health: player.meta.health,
     })
 }
