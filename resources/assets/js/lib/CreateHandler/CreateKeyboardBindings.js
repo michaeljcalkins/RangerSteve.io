@@ -1,5 +1,6 @@
 import actions from '../../actions'
 import GameConsts from '../GameConsts'
+import KillCurrentPlayer from '../KillCurrentPlayer'
 
 let lastSwitchWeaponKey = null
 
@@ -106,5 +107,12 @@ export default function() {
             // The sound effect is two seconds long so stop it once switching guns is complete.
             RS.switchingWeaponsFx.stop()
         }, switchDelay)
+    })
+
+    /**
+     * Self-kill
+     */
+    this.input.keyboard.addKey(store.getState().game.keyboardControls.selfkill).onUp.add(() => {
+        KillCurrentPlayer.call(this)
     })
 }
