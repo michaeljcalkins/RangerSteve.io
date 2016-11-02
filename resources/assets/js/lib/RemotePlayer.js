@@ -17,7 +17,7 @@ export default function RemotePlayer(player) {
     newRemotePlayer.id = player.id
     newRemotePlayer.lastPosition = {
         x: player.x,
-        y: player.y
+        y: player.y,
     }
 
     //  Physics

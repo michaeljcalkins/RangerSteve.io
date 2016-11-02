@@ -293,7 +293,7 @@ function onNewPlayer (data) {
     this.join(roomIdPlayerWillJoin)
 
     // Tell the user's client to load the game
-    io.to(roomIdPlayerWillJoin).emit('load game', {
+    io.to(this.id).emit('load game', {
         room: rooms[roomIdPlayerWillJoin],
     })
 
