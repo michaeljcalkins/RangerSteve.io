@@ -27,34 +27,31 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <button
                                         type="submit"
                                         class="btn btn-success btn-lg btn-block"
-                                        style="margin-bottom: 15px"
                                         id="play-button"
                                     >
                                         Play Now
                                     </button>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <a
-                                        class="help-block text-center"
+                                        class="btn btn-primary btn-lg btn-block"
                                         href="https://discord.gg/GqKgsmy"
                                         target="_blank"
-                                        style="margin: 0;"
+                                        id="discord-button"
                                     >
-                                        Join us on Discord!
+                                        Join us on Discord
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="how-to-container" class="panel panel-default">
+                    <div id="how-to-container" class="panel panel-default" style="margin-bottom: 0">
                         <div class="panel-heading text-center">How To Play</div>
 
                         <table class="table">
