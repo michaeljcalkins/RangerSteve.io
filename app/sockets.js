@@ -439,7 +439,7 @@ function onPlayerDamaged(data) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
             }
 
-            io.to(data.roomId).emit('player kill confirmed', {
+            io.to(this.id).emit('player kill confirmed', {
                 id: attackingPlayer.id,
                 damagedPlayerId: data.damagedPlayerId,
                 killingSpree: attackingPlayer.meta.killingSpree,
