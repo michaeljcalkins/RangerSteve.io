@@ -5,11 +5,11 @@ const hri = require('human-readable-ids').hri
 const _ = require('lodash')
 const moment = require('moment')
 
-const Player = require('./services/Player')
-const PlayerById = require('./services/PlayerById')
-const Room = require('./services/Room')
-const getTeam = require('./services/getTeam')
 const GameConsts = require('../resources/assets/js/lib/GameConsts')
+const createPlayer = require('./services/createPlayer')
+const getPlayerById = require('./services/getPlayerById')
+const getTeam = require('./services/getTeam')
+const createRoom = require('./services/createRoom')
 
 let rooms = {}
 let io = null
@@ -47,7 +47,7 @@ setInterval(function() {
             const previousMap = rooms[roomId].map
             const previousGamemode = rooms[roomId].gamemode
 
-            rooms[roomId] = new Room({
+            rooms[roomId] = createRoom({
                 id: roomId,
                 players: rooms[roomId].players,
                 roundLength: GameConsts.ROUND_LENGTH_MINUTES,
@@ -161,7 +161,7 @@ function onMessageSend(data) {
 }
 
 function onPlayerAdjustScore(data) {
-    var player = PlayerById(data.roomId, this.id, rooms)
+    var player = getPlayerById(data.roomId, this.id, rooms)
 
     if (! player) {
         util.log('Player not found when adjust score', data)
@@ -178,7 +178,7 @@ function onPlayerAdjustScore(data) {
 
 function onPlayerUpdateNickname(data) {
     let nickname = data.nickname
-    var player = PlayerById(data.roomId, this.id, rooms)
+    var player = getPlayerById(data.roomId, this.id, rooms)
 
     if (! player) {
         util.log('Player not found when updating nickname: ' + this.id)
@@ -200,11 +200,11 @@ function onNewPlayer (data) {
     util.log('Creating new player...', data, this.id)
 
     // Check for duplicate players
-    var player = PlayerById(data.roomId, this.id, rooms)
+    var player = getPlayerById(data.roomId, this.id, rooms)
     if (player) return util.log('Player already in room: ' + this.id)
 
     // Create a new player
-    var newPlayer = new Player(this.id, data.x, data.y)
+    var newPlayer = createPlayer(this.id, data.x, data.y)
 
     newPlayer.meta = {
         health: GameConsts.PLAYER_FULL_HEALTH,
@@ -228,7 +228,7 @@ function onNewPlayer (data) {
     // Specified room id and room has not been created
     if (data.roomId && ! rooms[data.roomId]) {
         util.log('Specified room does not exist and is being created')
-        rooms[data.roomId] = new Room({
+        rooms[data.roomId] = createRoom({
             id: data.roomId,
             player: newPlayer,
             roundLength: GameConsts.ROUND_LENGTH_MINUTES,
@@ -258,7 +258,7 @@ function onNewPlayer (data) {
             util.log('No rooms available, creating new room to add player')
 
             let newRoomId = hri.random()
-            rooms[newRoomId] = new Room({
+            rooms[newRoomId] = createRoom({
                 id: newRoomId,
                 player: newPlayer,
                 roundLength: GameConsts.ROUND_LENGTH_MINUTES,
@@ -342,7 +342,7 @@ function onClientDisconnect() {
         }
     })
 
-    var removePlayer = PlayerById(selectedRoomId, this.id, rooms)
+    var removePlayer = getPlayerById(selectedRoomId, this.id, rooms)
 
     // Player not found
     if (! removePlayer) {
@@ -368,7 +368,7 @@ function onClientDisconnect() {
 }
 
 function onPlayerFullHealth(data) {
-    let player = PlayerById(data.roomId, this.id, rooms)
+    let player = getPlayerById(data.roomId, this.id, rooms)
     player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
     io.to(data.roomId).emit('player health update', {
@@ -378,7 +378,7 @@ function onPlayerFullHealth(data) {
 }
 
 function onPlayerHealing(data) {
-    let player = PlayerById(data.roomId, this.id, rooms)
+    let player = getPlayerById(data.roomId, this.id, rooms)
     player.meta.health += 10
 
     if (player.meta.health > GameConsts.PLAYER_FULL_HEALTH)
@@ -391,7 +391,7 @@ function onPlayerHealing(data) {
 }
 
 function onPlayerDamaged(data) {
-    let player = PlayerById(data.roomId, data.damagedPlayerId, rooms)
+    let player = getPlayerById(data.roomId, data.damagedPlayerId, rooms)
 
     if (! player || player.meta.health <= 0) return
 
@@ -408,7 +408,7 @@ function onPlayerDamaged(data) {
     player.meta.damageStats.attackingHits++
     player.meta.damageStats.weaponId = data.weaponId
 
-    const attackingPlayer = PlayerById(data.roomId, data.attackingPlayerId, rooms)
+    const attackingPlayer = getPlayerById(data.roomId, data.attackingPlayerId, rooms)
     if (attackingPlayer) {
         attackingPlayer.meta.bulletsHit++
         if (data.wasHeadshot) attackingPlayer.meta.headshots++
@@ -499,7 +499,7 @@ function onPlayerDamaged(data) {
 function onBulletFired(data) {
     data.id = this.id
 
-    const player = PlayerById(data.roomId, data.id, rooms)
+    const player = getPlayerById(data.roomId, data.id, rooms)
 
     if (! player || player.meta.health <= 0) return
     player.meta.bulletsFired++

@@ -2,7 +2,7 @@
 
 const _ = require('lodash')
 
-const Player = function(id, startX, startY) {
+module.exports = function(id, startX, startY) {
     return {
         x: startX,
         y: startY,
@@ -22,5 +22,3 @@ const Player = function(id, startX, startY) {
         },
     }
 }
-
-module.exports = Player

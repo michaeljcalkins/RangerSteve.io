@@ -2,23 +2,22 @@
 
 const moment = require('moment')
 const _ = require('lodash')
-const util = require('util')
 
 const GameConsts = require('../../resources/assets/js/lib/GameConsts')
 
-const Room = function(data) {
-    util.log('Creating room', data.id)
-
-    let playersObj = {}
+module.exports = function(data) {
+    let players = {}
     if (data.player) {
-        playersObj[data.player.id] = data.player
+        // Initialize players object with a single player
+        players[data.player.id] = data.player
     } else {
-        playersObj = data.players
+        // Add existing players to this room
+        players = data.players
     }
 
     return {
         id: data.id,
-        players: playersObj,
+        players: players,
         roundEndTime: moment().add(GameConsts.ROUND_LENGTH_MINUTES, 'minutes').unix(),
         state: 'active',
         map: _.sample(GameConsts.MAPS),
@@ -28,5 +27,3 @@ const Room = function(data) {
         messages: data.messages || [],
     }
 }
-
-module.exports = Room
