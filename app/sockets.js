@@ -89,9 +89,11 @@ setInterval(function() {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
             rooms[roomId].roundStartTime = moment().add(GameConsts.END_OF_ROUND_BREAK_SECONDS, 'seconds').unix()
+
             io.to(roomId).emit('update players', {
                 room: rooms[roomId],
             })
+
             return
         }
 
