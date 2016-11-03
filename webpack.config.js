@@ -18,10 +18,9 @@ const
     OptimizeJsPlugin = require("optimize-js-plugin"),
 
     // Analysis Plugins
-    BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin,
+    // BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin,
 
     // Config
-    BABEL_CONFIG = JSON.parse(fs.readFileSync('.babelrc')),
     isProduction = process.argv[2] === '-p',
     SRC = 'resources/assets',
     APP = `${SRC}/js/app.js`,
@@ -34,7 +33,7 @@ let sharedConfig = {
     },
     output: {
         path: path.join(__dirname, DIST),
-        filename: 'js/app.js', // if you want cache busting, set string to [name]-hash.js;; if not wanted, leave be!
+        filename: 'js/app.js',
         publicPath: '/',
     },
     plugins: [
@@ -105,7 +104,7 @@ if (! isProduction) {
             manifest: require("./dll/vendor-manifest.json"),
         }),
         // uncomment to analyze webpack bundle size
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
         new OptimizeJsPlugin({
             sourceMap: false,
         }),
