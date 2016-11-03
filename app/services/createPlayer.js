@@ -1,6 +1,6 @@
 'use strict'
 
-const _ = require('lodash')
+const GameConsts = require('../../resources/assets/js/lib/GameConsts')
 
 module.exports = function(id, startX, startY) {
     return {
@@ -8,17 +8,20 @@ module.exports = function(id, startX, startY) {
         y: startY,
         id: id,
         meta: {
-            health: 100,
-            deaths: 0,
-            kills: 0,
             bestKillingSpree: 0,
-            killingSpree: 0,
             bulletsFired: 0,
-            secondsInRound: 0,
             bulletsHit: 0,
-            score: 0,
+            damageInflicted: 0,
+            deaths: 0,
             headshots: 0,
-            team: _.sample(['red', 'blue']),
+            health: GameConsts.PLAYER_FULL_HEALTH,
+            killingSpree: 0,
+            kills: 0,
+            nickname: null,
+            score: 0,
+            secondsInRound: 0,
+            team: null,
+            weaponId: null,
         },
     }
 }
