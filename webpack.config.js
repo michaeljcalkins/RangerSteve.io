@@ -54,7 +54,6 @@ let sharedConfig = {
                 include: [
                     path.join(__dirname, `${SRC}/js`),// important for performance!
                 ], exclude: [/node_modules/, "index.js"], loader: 'babel',
-                query: Object.assign({}, BABEL_CONFIG),
             },
             {
                 test: /\.scss$/, include: [
