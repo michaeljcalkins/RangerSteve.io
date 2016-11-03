@@ -208,23 +208,8 @@ function onNewPlayer(data) {
 
     // Create a new player
     var newPlayer = createPlayer(this.id, data.x, data.y)
-
-    newPlayer.meta = {
-        health: GameConsts.PLAYER_FULL_HEALTH,
-        kills: 0,
-        deaths: 0,
-        bestKillingSpree: 0,
-        score: 0,
-        nickname: data.nickname,
-        killingSpree: 0,
-        headshots: 0,
-        secondsInRound: 0,
-        damageInflicted: 0,
-        bulletsFired: 0,
-        bulletsHit: 0,
-        weaponId: data.weaponId,
-        team: null,
-    }
+    newPlayer.meta.weaponId = data.weaponId
+    newPlayer.meta.nickname = data.nickname
 
     let roomIdPlayerWillJoin = null
 
