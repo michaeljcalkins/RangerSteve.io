@@ -1,9 +1,9 @@
-import _ from 'lodash'
+import get from 'lodash/get'
 
 export default function(room) {
     let playerMeta = false
     Object.keys(room.players).forEach((player) => {
-        if (room.players[player].meta.headshots > _.get(playerMeta, 'headshots', 0)) {
+        if (room.players[player].meta.headshots > get(playerMeta, 'headshots', 0)) {
             playerMeta = room.players[player].meta
         }
     })

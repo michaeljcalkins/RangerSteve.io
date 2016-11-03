@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 import GameConsts from '../lib/GameConsts'
@@ -37,7 +37,7 @@ export default function() {
         weaponId: currentWeaponId,
     }
 
-    if (_.isEqual(lastPlayerData, newPlayerData)) return
+    if (isEqual(lastPlayerData, newPlayerData)) return
 
     emitMovePlayer.call(this, newPlayerData)
     lastPlayerData = newPlayerData

@@ -1,5 +1,6 @@
 import { PropTypes } from 'react'
-import _ from 'lodash'
+import includes from 'lodash/includes'
+import values from 'lodash/values'
 
 import RemotePlayer from '../RemotePlayer'
 import actions from '../../actions'
@@ -14,7 +15,7 @@ const propTypes = {
 let lastRoomState = null
 
 export default function onUpdatePlayers(data) {
-    if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
+    if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     const store = this.game.store
 
@@ -31,11 +32,11 @@ export default function onUpdatePlayers(data) {
     if (RS.enemies) RS.enemies.destroy(true)
     RS.enemies = this.game.add.group()
 
-    const rankedPlayers = _.values(store.getState().room.players)
+    const rankedPlayers = values(store.getState().room.players)
         .sort((a, b) => a.meta.score < b.meta.score)
         .map(player => player)
 
-    _.values(store.getState().room.players).forEach((player) => {
+    values(store.getState().room.players).forEach((player) => {
         if (player.id === window.SOCKET_ID) {
             store.dispatch(actions.player.setScore(player.meta.score))
             store.dispatch(actions.player.setHealth(player.meta.health))

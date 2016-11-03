@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import moment from 'moment'
-import _ from 'lodash'
+import get from 'lodash/get'
 import cs from 'classnames'
 
 import GameConsts from '../../../lib/GameConsts'
@@ -10,7 +10,7 @@ export default class RespawnModal extends React.Component {
         super(props)
 
         this.state = {
-            elapsed: 0
+            elapsed: 0,
         }
     }
 
@@ -39,11 +39,11 @@ export default class RespawnModal extends React.Component {
     renderDamageGiven() {
         const { player, room } = this.props
 
-        if (! _.get(player, 'attackingDamageStats.attackingDamage')) return null
+        if (! get(player, 'attackingDamageStats.attackingDamage')) return null
 
-        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
-        const defendingHits = _.get(player, 'attackingDamageStats.attackingHits')
-        const defendingDamage = _.get(player, 'attackingDamageStats.attackingDamage')
+        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
+        const defendingHits = get(player, 'attackingDamageStats.attackingHits')
+        const defendingDamage = get(player, 'attackingDamageStats.attackingDamage')
 
         return (
             <div>
@@ -57,9 +57,9 @@ export default class RespawnModal extends React.Component {
 
         if (! player.damageStats) return null
 
-        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
-        const attackingHits = _.get(player, 'damageStats.attackingHits')
-        const attackingDamage = _.get(player, 'damageStats.attackingDamage')
+        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
+        const attackingHits = get(player, 'damageStats.attackingHits')
+        const attackingDamage = get(player, 'damageStats.attackingDamage')
 
         return (
             <div>
@@ -71,9 +71,9 @@ export default class RespawnModal extends React.Component {
 
     renderCauseOfDeath() {
         const { player, room } = this.props
-        const attackingPlayerName = _.get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
-        const selectedWeapon = _.get(GameConsts, `WEAPONS[${player.damageStats.weaponId}]`)
-        const attackingPlayerId = _.get(player, 'damageStats.attackingPlayerId', false)
+        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
+        const selectedWeapon = get(GameConsts, `WEAPONS[${player.damageStats.weaponId}]`)
+        const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
 
         if (! attackingPlayerId) {
             return (
@@ -102,7 +102,7 @@ export default class RespawnModal extends React.Component {
 
     render() {
         const { player } = this.props
-        const attackingPlayerId = _.get(player, 'damageStats.attackingPlayerId', false)
+        const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
         const shareLink = window.location.href
         const encodedShareLink = encodeURIComponent(shareLink)
         const modalContentClasses = cs('modal-content', {
