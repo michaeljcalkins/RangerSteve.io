@@ -3,7 +3,9 @@
 const _ = require('lodash')
 
 module.exports = function(roomId, id, rooms) {
-    if (! _.has(rooms, `[${roomId}].players`))
+    if (! roomId || ! id || ! rooms) return false
+
+    if (! _.has(rooms, `['${roomId}'].players`))
         return false
 
     return rooms[roomId].players[id]
