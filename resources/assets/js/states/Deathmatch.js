@@ -1,3 +1,5 @@
+import throttle from 'lodash/throttle'
+
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
@@ -15,7 +17,6 @@ import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
 import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
 import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
 import CreateBullets from '../lib/CreateHandler/CreateBullets'
-import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
 import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
@@ -23,6 +24,8 @@ import PlayerAndEnemyBullets from '../lib/Collisions/PlayerAndEnemyBullets'
 import BulletsAndEnemyPlayers from '../lib/Collisions/BulletsAndEnemyPlayers'
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
+
+const throttledUpdatePlayerPosition = throttle(UpdatePlayerPosition, 33)
 
 /**
  * Collisions and all game mode related interactions.
@@ -65,7 +68,6 @@ Deathmatch.prototype = {
         CreateMapAndPlayer.call(this)
         CreateHurtBorder.call(this)
         CreateKillingSpreeAudio.call(this)
-        // CreateDetectIdleUser()
         CreateBullets.call(this)
         CreateHud.call(this)
         CreateKeyboardBindings.call(this)
@@ -153,8 +155,8 @@ Deathmatch.prototype = {
         }
 
         RotateBulletsToTrajectory.call(this)
-        UpdatePlayerPosition.call(this)
         UpdateHurtBorder.call(this)
+        throttledUpdatePlayerPosition.call(this)
     },
 
     render() {
@@ -171,7 +173,7 @@ Deathmatch.prototype = {
         RS.enemies.forEach((bullet) => {
             this.game.debug.body(bullet)
         })
-    }
+    },
 
 }
 
