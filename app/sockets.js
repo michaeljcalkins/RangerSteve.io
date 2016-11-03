@@ -81,7 +81,6 @@ setInterval(function() {
             io.to(roomId).emit('update players', {
                 room: rooms[roomId],
             })
-
             return
         }
 
@@ -93,7 +92,6 @@ setInterval(function() {
             io.to(roomId).emit('update players', {
                 room: rooms[roomId],
             })
-
             return
         }
 
@@ -347,12 +345,6 @@ function onClientDisconnect() {
     io.to(selectedRoomId).emit('update players', {
         room: rooms[selectedRoomId],
     })
-
-    // Remove empty rooms
-    const emptyRoomIds = Object.keys(rooms)
-        .filter(roomId => Object.keys(rooms[roomId].players).length === 0)
-    util.log('Deleting rooms: ', emptyRoomIds)
-    emptyRoomIds.forEach(roomId => delete rooms[roomId])
 }
 
 function onPlayerFullHealth(data) {
