@@ -197,7 +197,7 @@ function onPlayerUpdateNickname(data) {
 
 // New player has joined
 function onNewPlayer(data) {
-    util.log('New player has joined...', this.id)
+    util.log('New player has joined: ', this.id)
 
     // Check for duplicate players
     var player = getPlayerById(data.roomId, this.id, rooms)
