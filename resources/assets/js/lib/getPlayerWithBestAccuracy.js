@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import get from 'lodash/get'
 
 export default function(room) {
     let playerMeta = false
@@ -9,7 +9,7 @@ export default function(room) {
         const accuracy = room.players[player].meta.bulletsHit / room.players[player].meta.bulletsFired * 100
         room.players[player].meta.accuracy = accuracy.toFixed(1)
 
-        if (room.players[player].meta.accuracy > _.get(playerMeta, 'accuracy', 0)) {
+        if (room.players[player].meta.accuracy > get(playerMeta, 'accuracy', 0)) {
             playerMeta = room.players[player].meta
         }
     })

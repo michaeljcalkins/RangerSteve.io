@@ -1,3 +1,4 @@
+import includes from 'lodash/includes'
 import { PropTypes } from 'react'
 import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
@@ -22,7 +23,7 @@ function isNotMoving(movePlayer) {
 export default function onMovePlayer(data) {
     const store = this.game.store
 
-    if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
+    if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     if (data.id === window.SOCKET_ID) return
 

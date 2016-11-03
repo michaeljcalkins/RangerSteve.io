@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import get from 'lodash/get'
 
 export default function(room) {
     // 200 seconds tracked in game
@@ -12,7 +12,7 @@ export default function(room) {
         const minutesInRound = room.players[player].meta.secondsInRound / 60
         room.players[player].meta.killsPerMinute = (room.players[player].meta.kills / minutesInRound).toFixed(1)
 
-        if (room.players[player].meta.killsPerMinute > _.get(playerMeta, 'killsPerMinute', 0)) {
+        if (room.players[player].meta.killsPerMinute > get(playerMeta, 'killsPerMinute', 0)) {
             playerMeta = room.players[player].meta
         }
     })

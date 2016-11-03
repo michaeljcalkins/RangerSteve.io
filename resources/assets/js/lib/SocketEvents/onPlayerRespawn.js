@@ -1,3 +1,4 @@
+import includes from 'lodash/includes'
 import { PropTypes } from 'react'
 
 import Maps from '../Maps'
@@ -12,7 +13,7 @@ export default function onPlayerRespawn(data) {
     const store = this.game.store
     const currentWeapon = state.player.currentWeapon
 
-    if (_.includes(['Boot', 'Preloader'], this.game.state.current)) return
+    if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     if (data.damagedPlayerId !== window.SOCKET_ID) {
         let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
