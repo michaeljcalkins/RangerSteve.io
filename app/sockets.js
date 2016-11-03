@@ -1,7 +1,6 @@
 'use strict'
 
 const util = require('util')
-const hri = require('human-readable-ids').hri
 const _ = require('lodash')
 const moment = require('moment')
 
@@ -200,7 +199,7 @@ function onPlayerUpdateNickname(data) {
 
 // New player has joined
 function onNewPlayer(data) {
-    util.log('Creating new player...', data, this.id)
+    util.log('New player has joined...', this.id)
 
     // Check for duplicate players
     var player = getPlayerById(data.roomId, this.id, rooms)
@@ -215,27 +214,25 @@ function onNewPlayer(data) {
 
     // Specified room id and room has not been created
     if (data.roomId && ! rooms[data.roomId]) {
-        util.log('Specified room does not exist and is being created')
-        rooms[data.roomId] = createRoom({
+        const newRoom = createRoom({
             id: data.roomId,
             player: newPlayer,
-            roundLength: GameConsts.ROUND_LENGTH_MINUTES,
+            map: data.map,
+            gamemode: data.gamemode,
         })
 
-        // If the map specified doesn't exist don't use it
-        if (data.map && GameConsts.MAPS.indexOf(data.map) > -1) {
-            rooms[data.roomId].map = data.map
-        }
-
-        roomIdPlayerWillJoin = data.roomId
+        rooms[newRoom.id] = newRoom
+        roomIdPlayerWillJoin = newRoom.id
+        util.log('Specified room does not exist and is being created: ', newRoom.id)
     }
     // Specified room id and room has been created
     else if (
-        data.roomId && rooms[data.roomId] &&
+        data.roomId &&
+        rooms[data.roomId] &&
         Object.keys(rooms[data.roomId].players).length < GameConsts.MAX_ROOM_SIZE
     ) {
-        util.log('Specified room does existing and has room for player')
         roomIdPlayerWillJoin = data.roomId
+        util.log('Specified room does existing and has room for player: ', data.roomId)
     }
     // Either find a room to put the user in or create one
     else {
@@ -247,19 +244,16 @@ function onNewPlayer(data) {
 
         // No available rooms were found so we create one.
         if (availableRooms.length <= 0) {
-            util.log('No rooms available, creating new room to add player')
-
-            let newRoomId = hri.random()
-            rooms[newRoomId] = createRoom({
-                id: newRoomId,
+            const newRoom = createRoom({
                 player: newPlayer,
-                roundLength: GameConsts.ROUND_LENGTH_MINUTES,
             })
 
-            roomIdPlayerWillJoin = newRoomId
+            rooms[newRoom.id] = newRoom
+            roomIdPlayerWillJoin = newRoom.id
+            util.log('No rooms available, creating new room to add player', newRoom.id)
         } else {
-            util.log('Adding player to first available room')
             roomIdPlayerWillJoin = availableRooms[0]
+            util.log('Adding player to first available room', availableRooms[0])
         }
     }
 
