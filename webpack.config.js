@@ -15,7 +15,7 @@ const
 
     // Shared Plugins
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
-
+    OptimizeJsPlugin = require("optimize-js-plugin"),
     // Analysis Plugins
     // BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin,
 
@@ -106,6 +106,9 @@ if (! isProduction) {
         }),
         // uncomment to analyze webpack bundle size
         // new BundleAnalyzerPlugin(),
+        new OptimizeJsPlugin({
+            sourceMap: false,
+        }),
         new DashboardPlugin(),
     ]
 } else {
@@ -134,6 +137,9 @@ if (! isProduction) {
                 warnings: false,
                 screw_ie8: true,
             },
+        }),
+        new OptimizeJsPlugin({
+            sourceMap: false,
         }),
         new JavaScriptObfuscator({
             selfDefending: true,
