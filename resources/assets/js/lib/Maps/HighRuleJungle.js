@@ -1,3 +1,5 @@
+import sample from 'lodash/sample'
+
 import GameConsts from '../GameConsts'
 import KillCurrentPlayer from '../KillCurrentPlayer.js'
 import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
@@ -29,7 +31,7 @@ const SPAWN_POINTS = [
 ]
 
 export function getRandomSpawnPoint() {
-    return _.sample(SPAWN_POINTS)
+    return sample(SPAWN_POINTS)
 }
 
 export function getSpawnPoints() {

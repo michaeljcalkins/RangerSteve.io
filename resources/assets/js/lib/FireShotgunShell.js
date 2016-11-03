@@ -3,8 +3,10 @@ import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from './GameConsts'
 import actions from '../actions'
 import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
+import range from 'lodash/range'
+import sample from 'lodash/sample'
 
-const rangeOfVariance = _.range(-.12, .12, .01)
+const rangeOfVariance = range(-.12, .12, .01)
 let muzzleFlashHandler = null
 let nextFire = null
 
@@ -47,7 +49,7 @@ export default function FireShotgunShell(currentWeaponId) {
             bullet.rotation = pointerAngle
             socketPointerAngle = pointerAngle
         } else {
-            let randomPointerAngle = _.sample(rangeOfVariance) + pointerAngle
+            let randomPointerAngle = sample(rangeOfVariance) + pointerAngle
             let newVelocity = this.game.physics.arcade.velocityFromRotation(randomPointerAngle, currentWeapon.bulletSpeed)
             bullet.body.velocity.x += newVelocity.x
             bullet.body.velocity.y += newVelocity.y

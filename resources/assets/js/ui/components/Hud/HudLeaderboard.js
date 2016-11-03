@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import _ from 'lodash'
+import values from 'lodash/values'
 import cs from 'classnames'
 
 export default function HudLeaderboard({
@@ -8,7 +8,7 @@ export default function HudLeaderboard({
     function renderPlayers() {
         if (! room.players) return null
 
-        return _.values(room.players)
+        return values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map(function(player) {
                 let playerNickname = player.meta.nickname

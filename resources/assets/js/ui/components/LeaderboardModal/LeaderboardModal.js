@@ -1,6 +1,7 @@
 import autobind from 'react-autobind'
 import React, { Component, PropTypes } from 'react'
-import _ from 'lodash'
+import values from 'lodash/values'
+import get from 'lodash/get'
 import moment from 'moment'
 import cs from 'classnames'
 
@@ -52,7 +53,7 @@ export default class Leaderboard extends Component {
 
         if (! room.players) return null
 
-        return _.values(room.players)
+        return values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map((player, key) => {
                 const { meta: { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger' }, id } = player
@@ -84,10 +85,10 @@ export default class Leaderboard extends Component {
 
         if (! room.players) return null
 
-        const players = _.values(room.players)
+        const players = values(room.players)
             .sort((a, b) => a.meta.score < b.meta.score)
 
-        return _.get(players, '[0].meta.nickname')
+        return get(players, '[0].meta.nickname')
     }
 
     renderPlayerAchievement(playerMeta, award) {
