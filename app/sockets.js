@@ -244,7 +244,10 @@ function onNewPlayer(data) {
         roomIdPlayerWillJoin = data.roomId
     }
     // Specified room id and room has been created
-    else if (data.roomId && rooms[data.roomId]) {
+    else if (
+        data.roomId && rooms[data.roomId] &&
+        Object.keys(rooms[data.roomId].players).length < GameConsts.MAX_ROOM_SIZE
+    ) {
         util.log('Specified room does existing and has room for player')
         roomIdPlayerWillJoin = data.roomId
     }
