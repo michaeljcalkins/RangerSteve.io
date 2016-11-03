@@ -222,6 +222,7 @@ function onNewPlayer(data) {
             roundLength: GameConsts.ROUND_LENGTH_MINUTES,
         })
 
+        // If the map specified doesn't exist don't use it
         if (data.map && GameConsts.MAPS.indexOf(data.map) > -1) {
             rooms[data.roomId].map = data.map
         }
