@@ -29,6 +29,7 @@
     "moment": "^2.13.0",
     "morgan": "~1.6.1",
     "nunjucks": "^2.4.2",
+    "optimize-js-plugin": "^0.0.4",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.4.5"
   },
