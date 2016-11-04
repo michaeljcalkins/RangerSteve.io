@@ -27,7 +27,7 @@ nunjucks.setup({
     trimBlocks: false,
     lstripBlocks: false,
     watch: true,
-    noCache: true
+    noCache: true,
 }, app)
 
 app.use(favicon(path.join(__dirname, 'public', 'images/favicon.ico')));
@@ -38,7 +38,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), {
-    maxAge: 86400000 // One day
+    maxAge: 86400000, // One day
 }));
 
 app.use('/', routes)
@@ -59,7 +59,7 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500)
         res.render('error', {
             message: err.message,
-            error: err
+            error: err,
         })
     })
 }
@@ -70,7 +70,7 @@ app.use(function(err, req, res) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error: {}
+        error: {},
     })
 })
 
