@@ -26,7 +26,7 @@ import BulletsAndEnemyTeamPlayers from '../lib/Collisions/BulletsAndEnemyTeamPla
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 
-const throttledUpdatePlayerPosition = throttle(UpdatePlayerPosition, 33)
+const throttledUpdatePlayerPosition = throttle(UpdatePlayerPosition, GameConsts.PLAYER_POSITION_UPDATES_PER_SECOND)
 
 /**
  * Collisions and all game mode related interactions.
