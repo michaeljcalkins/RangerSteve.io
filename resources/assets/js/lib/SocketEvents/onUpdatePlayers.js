@@ -19,15 +19,19 @@ export default function onUpdatePlayers(data) {
 
     const store = this.game.store
 
+    // If the current map or gamemode does not match the one currently loaded refresh the game.
+    if (
+        store.getState().room.map !==data.room.map ||
+        this.game.state.current !== data.room.gamemode
+    ) {
+        document.location.reload(true)
+    }
+
     store.dispatch(actions.room.setRoom(data.room))
 
     // Allows you to share the url with your friends to play
     const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?roomId=' + store.getState().room.id
     window.history.pushState({ path: newurl }, '', newurl)
-
-    if (this.game.state.current !== data.room.gamemode) {
-        document.location.reload(true)
-    }
 
     if (RS.enemies) RS.enemies.destroy(true)
     RS.enemies = this.game.add.group()
