@@ -114,6 +114,47 @@ export default class Leaderboard extends Component {
         )
     }
 
+    renderWinningPlayerOrTeam() {
+        const { room } = this.props
+
+        const winningPhrase = room.state === 'ended'
+            ? 'wins!'
+            : 'in the lead.'
+
+        switch (room.gamemode) {
+            case 'Deathmatch':
+                return (
+                    <div className="winning-player">
+                        <div className="player-name">{ this.renderFirstPlacePlayerName() } { winningPhrase }</div>
+                    </div>
+                )
+
+            case 'TeamDeathmatch':
+                const winningTeamName = room.redTeamScore > room.blueTeamScore
+                    ? 'Red'
+                    : 'Blue'
+
+                const classes = cs('winning-player', {
+                    'red-winning': room.redTeamScore > room.blueTeamScore,
+                    'blue-winning': room.redTeamScore < room.blueTeamScore,
+                })
+
+                if (room.redTeamScore === room.blueTeamScore) {
+                    return (
+                        <div className="winning-player">
+                            <div className="player-name">Teams Are Tied.</div>
+                        </div>
+                    )
+                }
+
+                return (
+                    <div className={ classes }>
+                        <div className="player-name">{ winningTeamName } Team { winningPhrase }</div>
+                    </div>
+                )
+        }
+    }
+
     render() {
         const {
             state: { elapsed },
@@ -137,12 +178,10 @@ export default class Leaderboard extends Component {
                                 <h4 className="modal-title">Leaderboard</h4>
                             </div>
                             <div className="modal-body">
+
                                 <div className="row" style={ { marginBottom: '15px' } }>
                                     <div className="col-sm-5">
-                                        <div className="winning-player">
-                                            <div className="player-image"></div>
-                                            <div className="player-name">{ this.renderFirstPlacePlayerName() }</div>
-                                        </div>
+                                        { this.renderWinningPlayerOrTeam() }
                                     </div>
                                     <div className="col-sm-7">
                                         { this.renderPlayerAchievement(playerWithBestHeadshots, 'Most headshots') }

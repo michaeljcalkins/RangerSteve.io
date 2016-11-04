@@ -183,34 +183,29 @@
     }
 
     .winning-player {
-        background: url(/images/ui/panel/3.png) no-repeat center top;
-        background-size: 50%;
+        background: url(/images/ui/panel/dark-sword.png) no-repeat center top;
+        background-size: 80%;
         height: 190px;
         width: 100%;
 
-        .player-image {
-            background: url(/images/ranger-steve.png) no-repeat 66% 66%;
-            background-size: 40%;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        &.red-winning {
+            background-image: url(/images/ui/panel/red-sword.png);
+        }
+
+        &.blue-winning {
+            background-image: url(/images/ui/panel/blue-sword.png);
         }
 
         .player-name {
-            font-size: 10px;
-            position: absolute;
             bottom: 0;
-            left: 0; right: 0;
-            width: 100%;
+            color: #504F4D;
             font-family: "Keep Calm", Arial, sans-serif;
+            font-size: 10px;
             font-size: 14px;
+            left: 0; right: 0;
+            position: absolute;
             text-align: center;
-            color: white;
-            text-shadow: 0 6px rgba(0,0,0,.1);
-            text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+            width: 100%;
         }
     }
 
