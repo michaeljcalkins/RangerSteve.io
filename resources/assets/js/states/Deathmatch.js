@@ -25,7 +25,7 @@ import BulletsAndEnemyPlayers from '../lib/Collisions/BulletsAndEnemyPlayers'
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 
-const throttledUpdatePlayerPosition = throttle(UpdatePlayerPosition, 33)
+const throttledUpdatePlayerPosition = throttle(UpdatePlayerPosition, GameConsts.PLAYER_POSITION_UPDATES_PER_SECOND)
 
 /**
  * Collisions and all game mode related interactions.
@@ -45,25 +45,6 @@ Deathmatch.prototype = {
     create: function() {
         const store = this.game.store
         const { room } = store.getState()
-
-        // Enables advanced profiling features when debugging
-        this.game.time.advancedTiming = true
-
-        // Adds slopes and other useful tiles to AABB collisions
-        this.game.physics.startSystem(Phaser.Physics.ARCADE)
-        this.game.plugins.add(Phaser.Plugin.ArcadeSlopes)
-        this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
-
-        // Enemy remote players
-        RS.enemies = this.game.add.group()
-        RS.enemies.enableBody = true
-        RS.enemies.physicsBodyType = Phaser.Physics.ARCADE
-        this.game.physics.arcade.enable(RS.enemies)
-        this.game.physics.enable(RS.enemies, Phaser.Physics.ARCADE)
-
-        RS.jumpjetFx = this.game.add.audio('jumpjet')
-        RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
-        RS.headshotSound = this.game.add.audio('headshot')
 
         CreateMapAndPlayer.call(this)
         CreateHurtBorder.call(this)

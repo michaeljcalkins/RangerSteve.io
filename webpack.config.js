@@ -2,13 +2,11 @@
 
 const
     path = require('path'),
-    fs = require('fs'),
     webpack = require('webpack'),
 
     // Development Plugins
     BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
     DashboardPlugin = require('webpack-dashboard/plugin'),
-    phaserDebugPlugin = path.join(__dirname, '/node_modules/phaser-debphaser-debug.js'),
 
     // Production Plugins
     JavaScriptObfuscator = require('webpack-obfuscator'),
@@ -44,9 +42,6 @@ let sharedConfig = {
         }),
     ],
     module: {
-        noParse: [
-            /phaser-debug/,
-        ],
         loaders: [
             {
                 test:/\.(js|jsx)$/,
@@ -80,10 +75,6 @@ if (! isProduction) {
         path.resolve(__dirname, "resources/assets"),
         "node_modules",
     ]
-
-    config.resolve.alias = {
-        'phaser-debug': phaserDebugPlugin,
-    }
 
     config.plugins = [
         new BrowserSyncPlugin({
