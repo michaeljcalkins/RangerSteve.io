@@ -1,11 +1,12 @@
 // import $ from 'jquery'
 
 export default function() {
-    const qualities = [1000, 600, 300]
-    const scaleFactor = qualities[0]
+    // const qualities = [1000, 600, 300]
+    // const scaleFactor = qualities[0]
     const innerWidth = window.innerWidth
     const innerHeight = window.innerHeight
     const gameRatio = innerWidth / innerHeight
+    const scaleFactor = innerWidth
 
     const widthScaleFactor = Math.ceil(scaleFactor * gameRatio)
     const heightScaleFactor = scaleFactor
@@ -15,6 +16,6 @@ export default function() {
     //     "transform-origin": "top right",
     // })
 
-    this.game.scale.setGameSize(widthScaleFactor, heightScaleFactor)
+    // this.game.scale.setGameSize(widthScaleFactor, heightScaleFactor)
     RS.tiles && RS.tiles.resize(widthScaleFactor, heightScaleFactor)
 }
