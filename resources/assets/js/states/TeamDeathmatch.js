@@ -1,3 +1,5 @@
+import throttle from 'lodash/throttle'
+
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
@@ -15,7 +17,6 @@ import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
 import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
 import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
 import CreateBullets from '../lib/CreateHandler/CreateBullets'
-import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
 import UpdateTeamColors from '../lib/UpdateTeamColors'
@@ -24,6 +25,8 @@ import PlayerAndEnemyTeamBullets from '../lib/Collisions/PlayerAndEnemyTeamBulle
 import BulletsAndEnemyTeamPlayers from '../lib/Collisions/BulletsAndEnemyTeamPlayers'
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
+
+const throttledUpdatePlayerPosition = throttle(UpdatePlayerPosition, 33)
 
 /**
  * Collisions and all game mode related interactions.
@@ -66,7 +69,6 @@ TeamDeathmatch.prototype = {
         CreateMapAndPlayer.call(this)
         CreateHurtBorder.call(this)
         CreateKillingSpreeAudio.call(this)
-        // CreateDetectIdleUser()
         CreateBullets.call(this)
         CreateHud.call(this)
         CreateKeyboardBindings.call(this)
@@ -154,9 +156,9 @@ TeamDeathmatch.prototype = {
         }
 
         RotateBulletsToTrajectory.call(this)
-        UpdatePlayerPosition.call(this)
         UpdateHurtBorder.call(this)
         UpdateTeamColors.call(this)
+        throttledUpdatePlayerPosition.call(this)
     },
 
     render() {
