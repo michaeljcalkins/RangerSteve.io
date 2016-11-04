@@ -106,7 +106,7 @@ export default class RespawnModal extends React.Component {
         const shareLink = window.location.href
         const encodedShareLink = encodeURIComponent(shareLink)
         const modalContentClasses = cs('modal-content', {
-            'modal-content-suicide': ! attackingPlayerId
+            'modal-content-suicide': ! attackingPlayerId,
         })
 
         return (
