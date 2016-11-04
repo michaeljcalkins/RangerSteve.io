@@ -18,12 +18,12 @@ Boot.prototype = {
     },
 
     create: function() {
+        this.scale.scaleMode = Phaser.ScaleManager.RESIZE
         // Smooths sprite rendering
         this.game.renderer.renderSession.roundPixels = true
         // Prevents game from pausing when tab loses focus
         this.game.stage.disableVisibilityChange = true
 
-        this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
         window.onresize = UpdateGameScale.bind(this)
         UpdateGameScale.call(this)
 
@@ -46,13 +46,12 @@ Boot.prototype = {
         window.socket = io.connect()
         setEventHandlers.call(this)
 
-        // if (GameConsts.PHASER_DEBUG) {
-        //     const phaserDebug = require('phaser-debug')
-        //     this.add.plugin(phaserDebug)
+        if (GameConsts.PHASER_DEBUG) {
+            this.game.add.plugin(Phaser.Plugin.Debug)
 
-        //     // needed to correctly style other elements in css
-        //     $('body').addClass('phaser-debug')
-        // }
+            // needed to correctly style other elements in css
+            $('body').addClass('phaser-debug')
+        }
     },
 
 }
