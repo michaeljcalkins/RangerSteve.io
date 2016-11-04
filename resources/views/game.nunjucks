@@ -57,6 +57,9 @@
         <script src="/js/phaser-arcade-slopes.min.js"></script>
         <script src="/js/socket.io.min.js"></script>
         {% if isProduction !== true %}
+            <!-- Phaser debug plugin -->
+            <script src="https://cdn.rawgit.com/englercj/phaser-debug/master/dist/phaser-debug.js"></script>
+
             <!-- Dynamic-link library bundle -->
             <script type="text/javascript" src="/dll/dll.vendor.js"></script>
         {% endif %}
