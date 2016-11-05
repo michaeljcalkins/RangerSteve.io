@@ -1,7 +1,7 @@
 import { PropTypes } from 'react'
 
 const propTypes = {
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
 }
 
 export default function PlayerById(id) {

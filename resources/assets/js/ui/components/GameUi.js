@@ -52,7 +52,7 @@ export default class GameUi extends React.Component {
             roomId: this.props.room.id,
             playerId: '/#' + window.socket.id,
             playerNickname: this.props.player.nickname ? this.props.player.nickname : 'Unnamed Ranger',
-            message
+            message,
         })
     }
 

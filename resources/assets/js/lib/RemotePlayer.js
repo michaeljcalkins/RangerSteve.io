@@ -6,7 +6,7 @@ import { playerFaceRight, playerFaceLeft } from './RemotePlayerFaceHandler'
 const propTypes = {
     x: PropTypes.number.isRequired,
     y:  PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
 }
 
 export default function RemotePlayer(player) {

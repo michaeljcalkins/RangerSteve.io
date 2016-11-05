@@ -4,7 +4,7 @@ import storage from 'store'
 export default function ControlsMenu({
     game,
     onKeyboardControlChange,
-    onSetResetEventsFlag
+    onSetResetEventsFlag,
 }) {
     const keyboardCodes = {
         A: Phaser.Keyboard.A,
@@ -33,7 +33,7 @@ export default function ControlsMenu({
         X: Phaser.Keyboard.X,
         Y: Phaser.Keyboard.Y,
         Z: Phaser.Keyboard.Z,
-        SPACEBAR: Phaser.Keyboard.SPACEBAR
+        SPACEBAR: Phaser.Keyboard.SPACEBAR,
     }
 
     function handleSetAzerty() {
@@ -171,12 +171,12 @@ export default function ControlsMenu({
                             <tr>
                                 <td>Shoot</td>
                                 <td>Left click</td>
-                                <td></td>
+                                <td />
                             </tr>
                             <tr>
                                 <td>Aim</td>
                                 <td>Move your mouse</td>
-                                <td></td>
+                                <td />
                             </tr>
                             <tr>
                                 <td>Jump</td>
@@ -191,7 +191,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td></td>
+                                <td />
                             </tr>
                             <tr>
                                 <td>Move left</td>
@@ -206,7 +206,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td></td>
+                                <td />
                             </tr>
                             <tr>
                                 <td>Move right</td>
@@ -221,7 +221,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td></td>
+                                <td />
                             </tr>
                             <tr>
                                 <td>Reload</td>
@@ -236,7 +236,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td></td>
+                                <td />
                             </tr>
                             <tr>
                                 <td>Switch weapons</td>
@@ -251,7 +251,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td></td>
+                                <td />
                             </tr>
                             <tr>
                                 <td>Write chat message</td>
@@ -266,7 +266,7 @@ export default function ControlsMenu({
                                         { renderKeyboardCodes() }
                                     </select>
                                 </td>
-                                <td></td>
+                                <td />
                             </tr>
                         </tbody>
                     </table>
@@ -279,5 +279,5 @@ export default function ControlsMenu({
 ControlsMenu.propTypes = {
     game: PropTypes.object.isRequired,
     onKeyboardControlChange: PropTypes.func.isRequired,
-    onSetResetEventsFlag: PropTypes.func.isRequired
+    onSetResetEventsFlag: PropTypes.func.isRequired,
 }

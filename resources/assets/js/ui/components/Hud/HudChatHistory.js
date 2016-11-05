@@ -35,12 +35,12 @@ export default function HudChatHistory({
 }
 
 HudChatHistory.defaultProps = {
-    messages: []
+    messages: [],
 }
 
 HudChatHistory.propTypes = {
     isOpen: PropTypes.bool,
     messages: PropTypes.array,
     newChatMessageCharacter: PropTypes.number,
-    onSendMessage: PropTypes.func
+    onSendMessage: PropTypes.func,
 }

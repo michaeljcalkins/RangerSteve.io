@@ -9,7 +9,7 @@ const propTypes = {
     pointerAngle: PropTypes.number.isRequired,
     bulletSpeed: PropTypes.number.isRequired,
     damage: PropTypes.number.isRequired,
-    weaponId: PropTypes.string.isRequired
+    weaponId: PropTypes.string.isRequired,
 }
 
 export default function(data) {

@@ -71,7 +71,7 @@ export default function FireShotgunShell(currentWeaponId) {
             y,
             pointerAngle: socketPointerAngle,
             bulletSpeed: currentWeapon.bulletSpeed,
-            damage: currentWeapon.damage
+            damage: currentWeapon.damage,
         })
     }
 

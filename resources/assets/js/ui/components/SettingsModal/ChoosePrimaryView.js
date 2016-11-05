@@ -5,7 +5,7 @@ import WeaponStats from './WeaponStats'
 
 export default function ChoosePrimaryMenu({
     onViewChange,
-    onPrimaryGunClick
+    onPrimaryGunClick,
 }) {
     function handleSelectPrimaryClick(weapon) {
         mixpanel.track('primaryWeapon:selected:' + weapon.id)
@@ -60,5 +60,5 @@ export default function ChoosePrimaryMenu({
 ChoosePrimaryMenu.propTypes = {
     onPrimaryGunClick: PropTypes.func.isRequired,
     onViewChange: PropTypes.func.isRequired,
-    player: PropTypes.object
+    player: PropTypes.object,
 }

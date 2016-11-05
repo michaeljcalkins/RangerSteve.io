@@ -8,13 +8,13 @@ export default function() {
         if (bullet.weaponId === 'RPG') {
             return RocketExplosion.call(this, {
                 bulletY: bullet.y,
-                bulletX: bullet.x
+                bulletX: bullet.x,
             })
         }
 
         BulletRicochet.call(this, {
             bulletY: bullet.y,
-            bulletX: bullet.x
+            bulletX: bullet.x,
         })
     }, function(bullet, tile) {
         return tile.collides

@@ -6,7 +6,7 @@ const propTypes = {
     damagedPlayerId: PropTypes.string.isRequired,
     attackingPlayerId: PropTypes.string,
     weaponId: PropTypes.string,
-    wasHeadshot: PropTypes.bool.isRequired
+    wasHeadshot: PropTypes.bool.isRequired,
 }
 
 export default function(data) {

@@ -30,19 +30,19 @@ const player = (state = initialState, action) => {
         case 'OPEN_LEADERBOARD_MODAL':
             return {
                 ...state,
-                leaderboardModalIsOpen: action.value
+                leaderboardModalIsOpen: action.value,
             }
 
         case 'CLOSE_LEADERBOARD_MODAL':
             return {
                 ...state,
-                leaderboardModalIsOpen: action.value
+                leaderboardModalIsOpen: action.value,
             }
 
         case 'SET_RESET_EVENTS_FLAG':
             return {
                 ...state,
-                resetEventsFlag: action.value
+                resetEventsFlag: action.value,
             }
 
         case 'SET_KEYBOARD_CONTROL':
@@ -50,20 +50,20 @@ const player = (state = initialState, action) => {
                 ...state,
                 keyboardControls: {
                     ...state.keyboardControls,
-                    ...action.value
-                }
+                    ...action.value,
+                },
             }
 
         case 'REDUCE_TO_MAX_CHAT_MESSAGES':
             return {
                 ...state,
-                chatMessages: state.chatMessages.slice(-5)
+                chatMessages: state.chatMessages.slice(-5),
             }
 
         case 'SET_CHAT_MESSAGES':
             return {
                 ...state,
-                chatMessages: action.value
+                chatMessages: action.value,
             }
 
         case 'ADD_CHAT_MESSAGE':
@@ -71,8 +71,8 @@ const player = (state = initialState, action) => {
                 ...state,
                 chatMessages: [
                     ...state.chatMessages,
-                    action.value
-                ].slice(-5)
+                    action.value,
+                ].slice(-5),
             }
 
         case 'REMOVE_CHAT_MESSAGE':
@@ -81,8 +81,8 @@ const player = (state = initialState, action) => {
                 ...state,
                 chatMessages: [
                     ...state.chatMessages.slice(0, chatMessageIndex),
-                    ...state.chatMessages.slice(chatMessageIndex + 1)
-                ]
+                    ...state.chatMessages.slice(chatMessageIndex + 1),
+                ],
             }
 
         case 'ADD_KILL_LOG_MESSAGE':
@@ -90,8 +90,8 @@ const player = (state = initialState, action) => {
                 ...state,
                 killLogMessages: [
                     ...state.killLogMessages,
-                    action.value
-                ]
+                    action.value,
+                ],
             }
 
         case 'REMOVE_KILL_LOG_MESSAGE':
@@ -100,56 +100,56 @@ const player = (state = initialState, action) => {
                 ...state,
                 killLogMessages: [
                     ...state.killLogMessages.slice(0, killLogIndex),
-                    ...state.killLogMessages.slice(killLogIndex + 1)
-                ]
+                    ...state.killLogMessages.slice(killLogIndex + 1),
+                ],
             }
 
         case 'OPEN_CHAT_MODAL':
             return {
                 ...state,
-                chatModalIsOpen: action.value
+                chatModalIsOpen: action.value,
             }
 
         case 'CLOSE_CHAT_MODAL':
             return {
                 ...state,
-                chatModalIsOpen: action.value
+                chatModalIsOpen: action.value,
             }
 
         case 'OPEN_SETTINGS_MODAL':
             return {
                 ...state,
-                settingsModalIsOpen: action.value
+                settingsModalIsOpen: action.value,
             }
 
         case 'CLOSE_SETTINGS_MODAL':
             return {
                 ...state,
-                settingsModalIsOpen: action.value
+                settingsModalIsOpen: action.value,
             }
 
         case 'SET_SHOW_KILL_CONFIRMED':
             return {
                 ...state,
-                showKillConfirmed: action.value
+                showKillConfirmed: action.value,
             }
 
         case 'SET_SETTINGS_MODAL_VIEW':
             return {
                 ...state,
-                settingsView: action.value
+                settingsView: action.value,
             }
 
         case 'SET_SFX_VOLUME':
             return {
                 ...state,
-                sfxVolume: action.value
+                sfxVolume: action.value,
             }
 
         case 'SET_STATE':
             return {
                 ...state,
-                state: action.value
+                state: action.value,
             }
 
         default:

@@ -8,7 +8,7 @@ const propTypes = {
     health: PropTypes.number.isRequired,
     damageStats: PropTypes.object.isRequired,
     attackingDamageStats: PropTypes.object.isRequired,
-    canRespawnTimestamp: PropTypes.number
+    canRespawnTimestamp: PropTypes.number,
 }
 
 let damageTimeout = null
@@ -20,7 +20,7 @@ export default function onPlayerDamaged(data) {
     if (data.damagedPlayerId !== window.SOCKET_ID) {
         PlayPlayerDeathAnimation.call(this, {
             x: data.playerX,
-            y: data.playerY
+            y: data.playerY,
         })
         return
     }
@@ -44,7 +44,7 @@ export default function onPlayerDamaged(data) {
         damageTimeout = setTimeout(() => {
             // Player's health will fully regenerate
             window.socket.emit('player full health', {
-                roomId: store.getState().room.id
+                roomId: store.getState().room.id,
             })
         }, 5000)
     }
@@ -64,7 +64,7 @@ export default function onPlayerDamaged(data) {
 
                 // Increase player health by 10 every 1/2 a second
                 window.socket.emit('player healing', {
-                    roomId: store.getState().room.id
+                    roomId: store.getState().room.id,
                 })
             }, 500)
         }, 5000)
@@ -75,7 +75,7 @@ export default function onPlayerDamaged(data) {
         RS.player.visible = false
         PlayPlayerDeathAnimation.call(this, {
             x: RS.player.x,
-            y: RS.player.y
+            y: RS.player.y,
         })
     }
 }

@@ -5,7 +5,7 @@ import actions from '../../actions'
 const propTypes = {
     deadNickname: PropTypes.string.isRequired,
     attackerNickname: PropTypes.string,
-    weaponId: PropTypes.string
+    weaponId: PropTypes.string,
 }
 
 export default function onPlayerKillLog(data) {

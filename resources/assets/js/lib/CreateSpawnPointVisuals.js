@@ -13,7 +13,7 @@ export default function(spawnPoints) {
 
         let style = {
             font: "10px Arial",
-            fill: "#000"
+            fill: "#000",
         }
         let text = this.game.add.text(pos.x, pos.y, `x: ${pos.x}, y: ${pos.y}`, style)
         text.anchor.set(0.5, 0)

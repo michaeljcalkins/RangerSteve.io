@@ -27,7 +27,7 @@ const SPAWN_POINTS = [
     { x: 5100, y: 1110 },
     { x: 5500, y: 1400 },
     { x: 4900, y: 1420 },
-    { x: 2290, y: 730 }
+    { x: 2290, y: 730 },
 ]
 
 export function getRandomSpawnPoint() {

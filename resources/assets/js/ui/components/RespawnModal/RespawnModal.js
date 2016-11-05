@@ -168,7 +168,7 @@ export default class RespawnModal extends React.Component {
                 <div
                     className="modal-backdrop"
                     style={ { display: 'block' } }
-                ></div>
+                 />
             </div>
         )
     }
@@ -176,5 +176,5 @@ export default class RespawnModal extends React.Component {
 
 RespawnModal.propTypes = {
     player: PropTypes.object,
-    room: PropTypes.object
+    room: PropTypes.object,
 }

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 export default function HudHealth({
-    health
+    health,
 }) {
     return (
         <div className="hud-health hud-item">{ health }</div>
@@ -9,5 +9,5 @@ export default function HudHealth({
 }
 
 HudHealth.propTypes = {
-    health: PropTypes.number.isRequired
+    health: PropTypes.number.isRequired,
 }

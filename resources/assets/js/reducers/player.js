@@ -31,181 +31,181 @@ const player = (state = initialState, action) => {
         case 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID':
             return {
                 ...state,
-                nextSelectedPrimaryWeaponId: action.value
+                nextSelectedPrimaryWeaponId: action.value,
             }
 
         case 'SET_NEXT_SELECTED_SECONDARY_WEAPON_ID':
             return {
                 ...state,
-                nextSelectedSecondaryWeaponId: action.value
+                nextSelectedSecondaryWeaponId: action.value,
             }
 
         case 'SET_PRIMARY_IS_RELOADING':
             return {
                 ...state,
-                isPrimaryReloading: action.value
+                isPrimaryReloading: action.value,
             }
 
         case 'SET_SECONDARY_IS_RELOADING':
             return {
                 ...state,
-                isSecondaryReloading: action.value
+                isSecondaryReloading: action.value,
             }
 
         case 'SET_IS_SWITCHING_WEAPON':
             return {
                 ...state,
-                isSwitchingWeapon: action.value
+                isSwitchingWeapon: action.value,
             }
 
         case 'DECREMENT_SECONDARY_AMMO_REMAINING':
             return {
                 ...state,
-                secondaryAmmoRemaining: state.secondaryAmmoRemaining - 1
+                secondaryAmmoRemaining: state.secondaryAmmoRemaining - 1,
             }
 
         case 'SET_SECONDARY_AMMO_REMAINING':
             return {
                 ...state,
-                secondaryAmmoRemaining: action.value
+                secondaryAmmoRemaining: action.value,
             }
 
         case 'DECREMENT_PRIMARY_AMMO_REMAINING':
             return {
                 ...state,
-                primaryAmmoRemaining: state.primaryAmmoRemaining - 1
+                primaryAmmoRemaining: state.primaryAmmoRemaining - 1,
             }
 
         case 'SET_PRIMARY_AMMO_REMAINING':
             return {
                 ...state,
-                primaryAmmoRemaining: action.value
+                primaryAmmoRemaining: action.value,
             }
 
         case 'SET_ATTACKING_DAMAGE_STATS':
             return {
                 ...state,
-                attackingDamageStats: action.value
+                attackingDamageStats: action.value,
             }
 
         case 'SET_DAMAGE_STATS':
             return {
                 ...state,
-                damageStats: action.value
+                damageStats: action.value,
             }
 
         case 'SET_RESPAWN_TIME':
             return {
                 ...state,
-                respawnTime: action.value
+                respawnTime: action.value,
             }
 
         case 'SET_KILLING_SPREE_COUNT':
             return {
                 ...state,
-                killingSpreeCount: action.value
+                killingSpreeCount: action.value,
             }
 
         case 'SET_CURRENT_WEAPON':
             return {
                 ...state,
-                currentWeapon: action.value
+                currentWeapon: action.value,
             }
 
         case 'SET_HEALTH':
             return {
                 ...state,
-                health: action.value
+                health: action.value,
             }
 
         case 'SET_SCORE':
             return {
                 ...state,
-                score: action.value
+                score: action.value,
             }
 
         case 'SET_NICKNAME':
             return {
                 ...state,
-                nickname: action.value
+                nickname: action.value,
             }
 
         case 'SET_JUMP_JET_COUNTER':
             return {
                 ...state,
-                jumpJetCounter: action.value
+                jumpJetCounter: action.value,
             }
 
         case 'DECREMENT_JUMP_JET_COUNTER':
             return {
                 ...state,
-                jumpJetCounter: state.jumpJetCounter - action.value
+                jumpJetCounter: state.jumpJetCounter - action.value,
             }
 
         case 'INCREMENT_JUMP_JET_COUNTER':
             return {
                 ...state,
-                jumpJetCounter: state.jumpJetCounter + action.value
+                jumpJetCounter: state.jumpJetCounter + action.value,
             }
 
         case 'SET_JUMPING':
             return {
                 ...state,
-                jumping: action.value
+                jumping: action.value,
             }
 
         case 'SET_JUMPS':
             return {
                 ...state,
-                jumps: action.value
+                jumps: action.value,
             }
 
         case 'DECREMENT_JUMPS':
             return {
                 ...state,
-                jumps: state.jumps--
+                jumps: state.jumps--,
             }
 
         case 'INCREMENT_JUMPS':
             return {
                 ...state,
-                jumps: state.jumps++
+                jumps: state.jumps++,
             }
 
         case 'SET_FACING':
             return {
                 ...state,
-                facing: action.value
+                facing: action.value,
             }
 
         case 'SET_SELECTED_PRIMARY_WEAPON_ID':
             return {
                 ...state,
-                selectedPrimaryWeaponId: action.value
+                selectedPrimaryWeaponId: action.value,
             }
 
         case 'SET_SELECTED_SECONDARY_WEAPON_ID':
             return {
                 ...state,
-                selectedSecondaryWeaponId: action.value
+                selectedSecondaryWeaponId: action.value,
             }
 
         case 'SET_PRIMARY_WEAPON':
             return {
                 ...state,
-                primaryWeapon: action.value
+                primaryWeapon: action.value,
             }
 
         case 'SET_SECONDARY_WEAPON':
             return {
                 ...state,
-                secondaryWeapon: action.value
+                secondaryWeapon: action.value,
             }
 
         case 'SET_SHOW_KILL_CONFIRMED':
             return {
                 ...state,
-                showKillConfirmed: action.value
+                showKillConfirmed: action.value,
             }
 
         default:

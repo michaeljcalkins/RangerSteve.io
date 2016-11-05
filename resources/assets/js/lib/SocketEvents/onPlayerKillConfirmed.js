@@ -38,7 +38,7 @@ export default function onPlayerKillConfirmed(data) {
         movePlayer.visible = false
         PlayPlayerDeathAnimation.call(this, {
             x: movePlayer.x,
-            y: movePlayer.y
+            y: movePlayer.y,
         })
     }
 }

@@ -11,7 +11,7 @@ const propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     bulletSpeed: PropTypes.number.isRequired,
-    weaponId: PropTypes.string.isRequired
+    weaponId: PropTypes.string.isRequired,
 }
 
 let soundThrottle = false

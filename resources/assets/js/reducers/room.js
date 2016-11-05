@@ -1,5 +1,5 @@
 const initialState = {
-    roundEndTime: 0
+    roundEndTime: 0,
 }
 
 const room = (state = initialState, action) => {
@@ -7,7 +7,7 @@ const room = (state = initialState, action) => {
         case 'SET_ROOM':
             return {
                 ...state,
-                ...action.value
+                ...action.value,
             }
 
         default:

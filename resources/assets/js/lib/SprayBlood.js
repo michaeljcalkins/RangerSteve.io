@@ -4,7 +4,7 @@ const propTypes = {
     bulletY: PropTypes.number.isRequired,
     bulletX: PropTypes.number.isRequired,
     playerX: PropTypes.number.isRequired,
-    bulletRotation: PropTypes.number.isRequired
+    bulletRotation: PropTypes.number.isRequired,
 }
 
 export default function(data) {

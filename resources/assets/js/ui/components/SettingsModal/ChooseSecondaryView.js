@@ -5,7 +5,7 @@ import WeaponStats from './WeaponStats'
 
 export default function ChooseSecondaryMenu({
     onSecondaryGunClick,
-    onViewChange
+    onViewChange,
 }) {
     function handleSelectSecondaryClick(weapon) {
         mixpanel.track('secondaryWeapon:selected:' + weapon.id)
@@ -60,5 +60,5 @@ export default function ChooseSecondaryMenu({
 ChooseSecondaryMenu.propTypes = {
     onSecondaryGunClick: PropTypes.func.isRequired,
     onViewChange: PropTypes.func.isRequired,
-    player: PropTypes.object
+    player: PropTypes.object,
 }

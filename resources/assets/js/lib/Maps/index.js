@@ -9,5 +9,5 @@ export default {
     PunkFallout,
     PunkCity,
     PunkLoop,
-    DeathCycle
+    DeathCycle,
 }

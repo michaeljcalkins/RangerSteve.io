@@ -18,6 +18,6 @@ export default function() {
         roomId: store.getState().room.id,
         damage: 100,
         damagedPlayerId: window.SOCKET_ID,
-        attackingPlayerId: null
+        attackingPlayerId: null,
     })
 }

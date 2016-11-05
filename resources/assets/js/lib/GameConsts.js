@@ -44,7 +44,7 @@ const GameConsts = {
         LEFT_JUMP_JET_Y: -15,
 
         RIGHT_JUMP_JET_X: 25,
-        RIGHT_JUMP_JET_Y: -1
+        RIGHT_JUMP_JET_Y: -1,
     },
 
     PLAYER_FACE: {
@@ -53,15 +53,15 @@ const GameConsts = {
             RIGHT_ARM_Y: -14,
 
             LEFT_ARM_X: -5,
-            LEFT_ARM_Y: -14
+            LEFT_ARM_Y: -14,
         },
         RIGHT: {
             RIGHT_ARM_X: -6,
             RIGHT_ARM_Y: -14,
 
             LEFT_ARM_X: 5,
-            LEFT_ARM_Y: -14
-        }
+            LEFT_ARM_Y: -14,
+        },
     },
 
     // Physics
@@ -90,7 +90,7 @@ const GameConsts = {
         snapDown: 0,
         snapLeft: 0,
         snapRight: 0,
-        snapUp: 0
+        snapUp: 0,
     },
 
     SLOPE_TILES: {
@@ -118,7 +118,7 @@ const GameConsts = {
         31: 'HALF_BOTTOM',
         32: 'HALF_RIGHT',
         33: 'HALF_TOP',
-        34: 'HALF_LEFT'
+        34: 'HALF_LEFT',
     },
 
     PRIMARY_WEAPON_IDS: ['AK47', 'M4A1', 'P90', 'M500', 'Barrett'],
@@ -141,8 +141,8 @@ const GameConsts = {
                 rotation: 80.20,
                 scale: 0.65,
                 muzzleFlashX: 12,
-                muzzleFlashY: -49
-            }
+                muzzleFlashY: -49,
+            },
         },
         M500: {
             id: 'M500',
@@ -160,8 +160,8 @@ const GameConsts = {
                 rotation: 80.20,
                 scale: 0.46,
                 muzzleFlashX: 122,
-                muzzleFlashY: 0
-            }
+                muzzleFlashY: 0,
+            },
         },
         Skorpion: {
             id: 'Skorpion',
@@ -178,8 +178,8 @@ const GameConsts = {
                 rotation: 80.20,
                 scale: 0.3,
                 muzzleFlashX: 35,
-                muzzleFlashY: -75
-            }
+                muzzleFlashY: -75,
+            },
         },
         P90: {
             id: 'P90',
@@ -196,8 +196,8 @@ const GameConsts = {
                 rotation: 80.20,
                 scale: 0.4,
                 muzzleFlashX: 71,
-                muzzleFlashY: -58
-            }
+                muzzleFlashY: -58,
+            },
         },
         M4A1: {
             id: 'M4A1',
@@ -214,8 +214,8 @@ const GameConsts = {
                 rotation: 80.18,
                 scale: 0.45,
                 muzzleFlashX: 100,
-                muzzleFlashY: -65
-            }
+                muzzleFlashY: -65,
+            },
         },
         Barrett: {
             id: 'Barrett',
@@ -250,8 +250,8 @@ const GameConsts = {
                 rotation: 80.15,
                 scale: 0.5,
                 muzzleFlashX: 19,
-                muzzleFlashY: -16
-            }
+                muzzleFlashY: -16,
+            },
         },
         RPG: {
             id: 'RPG',
