@@ -19,6 +19,7 @@ import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
 import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
+import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
 import PlayerAndEnemyBullets from '../lib/Collisions/PlayerAndEnemyBullets'
 import BulletsAndEnemyPlayers from '../lib/Collisions/BulletsAndEnemyPlayers'
@@ -52,6 +53,7 @@ Deathmatch.prototype = {
         CreateBullets.call(this)
         CreateHud.call(this)
         CreateKeyboardBindings.call(this)
+        CreateDetectIdleUser()
 
         window.socket.emit('refresh players', {
             roomId: room.id,
