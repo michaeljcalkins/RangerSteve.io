@@ -10,33 +10,33 @@ module.exports = {
             "react-redux",
             "redux",
             "store",
-            "classnames"
-        ]
+            "classnames",
+        ],
     },
     output: {
         path: path.join(__dirname, "public", "dll"),
         filename: "dll.[name].js",
-        library: "[name]"
+        library: "[name]",
     },
     module: {
         loaders: [
-            { test: /\.json$/, loader: "json-loader" }
-        ]
+            { test: /\.json$/, loader: "json-loader" },
+        ],
     },
     plugins: [
         new webpack.DllPlugin({ // dynamic-linking library
             path: path.join(__dirname, "dll", "[name]-manifest.json"),
             name: "[name]",
-            context: path.resolve(__dirname, "resources/assets")
+            context: path.resolve(__dirname, "resources/assets"),
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin(),
     ],
     resolve: {
         modules: [
             path.resolve(__dirname, "resources/assets"),
-            "node_modules"
-        ]
+            "node_modules",
+        ],
     },
     node: {
         // console: true,

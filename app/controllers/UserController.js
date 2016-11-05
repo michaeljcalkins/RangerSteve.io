@@ -10,7 +10,7 @@ let UserController = {
         })
 
         res.send(String(userCount))
-    }
+    },
 }
 
 module.exports = UserController
