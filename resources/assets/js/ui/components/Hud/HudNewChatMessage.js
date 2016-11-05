@@ -48,5 +48,5 @@ export default class HudNewChatMessage extends React.Component {
 
 HudNewChatMessage.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    onSendMessage: PropTypes.func.isRequired
+    onSendMessage: PropTypes.func.isRequired,
 }

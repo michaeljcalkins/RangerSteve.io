@@ -3,6 +3,18 @@ import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
 import GameConsts from '../GameConsts'
 
+const propTypes = {
+    id: PropTypes.string.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    rightArmAngle: PropTypes.number.isRequired,
+    leftArmAngle: PropTypes.number.isRequired,
+    facing: PropTypes.string.isRequired,
+    health: PropTypes.number.isRequired,
+    weaponId: PropTypes.string.isRequired,
+    shooting: PropTypes.bool.isRequired,
+}
+
 function isNotMoving(movePlayer) {
     return movePlayer.x === movePlayer.lastPosition.x && movePlayer.y === movePlayer.lastPosition.y
 }

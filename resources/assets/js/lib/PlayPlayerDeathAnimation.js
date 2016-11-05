@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 
 const propTypes = {
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
+    y: PropTypes.number.isRequired,
 }
 
 export default function(data) {

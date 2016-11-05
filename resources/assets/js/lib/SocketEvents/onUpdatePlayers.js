@@ -9,7 +9,7 @@ const propTypes = {
     room: PropTypes.shape({
         id: PropTypes.string.isRequired,
         players: PropTypes.object.isRequired,
-    })
+    }),
 }
 
 let lastRoomState = null

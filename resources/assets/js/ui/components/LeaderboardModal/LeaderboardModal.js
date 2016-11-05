@@ -182,6 +182,10 @@ export default class Leaderboard extends Component {
                                 <div className="row" style={ { marginBottom: '15px' } }>
                                     <div className="col-sm-5">
                                         { this.renderWinningPlayerOrTeam() }
+                                        <div className="winning-player">
+                                            <div className="player-image"></div>
+                                            <div className="player-name">{ this.renderFirstPlacePlayerName() }</div>
+                                        </div>
                                     </div>
                                     <div className="col-sm-7">
                                         { this.renderPlayerAchievement(playerWithBestHeadshots, 'Most headshots') }
@@ -193,7 +197,7 @@ export default class Leaderboard extends Component {
                                 <table className="table table-condensed">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th />
                                             <th>Player</th>
                                             <th>Score</th>
                                             <th>Kills</th>
@@ -220,7 +224,7 @@ export default class Leaderboard extends Component {
                 <div
                     className="modal-backdrop"
                     style={ { display: 'block' } }
-                ></div>
+                 />
             </div>
         )
     }

@@ -12,7 +12,7 @@ export default class MainSettingsMenu extends React.Component {
 
         this.state = {
             nickname: props.player.nickname,
-            sfxVolume: props.game.sfxVolume
+            sfxVolume: props.game.sfxVolume,
         }
     }
 
@@ -172,5 +172,5 @@ MainSettingsMenu.propTypes = {
     onNicknameChange: PropTypes.func,
     onSoundEffectVolumeChange: PropTypes.func,
     onViewChange: PropTypes.func,
-    player: PropTypes.object
+    player: PropTypes.object,
 }

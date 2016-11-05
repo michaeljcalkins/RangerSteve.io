@@ -69,7 +69,7 @@ export default function FireRocket(currentWeaponId) {
         y,
         pointerAngle,
         bulletSpeed: currentWeapon.bulletSpeed,
-        damage: currentWeapon.damage
+        damage: currentWeapon.damage,
     })
 
     ReloadGunWhenEmpty.call(this, currentWeaponId)

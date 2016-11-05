@@ -47,9 +47,9 @@ export default function HudKillLog({
 }
 
 HudKillLog.defaultProps = {
-    messages: []
+    messages: [],
 }
 
 HudKillLog.propTypes = {
-    messages: PropTypes.array
+    messages: PropTypes.array,
 }

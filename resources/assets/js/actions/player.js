@@ -1,207 +1,207 @@
 export const setNextSelectedPrimaryWeaponId = (value) => {
     return {
         type: 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID',
-        value
+        value,
     }
 }
 
 export const setNextSelectedSecondaryWeaponId = (value) => {
     return {
         type: 'SET_NEXT_SELECTED_SECONDARY_WEAPON_ID',
-        value
+        value,
     }
 }
 
 export const setPrimaryIsReloading = (value) => {
     return {
         type: 'SET_PRIMARY_IS_RELOADING',
-        value
+        value,
     }
 }
 
 export const setSecondaryIsReloading = (value) => {
     return {
         type: 'SET_SECONDARY_IS_RELOADING',
-        value
+        value,
     }
 }
 
 export const setIsSwitchingWeapon = (value) => {
     return {
         type: 'SET_IS_SWITCHING_WEAPON',
-        value
+        value,
     }
 }
 
 export const decrementSecondaryAmmoRemaining = () => {
     return {
-        type: 'DECREMENT_SECONDARY_AMMO_REMAINING'
+        type: 'DECREMENT_SECONDARY_AMMO_REMAINING',
     }
 }
 
 export const setSecondaryAmmoRemaining = (value) => {
     return {
         type: 'SET_SECONDARY_AMMO_REMAINING',
-        value
+        value,
     }
 }
 
 export const decrementPrimaryAmmoRemaining = () => {
     return {
-        type: 'DECREMENT_PRIMARY_AMMO_REMAINING'
+        type: 'DECREMENT_PRIMARY_AMMO_REMAINING',
     }
 }
 
 export const setPrimaryAmmoRemaining = (value) => {
     return {
         type: 'SET_PRIMARY_AMMO_REMAINING',
-        value
+        value,
     }
 }
 
 export const setAttackingDamageStats = (value) => {
     return {
         type: 'SET_ATTACKING_DAMAGE_STATS',
-        value
+        value,
     }
 }
 
 export const setDamageStats = (value) => {
     return {
         type: 'SET_DAMAGE_STATS',
-        value
+        value,
     }
 }
 
 export const setRespawnTime = (value) => {
     return {
         type: 'SET_RESPAWN_TIME',
-        value
+        value,
     }
 }
 
 export const setKillingSpreeCount = (value) => {
     return {
         type: 'SET_KILLING_SPREE_COUNT',
-        value
+        value,
     }
 }
 
 export const setCurrentWeapon = (value) => {
     return {
         type: 'SET_CURRENT_WEAPON',
-        value
+        value,
     }
 }
 
 export const setHealth = (value) => {
     return {
         type: 'SET_HEALTH',
-        value
+        value,
     }
 }
 
 export const setNickname = (value) => {
     return {
         type: 'SET_NICKNAME',
-        value
+        value,
     }
 }
 
 export const setScore = (value) => {
     return {
         type: 'SET_SCORE',
-        value
+        value,
     }
 }
 
 export const setJumping = (value) => {
     return {
         type: 'SET_JUMPING',
-        value
+        value,
     }
 }
 
 export const setJumps = (value) => {
     return {
         type: 'SET_JUMPS',
-        value
+        value,
     }
 }
 
 export const decrementJumpJetCounter = (value) => {
     return {
         type: 'DECREMENT_JUMP_JET_COUNTER',
-        value
+        value,
     }
 }
 
 export const incrementJumpJetCounter = (value) => {
     return {
         type: 'INCREMENT_JUMP_JET_COUNTER',
-        value
+        value,
     }
 }
 
 export const setJumpJetCounter = (value) => {
     return {
         type: 'SET_JUMP_JET_COUNTER',
-        value
+        value,
     }
 }
 
 export const incrementJumps = (value) => {
     return {
         type: 'INCREMENT_JUMPS',
-        value
+        value,
     }
 }
 
 export const decrementJumps = (value) => {
     return {
         type: 'DECREMENT_JUMPS',
-        value
+        value,
     }
 }
 
 export const setFacing = (value) => {
     return {
         type: 'SET_FACING',
-        value
+        value,
     }
 }
 
 export const setSelectedPrimaryWeaponId = (value) => {
     return {
         type: 'SET_SELECTED_PRIMARY_WEAPON_ID',
-        value
+        value,
     }
 }
 
 export const setSelectedSecondaryWeaponId = (value) => {
     return {
         type: 'SET_SELECTED_SECONDARY_WEAPON_ID',
-        value
+        value,
     }
 }
 
 export const setPrimaryWeapon = (value) => {
     return {
         type: 'SET_PRIMARY_WEAPON',
-        value
+        value,
     }
 }
 
 export const setSecondaryWeapon = (value) => {
     return {
         type: 'SET_SECONDARY_WEAPON',
-        value
+        value,
     }
 }
 
 export const setShowKillConfirmed = (value) => {
     return {
         type: 'SET_SHOW_KILL_CONFIRMED',
-        value
+        value,
     }
 }

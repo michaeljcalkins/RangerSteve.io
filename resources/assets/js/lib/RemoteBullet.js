@@ -11,7 +11,7 @@ const propTypes = {
     width: PropTypes.number.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    bulletSpeed: PropTypes.number.isRequired
+    bulletSpeed: PropTypes.number.isRequired,
 }
 
 export default function RemoteBullet(data) {

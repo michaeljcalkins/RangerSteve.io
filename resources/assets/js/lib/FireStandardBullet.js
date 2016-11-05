@@ -78,7 +78,7 @@ export default function FireStandardBullet(currentWeaponId) {
         y,
         pointerAngle,
         bulletSpeed: currentWeapon.bulletSpeed,
-        damage: currentWeapon.damage
+        damage: currentWeapon.damage,
     })
 
     ReloadGunWhenEmpty.call(this, currentWeaponId)

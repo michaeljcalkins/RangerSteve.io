@@ -17,38 +17,38 @@ export default function SettingsModal({
     onKeyboardControlChange,
     onSetResetEventsFlag,
     player,
-    game
+    game,
 }) {
     function renderModalView() {
         switch (game.settingsView) {
-        case 'choosePrimary':
-            return (
+            case 'choosePrimary':
+                return (
                 <ChoosePrimaryView
                     onPrimaryGunClick={ onPrimaryGunClick }
                     onViewChange={ onViewChange }
                 />
-            )
+                )
 
-        case 'chooseSecondary':
-            return (
+            case 'chooseSecondary':
+                return (
                 <ChooseSecondaryView
                     onSecondaryGunClick={ onSecondaryGunClick }
                     onViewChange={ onViewChange }
                 />
-            )
+                )
 
-        case 'controls':
-            return (
+            case 'controls':
+                return (
                 <ControlsView
                     game={ game }
                     onKeyboardControlChange={ onKeyboardControlChange }
                     onSetResetEventsFlag={ onSetResetEventsFlag }
                     onViewChange={ onViewChange }
                 />
-            )
+                )
 
-        default:
-            return (
+            default:
+                return (
                 <DefaultView
                     game={ game }
                     onNicknameChange={ onNicknameChange }
@@ -56,7 +56,7 @@ export default function SettingsModal({
                     onViewChange={ onViewChange }
                     player={ player }
                 />
-            )
+                )
         }
     }
 
@@ -85,7 +85,7 @@ export default function SettingsModal({
                                         <li
                                             className={ cs({
                                                 pointer: true,
-                                                active: game.settingsView === 'default'
+                                                active: game.settingsView === 'default',
                                             }) }
                                         >
                                             <a onClick={ onViewChange.bind(this, 'default') }>
@@ -95,7 +95,7 @@ export default function SettingsModal({
                                         <li
                                             className={ cs({
                                                 pointer: true,
-                                                active: game.settingsView === 'controls'
+                                                active: game.settingsView === 'controls',
                                             }) }
                                         >
                                             <a onClick={ onViewChange.bind(this, 'controls') }>
@@ -113,7 +113,7 @@ export default function SettingsModal({
             <div
                 className="modal-backdrop"
                 style={ { display: isOpen ? 'block' : 'none' } }
-            ></div>
+             />
         </div>
     )
 }
@@ -131,5 +131,5 @@ SettingsModal.propTypes = {
     player: PropTypes.object,
     selectedPrimaryWeapon: PropTypes.string,
     selectedSecondaryWeapon: PropTypes.string,
-    settingsView: PropTypes.string
+    settingsView: PropTypes.string,
 }

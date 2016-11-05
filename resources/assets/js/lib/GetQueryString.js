@@ -1,7 +1,7 @@
 import { PropTypes } from 'react'
 
 const propTypes = {
-    field: PropTypes.string.isRequired
+    field: PropTypes.string.isRequired,
 }
 
 export default function GetQueryString(field, url) {
