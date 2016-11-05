@@ -1,26 +1,25 @@
-import { PropTypes } from 'react'
+// @flow
 import includes from 'lodash/includes'
 import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
 import GameConsts from '../GameConsts'
 
-const propTypes = {
-    id: PropTypes.string.isRequired,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    rightArmAngle: PropTypes.number.isRequired,
-    leftArmAngle: PropTypes.number.isRequired,
-    facing: PropTypes.string.isRequired,
-    health: PropTypes.number.isRequired,
-    weaponId: PropTypes.string.isRequired,
-    shooting: PropTypes.bool.isRequired,
-}
-
 function isNotMoving(movePlayer) {
     return movePlayer.x === movePlayer.lastPosition.x && movePlayer.y === movePlayer.lastPosition.y
 }
 
-export default function onMovePlayer(data) {
+export default function onMovePlayer(data: {
+    id: string,
+    x: number,
+    y: number,
+    rightArmAngle: number,
+    leftArmAngle: number,
+    facing: string,
+    health: number,
+    weaponId: string,
+    shooting: bool,
+    flying: bool,
+}) {
     const store = this.game.store
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return

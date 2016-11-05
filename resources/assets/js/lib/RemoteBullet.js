@@ -1,20 +1,17 @@
-import { PropTypes } from 'react'
-
+// @flow
 import GameConsts from './GameConsts'
 
-const propTypes = {
-    bulletId: PropTypes.string.isRequired,
-    playerId: PropTypes.string.isRequired,
-    damage: PropTypes.number.isRequired,
-    pointerAngle: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    bulletSpeed: PropTypes.number.isRequired,
-}
-
-export default function RemoteBullet(data) {
+export default function RemoteBullet(data: {
+    bulletId: string,
+    playerId: string,
+    damage: number,
+    pointerAngle: number,
+    height: number,
+    width: number,
+    x: number,
+    y: number,
+    bulletSpeed: number,
+}) {
     let bullet = RS.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)
     bullet.bulletId = data.bulletId

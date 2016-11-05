@@ -1,22 +1,20 @@
+// @flow
 import includes from 'lodash/includes'
-import { PropTypes } from 'react'
 
 import GameConsts from '../GameConsts'
-
-const propTypes = {
-    bulletId: PropTypes.string.isRequired,
-    playerId: PropTypes.string.isRequired,
-    damage: PropTypes.number.isRequired,
-    pointerAngle: PropTypes.number.isRequired,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    bulletSpeed: PropTypes.number.isRequired,
-    weaponId: PropTypes.string.isRequired,
-}
-
 let soundThrottle = false
 
-export default function onBulletFired(data) {
+export default function onBulletFired(data: {
+    id: string,
+    bulletId: string,
+    playerId: string,
+    damage: number,
+    pointerAngle: number,
+    x: number,
+    y: number,
+    bulletSpeed: number,
+    weaponId: string,
+}) {
     const store = this.game.store
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return

@@ -1,14 +1,11 @@
-import { PropTypes } from 'react'
-
-const propTypes = {
-    roomId: PropTypes.string.isRequired,
-    damage: PropTypes.number.isRequired,
-    damagedPlayerId: PropTypes.string.isRequired,
-    attackingPlayerId: PropTypes.string,
-    weaponId: PropTypes.string,
-    wasHeadshot: PropTypes.bool.isRequired,
-}
-
-export default function(data) {
+// @flow
+export default function(data: {
+  roomId: string,
+  damage: number,
+  damagedPlayerId: string,
+  attackingPlayerId: string,
+  weaponId: string,
+  wasHeadshot: bool,
+}) {
     window.socket.emit('player damaged', data)
 }

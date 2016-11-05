@@ -1,20 +1,20 @@
-import { PropTypes } from 'react'
+// @flow
 import includes from 'lodash/includes'
 import values from 'lodash/values'
 
 import RemotePlayer from '../RemotePlayer'
 import actions from '../../actions'
 
-const propTypes = {
-    room: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        players: PropTypes.object.isRequired,
-    }),
-}
-
 let lastRoomState = null
 
-export default function onUpdatePlayers(data) {
+export default function onUpdatePlayers(data: {
+    room: {
+        map: string,
+        gamemode: string,
+        id: string,
+        players: Object,
+    },
+}) {
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     const store = this.game.store

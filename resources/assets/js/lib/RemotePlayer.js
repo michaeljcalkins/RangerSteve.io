@@ -1,15 +1,13 @@
-import { PropTypes } from 'react'
-
+// @flow
 import GameConsts from './GameConsts'
 import { playerFaceRight, playerFaceLeft } from './RemotePlayerFaceHandler'
 
-const propTypes = {
-    x: PropTypes.number.isRequired,
-    y:  PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
-}
-
-export default function RemotePlayer(player) {
+export default function RemotePlayer(player: {
+    x: number,
+    y:  number,
+    id: string,
+    meta: Object,
+}) {
     const newRemotePlayer = this.game.add.sprite(player.x, player.y, 'player-placeholder')
     newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     newRemotePlayer.facing = 'right'

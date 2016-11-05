@@ -1,21 +1,21 @@
-import { PropTypes } from 'react'
+// @flow
 
 import actions from '../../actions'
 import PlayPlayerDeathAnimation from '../PlayPlayerDeathAnimation'
-
-const propTypes = {
-    damagedPlayerId: PropTypes.string.isRequired,
-    health: PropTypes.number.isRequired,
-    damageStats: PropTypes.object.isRequired,
-    attackingDamageStats: PropTypes.object.isRequired,
-    canRespawnTimestamp: PropTypes.number,
-}
 
 let damageTimeout = null
 let healingInterval = null
 let lastKnownHealth = null
 
-export default function onPlayerDamaged(data) {
+export default function onPlayerDamaged(data: {
+    playerX: number,
+    playerY: number,
+    damagedPlayerId: string,
+    health: number,
+    damageStats: Object,
+    attackingDamageStats: Object,
+    canRespawnTimestamp: number,
+}) {
     // When an enemy is killed play the death animation where they were.
     if (data.damagedPlayerId !== window.SOCKET_ID) {
         PlayPlayerDeathAnimation.call(this, {

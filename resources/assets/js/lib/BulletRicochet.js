@@ -1,11 +1,8 @@
-import { PropTypes } from 'react'
-
-const propTypes = {
-    bulletY: PropTypes.number.isRequired,
-    bulletX: PropTypes.number.isRequired,
-}
-
-export default function(data) {
+// @flow
+export default function(data: {
+  bulletY: number,
+  bulletX: number,
+}) {
     const ricochet = RS.ricochets.getFirstExists(false)
     ricochet.reset(data.bulletX, data.bulletY)
     ricochet.scale.setTo(.1)
