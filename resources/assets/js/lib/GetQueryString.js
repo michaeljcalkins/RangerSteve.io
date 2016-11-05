@@ -1,10 +1,6 @@
-import { PropTypes } from 'react'
+// @flow
 
-const propTypes = {
-    field: PropTypes.string.isRequired,
-}
-
-export default function GetQueryString(field, url) {
+export default function GetQueryString(field: string, url: string) {
     var href = url ? url : window.location.href;
     var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
     var string = reg.exec(href);

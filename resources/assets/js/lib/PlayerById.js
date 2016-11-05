@@ -1,10 +1,6 @@
-import { PropTypes } from 'react'
+// @flow
 
-const propTypes = {
-    id: PropTypes.string.isRequired,
-}
-
-export default function PlayerById(id) {
+export default function PlayerById(id: string) {
     if (! RS.enemies) return
 
     for (let i = 0; i < RS.enemies.children.length; i++) {

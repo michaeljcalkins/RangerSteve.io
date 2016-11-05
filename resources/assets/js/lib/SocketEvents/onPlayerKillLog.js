@@ -1,14 +1,11 @@
-import { PropTypes } from 'react'
-
+// @flow
 import actions from '../../actions'
 
-const propTypes = {
-    deadNickname: PropTypes.string.isRequired,
-    attackerNickname: PropTypes.string,
-    weaponId: PropTypes.string,
-}
-
-export default function onPlayerKillLog(data) {
+export default function onPlayerKillLog(data: {
+    deadNickname: string,
+    attackerNickname: string,
+    weaponId: string,
+}) {
     const store = this.game.store
 
     store.dispatch(actions.game.addKillLogMessage(data))

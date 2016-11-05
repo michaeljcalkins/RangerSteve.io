@@ -1,5 +1,5 @@
+// @flow
 import includes from 'lodash/includes'
-import { PropTypes } from 'react'
 
 import Maps from '../Maps'
 import PlayerById from '../PlayerById'
@@ -8,7 +8,10 @@ import GameConsts from '../GameConsts.js'
 import CreateKeyboardBindings from '../CreateHandler/CreateKeyboardBindings'
 import GetSpawnPoint from '../GetSpawnPoint'
 
-export default function onPlayerRespawn(data) {
+export default function onPlayerRespawn(data: {
+    damagedPlayerId: string,
+    health: number,
+}) {
     const state = this.game.store.getState()
     const store = this.game.store
     const currentWeapon = state.player.currentWeapon

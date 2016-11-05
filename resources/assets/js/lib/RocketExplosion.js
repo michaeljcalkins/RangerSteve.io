@@ -1,11 +1,8 @@
-import { PropTypes } from 'react'
-
-const propTypes = {
-    bulletY: PropTypes.number.isRequired,
-    bulletX: PropTypes.number.isRequired,
-}
-
-export default function(data) {
+// @flow
+export default function(data: {
+    bulletY: number,
+    bulletX: number,
+}) {
     let rpgExplosion = RS.rpgExplosions.getFirstExists(false)
     rpgExplosion.reset(data.bulletX, data.bulletY - 50)
     rpgExplosion.scale.setTo(.7)

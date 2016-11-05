@@ -1,11 +1,9 @@
-import { PropTypes } from 'react'
+// @flow
 
-const propTypes = {
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-}
-
-export default function(data) {
+export default function(data: {
+    x: number,
+    y: number,
+}) {
     const playerDeath = RS.playerDeaths.getFirstExists(false)
     playerDeath.reset(data.x, data.y)
     playerDeath.scale.setTo(.31)
