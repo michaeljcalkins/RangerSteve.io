@@ -1,9 +1,15 @@
 {
+    "plugins": [ "react", "import", "flowtype" ],
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:flowtype/recommended"
     ],
     "installedESLint": true,
+    "ecmaFeatures": {
+        "jsx": true
+    },
+    "esversion": 6,
     "env": {
         "browser": true,
         "node": true,
@@ -30,20 +36,15 @@
         "describe": true,
         "it": true
     },
-    "ecmaFeatures": {
-        "jsx": true
-    },
-    "plugins": [ "react", "import" ],
-    "esversion": 6,
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],
-        
+
         "comma-dangle": ["error", "always-multiline"],
         "no-console": 0,
         "no-const-assign": 1,
 
         # prevent accidentally importing constants that don’t exist to your reducers
-        "import/named": 2, 
+        "import/named": 2,
 
         "react/display-name": 0,
         "react/forbid-prop-types": 0,
