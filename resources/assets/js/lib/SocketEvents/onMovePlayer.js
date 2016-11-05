@@ -1,3 +1,4 @@
+import { PropTypes } from 'react'
 import includes from 'lodash/includes'
 import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
