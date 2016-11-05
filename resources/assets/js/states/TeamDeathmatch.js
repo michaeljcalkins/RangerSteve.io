@@ -19,6 +19,7 @@ import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
 import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
+import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import UpdateTeamColors from '../lib/UpdateTeamColors'
 import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
 import PlayerAndEnemyTeamBullets from '../lib/Collisions/PlayerAndEnemyTeamBullets'
@@ -53,6 +54,7 @@ TeamDeathmatch.prototype = {
         CreateBullets.call(this)
         CreateHud.call(this)
         CreateKeyboardBindings.call(this)
+        CreateDetectIdleUser()
 
         window.socket.emit('refresh players', {
             roomId: room.id,
