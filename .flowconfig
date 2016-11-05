@@ -1,7 +1,7 @@
 [ignore]
 node_modules
 [include]
-public/js/phaser.min.js
-[libs]
 
+[libs]
+flow_declarations
 [options]
