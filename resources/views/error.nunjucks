@@ -1,7 +1,13 @@
 {% extends 'master.nunjucks' %}
 
+{% block title %}{{ error.status }} | RangerSteve.io{% endblock %}
+
 {% block content %}
-    <h1>{{ message }}
-    <h2>{{ error.status }}
-    <pre>{{ error.stack  }}</pre>
+<section class="main-section">
+    <div class="col-xs-12">
+        <div class="main-header text-center">
+            {{ error.status }}
+        </div>
+    </div>
+</section>
 {% endblock %}
