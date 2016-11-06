@@ -3,6 +3,7 @@
 const util = require('util')
 const _ = require('lodash')
 const moment = require('moment')
+const msgpack = require('msgpack-lite')
 
 const GameConsts = require('../resources/assets/js/lib/GameConsts')
 const createPlayer = require('./services/createPlayer')
@@ -291,7 +292,7 @@ function onMovePlayer(data) {
 
     if (! rooms[roomId]) return
 
-    var movePlayer = rooms[roomId].players[this.id]
+    const movePlayer = rooms[roomId].players[this.id]
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
 
@@ -302,8 +303,7 @@ function onMovePlayer(data) {
     movePlayer.leftArmAngle = data.leftArmAngle
     movePlayer.facing = data.facing
 
-    // Broadcast updated position to connected socket clients
-    io.to(roomId).emit('move player', {
+    const packet = {
         id: this.id,
         x: data.x,
         y: data.y,
@@ -314,7 +314,11 @@ function onMovePlayer(data) {
         shooting: data.shooting,
         health: movePlayer.meta.health,
         weaponId: data.weaponId,
-    })
+    }
+
+    // Broadcast updated position to connected socket clients
+    const buffer = msgpack.encode(packet)
+    io.to(roomId).emit('move player', buffer)
 }
 
 // Socket client has disconnected

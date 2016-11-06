@@ -8,21 +8,13 @@ function isNotMoving(movePlayer) {
     return movePlayer.x === movePlayer.lastPosition.x && movePlayer.y === movePlayer.lastPosition.y
 }
 
-export default function onMovePlayer(data: {
-    id: string,
-    x: number,
-    y: number,
-    rightArmAngle: number,
-    leftArmAngle: number,
-    facing: string,
-    health: number,
-    weaponId: string,
-    shooting: bool,
-    flying: bool,
-}) {
+export default function onMovePlayer(buffer) {
     const store = this.game.store
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
+
+    const rawData = new Uint8Array(buffer)
+    const data = msgpack.decode(rawData)
 
     if (data.id === window.SOCKET_ID) return
 
