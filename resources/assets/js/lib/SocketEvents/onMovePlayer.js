@@ -1,4 +1,5 @@
 // @flow
+import msgpack from 'msgpack-lite'
 import includes from 'lodash/includes'
 import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
