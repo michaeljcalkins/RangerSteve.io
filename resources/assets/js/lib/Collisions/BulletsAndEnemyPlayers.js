@@ -1,5 +1,5 @@
 import emitPlayerDamaged from '../SocketEvents/emitPlayerDamaged'
-import SprayBlood from '../SprayBlood'
+import PlayBloodSpray from '../PlayBloodSpray'
 import RocketExplosion from '../RocketExplosion'
 
 export default function() {
@@ -24,7 +24,7 @@ export default function() {
             ? state.player[currentWeapon].damage + 30
             : state.player[currentWeapon].damage
 
-        SprayBlood.call(this, {
+        PlayBloodSpray.call(this, {
             bulletY: bullet.y,
             bulletX: bullet.x,
             playerX: enemy.x,

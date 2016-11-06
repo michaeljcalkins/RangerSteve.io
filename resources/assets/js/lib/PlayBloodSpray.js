@@ -15,7 +15,7 @@ export default function(data: {
         bloodX -= 10
         bloodY += 25
     }
-
+    console.log('PlayBloodSpray')
     const bloodSpray = RS.bloodSprays.getFirstExists(false)
     bloodSpray.reset(bloodX, bloodY)
     bloodSpray.scale.setTo(.14)
