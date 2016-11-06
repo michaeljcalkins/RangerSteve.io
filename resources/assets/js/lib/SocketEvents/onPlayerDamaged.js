@@ -78,7 +78,6 @@ export default function onPlayerDamaged(data: {
 
     // Player has died
     if (store.getState().player.health <= 0) {
-        console.log('1')
         RS.player.visible = false
         PlayPlayerDeathAnimation.call(this, {
             x: RS.player.x,

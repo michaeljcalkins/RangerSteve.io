@@ -1,4 +1,4 @@
-import SprayBlood from '../SprayBlood'
+import PlayBloodSpray from '../PlayBloodSpray'
 import RocketExplosion from '../RocketExplosion'
 
 export default function() {
@@ -14,7 +14,7 @@ export default function() {
 
         bullet.kill()
 
-        SprayBlood.call(this, {
+        PlayBloodSpray.call(this, {
             bulletY: bullet.y,
             bulletX: bullet.x,
             playerX: player.x,
