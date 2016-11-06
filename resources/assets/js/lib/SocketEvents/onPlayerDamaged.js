@@ -1,7 +1,7 @@
 // @flow
-
 import actions from '../../actions'
 import PlayPlayerDeathAnimation from '../PlayPlayerDeathAnimation'
+import PlayerById from '../PlayerById'
 
 let damageTimeout = null
 let healingInterval = null
@@ -12,12 +12,18 @@ export default function onPlayerDamaged(data: {
     playerY: number,
     damagedPlayerId: string,
     health: number,
-    damageStats: Object,
+    damageStats: {
+        attackingPlayerId: string,
+        attackingHits: number,
+        attackingDamage: number,
+    },
     attackingDamageStats: Object,
     canRespawnTimestamp: number,
 }) {
     // When an enemy is killed play the death animation where they were.
-    if (data.damagedPlayerId !== window.SOCKET_ID) {
+    if (data.damagedPlayerId !== window.SOCKET_ID && data.health <= 0) {
+        const movePlayer = PlayerById.call(this, data.damagedPlayerId)
+        movePlayer.visible = false
         PlayPlayerDeathAnimation.call(this, {
             x: data.playerX,
             y: data.playerY,
@@ -72,6 +78,7 @@ export default function onPlayerDamaged(data: {
 
     // Player has died
     if (store.getState().player.health <= 0) {
+        console.log('1')
         RS.player.visible = false
         PlayPlayerDeathAnimation.call(this, {
             x: RS.player.x,
