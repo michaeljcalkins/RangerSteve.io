@@ -8,6 +8,7 @@ let healingInterval = null
 let lastKnownHealth = null
 
 export default function onPlayerDamaged(data: {
+    id: string,
     playerX: number,
     playerY: number,
     damagedPlayerId: string,
@@ -30,6 +31,9 @@ export default function onPlayerDamaged(data: {
         })
         return
     }
+
+    // If player damaged was not you do not you and you're not dead don't do anything.
+    if (data.damagedPlayerId !== window.SOCKET_ID) return
 
     const store = this.game.store
 

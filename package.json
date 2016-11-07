@@ -5,8 +5,8 @@
     "npm": "3.8.6"
   },
   "scripts": {
-    "start": "nodejs-dashboard -- nodemon ./bin/www",
-    "watch": "webpack-dashboard -p 9839 -- webpack -w",
+    "start": "nodemon ./bin/www",
+    "watch": "webpack -w",
     "build:dll": "webpack --config webpack.dll.js",
     "postinstall": "npm run production",
     "production": "NODE_ENV='production' && webpack -p",
@@ -32,6 +32,7 @@
     "morgan": "~1.6.1",
     "nunjucks": "^2.4.2",
     "optimize-js-plugin": "^0.0.4",
+    "schemapack": "^1.4.2",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.4.5"
   },
@@ -74,7 +75,6 @@
     "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
     "node-sass": "^3.10.1",
-    "nodejs-dashboard": "^0.1.1",
     "npm-install-webpack-plugin": "^4.0.4",
     "react": "^15.3.2",
     "react-autobind": "^1.0.6",
@@ -88,7 +88,6 @@
     "uws": "^0.11.0",
     "webpack": "^2.1.0-beta.22",
     "webpack-bundle-analyzer": "^1.4.1",
-    "webpack-dashboard": "^0.2.0",
     "webpack-obfuscator": "^0.7.3"
   }
 }

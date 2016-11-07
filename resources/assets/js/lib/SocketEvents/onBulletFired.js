@@ -1,20 +1,24 @@
 // @flow
 import includes from 'lodash/includes'
+import schemapack from 'schemapack'
 
 import GameConsts from '../GameConsts'
 let soundThrottle = false
 
-export default function onBulletFired(data: {
-    id: string,
-    bulletId: string,
-    playerId: string,
-    damage: number,
-    pointerAngle: number,
-    x: number,
-    y: number,
-    bulletSpeed: number,
-    weaponId: string,
-}) {
+var bulletSchema = schemapack.build({
+    bulletId: 'string',
+    x: 'varuint',
+    y: 'varuint',
+    pointerAngle: 'float32',
+    bulletSpeed: 'varuint',
+    playerId: 'string',
+    damage: 'uint8',
+    weaponId: 'string',
+})
+
+export default function onBulletFired(buffer) {
+    const data = bulletSchema.decode(buffer)
+
     const store = this.game.store
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return

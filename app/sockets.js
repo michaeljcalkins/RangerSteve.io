@@ -10,6 +10,9 @@ const getPlayerById = require('./services/getPlayerById')
 const getTeam = require('./services/getTeam')
 const createRoom = require('./services/createRoom')
 const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
+const bulletSchema = require('../lib/schemas/bulletSchema')
+const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
+const playerFromServerSchema = require('../lib/schemas/playerFromServerSchema')
 
 let rooms = {}
 let io = null
@@ -286,14 +289,16 @@ function onNewPlayer(data) {
 }
 
 // Player has moved
-function onMovePlayer(data) {
+function onMovePlayer(buffer) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
 
     if (! rooms[roomId]) return
 
-    var movePlayer = rooms[roomId].players[this.id]
+    const movePlayer = rooms[roomId].players[this.id]
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
+
+    const data = playerFromClientSchema.decode(buffer)
 
     // Update player position
     movePlayer.x = data.x
@@ -302,8 +307,7 @@ function onMovePlayer(data) {
     movePlayer.leftArmAngle = data.leftArmAngle
     movePlayer.facing = data.facing
 
-    // Broadcast updated position to connected socket clients
-    io.to(roomId).emit('move player', {
+    const packet = {
         id: this.id,
         x: data.x,
         y: data.y,
@@ -314,7 +318,11 @@ function onMovePlayer(data) {
         shooting: data.shooting,
         health: movePlayer.meta.health,
         weaponId: data.weaponId,
-    })
+    }
+
+    // Broadcast updated position to connected socket clients
+    const newBuffer = playerFromServerSchema.encode(packet)
+    io.to(roomId).emit('move player', newBuffer)
 }
 
 // Socket client has disconnected
@@ -474,15 +482,18 @@ function onPlayerDamaged(data) {
     })
 }
 
-function onBulletFired(data) {
-    data.id = this.id
-
-    const player = getPlayerById(data.roomId, data.id, rooms)
+function onBulletFired(buffer) {
+    const data = bulletSchema.decode(buffer)
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    const player = getPlayerById(roomId, this.id, rooms)
+    data.playerId = this.id
 
     if (! player || player.meta.health <= 0) return
     player.meta.bulletsFired++
 
-    io.to(data.roomId).emit('bullet fired', data)
+    // Broadcast updated position to connected socket clients
+    var newBuffer = bulletSchema.encode(data)
+    io.to(roomId).emit('bullet fired', newBuffer)
 }
 
 module.exports.init = init

@@ -6,7 +6,6 @@ const
 
     // Development Plugins
     BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
-    DashboardPlugin = require('webpack-dashboard/plugin'),
 
     // Production Plugins
     JavaScriptObfuscator = require('webpack-obfuscator'),
@@ -99,7 +98,6 @@ if (! isProduction) {
         new OptimizeJsPlugin({
             sourceMap: false,
         }),
-        new DashboardPlugin(),
     ]
 } else {
     /**

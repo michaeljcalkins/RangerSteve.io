@@ -1,14 +1,17 @@
 // @flow
+import bulletSchema from '../../../../../lib/schemas/bulletSchema'
+
 export default function(data: {
-    roomId: string,
     bulletId: string,
-    playerId: string,
     x: number,
     y: number,
     pointerAngle: number,
     bulletSpeed: number,
     damage: number,
     weaponId: string,
+    playerId: string,
 }) {
-    window.socket.emit('bullet fired', data)
+    data.playerId = window.SOCKET_ID
+    var buffer = bulletSchema.encode(data)
+    window.socket.emit('bullet fired', buffer)
 }

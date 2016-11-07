@@ -1,13 +1,16 @@
 // @flow
+import playerFromClientSchema from '../../../../../lib/schemas/playerFromClientSchema'
+
 export default function(data: {
-  roomId: string,
-  x: number,
-  y: number,
-  rightArmAngle: number,
-  leftArmAngle: number,
-  facing: string,
-  flying: bool,
-  // shooting: bool
+    facing: string,
+    flying: bool,
+    leftArmAngle: number,
+    rightArmAngle: number,
+    shooting: bool,
+    weaponId: string,
+    x: number,
+    y: number,
 }) {
-    window.socket.emit('move player', data)
+    var buffer = playerFromClientSchema.encode(data)
+    window.socket.emit('move player', buffer)
 }
