@@ -34,7 +34,7 @@ export function getSpawnPoints() {
 }
 
 export function preload() {
-    this.game.load.image('background', '/images/maps/punk-fallout/background.png', true)
+    this.game.load.image('background', '/maps/punk-fallout/background.png', true)
     this.game.load.tilemap('tilemap', '/maps/punk-fallout/punk-fallout.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24);
 }
