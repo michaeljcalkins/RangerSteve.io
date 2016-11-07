@@ -1,5 +1,3 @@
-import isEqual from 'lodash/isEqual'
-
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
 import GameConsts from '../lib/GameConsts'
 
@@ -27,17 +25,18 @@ export default function() {
         : state.player.selectedSecondaryWeaponId
 
     let newPlayerData = {
-        x: RS.player.x,
-        y: RS.player.y,
-        rightArmAngle: RS.rightArmGroup.angle,
-        leftArmAngle: RS.leftArmGroup.angle,
         facing: state.player.facing,
         flying: RS.rightJumpjet.visible && RS.leftJumpjet.visible,
+        id: window.SOCKET_ID,
+        leftArmAngle: RS.leftArmGroup.angle,
+        rightArmAngle: RS.rightArmGroup.angle,
         shooting: isPlayerShooting(currentWeaponId, RS.rightArmSprite),
         weaponId: currentWeaponId,
+        x: RS.player.x,
+        y: RS.player.y,
     }
 
-    if (isEqual(lastPlayerData, newPlayerData)) return
+    if (JSON.stringify(lastPlayerData) === JSON.stringify(newPlayerData)) return
 
     emitMovePlayer.call(this, newPlayerData)
     lastPlayerData = newPlayerData
