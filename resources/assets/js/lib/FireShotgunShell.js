@@ -63,9 +63,7 @@ export default function FireShotgunShell(currentWeaponId) {
         }, 40)
 
         emitBulletFired.call(this, {
-            roomId: state.room.id,
             bulletId: bullet.bulletId,
-            playerId: window.SOCKET_ID,
             weaponId: currentWeaponId,
             x,
             y,
