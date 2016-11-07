@@ -1,5 +1,5 @@
 // @flow
-import msgpack from 'msgpack-lite'
+import playerSchema from '../../../../../lib/schemas/playerSchema'
 import includes from 'lodash/includes'
 
 import PlayerById from'../PlayerById'
@@ -15,9 +15,7 @@ export default function onMovePlayer(buffer) {
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
-    const rawData = new Uint8Array(buffer)
-    const data = msgpack.decode(rawData)
-
+    const data = playerSchema.decode(buffer)
     if (data.id === window.SOCKET_ID) return
 
     let movePlayer = PlayerById.call(this, data.id)

@@ -3,7 +3,6 @@
 const util = require('util')
 const _ = require('lodash')
 const moment = require('moment')
-const msgpack = require('msgpack-lite')
 
 const GameConsts = require('../resources/assets/js/lib/GameConsts')
 const createPlayer = require('./services/createPlayer')
@@ -11,6 +10,8 @@ const getPlayerById = require('./services/getPlayerById')
 const getTeam = require('./services/getTeam')
 const createRoom = require('./services/createRoom')
 const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
+const bulletSchema = require('../lib/schemas/bulletSchema')
+const playerSchema = require('../lib/schemas/playerSchema')
 
 let rooms = {}
 let io = null
@@ -287,7 +288,7 @@ function onNewPlayer(data) {
 }
 
 // Player has moved
-function onMovePlayer(data) {
+function onMovePlayer(buffer) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
 
     if (! rooms[roomId]) return
@@ -295,6 +296,8 @@ function onMovePlayer(data) {
     const movePlayer = rooms[roomId].players[this.id]
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
+
+    const data = playerSchema.decode(buffer)
 
     // Update player position
     movePlayer.x = data.x
@@ -317,8 +320,8 @@ function onMovePlayer(data) {
     }
 
     // Broadcast updated position to connected socket clients
-    const buffer = msgpack.encode(packet)
-    io.to(roomId).emit('move player', buffer)
+    const newBuffer = playerSchema.encode(packet)
+    io.to(roomId).emit('move player', newBuffer)
 }
 
 // Socket client has disconnected
@@ -478,17 +481,18 @@ function onPlayerDamaged(data) {
     })
 }
 
-function onBulletFired(data) {
+function onBulletFired(buffer) {
+    const data = bulletSchema.decode(buffer)
     const roomId = getRoomIdByPlayerId(this.id, rooms)
     const player = getPlayerById(roomId, this.id, rooms)
-    data.id = this.id
+    data.playerId = this.id
 
     if (! player || player.meta.health <= 0) return
     player.meta.bulletsFired++
 
     // Broadcast updated position to connected socket clients
-    const buffer = msgpack.encode(data)
-    io.to(roomId).emit('bullet fired', buffer)
+    var newBuffer = bulletSchema.encode(data)
+    io.to(roomId).emit('bullet fired', newBuffer)
 }
 
 module.exports.init = init
