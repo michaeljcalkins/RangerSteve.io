@@ -479,14 +479,16 @@ function onPlayerDamaged(data) {
 }
 
 function onBulletFired(data) {
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    const player = getPlayerById(roomId, this.id, rooms)
     data.id = this.id
-
-    const player = getPlayerById(data.roomId, data.id, rooms)
 
     if (! player || player.meta.health <= 0) return
     player.meta.bulletsFired++
 
-    io.to(data.roomId).emit('bullet fired', data)
+    // Broadcast updated position to connected socket clients
+    const buffer = msgpack.encode(data)
+    io.to(roomId).emit('bullet fired', buffer)
 }
 
 module.exports.init = init

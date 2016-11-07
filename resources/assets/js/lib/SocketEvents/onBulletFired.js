@@ -1,20 +1,14 @@
 // @flow
 import includes from 'lodash/includes'
+import msgpack from 'msgpack-lite'
 
 import GameConsts from '../GameConsts'
 let soundThrottle = false
 
-export default function onBulletFired(data: {
-    id: string,
-    bulletId: string,
-    playerId: string,
-    damage: number,
-    pointerAngle: number,
-    x: number,
-    y: number,
-    bulletSpeed: number,
-    weaponId: string,
-}) {
+export default function onBulletFired(buffer) {
+    const rawData = new Uint8Array(buffer)
+    const data = msgpack.decode(rawData)
+
     const store = this.game.store
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
