@@ -1,6 +1,7 @@
 // @flow
 import msgpack from 'msgpack-lite'
 import includes from 'lodash/includes'
+
 import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
 import GameConsts from '../GameConsts'
@@ -10,13 +11,12 @@ function isNotMoving(movePlayer) {
 }
 
 export default function onMovePlayer(buffer) {
-    const store = this.game.store
-
-    if (includes(['Boot', 'Preloader'], this.game.state.current)) return
-
     const rawData = new Uint8Array(buffer)
     const data = msgpack.decode(rawData)
 
+    const store = this.game.store
+
+    if (includes(['Boot', 'Preloader'], this.game.state.current)) return
     if (data.id === window.SOCKET_ID) return
 
     let movePlayer = PlayerById.call(this, data.id)
