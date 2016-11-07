@@ -11,12 +11,13 @@ function isNotMoving(movePlayer) {
 }
 
 export default function onMovePlayer(buffer) {
-    const rawData = new Uint8Array(buffer)
-    const data = msgpack.decode(rawData)
-
     const store = this.game.store
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
+
+    const rawData = new Uint8Array(buffer)
+    const data = msgpack.decode(rawData)
+
     if (data.id === window.SOCKET_ID) return
 
     let movePlayer = PlayerById.call(this, data.id)
