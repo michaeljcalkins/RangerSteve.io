@@ -27,6 +27,8 @@ import BulletsAndEnemyTeamPlayers from '../lib/Collisions/BulletsAndEnemyTeamPla
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 
+import logPointerWorldPosition from '../lib/logPointerWorldPosition'
+
 const throttledUpdatePlayerPosition = throttle(UpdatePlayerPosition, GameConsts.PLAYER_POSITION_UPDATES_PER_SECOND)
 
 /**
@@ -103,6 +105,10 @@ TeamDeathmatch.prototype = {
         // TODO FireWeaponIfActive.call(this)
         if (this.game.input.activePointer.leftButton.isDown) {
             const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
+
+            if (GameConsts.DEBUG) {
+                logPointerWorldPosition.call(this)
+            }
 
             if (player.isSwitchingWeapon) return
 
