@@ -11,7 +11,8 @@ const getTeam = require('./services/getTeam')
 const createRoom = require('./services/createRoom')
 const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
 const bulletSchema = require('../lib/schemas/bulletSchema')
-const playerSchema = require('../lib/schemas/playerSchema')
+const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
+const playerFromServerSchema = require('../lib/schemas/playerFromServerSchema')
 
 let rooms = {}
 let io = null
@@ -297,7 +298,7 @@ function onMovePlayer(buffer) {
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
 
-    const data = playerSchema.decode(buffer)
+    const data = playerFromClientSchema.decode(buffer)
 
     // Update player position
     movePlayer.x = data.x
@@ -320,7 +321,7 @@ function onMovePlayer(buffer) {
     }
 
     // Broadcast updated position to connected socket clients
-    const newBuffer = playerSchema.encode(packet)
+    const newBuffer = playerFromServerSchema.encode(packet)
     io.to(roomId).emit('move player', newBuffer)
 }
 

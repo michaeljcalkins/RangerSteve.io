@@ -27,7 +27,6 @@ export default function() {
     let newPlayerData = {
         facing: state.player.facing,
         flying: RS.rightJumpjet.visible && RS.leftJumpjet.visible,
-        id: window.SOCKET_ID,
         leftArmAngle: RS.leftArmGroup.angle,
         rightArmAngle: RS.rightArmGroup.angle,
         shooting: isPlayerShooting(currentWeaponId, RS.rightArmSprite),

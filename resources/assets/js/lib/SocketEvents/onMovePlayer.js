@@ -1,5 +1,5 @@
 // @flow
-import playerSchema from '../../../../../lib/schemas/playerSchema'
+import playerFromServerSchema from '../../../../../lib/schemas/playerFromServerSchema'
 import includes from 'lodash/includes'
 
 import PlayerById from'../PlayerById'
@@ -15,7 +15,7 @@ export default function onMovePlayer(buffer) {
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
-    const data = playerSchema.decode(buffer)
+    const data = playerFromServerSchema.decode(buffer)
     if (data.id === window.SOCKET_ID) return
 
     let movePlayer = PlayerById.call(this, data.id)

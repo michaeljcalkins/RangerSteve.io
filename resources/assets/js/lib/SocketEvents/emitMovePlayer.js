@@ -1,10 +1,9 @@
 // @flow
-import playerSchema from '../../../../../lib/schemas/playerSchema'
+import playerFromClientSchema from '../../../../../lib/schemas/playerFromClientSchema'
 
 export default function(data: {
     facing: string,
     flying: bool,
-    id: string,
     leftArmAngle: number,
     rightArmAngle: number,
     shooting: bool,
@@ -12,6 +11,6 @@ export default function(data: {
     x: number,
     y: number,
 }) {
-    var buffer = playerSchema.encode(data)
+    var buffer = playerFromClientSchema.encode(data)
     window.socket.emit('move player', buffer)
 }
