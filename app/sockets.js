@@ -289,7 +289,7 @@ function onNewPlayer(data) {
 }
 
 // Player has moved
-function onMovePlayer(buffer) {
+function onMovePlayer(buffer/*: Uint8Array*/) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
 
     if (! rooms[roomId]) return
@@ -321,7 +321,7 @@ function onMovePlayer(buffer) {
     }
 
     // Broadcast updated position to connected socket clients
-    const newBuffer = playerFromServerSchema.encode(packet)
+    const newBuffer/*: Uint8Array*/ = playerFromServerSchema.encode(packet)
     io.to(roomId).emit('move player', newBuffer)
 }
 
@@ -482,7 +482,7 @@ function onPlayerDamaged(data) {
     })
 }
 
-function onBulletFired(buffer) {
+function onBulletFired(buffer/*: Uint8Array*/) {
     const data = bulletSchema.decode(buffer)
     const roomId = getRoomIdByPlayerId(this.id, rooms)
     const player = getPlayerById(roomId, this.id, rooms)
@@ -492,7 +492,7 @@ function onBulletFired(buffer) {
     player.meta.bulletsFired++
 
     // Broadcast updated position to connected socket clients
-    var newBuffer = bulletSchema.encode(data)
+    var newBuffer/*: Uint8Array*/ = bulletSchema.encode(data)
     io.to(roomId).emit('bullet fired', newBuffer)
 }
 
