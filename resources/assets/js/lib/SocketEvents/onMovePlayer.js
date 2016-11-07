@@ -1,5 +1,5 @@
 // @flow
-import playerFromServerSchema from '../../../../../lib/schemas/playerFromServerSchema'
+import playerFromServerSchema from 'lib/schemas/playerFromServerSchema'
 import includes from 'lodash/includes'
 
 import PlayerById from'../PlayerById'
