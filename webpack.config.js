@@ -60,6 +60,10 @@ let sharedConfig = {
         ],
     },
     resolve: {
+        alias: {
+            schema: path.resolve('./lib/schemas'),
+            gameConsts: path.resolve('./resources/assets/js/lib/GameConsts.js'),
+        },
         extensions: ['.scss', '.webpack.js', '.web.js', '.js'],
     },
 }
