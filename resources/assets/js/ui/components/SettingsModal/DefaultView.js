@@ -135,7 +135,7 @@ export default class MainSettingsMenu extends React.Component {
                             <input
                                 className="form-control"
                                 defaultValue={ this.state.nickname }
-                                maxLength="100"
+                                maxLength="25"
                                 onChange={ this.handleNicknameChange }
                                 ref="nicknameInput"
                                 type="text"

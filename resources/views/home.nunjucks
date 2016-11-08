@@ -21,6 +21,7 @@
                                     class="form-control"
                                     placeholder="Enter your nickname..."
                                     autofocus
+                                    maxlength="25"
                                     style="margin-bottom: 15px"
                                     type="text"
                                 />
