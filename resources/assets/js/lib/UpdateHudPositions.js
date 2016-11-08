@@ -1,4 +1,3 @@
-import moment from 'moment'
 import RemainingFuelPercent from '../lib/RemainingFuelPercent'
 
 const TEXT_Y_OFFSET = 39
@@ -78,7 +77,7 @@ export default function() {
     }
 
     // Timer HUD
-    let timeRemaining = state.room.roundEndTime - moment().unix()
+    let timeRemaining = state.room.roundEndTime - Math.floor(Date.now() / 1000)
     var minutes = Math.floor(timeRemaining / 60)
     var seconds = timeRemaining - minutes * 60
     seconds = `0${seconds}`.substr(-2)

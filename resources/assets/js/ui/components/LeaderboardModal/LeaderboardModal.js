@@ -2,7 +2,6 @@ import autobind from 'react-autobind'
 import React, { Component, PropTypes } from 'react'
 import values from 'lodash/values'
 import get from 'lodash/get'
-import moment from 'moment'
 import cs from 'classnames'
 
 import getPlayerWithBestAccuracy from '../../../lib/getPlayerWithBestAccuracy'
@@ -39,7 +38,8 @@ export default class Leaderboard extends Component {
 
     tick() {
         const { props: { room } } = this
-        let timeRemaining = room.roundStartTime - moment().unix()
+        const currentTime = Math.floor(Date.now())
+        let timeRemaining = room.roundStartTime - currentTime
         let minutes = Math.floor(timeRemaining / 60)
         let seconds = timeRemaining - minutes * 60
 
