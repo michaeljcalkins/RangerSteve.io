@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import moment from 'moment'
 import get from 'lodash/get'
 import cs from 'classnames'
 
@@ -24,7 +23,8 @@ export default class RespawnModal extends React.Component {
 
     tick() {
         const { respawnTime } = this.props.player
-        const timeRemaining = respawnTime - moment().valueOf()
+        const currentTime = Math.floor(Date.now())
+        const timeRemaining = respawnTime - currentTime
         let seconds = Number((timeRemaining / 1000).toFixed(1))
         if (seconds % 1 === 0) seconds = seconds + '.0'
 
