@@ -5,7 +5,7 @@ const GameConsts = {
     ROUND_LENGTH_MINUTES: 5,
     END_OF_ROUND_BREAK_SECONDS: 10,
     PLAYER_FULL_HEALTH: 100,
-    MAPS: ['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop', 'DeathCycle'],
+    MAPS: ['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop', 'DeathCycle', 'EvilUnderground'],
     GAMEMODES: [
         'Deathmatch',
         'TeamDeathmatch',
