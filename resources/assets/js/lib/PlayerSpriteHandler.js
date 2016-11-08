@@ -53,7 +53,6 @@ export default function PlayerSpriteHandler() {
     // Left jump jet
     RS.leftJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
     RS.leftJumpjet.anchor.setTo(0)
-    RS.leftJumpjet.scale.setTo(0.07)
     RS.leftJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     RS.leftJumpjet.animations.play('thrust')
     RS.leftJumpjet.y = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_X
@@ -64,7 +63,6 @@ export default function PlayerSpriteHandler() {
     // Right jump jet
     RS.rightJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
     RS.rightJumpjet.anchor.setTo(0)
-    RS.rightJumpjet.scale.setTo(0.07)
     RS.rightJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     RS.rightJumpjet.animations.play('thrust')
     RS.rightJumpjet.y = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_X
