@@ -189,7 +189,7 @@ function onPlayerUpdateNickname(data) {
     }
 
     if (nickname.length > 25)
-        nickname = nickname.substr(0, nickname.length - 25)
+        nickname = nickname.substr(0, 25)
 
     player.meta.nickname = nickname
 
