@@ -23,7 +23,7 @@ Preloader.prototype = {
 
         this.game.load.spritesheet('hurt-border', '/images/hurt-border.png')
         this.game.load.spritesheet('jumpjet', '/images/jumpjet.png', 15, 29)
-        this.game.load.spritesheet('blood', '/images/blood.png', 440, 256)
+        this.game.load.spritesheet('blood', '/images/blood.png', 47, 27)
         this.game.load.spritesheet('player', '/sprites/player.png', 62, 62)
         this.game.load.spritesheet('right-arm-and-weapons', '/sprites/right-arm-and-weapons.png', 137, 30)
 

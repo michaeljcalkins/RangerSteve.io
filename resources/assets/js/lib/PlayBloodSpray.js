@@ -17,7 +17,6 @@ export default function(data: {
     }
     const bloodSpray = RS.bloodSprays.getFirstExists(false)
     bloodSpray.reset(bloodX, bloodY)
-    bloodSpray.scale.setTo(.14)
     bloodSpray.rotation = bloodRotation
     bloodSpray.animations.play('spray', 45, false, true)
 }
