@@ -68,7 +68,6 @@ export default function RemotePlayer(player: {
     // Left arm
     newRemotePlayer.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
     newRemotePlayer.leftArmSprite.anchor.setTo(0.8, .2)
-    newRemotePlayer.leftArmSprite.scale.setTo(0.37)
     newRemotePlayer.leftArmSprite.rotation = 83
     newRemotePlayer.leftArmSprite.scale.y *= -1
     newRemotePlayer.leftArmGroup.add(newRemotePlayer.leftArmSprite)
@@ -87,7 +86,6 @@ export default function RemotePlayer(player: {
     // Right arm
     newRemotePlayer.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
     newRemotePlayer.rightArmSprite.anchor.setTo(0.62, 0.4)
-    newRemotePlayer.rightArmSprite.scale.setTo(0.37)
     newRemotePlayer.rightArmSprite.rotation = 83.4
     newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[player.meta.weaponId].frame
     newRemotePlayer.rightArmSprite.scale.y *= -1
