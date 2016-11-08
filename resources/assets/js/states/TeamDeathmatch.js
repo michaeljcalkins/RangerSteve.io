@@ -1,5 +1,3 @@
-import throttle from 'lodash/throttle'
-
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerAngleHandler from '../lib/PlayerAngleHandler'
@@ -28,8 +26,6 @@ import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 
 import logPointerWorldPosition from '../lib/logPointerWorldPosition'
-
-const throttledUpdatePlayerPosition = throttle(UpdatePlayerPosition, GameConsts.PLAYER_POSITION_UPDATES_PER_SECOND)
 
 /**
  * Collisions and all game mode related interactions.
@@ -147,7 +143,7 @@ TeamDeathmatch.prototype = {
         RotateBulletsToTrajectory.call(this)
         UpdateHurtBorder.call(this)
         UpdateTeamColors.call(this)
-        throttledUpdatePlayerPosition.call(this)
+        UpdatePlayerPosition.call(this)
     },
 
     render() {
