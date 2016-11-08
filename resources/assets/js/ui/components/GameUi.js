@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
-import $ from 'jquery'
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudKillLog from './Hud/HudKillLog'
@@ -25,7 +24,7 @@ export default class GameUi extends React.Component {
     }
 
     startEventHandler() {
-        $(document).keyup((e) => {
+        document.addEventListener('keyup', (e) => {
             const game = this.props.game
 
             if (e.keyCode === Phaser.Keyboard.ESC) {

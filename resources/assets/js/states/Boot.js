@@ -1,5 +1,3 @@
-import $ from 'jquery'
-
 import GameConsts from '../lib/GameConsts'
 import setEventHandlers from '../lib/SocketEvents/setEventHandlers'
 import UpdateGameScale from '../lib/UpdateGameScale'
@@ -50,7 +48,10 @@ Boot.prototype = {
             this.game.add.plugin(Phaser.Plugin.Debug)
 
             // needed to correctly style other elements in css
-            $('body').addClass('phaser-debug')
+            if (document.getElementsByTagName('body').classList)
+                document.getElementsByTagName('body').classList.add('phaser-debug')
+            else
+                document.getElementsByTagName.className += ' phaser-debug'
         }
     },
 
