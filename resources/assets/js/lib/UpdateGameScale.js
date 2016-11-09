@@ -14,6 +14,5 @@ export default function() {
     //     "transform-origin": "top right",
     // })
 
-    // this.game.scale.setGameSize(widthScaleFactor, heightScaleFactor)
     RS.tiles && RS.tiles.resize(widthScaleFactor, heightScaleFactor)
 }

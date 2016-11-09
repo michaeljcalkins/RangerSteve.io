@@ -5,7 +5,6 @@ export default function(data: {
 }) {
     const ricochet = RS.ricochets.getFirstExists(false)
     ricochet.reset(data.bulletX, data.bulletY)
-    ricochet.scale.setTo(.1)
     ricochet.anchor.setTo(.5, .5)
     ricochet.animations.play('collision', 35, false, true)
 }

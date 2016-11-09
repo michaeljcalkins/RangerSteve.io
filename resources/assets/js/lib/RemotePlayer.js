@@ -37,7 +37,6 @@ export default function RemotePlayer(player: {
     // Left jump jet
     newRemotePlayer.leftJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
     newRemotePlayer.leftJumpjet.anchor.setTo(0)
-    newRemotePlayer.leftJumpjet.scale.setTo(0.07)
     newRemotePlayer.leftJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     newRemotePlayer.leftJumpjet.animations.play('thrust')
     newRemotePlayer.leftJumpjet.y = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_X
@@ -48,7 +47,6 @@ export default function RemotePlayer(player: {
     // Right jump jet
     newRemotePlayer.rightJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
     newRemotePlayer.rightJumpjet.anchor.setTo(0)
-    newRemotePlayer.rightJumpjet.scale.setTo(0.07)
     newRemotePlayer.rightJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
     newRemotePlayer.rightJumpjet.animations.play('thrust')
     newRemotePlayer.rightJumpjet.y = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_X
@@ -70,7 +68,6 @@ export default function RemotePlayer(player: {
     // Left arm
     newRemotePlayer.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
     newRemotePlayer.leftArmSprite.anchor.setTo(0.8, .2)
-    newRemotePlayer.leftArmSprite.scale.setTo(0.37)
     newRemotePlayer.leftArmSprite.rotation = 83
     newRemotePlayer.leftArmSprite.scale.y *= -1
     newRemotePlayer.leftArmGroup.add(newRemotePlayer.leftArmSprite)
@@ -89,7 +86,6 @@ export default function RemotePlayer(player: {
     // Right arm
     newRemotePlayer.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
     newRemotePlayer.rightArmSprite.anchor.setTo(0.62, 0.4)
-    newRemotePlayer.rightArmSprite.scale.setTo(0.37)
     newRemotePlayer.rightArmSprite.rotation = 83.4
     newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[player.meta.weaponId].frame
     newRemotePlayer.rightArmSprite.scale.y *= -1
