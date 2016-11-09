@@ -264,7 +264,7 @@ const GameConsts = {
             image: 'Spr_RPG.png',
             name: 'RPG',
             reloadTime: 15000,
-            shootingFrame: 20,
+            shootingFrame: 8,
             switchDelay: 1000,
             position: {
                 rotation: 80.20,

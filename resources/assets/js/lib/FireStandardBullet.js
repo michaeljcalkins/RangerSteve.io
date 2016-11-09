@@ -50,7 +50,6 @@ export default function FireStandardBullet(currentWeaponId) {
 
     clearTimeout(muzzleFlashHandler)
     muzzleFlashHandler = setTimeout(() => {
-        console.log(currentWeaponId, GameConsts.WEAPONS[currentWeaponId].frame)
         RS.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
     }, 60)
 
