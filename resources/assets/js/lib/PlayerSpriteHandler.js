@@ -102,7 +102,6 @@ export default function PlayerSpriteHandler() {
 
     // Right arm
     RS.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
-    console.log(RS.rightArmSprite.animations.frameTotal)
     RS.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
     RS.rightArmSprite.anchor.setTo(0.62, 0.4)
     RS.rightArmSprite.rotation = 83.4

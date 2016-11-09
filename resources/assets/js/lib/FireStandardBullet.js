@@ -47,7 +47,6 @@ export default function FireStandardBullet(currentWeaponId) {
 
     // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
     RS.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
-    console.log(currentWeaponId, GameConsts.WEAPONS[currentWeaponId].shootingFrame)
 
     clearTimeout(muzzleFlashHandler)
     muzzleFlashHandler = setTimeout(() => {
