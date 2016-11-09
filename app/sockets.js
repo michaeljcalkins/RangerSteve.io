@@ -43,6 +43,10 @@ function init(ioInstance) {
     })
 }
 
+function getRooms() {
+    return rooms
+}
+
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
@@ -497,3 +501,4 @@ function onBulletFired(buffer/*: Uint8Array*/) {
 }
 
 module.exports.init = init
+module.exports.getRooms = getRooms
