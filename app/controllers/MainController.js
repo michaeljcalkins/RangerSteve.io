@@ -31,6 +31,16 @@ let MainController = {
             lastModifiedTime: lastModifiedTime,
         })
     },
+
+    rooms: function(req, res) {
+        const rooms = require('../sockets').getRooms()
+        const maxRoomSize = require('../../resources/assets/js/lib/GameConsts').MAX_ROOM_SIZE
+
+        res.render('rooms', {
+            rooms,
+            maxRoomSize,
+        })
+    },
 }
 
 module.exports = MainController

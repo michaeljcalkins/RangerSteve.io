@@ -1,0 +1,66 @@
+{% extends 'master.nunjucks' %}
+
+{% block title %}RangerSteve.io - Rooms{% endblock %}
+
+{% block content %}
+<section class="main-section">
+    <div class="col-xs-12">
+        <div class="main-header text-center">
+            Ranger Steve
+            <span>Beta</span>
+        </div>
+
+        <div class="rooms-content">
+            <div class="well">
+
+                <div id="rooms-container" class="panel panel-default" style="margin-bottom: 0">
+                    <div class="panel-heading text-center">Rooms</div>
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Game mode</th>
+                                <th>Map</th>
+                                <th>Players</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for id, room in rooms %}
+                            <tr class="room-link pointer" data-href="/game?roomId={{ id }}">
+                                <td>{{ id }}</td>
+                                <td>{{ room.gamemode }}</td>
+                                <td>{{ room.map }}</td>
+                                <td>{{ room.players | length }} / {{ maxRoomSize }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row home-footer">
+    <div class="col-sm-12 text-center">
+        <strong>
+            <a href="https://www.facebook.com/rangerstevegame/" target="_blank">Facebook</a>
+            |
+            <a href="https://twitter.com/michaeljcalkins" target="_blank">Twitter</a>
+            |
+            <a href="https://github.com/michaeljcalkins/rangersteve-ideas/issues" target="_blank">Bugs and Ideas</a>
+            |
+            <a href="/credits">Credits</a>
+        </strong>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $('.room-link').click(function() {
+            window.location = $(this).data('href')
+        })
+    </script>
+{% endblock %}
