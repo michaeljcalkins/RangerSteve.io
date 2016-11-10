@@ -64,6 +64,12 @@ export default class GameUi extends React.Component {
         })
     }
 
+    handleQualityChange(quality) {
+        storage.set('quality', quality)
+        this.props.onQualityChange(quality)
+        window.dispatchEvent(new Event('resize'))
+    }
+
     handleSoundEffectVolumeChange(volume) {
         storage.set('sfxVolume', volume)
         this.props.onSfxVolumeChange(volume)
@@ -152,6 +158,7 @@ export default class GameUi extends React.Component {
                     onKeyboardControlChange={ this.props.onKeyboardControlChange }
                     onNicknameChange={ this.handleNicknameChange }
                     onPrimaryGunClick={ this.handlePrimaryGunClick }
+                    onQualityChange={ this.handleQualityChange }
                     onSecondaryGunClick={ this.handleSecondaryGunClick }
                     onSetResetEventsFlag={ this.props.onSetResetEventsFlag }
                     onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
@@ -172,6 +179,7 @@ GameUi.propTypes = {
     onOpenChatModal: PropTypes.func.isRequired,
     onOpenSettingsModal: PropTypes.func.isRequired,
     onPrimaryWeaponIdChange: PropTypes.func.isRequired,
+    onQualityChange: PropTypes.func.isRequired,
     onReduceToMaxChatMessages: PropTypes.func.isRequired,
     onSecondaryWeaponIdChange: PropTypes.func.isRequired,
     onSetResetEventsFlag: PropTypes.func,

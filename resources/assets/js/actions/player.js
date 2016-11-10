@@ -1,3 +1,10 @@
+export const setQuality = (value) => {
+    return {
+        type: 'SET_QUALITY',
+        value,
+    }
+}
+
 export const setNextSelectedPrimaryWeaponId = (value) => {
     return {
         type: 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID',

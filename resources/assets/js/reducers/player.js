@@ -11,23 +11,30 @@ const initialState = {
     isSwitchingWeapon: false,
     jumping: false,
     jumpJetCounter: 0,
+    nextSelectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
+    nextSelectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
     nickname: storage.get('nickname', NameGenerator()),
     primaryAmmoRemaining: 0,
     primaryWeapon: null,
+    quality: storage.get('quality', 1000),
     respawnTime: null,
     score: 0,
     secondaryAmmoRemaining: 0,
     secondaryWeapon: null,
     selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
     selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
-    nextSelectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
-    nextSelectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
 }
 
 storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case 'SET_QUALITY':
+            return {
+                ...state,
+                quality: action.value,
+            }
+
         case 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID':
             return {
                 ...state,

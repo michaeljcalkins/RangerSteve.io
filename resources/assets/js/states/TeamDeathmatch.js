@@ -24,7 +24,7 @@ import PlayerAndEnemyTeamBullets from '../lib/Collisions/PlayerAndEnemyTeamBulle
 import BulletsAndEnemyTeamPlayers from '../lib/Collisions/BulletsAndEnemyTeamPlayers'
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
-
+import UpdateGameScale from '../lib/UpdateGameScale'
 import logPointerWorldPosition from '../lib/logPointerWorldPosition'
 
 /**
@@ -57,6 +57,9 @@ TeamDeathmatch.prototype = {
         window.socket.emit('refresh players', {
             roomId: room.id,
         })
+
+        window.onresize = UpdateGameScale.bind(this)
+        UpdateGameScale.call(this)
 
         this.game.paused = false
     },

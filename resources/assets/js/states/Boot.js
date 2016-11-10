@@ -16,14 +16,12 @@ Boot.prototype = {
     },
 
     create: function() {
-        this.scale.scaleMode = Phaser.ScaleManager.RESIZE
+        this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
         // Smooths sprite rendering
         this.game.renderer.renderSession.roundPixels = true
         // Prevents game from pausing when tab loses focus
         this.game.stage.disableVisibilityChange = true
-
-        window.onresize = UpdateGameScale.bind(this)
-        UpdateGameScale.call(this)
+        this.game.scale.refresh()
 
         // Loading screen
         this.game.stage.backgroundColor = '#2B2825'

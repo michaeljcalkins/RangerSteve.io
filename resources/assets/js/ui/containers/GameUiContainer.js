@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onSetSfxVolume: gameActions.setSfxVolume,
         onSetNickname: playerActions.setNickname,
+        onQualityChange: playerActions.setQuality,
         onReduceToMaxChatMessages: gameActions.reduceToMaxChatMessages,
         onCloseSettingsModal: gameActions.closeSettingsModal,
         onOpenSettingsModal: gameActions.openSettingsModal,

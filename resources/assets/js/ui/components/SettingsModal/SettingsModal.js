@@ -7,17 +7,18 @@ import ChooseSecondaryView from './ChooseSecondaryView'
 import ControlsView from './ControlsView'
 
 export default function SettingsModal({
+    game,
     isOpen,
     onClose,
-    onViewChange,
+    onKeyboardControlChange,
     onNicknameChange,
     onPrimaryGunClick,
+    onQualityChange,
     onSecondaryGunClick,
-    onSfxVolumeChange,
-    onKeyboardControlChange,
     onSetResetEventsFlag,
+    onSfxVolumeChange,
+    onViewChange,
     player,
-    game,
 }) {
     function renderModalView() {
         switch (game.settingsView) {
@@ -52,6 +53,7 @@ export default function SettingsModal({
                 <DefaultView
                     game={ game }
                     onNicknameChange={ onNicknameChange }
+                    onQualityChange={ onQualityChange }
                     onSfxVolumeChange={ onSfxVolumeChange }
                     onViewChange={ onViewChange }
                     player={ player }
@@ -125,6 +127,7 @@ SettingsModal.propTypes = {
     onClose: PropTypes.func,
     onNicknameChange: PropTypes.func,
     onPrimaryGunClick: PropTypes.func,
+    onQualityChange: PropTypes.func.isRequired,
     onSecondaryGunClick: PropTypes.func,
     onSoundEffectVolumeChange: PropTypes.func,
     onViewChange: PropTypes.func,

@@ -23,7 +23,7 @@ import PlayerAndEnemyBullets from '../lib/Collisions/PlayerAndEnemyBullets'
 import BulletsAndEnemyPlayers from '../lib/Collisions/BulletsAndEnemyPlayers'
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
-
+import UpdateGameScale from '../lib/UpdateGameScale'
 import logPointerWorldPosition from '../lib/logPointerWorldPosition'
 
 /**
@@ -56,6 +56,9 @@ Deathmatch.prototype = {
         window.socket.emit('refresh players', {
             roomId: room.id,
         })
+
+        window.onresize = UpdateGameScale.bind(this)
+        UpdateGameScale.call(this)
 
         this.game.paused = false
     },

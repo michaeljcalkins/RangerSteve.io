@@ -13,6 +13,7 @@ export default class MainSettingsMenu extends React.Component {
         this.state = {
             nickname: props.player.nickname,
             sfxVolume: props.game.sfxVolume,
+            quality: props.player.quality,
         }
     }
 
@@ -32,6 +33,10 @@ export default class MainSettingsMenu extends React.Component {
 
     handleSoundEffectVolumeChange(evt) {
         this.props.onSfxVolumeChange(Number(evt.target.value))
+    }
+
+    handleQualityChange(evt) {
+        this.props.onQualityChange(evt.target.value)
     }
 
     handlePrimaryViewClick() {
@@ -160,6 +165,19 @@ export default class MainSettingsMenu extends React.Component {
                                 type="range"
                             />
                         </div>
+                        <div className="form-group">
+                            <label>Game Quality</label>
+                            <input
+                                defaultValue={ this.state.quality }
+                                max="1600"
+                                min="600"
+                                onChange={ this.handleQualityChange }
+                                step="50"
+                                type="range"
+                            />
+                            <span className="help-block">Low <span className="pull-right">High</span></span>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,6 +188,8 @@ export default class MainSettingsMenu extends React.Component {
 MainSettingsMenu.propTypes = {
     game: PropTypes.object,
     onNicknameChange: PropTypes.func,
+    onQualityChange: PropTypes.func,
+    onSfxVolumeChange: PropTypes.func,
     onSoundEffectVolumeChange: PropTypes.func,
     onViewChange: PropTypes.func,
     player: PropTypes.object,
