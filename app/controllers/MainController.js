@@ -5,10 +5,13 @@ let moment = require('moment')
 
 let MainController = {
     home: function(req, res) {
-        let fileStat = fs.statSync('public/css/app.css')
-        let lastModifiedTime = moment(fileStat.mtime).unix()
+        const fileStat = fs.statSync('public/css/app.css')
+        const lastModifiedTime = moment(fileStat.mtime).unix()
+        const rooms = require('../sockets').getRooms()
+        const numberOfRooms = Object.keys(rooms).length
 
         res.render('home', {
+            numberOfRooms: numberOfRooms,
             lastModifiedTime: lastModifiedTime,
         })
     },
@@ -29,6 +32,16 @@ let MainController = {
 
         res.render('credits', {
             lastModifiedTime: lastModifiedTime,
+        })
+    },
+
+    rooms: function(req, res) {
+        const rooms = require('../sockets').getRooms()
+        const maxRoomSize = require('../../resources/assets/js/lib/GameConsts').MAX_ROOM_SIZE
+
+        res.render('rooms', {
+            rooms,
+            maxRoomSize,
         })
     },
 }

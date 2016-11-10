@@ -18,6 +18,7 @@ body.main {
     top: 50%;
     height: auto;
     transform: translate(-50%, -50%);
+    width: auto;
 
     & > div {
         position: absolute;
@@ -29,15 +30,22 @@ body.main {
     .main-header {
         clear: both;
         color: #fff;
+        display: block;
         font-family: Bangers, Arial, sans-serif;
         font-size: 110px;
         font-weight: 300;
         letter-spacing: 2px;
         line-height: 110px;
-        position: relative;
         margin-bottom: 10px;
+        position: relative;
+        text-align: center;
         text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
         width: auto;
+
+        &:active,
+        &:hover {
+            text-decoration: none;
+        }
 
         span {
             position: absolute;
@@ -98,12 +106,17 @@ body.main {
 
 .home-content {
     margin: 0 auto;
-    width: 560px;
+    width: 660px;
+}
+
+.rooms-content {
+    margin: 0 auto;
+    width: 660px;
 }
 
 .home-footer {
     position: absolute;
-    bottom: 10px;
+    bottom: 15px;
     color: white;
     width: 100%;
 

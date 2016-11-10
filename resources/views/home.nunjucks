@@ -5,10 +5,10 @@
 {% block content %}
 <section class="main-section">
     <div class="col-xs-12">
-        <div class="main-header text-center">
+        <a class="main-header" href="/">
             Ranger Steve
             <span>Beta</span>
-        </div>
+        </a>
 
         <div class="home-content">
             <form action="/game" method="GET">
@@ -28,26 +28,36 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <button
-                                        type="submit"
-                                        class="btn btn-success btn-lg btn-block"
-                                        id="play-button"
-                                    >
-                                        Play Now
-                                    </button>
-                                </div>
+                                {% if numberOfRooms > 0 %}
+                                    <div class="col-sm-6">
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success btn-lg btn-block"
+                                            id="play-button"
+                                        >
+                                            Play Now
+                                        </button>
+                                    </div>
 
-                                <div class="col-sm-6">
-                                    <a
-                                        class="btn btn-primary btn-lg btn-block"
-                                        href="https://discord.gg/GqKgsmy"
-                                        target="_blank"
-                                        id="discord-button"
-                                    >
-                                        Join us on Discord
-                                    </a>
-                                </div>
+                                    <div class="col-sm-6">
+                                        <a
+                                            class="btn btn-primary btn-lg btn-block"
+                                            href="/rooms"
+                                        >
+                                            View Rooms
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <div class="col-sm-12">
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success btn-lg btn-block"
+                                            id="play-button"
+                                        >
+                                            Play Now
+                                        </button>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -112,20 +122,6 @@
         </div>
     </div>
 </section>
-
-<div class="row home-footer">
-    <div class="col-sm-12 text-center">
-        <strong>
-            <a href="https://www.facebook.com/rangerstevegame/" target="_blank">Facebook</a>
-            |
-            <a href="https://twitter.com/michaeljcalkins" target="_blank">Twitter</a>
-            |
-            <a href="https://github.com/michaeljcalkins/rangersteve-ideas/issues" target="_blank">Bugs and Ideas</a>
-            |
-            <a href="/credits">Credits</a>
-        </strong>
-    </div>
-</div>
 {% endblock %}
 
 {% block scripts %}
