@@ -7,6 +7,5 @@ var MainController = require('./controllers/MainController')
 router.get('/', MainController.home)
 router.get('/game', MainController.game)
 router.get('/credits', MainController.credits)
-router.get('/rooms', MainController.rooms)
 
 module.exports = router
