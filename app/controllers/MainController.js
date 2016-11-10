@@ -5,10 +5,13 @@ let moment = require('moment')
 
 let MainController = {
     home: function(req, res) {
-        let fileStat = fs.statSync('public/css/app.css')
-        let lastModifiedTime = moment(fileStat.mtime).unix()
+        const fileStat = fs.statSync('public/css/app.css')
+        const lastModifiedTime = moment(fileStat.mtime).unix()
+        const rooms = require('../sockets').getRooms()
+        const numberOfRooms = Object.keys(rooms).length
 
         res.render('home', {
+            numberOfRooms: numberOfRooms,
             lastModifiedTime: lastModifiedTime,
         })
     },

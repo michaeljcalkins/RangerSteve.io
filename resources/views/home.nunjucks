@@ -28,24 +28,36 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <button
-                                        type="submit"
-                                        class="btn btn-success btn-lg btn-block"
-                                        id="play-button"
-                                    >
-                                        Play Now
-                                    </button>
-                                </div>
+                                {% if numberOfRooms > 0 %}
+                                    <div class="col-sm-6">
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success btn-lg btn-block"
+                                            id="play-button"
+                                        >
+                                            Play Now
+                                        </button>
+                                    </div>
 
-                                <div class="col-sm-6">
-                                    <a
-                                        class="btn btn-primary btn-lg btn-block"
-                                        href="/rooms"
-                                    >
-                                        View Rooms
-                                    </a>
-                                </div>
+                                    <div class="col-sm-6">
+                                        <a
+                                            class="btn btn-primary btn-lg btn-block"
+                                            href="/rooms"
+                                        >
+                                            View Rooms
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <div class="col-sm-12">
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success btn-lg btn-block"
+                                            id="play-button"
+                                        >
+                                            Play Now
+                                        </button>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

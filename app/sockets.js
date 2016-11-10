@@ -49,6 +49,9 @@ function getRooms() {
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
+        // Room was likely deleted when the last player left
+        if (! rooms[roomId]) return
+
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
             util.log('Restarting round for', roomId)
             const previousMap = rooms[roomId].map
@@ -357,6 +360,12 @@ function onClientDisconnect() {
     io.to(selectedRoomId).emit('update players', {
         room: rooms[selectedRoomId],
     })
+
+    // If the room the player left is empty close the room
+    if (Object.keys(rooms[selectedRoomId].players).length === 0) {
+        util.log('Removing room: ', selectedRoomId)
+        delete rooms[selectedRoomId]
+    }
 }
 
 function onPlayerFullHealth(data) {
