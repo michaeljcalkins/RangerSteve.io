@@ -32,6 +32,7 @@ body.main {
         font-family: Bangers, Arial, sans-serif;
         font-size: 110px;
         font-weight: 300;
+        display: block;
         letter-spacing: 2px;
         line-height: 110px;
         position: relative;
@@ -98,12 +99,17 @@ body.main {
 
 .home-content {
     margin: 0 auto;
-    width: 560px;
+    width: 660px;
+}
+
+.rooms-content {
+    margin: 0 auto;
+    width: 660px;
 }
 
 .home-footer {
     position: absolute;
-    bottom: 10px;
+    bottom: 15px;
     color: white;
     width: 100%;
 

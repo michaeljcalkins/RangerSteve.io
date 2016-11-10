@@ -45,7 +45,23 @@
 <body class="main">
     {% block content %}{% endblock %}
 
-    <script src="/js/jquery.min.js"></script>
+    <div class="row home-footer">
+        <div class="col-sm-12 text-center">
+            <strong>
+                <a href="https://discord.gg/GqKgsmy" target="_blank" id="discord-button">Join us on Discord</a>
+                |
+                <a href="https://www.facebook.com/rangerstevegame/" target="_blank">Facebook</a>
+                |
+                <a href="https://twitter.com/michaeljcalkins" target="_blank">Twitter</a>
+                |
+                <a href="https://github.com/michaeljcalkins/rangersteve-ideas/issues" target="_blank">Bugs and Ideas</a>
+                |
+                <a href="/credits">Credits</a>
+            </strong>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

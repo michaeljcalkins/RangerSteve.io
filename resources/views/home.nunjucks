@@ -41,11 +41,9 @@
                                 <div class="col-sm-6">
                                     <a
                                         class="btn btn-primary btn-lg btn-block"
-                                        href="https://discord.gg/GqKgsmy"
-                                        target="_blank"
-                                        id="discord-button"
+                                        href="/rooms"
                                     >
-                                        Join us on Discord
+                                        View Rooms
                                     </a>
                                 </div>
                             </div>
@@ -112,20 +110,6 @@
         </div>
     </div>
 </section>
-
-<div class="row home-footer">
-    <div class="col-sm-12 text-center">
-        <strong>
-            <a href="https://www.facebook.com/rangerstevegame/" target="_blank">Facebook</a>
-            |
-            <a href="https://twitter.com/michaeljcalkins" target="_blank">Twitter</a>
-            |
-            <a href="https://github.com/michaeljcalkins/rangersteve-ideas/issues" target="_blank">Bugs and Ideas</a>
-            |
-            <a href="/credits">Credits</a>
-        </strong>
-    </div>
-</div>
 {% endblock %}
 
 {% block scripts %}
