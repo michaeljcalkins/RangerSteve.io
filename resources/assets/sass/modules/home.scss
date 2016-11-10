@@ -11,21 +11,9 @@ body.main {
 }
 
 .main-section {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 50%;
-    top: 50%;
+    margin-top: 200px;
     height: auto;
-    transform: translate(-50%, -50%);
-    width: auto;
-
-    & > div {
-        position: absolute;
-        left: 50%;
-        top: 55%;
-        transform: translate(-50%, -50%);
-    }
+    width: 100%;
 
     .main-header {
         clear: both;
@@ -53,6 +41,7 @@ body.main {
         box-shadow: none;
         border-radius: 3px;
         border: 0;
+        min-height: 510px;
         padding: 30px;
     }
 
@@ -108,16 +97,13 @@ body.main {
 }
 
 .home-footer {
-    position: absolute;
-    bottom: 15px;
     color: white;
-    width: 100%;
+    margin-bottom: 20px;
 
     a {
         color: white;
     }
 }
-
 
 #beta-label {
     color: white;
