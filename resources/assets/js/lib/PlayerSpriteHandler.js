@@ -88,6 +88,7 @@ export default function PlayerSpriteHandler() {
     RS.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
     RS.leftArmSprite.anchor.setTo(0.8, .2)
     RS.leftArmSprite.rotation = 83
+    RS.leftArmSprite.scale.y *= -1
     RS.leftArmGroup.add(RS.leftArmSprite)
 
     // Add left arm to player as child then offset it
@@ -105,6 +106,7 @@ export default function PlayerSpriteHandler() {
     RS.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
     RS.rightArmSprite.anchor.setTo(0.62, 0.4)
     RS.rightArmSprite.rotation = 83.4
+    RS.rightArmSprite.scale.y *= -1
     RS.rightArmGroup.add(RS.rightArmSprite)
 
     // Add right arm to player as child then offset it
