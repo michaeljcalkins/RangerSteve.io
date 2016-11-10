@@ -5,7 +5,7 @@
 {% block content %}
 <section class="main-section">
     <div class="col-xs-12">
-        <a class="main-header text-center pointer" href="/">
+        <a class="main-header" href="/">
             Ranger Steve
             <span>Beta</span>
         </a>
@@ -22,6 +22,7 @@
                                 <th>Game mode</th>
                                 <th>Map</th>
                                 <th>Players</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,7 +32,7 @@
                                 <td>{{ room.gamemode }}</td>
                                 <td>{{ room.map }}</td>
                                 <td>{{ room.players | length }} / {{ maxRoomSize }}</td>
-                                <td>
+                                <td class="text-right">
                                     <button class="btn btn-sm btn-primary">Join Room</button>
                                 </td>
                             </tr>
