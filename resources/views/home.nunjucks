@@ -64,7 +64,7 @@
                 <div id="rooms-container" class="panel panel-default" style="margin-bottom: 0">
                     <div class="panel-heading text-center">Rooms</div>
 
-                    <table class="table table-middle">
+                    <table class="table table-middle table-hover">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -76,13 +76,13 @@
                         </thead>
                         <tbody>
                             {% for id, room in rooms %}
-                                <tr class="room-link pointer">
+                                <tr class="room-link pointer" data-href="/game?roomId={{ id }}">
                                     <td>{{ id }}</td>
                                     <td>{{ room.gamemode }}</td>
                                     <td>{{ room.map }}</td>
                                     <td>{{ room.players | length }} / {{ maxRoomSize }}</td>
-                                    <td class="text-right">
-                                        <a href="/game?roomId={{ id }}" class="btn btn-sm btn-primary">Join Room</a>
+                                    <td class="text-right" >
+                                        <button class="btn btn-sm btn-primary">Join Room</button>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -170,6 +170,10 @@
     $('#rooms-button').on('click', function() {
         $('#rooms-container').show()
         $('#how-to-play-container').hide()
+    })
+
+    $('.room-link').click(function() {
+        window.location = $(this).data('href')
     })
 
     {% if isProduction %}
