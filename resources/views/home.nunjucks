@@ -3,11 +3,12 @@
 {% block title %}RangerSteve.io{% endblock %}
 
 {% block content %}
+<span id="beta-label">Beta</span>
+
 <section class="main-section">
     <div class="col-xs-12">
         <a class="main-header" href="/">
             Ranger Steve
-            <span>Beta</span>
         </a>
 
         <div class="home-content">
@@ -40,22 +41,24 @@
                 </form>
 
                 <div class="row">
-                    <div class="col-sm-6">
-                        <button
-                            class="btn btn-primary btn-lg btn-block"
-                            id="how-to-play-button"
-                        >
-                            How to Play
-                        </button>
-                    </div>
-                    <div class="col-sm-6">
-                        <button
-                            class="btn btn-primary btn-lg btn-block"
-                            id="rooms-button"
-                        >
-                            View Rooms
-                        </button>
-                    </div>
+                    {% if numberOfRooms > 0 %}
+                        <div class="col-sm-6">
+                            <button
+                                class="btn btn-primary btn-lg btn-block"
+                                id="how-to-play-button"
+                            >
+                                How to Play
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button
+                                class="btn btn-primary btn-lg btn-block"
+                                id="rooms-button"
+                            >
+                                View Rooms
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div id="rooms-container" class="panel panel-default" style="margin-bottom: 0">

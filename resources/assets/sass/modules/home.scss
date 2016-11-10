@@ -46,13 +46,6 @@ body.main {
         &:hover {
             text-decoration: none;
         }
-
-        span {
-            position: absolute;
-            top: 0px;
-            transform: translate(-88%, -60%);
-            font-size: 35px;
-        }
     }
 
     .well {
@@ -125,12 +118,23 @@ body.main {
     }
 }
 
+
+#beta-label {
+    color: white;
+    font-size: 60px;
+    font-family: Bangers;
+    position: absolute;
+    top: 45px;
+    left: 20px;
+    transform: rotate(-45deg);
+}
+
 #how-to-play-container {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 #rooms-container {
-    margin-top: 20px;
+    margin-top: 15px;
     display: none;
 }
 
