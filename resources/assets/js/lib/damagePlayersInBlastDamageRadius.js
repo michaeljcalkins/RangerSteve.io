@@ -37,7 +37,6 @@ export default function(bullet) {
             damage: blastDamage,
             weaponId: bullet.weaponId,
             damagedPlayerId: window.SOCKET_ID,
-            attackingPlayerId: bullet.playerId,
             wasHeadshot: false,
         })
     }
@@ -58,7 +57,7 @@ export default function(bullet) {
                 damage: blastDamage,
                 weaponId: bullet.weaponId,
                 damagedPlayerId: enemy.id,
-                attackingPlayerId: bullet.playerId,
+                attackingPlayerId: window.SOCKET_ID,
                 wasHeadshot: false,
             })
         }
