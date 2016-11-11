@@ -13,6 +13,21 @@
     padding: 10px 15px 10px 50px;
 }
 
+.hud-settings-button {
+    background: url(/images/icons/cog-32-white.png) rgba(0, 0, 0, .4) 8px 8px no-repeat;
+    background-size: 16px;
+    font-size: 11px;
+    border: 0;
+    cursor: pointer;
+    padding: 5px 10px 5px 35px;
+    right: 5px;
+    top: 5px;
+    width: 107px;
+    height: auto;
+    text-align: center;
+    z-index: 1000000001; /* needs to be higher than z-index for .modal */
+}
+
 .hud-change-weapons-button {
     background: url(/images/icons/rifle-48.png) rgba(0, 0, 0, .4) 8px 6px no-repeat;
     background-size: 20px;
@@ -20,7 +35,7 @@
     border: 0;
     cursor: pointer;
     padding: 5px 10px 5px 35px;
-    right: 5px;
+    right: 118px;
     top: 5px;
     width: 107px;
     height: auto;

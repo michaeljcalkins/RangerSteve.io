@@ -1312,7 +1312,7 @@ class-validator@^0.6.1:
   dependencies:
     validator ">=5.0.0"
 
-classnames@^2.2.5:
+classnames@^2.2.4, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -4625,6 +4625,10 @@ react-dom@15.3.1:
   version "15.3.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.1.tgz#6d42cd2b64c8c5e0b693f3ffaec301e6e627e24e"
 
+react-input-autosize@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-1.1.0.tgz#3fe1ac832387d8abab85f6051ceab1c9e5570853"
+
 react-redux@^4.4.5:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-4.4.5.tgz#f509a2981be2252d10c629ef7c559347a4aec457"
@@ -4633,6 +4637,13 @@ react-redux@^4.4.5:
     invariant "^2.0.0"
     lodash "^4.2.0"
     loose-envify "^1.1.0"
+
+react-select:
+  version "1.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/react-select/-/react-select-1.0.0-rc.2.tgz#9fc11b149a3dc1ac831289d21b40a59742f82f8d"
+  dependencies:
+    classnames "^2.2.4"
+    react-input-autosize "^1.1.0"
 
 react@15.3.1:
   version "15.3.1"

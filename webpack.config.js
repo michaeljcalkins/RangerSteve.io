@@ -15,7 +15,7 @@ const
     OptimizeJsPlugin = require("optimize-js-plugin"),
 
     // Analysis Plugins
-    BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin,
+    // BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin,
 
     // Config
     isProduction = process.argv[2] === '-p',
@@ -99,7 +99,7 @@ if (! isProduction) {
             manifest: require("./dll/vendor-manifest.json"),
         }),
         // uncomment to analyze webpack bundle size
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
         new OptimizeJsPlugin({
             sourceMap: false,
         }),

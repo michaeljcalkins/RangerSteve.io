@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react'
 import cs from 'classnames'
 
-import DefaultView from './DefaultView'
 import ChoosePrimaryView from './ChoosePrimaryView'
 import ChooseSecondaryView from './ChooseSecondaryView'
 import ControlsView from './ControlsView'
+import WeaponsView from './WeaponsView'
+import SettingsView from './SettingsView'
 
 export default function SettingsModal({
     game,
@@ -38,6 +39,18 @@ export default function SettingsModal({
                 />
                 )
 
+            case 'settings':
+                return (
+                <SettingsView
+                    game={ game }
+                    onNicknameChange={ onNicknameChange }
+                    onQualityChange={ onQualityChange }
+                    onSfxVolumeChange={ onSfxVolumeChange }
+                    onViewChange={ onViewChange }
+                    player={ player }
+                />
+                )
+
             case 'controls':
                 return (
                 <ControlsView
@@ -50,11 +63,8 @@ export default function SettingsModal({
 
             default:
                 return (
-                <DefaultView
+                <WeaponsView
                     game={ game }
-                    onNicknameChange={ onNicknameChange }
-                    onQualityChange={ onQualityChange }
-                    onSfxVolumeChange={ onSfxVolumeChange }
                     onViewChange={ onViewChange }
                     player={ player }
                 />
@@ -91,7 +101,17 @@ export default function SettingsModal({
                                             }) }
                                         >
                                             <a onClick={ onViewChange.bind(this, 'default') }>
-                                                Weapons and Settings
+                                                Weapons
+                                            </a>
+                                        </li>
+                                        <li
+                                            className={ cs({
+                                                pointer: true,
+                                                active: game.settingsView === 'settings',
+                                            }) }
+                                        >
+                                            <a onClick={ onViewChange.bind(this, 'settings') }>
+                                                Settings
                                             </a>
                                         </li>
                                         <li
