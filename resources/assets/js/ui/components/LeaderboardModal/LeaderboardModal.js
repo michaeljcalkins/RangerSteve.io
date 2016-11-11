@@ -38,7 +38,7 @@ export default class Leaderboard extends Component {
 
     tick() {
         const { props: { room } } = this
-        const currentTime = Math.floor(Date.now())
+        const currentTime = Math.floor(Date.now() / 1000)
         let timeRemaining = room.roundStartTime - currentTime
         let minutes = Math.floor(timeRemaining / 60)
         let seconds = timeRemaining - minutes * 60

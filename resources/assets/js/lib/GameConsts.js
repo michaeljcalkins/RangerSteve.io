@@ -2,7 +2,7 @@ const GameConsts = {
     // Server Settings
     MAX_ROOM_SIZE: 8,
     RESPAWN_TIME_SECONDS: 5,
-    ROUND_LENGTH_MINUTES: 5,
+    ROUND_LENGTH_MINUTES: .2,
     END_OF_ROUND_BREAK_SECONDS: 10,
     PLAYER_FULL_HEALTH: 100,
     MAPS: ['PunkFallout', 'HighRuleJungle', 'PunkCity', 'PunkLoop', 'DeathCycle', 'EvilUnderground'],
