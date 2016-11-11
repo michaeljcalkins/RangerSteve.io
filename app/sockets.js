@@ -52,6 +52,7 @@ setInterval(function() {
         // Room was likely deleted when the last player left
         if (! rooms[roomId]) return
 
+        // Round has ended and is restarting now
         if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
             util.log('Restarting round for', roomId)
             const previousMap = rooms[roomId].map
@@ -60,10 +61,7 @@ setInterval(function() {
             rooms[roomId] = createRoom({
                 id: roomId,
                 players: rooms[roomId].players,
-                roundLength: GameConsts.ROUND_LENGTH_MINUTES,
                 messages: rooms[roomId].messages,
-                redTeamScore: 0,
-                blueTeamScore: 0,
             })
 
             // Randomly select a map that was not the previous map
@@ -94,6 +92,7 @@ setInterval(function() {
             return
         }
 
+        // Round has ended and setting the time the next round will start at
         if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
@@ -265,19 +264,12 @@ function onNewPlayer(data) {
         }
     }
 
-    /**
-     * Add the player to the blue team
-     * if it has less players
-     * or the same number of players but is losing.
-     */
+    // Assign the new player to a team
     if (rooms[roomIdPlayerWillJoin] && rooms[roomIdPlayerWillJoin].gamemode === 'TeamDeathmatch') {
         const players = rooms[roomIdPlayerWillJoin].players
         const redTeamScore = rooms[roomIdPlayerWillJoin].redTeamScore
         const blueTeamScore = rooms[roomIdPlayerWillJoin].blueTeamScore
-
         newPlayer.meta.team = getTeam(players, redTeamScore, blueTeamScore)
-
-        util.log('Player added to team: ', newPlayer.meta.team)
     }
 
     // User to the room

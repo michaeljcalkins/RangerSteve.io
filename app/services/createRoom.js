@@ -5,6 +5,7 @@ const _ = require('lodash')
 const hri = require('human-readable-ids').hri
 
 const GameConsts = require('../../resources/assets/js/lib/GameConsts')
+const getTeam = require('./getTeam')
 
 module.exports = function(data) {
     let players = {}
@@ -21,6 +22,12 @@ module.exports = function(data) {
     const gamemodeId = data.gamemode && GameConsts.GAMEMODES.indexOf(data.gamemode) > -1
         ? data.gamemode
         : _.sample(GameConsts.GAMEMODES)
+
+    if (gamemodeId === 'TeamDeathmatch') {
+        Object.keys(players).forEach(playerId => {
+            players[playerId].meta.team = getTeam(players, 0, 0)
+        })
+    }
 
     // Use the specified map if it exists
     const mapId = data.map && GameConsts.MAPS.indexOf(data.map) > -1
