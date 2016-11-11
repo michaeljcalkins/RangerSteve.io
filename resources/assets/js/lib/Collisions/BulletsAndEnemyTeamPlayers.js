@@ -1,6 +1,7 @@
 import emitPlayerDamaged from '../SocketEvents/emitPlayerDamaged'
 import PlayBloodSpray from '../PlayBloodSpray'
-import RocketExplosion from '../RocketExplosion'
+import PlayRocketExplosion from '../PlayRocketExplosion'
+import damagePlayersInBlastDamageRadius from '../damagePlayersInBlastDamageRadius'
 
 export default function() {
     const state = this.game.store.getState()
@@ -33,7 +34,9 @@ export default function() {
         })
 
         if (bullet.weaponId === 'RPG') {
-            RocketExplosion.call(this, {
+            damagePlayersInBlastDamageRadius.call(this, bullet)
+
+            PlayRocketExplosion.call(this, {
                 bulletY: bullet.y,
                 bulletX: bullet.x,
             })
