@@ -45,8 +45,11 @@ let sharedConfig = {
             {
                 test:/\.(js|jsx)$/,
                 include: [
-                    path.join(__dirname, `${SRC}/js`),// important for performance!
-                ], exclude: [/node_modules/, "index.js"], loader: 'babel',
+                    path.join(__dirname, `${SRC}/js`),
+                    path.resolve('node_modules/preact-compat/src'),
+                ],
+                loader: 'babel',
+
             },
             {
                 test: /\.scss$/, include: [
