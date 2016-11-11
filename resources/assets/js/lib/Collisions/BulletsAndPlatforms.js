@@ -1,12 +1,15 @@
-import RocketExplosion from '../RocketExplosion'
+import PlayRocketExplosion from '../PlayRocketExplosion'
 import BulletRicochet from '../BulletRicochet'
+import damagePlayersInBlastDamageRadius from '../damagePlayersInBlastDamageRadius'
 
 export default function() {
     this.game.physics.arcade.overlap(RS.bullets, this.ground, function(bullet) {
         bullet.kill()
 
         if (bullet.weaponId === 'RPG') {
-            return RocketExplosion.call(this, {
+            damagePlayersInBlastDamageRadius.call(this, bullet)
+
+            return PlayRocketExplosion.call(this, {
                 bulletY: bullet.y,
                 bulletX: bullet.x,
             })
