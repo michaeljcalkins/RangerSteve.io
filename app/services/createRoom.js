@@ -29,7 +29,7 @@ module.exports = function(data) {
 
     // Remove non alphanumeric and hyphens from custom room ids
     const cleanedRoomId = data.id
-        ? data.id.replace(/[^a-zA-Z0-9 -]/g, '')
+        ? data.id.replace(/[^a-zA-Z0-9 -]/g, '').substr(0, 25)
         : hri.random().replace(/[^a-zA-Z0-9 -]/g, '')
 
     return {

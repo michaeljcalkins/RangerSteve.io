@@ -13,6 +13,15 @@ describe('createRoom', function() {
         assert.equal(newRoom.players[123].id, 123)
     })
 
+    it('should create room with a shortened custom room id', function() {
+        const newRoom = createRoom({
+            id: 'test.test/@#$asdf-asdfadsflhgaweurghalw3ur23jghatkwjfuwajkgjku3gjgb4k3ygtkajsgdfkjasgdfkagwefkyweaaadsflhgaweurghalw3ur23jghatkwjfuwajkgjku3gjgb4k3ygtkajsgdfkjasgdfkagwefkyweaaadsflhgaweurghalw3ur23jghatkwjfuwajkgjku3gjgb4k3ygtkajsgdfkjasgdfkagwefkyweaa',
+        })
+
+        assert.equal(newRoom.id.length, 25)
+        assert.equal(newRoom.id, 'testtestasdf-asdfadsflhga')
+    })
+
     it('should create room with random room id and player', function() {
         const newRoom = createRoom({
             player: { id: 123 },
