@@ -43,6 +43,8 @@ export default function(bullet) {
 
     // Find all players in the vicinity of this explosion and deal them damage
     RS.enemies.forEach(enemy => {
+        if (state.room.players[enemy.id].meta.team === state.room.players[window.SOCKET_ID].meta.team) return
+
         const a = enemy.x - bullet.x
         const b = enemy.y - bullet.y
         const distanceFromExplosion = Math.sqrt(a * a + b * b)
