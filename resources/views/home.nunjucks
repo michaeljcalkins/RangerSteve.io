@@ -77,7 +77,7 @@
                         <tbody>
                             {% for id, room in rooms %}
                                 <tr class="room-link pointer" data-href="/game?roomId={{ id }}">
-                                    <td>{{ id }}</td>
+                                    <td class="dont-break-out">{{ id }}</td>
                                     <td>{{ room.gamemode }}</td>
                                     <td>{{ room.map }}</td>
                                     <td>{{ room.players | length }} / {{ maxRoomSize }}</td>
