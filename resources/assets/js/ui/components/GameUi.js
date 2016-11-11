@@ -5,7 +5,7 @@ import autobind from 'react-autobind'
 import HudChatHistory from './Hud/HudChatHistory'
 import HudKillLog from './Hud/HudKillLog'
 import HudChangeWeaponsButton from './Hud/HudChangeWeaponsButton'
-import HudKeyboardControlsButton from './Hud/HudKeyboardControlsButton'
+import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
 import HudLeaderboard from './Hud/HudLeaderboard'
 import SettingsModal from './SettingsModal/SettingsModal'
@@ -100,11 +100,11 @@ export default class GameUi extends React.Component {
         return (game.leaderboardModalIsOpen || room.state === 'ended')
     }
 
-    handleOpenKeyboardControlsButton() {
+    handleOpenSettingsButton() {
         const { onOpenSettingsModal, onSettingsViewChange } = this.props
 
         onOpenSettingsModal()
-        onSettingsViewChange('controls')
+        onSettingsViewChange('settings')
     }
 
     handleChangeWeaponsButton() {
@@ -130,7 +130,7 @@ export default class GameUi extends React.Component {
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
                 <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
-                <HudKeyboardControlsButton onButtonClick={ this.handleOpenKeyboardControlsButton } />
+                <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />
                 <HudLeaderboard room={ room } />
                 <HudChatHistory
                     isOpen={ game.chatModalIsOpen }

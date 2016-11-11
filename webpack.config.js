@@ -62,6 +62,8 @@ let sharedConfig = {
     resolve: {
         alias: {
             lib: path.resolve('./lib'),
+            'react': 'preact-compat',
+            'react-dom': 'preact-compat',
         },
         extensions: ['.scss', '.webpack.js', '.web.js', '.js'],
     },

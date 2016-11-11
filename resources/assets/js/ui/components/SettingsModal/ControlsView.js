@@ -1,40 +1,41 @@
 import React, { PropTypes } from 'react'
+import Select from 'react-select'
 import storage from 'store'
 
-export default function ControlsMenu({
+export default function ControlsView({
     game,
     onKeyboardControlChange,
     onSetResetEventsFlag,
 }) {
-    const keyboardCodes = {
-        A: Phaser.Keyboard.A,
-        B: Phaser.Keyboard.B,
-        C: Phaser.Keyboard.C,
-        D: Phaser.Keyboard.D,
-        E: Phaser.Keyboard.E,
-        F: Phaser.Keyboard.F,
-        G: Phaser.Keyboard.G,
-        H: Phaser.Keyboard.H,
-        I: Phaser.Keyboard.I,
-        J: Phaser.Keyboard.J,
-        K: Phaser.Keyboard.K,
-        L: Phaser.Keyboard.L,
-        M: Phaser.Keyboard.M,
-        N: Phaser.Keyboard.N,
-        O: Phaser.Keyboard.O,
-        P: Phaser.Keyboard.p,
-        Q: Phaser.Keyboard.Q,
-        R: Phaser.Keyboard.R,
-        S: Phaser.Keyboard.S,
-        T: Phaser.Keyboard.T,
-        U: Phaser.Keyboard.U,
-        V: Phaser.Keyboard.V,
-        W: Phaser.Keyboard.W,
-        X: Phaser.Keyboard.X,
-        Y: Phaser.Keyboard.Y,
-        Z: Phaser.Keyboard.Z,
-        SPACEBAR: Phaser.Keyboard.SPACEBAR,
-    }
+    const options = [
+        { value: Phaser.Keyboard.A, label: 'A' },
+        { value: Phaser.Keyboard.B, label: 'B' },
+        { value: Phaser.Keyboard.C, label: 'C' },
+        { value: Phaser.Keyboard.D, label: 'D' },
+        { value: Phaser.Keyboard.E, label: 'E' },
+        { value: Phaser.Keyboard.F, label: 'F' },
+        { value: Phaser.Keyboard.G, label: 'G' },
+        { value: Phaser.Keyboard.H, label: 'H' },
+        { value: Phaser.Keyboard.I, label: 'I' },
+        { value: Phaser.Keyboard.J, label: 'J' },
+        { value: Phaser.Keyboard.K, label: 'K' },
+        { value: Phaser.Keyboard.L, label: 'L' },
+        { value: Phaser.Keyboard.M, label: 'M' },
+        { value: Phaser.Keyboard.N, label: 'N' },
+        { value: Phaser.Keyboard.O, label: 'O' },
+        { value: Phaser.Keyboard.P, label: 'P' },
+        { value: Phaser.Keyboard.Q, label: 'Q' },
+        { value: Phaser.Keyboard.R, label: 'R' },
+        { value: Phaser.Keyboard.S, label: 'S' },
+        { value: Phaser.Keyboard.T, label: 'T' },
+        { value: Phaser.Keyboard.U, label: 'U' },
+        { value: Phaser.Keyboard.V, label: 'V' },
+        { value: Phaser.Keyboard.W, label: 'W' },
+        { value: Phaser.Keyboard.X, label: 'X' },
+        { value: Phaser.Keyboard.Y, label: 'Y' },
+        { value: Phaser.Keyboard.Z, label: 'Z' },
+        { value: Phaser.Keyboard.SPACEBAR, label: 'Space Bar' },
+    ]
 
     function handleSetAzerty() {
         let obj = {}
@@ -42,32 +43,22 @@ export default function ControlsMenu({
         obj['left'] = Phaser.Keyboard.Q
         storage.set('keyboardControl.left', Phaser.Keyboard.Q)
         onKeyboardControlChange(obj)
-        let input = document.getElementById('control-left')
-        input.value = Phaser.Keyboard.Q
 
         obj['right'] = Phaser.Keyboard.D
         storage.set('keyboardControl.right', Phaser.Keyboard.D)
         onKeyboardControlChange(obj)
-        input = document.getElementById('control-right')
-        input.value = Phaser.Keyboard.D
 
         obj['up'] = Phaser.Keyboard.Z
         storage.set('keyboardControl.up', Phaser.Keyboard.Z)
         onKeyboardControlChange(obj)
-        input = document.getElementById('control-up')
-        input.value = Phaser.Keyboard.Z
 
         obj['switchWeapon'] = Phaser.Keyboard.A
         storage.set('keyboardControl.switchWeapon', Phaser.Keyboard.A)
         onKeyboardControlChange(obj)
-        input = document.getElementById('control-switchWeapon')
-        input.value = Phaser.Keyboard.A
 
         obj['newChatMessage'] = Phaser.Keyboard.T
         storage.set('keyboardControl.newChatMessage', Phaser.Keyboard.T)
         onKeyboardControlChange(obj)
-        input = document.getElementById('control-newChatMessage')
-        input.value = Phaser.Keyboard.T
 
         onSetResetEventsFlag(true)
     }
@@ -78,57 +69,32 @@ export default function ControlsMenu({
         obj['left'] = Phaser.Keyboard.A
         storage.set('keyboardControl.left', Phaser.Keyboard.A)
         onKeyboardControlChange(obj)
-        let input = document.getElementById('control-left')
-        input.value = Phaser.Keyboard.A
 
         obj['right'] = Phaser.Keyboard.D
         storage.set('keyboardControl.right', Phaser.Keyboard.D)
         onKeyboardControlChange(obj)
-        input = document.getElementById('control-right')
-        input.value = Phaser.Keyboard.D
 
         obj['up'] = Phaser.Keyboard.W
         storage.set('keyboardControl.up', Phaser.Keyboard.W)
         onKeyboardControlChange(obj)
-        input = document.getElementById('control-up')
-        input.value = Phaser.Keyboard.W
 
         obj['switchWeapon'] = Phaser.Keyboard.Q
         storage.set('keyboardControl.switchWeapon', Phaser.Keyboard.Q)
         onKeyboardControlChange(obj)
-        input = document.getElementById('control-switchWeapon')
-        input.value = Phaser.Keyboard.Q
 
         obj['newChatMessage'] = Phaser.Keyboard.T
         storage.set('keyboardControl.newChatMessage', Phaser.Keyboard.T)
         onKeyboardControlChange(obj)
-        input = document.getElementById('control-newChatMessage')
-        input.value = Phaser.Keyboard.T
 
         onSetResetEventsFlag(true)
     }
 
-    function renderKeyboardCodes() {
-        return Object.keys(keyboardCodes).map((key) => {
-            return (
-                <option
-                    key={ key }
-                    value={ keyboardCodes[key] }
-                >
-                    { key }
-                </option>
-            )
-        })
-    }
-
-    function handleControlChange(evt) {
-        storage.set('keyboardControl.' + evt.target.name, evt.target.value)
+    function handleControlChange(name, val) {
+        const storageKey = 'keyboardControl.' + name
+        storage.set(storageKey, val.value)
         let obj = {}
-        obj[evt.target.name] = evt.target.value
+        obj[name] = val.value
         onKeyboardControlChange(obj)
-        let input = document.getElementById('control-' + evt.target.name)
-        input.value = evt.target.value
-
         onSetResetEventsFlag(true)
     }
 
@@ -181,90 +147,67 @@ export default function ControlsMenu({
                             <tr>
                                 <td>Jump</td>
                                 <td>
-                                    <select
-                                        className="form-control"
-                                        defaultValue={ game.keyboardControls['up'] }
-                                        id="control-up"
-                                        name="up"
-                                        onChange={ handleControlChange }
-                                    >
-                                        { renderKeyboardCodes() }
-                                    </select>
+                                    <Select
+                                        id="control-left"
+                                        onChange={ handleControlChange.bind(this, 'up') }
+                                        options={ options }
+                                        value={ game.keyboardControls['up'] }
+                                    />
                                 </td>
                                 <td />
                             </tr>
                             <tr>
                                 <td>Move left</td>
                                 <td>
-                                    <select
-                                        className="form-control"
-                                        defaultValue={ game.keyboardControls['left'] }
-                                        id="control-left"
-                                        name="left"
-                                        onChange={ handleControlChange }
-                                    >
-                                        { renderKeyboardCodes() }
-                                    </select>
+                                    <Select
+                                        onChange={ handleControlChange.bind(this, 'left') }
+                                        options={ options }
+                                        value={ game.keyboardControls['left'] }
+                                    />
                                 </td>
                                 <td />
                             </tr>
                             <tr>
                                 <td>Move right</td>
                                 <td>
-                                    <select
-                                        className="form-control"
-                                        defaultValue={ game.keyboardControls['right'] }
-                                        id="control-right"
-                                        name="right"
-                                        onChange={ handleControlChange }
-                                    >
-                                        { renderKeyboardCodes() }
-                                    </select>
+                                    <Select
+                                        onChange={ handleControlChange.bind(this, 'right') }
+                                        options={ options }
+                                        value={ game.keyboardControls['right'] }
+                                    />
                                 </td>
                                 <td />
                             </tr>
                             <tr>
                                 <td>Reload</td>
                                 <td>
-                                    <select
-                                        className="form-control"
-                                        defaultValue={ game.keyboardControls['reload'] }
-                                        id="control-reload"
-                                        name="reload"
-                                        onChange={ handleControlChange }
-                                    >
-                                        { renderKeyboardCodes() }
-                                    </select>
+                                    <Select
+                                        onChange={ handleControlChange.bind(this, 'reload') }
+                                        options={ options }
+                                        value={ game.keyboardControls['reload'] }
+                                    />
                                 </td>
                                 <td />
                             </tr>
                             <tr>
                                 <td>Switch weapons</td>
                                 <td>
-                                    <select
-                                        className="form-control"
-                                        defaultValue={ game.keyboardControls['switchWeapon'] }
-                                        id="control-switchWeapon"
-                                        name="switchWeapon"
-                                        onChange={ handleControlChange }
-                                    >
-                                        { renderKeyboardCodes() }
-                                    </select>
+                                    <Select
+                                        onChange={ handleControlChange.bind(this, 'switchWeapon') }
+                                        options={ options }
+                                        value={ game.keyboardControls['switchWeapon'] }
+                                    />
                                 </td>
                                 <td />
                             </tr>
                             <tr>
                                 <td>Write chat message</td>
                                 <td>
-                                    <select
-                                        className="form-control"
-                                        defaultValue={ game.keyboardControls['newChatMessage'] }
-                                        id="control-newChatMessage"
-                                        name="newChatMessage"
-                                        onChange={ handleControlChange }
-                                    >
-                                        { renderKeyboardCodes() }
-                                    </select>
+                                    <Select
+                                        onChange={ handleControlChange.bind(this, 'newChatMessage') }
+                                        options={ options }
+                                        value={ game.keyboardControls['newChatMessage'] }
+                                    />
                                 </td>
                                 <td />
                             </tr>
@@ -276,7 +219,7 @@ export default function ControlsMenu({
     )
 }
 
-ControlsMenu.propTypes = {
+ControlsView.propTypes = {
     game: PropTypes.object.isRequired,
     onKeyboardControlChange: PropTypes.func.isRequired,
     onSetResetEventsFlag: PropTypes.func.isRequired,
