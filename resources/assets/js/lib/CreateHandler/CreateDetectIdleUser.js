@@ -1,17 +1,12 @@
 import GameConsts from '../GameConsts'
+import debounce from 'lodash/debounce'
+
+const playerIsIdle = debounce(() => {
+    document.location.href = '/'
+}, GameConsts.MAX_IDLE_SECONDS * 1000)
 
 export default function() {
-    let t
-    window.onload = resetTimer
-    document.onmousemove = resetTimer
-    document.onkeypress = resetTimer
-
-    function playerIsIdle() {
-        document.location.href = '/'
-    }
-
-    function resetTimer() {
-        clearTimeout(t)
-        t = setTimeout(playerIsIdle, GameConsts.MAX_IDLE_SECONDS * 1000)
-    }
+    window.onload = playerIsIdle
+    document.onmousemove = playerIsIdle
+    document.onkeypress = playerIsIdle
 }
