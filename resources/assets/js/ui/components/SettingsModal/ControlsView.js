@@ -149,7 +149,7 @@ export default function ControlsView({
                                 <td>Jump</td>
                                 <td>
                                     <Select
-                                        id="control-left"
+                                        clearable={ false }
                                         onChange={ handleControlChange.bind(this, 'up') }
                                         options={ options }
                                         value={ game.keyboardControls['up'] }
@@ -161,6 +161,7 @@ export default function ControlsView({
                                 <td>Move left</td>
                                 <td>
                                     <Select
+                                        clearable={ false }
                                         onChange={ handleControlChange.bind(this, 'left') }
                                         options={ options }
                                         value={ game.keyboardControls['left'] }
@@ -172,6 +173,7 @@ export default function ControlsView({
                                 <td>Move right</td>
                                 <td>
                                     <Select
+                                        clearable={ false }
                                         onChange={ handleControlChange.bind(this, 'right') }
                                         options={ options }
                                         value={ game.keyboardControls['right'] }
@@ -183,6 +185,7 @@ export default function ControlsView({
                                 <td>Reload</td>
                                 <td>
                                     <Select
+                                        clearable={ false }
                                         onChange={ handleControlChange.bind(this, 'reload') }
                                         options={ options }
                                         value={ game.keyboardControls['reload'] }
@@ -194,6 +197,7 @@ export default function ControlsView({
                                 <td>Switch weapons</td>
                                 <td>
                                     <Select
+                                        clearable={ false }
                                         onChange={ handleControlChange.bind(this, 'switchWeapon') }
                                         options={ options }
                                         value={ game.keyboardControls['switchWeapon'] }
@@ -205,6 +209,7 @@ export default function ControlsView({
                                 <td>Write chat message</td>
                                 <td>
                                     <Select
+                                        clearable={ false }
                                         onChange={ handleControlChange.bind(this, 'newChatMessage') }
                                         options={ options }
                                         value={ game.keyboardControls['newChatMessage'] }
