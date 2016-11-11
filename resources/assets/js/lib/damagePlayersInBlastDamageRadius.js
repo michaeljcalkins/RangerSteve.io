@@ -1,7 +1,7 @@
 import emitPlayerDamaged from './SocketEvents/emitPlayerDamaged'
 
 let lastBulletId = null
-const blastRadius = 100
+const blastRadius = 120
 
 function getBlastDamage(distanceFromExplosion) {
     const percentFromCenter = (blastRadius - distanceFromExplosion)
