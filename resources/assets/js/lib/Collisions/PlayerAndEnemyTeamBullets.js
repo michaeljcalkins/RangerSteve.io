@@ -1,5 +1,5 @@
 import PlayBloodSpray from '../PlayBloodSpray'
-import RocketExplosion from '../RocketExplosion'
+import PlayRocketExplosion from '../PlayRocketExplosion'
 
 export default function() {
     const state = this.game.store.getState()
@@ -23,7 +23,7 @@ export default function() {
         })
 
         if (bullet.weaponId === 'RPG') {
-            RocketExplosion.call(this, {
+            PlayRocketExplosion.call(this, {
                 bulletY: bullet.y,
                 bulletX: bullet.x,
             })

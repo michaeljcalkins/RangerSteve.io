@@ -1,4 +1,4 @@
-import RocketExplosion from '../RocketExplosion'
+import PlayRocketExplosion from '../PlayRocketExplosion'
 import BulletRicochet from '../BulletRicochet'
 
 export default function() {
@@ -6,7 +6,7 @@ export default function() {
         bullet.kill()
 
         if (bullet.weaponId === 'RPG') {
-            return RocketExplosion.call(this, {
+            return PlayRocketExplosion.call(this, {
                 bulletY: bullet.y,
                 bulletX: bullet.x,
             })
