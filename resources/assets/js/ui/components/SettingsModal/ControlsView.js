@@ -90,6 +90,7 @@ export default function ControlsView({
     }
 
     function handleControlChange(name, val) {
+        if (! val) return
         const storageKey = 'keyboardControl.' + name
         storage.set(storageKey, val.value)
         let obj = {}
