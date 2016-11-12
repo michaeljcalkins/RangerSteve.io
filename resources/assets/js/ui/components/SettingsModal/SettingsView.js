@@ -82,7 +82,7 @@ export default class SettingsView extends React.Component {
                             <label>Game Quality</label>
                             <input
                                 defaultValue={ this.state.quality }
-                                max="1600"
+                                max="950"
                                 min="600"
                                 onChange={ this.handleQualityChange }
                                 step="50"
