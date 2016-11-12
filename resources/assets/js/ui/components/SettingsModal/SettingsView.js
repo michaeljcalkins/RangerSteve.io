@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import autobind from 'react-autobind'
 
 import NameGenerator from '../../../lib/NameGenerator'
+import GameConsts from '../../../lib/GameConsts'
 
 export default class SettingsView extends React.Component {
     constructor(props) {
@@ -82,8 +83,8 @@ export default class SettingsView extends React.Component {
                             <label>Game Quality</label>
                             <input
                                 defaultValue={ this.state.quality }
-                                max="950"
-                                min="600"
+                                max={ GameConsts.MAX_QUALITY_SIZE }
+                                min={ GameConsts.MIN_QUALITY_SIZE }
                                 onChange={ this.handleQualityChange }
                                 step="50"
                                 type="range"

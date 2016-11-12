@@ -1,5 +1,6 @@
 import storage from 'store'
 import NameGenerator from '../lib/NameGenerator'
+import GameConsts from '../lib/GameConsts'
 
 const initialState = {
     currentWeapon: 'primaryWeapon',
@@ -16,7 +17,7 @@ const initialState = {
     nickname: storage.get('nickname', NameGenerator()),
     primaryAmmoRemaining: 0,
     primaryWeapon: null,
-    quality: storage.get('quality', 1000),
+    quality: storage.get('quality', GameConsts.MAX_QUALITY_SIZE),
     respawnTime: null,
     score: 0,
     secondaryAmmoRemaining: 0,

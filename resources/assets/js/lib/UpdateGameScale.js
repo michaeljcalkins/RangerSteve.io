@@ -1,8 +1,10 @@
-import storage from 'store'
+import GameConsts from './GameConsts'
 
 export default function() {
-    // const qualities = [1000, 600, 300]
-    const scaleFactor = storage.get('quality', 1000)
+    const state = this.game.store.getState()
+    const scaleFactor = state.player.quality <= GameConsts.MAX_QUALITY_SIZE
+        ? state.player.quality
+        : GameConsts.MAX_QUALITY_SIZE
     const innerWidth = window.innerWidth
     const innerHeight = window.innerHeight
     const gameRatio = innerWidth / innerHeight
