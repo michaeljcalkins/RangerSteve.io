@@ -47,7 +47,7 @@
 
     <div class="row home-footer">
         <div class="col-sm-12 text-center">
-            <strong>
+            <div class="footer-content">
                 <a href="https://discord.gg/GqKgsmy" target="_blank" id="discord-button">Join us on Discord</a>
                 |
                 <a href="https://www.facebook.com/rangerstevegame/" target="_blank">Facebook</a>
@@ -57,7 +57,7 @@
                 <a href="https://github.com/michaeljcalkins/rangersteve-ideas/issues" target="_blank">Bugs and Ideas</a>
                 |
                 <a href="/credits">Credits</a>
-            </strong>
+            </div>
         </div>
     </div>
 
