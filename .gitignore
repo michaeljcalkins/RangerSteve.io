@@ -45,3 +45,4 @@ public/js/app.js.map
 public/css/app.css
 public/css/app.css.map
 /.vscode
+/lib/GameConsts.dev.js
