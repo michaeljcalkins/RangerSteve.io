@@ -1,4 +1,4 @@
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 export function playerFaceLeft(remotePlayer) {
     if (remotePlayer.facing === 'left') return

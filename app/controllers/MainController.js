@@ -12,7 +12,7 @@ let MainController = {
         // Room table
         const rooms = require('../sockets').getRooms()
         const numberOfRooms = Object.keys(rooms).length
-        const maxRoomSize = require('../../resources/assets/js/lib/GameConsts').MAX_ROOM_SIZE
+        const maxRoomSize = require('../../lib/GameConsts').MAX_ROOM_SIZE
 
         res.render('home', {
             lastModifiedTime: lastModifiedTime,

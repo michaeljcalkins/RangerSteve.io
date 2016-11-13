@@ -1,6 +1,6 @@
 import sample from 'lodash/sample'
 
-import GameConsts from '../GameConsts'
+import GameConsts from 'lib/GameConsts'
 import KillCurrentPlayer from '../KillCurrentPlayer.js'
 import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 

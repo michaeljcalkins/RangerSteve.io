@@ -1,4 +1,4 @@
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 import Maps from './Maps'
 import actions from '../actions'
 import GetSpawnPoint from './GetSpawnPoint'

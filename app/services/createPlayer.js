@@ -1,6 +1,6 @@
 'use strict'
 
-const GameConsts = require('../../resources/assets/js/lib/GameConsts')
+const GameConsts = require('../../lib/GameConsts')
 
 module.exports = function(id, startX, startY) {
     return {

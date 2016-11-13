@@ -1,5 +1,5 @@
 import actions from '../actions'
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 export default function(currentWeaponId) {
     const store = this.game.store

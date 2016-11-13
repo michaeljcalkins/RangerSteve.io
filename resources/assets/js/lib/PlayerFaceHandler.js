@@ -1,5 +1,5 @@
 import actions from '../actions'
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 export function playerFaceLeft() {
     if (this.game.store.getState().player.facing === 'left') return

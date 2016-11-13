@@ -1,5 +1,5 @@
 import actions from '../../actions'
-import GameConsts from '../GameConsts'
+import GameConsts from 'lib/GameConsts'
 import KillCurrentPlayer from '../KillCurrentPlayer'
 
 let lastSwitchWeaponKey = null

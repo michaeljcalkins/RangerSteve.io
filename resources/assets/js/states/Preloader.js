@@ -1,7 +1,7 @@
 /**
  * Load all base game assets and start the gamemode.
  */
-import GameConsts from '../lib/GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 function Preloader(game) {
     this.game = game

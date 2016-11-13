@@ -1,4 +1,4 @@
-import GameConsts from '../GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 export default function() {
     RS.triplekillSound = this.game.add.audio('triplekill')

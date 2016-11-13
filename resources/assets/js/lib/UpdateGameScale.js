@@ -1,4 +1,4 @@
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 export default function() {
     const state = this.game.store.getState()

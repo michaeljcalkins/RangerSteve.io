@@ -1,4 +1,4 @@
-import GameConsts from '../GameConsts.js'
+import GameConsts from 'lib/GameConsts'
 
 export default function() {
     RS.rpgExplosions = this.game.add.group()

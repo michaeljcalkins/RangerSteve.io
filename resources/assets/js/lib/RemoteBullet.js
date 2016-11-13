@@ -1,5 +1,5 @@
 // @flow
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 export default function RemoteBullet(data: {
     bulletId: string,

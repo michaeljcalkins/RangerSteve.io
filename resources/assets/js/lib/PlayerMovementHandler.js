@@ -1,4 +1,4 @@
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 import { playerFaceLeft, playerFaceRight } from './PlayerFaceHandler'
 import { isJumpJetInputActive } from './InputHelpers'
 

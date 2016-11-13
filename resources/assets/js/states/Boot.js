@@ -1,4 +1,4 @@
-import GameConsts from '../lib/GameConsts'
+import GameConsts from 'lib/GameConsts'
 import setEventHandlers from '../lib/SocketEvents/setEventHandlers'
 import UpdateGameScale from '../lib/UpdateGameScale'
 

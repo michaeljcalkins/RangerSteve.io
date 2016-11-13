@@ -1,5 +1,5 @@
 // @flow
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 import { playerFaceRight, playerFaceLeft } from './RemotePlayerFaceHandler'
 
 export default function RemotePlayer(player: {

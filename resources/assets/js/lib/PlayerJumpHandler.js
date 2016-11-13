@@ -1,6 +1,6 @@
 import includes from 'lodash/includes'
 
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 import { upInputIsActive, upInputReleased, isJumpJetInputActive } from './InputHelpers'
 import actions from '../actions'

@@ -1,5 +1,5 @@
 import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
-import GameConsts from '../lib/GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 let lastPlayerData = {}
 

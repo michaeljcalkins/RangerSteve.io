@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-import GameConsts from '../../../lib/GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 export default function HudKillLog({
     messages,
