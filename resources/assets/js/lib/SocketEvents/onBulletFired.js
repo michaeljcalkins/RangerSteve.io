@@ -2,7 +2,7 @@
 import includes from 'lodash/includes'
 import schemapack from 'schemapack'
 
-import GameConsts from '../GameConsts'
+import GameConsts from 'lib/GameConsts'
 let soundThrottle = false
 
 var bulletSchema = schemapack.build({

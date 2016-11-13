@@ -4,7 +4,7 @@ import includes from 'lodash/includes'
 
 import PlayerById from'../PlayerById'
 import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
-import GameConsts from '../GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 function isNotMoving(movePlayer) {
     return movePlayer.x === movePlayer.lastPosition.x && movePlayer.y === movePlayer.lastPosition.y

@@ -1,7 +1,7 @@
 import sample from 'lodash/sample'
 import remove from 'lodash/remove'
 
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 export default function GetSpawnPoint(spawnPoints, enemies) {
     const possibleSpawnPoints = filterSpawnPointsBasedOnEnemyPositions(spawnPoints, enemies)

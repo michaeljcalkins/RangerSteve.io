@@ -1,6 +1,6 @@
 import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
-import GameConsts from './GameConsts'
+import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
 import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 

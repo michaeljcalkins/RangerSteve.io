@@ -1,6 +1,6 @@
 import sample from 'lodash/sample'
 
-import GameConsts from '../GameConsts'
+import GameConsts from 'lib/GameConsts'
 import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 
 const WORLD_WIDTH = 110 * 32

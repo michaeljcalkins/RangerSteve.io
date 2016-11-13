@@ -1,4 +1,4 @@
-import GameConsts from '../GameConsts'
+import GameConsts from 'lib/GameConsts'
 import debounce from 'lodash/debounce'
 
 const playerIsIdle = debounce(() => {

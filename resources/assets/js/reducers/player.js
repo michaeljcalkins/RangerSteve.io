@@ -1,6 +1,6 @@
 import storage from 'store'
 import NameGenerator from '../lib/NameGenerator'
-import GameConsts from '../lib/GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 const initialState = {
     currentWeapon: 'primaryWeapon',

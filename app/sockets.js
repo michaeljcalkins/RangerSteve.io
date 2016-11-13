@@ -4,7 +4,7 @@ const util = require('util')
 const _ = require('lodash')
 const moment = require('moment')
 
-const GameConsts = require('../resources/assets/js/lib/GameConsts')
+const GameConsts = require('../lib/GameConsts')
 const createPlayer = require('./services/createPlayer')
 const getPlayerById = require('./services/getPlayerById')
 const getTeam = require('./services/getTeam')

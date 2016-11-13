@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import get from 'lodash/get'
 import cs from 'classnames'
 
-import GameConsts from '../../../lib/GameConsts'
+import GameConsts from 'lib/GameConsts'
 
 export default class RespawnModal extends React.Component {
     constructor(props) {

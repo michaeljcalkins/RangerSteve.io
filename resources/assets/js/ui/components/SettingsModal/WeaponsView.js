@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import autobind from 'react-autobind'
 
-import GameConsts from '../../../lib/GameConsts'
+import GameConsts from 'lib/GameConsts'
 import WeaponStats from './WeaponStats'
 
 export default class WeaponsView extends React.Component {
