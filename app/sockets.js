@@ -58,18 +58,20 @@ setInterval(function() {
             const previousMap = rooms[roomId].map
             const previousGamemode = rooms[roomId].gamemode
 
-            rooms[roomId] = createRoom({
-                id: roomId,
-                players: rooms[roomId].players,
-                messages: rooms[roomId].messages,
-            })
-
             // Randomly select a map that was not the previous map
             const potentialNextMaps = GameConsts.MAPS.filter(map => map !== previousMap)
             const potentialNextGamemodes = GameConsts.GAMEMODES.filter(gamemode => gamemode !== previousGamemode)
 
-            rooms[roomId].map = _.sample(potentialNextMaps)
-            rooms[roomId].gamemode = _.sample(potentialNextGamemodes)
+            const nextMap = _.sample(potentialNextMaps)
+            const nextGamemode = _.sample(potentialNextGamemodes)
+
+            rooms[roomId] = createRoom({
+                id: roomId,
+                players: rooms[roomId].players,
+                messages: rooms[roomId].messages,
+                map: nextMap,
+                gamemode: nextGamemode,
+            })
 
             util.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} for room ${roomId}`)
 
