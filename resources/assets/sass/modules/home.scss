@@ -100,6 +100,16 @@ body.main {
     color: white;
     margin-bottom: 20px;
 
+    .footer-content {
+        display: inline-block;
+        margin: 0 15px;
+        padding: 10px;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.5);
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: bold;
+    }
+
     a {
         color: white;
     }
