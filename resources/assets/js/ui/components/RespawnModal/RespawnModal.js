@@ -1,10 +1,13 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import get from 'lodash/get'
 import cs from 'classnames'
+import storage from 'store'
 
 import GameConsts from 'lib/GameConsts'
+import ChoosePrimaryView from '../SettingsModal/ChoosePrimaryView'
+import ChooseSecondaryView from '../SettingsModal/ChooseSecondaryView'
 
-export default class RespawnModal extends React.Component {
+export default class RespawnModal extends Component {
     constructor(props) {
         super(props)
 
@@ -15,6 +18,7 @@ export default class RespawnModal extends React.Component {
 
     componentDidMount() {
         this.timer = setInterval(this.tick.bind(this), 100)
+        window.res = this.respawn
     }
 
     componentWillUnmount() {
@@ -35,7 +39,15 @@ export default class RespawnModal extends React.Component {
 
         this.setState({ elapsed: seconds })
     }
-
+    handlePrimaryGunClick(weapon) {
+        this.props.onPrimaryWeaponIdChange(weapon.id)
+        storage.set('selectedPrimaryWeaponId', weapon.id)
+    }
+    
+    handleSecondaryGunClick(weapon) {
+        storage.set('selectedSecondaryWeaponId', weapon.id)
+        this.props.onSecondaryWeaponIdChange(weapon.id)
+    }
     renderDamageGiven() {
         const { player, room } = this.props
 
@@ -47,7 +59,10 @@ export default class RespawnModal extends React.Component {
 
         return (
             <div>
-                <strong className="text-success">Damage given:</strong> <strong>{ defendingDamage }</strong> in <strong>{ defendingHits } hits</strong> to { attackingPlayerName }
+                <strong className="text-success">Damage given:</strong>
+                <strong>{ defendingDamage }</strong> in 
+                <strong>{ defendingHits } hits</strong>
+                to { attackingPlayerName }
             </div>
         )
     }
@@ -67,6 +82,21 @@ export default class RespawnModal extends React.Component {
                 <br />
             </div>
         )
+    }
+    youDied() {
+        return (
+          <div className="text-center">
+              <button >Respawn Now</button>
+          </div>
+        )
+    }
+
+    autoRespawn() {
+        return (
+                <label htmlFor="">Auto-Respawn
+                    <input ref={ node => this.respawn = node }style={ {marginLeft: "7px"} } type="checkbox"/>
+                </label>
+                )
     }
 
     renderCauseOfDeath() {
@@ -128,7 +158,7 @@ export default class RespawnModal extends React.Component {
                                 </div>
 
                                 <h4 className="text-center">Respawning in { this.state.elapsed } seconds</h4>
-
+                                { this.youDied() }
                                 <hr />
 
                                 <div className="row">
@@ -159,6 +189,10 @@ export default class RespawnModal extends React.Component {
                                             readOnly
                                             type="text"
                                         />
+                                        <br />
+                                        <label htmlFor="">Auto-Respawn
+                                                            <input ref={ node => this.respawn = node }style={ {marginLeft: "7px"} } type="checkbox"/>
+                                                        </label>
                                     </div>
                                 </div>
                             </div>
