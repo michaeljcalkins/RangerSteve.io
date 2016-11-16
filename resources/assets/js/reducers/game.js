@@ -23,6 +23,7 @@ const initialState = {
     showKillConfirmed: false,
     state: 'active',
     resetEventsFlag: false,
+    autoRespawn: storage.get('autoRespawn'),
 }
 
 const player = (state = initialState, action) => {
@@ -144,6 +145,12 @@ const player = (state = initialState, action) => {
             return {
                 ...state,
                 sfxVolume: action.value,
+            }
+            
+        case 'SET_AUTO_RESPAWN':
+            return {
+                ...state,
+                autoRespawn: action.value,
             }
 
         case 'SET_STATE':
