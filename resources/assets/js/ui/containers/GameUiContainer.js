@@ -30,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
         onSettingsViewChange: gameActions.setSettingsModalView,
         onPrimaryWeaponIdChange: playerActions.setNextSelectedPrimaryWeaponId,
         onSecondaryWeaponIdChange: playerActions.setNextSelectedSecondaryWeaponId,
+        onSetAutoRespawn: gameActions.setAutoRespawn,
         onSetResetEventsFlag: gameActions.setResetEventsFlag,
         onKeyboardControlChange: gameActions.setKeyboardControl,
     }
