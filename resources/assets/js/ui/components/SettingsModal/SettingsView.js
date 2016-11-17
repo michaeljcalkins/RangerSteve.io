@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import autobind from 'react-autobind'
-
+import storage from 'store'
 import NameGenerator from '../../../lib/NameGenerator'
 import GameConsts from 'lib/GameConsts'
 
@@ -13,6 +13,7 @@ export default class SettingsView extends React.Component {
             nickname: props.player.nickname,
             sfxVolume: props.game.sfxVolume,
             quality: props.player.quality,
+            autoRespawn: storage.get('autoRespawn'),
         }
     }
 
@@ -36,6 +37,13 @@ export default class SettingsView extends React.Component {
 
     handleQualityChange(evt) {
         this.props.onQualityChange(evt.target.value)
+    }
+
+    handleRespawnChange(evt) {
+        const autoRespawn = evt.target.checked
+        this.setState({ autoRespawn })
+        storage.set('autoRespawn', autoRespawn)
+        this.props.onRespawnChange(autoRespawn)
     }
 
     render() {
@@ -67,7 +75,14 @@ export default class SettingsView extends React.Component {
                                 </button>
                             </div>
                         </div>
-
+                        <div className="form-group">
+                            <label htmlFor="Auto-Respawn">Auto-Respawn </label>
+                                <input onClick={ this.handleRespawnChange }
+                                       ref={ node => this.respawn = node }
+                                       style={ {marginLeft: "7px", marginRight: "7px"} }
+                                       checked={ this.state.autoRespawn }
+                                       type="checkbox"/>
+                        </div>
                         <div className="form-group">
                             <label>Sound Effects Volume</label>
                             <input
