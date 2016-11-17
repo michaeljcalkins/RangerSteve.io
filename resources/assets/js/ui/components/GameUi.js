@@ -122,6 +122,7 @@ export default class GameUi extends React.Component {
                 game,
                 onCloseSettingsModal,
                 onSettingsViewChange,
+                ...props,
             },
         } = this
 
@@ -148,19 +149,25 @@ export default class GameUi extends React.Component {
                 }
 
                 { player.health <= 0 && room.state !== 'ended' &&
-                    <RespawnModal player={ player } room={ room } />
+                    <RespawnModal {...{
+                        player,
+                        room,
+                        onCloseSettingsModal,
+                        ...props}}
+                    />
                 }
 
                 <SettingsModal
                     game={ game }
                     isOpen={ game.settingsModalIsOpen }
                     onClose={ onCloseSettingsModal }
-                    onKeyboardControlChange={ this.props.onKeyboardControlChange }
+                    onKeyboardControlChange={ props.onKeyboardControlChange }
                     onNicknameChange={ this.handleNicknameChange }
                     onPrimaryGunClick={ this.handlePrimaryGunClick }
                     onQualityChange={ this.handleQualityChange }
+                    onRespawnChange={ props.onSetAutoRespawn }
                     onSecondaryGunClick={ this.handleSecondaryGunClick }
-                    onSetResetEventsFlag={ this.props.onSetResetEventsFlag }
+                    onSetResetEventsFlag={ props.onSetResetEventsFlag }
                     onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
                     onViewChange={ onSettingsViewChange }
                     player={ player }
