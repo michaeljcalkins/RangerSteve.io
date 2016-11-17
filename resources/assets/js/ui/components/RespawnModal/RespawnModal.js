@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator'
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import get from 'lodash/get'
 import cs from 'classnames'
 import CopyToClipboard from 'react-copy-to-clipboard'
@@ -12,7 +12,8 @@ import GameConsts from 'lib/GameConsts'
 
 @autobind
 export default class RespawnModal extends Component {
-    state = {
+    props: Props
+    state: Object = {
         elapsed: 0,
         copied: false,
     }
@@ -238,7 +239,7 @@ export default class RespawnModal extends Component {
 
 }
 
-RespawnModal.propTypes = {
-    player: PropTypes.object,
-    room: PropTypes.object,
+type Props = {
+    player: Object,
+    room: Object,
 }

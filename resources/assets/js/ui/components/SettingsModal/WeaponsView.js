@@ -1,10 +1,14 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React, { Component } from 'react'
 import autobind from 'react-autobind'
 
 import GameConsts from 'lib/GameConsts'
 import WeaponStats from './WeaponStats'
 
-export default class WeaponsView extends React.Component {
+export default class WeaponsView extends Component {
+    props: Props
+    state: Object
+    
     constructor(props) {
         super(props)
         autobind(this)
@@ -110,8 +114,8 @@ export default class WeaponsView extends React.Component {
     }
 }
 
-WeaponsView.propTypes = {
-    game: PropTypes.object,
-    onViewChange: PropTypes.func,
-    player: PropTypes.object,
+type Props = {
+    game: Object,
+    onViewChange: Function,
+    player: Object,
 }

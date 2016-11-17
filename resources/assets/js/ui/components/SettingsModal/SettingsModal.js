@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React from 'react'
 import cs from 'classnames'
 
 import ChoosePrimaryView from './ChoosePrimaryView'
@@ -21,7 +22,7 @@ export default function SettingsModal({
     onSfxVolumeChange,
     onViewChange,
     player,
-}) {
+}: Props) {
     function renderModalView() {
         switch (game.settingsView) {
             case 'choosePrimary':
@@ -147,19 +148,19 @@ export default function SettingsModal({
     )
 }
 
-SettingsModal.propTypes = {
-    defaultNicknameValue: PropTypes.string,
-    defaultSoundEffectValue: PropTypes.number,
-    isOpen: PropTypes.bool,
-    onClose: PropTypes.func,
-    onNicknameChange: PropTypes.func,
-    onPrimaryGunClick: PropTypes.func,
-    onQualityChange: PropTypes.func.isRequired,
-    onSecondaryGunClick: PropTypes.func,
-    onSoundEffectVolumeChange: PropTypes.func,
-    onViewChange: PropTypes.func,
-    player: PropTypes.object,
-    selectedPrimaryWeapon: PropTypes.string,
-    selectedSecondaryWeapon: PropTypes.string,
-    settingsView: PropTypes.string,
+type Props = {
+    defaultNicknameValue: string,
+    defaultSoundEffectValue: number,
+    isOpen: bool,
+    onClose: Function,
+    onNicknameChange: Function,
+    onPrimaryGunClick: Function,
+    onQualityChange: Function,
+    onSecondaryGunClick: Function,
+    onSoundEffectVolumeChange: Function,
+    onViewChange: Function,
+    player: Object,
+    selectedPrimaryWeapon: string,
+    selectedSecondaryWeapon: string,
+    settingsView: string,
 }

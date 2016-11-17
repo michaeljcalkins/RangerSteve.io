@@ -1,10 +1,14 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React from 'react'
 import autobind from 'react-autobind'
 import storage from 'store'
 import NameGenerator from '../../../lib/NameGenerator'
 import GameConsts from 'lib/GameConsts'
 
 export default class SettingsView extends React.Component {
+    props: Props
+    state: Object
+    
     constructor(props) {
         super(props)
         autobind(this)
@@ -113,11 +117,11 @@ export default class SettingsView extends React.Component {
     }
 }
 
-SettingsView.propTypes = {
-    game: PropTypes.object,
-    onNicknameChange: PropTypes.func,
-    onQualityChange: PropTypes.func,
-    onSfxVolumeChange: PropTypes.func,
-    onViewChange: PropTypes.func,
-    player: PropTypes.object,
+type Props = {
+    game: Object,
+    onNicknameChange: Function,
+    onQualityChange: Function,
+    onSfxVolumeChange: Function,
+    onViewChange: Function,
+    player: Object,
 }
