@@ -15,6 +15,7 @@ export default function SettingsModal({
     onNicknameChange,
     onPrimaryGunClick,
     onQualityChange,
+    onRespawnChange,
     onSecondaryGunClick,
     onSetResetEventsFlag,
     onSfxVolumeChange,
@@ -25,48 +26,54 @@ export default function SettingsModal({
         switch (game.settingsView) {
             case 'choosePrimary':
                 return (
-                <ChoosePrimaryView
-                    onPrimaryGunClick={ onPrimaryGunClick }
-                    onViewChange={ onViewChange }
+                <ChoosePrimaryView {...{
+                    onPrimaryGunClick,
+                    onViewChange,
+                }}
                 />
                 )
 
             case 'chooseSecondary':
                 return (
-                <ChooseSecondaryView
-                    onSecondaryGunClick={ onSecondaryGunClick }
-                    onViewChange={ onViewChange }
+                <ChooseSecondaryView {...{
+                    onSecondaryGunClick,
+                    onViewChange,
+                }}
                 />
                 )
 
             case 'settings':
                 return (
-                <SettingsView
-                    game={ game }
-                    onNicknameChange={ onNicknameChange }
-                    onQualityChange={ onQualityChange }
-                    onSfxVolumeChange={ onSfxVolumeChange }
-                    onViewChange={ onViewChange }
-                    player={ player }
+                <SettingsView {...{
+                    game,
+                    onNicknameChange,
+                    onQualityChange,
+                    onSfxVolumeChange,
+                    onViewChange,
+                    onRespawnChange,
+                    player,
+                }}
                 />
                 )
 
             case 'controls':
                 return (
-                <ControlsView
-                    game={ game }
-                    onKeyboardControlChange={ onKeyboardControlChange }
-                    onSetResetEventsFlag={ onSetResetEventsFlag }
-                    onViewChange={ onViewChange }
+                <ControlsView {...{
+                    game,
+                    onKeyboardControlChange,
+                    onSetResetEventsFlag,
+                    onViewChange,
+                }}
                 />
                 )
 
             default:
                 return (
-                <WeaponsView
-                    game={ game }
-                    onViewChange={ onViewChange }
-                    player={ player }
+                <WeaponsView {...{
+                    game,
+                    onViewChange,
+                    player,
+                }}
                 />
                 )
         }
