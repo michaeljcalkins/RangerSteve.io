@@ -23,7 +23,7 @@ const initialState = {
     showKillConfirmed: false,
     state: 'active',
     resetEventsFlag: false,
-    autoRespawn: storage.get('autoRespawn'),
+    autoRespawn: storage.get('autoRespawn', false),
 }
 
 const player = (state = initialState, action) => {
