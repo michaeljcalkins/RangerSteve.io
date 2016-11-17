@@ -4,8 +4,8 @@ import GameConsts from 'lib/GameConsts'
 import WeaponStats from './WeaponStats'
 
 export default function ChooseSecondaryMenu({
-    onSecondaryGunClick,
     onViewChange,
+    onSecondaryGunClick,
 }) {
     function handleSelectSecondaryClick(weapon) {
         mixpanel.track('secondaryWeapon:selected:' + weapon.id)
