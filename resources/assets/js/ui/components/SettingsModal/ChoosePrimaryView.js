@@ -20,8 +20,8 @@ export default function ChoosePrimaryMenu({
             return (
                 <div
                     className="option-group align-middle"
-                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                     key={ 'primary' + weaponId }
+                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
                 >
                     <div>
                         <img src={ '/images/guns/large/' + weapon.image } />
