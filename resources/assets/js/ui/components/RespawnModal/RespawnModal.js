@@ -204,9 +204,11 @@ export class RespawnModal extends Component {
                             />
 
                             <div className="row">
-                                <div className="col-sm-12 text-center">
+                                <div className="col-sm-8 text-right">
                                     { this.renderRespawnButton() }
-                                    <div className="checkbox">
+                                </div>
+                                <div className="col-sm-4 text-left">
+                                    <div className="checkbox" style="margin-top: 15px;">
                                         <label>
                                             <input
                                                 checked={ this.state.autoRespawn }
