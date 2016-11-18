@@ -20,6 +20,7 @@ export class RespawnModal extends Component {
 
     state: Object = {
         autoRespawn: this.props.game.autoRespawn,
+        oneTimeAutoRespawn: false,
         elapsed: 0,
         view: 'default',
     }
@@ -49,7 +50,7 @@ export class RespawnModal extends Component {
             return
         }
 
-        if (this.state.autoRespawn && seconds <= 0.1) {
+        if ((this.state.autoRespawn || this.state.oneTimeAutoRespawn) && seconds <= 0.1) {
             this.handleRespawnButtonClick()
         }
 
@@ -92,10 +93,20 @@ export class RespawnModal extends Component {
         )
     }
 
+    handleDisabledRespawnButtonClick() {
+        this.setState({
+            ...this.state,
+            oneTimeAutoRespawn: true,
+        })
+    }
+
     renderRespawnButton() {
         if (this.state.elapsed > 0) {
             return (
-                <button className="btn btn-primary btn-lg disabled">
+                <button
+                    className="btn btn-primary btn-lg disabled"
+                    onClick={ this.handleDisabledRespawnButtonClick }
+                >
                     Respawning in { this.state.elapsed } seconds
                 </button>
             )
