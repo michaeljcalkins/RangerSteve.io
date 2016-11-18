@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import GameConsts from 'lib/GameConsts'
 import WeaponStats from './WeaponStats'
-import actions from '../../../actions'
+import actions from 'actions'
 
 export function ChooseSecondaryMenu({
     onSettingsViewChange,

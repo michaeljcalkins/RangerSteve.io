@@ -1,4 +1,4 @@
-import actions from '../../actions'
+import actions from 'actions'
 import PlayKillingSpreeSound from '../PlayKillingSpreeSound'
 
 let killConfirmedHandle = null

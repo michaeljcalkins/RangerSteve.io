@@ -1,4 +1,4 @@
-import actions from '../../actions'
+import actions from 'actions'
 
 export default function onLoadGame(data) {
     if (this.game.state.current !== 'Boot') return

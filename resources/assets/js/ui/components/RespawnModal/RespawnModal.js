@@ -7,7 +7,7 @@ import storage from 'store'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import actions from '../../../actions'
+import actions from 'actions'
 import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
 import emptyEventSchema from 'lib/schemas/emptyEventSchema'

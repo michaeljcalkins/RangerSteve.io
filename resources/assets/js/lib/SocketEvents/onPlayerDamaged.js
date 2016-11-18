@@ -1,5 +1,5 @@
 // @flow
-import actions from '../../actions'
+import actions from 'actions'
 import PlayPlayerDeathAnimation from '../PlayPlayerDeathAnimation'
 import PlayerById from '../PlayerById'
 

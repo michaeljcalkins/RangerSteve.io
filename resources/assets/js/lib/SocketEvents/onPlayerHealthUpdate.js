@@ -1,4 +1,4 @@
-import actions from '../../actions'
+import actions from 'actions'
 
 export default function onPlayerHealthUpdate(data) {
     const store = this.game.store

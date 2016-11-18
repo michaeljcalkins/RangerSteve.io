@@ -1,5 +1,5 @@
 // @flow
-import actions from '../../actions'
+import actions from 'actions'
 
 export default function onPlayerKillLog(data: {
     deadNickname: string,
