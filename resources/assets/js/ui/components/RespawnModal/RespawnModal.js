@@ -20,7 +20,6 @@ export class RespawnModal extends Component {
 
     state: Object = {
         autoRespawn: this.props.game.autoRespawn,
-        copied: false,
         elapsed: 0,
         view: 'default',
     }
