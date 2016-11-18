@@ -3,23 +3,26 @@ import autobind from 'react-autobind'
 import React, { Component } from 'react'
 import get from 'lodash/get'
 import cs from 'classnames'
+import storage from 'store'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
+import actions from '../../../actions'
 import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
 import emptyEventSchema from 'lib/schemas/emptyEventSchema'
 
-export default class RespawnModal extends Component {
+export class RespawnModal extends Component {
     constructor(props) {
         super(props)
         autobind(this)
     }
 
-    props: Props
-
     state: Object = {
-        view: 'default',
-        elapsed: 0,
+        autoRespawn: this.props.game.autoRespawn,
         copied: false,
+        elapsed: 0,
+        view: 'default',
     }
 
     componentDidMount() {
@@ -28,6 +31,11 @@ export default class RespawnModal extends Component {
 
     componentWillUnmount() {
         clearInterval(this.timer)
+    }
+
+    props: {
+        player: Object,
+        room: Object,
     }
 
     tick() {
@@ -40,6 +48,10 @@ export default class RespawnModal extends Component {
         if (isNaN(seconds) || seconds <= 0) {
             this.setState({ elapsed: 0 })
             return
+        }
+
+        if (this.state.autoRespawn && seconds <= 0.1) {
+            this.handleRespawnButtonClick()
         }
 
         this.setState({ elapsed: seconds })
@@ -148,6 +160,13 @@ export default class RespawnModal extends Component {
         this.props.onSettingsViewChange(view)
     }
 
+    handleRespawnChange(evt) {
+        const autoRespawn = evt.target.checked
+        this.setState({ autoRespawn })
+        storage.set('autoRespawn', autoRespawn)
+        this.props.onRespawnChange(autoRespawn)
+    }
+
     render() {
         const { player, game } = this.props
         const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
@@ -177,6 +196,17 @@ export default class RespawnModal extends Component {
                             <div className="row">
                                 <div className="col-sm-12 text-center">
                                     { this.renderRespawnButton() }
+                                    <div className="checkbox">
+                                        <label>
+                                            <input
+                                                checked={ this.state.autoRespawn }
+                                                onClick={ this.handleRespawnChange }
+                                                ref={ node => this.respawn = node }
+                                                type="checkbox"
+                                            />
+                                            Auto respawn
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -187,7 +217,23 @@ export default class RespawnModal extends Component {
     }
 }
 
-type Props = {
-    player: Object,
-    room: Object,
+const mapStateToProps = (state) => {
+    return {
+        player: state.player,
+        room: state.room,
+        game: state.game,
+    }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    const gameActions = bindActionCreators(actions.game, dispatch)
+
+    return {
+        onRespawnChange: gameActions.setAutoRespawn,
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RespawnModal)
