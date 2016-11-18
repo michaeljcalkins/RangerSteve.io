@@ -48,7 +48,7 @@ let sharedConfig = {
                     path.join(__dirname, `${SRC}/js`),
                     path.resolve('node_modules/preact-compat/src'),
                 ],
-                loader: 'babel-loader',
+                loader: 'babel',
 
             },
             {
