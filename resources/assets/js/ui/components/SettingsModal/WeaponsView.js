@@ -43,7 +43,7 @@ export default class WeaponsView extends Component {
                     <div className="col-sm-6">
                         <label>Secondary Weapon</label>
                         <WeaponButton
-                            onClick={ this.handlePrimaryViewClick }
+                            onClick={ this.handleSecondaryViewClick }
                             weapon={ secondaryWeapon }
                         />
                     </div>

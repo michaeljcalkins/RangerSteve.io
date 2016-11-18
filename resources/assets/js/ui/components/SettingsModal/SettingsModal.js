@@ -81,69 +81,63 @@ export default function SettingsModal({
     }
 
     return (
-        <div>
-            <div
-                className="modal modal-settings"
-                style={ { display: isOpen ? 'block' : 'none' } }
-            >
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button
-                                className="close"
-                                onClick={ onClose }
-                                type="button"
-                            >
-                                <span>&times;</span>
-                            </button>
-                            <h4 className="modal-title">Settings</h4>
-                        </div>
-                        <div className="modal-body">
-                            <div className="row">
-                                <div className="col-sm-12 text-center">
-                                    <ul className="nav nav-pills" style={ { marginBottom: '15px', display: 'inline-block' } }>
-                                        <li
-                                            className={ cs({
-                                                pointer: true,
-                                                active: game.settingsView === 'default',
-                                            }) }
-                                        >
-                                            <a onClick={ onViewChange.bind(this, 'default') }>
-                                                Weapons
-                                            </a>
-                                        </li>
-                                        <li
-                                            className={ cs({
-                                                pointer: true,
-                                                active: game.settingsView === 'settings',
-                                            }) }
-                                        >
-                                            <a onClick={ onViewChange.bind(this, 'settings') }>
-                                                Settings
-                                            </a>
-                                        </li>
-                                        <li
-                                            className={ cs({
-                                                pointer: true,
-                                                active: game.settingsView === 'controls',
-                                            }) }
-                                        >
-                                            <a onClick={ onViewChange.bind(this, 'controls') }>
-                                                Controls
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+        <div
+            className="modal modal-settings"
+            style={ { display: isOpen ? 'block' : 'none' } }
+        >
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <button
+                            className="close"
+                            onClick={ onClose }
+                            type="button"
+                        >
+                            <span>&times;</span>
+                        </button>
+                        <h4 className="modal-title">Settings</h4>
+                    </div>
+                    <div className="modal-body">
+                        <div className="row">
+                            <div className="col-sm-12 text-center">
+                                <ul className="nav nav-pills" style={ { marginBottom: '15px', display: 'inline-block' } }>
+                                    <li
+                                        className={ cs({
+                                            pointer: true,
+                                            active: game.settingsView === 'default',
+                                        }) }
+                                    >
+                                        <a onClick={ onViewChange.bind(this, 'default') }>
+                                            Weapons
+                                        </a>
+                                    </li>
+                                    <li
+                                        className={ cs({
+                                            pointer: true,
+                                            active: game.settingsView === 'settings',
+                                        }) }
+                                    >
+                                        <a onClick={ onViewChange.bind(this, 'settings') }>
+                                            Settings
+                                        </a>
+                                    </li>
+                                    <li
+                                        className={ cs({
+                                            pointer: true,
+                                            active: game.settingsView === 'controls',
+                                        }) }
+                                    >
+                                        <a onClick={ onViewChange.bind(this, 'controls') }>
+                                            Controls
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            { renderModalView() }
                         </div>
+                        { renderModalView() }
                     </div>
                 </div>
             </div>
-            <div
-                className="modal-backdrop"
-                style={ { display: isOpen ? 'block' : 'none' } }
-             />
         </div>
     )
 }

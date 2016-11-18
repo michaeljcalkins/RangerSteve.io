@@ -6,6 +6,7 @@ import cs from 'classnames'
 
 import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
+import emptyEventSchema from 'lib/schemas/emptyEventSchema'
 
 @autobind
 export default class RespawnModal extends Component {
@@ -76,16 +77,20 @@ export default class RespawnModal extends Component {
     }
 
     renderRespawnButton() {
-        const buttonClasses = cs('btn btn-success', {
-            disabled: this.state.elapsed > 0,
-        })
-        const buttonText =  this.state.elapsed > 0
-            ? `Respawning in ${this.state.elapsed} seconds`
-            : 'Respawn Now'
+        if (this.state.elapsed > 0) {
+            return (
+                <button className="btn btn-primary btn-lg disabled">
+                    Respawning in { this.state.elapsed } seconds
+                </button>
+            )
+        }
 
         return (
-            <button className={ buttonClasses }>
-                { buttonText }
+            <button
+                className="btn btn-primary btn-lg"
+                onClick={ this.handleRespawnButtonClick }
+            >
+                Respawn Now
             </button>
         )
     }
@@ -128,8 +133,18 @@ export default class RespawnModal extends Component {
         }
     }
 
+    handleRespawnButtonClick() {
+        var buffer: Uint8Array = emptyEventSchema.encode()
+        window.socket.emit('player respawn', buffer)
+    }
+
+    handleWeaponsViewClick(view) {
+        this.props.onOpenSettingsModal()
+        this.props.onSettingsViewChange(view)
+    }
+
     render() {
-        const { player, game, onOpenSettingsModal } = this.props
+        const { player, game } = this.props
         const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
         const modalContentClasses = cs('modal-content', {
             'modal-content-suicide': ! attackingPlayerId,
@@ -150,8 +165,8 @@ export default class RespawnModal extends Component {
 
                             <WeaponsView
                                 game={ game }
+                                onViewChange={ this.handleWeaponsViewClick }
                                 player={ player }
-                                onViewChange={ onOpenSettingsModal }
                             />
 
                             <div className="row">

@@ -11,6 +11,7 @@ const getTeam = require('./services/getTeam')
 const createRoom = require('./services/createRoom')
 const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
 const bulletSchema = require('../lib/schemas/bulletSchema')
+const playerIdSchema = require('../lib/schemas/playerIdSchema')
 const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
 const playerFromServerSchema = require('../lib/schemas/playerFromServerSchema')
 
@@ -31,6 +32,7 @@ function init(ioInstance) {
         socket.on('player healing', onPlayerHealing)
         socket.on('player adjust score', onPlayerAdjustScore)
         socket.on('player update nickname', onPlayerUpdateNickname)
+        socket.on('player respawn', onPlayerRespawn)
 
         socket.on('message send', onMessageSend)
 
@@ -112,6 +114,21 @@ setInterval(function() {
     })
 }, 1000)
 
+function onPlayerRespawn() {
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    const player = getPlayerById(roomId, this.id, rooms)
+
+    if (! player) {
+        util.log('Player not found when trying to respawn', this.id)
+        return
+    }
+
+    player.meta.health = GameConsts.PLAYER_FULL_HEALTH
+
+    const buffer = playerIdSchema.encode({ id: this.id })
+    io.to(roomId).emit('player respawn', buffer)
+}
+
 function onRefreshPlayers(data) {
     io.to(data.roomId).emit('update players', {
         room: rooms[data.roomId],
@@ -122,28 +139,6 @@ function onRefreshRoom(data) {
     io.to(data.roomId).emit('refresh room', {
         room: rooms[data.roomId],
     })
-}
-
-function respawnPlayer(player, attackingPlayer, socketId, roomId) {
-    setTimeout(() => {
-        player.meta.health = GameConsts.PLAYER_FULL_HEALTH
-
-        io.to(roomId).emit('player respawn', {
-            id: socketId,
-            damagedPlayerId: player.id,
-            health: GameConsts.PLAYER_FULL_HEALTH,
-        })
-
-        player.meta.damageStats.attackingPlayerId = null
-        player.meta.damageStats.attackingDamage = 0
-        player.meta.damageStats.attackingHits = 0
-
-        if (_.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id) {
-            attackingPlayer.meta.damageStats.attackingPlayerId = null
-            attackingPlayer.meta.damageStats.attackingDamage = 0
-            attackingPlayer.meta.damageStats.attackingHits = 0
-        }
-    }, GameConsts.RESPAWN_TIME_SECONDS * 1000)
 }
 
 function onLoadComplete(data) {
@@ -172,7 +167,7 @@ function onMessageSend(data) {
 }
 
 function onPlayerAdjustScore(data) {
-    var player = getPlayerById(data.roomId, this.id, rooms)
+    const player = getPlayerById(data.roomId, this.id, rooms)
 
     if (! player) {
         util.log('Player not found when adjust score', data)
@@ -471,7 +466,15 @@ function onPlayerDamaged(data) {
             playerY: player.y,
         })
 
-        respawnPlayer(player, attackingPlayer, this.id, data.roomId)
+        player.meta.damageStats.attackingPlayerId = null
+        player.meta.damageStats.attackingDamage = 0
+        player.meta.damageStats.attackingHits = 0
+
+        if (_.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id) {
+            attackingPlayer.meta.damageStats.attackingPlayerId = null
+            attackingPlayer.meta.damageStats.attackingDamage = 0
+            attackingPlayer.meta.damageStats.attackingHits = 0
+        }
 
         io.to(data.roomId).emit('update players', {
             room: rooms[data.roomId],

@@ -125,6 +125,7 @@ export default class GameUi extends React.Component {
                 game,
                 onCloseSettingsModal,
                 onSettingsViewChange,
+                onOpenSettingsModal,
                 ...props,
             },
         } = this
@@ -156,7 +157,8 @@ export default class GameUi extends React.Component {
                         player,
                         game,
                         room,
-                        onOpenSettingsModal: this.onOpenSettingsModal,
+                        onOpenSettingsModal: onOpenSettingsModal,
+                        onSettingsViewChange: onSettingsViewChange,
                         ...props } }
                     />
                 }
@@ -176,6 +178,16 @@ export default class GameUi extends React.Component {
                     onViewChange={ onSettingsViewChange }
                     player={ player }
                 />
+
+                { (
+                    (player.health <= 0 && room.state !== 'ended') ||
+                    game.settingsModalIsOpen
+                ) &&
+                    <div
+                        className="modal-backdrop"
+                        style={ { display: 'block' } }
+                    />
+                }
             </div>
         )
     }
