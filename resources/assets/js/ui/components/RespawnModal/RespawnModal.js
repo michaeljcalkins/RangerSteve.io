@@ -3,18 +3,15 @@ import autobind from 'autobind-decorator'
 import React, { Component } from 'react'
 import get from 'lodash/get'
 import cs from 'classnames'
-import CopyToClipboard from 'react-copy-to-clipboard'
 
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
-import Tooltip from 'react-bootstrap/lib/Tooltip'
-
+import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
 
 @autobind
 export default class RespawnModal extends Component {
     props: Props
     state: Object = {
+        view: 'default',
         elapsed: 0,
         copied: false,
     }
@@ -26,7 +23,6 @@ export default class RespawnModal extends Component {
     componentWillUnmount() {
         clearInterval(this.timer)
     }
-
 
     tick() {
         const { respawnTime } = this.props.player
@@ -55,7 +51,7 @@ export default class RespawnModal extends Component {
         return (
             <div>
                 <strong className="text-success">Damage given:</strong>
-                <strong>{ defendingDamage }</strong> in 
+                <strong>{ defendingDamage }</strong> in
                 <strong>{ defendingHits } hits</strong>
                 to { attackingPlayerName }
             </div>
@@ -78,77 +74,19 @@ export default class RespawnModal extends Component {
             </div>
         )
     }
-    socialMedia() {
-        const shareLink = window.location.href
-        const encodedShareLink = encodeURIComponent(shareLink)
 
-        let tooltipContent = (
-            <div className="row">
-                <div className="col-sm-12 ">
-                    <p>Invite people into this game.</p>
-                    <a
-                        href={ 'https://www.facebook.com/sharer/sharer.php?u=' + encodedShareLink }
-                        target="_blank"
-                    >
-                        <img className="social-image" src="/images/icons/facebook-3-128.png" />
-                    </a>
-                    &nbsp;
-                    <a
-                        href={ 'https://twitter.com/home?status=' + encodedShareLink }
-                        target="_blank"
-                    >
-                        <img className="social-image" src="/images/icons/twitter-3-128.png" />
-                    </a>
-                </div>
-            </div>
-        )
-
-        return (
-                <OverlayTrigger placement="right" 
-                                overlay={
-                                <Tooltip id="Copy Invitation Link To Clipboard">
-                                  {tooltipContent}
-                                </Tooltip>}>
-                                <Glyphicon glyph="user" />
-                </OverlayTrigger>
-                ) 
-    }
-
-    reset(e) {
-      e.preventDefault()
-      setTimeout(() => {
-        this.setState({
-          copied: false,
+    renderRespawnButton() {
+        const buttonClasses = cs('btn btn-success', {
+            disabled: this.state.elapsed > 0,
         })
-      }, 5000)
-    }
-    
-    directLink() {
-        let { copied } = this.state
-        const shareLink = window.location.href
+        const buttonText =  this.state.elapsed > 0
+            ? `Respawning in ${this.state.elapsed} seconds`
+            : 'Respawn Now'
 
-        let tooltipContent = !copied
-          ? <strong>Click for an invite link to this game!</strong> 
-          : <strong style={{color: '#00ff74'}}> Copied Link!</strong>
         return (
-                <OverlayTrigger placement="right" 
-                                overlay={
-                                <Tooltip id="Copy Invitation Link To Clipboard">
-                                  {tooltipContent}
-                                </Tooltip>}>
-                  <CopyToClipboard text={`${shareLink}`}
-                    onCopy={() => this.setState({copied: true})}>
-                    <Glyphicon onClick={this.reset}
-                               glyph="link" />
-                  </CopyToClipboard>
-                </OverlayTrigger>
-        )
-    }
-    youDied() {
-        return (
-          <div className="text-center">
-              <button >Respawn Now</button>
-          </div>
+            <button className={ buttonClasses }>
+                { buttonText }
+            </button>
         )
     }
 
@@ -161,75 +99,65 @@ export default class RespawnModal extends Component {
         if (! attackingPlayerId) {
             return (
                 <div className="row">
-                    <div className="col-sm-12 text-center">
-                        <h4>You killed yourself...</h4>
+                    <div className="col-sm-6 text-right">
+                        <img height="150" src="/images/ui/panel/suicide.png" />
+                    </div>
+                    <div className="col-sm-6 text-left">
+                        <h4 style="margin-top: 60px;">You killed yourself...</h4>
                     </div>
                 </div>
             )
         } else {
-
             return (
                 <div className="row">
-                    <div className="col-sm-12 text-center">
+                    <div className="col-sm-5 text-right">
                         <img
                             className="weapon-image"
                             src={ '/images/guns/large/' + selectedWeapon.image }
                         />
-                        <h4><strong>{ attackingPlayerName }</strong> killed you with their <strong>{ selectedWeapon.name }</strong></h4>
-                        { this.renderDamageTaken() }
-                        { this.renderDamageGiven() }
+                    </div>
+                    <div className="col-sm-7 text-left">
+                        <div style="margin-top: 60px;">
+                            <h4><strong>{ attackingPlayerName }</strong> killed you with their <strong>{ selectedWeapon.name }</strong></h4>
+                            { this.renderDamageTaken() }
+                            { this.renderDamageGiven() }
+                        </div>
                     </div>
                 </div>
             )
         }
-
-    }
-    openSettingsModal() {
-        return (
-          <div className="text-center">
-              <button 
-                  className="btn btn-primary btn-md btn-block"
-                  onClick={ this.props.onOpenSettingsModal }>
-                  Change Settings
-              </button>
-          </div>
-        )
     }
 
     render() {
-        const { player } = this.props
+        const { player, game, onOpenSettingsModal } = this.props
         const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
         const modalContentClasses = cs('modal-content', {
             'modal-content-suicide': ! attackingPlayerId,
         })
 
         return (
-            <div>
-                <div
-                    className="modal modal-respawn"
-                    style={ { display: 'block' } }
-                >
-                    <div className="modal-dialog">
-                        <div className={ modalContentClasses }>
-                            <div className="modal-header">
-                                <h4 className="modal-title">Respawn</h4>
-                            </div>
-                            <div className="modal-body">
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                        { this.renderCauseOfDeath() }
-                                    </div>
-                                </div>
+            <div
+                className="modal modal-respawn"
+                style={ { display: 'block' } }
+            >
+                <div className="modal-dialog">
+                    <div className={ modalContentClasses }>
+                        <div className="modal-header">
+                            <h4 className="modal-title">Respawn</h4>
+                        </div>
+                        <div className="modal-body">
+                            { this.renderCauseOfDeath() }
 
-                                <h4 className="text-center">Respawning in { this.state.elapsed } seconds</h4>
-                                { this.youDied() }
-                                <hr />
-                                <div className="text-center">
-                                    { this.socialMedia() }
-                                    { this.directLink() }
-                                    { this.openSettingsModal() }    
+                            <WeaponsView
+                                game={ game }
+                                player={ player }
+                                onViewChange={ onOpenSettingsModal }
+                            />
+
+                            <div className="row">
+                                <div className="col-sm-12 text-center">
+                                    { this.renderRespawnButton() }
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -237,7 +165,6 @@ export default class RespawnModal extends Component {
             </div>
         )
     }
-
 }
 
 type Props = {

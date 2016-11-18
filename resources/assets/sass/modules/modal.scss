@@ -5,6 +5,10 @@
     text-align: center;
     padding: 0 !important;
     z-index: 1000000000;
+
+    .modal-title {
+        margin-top: 4px;
+    }
 }
 
 .modal:before {
@@ -113,28 +117,8 @@
  * Respawn Modal
  */
 .modal-respawn {
-    .modal-content {
-        background: url(/images/ui/panel/3.png) no-repeat center 75px,
-            url(/images/ui/panel/5.png) no-repeat top center;
-        background-size: 30%, 100%;
-        width: 600px;
-        height: 583px;
-        margin: inherit;
-
-        .modal-body {
-            overflow: hidden;
-            max-height: 500px;
-        }
-
-        &.modal-content-suicide {
-            background: url(/images/ui/panel/4.png) no-repeat center 75px,
-                url(/images/ui/panel/5.png) no-repeat top center;
-            background-size: 30%, 100%;
-
-            .modal-body {
-                padding-top: 180px;
-            }
-        }
+    .modal-body {
+        overflow: hidden;
     }
 
     .weapon-image {
@@ -144,30 +128,6 @@
         margin-bottom: 70px;
         max-width: 200px;
         max-height: 200px;
-    }
-
-    hr {
-        border-color: #4D4D4D;
-        border-width: 2px;
-        margin: 25px auto;
-        width: 80%;
-    }
-
-    .social-image {
-        width: 32px;
-        margin-bottom: 15px;
-    }
-
-    input {
-        max-width: 300px;
-        float: none;
-        display: inline-block;
-    }
-}
-
-.modal-settings {
-    .modal-title {
-        margin-top: 4px;
     }
 }
 

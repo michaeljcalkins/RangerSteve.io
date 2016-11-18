@@ -152,11 +152,12 @@ export default class GameUi extends React.Component {
                 }
 
                 { player.health <= 0 && room.state !== 'ended' &&
-                    <RespawnModal {...{
+                    <RespawnModal { ...{
                         player,
+                        game,
                         room,
-                        onCloseSettingsModal,
-                        ...props}}
+                        onOpenSettingsModal: this.onOpenSettingsModal,
+                        ...props } }
                     />
                 }
 
