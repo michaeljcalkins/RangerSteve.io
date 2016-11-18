@@ -6,19 +6,27 @@ import NameGenerator from '../../../lib/NameGenerator'
 import GameConsts from 'lib/GameConsts'
 
 export default class SettingsView extends React.Component {
-    props: Props
-    state: Object
-    
     constructor(props) {
         super(props)
         autobind(this)
 
         this.state = {
+            autoRespawn: props.game.autoRespawn,
             nickname: props.player.nickname,
-            sfxVolume: props.game.sfxVolume,
             quality: props.player.quality,
-            autoRespawn: storage.get('autoRespawn'),
+            sfxVolume: props.game.sfxVolume,
         }
+    }
+
+    state: Object
+
+    props: {
+        game: Object,
+        onNicknameChange: Function,
+        onQualityChange: Function,
+        onSfxVolumeChange: Function,
+        onViewChange: Function,
+        player: Object,
     }
 
     handleGenerateName() {
@@ -79,13 +87,16 @@ export default class SettingsView extends React.Component {
                                 </button>
                             </div>
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="Auto-Respawn">Auto-Respawn </label>
-                                <input onClick={ this.handleRespawnChange }
-                                       ref={ node => this.respawn = node }
-                                       style={ {marginLeft: "7px", marginRight: "7px"} }
-                                       checked={ this.state.autoRespawn }
-                                       type="checkbox"/>
+                        <div className="checkbox">
+                            <label>
+                                <input
+                                    checked={ this.state.autoRespawn }
+                                    onClick={ this.handleRespawnChange }
+                                    ref={ node => this.respawn = node }
+                                    type="checkbox"
+                                />
+                                Auto respawn
+                            </label>
                         </div>
                         <div className="form-group">
                             <label>Sound Effects Volume</label>
@@ -115,13 +126,4 @@ export default class SettingsView extends React.Component {
             </div>
         )
     }
-}
-
-type Props = {
-    game: Object,
-    onNicknameChange: Function,
-    onQualityChange: Function,
-    onSfxVolumeChange: Function,
-    onViewChange: Function,
-    player: Object,
 }
