@@ -104,7 +104,7 @@ export class RespawnModal extends Component {
         if (this.state.elapsed > 0) {
             return (
                 <button
-                    className="btn btn-primary btn-lg disabled"
+                    className="btn btn-primary btn-lg btn-block disabled"
                     onClick={ this.handleDisabledRespawnButtonClick }
                 >
                     Respawning in { this.state.elapsed } seconds
@@ -114,7 +114,7 @@ export class RespawnModal extends Component {
 
         return (
             <button
-                className="btn btn-primary btn-lg"
+                className="btn btn-primary btn-lg btn-block"
                 onClick={ this.handleRespawnButtonClick }
             >
                 Respawn Now
@@ -204,7 +204,7 @@ export class RespawnModal extends Component {
                             />
 
                             <div className="row">
-                                <div className="col-sm-8 text-right">
+                                <div className="col-sm-4 col-sm-offset-4">
                                     { this.renderRespawnButton() }
                                 </div>
                                 <div className="col-sm-4 text-left">
