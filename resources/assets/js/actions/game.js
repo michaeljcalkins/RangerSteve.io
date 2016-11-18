@@ -123,6 +123,13 @@ export const setSettingsModalView = (value) => {
     }
 }
 
+export const setAutoRespawn = (value) => {
+    return {
+        type: 'SET_AUTO_RESPAWN',
+        value,
+    }
+}
+
 export const setState = (value) => {
     return {
         type: 'SET_STATE',

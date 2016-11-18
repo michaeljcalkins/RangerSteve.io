@@ -1,16 +1,23 @@
 import React, { PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import GameConsts from 'lib/GameConsts'
 import WeaponStats from './WeaponStats'
+import actions from '../../../actions'
 
-export default function ChooseSecondaryMenu({
+export function ChooseSecondaryMenu({
+    onSettingsViewChange,
     onSecondaryGunClick,
-    onViewChange,
+    onCloseSettingsModal,
+    player,
 }) {
     function handleSelectSecondaryClick(weapon) {
         mixpanel.track('secondaryWeapon:selected:' + weapon.id)
         onSecondaryGunClick(weapon)
-        onViewChange('main')
+        player.health <= 0
+            ? onCloseSettingsModal()
+            : onSettingsViewChange('main')
     }
 
     function renderWeapons() {
@@ -59,6 +66,27 @@ export default function ChooseSecondaryMenu({
 
 ChooseSecondaryMenu.propTypes = {
     onSecondaryGunClick: PropTypes.func.isRequired,
-    onViewChange: PropTypes.func.isRequired,
+    onCloseSettingsModal: PropTypes.func.isRequired,
+    onSettingsViewChange: PropTypes.func.isRequired,
     player: PropTypes.object,
 }
+
+const mapStateToProps = (state) => {
+    return {
+        player: state.player,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    const gameActions = bindActionCreators(actions.game, dispatch)
+
+    return {
+        onCloseSettingsModal: gameActions.closeSettingsModal,
+        onSettingsViewChange: gameActions.setSettingsModalView,
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ChooseSecondaryMenu)

@@ -7,22 +7,21 @@ import actions from '../../actions'
 import GameConsts from 'lib/GameConsts'
 import CreateKeyboardBindings from '../CreateHandler/CreateKeyboardBindings'
 import GetSpawnPoint from '../GetSpawnPoint'
+import playerIdSchema from 'lib/schemas/playerIdSchema'
 
-export default function onPlayerRespawn(data: {
-    damagedPlayerId: string,
-    health: number,
-}) {
+export default function onPlayerRespawn(buffer) {
+    const data = playerIdSchema.decode(buffer)
     const state = this.game.store.getState()
     const store = this.game.store
     const currentWeapon = state.player.currentWeapon
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
-    if (data.damagedPlayerId !== window.SOCKET_ID) {
-        let enemyPlayer = PlayerById.call(this, data.damagedPlayerId)
+    if (data.id !== window.SOCKET_ID) {
+        let enemyPlayer = PlayerById.call(this, data.id)
         if (! enemyPlayer) return
-        enemyPlayer.meta.health = 100
-        // enemyPlayer.visible = true
+        enemyPlayer.meta.health = GameConsts.PLAYER_FULL_HEALTH
+        enemyPlayer.visible = true
         return
     }
 
@@ -63,6 +62,6 @@ export default function onPlayerRespawn(data: {
     // so that the map doesn't
     // kill them again.
     setTimeout(() => {
-        store.dispatch(actions.player.setHealth(data.health))
+        store.dispatch(actions.player.setHealth(GameConsts.PLAYER_FULL_HEALTH))
     }, 100)
 }

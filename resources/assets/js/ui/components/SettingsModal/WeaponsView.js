@@ -1,20 +1,17 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React, { Component } from 'react'
 import autobind from 'react-autobind'
 
 import GameConsts from 'lib/GameConsts'
-import WeaponStats from './WeaponStats'
+import WeaponButton from './WeaponButton'
 
-export default class WeaponsView extends React.Component {
+export default class WeaponsView extends Component {
     constructor(props) {
         super(props)
         autobind(this)
-
-        this.state = {
-            nickname: props.player.nickname,
-            sfxVolume: props.game.sfxVolume,
-            quality: props.player.quality,
-        }
     }
+
+    props: Props
 
     handlePrimaryViewClick() {
         this.props.onViewChange('choosePrimary')
@@ -24,79 +21,31 @@ export default class WeaponsView extends React.Component {
         this.props.onViewChange('chooseSecondary')
     }
 
-    // TODO This function is no longer needed
-    primaryWeapon() {
-        const { nextSelectedPrimaryWeaponId } = this.props.player
-        const weapon = GameConsts.WEAPONS[nextSelectedPrimaryWeaponId]
-
-        if (! weapon) {
-            console.error('Could not find primary weapon.', nextSelectedPrimaryWeaponId)
-            return null
-        }
-
-        return weapon
-    }
-
-    // TODO This function is no longer needed
-    secondaryWeapon() {
-        const { nextSelectedSecondaryWeaponId } = this.props.player
-        const weapon = GameConsts.WEAPONS[nextSelectedSecondaryWeaponId]
-
-        if (! weapon) {
-            console.error('Could not find secondary weapon.', nextSelectedSecondaryWeaponId)
-            return null
-        }
-
-        return weapon
-    }
-
-    renderPrimaryWeaponImage() {
-        const primaryWeapon = this.primaryWeapon()
-
-        if (! primaryWeapon) return null
-
-        return <img src={ '/images/guns/large/' + primaryWeapon.image } />
-    }
-
-    renderSecondaryWeaponImage() {
-        const secondaryWeapon = this.secondaryWeapon()
-
-        if (! secondaryWeapon) return null
-
-        return <img src={ '/images/guns/large/' + secondaryWeapon.image } />
-    }
-
     render() {
+        const {
+            nextSelectedPrimaryWeaponId,
+            nextSelectedSecondaryWeaponId,
+        } = this.props.player
+
+        const primaryWeapon = GameConsts.WEAPONS[nextSelectedPrimaryWeaponId]
+        const secondaryWeapon = GameConsts.WEAPONS[nextSelectedSecondaryWeaponId]
+
         return (
             <div>
                 <div className="row">
                     <div className="col-sm-6">
                         <label>Primary Weapon</label>
-                        <div
-                            className="option-group option-group-lg option-character-group align-middle"
-                            id="open-primary-weapon-menu-button"
+                        <WeaponButton
                             onClick={ this.handlePrimaryViewClick }
-                        >
-                            <div>
-                                { this.renderPrimaryWeaponImage() }
-                            </div>
-                            <span className="option-name">{ this.primaryWeapon().name }</span>
-                            <WeaponStats weapon={ this.primaryWeapon() } />
-                        </div>
+                            weapon={ primaryWeapon }
+                        />
                     </div>
                     <div className="col-sm-6">
                         <label>Secondary Weapon</label>
-                        <div
-                            className="option-group option-group-lg option-weapon-group align-middle"
-                            id="open-secondary-weapon-menu-button"
+                        <WeaponButton
                             onClick={ this.handleSecondaryViewClick }
-                        >
-                            <div>
-                                { this.renderSecondaryWeaponImage() }
-                            </div>
-                            <span className="option-name">{ this.secondaryWeapon().name }</span>
-                            <WeaponStats weapon={ this.secondaryWeapon() } />
-                        </div>
+                            weapon={ secondaryWeapon }
+                        />
                     </div>
                 </div>
 
@@ -110,8 +59,8 @@ export default class WeaponsView extends React.Component {
     }
 }
 
-WeaponsView.propTypes = {
-    game: PropTypes.object,
-    onViewChange: PropTypes.func,
-    player: PropTypes.object,
+type Props = {
+    game: Object,
+    onViewChange: Function,
+    player: Object,
 }

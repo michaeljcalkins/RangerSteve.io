@@ -36,13 +36,13 @@ function TeamDeathmatch(game) {
 
 TeamDeathmatch.prototype = {
 
-    preload: function() {
+    preload() {
         const store = this.game.store
         const mapName = store.getState().room.map
         Maps[mapName].preload.call(this)
     },
 
-    create: function() {
+    create() {
         const store = this.game.store
         const { room } = store.getState()
 
@@ -64,7 +64,7 @@ TeamDeathmatch.prototype = {
         this.game.paused = false
     },
 
-    update: function() {
+    update() {
         if (this.game.store.getState().game.resetEventsFlag) {
             this.game.store.dispatch(actions.game.setResetEventsFlag(false))
             CreateKeyboardBindings.call(this)

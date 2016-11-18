@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
 
@@ -14,6 +15,8 @@ import RespawnModal from './RespawnModal/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 
 export default class GameUi extends React.Component {
+    props: Props
+
     constructor(props) {
         super(props)
         autobind(this)
@@ -122,6 +125,8 @@ export default class GameUi extends React.Component {
                 game,
                 onCloseSettingsModal,
                 onSettingsViewChange,
+                onOpenSettingsModal,
+                ...props,
             },
         } = this
 
@@ -148,43 +153,61 @@ export default class GameUi extends React.Component {
                 }
 
                 { player.health <= 0 && room.state !== 'ended' &&
-                    <RespawnModal player={ player } room={ room } />
+                    <RespawnModal { ...{
+                        player,
+                        game,
+                        room,
+                        onOpenSettingsModal: onOpenSettingsModal,
+                        onSettingsViewChange: onSettingsViewChange,
+                        ...props } }
+                    />
                 }
 
                 <SettingsModal
                     game={ game }
                     isOpen={ game.settingsModalIsOpen }
                     onClose={ onCloseSettingsModal }
-                    onKeyboardControlChange={ this.props.onKeyboardControlChange }
+                    onKeyboardControlChange={ props.onKeyboardControlChange }
                     onNicknameChange={ this.handleNicknameChange }
                     onPrimaryGunClick={ this.handlePrimaryGunClick }
                     onQualityChange={ this.handleQualityChange }
+                    onRespawnChange={ props.onSetAutoRespawn }
                     onSecondaryGunClick={ this.handleSecondaryGunClick }
-                    onSetResetEventsFlag={ this.props.onSetResetEventsFlag }
+                    onSetResetEventsFlag={ props.onSetResetEventsFlag }
                     onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
                     onViewChange={ onSettingsViewChange }
                     player={ player }
                 />
+
+                { (
+                    (player.health <= 0 && room.state !== 'ended') ||
+                    game.settingsModalIsOpen
+                ) &&
+                    <div
+                        className="modal-backdrop"
+                        style={ { display: 'block' } }
+                    />
+                }
             </div>
         )
     }
 }
 
-GameUi.propTypes = {
-    game: PropTypes.object.isRequired,
-    onCloseChatModal: PropTypes.func.isRequired,
-    onCloseSettingsModal: PropTypes.func.isRequired,
-    onKeyboardControlChange: PropTypes.func.isRequired,
-    onNicknameChange: PropTypes.func.isRequired,
-    onOpenChatModal: PropTypes.func.isRequired,
-    onOpenSettingsModal: PropTypes.func.isRequired,
-    onPrimaryWeaponIdChange: PropTypes.func.isRequired,
-    onQualityChange: PropTypes.func.isRequired,
-    onReduceToMaxChatMessages: PropTypes.func.isRequired,
-    onSecondaryWeaponIdChange: PropTypes.func.isRequired,
-    onSetResetEventsFlag: PropTypes.func,
-    onSettingsViewChange: PropTypes.func.isRequired,
-    onSfxVolumeChange: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired,
-    room: PropTypes.object.isRequired,
+type Props = {
+    game: Object,
+    onCloseChatModal: Function,
+    onCloseSettingsModal: Function,
+    onKeyboardControlChange: Function,
+    onNicknameChange: Function,
+    onOpenChatModal: Function,
+    onOpenSettingsModal: Function,
+    onPrimaryWeaponIdChange: Function,
+    onQualityChange: Function,
+    onReduceToMaxChatMessages: Function,
+    onSecondaryWeaponIdChange: Function,
+    onSetResetEventsFlag: Function,
+    onSettingsViewChange: Function,
+    onSfxVolumeChange: Function,
+    player: Object,
+    room: Object,
 }

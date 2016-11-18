@@ -1,16 +1,25 @@
-import React, { PropTypes } from 'react'
+// @flow
+import autobind from 'react-autobind'
+import React, { Component } from 'react'
 import get from 'lodash/get'
 import cs from 'classnames'
 
+import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
+import emptyEventSchema from 'lib/schemas/emptyEventSchema'
 
-export default class RespawnModal extends React.Component {
+export default class RespawnModal extends Component {
     constructor(props) {
         super(props)
+        autobind(this)
+    }
 
-        this.state = {
-            elapsed: 0,
-        }
+    props: Props
+
+    state: Object = {
+        view: 'default',
+        elapsed: 0,
+        copied: false,
     }
 
     componentDidMount() {
@@ -47,7 +56,10 @@ export default class RespawnModal extends React.Component {
 
         return (
             <div>
-                <strong className="text-success">Damage given:</strong> <strong>{ defendingDamage }</strong> in <strong>{ defendingHits } hits</strong> to { attackingPlayerName }
+                <strong className="text-success">Damage given:</strong>
+                <strong>{ defendingDamage }</strong> in
+                <strong>{ defendingHits } hits</strong>
+                to { attackingPlayerName }
             </div>
         )
     }
@@ -69,6 +81,25 @@ export default class RespawnModal extends React.Component {
         )
     }
 
+    renderRespawnButton() {
+        if (this.state.elapsed > 0) {
+            return (
+                <button className="btn btn-primary btn-lg disabled">
+                    Respawning in { this.state.elapsed } seconds
+                </button>
+            )
+        }
+
+        return (
+            <button
+                className="btn btn-primary btn-lg"
+                onClick={ this.handleRespawnButtonClick }
+            >
+                Respawn Now
+            </button>
+        )
+    }
+
     renderCauseOfDeath() {
         const { player, room } = this.props
         const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
@@ -78,103 +109,85 @@ export default class RespawnModal extends React.Component {
         if (! attackingPlayerId) {
             return (
                 <div className="row">
-                    <div className="col-sm-12 text-center">
-                        <h4>You killed yourself...</h4>
+                    <div className="col-sm-6 text-right">
+                        <img height="150" src="/images/ui/panel/suicide.png" />
+                    </div>
+                    <div className="col-sm-6 text-left">
+                        <h4 style="margin-top: 60px;">You killed yourself...</h4>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="row">
+                    <div className="col-sm-5 text-right">
+                        <img
+                            className="weapon-image"
+                            src={ '/images/guns/large/' + selectedWeapon.image }
+                        />
+                    </div>
+                    <div className="col-sm-7 text-left">
+                        <div style="margin-top: 60px;">
+                            <h4><strong>{ attackingPlayerName }</strong> killed you with their <strong>{ selectedWeapon.name }</strong></h4>
+                            { this.renderDamageTaken() }
+                            { this.renderDamageGiven() }
+                        </div>
                     </div>
                 </div>
             )
         }
+    }
 
-        return (
-            <div className="row">
-                <div className="col-sm-12 text-center">
-                    <img
-                        className="weapon-image"
-                        src={ '/images/guns/large/' + selectedWeapon.image }
-                    />
-                    <h4><strong>{ attackingPlayerName }</strong> killed you with their <strong>{ selectedWeapon.name }</strong></h4>
-                    { this.renderDamageTaken() }
-                    { this.renderDamageGiven() }
-                </div>
-            </div>
-        )
+    handleRespawnButtonClick() {
+        var buffer: Uint8Array = emptyEventSchema.encode()
+        window.socket.emit('player respawn', buffer)
+    }
+
+    handleWeaponsViewClick(view) {
+        this.props.onOpenSettingsModal()
+        this.props.onSettingsViewChange(view)
     }
 
     render() {
-        const { player } = this.props
+        const { player, game } = this.props
         const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
-        const shareLink = window.location.href
-        const encodedShareLink = encodeURIComponent(shareLink)
         const modalContentClasses = cs('modal-content', {
             'modal-content-suicide': ! attackingPlayerId,
         })
 
         return (
-            <div>
-                <div
-                    className="modal modal-respawn"
-                    style={ { display: 'block' } }
-                >
-                    <div className="modal-dialog">
-                        <div className={ modalContentClasses }>
-                            <div className="modal-header">
-                                <h4 className="modal-title">Respawn</h4>
-                            </div>
-                            <div className="modal-body">
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                        { this.renderCauseOfDeath() }
-                                    </div>
-                                </div>
+            <div
+                className="modal modal-respawn"
+                style={ { display: 'block' } }
+            >
+                <div className="modal-dialog">
+                    <div className={ modalContentClasses }>
+                        <div className="modal-header">
+                            <h4 className="modal-title">Respawn</h4>
+                        </div>
+                        <div className="modal-body">
+                            { this.renderCauseOfDeath() }
 
-                                <h4 className="text-center">Respawning in { this.state.elapsed } seconds</h4>
+                            <WeaponsView
+                                game={ game }
+                                onViewChange={ this.handleWeaponsViewClick }
+                                player={ player }
+                            />
 
-                                <hr />
-
-                                <div className="row">
-                                    <div className="col-sm-12 text-center">
-                                        <p className="text-center">Invite people into this game.</p>
-                                        <a
-                                            href={ 'https://www.facebook.com/sharer/sharer.php?u=' + encodedShareLink }
-                                            target="_blank"
-                                        >
-                                            <img className="social-image" src="/images/icons/facebook-3-128.png" />
-                                        </a>
-                                        &nbsp;
-                                        <a
-                                            href={ 'https://twitter.com/home?status=' + encodedShareLink }
-                                            target="_blank"
-                                        >
-                                            <img className="social-image" src="/images/icons/twitter-3-128.png" />
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-sm-12 text-center">
-                                        <p className="text-center">Direct link to this game.</p>
-                                        <input
-                                            className="form-control text-center"
-                                            defaultValue={ shareLink }
-                                            readOnly
-                                            type="text"
-                                        />
-                                    </div>
+                            <div className="row">
+                                <div className="col-sm-12 text-center">
+                                    { this.renderRespawnButton() }
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div
-                    className="modal-backdrop"
-                    style={ { display: 'block' } }
-                 />
             </div>
         )
     }
 }
 
-RespawnModal.propTypes = {
-    player: PropTypes.object,
-    room: PropTypes.object,
+type Props = {
+    player: Object,
+    room: Object,
 }
