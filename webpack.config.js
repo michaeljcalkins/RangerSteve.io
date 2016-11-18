@@ -123,7 +123,7 @@ if (! isProduction) {
             allChunks: true,
             disable: false,
         }),
-        new webpack.optimize.DedupePlugin(),
+        // new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
