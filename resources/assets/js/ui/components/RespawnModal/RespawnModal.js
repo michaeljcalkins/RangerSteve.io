@@ -1,5 +1,5 @@
 // @flow
-import autobind from 'autobind-decorator'
+import autobind from 'react-autobind'
 import React, { Component } from 'react'
 import get from 'lodash/get'
 import cs from 'classnames'
@@ -8,9 +8,14 @@ import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
 import emptyEventSchema from 'lib/schemas/emptyEventSchema'
 
-@autobind
 export default class RespawnModal extends Component {
+    constructor(props) {
+        super(props)
+        autobind(this)
+    }
+
     props: Props
+
     state: Object = {
         view: 'default',
         elapsed: 0,
