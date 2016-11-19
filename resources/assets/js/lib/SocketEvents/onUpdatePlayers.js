@@ -3,7 +3,7 @@ import includes from 'lodash/includes'
 import values from 'lodash/values'
 
 import RemotePlayer from '../RemotePlayer'
-import actions from '../../actions'
+import actions from 'actions'
 
 let lastRoomState = null
 

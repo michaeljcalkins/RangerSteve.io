@@ -67,6 +67,7 @@ let sharedConfig = {
             lib: path.resolve('./lib'),
             'react': 'preact-compat',
             'react-dom': 'preact-compat',
+            'actions': path.resolve('./resources/assets/js/actions/'),
         },
         extensions: ['.scss', '.webpack.js', '.web.js', '.js'],
     },
