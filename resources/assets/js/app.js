@@ -4,7 +4,9 @@ import { createStore } from 'redux'
 import rootReducer from './reducers'
 import ui from './ui'
 import game from './game'
+import checkForIframeAndRedirect from './lib/checkForIframeAndRedirect'
 
+checkForIframeAndRedirect()
 const store = createStore(rootReducer)
 
 ui(store)
