@@ -7,9 +7,11 @@
 
 <section class="main-section">
     <div class="col-xs-12">
-        <a class="main-header" href="/">
-            Ranger Steve
-        </a>
+        <div class="text-center">
+            <a class="main-header" href="/">
+                Ranger Steve
+            </a>
+        </div>
 
         <div class="home-content">
             <div class="well">
@@ -42,26 +44,39 @@
 
                 <div class="row">
                     {% if numberOfRooms > 0 %}
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
+                            <div class="btn-group btn-group-justified" id="servers-container" style="margin-top: 2px;">
+                                <a href="https://rangersteve.io" class="btn btn-primary">US</a>
+                                <a href="https://eu.rangersteve.io" class="btn btn-primary">EU</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
                             <button
-                                class="btn btn-primary btn-lg btn-block"
+                                class="btn btn-primary btn-block"
                                 id="how-to-play-button"
                             >
                                 How to Play
                             </button>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <button
-                                class="btn btn-primary btn-lg btn-block"
+                                class="btn btn-primary btn-block"
                                 id="rooms-button"
                             >
                                 View Rooms
                             </button>
                         </div>
+                    {% else %}
+                        <div class="col-sm-12">
+                            <div class="btn-group btn-group-justified" id="servers-container">
+                                <a href="https://rangersteve.io" class="btn btn-primary">US</a>
+                                <a href="https://eu.rangersteve.io" class="btn btn-primary">EU</a>
+                            </div>
+                        </div>
                     {% endif %}
                 </div>
 
-                <div id="rooms-container" class="panel panel-default" style="margin-bottom: 0">
+                <div id="rooms-container" class="panel panel-default">
                     <div class="panel-heading text-center">Rooms</div>
 
                     <table class="table table-middle table-hover">
@@ -90,7 +105,7 @@
                     </table>
                 </div>
 
-                <div id="how-to-play-container" class="panel panel-default" style="margin-bottom: 0">
+                <div id="how-to-play-container" class="panel panel-default">
                     <div class="panel-heading text-center">How To Play</div>
 
                     <table class="table">
@@ -145,6 +160,24 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <a style="background: #7289DA;" href="https://discord.gg/GqKgsmy" class="btn btn-primary btn-block" target="_blank">
+                            <i class="fa fa-commenting"></i> Discord
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a style="background: #3b5998;" href="https://www.facebook.com/rangerstevegame/" class="btn btn-primary btn-block" target="_blank">
+                            <i class="fa fa-facebook"></i> Facebook
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a style="background: #1da1f2;" href="https://twitter.com/michaeljcalkins" class="btn btn-primary btn-block" target="_blank">
+                            <i class="fa fa-twitter"></i> Twitter
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -161,6 +194,15 @@
     $('#nickname').on('keyup', function(evt) {
         localStorage.setItem('nickname', JSON.stringify(evt.target.value))
     })
+
+    if (
+        window.location.href.indexOf('https://rangersteve.io') > -1 ||
+        window.location.href.indexOf('http://localhost') > -1
+    ) {
+        $('#servers-container').find('a:first-child').addClass('active')
+    } else if (window.location.href.indexOf('https://eu.rangersteve.io') > -1) {
+        $('#servers-container').find('a:last-child').addClass('active')
+    }
 
     $('#how-to-play-button').on('click', function() {
         $('#how-to-play-container').show()
