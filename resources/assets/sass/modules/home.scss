@@ -137,13 +137,20 @@ body.main:after {
     text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
 }
 
-#how-to-play-container {
-    margin-top: 15px;
+#views {
+    margin-top: 1em;
+
+    .nav {
+        font-weight: bold;
+
+        .active a {
+            border-bottom: 1px dashed #EEE;
+        }
+    }
 }
 
-#rooms-container {
-    margin-top: 15px;
-    display: none;
+.view-container {
+    border-top-width: 0;
 }
 
 /* Large Devices, Wide Screens */
