@@ -3,8 +3,8 @@ import playerFromServerSchema from 'lib/schemas/playerFromServerSchema'
 import includes from 'lodash/includes'
 
 import PlayerById from'../PlayerById'
-import { playerFaceLeft, playerFaceRight } from '../RemotePlayerFaceHandler'
 import GameConsts from 'lib/GameConsts'
+import updatePlayerAngles from '../updatePlayerAngles'
 
 function isNotMoving(movePlayer) {
     return movePlayer.x === movePlayer.lastPosition.x && movePlayer.y === movePlayer.lastPosition.y
@@ -45,15 +45,7 @@ export default function onMovePlayer(buffer) {
         movePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[movePlayer.meta.weaponId].frame
     }
 
-    // Update player angles
-    movePlayer.rightArmGroup.angle = data.rightArmAngle
-    movePlayer.leftArmGroup.angle = data.leftArmAngle
-
-    if (data.facing === 'right') {
-        playerFaceRight(movePlayer)
-    } else {
-        playerFaceLeft(movePlayer)
-    }
+    updatePlayerAngles(movePlayer, data.angle)
 
     if (
         movePlayer.x > movePlayer.lastPosition.x &&

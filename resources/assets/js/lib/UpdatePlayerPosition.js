@@ -24,11 +24,11 @@ export default function() {
         ? state.player.selectedPrimaryWeaponId
         : state.player.selectedSecondaryWeaponId
 
+    const angle = (this.game.physics.arcade.angleToPointer(RS.player) * 180 / Math.PI) + 90
+
     let newPlayerData = {
-        facing: state.player.facing,
+        angle: angle,
         flying: RS.rightJumpjet.visible && RS.leftJumpjet.visible,
-        leftArmAngle: RS.leftArmGroup.angle,
-        rightArmAngle: RS.rightArmGroup.angle,
         shooting: isPlayerShooting(currentWeaponId, RS.rightArmSprite),
         weaponId: currentWeaponId,
         x: RS.player.x,

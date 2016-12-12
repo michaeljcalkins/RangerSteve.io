@@ -5,7 +5,7 @@ export default function PlayerAngleHandler() {
     let leftAngle = angleInDegrees
     let rightAngle = angleInDegrees
 
-    if (state.player.facing === 'right') {
+    if (angleInDegrees >= 0 && angleInDegrees <= 180) {
         // User is aiming up and to the right
         if (angleInDegrees <= 81 && angleInDegrees >= 71) {
             leftAngle -= -10
@@ -64,13 +64,8 @@ export default function PlayerAngleHandler() {
         } else if (angleInDegrees > 169 && angleInDegrees <= 180) {
             leftAngle += 100
             rightAngle -= 10
-        } else if (angleInDegrees > 180 && angleInDegrees <= 189) {
-            leftAngle += 110
-            rightAngle -= 12
         }
-    }
-
-    if (state.player.facing === 'left') {
+    } else {
         // User is aiming up and to the left
         if (angleInDegrees >= -91 && angleInDegrees <= -81) {
             leftAngle += 20
