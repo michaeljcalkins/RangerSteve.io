@@ -1,12 +1,12 @@
 // @flow
 import GameConsts from 'lib/GameConsts'
-import { playerFaceRight, playerFaceLeft } from './RemotePlayerFaceHandler'
+import updatePlayerAngles from './updatePlayerAngles'
 
 export default function RemotePlayer(player: {
-    x: number,
-    y:  number,
     id: string,
     meta: Object,
+    x: number,
+    y: number,
 }) {
     const newRemotePlayer = this.game.add.sprite(player.x, player.y, 'player-placeholder')
     newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
@@ -103,8 +103,7 @@ export default function RemotePlayer(player: {
 
     newRemotePlayer.meta = player.meta
 
-    playerFaceLeft(newRemotePlayer)
-    playerFaceRight(newRemotePlayer)
+    updatePlayerAngles(newRemotePlayer, 90)
     newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_LEFT_FRAME
 
     return newRemotePlayer

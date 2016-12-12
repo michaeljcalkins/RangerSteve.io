@@ -1,9 +1,22 @@
+import GameConsts from 'lib/GameConsts'
+
 export default function(player, angle) {
     let leftAngle = angle
     let rightAngle = angle
 
     if (angle >= 0 && angle <= 180) {
+        const previousFacingValue = player.facing
         player.facing = 'right'
+
+        if (previousFacingValue !== player.facing) {
+            player.rightArmSprite.scale.y *= -1
+            player.rightArmGroup.x = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_X
+            player.rightArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_Y
+
+            player.leftArmSprite.scale.y *= -1
+            player.leftArmGroup.x = GameConsts.PLAYER_FACE.RIGHT.LEFT_ARM_X
+            player.leftArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.LEFT_ARM_Y
+        }
 
         // User is aiming up and to the right
         if (angle <= 81 && angle >= 71) {
@@ -65,7 +78,18 @@ export default function(player, angle) {
             rightAngle -= 10
         }
     } else {
+        const previousFacingValue = player.facing
         player.facing = 'left'
+
+        if (previousFacingValue !== player.facing) {
+            player.rightArmSprite.scale.y *= -1
+            player.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
+            player.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
+
+            player.leftArmSprite.scale.y *= -1
+            player.leftArmGroup.x = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_X
+            player.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
+        }
 
         // User is aiming up and to the left
         if (angle >= -91 && angle <= -81) {

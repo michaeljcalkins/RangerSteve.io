@@ -16,6 +16,7 @@ export default function onMovePlayer(buffer) {
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     const data = playerFromServerSchema.decode(buffer)
+
     if (data.id === window.SOCKET_ID) return
 
     let movePlayer = PlayerById.call(this, data.id)

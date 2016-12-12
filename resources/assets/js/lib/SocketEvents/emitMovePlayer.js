@@ -2,10 +2,9 @@
 import playerFromClientSchema from 'lib/schemas/playerFromClientSchema'
 
 export default function(data: {
+    angle: number,
     facing: string,
     flying: bool,
-    leftArmAngle: number,
-    rightArmAngle: number,
     shooting: bool,
     weaponId: string,
     x: number,

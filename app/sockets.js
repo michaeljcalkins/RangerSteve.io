@@ -301,17 +301,13 @@ function onMovePlayer(buffer/*: Uint8Array*/) {
     // Update player position
     movePlayer.x = data.x
     movePlayer.y = data.y
-    movePlayer.rightArmAngle = data.rightArmAngle
-    movePlayer.leftArmAngle = data.leftArmAngle
-    movePlayer.facing = data.facing
+    movePlayer.angle = data.angle
 
     const packet = {
         id: this.id,
         x: data.x,
         y: data.y,
-        rightArmAngle: data.rightArmAngle,
-        leftArmAngle: data.leftArmAngle,
-        facing: data.facing,
+        angle: data.angle,
         flying: data.flying,
         shooting: data.shooting,
         health: movePlayer.meta.health,
@@ -319,7 +315,7 @@ function onMovePlayer(buffer/*: Uint8Array*/) {
     }
 
     // Broadcast updated position to connected socket clients
-    const newBuffer/*: Uint8Array*/ = playerFromServerSchema.encode(packet)
+    const newBuffer = playerFromServerSchema.encode(packet)
     io.to(roomId).emit('move player', newBuffer)
 }
 
