@@ -162,6 +162,22 @@
     -webkit-animation-timing-function: linear;
 }
 
+.hud-announcement {
+    position: absolute;
+    top: 120px;
+    margin: 0 auto;
+    width: 500px;
+    left: 0;
+    right: 0;
+
+    .alert {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.3);
+        color: rgba(255, 255, 0, 0.9);
+        border: 1px solid rgba(255, 255, 0, 0.5);
+    }
+}
+
 .hud-chat {
     background: -webkit-linear-gradient(left, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Opera 11.1 to 12.0 */

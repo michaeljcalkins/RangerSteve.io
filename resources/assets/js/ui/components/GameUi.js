@@ -4,6 +4,7 @@ import storage from 'store'
 import autobind from 'react-autobind'
 
 import HudChatHistory from './Hud/HudChatHistory'
+import HudAnnouncement from './Hud/HudAnnouncement'
 import HudKillLog from './Hud/HudKillLog'
 import HudChangeWeaponsButton from './Hud/HudChangeWeaponsButton'
 import HudSettingsButton from './Hud/HudSettingsButton'
@@ -137,6 +138,7 @@ export default class GameUi extends React.Component {
                 <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
                 <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />
                 <HudLeaderboard room={ room } />
+                <HudAnnouncement announcement={ room.announcement } />
                 <HudChatHistory
                     isOpen={ game.chatModalIsOpen }
                     messages={ game.chatMessages }
