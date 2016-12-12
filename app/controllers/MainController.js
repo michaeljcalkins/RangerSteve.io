@@ -41,6 +41,29 @@ let MainController = {
         })
     },
 
+    admin: function(req, res) {
+        res.render('admin', {
+            announcement: 'A new version of the game will be deployed in a moment...',
+        })
+    },
+
+    adminAnnouncement: function(req, res) {
+        let error = false
+        let success = false
+
+        if (! req.body || ! req.body.announcement) {
+            error = 'Announcement cannot be empty.'
+        } else {
+            res.io.emit('announcement', req.body.announcement)
+            success = true
+        }
+
+        res.render('admin', {
+            error: error,
+            success: success,
+            announcement: req.body.announcement,
+        })
+    },
 }
 
 module.exports = MainController
