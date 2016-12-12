@@ -72,12 +72,12 @@ export default function FireStandardBullet(currentWeaponId) {
 
     emitBulletFired.call(this, {
         bulletId: bullet.bulletId,
-        weaponId: currentWeaponId,
-        x,
-        y,
-        pointerAngle,
         bulletSpeed: currentWeapon.bulletSpeed,
         damage: currentWeapon.damage,
+        pointerAngle,
+        weaponId: currentWeaponId,
+        x: Math.abs(x),
+        y: Math.abs(y),
     })
 
     ReloadGunWhenEmpty.call(this, currentWeaponId)
