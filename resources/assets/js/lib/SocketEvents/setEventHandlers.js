@@ -11,6 +11,7 @@ import onMessageReceived from './onMessageReceived'
 import onPlayerKillLog from './onPlayerKillLog'
 import onRefreshRoom from './onRefreshRoom'
 import onLoadGame from './onLoadGame'
+import onAnnouncement from './onAnnouncement'
 
 export default function() {
     window.socket.on('connect', onSocketConnected.bind(this))
@@ -30,4 +31,6 @@ export default function() {
     window.socket.on('refresh room', onRefreshRoom.bind(this))
     window.socket.on('bullet fired', onBulletFired.bind(this))
     window.socket.on('load game', onLoadGame.bind(this))
+
+    window.socket.on('announcement', onAnnouncement.bind(this))
 }

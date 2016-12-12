@@ -1,5 +1,6 @@
 const initialState = {
     roundEndTime: 0,
+    announcement: '',
 }
 
 const room = (state = initialState, action) => {
@@ -8,6 +9,11 @@ const room = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.value,
+            }
+        case 'ADD_ANNOUNCEMENT':
+            return {
+                ...state,
+                announcement: action.value,
             }
 
         default:

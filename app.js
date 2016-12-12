@@ -41,6 +41,11 @@ app.use(express.static(path.join(__dirname, 'public'), {
     maxAge: 86400000, // One day
 }));
 
+app.use(function(req, res, next){
+    res.io = io;
+    next();
+});
+
 app.use('/', routes)
 
 // catch 404 and forward to error handler

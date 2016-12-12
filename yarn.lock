@@ -903,9 +903,19 @@ base64id@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/base64id/-/base64id-0.1.0.tgz#02ce0fdeee0cef4f40080e1e73e834f0b1bfce3f"
 
+basic-auth@^1.0.3:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/basic-auth/-/basic-auth-1.1.0.tgz#45221ee429f7ee1e5035be3f51533f1cdfd29884"
+
 basic-auth@~1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/basic-auth/-/basic-auth-1.0.4.tgz#030935b01de7c9b94a824b29f3fccb750d3a5290"
+
+basicauth-middleware:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/basicauth-middleware/-/basicauth-middleware-2.0.0.tgz#cd25793fc1a51190a4d370effea85514149fa50c"
+  dependencies:
+    basic-auth "^1.0.3"
 
 batch@0.5.3:
   version "0.5.3"
