@@ -4,3 +4,10 @@ export const setRoom = (value) => {
         value,
     }
 }
+
+export const addAnnouncement = (value) => {
+    return {
+        type: 'ADD_ANNOUNCEMENT',
+        value,
+    }
+}
