@@ -14,6 +14,9 @@
         </div>
 
         <div class="home-content">
+            <div id="browser-recommendation" class="alert alert-info text-center">
+                We recommend using Chrome browser for the best game performance
+            </div>
             <div class="well">
                 <form action="/game" method="GET">
                     <div class="row">
@@ -175,6 +178,8 @@
         setView(lastView)
     } catch (e) {}
 
+    if (! isChromeBrowser()) showBrowserRecommendation()
+
     $('#nickname').on('keyup', function(evt) {
         localStorage.setItem('nickname', JSON.stringify(evt.target.value))
     })
@@ -205,6 +210,14 @@
         $('#' + viewName + '-button').parent().addClass('active')
 
         localStorage.setItem('lastView', viewName)
+    }
+
+    function isChromeBrowser() {
+        return navigator.userAgent.indexOf('Chrome') > -1
+    }
+
+    function showBrowserRecommendation() {
+        $('#browser-recommendation').show()
     }
 
     {% if isProduction %}
