@@ -28,8 +28,8 @@ export default function() {
 
     let newPlayerData = {
         angle: angle,
-        flying: RS.rightJumpjet.visible && RS.leftJumpjet.visible,
-        shooting: isPlayerShooting(currentWeaponId, RS.rightArmSprite),
+        flying: RS.player.rightJumpjet.visible && RS.player.leftJumpjet.visible,
+        shooting: isPlayerShooting(currentWeaponId, RS.player.rightArmSprite),
         weaponId: currentWeaponId,
         x: RS.player.x,
         y: RS.player.y,

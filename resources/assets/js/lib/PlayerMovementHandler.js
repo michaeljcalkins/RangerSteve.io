@@ -1,6 +1,6 @@
 import GameConsts from 'lib/GameConsts'
-import { playerFaceLeft, playerFaceRight } from './PlayerFaceHandler'
 import { isJumpJetInputActive } from './InputHelpers'
+import updatePlayerAngles from './updatePlayerAngles'
 
 function isRunningLeftAndFacingLeft(isMovingLeft, isMovingRight, mouseX, playerX) {
     return isMovingLeft && ! isMovingRight && mouseX < playerX
@@ -26,28 +26,23 @@ export default function PlayerMovementHandler() {
     const state = this.game.store.getState()
     const isMovingLeft = this.game.input.keyboard.isDown(state.game.keyboardControls.left)
     const isMovingRight = this.game.input.keyboard.isDown(state.game.keyboardControls.right)
+    const angle = (this.game.physics.arcade.angleToPointer(RS.player) * 180 / Math.PI) + 90
 
     if (state.player.health <= 0) return
 
-    // Left facing head needs to be set only once
-    if (this.game.input.worldX >= RS.player.x) {
-        playerFaceRight.call(this)
-    }
-    else if (this.game.input.worldX < RS.player.x) {
-        playerFaceLeft.call(this)
-    }
+    updatePlayerAngles(RS.player, angle)
 
     if (isRunningLeftAndFacingLeft(isMovingLeft, isMovingRight, this.game.input.worldX, RS.player.x)) {
-        RS.playerSprite.animations.play('runLeft-faceLeft')
+        RS.player.playerSprite.animations.play('runLeft-faceLeft')
     }
     else if (isRunningLeftAndFacingRight(isMovingLeft, isMovingRight, this.game.input.worldX, RS.player.x)) {
-        RS.playerSprite.animations.play('runLeft-faceRight')
+        RS.player.playerSprite.animations.play('runLeft-faceRight')
     }
     else if (isRunningRightAndFacingLeft(isMovingLeft, isMovingRight, this.game.input.worldX, RS.player.x)) {
-        RS.playerSprite.animations.play('runRight-faceLeft')
+        RS.player.playerSprite.animations.play('runRight-faceLeft')
     }
     else if (isRunningRightAndFacingRight(isMovingLeft, isMovingRight, this.game.input.worldX, RS.player.x)) {
-        RS.playerSprite.animations.play('runRight-faceRight')
+        RS.player.playerSprite.animations.play('runRight-faceRight')
     }
 
     // Standing still and facing right
@@ -59,7 +54,7 @@ export default function PlayerMovementHandler() {
         ) &&
         this.game.input.worldX >= RS.player.x
     ) {
-        RS.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
+        RS.player.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
     }
 
     // Standing still and facing left
@@ -70,7 +65,7 @@ export default function PlayerMovementHandler() {
         ) &&
         this.game.input.worldX < RS.player.x
     ) {
-        RS.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
+        RS.player.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
     }
 
     // If the LEFT key is down, set the player velocity to move left
@@ -86,6 +81,6 @@ export default function PlayerMovementHandler() {
     // Stand still
     if (isNotMoving(isMovingLeft, isMovingRight)) {
         RS.player.body.acceleration.x = 0
-        RS.playerSprite.animations.stop()
+        RS.player.playerSprite.animations.stop()
     }
 }

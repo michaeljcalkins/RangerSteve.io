@@ -17,10 +17,6 @@ export default function PlayerSpriteHandler() {
     this.game.store.dispatch(actions.player.setPrimaryAmmoRemaining(selectedPrimaryWeapon.ammo))
     this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
 
-    RS.playerGroup = this.game.add.group()
-    RS.leftArmGroup = this.game.add.group()
-    RS.rightArmGroup = this.game.add.group()
-
     // Player sprite
     RS.player = this.game.add.sprite(spawnPoint.x, spawnPoint.y, 'player-placeholder')
     RS.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
@@ -51,70 +47,72 @@ export default function PlayerSpriteHandler() {
     RS.player.body.collideWorldBounds = true
 
     // Left jump jet
-    RS.leftJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
-    RS.leftJumpjet.anchor.setTo(0)
-    RS.leftJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
-    RS.leftJumpjet.animations.play('thrust')
-    RS.leftJumpjet.y = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_X
-    RS.leftJumpjet.x = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_Y
-    RS.leftJumpjet.visible = false
-    RS.player.addChild(RS.leftJumpjet)
+    RS.player.leftJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
+    RS.player.leftJumpjet.anchor.setTo(0)
+    RS.player.leftJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
+    RS.player.leftJumpjet.animations.play('thrust')
+    RS.player.leftJumpjet.y = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_X
+    RS.player.leftJumpjet.x = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_Y
+    RS.player.leftJumpjet.visible = false
+    RS.player.addChild(RS.player.leftJumpjet)
 
     // Right jump jet
-    RS.rightJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
-    RS.rightJumpjet.anchor.setTo(0)
-    RS.rightJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
-    RS.rightJumpjet.animations.play('thrust')
-    RS.rightJumpjet.y = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_X
-    RS.rightJumpjet.x = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_Y
-    RS.rightJumpjet.visible = false
-    RS.player.addChild(RS.rightJumpjet)
+    RS.player.rightJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
+    RS.player.rightJumpjet.anchor.setTo(0)
+    RS.player.rightJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
+    RS.player.rightJumpjet.animations.play('thrust')
+    RS.player.rightJumpjet.y = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_X
+    RS.player.rightJumpjet.x = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_Y
+    RS.player.rightJumpjet.visible = false
+    RS.player.addChild(RS.player.rightJumpjet)
 
     // Player sprite
-    RS.playerSprite = this.game.add.sprite(0, 0, 'player')
-    RS.playerSprite.anchor.setTo(.5)
+    RS.player.playerSprite = this.game.add.sprite(0, 0, 'player')
+    RS.player.playerSprite.anchor.setTo(.5)
 
     //  Our two animations, walking left and right.
-    RS.playerSprite.animations.add('runRight-faceRight', [0,1,2,3,4,5], GameConsts.ANIMATION_FRAMERATE, true)
-    RS.playerSprite.animations.add('runLeft-faceLeft', [7,8,9,10,11,12], GameConsts.ANIMATION_FRAMERATE, true)
-    RS.playerSprite.animations.add('runRight-faceLeft', [14,15,16,17,18,19], GameConsts.ANIMATION_FRAMERATE, true)
-    RS.playerSprite.animations.add('runLeft-faceRight', [21,22,23,24,25,26], GameConsts.ANIMATION_FRAMERATE, true)
-    RS.playerSprite.animations.frame = GameConsts.STANDING_RIGHT_FRAME
+    RS.player.playerSprite.animations.add('runRight-faceRight', [0,1,2,3,4,5], GameConsts.ANIMATION_FRAMERATE, true)
+    RS.player.playerSprite.animations.add('runLeft-faceLeft', [7,8,9,10,11,12], GameConsts.ANIMATION_FRAMERATE, true)
+    RS.player.playerSprite.animations.add('runRight-faceLeft', [14,15,16,17,18,19], GameConsts.ANIMATION_FRAMERATE, true)
+    RS.player.playerSprite.animations.add('runLeft-faceRight', [21,22,23,24,25,26], GameConsts.ANIMATION_FRAMERATE, true)
+    RS.player.playerSprite.animations.frame = GameConsts.STANDING_RIGHT_FRAME
 
     this.game.store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[primaryWeaponId]))
     this.game.store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[secondaryWeaponId]))
 
     // Left arm
-    RS.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
-    RS.leftArmSprite.anchor.setTo(0.8, .2)
-    RS.leftArmSprite.rotation = 83
-    RS.leftArmSprite.scale.y *= -1
-    RS.leftArmGroup.add(RS.leftArmSprite)
+    RS.player.leftArmGroup = this.game.add.group()
+    RS.player.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
+    RS.player.leftArmSprite.anchor.setTo(0.8, .2)
+    RS.player.leftArmSprite.rotation = 83
+    RS.player.leftArmSprite.scale.y *= -1
+    RS.player.leftArmGroup.add(RS.player.leftArmSprite)
 
     // Add left arm to player as child then offset it
-    RS.player.addChild(RS.leftArmGroup)
-    RS.leftArmGroup.pivot.x = 0
-    RS.leftArmGroup.pivot.y = 0
-    RS.leftArmGroup.x = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_X
-    RS.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
+    RS.player.addChild(RS.player.leftArmGroup)
+    RS.player.leftArmGroup.pivot.x = 0
+    RS.player.leftArmGroup.pivot.y = 0
+    RS.player.leftArmGroup.x = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_X
+    RS.player.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
 
     // So that the left arm is behind the player
-    RS.player.addChild(RS.playerSprite)
+    RS.player.addChild(RS.player.playerSprite)
 
     // Right arm
-    RS.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
-    RS.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
-    RS.rightArmSprite.anchor.setTo(0.62, 0.4)
-    RS.rightArmSprite.rotation = 83.4
-    RS.rightArmSprite.scale.y *= -1
-    RS.rightArmGroup.add(RS.rightArmSprite)
+    RS.player.rightArmGroup = this.game.add.group()
+    RS.player.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
+    RS.player.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
+    RS.player.rightArmSprite.anchor.setTo(0.62, 0.4)
+    RS.player.rightArmSprite.rotation = 83.4
+    RS.player.rightArmSprite.scale.y *= -1
+    RS.player.rightArmGroup.add(RS.player.rightArmSprite)
 
     // Add right arm to player as child then offset it
-    RS.player.addChild(RS.rightArmGroup)
-    RS.rightArmGroup.pivot.x = 0
-    RS.rightArmGroup.pivot.y = 0
-    RS.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
-    RS.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
+    RS.player.addChild(RS.player.rightArmGroup)
+    RS.player.rightArmGroup.pivot.x = 0
+    RS.player.rightArmGroup.pivot.y = 0
+    RS.player.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
+    RS.player.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
     RS.player.anchor.set(0.5)
 
     /**

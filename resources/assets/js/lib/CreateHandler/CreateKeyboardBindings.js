@@ -102,7 +102,7 @@ export default function() {
                 ? store.getState().player.selectedPrimaryWeaponId
                 : store.getState().player.selectedSecondaryWeaponId
 
-            RS.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+            RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
 
             // The sound effect is two seconds long so stop it once switching guns is complete.
             RS.switchingWeaponsFx.stop()

@@ -103,7 +103,7 @@ export default function RemotePlayer(player: {
 
     newRemotePlayer.meta = player.meta
 
-    updatePlayerAngles(newRemotePlayer, 90)
+    updatePlayerAngles(newRemotePlayer, 270)
     newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_LEFT_FRAME
 
     return newRemotePlayer

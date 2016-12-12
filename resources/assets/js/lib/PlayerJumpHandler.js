@@ -43,8 +43,8 @@ export default function PlayerJumpHandler() {
             RS.jumpjetFx.volume = store.getState().game.sfxVolume
             RS.jumpjetFx.loopFull()
 
-            RS.rightJumpjet.visible = true
-            RS.leftJumpjet.visible = true
+            RS.player.rightJumpjet.visible = true
+            RS.player.leftJumpjet.visible = true
         }
 
         RS.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
@@ -53,8 +53,8 @@ export default function PlayerJumpHandler() {
         jumpjetFxHandle = false
         RS.player.body.acceleration.y = 0
         RS.jumpjetFx.stop()
-        RS.rightJumpjet.visible = false
-        RS.leftJumpjet.visible = false
+        RS.player.rightJumpjet.visible = false
+        RS.player.leftJumpjet.visible = false
         if (store.getState().player.jumpJetCounter < 0) {
             store.dispatch(actions.player.decrementJumpJetCounter(GameConsts.JUMP_JET_SPEED_REGENERATION))
         } else {

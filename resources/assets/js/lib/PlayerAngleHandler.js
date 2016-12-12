@@ -127,6 +127,6 @@ export default function PlayerAngleHandler() {
         }
     }
 
-    RS.leftArmGroup.angle = leftAngle
-    RS.rightArmGroup.angle = rightAngle
+    RS.player.leftArmGroup.angle = leftAngle
+    RS.player.rightArmGroup.angle = rightAngle
 }
