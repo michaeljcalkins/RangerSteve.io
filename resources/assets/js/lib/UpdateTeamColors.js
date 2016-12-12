@@ -7,15 +7,15 @@ export default function() {
     if (state.room.players[window.SOCKET_ID]) {
         switch (state.room.players[window.SOCKET_ID].meta.team) {
             case 'red':
-                RS.playerSprite.tint = red
-                RS.leftArmSprite.tint = red
-                RS.rightArmSprite.tint = red
+                RS.player.playerSprite.tint = red
+                RS.player.leftArmSprite.tint = red
+                RS.player.rightArmSprite.tint = red
                 break
 
             case 'blue':
-                RS.playerSprite.tint = blue
-                RS.leftArmSprite.tint = blue
-                RS.rightArmSprite.tint = blue
+                RS.player.playerSprite.tint = blue
+                RS.player.leftArmSprite.tint = blue
+                RS.player.rightArmSprite.tint = blue
                 break
         }
     }
