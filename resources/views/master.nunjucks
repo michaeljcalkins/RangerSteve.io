@@ -45,16 +45,6 @@
 <body class="main" style="background-image: urL(/images/home/bg{{ [1,2,3,4,5] | random }}.png)">
     {% block content %}{% endblock %}
 
-    <div class="row home-footer">
-        <div class="col-sm-12 text-center">
-            <div class="footer-content">
-                <a href="https://github.com/michaeljcalkins/rangersteve-ideas/issues" target="_blank">Bugs and Ideas</a>
-                |
-                <a href="/credits">Credits</a>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="/js/scripts.js"></script>
     {% block scripts %}{% endblock %}

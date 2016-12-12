@@ -172,6 +172,17 @@
         </div>
     </div>
 </section>
+
+<div class="row home-footer">
+    <div class="col-sm-12 text-center">
+        <div class="footer-content">
+            <a href="https://github.com/michaeljcalkins/rangersteve-ideas/issues" target="_blank">Bugs and Ideas</a>
+            |
+            <a href="/credits">Credits</a>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
