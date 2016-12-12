@@ -1,6 +1,10 @@
 import GameConsts from 'lib/GameConsts'
 
 export default function(player, angle) {
+    if (! angle) {
+        angle = (this.game.physics.arcade.angleToPointer(player) * 180 / Math.PI) + 90
+    }
+
     let leftAngle = angle
     let rightAngle = angle
 

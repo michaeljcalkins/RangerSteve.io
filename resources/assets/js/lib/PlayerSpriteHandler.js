@@ -2,6 +2,7 @@ import GameConsts from 'lib/GameConsts'
 import Maps from './Maps'
 import actions from '../actions'
 import GetSpawnPoint from './GetSpawnPoint'
+import updatePlayerAngles from './updatePlayerAngles'
 
 export default function PlayerSpriteHandler() {
     const state = this.game.store.getState()
@@ -114,6 +115,8 @@ export default function PlayerSpriteHandler() {
     RS.player.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
     RS.player.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
     RS.player.anchor.set(0.5)
+
+    updatePlayerAngles.call(this, RS.player, 200)
 
     /**
      * Camera Settings

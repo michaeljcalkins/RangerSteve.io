@@ -46,7 +46,7 @@ export default function onMovePlayer(buffer) {
         movePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[movePlayer.meta.weaponId].frame
     }
 
-    updatePlayerAngles(movePlayer, data.angle)
+    updatePlayerAngles.call(this, movePlayer, data.angle)
 
     if (
         movePlayer.x > movePlayer.lastPosition.x &&

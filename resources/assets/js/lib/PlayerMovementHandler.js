@@ -26,11 +26,10 @@ export default function PlayerMovementHandler() {
     const state = this.game.store.getState()
     const isMovingLeft = this.game.input.keyboard.isDown(state.game.keyboardControls.left)
     const isMovingRight = this.game.input.keyboard.isDown(state.game.keyboardControls.right)
-    const angle = (this.game.physics.arcade.angleToPointer(RS.player) * 180 / Math.PI) + 90
 
     if (state.player.health <= 0) return
 
-    updatePlayerAngles(RS.player, angle)
+    updatePlayerAngles.call(this, RS.player)
 
     if (isRunningLeftAndFacingLeft(isMovingLeft, isMovingRight, this.game.input.worldX, RS.player.x)) {
         RS.player.playerSprite.animations.play('runLeft-faceLeft')

@@ -100,10 +100,8 @@ export default function RemotePlayer(player: {
     newRemotePlayer.rightArmGroup.y = GameConsts.PLAYER_BODY.RIGHT_ARM_Y
 
     newRemotePlayer.anchor.set(0.5)
-
     newRemotePlayer.meta = player.meta
-
-    updatePlayerAngles(newRemotePlayer, 270)
+    updatePlayerAngles(newRemotePlayer, 200)
     newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_LEFT_FRAME
 
     return newRemotePlayer

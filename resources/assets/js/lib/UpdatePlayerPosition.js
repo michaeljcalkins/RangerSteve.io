@@ -27,7 +27,7 @@ export default function() {
     const angle = (this.game.physics.arcade.angleToPointer(RS.player) * 180 / Math.PI) + 90
 
     let newPlayerData = {
-        angle: Math.abs(angle),
+        angle: angle,
         flying: RS.player.rightJumpjet.visible && RS.player.leftJumpjet.visible,
         shooting: isPlayerShooting(currentWeaponId, RS.player.rightArmSprite),
         weaponId: currentWeaponId,

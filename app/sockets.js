@@ -349,7 +349,7 @@ function onClientDisconnect() {
     })
 
     // If the room the player left is empty close the room
-    if (Object.keys(rooms[selectedRoomId].players).length === 0) {
+    if (rooms[selectedRoomId] && Object.keys(rooms[selectedRoomId].players).length === 0) {
         util.log('Removing room: ', selectedRoomId)
         delete rooms[selectedRoomId]
     }

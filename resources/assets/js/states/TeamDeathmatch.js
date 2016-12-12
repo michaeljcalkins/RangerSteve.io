@@ -1,6 +1,6 @@
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
-import PlayerAngleHandler from '../lib/PlayerAngleHandler'
+import updatePlayerAngles from '../lib/updatePlayerAngles'
 import FireStandardBullet from '../lib/FireStandardBullet'
 import FireShotgunShell from '../lib/FireShotgunShell'
 import FireRocket from '../lib/FireRocket'
@@ -95,7 +95,7 @@ TeamDeathmatch.prototype = {
         if (state.player.health > 0) {
             PlayerMovementHandler.call(this)
             PlayerJumpHandler.call(this)
-            PlayerAngleHandler.call(this)
+            updatePlayerAngles.call(this, RS.player)
         }
 
         /**
