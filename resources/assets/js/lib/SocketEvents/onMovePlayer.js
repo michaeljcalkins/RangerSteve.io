@@ -49,45 +49,44 @@ export default function onMovePlayer(buffer) {
     updatePlayerAngles.call(this, movePlayer, data.angle)
 
     if (
+        (data.flying && movePlayer.facing === 'right') ||
+        (isNotMoving(movePlayer) && movePlayer.facing === 'right')
+    ) {
+        // Standing still or flying and facing right
+        movePlayer.playerSprite.animations.stop()
+        movePlayer.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
+    } else if (
+        (data.flying && movePlayer.facing === 'left') ||
+        (isNotMoving(movePlayer) && movePlayer.facing === 'left')
+    ) {
+        // Standing still or flying and facing left
+        movePlayer.playerSprite.animations.stop()
+        movePlayer.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
+    } else if (
         movePlayer.x > movePlayer.lastPosition.x &&
-        data.facing === 'right' &&
+        movePlayer.facing === 'right' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runRight-faceRight')
     }
     else if (
         movePlayer.x < movePlayer.lastPosition.x &&
-        data.facing === 'left' &&
+        movePlayer.facing === 'left' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runLeft-faceLeft')
     } else if (
         movePlayer.x < movePlayer.lastPosition.x &&
-        data.facing === 'right' &&
+        movePlayer.facing === 'right' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runLeft-faceRight')
     } else if (
         movePlayer.x > movePlayer.lastPosition.x &&
-        data.facing === 'left' &&
+        movePlayer.facing === 'left' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runRight-faceLeft')
-    }
-
-    // Is the player moving
-    if (isNotMoving(movePlayer)) {
-        movePlayer.playerSprite.animations.stop()
-    }
-
-    // Standing still and facing right
-    if (isNotMoving(movePlayer) && movePlayer.facing === 'right') {
-        movePlayer.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
-    }
-
-    // Standing still and facing left
-    if (isNotMoving(movePlayer) && movePlayer.facing === 'left') {
-        movePlayer.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
     }
 
     movePlayer.lastPosition.x = movePlayer.x
