@@ -48,7 +48,7 @@ body.main:after {
     }
 
     .well {
-        background: white;
+        background: rgba(0, 0, 0, 0.5);
         box-shadow: none;
         border-radius: 3px;
         border: 0;
@@ -56,9 +56,28 @@ body.main:after {
         padding: 30px;
     }
 
+    a {
+        color: rgba(255, 255, 255, 0.8);
+
+        &:active,
+        &:hover {
+            color: #fff;
+        }
+    }
+
     input {
         border-radius: 3px;
         margin: 0 auto;
+    }
+
+    #nickname {
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+
+        &:focus {
+            border-color: #fff;
+        }
     }
 
     .form-group {
@@ -97,6 +116,19 @@ body.main:after {
     padding: 30px;
 }
 
+.server-option {
+    color: #aaa;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.server-option.active {
+    color: #fff;
+    border-color: #3d8b3d;
+    background-image: linear-gradient(#5cb85c, #4cae4c);
+    cursor: default;
+}
+
 .home-content {
     margin: 0 auto;
     width: 660px;
@@ -120,7 +152,7 @@ body.main:after {
         display: inline-block;
         margin: 0 15px;
         padding: 10px;
-        border-radius: 5px;
+        border-radius: 3px;
         background: rgba(0, 0, 0, 0.5);
         color: rgba(255, 255, 255, 0.5);
         font-weight: bold;
@@ -148,7 +180,14 @@ body.main:after {
     .nav {
         font-weight: bold;
 
+        a {
+            background: transparent;
+            border-color: transparent;
+            border-radius: 3px 3px 0 0;
+        }
+
         .active a {
+            background: #fff;
             border-bottom: 1px dashed #EEE;
         }
     }
@@ -156,6 +195,14 @@ body.main:after {
 
 .view-container {
     border-top-width: 0;
+}
+
+#how-to-play-container {
+    border-radius: 0 3px 3px;
+}
+
+#rooms-container {
+    border-radius: 3px 0 3px 3px;
 }
 
 /* Large Devices, Wide Screens */
