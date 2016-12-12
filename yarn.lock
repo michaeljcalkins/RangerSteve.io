@@ -907,6 +907,12 @@ basic-auth@~1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/basic-auth/-/basic-auth-1.0.4.tgz#030935b01de7c9b94a824b29f3fccb750d3a5290"
 
+basicauth-middleware:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/basicauth-middleware/-/basicauth-middleware-2.0.0.tgz#cd25793fc1a51190a4d370effea85514149fa50c"
+  dependencies:
+    basic-auth "^1.0.3"
+
 batch@0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.5.3.tgz#3f3414f380321743bfc1042f9a83ff1d5824d464"
