@@ -48,14 +48,14 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="btn-group btn-group-justified" id="servers-container">
-                            <a href="https://rangersteve.io" class="btn btn-warning">America</a>
-                            <a href="https://eu.rangersteve.io" class="btn btn-warning">Europe</a>
+                            <a href="https://rangersteve.io" class="server-option btn">America</a>
+                            <a href="https://eu.rangersteve.io" class="server-option btn">Europe</a>
                         </div>
                     </div>
                     <div id="views" class="col-sm-12">
                         <ul class="nav nav-tabs nav-justified">
                             <li class="view-button">
-                                <a id="how-to-play-button"  href="#">How to Play</a>
+                                <a id="how-to-play-button" href="#">How to Play</a>
                             </li>
                             <li class="view-button">
                                 <a id="rooms-button" href="#">Rooms ( {{ numberOfRooms }} )</a>
@@ -84,6 +84,12 @@
                                     <td>{{ room.players | length }} / {{ maxRoomSize }}</td>
                                     <td class="text-right" >
                                         <button class="btn btn-sm btn-primary">Join Room</button>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        No rooms
                                     </td>
                                 </tr>
                             {% endfor %}
