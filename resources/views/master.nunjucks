@@ -42,7 +42,7 @@
 
     {% block head %}{% endblock %}
 </head>
-<body class="main" style="background-image: urL(/images/home/bg{{ [1,2,3,4,5] | random }}.png)">
+<body class="main" style="background-image: urL(/images/home/bg{{ [1,2,3,4,5] | random }}.jpg)">
     {% block content %}{% endblock %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
