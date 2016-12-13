@@ -2,6 +2,7 @@
 
 let fs = require('fs')
 let moment = require('moment')
+let GameConsts = require('../../lib/GameConsts')
 
 let MainController = {
     home: function(req, res) {
@@ -12,7 +13,7 @@ let MainController = {
         // Room table
         const rooms = require('../sockets').getRooms()
         const numberOfRooms = Object.keys(rooms).length
-        const maxRoomSize = require('../../lib/GameConsts').MAX_ROOM_SIZE
+        const maxRoomSize = GameConsts.MAX_ROOM_SIZE
 
         res.render('home', {
             lastModifiedTime: lastModifiedTime,
@@ -54,7 +55,7 @@ let MainController = {
         if (! req.body || ! req.body.announcement) {
             error = 'Announcement cannot be empty.'
         } else {
-            res.io.emit('announcement', req.body.announcement)
+            res.io.write({type: GameConsts.EVENT.ANNOUNCEMENT, payload: req.body.announcement})
             success = true
         }
 

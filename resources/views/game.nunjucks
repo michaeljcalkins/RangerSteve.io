@@ -56,7 +56,7 @@
 
         <script src="/js/phaser.min.js"></script>
         <script src="/js/phaser-arcade-slopes.min.js"></script>
-        <script src="/js/socket.io.min.js"></script>
+        <script src="/primus/primus.js"></script>
         {% if isProduction !== true %}
             <!-- Phaser debug plugin -->
             <script src="https://cdn.rawgit.com/englercj/phaser-debug/master/dist/phaser-debug.js"></script>

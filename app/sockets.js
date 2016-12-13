@@ -18,13 +18,27 @@ const playerFromServerSchema = require('../lib/schemas/playerFromServerSchema')
 let rooms = {}
 let io = null
 
-function init(ioInstance) {
-    io = ioInstance
+function init(primusInstance) {
+    io = primusInstance
     io.on('connection', (socket) => {
-        util.log('New connection from ' + socket.request.connection.remoteAddress)
+        util.log('New connection: ' + socket.id + ', ' + JSON.stringify(socket.address))
+
+        socket.on('data', (data) => {
+            console.log('* LOG * data', data);
+            if (! data || ! data.type) return
+
+            switch (data.type) {
+                case GameConsts.EVENT.NEW_PLAYER:
+                    console.log('* LOG * data.payload', data.payload);
+                    onNewPlayer.call(socket, data.payload)
+                    break;
+                default:
+                    console.log('* LOG * default');
+            }
+        })
 
         socket.on('disconnect', onClientDisconnect)
-        socket.on('new player', onNewPlayer)
+        // socket.on('new player', onNewPlayer)
         socket.on('move player', onMovePlayer)
 
         socket.on('player damaged', onPlayerDamaged)
@@ -90,8 +104,11 @@ setInterval(function() {
                 rooms[roomId].players[playerId].meta.secondsInRound = 0
             })
 
-            io.to(roomId).emit('update players', {
-                room: rooms[roomId],
+            io.room(roomId).write({
+                type: GameConsts.EVENT.UPDATE_PLAYERS,
+                payload: {
+                    room: rooms[roomId],
+                },
             })
             return
         }
@@ -102,8 +119,11 @@ setInterval(function() {
             rooms[roomId].state = 'ended'
             rooms[roomId].roundStartTime = moment().add(GameConsts.END_OF_ROUND_BREAK_SECONDS, 'seconds').unix()
 
-            io.to(roomId).emit('update players', {
-                room: rooms[roomId],
+            io.room(roomId).write({
+                type: GameConsts.EVENT.UPDATE_PLAYERS,
+                payload: {
+                    room: rooms[roomId],
+                },
             })
             return
         }
@@ -273,17 +293,30 @@ function onNewPlayer(data) {
 
     // User to the room
     rooms[roomIdPlayerWillJoin].players[this.id] = newPlayer
+    console.log('* LOG * roomIdPlayerWillJoin', roomIdPlayerWillJoin);
     this.join(roomIdPlayerWillJoin)
 
     // Tell the user's client to load the game
-    io.to(this.id).emit('load game', {
-        room: rooms[roomIdPlayerWillJoin],
+    io.room(roomIdPlayerWillJoin).write({
+        type: GameConsts.EVENT.LOAD_GAME,
+        payload: {
+            room: rooms[roomIdPlayerWillJoin],
+        },
     })
+    // io.room(this.id).emit('load game', {
+    //     room: rooms[roomIdPlayerWillJoin],
+    // })
 
     // Tell everyone about the new player
-    io.to(roomIdPlayerWillJoin).emit('update players', {
-        room: rooms[roomIdPlayerWillJoin],
+    io.room(roomIdPlayerWillJoin).write({
+        type: GameConsts.EVENT.UPDATE_PLAYERS,
+        payload: {
+            room: rooms[roomIdPlayerWillJoin],
+        },
     })
+    // io.room(roomIdPlayerWillJoin).emit('update players', {
+    //     room: rooms[roomIdPlayerWillJoin],
+    // })
 }
 
 // Player has moved
