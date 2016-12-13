@@ -34,6 +34,7 @@
     "optimize-js-plugin": "^0.0.4",
     "preact": "^6.4.0",
     "preact-compat": "^3.9.1",
+    "primus": "^6.0.7",
     "react-select": "^1.0.0-rc.2",
     "schemapack": "^1.4.2",
     "serve-favicon": "~2.3.0",
