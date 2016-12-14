@@ -14,6 +14,7 @@ import SettingsModal from './SettingsModal/SettingsModal'
 import LeaderboardModal from './LeaderboardModal/LeaderboardModal'
 import RespawnModal from './RespawnModal/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
+import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNickname'
 
 export default class GameUi extends React.Component {
     props: Props
@@ -62,10 +63,7 @@ export default class GameUi extends React.Component {
     handleNicknameChange(nickname) {
         storage.set('nickname', nickname)
         this.props.onNicknameChange(nickname)
-        window.socket.emit('player update nickname', {
-            roomId: this.props.room.id,
-            nickname,
-        })
+        emitPlayerUpdateNickname(this.props.room.id, nickname)
     }
 
     handleQualityChange(quality) {
