@@ -14,7 +14,6 @@ const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
 const bulletSchema = require('../lib/schemas/bulletSchema')
 const playerIdSchema = require('../lib/schemas/playerIdSchema')
 const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
-const playerFromServerSchema = require('../lib/schemas/playerFromServerSchema')
 
 let rooms = {}
 let io = null
@@ -66,8 +65,9 @@ function getRooms() {
 
 gameloop.setGameLoop(function() {
     Object.keys(rooms).forEach((roomId) => {
-        io.to(roomId).emit('refresh room', {
-            room: rooms[roomId],
+        io.write({
+            type: GameConsts.EVENT.REFRESH_ROOM,
+            payload: rooms[roomId],
         })
     })
 }, 1000 / 30)

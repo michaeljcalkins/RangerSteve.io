@@ -35,7 +35,7 @@ const events = {
 
 export default function() {
     window.socket.on('data', (data) => {
-        console.log('* LOG * data', data);
+        console.log('* LOG * data', data.type, data.paypload);
         if (! data || ! data.type) return
 
         if (! events[data.type]) return

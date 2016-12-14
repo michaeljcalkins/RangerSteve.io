@@ -4611,19 +4611,19 @@ primus:
     ultron "~1.0.2"
     yeast "~0.1.2"
 
-primus-rooms:
+primus-rooms-adapter@0.3.x:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/primus-rooms-adapter/-/primus-rooms-adapter-0.3.2.tgz#2344ddb78b23f86da04fd37516692e528c8b8f2c"
+  dependencies:
+    extendible "0.1.x"
+
+primus-rooms@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/primus-rooms/-/primus-rooms-3.4.1.tgz#7e832323a6c90c38433ae6084c0d75d4ab9cb6fd"
   dependencies:
     async "^2.0.0-rc.4"
     debug "2.2.x"
     primus-rooms-adapter "0.3.x"
-
-primus-rooms-adapter@0.3.x:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/primus-rooms-adapter/-/primus-rooms-adapter-0.3.2.tgz#2344ddb78b23f86da04fd37516692e528c8b8f2c"
-  dependencies:
-    extendible "0.1.x"
 
 private@^0.1.6, private@~0.1.5:
   version "0.1.6"
