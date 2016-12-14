@@ -64,7 +64,7 @@ gameloop.setGameLoop(function() {
             payload: rooms[roomId],
         })
     })
-}, 1000 / 30)
+}, GameConsts.TICK_RATE)
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
@@ -303,7 +303,7 @@ function onNewPlayer(data) {
 }
 
 // Player has moved
-function onMovePlayer(buffer/*: Uint8Array*/) {
+function onMovePlayer(data) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
 
     if (! rooms[roomId]) return
@@ -312,7 +312,7 @@ function onMovePlayer(buffer/*: Uint8Array*/) {
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
 
-    const data = playerFromClientSchema.decode(buffer)
+    // const data = playerFromClientSchema.decode(buffer)
 
     // Update player position
     movePlayer.x = data.x

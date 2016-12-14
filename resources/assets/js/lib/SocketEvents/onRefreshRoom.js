@@ -4,6 +4,7 @@ import actions from 'actions'
 import PlayerById from'../PlayerById'
 import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from '../updatePlayerAngles'
+import RemotePlayer from '../RemotePlayer'
 
 function isNotMoving(player) {
     return player.x === player.lastPosition.x && player.y === player.lastPosition.y
@@ -22,11 +23,34 @@ export default function onRefreshRoom(data) {
         let player = PlayerById.call(this, playerId)
 
         // 2. if player is not found create them and continue
+        if (! player) {
+            let newRemotePlayer = RemotePlayer.call(this, playerData)
+            let enemyPlayerName = playerData.meta.nickname
+                ? playerData.meta.nickname
+                : 'Unnamed Ranger'
+
+            const style = {
+                font: "10px Arial",
+                fill: "#fff",
+                align: "center",
+                stroke: "black",
+                strokeThickness: 2,
+            }
+            const text = this.game.add.text(0, -50, enemyPlayerName, style)
+            newRemotePlayer.addChild(text)
+            text.x = (text.width / 2) * -1
+            text.smoothed = true
+
+            if (playerData.meta.health <= 0) {
+                newRemotePlayer.visible = false
+            }
+
+            RS.enemies.add(newRemotePlayer)
+        }
 
         if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
 
         // 3. update the player
-
         if (player.meta.health <= 0) {
             player.visible = false
             return
@@ -45,9 +69,9 @@ export default function onRefreshRoom(data) {
 
         // Control muzzle flash visibility
         if (playerData.shooting) {
-            player.rightArmSprite.animations.frame = GameConsts.WEAPONS[player.meta.weaponId].shootingFrame
+            player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].shootingFrame
         } else {
-            player.rightArmSprite.animations.frame = GameConsts.WEAPONS[player.meta.weaponId].frame
+            player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].frame
         }
 
         updatePlayerAngles.call(this, player, playerData.angle)
