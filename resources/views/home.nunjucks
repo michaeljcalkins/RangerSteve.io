@@ -3,7 +3,7 @@
 {% block title %}RangerSteve.io{% endblock %}
 
 {% block content %}
-<span id="beta-label">Alpha</span>
+<span id="beta-label">Beta</span>
 
 <section class="main-section">
     <div class="col-xs-12">
