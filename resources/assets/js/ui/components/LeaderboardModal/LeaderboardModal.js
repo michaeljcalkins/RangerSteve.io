@@ -4,6 +4,8 @@ import values from 'lodash/values'
 import get from 'lodash/get'
 import cs from 'classnames'
 
+import GameConsts from 'lib/GameConsts'
+import Client from '../../../lib/Client'
 import getPlayerWithBestAccuracy from '../../../lib/getPlayerWithBestAccuracy'
 import getPlayerWithBestHeadshots from '../../../lib/getPlayerWithBestHeadshots'
 import getPlayerWithBestKillingSpree from '../../../lib/getPlayerWithBestKillingSpree'
@@ -27,7 +29,7 @@ export default class Leaderboard extends Component {
 
     componentDidMount() {
         this.timer = setInterval(this.tick.bind(this), 100)
-        window.socket.emit('refresh room', {
+        Client.send(GameConsts.EVENT.REFRESH_ROOM, {
             roomId: this.props.room.id,
         })
     }

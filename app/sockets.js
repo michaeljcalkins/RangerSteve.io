@@ -26,6 +26,7 @@ const events = {
     [GameConsts.EVENT.PLAYER_HEALING]: onPlayerHealing,
     [GameConsts.EVENT.PLAYER_ADJUST_SCORE]: onPlayerAdjustScore,
     [GameConsts.EVENT.PLAYER_RESPAWN]: onPlayerRespawn,
+    [GameConsts.EVENT.PLAYER_UPDATE_NICKNAME]: onPlayerUpdateNickname,
     [GameConsts.EVENT.MESSAGE_SEND]: onMessageSend,
     [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
     [GameConsts.EVENT.KICK_PLAYER]: onKickPlayer,
@@ -153,8 +154,11 @@ function onPlayerRespawn() {
 }
 
 function onRefreshRoom(data) {
-    io.to(data.roomId).emit('refresh room', {
-        room: rooms[data.roomId],
+    io.room(data.roomId).write({
+        type: GameConsts.EVENT.REFRESH_ROOM,
+        payload: {
+            room: rooms[data.roomId],
+        },
     })
 }
 
@@ -497,8 +501,8 @@ function onPlayerDamaged(data) {
     })
 }
 
-function onBulletFired(buffer/*: Uint8Array*/) {
-    const data = bulletSchema.decode(buffer)
+function onBulletFired(data) {
+    // const data = bulletSchema.decode(buffer)
     const roomId = getRoomIdByPlayerId(this.id, rooms)
     const player = getPlayerById(roomId, this.id, rooms)
     data.playerId = this.id
@@ -507,8 +511,14 @@ function onBulletFired(buffer/*: Uint8Array*/) {
     player.meta.bulletsFired++
 
     // Broadcast updated position to connected socket clients
-    var newBuffer/*: Uint8Array*/ = bulletSchema.encode(data)
-    io.to(roomId).emit('bullet fired', newBuffer)
+    // var newBuffer/*: Uint8Array*/ = bulletSchema.encode(data)
+
+    io.room(roomId).write({
+        type: GameConsts.EVENT.BULLET_FIRED,
+        payload: {
+            data,
+        },
+    })
 }
 
 module.exports.init = init

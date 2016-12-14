@@ -6,6 +6,7 @@ import FireShotgunShell from '../lib/FireShotgunShell'
 import FireRocket from '../lib/FireRocket'
 import RotateBulletsToTrajectory from '../lib/RotateBulletsToTrajectory'
 import Maps from '../lib/Maps'
+import Client from '../lib/Client'
 import actions from '../actions'
 import GameConsts from 'lib/GameConsts'
 import UpdateHudPositions from '../lib/UpdateHudPositions'
@@ -56,7 +57,7 @@ TeamDeathmatch.prototype = {
         CreateKeyboardBindings.call(this)
         CreateDetectIdleUser()
 
-        window.socket.emit('refresh players', {
+        Client.send(GameConsts.EVENT.REFRESH_PLAYERS, {
             roomId: room.id,
         })
 
