@@ -3,6 +3,7 @@
 const util = require('util')
 const _ = require('lodash')
 const moment = require('moment')
+const gameloop = require('node-gameloop')
 
 const GameConsts = require('../lib/GameConsts')
 const createPlayer = require('./services/createPlayer')
@@ -62,6 +63,14 @@ function init(primusInstance) {
 function getRooms() {
     return rooms
 }
+
+gameloop.setGameLoop(function() {
+    Object.keys(rooms).forEach((roomId) => {
+        io.to(roomId).emit('refresh room', {
+            room: rooms[roomId],
+        })
+    })
+}, 1000 / 30)
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
@@ -336,20 +345,20 @@ function onMovePlayer(buffer/*: Uint8Array*/) {
     movePlayer.y = data.y
     movePlayer.angle = data.angle
 
-    const packet = {
-        id: this.id,
-        x: data.x,
-        y: data.y,
-        angle: data.angle,
-        flying: data.flying,
-        shooting: data.shooting,
-        health: movePlayer.meta.health,
-        weaponId: data.weaponId,
-    }
+    // const packet = {
+    //     id: this.id,
+    //     x: data.x,
+    //     y: data.y,
+    //     angle: data.angle,
+    //     flying: data.flying,
+    //     shooting: data.shooting,
+    //     health: movePlayer.meta.health,
+    //     weaponId: data.weaponId,
+    // }
 
     // Broadcast updated position to connected socket clients
-    const newBuffer = playerFromServerSchema.encode(packet)
-    io.to(roomId).emit('move player', newBuffer)
+    // const newBuffer = playerFromServerSchema.encode(packet)
+    // io.to(roomId).emit('move player', newBuffer)
 }
 
 // Socket client has disconnected

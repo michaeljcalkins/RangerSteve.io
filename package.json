@@ -31,6 +31,7 @@
     "lodash": "^4.16.4",
     "moment": "^2.15.2",
     "morgan": "~1.6.1",
+    "node-gameloop": "^0.1.0",
     "nunjucks": "^2.4.2",
     "optimize-js-plugin": "^0.0.4",
     "preact": "^6.4.0",
