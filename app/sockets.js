@@ -18,44 +18,35 @@ const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
 let rooms = {}
 let io = null
 
+const events = {
+    [GameConsts.EVENT.NEW_PLAYER]: onNewPlayer,
+    [GameConsts.EVENT.MOVE_PLAYER]: onMovePlayer,
+    [GameConsts.EVENT.PLAYER_DAMAGED]: onPlayerDamaged,
+    [GameConsts.EVENT.PLAYER_FULL_HEALTH]: onPlayerFullHealth,
+    [GameConsts.EVENT.PLAYER_HEALING]: onPlayerHealing,
+    [GameConsts.EVENT.PLAYER_ADJUST_SCORE]: onPlayerAdjustScore,
+    [GameConsts.EVENT.PLAYER_RESPAWN]: onPlayerRespawn,
+    [GameConsts.EVENT.MESSAGE_SEND]: onMessageSend,
+    [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
+    [GameConsts.EVENT.KICK_PLAYER]: onKickPlayer,
+    [GameConsts.EVENT.LOAD_COMPLETE]: onLoadComplete,
+    [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
+    [GameConsts.EVENT.REFRESH_PLAYERS]: onRefreshPlayers,
+}
+
 function init(primusInstance) {
     io = primusInstance
     io.on('connection', (socket) => {
         util.log('New connection: ' + socket.id + ', ' + JSON.stringify(socket.address))
 
         socket.on('data', (data) => {
-            console.log('* LOG * data', data);
+            console.log('* LOG * data', data.type, data.payload)
             if (! data || ! data.type) return
 
-            switch (data.type) {
-                case GameConsts.EVENT.NEW_PLAYER:
-                    console.log('* LOG * data.payload', data.payload);
-                    onNewPlayer.call(socket, data.payload)
-                    break;
-                default:
-                    console.log('* LOG * default');
-            }
+            if (! events[data.type]) return
+
+            events[data.type].call(socket, data.payload)
         })
-
-        socket.on('disconnect', onClientDisconnect)
-        // socket.on('new player', onNewPlayer)
-        socket.on('move player', onMovePlayer)
-
-        socket.on('player damaged', onPlayerDamaged)
-        socket.on('player full health', onPlayerFullHealth)
-        socket.on('player healing', onPlayerHealing)
-        socket.on('player adjust score', onPlayerAdjustScore)
-        socket.on('player update nickname', onPlayerUpdateNickname)
-        socket.on('player respawn', onPlayerRespawn)
-
-        socket.on('message send', onMessageSend)
-
-        socket.on('bullet fired', onBulletFired)
-        socket.on('kick player', onKickPlayer)
-        socket.on('load complete', onLoadComplete)
-
-        socket.on('refresh room', onRefreshRoom)
-        socket.on('refresh players', onRefreshPlayers)
     })
 }
 

@@ -18,18 +18,14 @@ const events = {
     [GameConsts.EVENT.LOAD_GAME]: onLoadGame,
     [GameConsts.EVENT.UPDATE_PLAYERS]: onUpdatePlayers,
     [GameConsts.EVENT.MOVE_PLAYER]: onMovePlayer,
-
     [GameConsts.EVENT.PLAYER_RESPAWN]: onPlayerRespawn,
     [GameConsts.EVENT.PLAYER_DAMAGED]: onPlayerDamaged,
     [GameConsts.EVENT.PLAYER_HEALTH_UPDATE]: onPlayerHealthUpdate,
     [GameConsts.EVENT.PLAYER_KILL_CONFIRMED]: onPlayerKillConfirmed,
     [GameConsts.EVENT.PLAYER_KILL_LOG]: onPlayerKillLog,
-
     [GameConsts.EVENT.MESSAGE_RECEIVED]: onMessageReceived,
-
     [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
     [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
-
     [GameConsts.EVENT.ANNOUNCEMENT]: onAnnouncement,
 }
 
