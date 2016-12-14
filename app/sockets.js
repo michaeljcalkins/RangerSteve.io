@@ -31,7 +31,6 @@ const events = {
     [GameConsts.EVENT.KICK_PLAYER]: onKickPlayer,
     [GameConsts.EVENT.LOAD_COMPLETE]: onLoadComplete,
     [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
-    [GameConsts.EVENT.REFRESH_PLAYERS]: onRefreshPlayers,
 }
 
 function init(primusInstance) {
@@ -48,6 +47,10 @@ function init(primusInstance) {
             events[data.type].call(socket, data.payload)
         })
     })
+
+    io.on('disconnection', (socket) => {
+        onClientDisconnect.call(socket)
+    })
 }
 
 function getRooms() {
@@ -56,7 +59,7 @@ function getRooms() {
 
 gameloop.setGameLoop(function() {
     Object.keys(rooms).forEach((roomId) => {
-        io.write({
+        io.room(roomId).write({
             type: GameConsts.EVENT.REFRESH_ROOM,
             payload: rooms[roomId],
         })
@@ -149,12 +152,6 @@ function onPlayerRespawn() {
     io.to(roomId).emit('player respawn', buffer)
 }
 
-function onRefreshPlayers(data) {
-    io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId],
-    })
-}
-
 function onRefreshRoom(data) {
     io.to(data.roomId).emit('refresh room', {
         room: rooms[data.roomId],
@@ -198,10 +195,6 @@ function onPlayerAdjustScore(data) {
 
     player.meta.score += data.amount
     player.meta.score = player.meta.score <= 0 ? 0 : player.meta.score
-
-    io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId],
-    })
 }
 
 function onPlayerUpdateNickname(data) {
@@ -217,10 +210,6 @@ function onPlayerUpdateNickname(data) {
         nickname = nickname.substr(0, 25)
 
     player.meta.nickname = nickname
-
-    io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId],
-    })
 }
 
 // New player has joined
@@ -303,9 +292,6 @@ function onNewPlayer(data) {
             room: rooms[roomIdPlayerWillJoin],
         },
     })
-    // io.room(this.id).emit('load game', {
-    //     room: rooms[roomIdPlayerWillJoin],
-    // })
 
     // Tell everyone about the new player
     io.room(roomIdPlayerWillJoin).write({
@@ -314,9 +300,6 @@ function onNewPlayer(data) {
             room: rooms[roomIdPlayerWillJoin],
         },
     })
-    // io.room(roomIdPlayerWillJoin).emit('update players', {
-    //     room: rooms[roomIdPlayerWillJoin],
-    // })
 }
 
 // Player has moved
@@ -374,11 +357,6 @@ function onClientDisconnect() {
     // Remove player from players array
     Object.keys(rooms).forEach((roomId) => {
         delete rooms[roomId].players[this.id]
-    })
-
-    // Broadcast removed player to connected socket clients
-    io.to(selectedRoomId).emit('update players', {
-        room: rooms[selectedRoomId],
     })
 
     // If the room the player left is empty close the room
@@ -506,10 +484,6 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.damageStats.attackingDamage = 0
             attackingPlayer.meta.damageStats.attackingHits = 0
         }
-
-        io.to(data.roomId).emit('update players', {
-            room: rooms[data.roomId],
-        })
         return
     }
 
