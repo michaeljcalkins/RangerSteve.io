@@ -19,11 +19,14 @@ export default function onRefreshRoom(data) {
     // 1. check for players that do not exist anymore
 
     Object.keys(data.players).forEach((playerId) => {
+        if (playerId === window.SOCKET_ID) return
+
         const playerData = data.players[playerId]
         let player = PlayerById.call(this, playerId)
 
         // 2. if player is not found create them and continue
         if (! player) {
+            console.log(playerId)
             let newRemotePlayer = RemotePlayer.call(this, playerData)
             let enemyPlayerName = playerData.meta.nickname
                 ? playerData.meta.nickname
@@ -46,6 +49,8 @@ export default function onRefreshRoom(data) {
             }
 
             RS.enemies.add(newRemotePlayer)
+            player = PlayerById.call(this, playerId)
+            console.log(player)
         }
 
         if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return

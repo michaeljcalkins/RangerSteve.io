@@ -11,7 +11,6 @@ export default function onSocketConnected() {
     const { store } = this.game
 
     window.socket.id(function (id) {
-        console.log('client id', id);
         window.SOCKET_ID = id
 
         if (getParameterByName('roomId')) {

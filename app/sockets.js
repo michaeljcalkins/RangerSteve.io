@@ -39,7 +39,7 @@ function init(primusInstance) {
         util.log('New connection: ' + socket.id + ', ' + JSON.stringify(socket.address))
 
         socket.on('data', (data) => {
-            console.log('* LOG * data', data.type, data.payload)
+            // console.log('* LOG * data', data.type, data.payload)
             if (! data || ! data.type) return
 
             if (! events[data.type]) return
