@@ -67,13 +67,6 @@ Preloader.prototype = {
         this.game.plugins.add(Phaser.Plugin.ArcadeSlopes)
         this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
-        // Enemy remote players
-        RS.enemies = this.game.add.group()
-        RS.enemies.enableBody = true
-        RS.enemies.physicsBodyType = Phaser.Physics.ARCADE
-        this.game.physics.arcade.enable(RS.enemies)
-        this.game.physics.enable(RS.enemies, Phaser.Physics.ARCADE)
-
         RS.jumpjetFx = this.game.add.audio('jumpjet')
         RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
         RS.headshotSound = this.game.add.audio('headshot')

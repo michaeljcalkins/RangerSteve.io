@@ -25,6 +25,7 @@ import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 import UpdateGameScale from '../lib/UpdateGameScale'
 import logPointerWorldPosition from '../lib/logPointerWorldPosition'
+import createEnemyGroup from '../lib/createEnemyGroup'
 
 /**
  * Collisions and all game mode related interactions.
@@ -45,6 +46,7 @@ Deathmatch.prototype = {
         const store = this.game.store
         const { room } = store.getState()
 
+        createEnemyGroup.call(this)
         CreateMapAndPlayer.call(this)
         CreateHurtBorder.call(this)
         CreateKillingSpreeAudio.call(this)

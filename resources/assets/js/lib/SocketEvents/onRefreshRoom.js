@@ -14,9 +14,21 @@ export default function onRefreshRoom(data) {
     const store = this.game.store
     store.dispatch(actions.room.setRoom(data))
 
-    if (includes(['Boot', 'Preloader'], this.game.state.current)) return
+    if (
+        includes(['Boot', 'Preloader'], this.game.state.current) ||
+        ! RS.enemies
+    ) return
 
     // 1. check for players that do not exist anymore
+    if (RS.enemies) {
+        RS.enemies.forEach((player, index) => {
+            if (data.players[player.id]) return
+
+            // console.log('Removing', player.id)
+            RS.enemies.removeChildAt(index)
+            player.destroy(true)
+        })
+    }
 
     Object.keys(data.players).forEach((playerId) => {
         if (playerId === window.SOCKET_ID) return
@@ -26,7 +38,7 @@ export default function onRefreshRoom(data) {
 
         // 2. if player is not found create them and continue
         if (! player) {
-            console.log(playerId)
+            // console.log('Creating', playerId)
             let newRemotePlayer = RemotePlayer.call(this, playerData)
             let enemyPlayerName = playerData.meta.nickname
                 ? playerData.meta.nickname
@@ -50,7 +62,7 @@ export default function onRefreshRoom(data) {
 
             RS.enemies.add(newRemotePlayer)
             player = PlayerById.call(this, playerId)
-            console.log(player)
+            this.game.world.bringToTop(RS.enemies)
         }
 
         if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
@@ -73,10 +85,12 @@ export default function onRefreshRoom(data) {
         player.meta.weaponId = playerData.weaponId
 
         // Control muzzle flash visibility
-        if (playerData.shooting) {
-            player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].shootingFrame
-        } else {
-            player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].frame
+        if (GameConsts.WEAPONS[playerData.meta.weaponId]) {
+            if (playerData.shooting) {
+                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].shootingFrame
+            } else {
+                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].frame
+            }
         }
 
         updatePlayerAngles.call(this, player, playerData.angle)
@@ -124,5 +138,6 @@ export default function onRefreshRoom(data) {
 
         player.lastPosition.x = player.x
         player.lastPosition.y = player.y
+        this.game.world.bringToTop(player)
     })
 }
