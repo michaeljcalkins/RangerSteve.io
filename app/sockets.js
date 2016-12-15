@@ -8,14 +8,18 @@ const gameloop = require('node-gameloop')
 const Server = require('./Server')
 
 const GameConsts = require('../lib/GameConsts')
+const helpers = require('../lib/helpers')
 const createPlayer = require('./services/createPlayer')
 const getPlayerById = require('./services/getPlayerById')
 const getTeam = require('./services/getTeam')
 const createRoom = require('./services/createRoom')
 const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
-const bulletSchema = require('../lib/schemas/bulletSchema')
-const playerIdSchema = require('../lib/schemas/playerIdSchema')
-const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
+// const bulletSchema = require('../lib/schemas/bulletSchema')
+// const playerIdSchema = require('../lib/schemas/playerIdSchema')
+// const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
+
+const NetworkStats = helpers.NetworkStats
+const sizeOf = helpers.sizeOf
 
 let rooms = {}
 let io = null
@@ -36,6 +40,8 @@ const events = {
     [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
 }
 
+let dataReceived = 0
+
 function init(primusInstance) {
     io = primusInstance
     Server.init(io)
@@ -43,6 +49,7 @@ function init(primusInstance) {
         util.log('New connection: ' + socket.id + ', ' + JSON.stringify(socket.address))
 
         socket.on('data', (data) => {
+            dataReceived += sizeOf(data)
             // console.log('* LOG * data', data.type, data.payload)
             if (! data || ! data.type) return
 
@@ -55,6 +62,11 @@ function init(primusInstance) {
     io.on('disconnection', (socket) => {
         onClientDisconnect.call(socket)
     })
+
+    // NetworkStats.loop(() => {
+    //     const dataSent = Server.getStats().dataSent
+    //     NetworkStats.print(dataSent, dataReceived)
+    // })
 }
 
 function getRooms() {
