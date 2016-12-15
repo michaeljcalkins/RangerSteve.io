@@ -515,9 +515,7 @@ function onBulletFired(data) {
 
     io.room(roomId).write({
         type: GameConsts.EVENT.BULLET_FIRED,
-        payload: {
-            data,
-        },
+        payload: data,
     })
 }
 
