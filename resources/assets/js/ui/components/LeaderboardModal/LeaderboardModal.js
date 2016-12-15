@@ -29,9 +29,10 @@ export default class Leaderboard extends Component {
 
     componentDidMount() {
         this.timer = setInterval(this.tick.bind(this), 100)
-        Client.send(GameConsts.EVENT.REFRESH_ROOM, {
-            roomId: this.props.room.id,
-        })
+        // TODO: check if needed
+        // Client.send(GameConsts.EVENT.REFRESH_ROOM, {
+        //     roomId: this.props.room.id,
+        // })
     }
 
     componentWillUnmount() {

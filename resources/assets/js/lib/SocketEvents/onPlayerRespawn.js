@@ -7,10 +7,10 @@ import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
 import CreateKeyboardBindings from '../CreateHandler/CreateKeyboardBindings'
 import GetSpawnPoint from '../GetSpawnPoint'
-import playerIdSchema from 'lib/schemas/playerIdSchema'
+// import playerIdSchema from 'lib/schemas/playerIdSchema'
 
-export default function onPlayerRespawn(buffer) {
-    const data = playerIdSchema.decode(buffer)
+export default function onPlayerRespawn(data) {
+    // const data = playerIdSchema.decode(buffer)
     const state = this.game.store.getState()
     const store = this.game.store
     const currentWeapon = state.player.currentWeapon
