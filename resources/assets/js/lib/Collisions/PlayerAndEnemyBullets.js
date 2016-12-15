@@ -8,7 +8,7 @@ export default function() {
     this.game.physics.arcade.overlap(RS.player, RS.enemyBullets, (player, bullet) => {
         if (
             ! bullet.weaponId ||
-            ! window.socket.id ||
+            ! window.SOCKET_ID ||
             state.player.health <= 0
         ) return
 

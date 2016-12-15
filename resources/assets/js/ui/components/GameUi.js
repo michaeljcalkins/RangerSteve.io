@@ -54,7 +54,7 @@ export default class GameUi extends React.Component {
 
         emitMessageSend.call(this, {
             roomId: this.props.room.id,
-            playerId: '/#' + window.socket.id,
+            playerId: window.SOCKET_ID,
             playerNickname: this.props.player.nickname ? this.props.player.nickname : 'Unnamed Ranger',
             message,
         })

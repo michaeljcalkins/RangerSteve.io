@@ -63,7 +63,7 @@ export default class Leaderboard extends Component {
                 const kdRatio = deaths > 0 ? (kills / deaths) : kills
                 const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
                 const classes = cs({
-                    'active-player': id === window.socket.id,
+                    'active-player': id === window.SOCKET_ID,
                 })
 
                 return (
