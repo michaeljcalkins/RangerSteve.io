@@ -30,7 +30,7 @@ export default function onUpdatePlayers(data: {
     // RS.enemies = this.game.add.group()
 
     const rankedPlayers = values(store.getState().room.players)
-        .sort((a, b) => a.meta.score < b.meta.score)
+        .sort((a, b) => a.meta.score < b.meta.score) // TODO should consider meta.secondsInRound as well
         .map(player => player)
 
     values(store.getState().room.players).forEach((player) => {
