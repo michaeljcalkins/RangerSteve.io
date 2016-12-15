@@ -149,8 +149,12 @@ function onPlayerRespawn() {
 
     player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
-    const buffer = playerIdSchema.encode({ id: this.id })
-    io.to(roomId).emit('player respawn', buffer)
+    const data = { id: this.id }
+    // const buffer = playerIdSchema.encode(data)
+    io.room(roomId).write({
+        type: GameConsts.EVENT.PLAYER_RESPAWN,
+        payload: data,
+    })
 }
 
 function onRefreshRoom(data) {
@@ -163,8 +167,11 @@ function onRefreshRoom(data) {
 }
 
 function onLoadComplete(data) {
-    io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId],
+    io.room(data.roomId).write({
+        type: GameConsts.EVENT.UPDATE_PLAYERS,
+        payload: {
+            room: rooms[data.roomId],
+        },
     })
 }
 
@@ -175,9 +182,12 @@ function onKickPlayer(data) {
         util.error('Could not find player.')
     }
 
-    io.to(data.roomId).emit('kick player', {
-        id: player.id,
-        roomId: data.roomId,
+    io.room(data.roomId).write({
+        type: GameConsts.EVENT.KICK_PLAYER,
+        payload: {
+            id: player.id,
+            roomId: data.roomId,
+        },
     })
 }
 
@@ -186,7 +196,11 @@ function onMessageSend(data) {
 
     rooms[data.roomId].messages.push(data)
     rooms[data.roomId].messages = rooms[data.roomId].messages.slice(-5)
-    io.to(data.roomId).emit('message received', data)
+
+    io.room(data.roomId).write({
+        type: GameConsts.EVENT.MESSAGE_RECEIVED,
+        payload: data,
+    })
 }
 
 function onPlayerAdjustScore(data) {
@@ -374,8 +388,11 @@ function onPlayerFullHealth(data) {
     let player = getPlayerById(data.roomId, this.id, rooms)
     player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
-    io.to(this.id).emit('player health update', {
-        health: player.meta.health,
+    io.spark(this.id).write({
+        type: GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
+        payload: {
+            health: player.meta.health,
+        },
     })
 }
 
@@ -386,8 +403,11 @@ function onPlayerHealing(data) {
     if (player.meta.health > GameConsts.PLAYER_FULL_HEALTH)
         player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
-    io.to(this.id).emit('player health update', {
-        health: player.meta.health,
+    io.spark(this.id).write({
+        type: GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
+        payload: {
+            health: player.meta.health,
+        },
     })
 }
 
@@ -440,26 +460,35 @@ function onPlayerDamaged(data) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
             }
 
-            io.to(this.id).emit('player kill confirmed', {
-                id: attackingPlayer.id,
-                damagedPlayerId: data.damagedPlayerId,
-                killingSpree: attackingPlayer.meta.killingSpree,
-                wasHeadshot: data.wasHeadshot,
+            io.spark(this.id).write({
+                type: GameConsts.EVENT.PLAYER_KILL_CONFIRMED,
+                payload: {
+                    id: attackingPlayer.id,
+                    damagedPlayerId: data.damagedPlayerId,
+                    killingSpree: attackingPlayer.meta.killingSpree,
+                    wasHeadshot: data.wasHeadshot,
+                },
             })
 
-            io.to(data.roomId).emit('player kill log', {
-                deadNickname: player.meta.nickname,
-                attackerNickname: attackingPlayer.meta.nickname,
-                weaponId: data.weaponId,
-                wasHeadshot: data.wasHeadshot,
+            io.room(data.roomId).write({
+                type: GameConsts.EVENT.PLAYER_KILL_LOG,
+                payload: {
+                    deadNickname: player.meta.nickname,
+                    attackerNickname: attackingPlayer.meta.nickname,
+                    weaponId: data.weaponId,
+                    wasHeadshot: data.wasHeadshot,
+                },
             })
         } else {
             if (player.meta.score >= 10) {
                 player.meta.score -= 10
             }
 
-            io.to(data.roomId).emit('player kill log', {
-                deadNickname: player.meta.nickname,
+            io.room(data.roomId).write({
+                type: GameConsts.EVENT.PLAYER_KILL_LOG,
+                payload: {
+                    deadNickname: player.meta.nickname,
+                },
             })
         }
 
@@ -467,16 +496,19 @@ function onPlayerDamaged(data) {
             ? _.get(attackingPlayer, 'meta.damageStats', {})
             : {}
 
-        io.to(data.roomId).emit('player damaged', {
-            id: this.id,
-            damagedPlayerId: data.damagedPlayerId,
-            damage: data.damage,
-            health: player.meta.health,
-            damageStats: player.meta.damageStats,
-            attackingDamageStats,
-            canRespawnTimestamp: player.meta.canRespawnTimestamp,
-            playerX: player.x,
-            playerY: player.y,
+        io.room(data.roomId).write({
+            type: GameConsts.EVENT.PLAYER_DAMAGED,
+            payload: {
+                id: this.id,
+                damagedPlayerId: data.damagedPlayerId,
+                damage: data.damage,
+                health: player.meta.health,
+                damageStats: player.meta.damageStats,
+                attackingDamageStats,
+                canRespawnTimestamp: player.meta.canRespawnTimestamp,
+                playerX: player.x,
+                playerY: player.y,
+            },
         })
 
         player.meta.damageStats.attackingPlayerId = null
@@ -491,13 +523,16 @@ function onPlayerDamaged(data) {
         return
     }
 
-    io.to(data.roomId).emit('player damaged', {
-        id: this.id,
-        damagedPlayerId: data.damagedPlayerId,
-        damage: data.damage,
-        health: player.meta.health,
-        damageStats: {},
-        attackingDamageStats: {},
+    io.room(data.roomId).write({
+        type: GameConsts.EVENT.PLAYER_DAMAGED,
+        payload: {
+            id: this.id,
+            damagedPlayerId: data.damagedPlayerId,
+            damage: data.damage,
+            health: player.meta.health,
+            damageStats: {},
+            attackingDamageStats: {},
+        },
     })
 }
 
