@@ -3,6 +3,7 @@
 const util = require('util')
 const _ = require('lodash')
 const moment = require('moment')
+const filter = require('profanity-filter')
 const gameloop = require('node-gameloop')
 
 const Server = require('./Server')
@@ -17,6 +18,9 @@ const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
 // const bulletSchema = require('../lib/schemas/bulletSchema')
 // const playerIdSchema = require('../lib/schemas/playerIdSchema')
 // const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
+
+filter.seed(require('./seeds/profanity.json'))
+filter.setReplacementMethod('grawlix')
 
 const NetworkStats = helpers.NetworkStats
 const sizeOf = helpers.sizeOf
@@ -217,7 +221,8 @@ function onMessageSend(data) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
     const player = getPlayerById(roomId, this.id, rooms)
 
-    const newMessage = data.substr(0, GameConsts.MAX_CHAT_MESSAGE_LENGTH)
+    const newMessage = filter.clean(data.substr(0, GameConsts.MAX_CHAT_MESSAGE_LENGTH))
+    console.log('newMessage', newMessage)
     rooms[roomId].messages.push([
         player.meta.nickname,
         newMessage,

@@ -38,6 +38,7 @@
     "preact-compat": "^3.9.1",
     "primus": "^6.0.7",
     "primus-rooms": "^3.4.1",
+    "profanity-filter": "^0.2.1",
     "react-select": "^1.0.0-rc.2",
     "schemapack": "^1.4.2",
     "serve-favicon": "~2.3.0",
