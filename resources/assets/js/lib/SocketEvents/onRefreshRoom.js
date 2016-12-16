@@ -67,6 +67,8 @@ export default function onRefreshRoom(data) {
 
         if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
 
+        player.meta.health = playerData.meta.health
+
         // 3. update the player
         if (playerData.meta.health <= 0) {
             player.visible = false
