@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import autobind from 'react-autobind'
 
+import GameConsts from 'lib/GameConsts'
+
 export default class HudNewChatMessage extends React.Component {
     constructor(props) {
         super(props)
@@ -13,7 +15,7 @@ export default class HudNewChatMessage extends React.Component {
             ReactDOM.findDOMNode(this.refs.messageInput).focus()
     }
 
-    handleKepressSendMessage(evt) {
+    handleKeypressSendMessage(evt) {
         if (evt.key !== 'Enter') return
         this.handleSendMessage()
     }
@@ -30,7 +32,8 @@ export default class HudNewChatMessage extends React.Component {
         return (
             <li className="hud-chat-message">
                 <input
-                    onKeyPress={ this.handleKepressSendMessage }
+                    maxLength={ GameConsts.MAX_CHAT_MESSAGE_LENGTH }
+                    onKeyPress={ this.handleKeypressSendMessage }
                     placeholder="Push enter to send..."
                     ref="messageInput"
                     type="text"

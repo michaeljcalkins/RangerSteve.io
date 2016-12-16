@@ -214,15 +214,24 @@ function onKickPlayer(data) {
 }
 
 function onMessageSend(data) {
-    if (! rooms[data.roomId]) return
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    const player = getPlayerById(roomId, this.id, rooms)
 
-    rooms[data.roomId].messages.push(data)
-    rooms[data.roomId].messages = rooms[data.roomId].messages.slice(-5)
+    const newMessage = data.substr(0, GameConsts.MAX_CHAT_MESSAGE_LENGTH)
+    rooms[roomId].messages.push([
+        player.meta.nickname,
+        newMessage,
+    ])
+    rooms[roomId].messages = rooms[roomId].messages.slice(-5)
 
+    // Array: [nickname, message]
     Server.sendToRoom(
-        data.roomId,
+        roomId,
         GameConsts.EVENT.MESSAGE_RECEIVED,
-        data
+        [
+            player.meta.nickname,
+            newMessage,
+        ]
     )
 }
 

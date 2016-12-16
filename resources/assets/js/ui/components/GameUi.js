@@ -52,12 +52,7 @@ export default class GameUi extends React.Component {
 
         this.props.onReduceToMaxChatMessages()
 
-        emitMessageSend.call(this, {
-            roomId: this.props.room.id,
-            playerId: window.SOCKET_ID,
-            playerNickname: this.props.player.nickname ? this.props.player.nickname : 'Unnamed Ranger',
-            message,
-        })
+        emitMessageSend.call(this, message)
     }
 
     handleNicknameChange(nickname) {
