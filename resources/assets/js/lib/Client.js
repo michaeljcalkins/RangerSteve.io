@@ -1,6 +1,6 @@
 // @flow
 import GameConsts from 'lib/GameConsts'
-import { sizeOf } from 'lib/helpers'
+import { sizeOf, formatByteSize } from 'lib/helpers'
 
 const _stats = {
     dataSent: 0,
@@ -21,11 +21,12 @@ const Client = {
             payload,
         }
 
-        _stats.dataSent += sizeOf(data)
+        const sizeOfData = sizeOf(data)
+        _stats.dataSent += sizeOfData
 
-        // if (type !== GameConsts.EVENT.MOVE_PLAYER) {
-        //     console.log('* LOG * Client.send', type, GameConsts.EVENTS[type], payload, formatByteSize(_stats.dataSent));
-        // }
+        if (type !== GameConsts.EVENT.MOVE_PLAYER) {
+            console.log('* LOG * Client.send', type, GameConsts.EVENTS[type], payload, formatByteSize(sizeOfData))
+        }
         window.socket.write(data)
     },
 }
