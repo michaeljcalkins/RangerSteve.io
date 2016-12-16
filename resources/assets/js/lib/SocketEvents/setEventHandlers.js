@@ -19,7 +19,6 @@ import Client from '../Client'
 const events = {
     [GameConsts.EVENT.LOAD_GAME]: onLoadGame,
     [GameConsts.EVENT.UPDATE_PLAYERS]: onUpdatePlayers,
-    // [GameConsts.EVENT.MOVE_PLAYER]: onMovePlayer,
     [GameConsts.EVENT.PLAYER_RESPAWN]: onPlayerRespawn,
     [GameConsts.EVENT.PLAYER_DAMAGED]: onPlayerDamaged,
     [GameConsts.EVENT.PLAYER_HEALTH_UPDATE]: onPlayerHealthUpdate,
@@ -29,7 +28,6 @@ const events = {
     [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
     [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
     [GameConsts.EVENT.ANNOUNCEMENT]: onAnnouncement,
-    // [GameConsts.EVENT.KICK_PLAYER]: ,
 }
 
 let dataReceived = 0

@@ -126,7 +126,7 @@ setInterval(function() {
 
             Server.sendToRoom(
                 roomId,
-                GameConsts.EVENT.UPDATE_PLAYERS,
+                GameConsts.EVENT.LOAD_GAME,
                 {
                     room: rooms[roomId],
                 }
