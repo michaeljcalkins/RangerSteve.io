@@ -1,5 +1,6 @@
 const GameConsts = require('../lib/GameConsts')
 const sizeOf = require('../lib/helpers').sizeOf
+const formatByteSize = require('../lib/helpers').formatByteSize
 
 const _stats = {
     dataSent: 0,
@@ -32,11 +33,12 @@ const Server = {
             payload,
         }
 
-        _stats.dataSent += sizeOf(data)
+        const sizeOfData = sizeOf(data)
+        _stats.dataSent += sizeOfData
 
-        // if (type !== GameConsts.EVENT.REFRESH_ROOM) {
-        //     console.log('* LOG * Server._prepareData', type, GameConsts.EVENTS[type], payload);
-        // }
+        if (type !== GameConsts.EVENT.REFRESH_ROOM) {
+            console.log('* LOG * Server._prepareData', type, GameConsts.EVENTS[type], payload, formatByteSize(sizeOfData))
+        }
 
         return data
     },
