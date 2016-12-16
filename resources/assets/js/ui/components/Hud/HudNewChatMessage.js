@@ -35,12 +35,6 @@ export default class HudNewChatMessage extends React.Component {
                     ref="messageInput"
                     type="text"
                 />
-                <button
-                    className="btn btn-sm btn-link"
-                    onClick={ this.handleSendMessage }
-                >
-                    Send
-                </button>
             </li>
         )
     }
