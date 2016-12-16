@@ -83,7 +83,7 @@ TeamDeathmatch.prototype = {
 
         // Pause controls so user can't do anything in the background accidentally
         const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
-        this.game.input.enabled = !isPaused
+        this.game.input.enabled = ! isPaused
 
         PlayerAndPlatforms.call(this)
         PlayerAndEnemyTeamBullets.call(this)

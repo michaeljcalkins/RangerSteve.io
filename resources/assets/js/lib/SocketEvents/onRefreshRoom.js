@@ -19,6 +19,13 @@ export default function onRefreshRoom(data) {
         ! RS.enemies
     ) return
 
+    // Players should only be allowed to move when the room state is active
+    if (data.state !== 'active') {
+        this.game.paused = true
+    } else {
+        this.game.paused = false
+    }
+
     // 1. check for players that do not exist anymore
     if (RS.enemies) {
         RS.enemies.forEach((player, index) => {
