@@ -361,21 +361,8 @@ function onMovePlayer(data) {
     movePlayer.x = data.x
     movePlayer.y = data.y
     movePlayer.angle = data.angle
-
-    // const packet = {
-    //     id: this.id,
-    //     x: data.x,
-    //     y: data.y,
-    //     angle: data.angle,
-    //     flying: data.flying,
-    //     shooting: data.shooting,
-    //     health: movePlayer.meta.health,
-    //     weaponId: data.weaponId,
-    // }
-
-    // Broadcast updated position to connected socket clients
-    // const newBuffer = playerFromServerSchema.encode(packet)
-    // io.to(roomId).emit('move player', newBuffer)
+    movePlayer.flying = data.flying
+    movePlayer.shooting = data.shooting
 }
 
 // Socket client has disconnected

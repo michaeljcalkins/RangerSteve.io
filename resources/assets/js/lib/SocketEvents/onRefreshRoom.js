@@ -73,9 +73,15 @@ export default function onRefreshRoom(data) {
             return
         }
 
+        console.log(playerData)
+
         // Update player position
-        player.x = playerData.x
-        player.y = playerData.y
+        this.game.add.tween(player).to({
+            x: playerData.x,
+            y: playerData.y,
+        }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
+        // player.x = playerData.x
+        // player.y = playerData.y
         player.visible = true
 
         // Control jump jet visibility
