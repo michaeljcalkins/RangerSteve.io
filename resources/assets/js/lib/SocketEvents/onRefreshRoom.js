@@ -68,20 +68,16 @@ export default function onRefreshRoom(data) {
         if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
 
         // 3. update the player
-        if (player.meta.health <= 0) {
+        if (playerData.meta.health <= 0) {
             player.visible = false
             return
         }
-
-        console.log(playerData)
 
         // Update player position
         this.game.add.tween(player).to({
             x: playerData.x,
             y: playerData.y,
         }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
-        // player.x = playerData.x
-        // player.y = playerData.y
         player.visible = true
 
         // Control jump jet visibility
