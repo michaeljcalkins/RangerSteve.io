@@ -38,9 +38,13 @@ export default function onRefreshRoom(data) {
     }
 
     Object.keys(data.players).forEach((playerId) => {
-        if (playerId === window.SOCKET_ID) return
-
         const playerData = data.players[playerId]
+
+        if (playerId === window.SOCKET_ID) {
+            store.dispatch(actions.player.setHealth(playerData.meta.health))
+            return
+        }
+
         let player = PlayerById.call(this, playerId)
 
         // 2. if player is not found create them and continue
@@ -149,6 +153,5 @@ export default function onRefreshRoom(data) {
 
         player.lastPosition.x = player.x
         player.lastPosition.y = player.y
-        this.game.world.bringToTop(player)
     })
 }
