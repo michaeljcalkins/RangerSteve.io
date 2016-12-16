@@ -46,8 +46,10 @@ export default function() {
     window.socket.on('open', onSocketConnected.bind(this))
     window.socket.on('end', onSocketDisconnect.bind(this))
 
-    // NetworkStats.loop(() => {
-    //     const dataSent = Client.getStats().dataSent
-    //     NetworkStats.print(dataSent, dataReceived)
-    // })
+    if (GameConsts.ENABLE_NETWORK_STATS) {
+        NetworkStats.loop(() => {
+            const dataSent = Client.getStats().dataSent
+            NetworkStats.print(dataSent, dataReceived)
+        })
+    }
 }

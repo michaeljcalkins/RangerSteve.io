@@ -40,7 +40,7 @@ const events = {
     [GameConsts.EVENT.MESSAGE_SEND]: onMessageSend,
     [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
     [GameConsts.EVENT.KICK_PLAYER]: onKickPlayer,
-    [GameConsts.EVENT.LOAD_COMPLETE]: onLoadComplete,
+    // [GameConsts.EVENT.LOAD_COMPLETE]: onLoadComplete,
     [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
 }
 
@@ -67,10 +67,12 @@ function init(primusInstance) {
         onClientDisconnect.call(socket)
     })
 
-    // NetworkStats.loop(() => {
-    //     const dataSent = Server.getStats().dataSent
-    //     NetworkStats.print(dataSent, dataReceived)
-    // })
+    if (GameConsts.ENABLE_NETWORK_STATS) {
+        NetworkStats.loop(() => {
+            const dataSent = Server.getStats().dataSent
+            NetworkStats.print(dataSent, dataReceived)
+        })
+    }
 }
 
 function getRooms() {
@@ -144,13 +146,13 @@ setInterval(function() {
             rooms[roomId].state = 'ended'
             rooms[roomId].roundStartTime = moment().add(GameConsts.END_OF_ROUND_BREAK_SECONDS, 'seconds').unix()
 
-            Server.sendToRoom(
-                roomId,
-                GameConsts.EVENT.UPDATE_PLAYERS,
-                {
-                    room: rooms[roomId],
-                }
-            )
+            // Server.sendToRoom(
+            //     roomId,
+            //     GameConsts.EVENT.UPDATE_PLAYERS,
+            //     {
+            //         room: rooms[roomId],
+            //     }
+            // )
             return
         }
 
@@ -190,15 +192,15 @@ function onRefreshRoom(data) {
     )
 }
 
-function onLoadComplete(data) {
-    Server.sendToRoom(
-        data.roomId,
-        GameConsts.EVENT.UPDATE_PLAYERS,
-        {
-            room: rooms[data.roomId],
-        }
-    )
-}
+// function onLoadComplete(data) {
+//     Server.sendToRoom(
+//         data.roomId,
+//         GameConsts.EVENT.UPDATE_PLAYERS,
+//         {
+//             room: rooms[data.roomId],
+//         }
+//     )
+// }
 
 function onKickPlayer(data) {
     let players = _.values(rooms[data.roomId].players)
@@ -350,13 +352,13 @@ function onNewPlayer(data) {
     )
 
     // Tell everyone about the new player
-    Server.sendToRoom(
-        roomIdPlayerWillJoin,
-        GameConsts.EVENT.UPDATE_PLAYERS,
-        {
-            room: rooms[roomIdPlayerWillJoin],
-        }
-    )
+    // Server.sendToRoom(
+    //     roomIdPlayerWillJoin,
+    //     GameConsts.EVENT.UPDATE_PLAYERS,
+    //     {
+    //         room: rooms[roomIdPlayerWillJoin],
+    //     }
+    // )
 }
 
 // Player has moved
