@@ -2,22 +2,8 @@ import React from 'react'
 
 export default function() {
     return (
-        <div
-            class="hud hud-item no-pointer-events"
-            style="
-                font-family: Arial;
-                font-size: 12px;
-                font-weight: normal;
-                height: 115px;
-                left: 10px;
-                padding: 15px;
-                position: absolute;
-                text-align: left;
-                top: 10px;
-                width: 250px;
-            "
-        >
-            <table class="table">
+        <div className="hud-network-stats no-pointer-events">
+            <table>
                 <tr>
                     <td>Data Sent:</td>
                     <td>{ window.RS.networkStats.dataSent }</td>
