@@ -18,11 +18,13 @@ export default function onSocketConnected() {
             nickname: state.player.nickname,
         }
 
+        // Only specify roomId if specified in url
         if (getParameterByName('roomId')) {
             mixpanel.track('player:joinedByRoomId')
             data.roomId = getParameterByName('roomId')
         }
 
+        // Only specify map if specified in url
         if (getParameterByName('map')) {
             data.map = getParameterByName('map')
         }
