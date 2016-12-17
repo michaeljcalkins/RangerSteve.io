@@ -1,5 +1,5 @@
 import GameConsts from 'lib/GameConsts'
-import { NetworkStats, sizeOf } from 'lib/helpers'
+import { NetworkStats, formatByteSize, sizeOf } from 'lib/helpers'
 import onUpdatePlayers from './onUpdatePlayers'
 import onSocketConnected from './onSocketConnected'
 import onSocketDisconnect from './onSocketDisconnect'
@@ -48,7 +48,15 @@ export default function() {
     if (GameConsts.ENABLE_NETWORK_STATS) {
         NetworkStats.loop(() => {
             const dataSent = Client.getStats().dataSent
-            NetworkStats.print(dataSent, dataReceived)
+            const data = NetworkStats.getDataPerSecond(dataSent, dataReceived)
+
+            window.RS.networkStats = {
+                dataSent: formatByteSize(dataSent),
+                dataReceived: formatByteSize(dataReceived),
+                dataSentPerSecond: formatByteSize(data.dataSentPerSecond),
+                dataReceivedPerSecond: formatByteSize(data.dataReceivedPerSecond),
+            }
+            // NetworkStats.print(dataSent, dataReceived)
         })
     }
 }
