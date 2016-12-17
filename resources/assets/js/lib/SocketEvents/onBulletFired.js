@@ -27,7 +27,7 @@ export default function onBulletFired(data) {
     let bullet = RS.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)
     bullet.bulletId = data.bulletId
-    bullet.playerId = this.id
+    bullet.playerId = data.playerId
     bullet.damage = GameConsts.WEAPONS[data.weaponId].damage
     bullet.rotation = data.pointerAngle
     bullet.weaponId = data.weaponId

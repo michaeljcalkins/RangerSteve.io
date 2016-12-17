@@ -413,20 +413,20 @@ function onClientDisconnect() {
 }
 
 function onPlayerFullHealth(data) {
-    let player = getPlayerById(data.roomId, this.id, rooms)
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    let player = getPlayerById(roomId, this.id, rooms)
     player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
     Server.sendToSocket(
         this.id,
         GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
-        {
-            health: player.meta.health,
-        }
+        GameConsts.PLAYER_FULL_HEALTH
     )
 }
 
-function onPlayerHealing(data) {
-    let player = getPlayerById(data.roomId, this.id, rooms)
+function onPlayerHealing() {
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    let player = getPlayerById(roomId, this.id, rooms)
     player.meta.health += 10
 
     if (player.meta.health > GameConsts.PLAYER_FULL_HEALTH)
@@ -435,9 +435,7 @@ function onPlayerHealing(data) {
     Server.sendToSocket(
         this.id,
         GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
-        {
-            health: player.meta.health,
-        }
+        player.meta.health
     )
 }
 

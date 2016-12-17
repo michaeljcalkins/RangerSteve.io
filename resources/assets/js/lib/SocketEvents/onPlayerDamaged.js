@@ -55,9 +55,7 @@ export default function onPlayerDamaged(data: {
         clearTimeout(damageTimeout)
         damageTimeout = setTimeout(() => {
             // Player's health will fully regenerate
-            Client.send(GameConsts.EVENT.PLAYER_FULL_HEALTH, {
-                roomId: store.getState().room.id,
-            })
+            Client.send(GameConsts.EVENT.PLAYER_FULL_HEALTH)
         }, 5000)
     }
 
@@ -75,9 +73,7 @@ export default function onPlayerDamaged(data: {
                 lastKnownHealth += 10
 
                 // Increase player health by 10 every 1/2 a second
-                Client.send(GameConsts.EVENT.PLAYER_HEALING, {
-                    roomId: store.getState().room.id,
-                })
+                Client.send(GameConsts.EVENT.PLAYER_HEALING)
             }, 500)
         }, 5000)
     }
