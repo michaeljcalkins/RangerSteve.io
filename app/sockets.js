@@ -67,12 +67,12 @@ function init(primusInstance) {
         onClientDisconnect.call(socket)
     })
 
-    if (GameConsts.ENABLE_NETWORK_STATS) {
-        NetworkStats.loop(() => {
-            const dataSent = Server.getStats().dataSent
-            NetworkStats.print(dataSent, dataReceived)
-        })
-    }
+    // if (GameConsts.ENABLE_NETWORK_STATS) {
+    //     NetworkStats.loop(() => {
+    //         const dataSent = Server.getStats().dataSent
+    //         NetworkStats.print(dataSent, dataReceived)
+    //     })
+    // }
 }
 
 function getRooms() {
