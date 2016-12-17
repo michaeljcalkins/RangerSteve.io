@@ -15,6 +15,7 @@ import LeaderboardModal from './LeaderboardModal/LeaderboardModal'
 import RespawnModal from './RespawnModal/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNickname'
+import NetworkStats from './NetworkStats/NetworkStats'
 
 export default class GameUi extends React.Component {
     props: Props
@@ -179,6 +180,10 @@ export default class GameUi extends React.Component {
                         className="modal-backdrop"
                         style={ { display: 'block' } }
                     />
+                }
+
+                { window.RS && window.RS.networkStats &&
+                    <NetworkStats />
                 }
             </div>
         )
