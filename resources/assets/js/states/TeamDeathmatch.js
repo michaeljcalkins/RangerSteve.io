@@ -57,10 +57,6 @@ TeamDeathmatch.prototype = {
         CreateKeyboardBindings.call(this)
         CreateDetectIdleUser()
 
-        Client.send(GameConsts.EVENT.REFRESH_PLAYERS, {
-            roomId: room.id,
-        })
-
         window.onresize = UpdateGameScale.bind(this)
         UpdateGameScale.call(this)
 

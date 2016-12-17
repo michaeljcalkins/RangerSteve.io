@@ -182,16 +182,6 @@ function onPlayerRespawn() {
     )
 }
 
-function onRefreshRoom(data) {
-    Server.sendToRoom(
-        data.roomId,
-        GameConsts.EVENT.REFRESH_ROOM,
-        {
-            room: rooms[data.roomId],
-        }
-    )
-}
-
 // function onLoadComplete(data) {
 //     Server.sendToRoom(
 //         data.roomId,
