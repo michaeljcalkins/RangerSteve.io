@@ -8,11 +8,11 @@
     "start": "nodemon ./bin/www",
     "watch": "webpack -w",
     "build:dll": "webpack --config webpack.dll.js",
-    "postinstall": "npm run production",
+    "postinstall": "yarn run production",
     "production": "NODE_ENV='production' && webpack -p",
     "test": "NODE_ENV=test mocha --require babel-core/register app/services/**/*.test.js",
     "test-report": "NODE_ENV=test mocha --recursive -R xunit tests/browser.js tests/**/*.test.js > test-reports.xml",
-    "test-watch": "nodemon --watch app/services/**/*.js -q -x 'npm test'",
+    "test-watch": "nodemon --watch app/services/**/*.js -q -x 'yarn test'",
     "flow": "flow",
     "flow-coverage-report": "flow-coverage-report -i 'resources/assets/js/lib/**/*.js' -t html -t text; open flow-coverage/index.html"
   },
