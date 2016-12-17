@@ -4,7 +4,7 @@ import GameConsts from 'lib/GameConsts'
 import Client from '../Client'
 
 export default function(data: {
-    bulletId: string,
+    bulletId: number,
     x: number,
     y: number,
     pointerAngle: number,

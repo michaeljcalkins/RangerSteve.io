@@ -2,7 +2,7 @@
 import GameConsts from 'lib/GameConsts'
 
 export default function RemoteBullet(data: {
-    bulletId: string,
+    bulletId: number,
     playerId: string,
     damage: number,
     pointerAngle: number,

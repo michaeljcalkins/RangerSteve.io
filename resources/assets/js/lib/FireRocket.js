@@ -26,7 +26,7 @@ export default function FireRocket(currentWeaponId) {
     let y = RS.player.y - 10
 
     let bullet = RS.bullets.getFirstDead()
-    bullet.bulletId = (Math.random()*10000).toFixed(0)
+    bullet.bulletId = Math.round(Math.random() * 16000)
     bullet.damage = this.damage
     bullet.weaponId = currentWeaponId
     bullet.alpha = 0
