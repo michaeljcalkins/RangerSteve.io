@@ -35,7 +35,7 @@ export default function FireShotgunShell(currentWeaponId) {
     let pointerAngle = null
     for (var i = 0; i < 4; i++) {
         let bullet = RS.bullets.getFirstDead()
-        bullet.bulletId = Guid()
+        bullet.bulletId = (Math.random()*10000).toFixed(0)
         bullet.damage = currentWeapon.damage
         bullet.weaponId = currentWeaponId
         bullet.alpha = 0
