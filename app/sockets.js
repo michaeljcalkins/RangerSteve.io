@@ -442,7 +442,8 @@ function onPlayerHealing(data) {
 }
 
 function onPlayerDamaged(data) {
-    let player = getPlayerById(data.roomId, data.damagedPlayerId, rooms)
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    let player = getPlayerById(roomId, data.damagedPlayerId, rooms)
 
     if (! player || player.meta.health <= 0) return
 
@@ -459,7 +460,7 @@ function onPlayerDamaged(data) {
     player.meta.damageStats.attackingHits++
     player.meta.damageStats.weaponId = data.weaponId
 
-    const attackingPlayer = getPlayerById(data.roomId, data.attackingPlayerId, rooms)
+    const attackingPlayer = getPlayerById(roomId, data.attackingPlayerId, rooms)
     if (attackingPlayer) {
         attackingPlayer.meta.bulletsHit++
         if (data.wasHeadshot) attackingPlayer.meta.headshots++
@@ -479,11 +480,11 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.damageInflicted += Number(data.damage)
 
             if (player.meta.team === 'red') {
-                rooms[data.roomId].blueTeamScore += 10
+                rooms[roomId].blueTeamScore += 10
             }
 
             if (player.meta.team === 'blue') {
-                rooms[data.roomId].redTeamScore += 10
+                rooms[roomId].redTeamScore += 10
             }
 
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
@@ -502,7 +503,7 @@ function onPlayerDamaged(data) {
             )
 
             Server.sendToRoom(
-                data.roomId,
+                roomId,
                 GameConsts.EVENT.PLAYER_KILL_LOG,
                 {
                     deadNickname: player.meta.nickname,
@@ -517,7 +518,7 @@ function onPlayerDamaged(data) {
             }
 
             Server.sendToRoom(
-                data.roomId,
+                roomId,
                 GameConsts.EVENT.PLAYER_KILL_LOG,
                 {
                     deadNickname: player.meta.nickname,
@@ -530,7 +531,7 @@ function onPlayerDamaged(data) {
             : {}
 
         Server.sendToRoom(
-            data.roomId,
+            roomId,
             GameConsts.EVENT.PLAYER_DAMAGED,
             {
                 id: this.id,
@@ -558,7 +559,7 @@ function onPlayerDamaged(data) {
     }
 
     Server.sendToRoom(
-        data.roomId,
+        roomId,
         GameConsts.EVENT.PLAYER_DAMAGED,
         {
             id: this.id,
