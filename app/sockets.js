@@ -132,9 +132,7 @@ setInterval(function() {
             Server.sendToRoom(
                 roomId,
                 GameConsts.EVENT.LOAD_GAME,
-                {
-                    room: rooms[roomId],
-                }
+                rooms[roomId]
             )
             return
         }
@@ -144,14 +142,6 @@ setInterval(function() {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
             rooms[roomId].roundStartTime = moment().add(GameConsts.END_OF_ROUND_BREAK_SECONDS, 'seconds').unix()
-
-            // Server.sendToRoom(
-            //     roomId,
-            //     GameConsts.EVENT.UPDATE_PLAYERS,
-            //     {
-            //         room: rooms[roomId],
-            //     }
-            // )
             return
         }
 
@@ -215,7 +205,7 @@ function onMessageSend(data) {
     const newMessage = filter.clean(data.substr(0, GameConsts.MAX_CHAT_MESSAGE_LENGTH))
     console.log('newMessage', newMessage)
     rooms[roomId].messages.push([
-        player.meta.nickname,
+        player.meta.nickname.substr(0, GameConsts.MAX_NICKNAME_LENGTH),
         newMessage,
     ])
     rooms[roomId].messages = rooms[roomId].messages.slice(-5)
@@ -335,19 +325,8 @@ function onNewPlayer(data) {
     Server.sendToSocket(
         this.id,
         GameConsts.EVENT.LOAD_GAME,
-        {
-            room: rooms[roomIdPlayerWillJoin],
-        }
+        rooms[roomIdPlayerWillJoin]
     )
-
-    // Tell everyone about the new player
-    // Server.sendToRoom(
-    //     roomIdPlayerWillJoin,
-    //     GameConsts.EVENT.UPDATE_PLAYERS,
-    //     {
-    //         room: rooms[roomIdPlayerWillJoin],
-    //     }
-    // )
 }
 
 // Player has moved
