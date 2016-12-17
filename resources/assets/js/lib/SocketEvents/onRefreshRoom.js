@@ -90,7 +90,7 @@ export default function onRefreshRoom(data) {
         this.game.add.tween(player).to({
             x: playerData.x,
             y: playerData.y,
-        }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
+        }, GameConsts.TICK_RATE / 2, Phaser.Easing.Linear.None, true)
         player.visible = true
 
         // Control jump jet visibility
