@@ -183,7 +183,7 @@ export default class GameUi extends React.Component {
                 }
 
                 { window.RS && window.RS.networkStats &&
-                    <NetworkStats />
+                    <NetworkStats stats={window.RS.networkStats} />
                 }
             </div>
         )

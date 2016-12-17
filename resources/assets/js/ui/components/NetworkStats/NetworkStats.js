@@ -1,24 +1,24 @@
 import React from 'react'
 
-export default function() {
+export default function({ stats }) {
     return (
         <div className="hud-network-stats no-pointer-events">
             <table>
                 <tr>
                     <td>Data Sent:</td>
-                    <td>{ window.RS.networkStats.dataSent }</td>
+                    <td>{ stats.dataSent }</td>
                 </tr>
                 <tr>
                     <td>Data Sent/sec:</td>
-                    <td>{ window.RS.networkStats['dataSent/sec'] }</td>
+                    <td>{ stats.dataSentPerSecond }</td>
                 </tr>
                 <tr>
                     <td>Data Received:</td>
-                    <td>{ window.RS.networkStats.dataReceived }</td>
+                    <td>{ stats.dataReceived }</td>
                 </tr>
                 <tr>
                     <td>Data Received/sec:</td>
-                    <td>{ window.RS.networkStats['dataReceived/sec'] }</td>
+                    <td>{ stats.dataReceivedPerSecond }</td>
                 </tr>
             </table>
         </div>
