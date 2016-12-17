@@ -44,9 +44,6 @@ Deathmatch.prototype = {
     },
 
     create: function() {
-        const store = this.game.store
-        const { room } = store.getState()
-
         createEnemyGroup.call(this)
         CreateMapAndPlayer.call(this)
         CreateHurtBorder.call(this)

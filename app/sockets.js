@@ -41,7 +41,6 @@ const events = {
     [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
     [GameConsts.EVENT.KICK_PLAYER]: onKickPlayer,
     // [GameConsts.EVENT.LOAD_COMPLETE]: onLoadComplete,
-    [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
 }
 
 let dataReceived = 0

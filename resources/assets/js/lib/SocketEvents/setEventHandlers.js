@@ -14,6 +14,7 @@ import onRefreshRoom from './onRefreshRoom'
 import onLoadGame from './onLoadGame'
 import onAnnouncement from './onAnnouncement'
 import Client from '../Client'
+import storage from 'store'
 
 const events = {
     [GameConsts.EVENT.LOAD_GAME]: onLoadGame,
@@ -45,7 +46,7 @@ export default function() {
     window.socket.on('open', onSocketConnected.bind(this))
     window.socket.on('end', onSocketDisconnect.bind(this))
 
-    if (GameConsts.ENABLE_NETWORK_STATS) {
+    if (GameConsts.ENABLE_NETWORK_STATS || storage.get('ENABLE_NETWORK_STATS', false)) {
         NetworkStats.loop(() => {
             const dataSent = Client.getStats().dataSent
             const data = NetworkStats.getDataPerSecond(dataSent, dataReceived)
