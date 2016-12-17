@@ -8,12 +8,8 @@ export default function(data: {
     x: number,
     y: number,
     pointerAngle: number,
-    bulletSpeed: number,
-    damage: number,
     weaponId: string,
-    playerId: string,
 }) {
-    data.playerId = window.SOCKET_ID
     // let buffer: Uint8Array = bulletSchema.encode(data)
     Client.send(GameConsts.EVENT.BULLET_FIRED, data)
 }

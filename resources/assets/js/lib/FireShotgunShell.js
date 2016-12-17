@@ -64,8 +64,6 @@ export default function FireShotgunShell(currentWeaponId) {
 
         emitBulletFired.call(this, {
             bulletId: bullet.bulletId,
-            bulletSpeed: currentWeapon.bulletSpeed,
-            damage: currentWeapon.damage,
             pointerAngle: socketPointerAngle,
             weaponId: currentWeaponId,
             x: Math.abs(x),

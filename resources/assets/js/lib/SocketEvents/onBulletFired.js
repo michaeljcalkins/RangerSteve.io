@@ -27,15 +27,15 @@ export default function onBulletFired(data) {
     let bullet = RS.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)
     bullet.bulletId = data.bulletId
-    bullet.playerId = data.playerId
-    bullet.damage = data.damage
+    bullet.playerId = this.id
+    bullet.damage = GameConsts.WEAPONS[data.weaponId].damage
     bullet.rotation = data.pointerAngle
     bullet.weaponId = data.weaponId
     bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
     bullet.enableBody = true
     bullet.physicsBodyType = Phaser.Physics.ARCADE
 
-    let newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, data.bulletSpeed)
+    let newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, GameConsts.WEAPONS[data.weaponId].bulletSpeed)
     bullet.body.velocity.x += newVelocity.x
     bullet.body.velocity.y += newVelocity.y
 

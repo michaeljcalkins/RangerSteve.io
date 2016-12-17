@@ -2,6 +2,7 @@ import emitPlayerDamaged from '../SocketEvents/emitPlayerDamaged'
 import PlayBloodSpray from '../PlayBloodSpray'
 import PlayRocketExplosion from '../PlayRocketExplosion'
 import damagePlayersInBlastDamageRadius from '../damagePlayersInBlastDamageRadius'
+import GameConsts from 'lib/GameConsts'
 
 export default function() {
     const state = this.game.store.getState()
@@ -22,8 +23,8 @@ export default function() {
         bullet.kill()
 
         const bulletDamage = wasHeadshot
-            ? state.player[currentWeapon].damage + 30
-            : state.player[currentWeapon].damage
+            ? GameConsts.WEAPONS[bullet.weaponId].damage + 30
+            : GameConsts.WEAPONS[bullet.weaponId].damage
 
         PlayBloodSpray.call(this, {
             bulletY: bullet.y,
