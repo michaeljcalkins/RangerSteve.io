@@ -4,23 +4,29 @@ import Client from '../Client'
 
 export default function onSocketConnected() {
     const { store } = this.game
+    const state = store.getState()
 
     Client.getId(id => {
         window.SOCKET_ID = id
 
-        if (getParameterByName('roomId')) {
-            mixpanel.track('player:joinedByRoomId')
-        }
-
-        Client.send(GameConsts.EVENT.NEW_PLAYER, {
-            roomId: getParameterByName('roomId'),
-            map: getParameterByName('map'),
+        let data = {
             x: 0,
             y: 0,
-            weaponId: store.getState().player.currentWeapon === 'primaryWeapon'
-                ? store.getState().player.selectedPrimaryWeaponId
-                : store.getState().player.selectedSecondaryWeaponId,
-            nickname: store.getState().player.nickname,
-        })
+            weaponId: state.player.currentWeapon === 'primaryWeapon'
+                ? state.player.selectedPrimaryWeaponId
+                : state.player.selectedSecondaryWeaponId,
+            nickname: state.player.nickname,
+        }
+
+        if (getParameterByName('roomId')) {
+            mixpanel.track('player:joinedByRoomId')
+            data.roomId = getParameterByName('roomId')
+        }
+
+        if (getParameterByName('map')) {
+            data.map = getParameterByName('map')
+        }
+
+        Client.send(GameConsts.EVENT.NEW_PLAYER, data)
     })
 }
