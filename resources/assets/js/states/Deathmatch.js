@@ -6,6 +6,7 @@ import FireShotgunShell from '../lib/FireShotgunShell'
 import FireRocket from '../lib/FireRocket'
 import RotateBulletsToTrajectory from '../lib/RotateBulletsToTrajectory'
 import Maps from '../lib/Maps'
+import Client from '../lib/Client'
 import actions from '../actions'
 import GameConsts from 'lib/GameConsts'
 import UpdateHudPositions from '../lib/UpdateHudPositions'
@@ -25,6 +26,7 @@ import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 import UpdateGameScale from '../lib/UpdateGameScale'
 import logPointerWorldPosition from '../lib/logPointerWorldPosition'
+import createEnemyGroup from '../lib/createEnemyGroup'
 
 /**
  * Collisions and all game mode related interactions.
@@ -42,9 +44,7 @@ Deathmatch.prototype = {
     },
 
     create: function() {
-        const store = this.game.store
-        const { room } = store.getState()
-
+        createEnemyGroup.call(this)
         CreateMapAndPlayer.call(this)
         CreateHurtBorder.call(this)
         CreateKillingSpreeAudio.call(this)
@@ -52,10 +52,6 @@ Deathmatch.prototype = {
         CreateHud.call(this)
         CreateKeyboardBindings.call(this)
         CreateDetectIdleUser()
-
-        window.socket.emit('refresh players', {
-            roomId: room.id,
-        })
 
         window.onresize = UpdateGameScale.bind(this)
         UpdateGameScale.call(this)

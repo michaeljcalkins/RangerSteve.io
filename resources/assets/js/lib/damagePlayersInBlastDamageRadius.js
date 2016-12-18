@@ -33,11 +33,9 @@ export default function(bullet) {
         const blastDamage = getBlastDamage(distanceFromExplosion)
 
         emitPlayerDamaged.call(this, {
-            roomId: state.room.id,
             damage: blastDamage,
             weaponId: bullet.weaponId,
             damagedPlayerId: window.SOCKET_ID,
-            wasHeadshot: false,
         })
     }
 
@@ -55,12 +53,10 @@ export default function(bullet) {
             const blastDamage = getBlastDamage(distanceFromExplosion)
 
             emitPlayerDamaged.call(this, {
-                roomId: state.room.id,
                 damage: blastDamage,
                 weaponId: bullet.weaponId,
                 damagedPlayerId: enemy.id,
                 attackingPlayerId: window.SOCKET_ID,
-                wasHeadshot: false,
             })
         }
     })

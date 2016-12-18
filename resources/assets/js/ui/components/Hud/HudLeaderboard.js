@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 import values from 'lodash/values'
 import cs from 'classnames'
+import { connect } from 'react-redux'
 
-export default function HudLeaderboard({
+export function HudLeaderboard({
     room,
 }) {
     function renderPlayers() {
@@ -65,3 +66,16 @@ export default function HudLeaderboard({
 HudLeaderboard.propTypes = {
     room: PropTypes.object,
 }
+
+const mapStateToProps = (state) => {
+    return {
+        room: state.room,
+    }
+}
+
+const HudLeaderboardContainer = connect(
+    mapStateToProps,
+    null,
+)(HudLeaderboard)
+
+export default HudLeaderboardContainer

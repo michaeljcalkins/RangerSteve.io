@@ -15,7 +15,6 @@ export default function() {
     RS.player.visible = false
 
     emitPlayerDamaged.call(this, {
-        roomId: store.getState().room.id,
         damage: 100,
         damagedPlayerId: window.SOCKET_ID,
         attackingPlayerId: null,

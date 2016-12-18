@@ -1,5 +1,5 @@
 // @flow
-import playerFromServerSchema from 'lib/schemas/playerFromServerSchema'
+// import playerFromServerSchema from 'lib/schemas/playerFromServerSchema'
 import includes from 'lodash/includes'
 
 import PlayerById from'../PlayerById'
@@ -10,12 +10,12 @@ function isNotMoving(movePlayer) {
     return movePlayer.x === movePlayer.lastPosition.x && movePlayer.y === movePlayer.lastPosition.y
 }
 
-export default function onMovePlayer(buffer) {
+export default function onMovePlayer(data) {
     const store = this.game.store
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
-    const data = playerFromServerSchema.decode(buffer)
+    // const data = playerFromServerSchema.decode(buffer)
 
     if (data.id === window.SOCKET_ID) return
 

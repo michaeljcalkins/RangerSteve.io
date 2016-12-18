@@ -39,7 +39,8 @@ Boot.prototype = {
         // Initializes the socket connection and
         // when connected the next game
         // state will be started.
-        window.socket = io.connect()
+        window.socket = Primus.connect()
+        console.log('* LOG * window.socket', window.socket);
         setEventHandlers.call(this)
 
         if (GameConsts.PHASER_DEBUG) {

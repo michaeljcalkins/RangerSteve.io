@@ -1,5 +1,7 @@
 // @flow
-import playerFromClientSchema from 'lib/schemas/playerFromClientSchema'
+// import playerFromClientSchema from 'lib/schemas/playerFromClientSchema'
+import GameConsts from 'lib/GameConsts'
+import Client from '../Client'
 
 export default function(data: {
     angle: number,
@@ -10,6 +12,6 @@ export default function(data: {
     x: number,
     y: number,
 }) {
-    var buffer: Uint8Array = playerFromClientSchema.encode(data)
-    window.socket.emit('move player', buffer)
+    // var buffer: Uint8Array = playerFromClientSchema.encode(data)
+    Client.send(GameConsts.EVENT.MOVE_PLAYER, data)
 }

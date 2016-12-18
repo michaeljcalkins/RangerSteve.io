@@ -1,5 +1,7 @@
 // @flow
 import actions from 'actions'
+import GameConsts from 'lib/GameConsts'
+import Client from '../Client'
 import PlayPlayerDeathAnimation from '../PlayPlayerDeathAnimation'
 import PlayerById from '../PlayerById'
 
@@ -53,9 +55,7 @@ export default function onPlayerDamaged(data: {
         clearTimeout(damageTimeout)
         damageTimeout = setTimeout(() => {
             // Player's health will fully regenerate
-            window.socket.emit('player full health', {
-                roomId: store.getState().room.id,
-            })
+            Client.send(GameConsts.EVENT.PLAYER_FULL_HEALTH)
         }, 5000)
     }
 
@@ -73,9 +73,7 @@ export default function onPlayerDamaged(data: {
                 lastKnownHealth += 10
 
                 // Increase player health by 10 every 1/2 a second
-                window.socket.emit('player healing', {
-                    roomId: store.getState().room.id,
-                })
+                Client.send(GameConsts.EVENT.PLAYER_HEALING)
             }, 500)
         }, 5000)
     }

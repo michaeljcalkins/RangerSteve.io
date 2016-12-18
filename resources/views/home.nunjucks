@@ -8,9 +8,9 @@
 <section class="main-section">
     <div class="col-xs-12">
         <div class="text-center">
-            <a class="main-header" href="/">
+            <span class="main-header">
                 Ranger Steve
-            </a>
+            </span>
         </div>
 
         <div class="home-content">

@@ -93,6 +93,10 @@ export default function() {
     RS.hudJumpJetBar.width = widthPercent
 
     if (state.room.gamemode === 'TeamDeathmatch') {
+        if (! RS.redTeamScore || ! RS.blueTeamScore) {
+            console.log('* LOG * No RS.redTeamScore or RS.blueTeamScore');
+            return
+        }
         RS.redTeamScore.y = 25
         RS.redTeamScore.x = (this.camera.width / 2) - (RS.redTeamScore.width / 2) - 100
         RS.redTeamScore.fixedToCamera = true

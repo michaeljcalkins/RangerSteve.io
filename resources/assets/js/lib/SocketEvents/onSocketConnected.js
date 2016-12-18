@@ -1,27 +1,34 @@
+import GameConsts from 'lib/GameConsts'
 import getParameterByName from '../GetParameterByName.js'
-
-// 1. send new player
-// 2. receive load game
-// 3. send load complete
-// 4. receive update players
+import Client from '../Client'
 
 export default function onSocketConnected() {
     const { store } = this.game
+    const state = store.getState()
 
-    window.SOCKET_ID = window.socket.id.replace('/#', '')
+    Client.getId(id => {
+        window.SOCKET_ID = id
 
-    if (getParameterByName('roomId')) {
-        mixpanel.track('player:joinedByRoomId')
-    }
+        let data = {
+            x: 0,
+            y: 0,
+            weaponId: state.player.currentWeapon === 'primaryWeapon'
+                ? state.player.selectedPrimaryWeaponId
+                : state.player.selectedSecondaryWeaponId,
+            nickname: state.player.nickname,
+        }
 
-    window.socket.emit('new player', {
-        roomId: getParameterByName('roomId'),
-        map: getParameterByName('map'),
-        x: 0,
-        y: 0,
-        weaponId: store.getState().player.currentWeapon === 'primaryWeapon'
-            ? store.getState().player.selectedPrimaryWeaponId
-            : store.getState().player.selectedSecondaryWeaponId,
-        nickname: store.getState().player.nickname,
+        // Only specify roomId if specified in url
+        if (getParameterByName('roomId')) {
+            mixpanel.track('player:joinedByRoomId')
+            data.roomId = getParameterByName('roomId')
+        }
+
+        // Only specify map if specified in url
+        if (getParameterByName('map')) {
+            data.map = getParameterByName('map')
+        }
+
+        Client.send(GameConsts.EVENT.NEW_PLAYER, data)
     })
 }

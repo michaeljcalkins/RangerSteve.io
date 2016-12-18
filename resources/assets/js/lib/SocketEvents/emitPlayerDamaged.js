@@ -1,4 +1,7 @@
 // @flow
+import GameConsts from 'lib/GameConsts'
+import Client from '../Client'
+
 export default function(data: {
   roomId: string,
   damage: number,
@@ -7,5 +10,5 @@ export default function(data: {
   weaponId: string,
   wasHeadshot: bool,
 }) {
-    window.socket.emit('player damaged', data)
+    Client.send(GameConsts.EVENT.PLAYER_DAMAGED, data)
 }

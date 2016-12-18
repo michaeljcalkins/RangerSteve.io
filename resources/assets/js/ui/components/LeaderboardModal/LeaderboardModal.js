@@ -4,6 +4,8 @@ import values from 'lodash/values'
 import get from 'lodash/get'
 import cs from 'classnames'
 
+import GameConsts from 'lib/GameConsts'
+import Client from '../../../lib/Client'
 import getPlayerWithBestAccuracy from '../../../lib/getPlayerWithBestAccuracy'
 import getPlayerWithBestHeadshots from '../../../lib/getPlayerWithBestHeadshots'
 import getPlayerWithBestKillingSpree from '../../../lib/getPlayerWithBestKillingSpree'
@@ -27,9 +29,10 @@ export default class Leaderboard extends Component {
 
     componentDidMount() {
         this.timer = setInterval(this.tick.bind(this), 100)
-        window.socket.emit('refresh room', {
-            roomId: this.props.room.id,
-        })
+        // TODO: check if needed
+        // Client.send(GameConsts.EVENT.REFRESH_ROOM, {
+        //     roomId: this.props.room.id,
+        // })
     }
 
     componentWillUnmount() {
@@ -60,7 +63,7 @@ export default class Leaderboard extends Component {
                 const kdRatio = deaths > 0 ? (kills / deaths) : kills
                 const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
                 const classes = cs({
-                    'active-player': id === window.socket.id,
+                    'active-player': id === window.SOCKET_ID,
                 })
 
                 return (

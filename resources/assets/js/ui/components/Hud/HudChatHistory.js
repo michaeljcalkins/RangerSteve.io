@@ -9,16 +9,24 @@ export default function HudChatHistory({
     onSendMessage,
 }) {
     function renderMessages() {
-        if (messages.length === 0 && ! isOpen)
-            return (<li>Press { String.fromCharCode(newChatMessageCharacter) } to chat</li>)
+        let formattedMessages = []
 
-        return messages.map(function(message, index) {
+        // Array: [nickname, message]
+        formattedMessages = messages.map((message, index) => {
             return (
-                <li key={ index } className="dont-break-out">
-                    <strong>{ message.playerNickname }:</strong> { message.message }
+                <li className="dont-break-out" key={ 'chat-message' + index }>
+                    <strong>{ message[0] }:</strong> { message[1] }
                 </li>
             )
         })
+
+        if (! isOpen) {
+            formattedMessages.push((
+                <li>Press { String.fromCharCode(newChatMessageCharacter) } to chat</li>
+            ))
+        }
+
+        return formattedMessages
     }
 
     return (

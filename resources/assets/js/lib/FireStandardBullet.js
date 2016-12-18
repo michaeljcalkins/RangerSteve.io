@@ -35,7 +35,7 @@ export default function FireStandardBullet(currentWeaponId) {
     let y = RS.player.y - 10
 
     let bullet = RS.bullets.getFirstDead()
-    bullet.bulletId = Guid()
+    bullet.bulletId = Math.round(Math.random() * 16000)
     bullet.damage = currentWeapon.damage
     bullet.weaponId = currentWeaponId
     bullet.alpha = 0
@@ -72,8 +72,6 @@ export default function FireStandardBullet(currentWeaponId) {
 
     emitBulletFired.call(this, {
         bulletId: bullet.bulletId,
-        bulletSpeed: currentWeapon.bulletSpeed,
-        damage: currentWeapon.damage,
         pointerAngle,
         weaponId: currentWeaponId,
         x: Math.abs(x),

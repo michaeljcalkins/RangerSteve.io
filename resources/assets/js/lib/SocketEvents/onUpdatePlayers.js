@@ -15,6 +15,7 @@ export default function onUpdatePlayers(data: {
         players: Object,
     },
 }) {
+    return
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
     const store = this.game.store
@@ -26,10 +27,10 @@ export default function onUpdatePlayers(data: {
     window.history.pushState({ path: newurl }, '', newurl)
 
     if (RS.enemies) RS.enemies.destroy(true)
-    RS.enemies = this.game.add.group()
+    // RS.enemies = this.game.add.group()
 
     const rankedPlayers = values(store.getState().room.players)
-        .sort((a, b) => a.meta.score < b.meta.score)
+        .sort((a, b) => a.meta.score < b.meta.score) // TODO should consider meta.secondsInRound as well
         .map(player => player)
 
     values(store.getState().room.players).forEach((player) => {

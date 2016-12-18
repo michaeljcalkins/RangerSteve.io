@@ -10,7 +10,8 @@ import { bindActionCreators } from 'redux'
 import actions from 'actions'
 import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
-import emptyEventSchema from 'lib/schemas/emptyEventSchema'
+import Client from '../../../lib/Client'
+// import emptyEventSchema from 'lib/schemas/emptyEventSchema'
 
 export class RespawnModal extends Component {
     constructor(props) {
@@ -161,8 +162,8 @@ export class RespawnModal extends Component {
     }
 
     handleRespawnButtonClick() {
-        var buffer: Uint8Array = emptyEventSchema.encode()
-        window.socket.emit('player respawn', buffer)
+        // var buffer: Uint8Array = emptyEventSchema.encode()
+        Client.send(GameConsts.EVENT.PLAYER_RESPAWN, {})
     }
 
     handleWeaponsViewClick(view) {

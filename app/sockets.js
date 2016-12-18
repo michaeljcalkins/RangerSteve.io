@@ -3,51 +3,90 @@
 const util = require('util')
 const _ = require('lodash')
 const moment = require('moment')
+const filter = require('profanity-filter')
+const gameloop = require('node-gameloop')
+
+const Server = require('./Server')
 
 const GameConsts = require('../lib/GameConsts')
+const helpers = require('../lib/helpers')
 const createPlayer = require('./services/createPlayer')
 const getPlayerById = require('./services/getPlayerById')
 const getTeam = require('./services/getTeam')
 const createRoom = require('./services/createRoom')
 const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
-const bulletSchema = require('../lib/schemas/bulletSchema')
-const playerIdSchema = require('../lib/schemas/playerIdSchema')
-const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
-const playerFromServerSchema = require('../lib/schemas/playerFromServerSchema')
+// const bulletSchema = require('../lib/schemas/bulletSchema')
+// const playerIdSchema = require('../lib/schemas/playerIdSchema')
+// const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
+
+filter.seed(require('./seeds/profanity.json'))
+filter.setReplacementMethod('grawlix')
+
+const NetworkStats = helpers.NetworkStats
+const sizeOf = helpers.sizeOf
 
 let rooms = {}
 let io = null
 
-function init(ioInstance) {
-    io = ioInstance
+const events = {
+    [GameConsts.EVENT.NEW_PLAYER]: onNewPlayer,
+    [GameConsts.EVENT.MOVE_PLAYER]: onMovePlayer,
+    [GameConsts.EVENT.PLAYER_DAMAGED]: onPlayerDamaged,
+    [GameConsts.EVENT.PLAYER_FULL_HEALTH]: onPlayerFullHealth,
+    [GameConsts.EVENT.PLAYER_HEALING]: onPlayerHealing,
+    [GameConsts.EVENT.PLAYER_ADJUST_SCORE]: onPlayerAdjustScore,
+    [GameConsts.EVENT.PLAYER_RESPAWN]: onPlayerRespawn,
+    [GameConsts.EVENT.PLAYER_UPDATE_NICKNAME]: onPlayerUpdateNickname,
+    [GameConsts.EVENT.MESSAGE_SEND]: onMessageSend,
+    [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
+    [GameConsts.EVENT.KICK_PLAYER]: onKickPlayer,
+    // [GameConsts.EVENT.LOAD_COMPLETE]: onLoadComplete,
+}
+
+let dataReceived = 0
+
+function init(primusInstance) {
+    io = primusInstance
+    Server.init(io)
     io.on('connection', (socket) => {
-        util.log('New connection from ' + socket.request.connection.remoteAddress)
+        util.log('New connection: ' + socket.id + ', ' + JSON.stringify(socket.address))
 
-        socket.on('disconnect', onClientDisconnect)
-        socket.on('new player', onNewPlayer)
-        socket.on('move player', onMovePlayer)
+        socket.on('data', (data) => {
+            dataReceived += sizeOf(data)
+            // console.log('* LOG * data', data.type, data.payload)
+            if (! data || ! data.type) return
 
-        socket.on('player damaged', onPlayerDamaged)
-        socket.on('player full health', onPlayerFullHealth)
-        socket.on('player healing', onPlayerHealing)
-        socket.on('player adjust score', onPlayerAdjustScore)
-        socket.on('player update nickname', onPlayerUpdateNickname)
-        socket.on('player respawn', onPlayerRespawn)
+            if (! events[data.type]) return
 
-        socket.on('message send', onMessageSend)
-
-        socket.on('bullet fired', onBulletFired)
-        socket.on('kick player', onKickPlayer)
-        socket.on('load complete', onLoadComplete)
-
-        socket.on('refresh room', onRefreshRoom)
-        socket.on('refresh players', onRefreshPlayers)
+            events[data.type].call(socket, data.payload)
+        })
     })
+
+    io.on('disconnection', (socket) => {
+        onClientDisconnect.call(socket)
+    })
+
+    // if (GameConsts.ENABLE_NETWORK_STATS) {
+    //     NetworkStats.loop(() => {
+    //         const dataSent = Server.getStats().dataSent
+    //         NetworkStats.print(dataSent, dataReceived)
+    //     })
+    // }
 }
 
 function getRooms() {
     return rooms
 }
+
+gameloop.setGameLoop(function() {
+    Object.keys(rooms).forEach((roomId) => {
+        Server.sendToRoom(
+            roomId,
+            GameConsts.EVENT.REFRESH_ROOM,
+            rooms[roomId]
+        )
+    })
+}, GameConsts.TICK_RATE)
 
 setInterval(function() {
     Object.keys(rooms).forEach((roomId) => {
@@ -90,9 +129,11 @@ setInterval(function() {
                 rooms[roomId].players[playerId].meta.secondsInRound = 0
             })
 
-            io.to(roomId).emit('update players', {
-                room: rooms[roomId],
-            })
+            Server.sendToRoom(
+                roomId,
+                GameConsts.EVENT.LOAD_GAME,
+                rooms[roomId]
+            )
             return
         }
 
@@ -101,10 +142,6 @@ setInterval(function() {
             util.log('Round has ended for', roomId)
             rooms[roomId].state = 'ended'
             rooms[roomId].roundStartTime = moment().add(GameConsts.END_OF_ROUND_BREAK_SECONDS, 'seconds').unix()
-
-            io.to(roomId).emit('update players', {
-                room: rooms[roomId],
-            })
             return
         }
 
@@ -125,27 +162,24 @@ function onPlayerRespawn() {
 
     player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
-    const buffer = playerIdSchema.encode({ id: this.id })
-    io.to(roomId).emit('player respawn', buffer)
+    const data = { id: this.id }
+    // const buffer = playerIdSchema.encode(data)
+    Server.sendToRoom(
+        roomId,
+        GameConsts.EVENT.PLAYER_RESPAWN,
+        data
+    )
 }
 
-function onRefreshPlayers(data) {
-    io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId],
-    })
-}
-
-function onRefreshRoom(data) {
-    io.to(data.roomId).emit('refresh room', {
-        room: rooms[data.roomId],
-    })
-}
-
-function onLoadComplete(data) {
-    io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId],
-    })
-}
+// function onLoadComplete(data) {
+//     Server.sendToRoom(
+//         data.roomId,
+//         GameConsts.EVENT.UPDATE_PLAYERS,
+//         {
+//             room: rooms[data.roomId],
+//         }
+//     )
+// }
 
 function onKickPlayer(data) {
     let players = _.values(rooms[data.roomId].players)
@@ -154,18 +188,37 @@ function onKickPlayer(data) {
         util.error('Could not find player.')
     }
 
-    io.to(data.roomId).emit('kick player', {
-        id: player.id,
-        roomId: data.roomId,
-    })
+    Server.sendToRoom(
+        data.roomId,
+        GameConsts.EVENT.KICK_PLAYER,
+        {
+            id: player.id,
+            roomId: data.roomId,
+        }
+    )
 }
 
 function onMessageSend(data) {
-    if (! rooms[data.roomId]) return
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    const player = getPlayerById(roomId, this.id, rooms)
 
-    rooms[data.roomId].messages.push(data)
-    rooms[data.roomId].messages = rooms[data.roomId].messages.slice(-5)
-    io.to(data.roomId).emit('message received', data)
+    const newMessage = filter.clean(data.substr(0, GameConsts.MAX_CHAT_MESSAGE_LENGTH))
+    console.log('newMessage', newMessage)
+    rooms[roomId].messages.push([
+        player.meta.nickname.substr(0, GameConsts.MAX_NICKNAME_LENGTH),
+        newMessage,
+    ])
+    rooms[roomId].messages = rooms[roomId].messages.slice(-5)
+
+    // Array: [nickname, message]
+    Server.sendToRoom(
+        roomId,
+        GameConsts.EVENT.MESSAGE_RECEIVED,
+        [
+            player.meta.nickname,
+            newMessage,
+        ]
+    )
 }
 
 function onPlayerAdjustScore(data) {
@@ -178,10 +231,6 @@ function onPlayerAdjustScore(data) {
 
     player.meta.score += data.amount
     player.meta.score = player.meta.score <= 0 ? 0 : player.meta.score
-
-    io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId],
-    })
 }
 
 function onPlayerUpdateNickname(data) {
@@ -197,10 +246,6 @@ function onPlayerUpdateNickname(data) {
         nickname = nickname.substr(0, 25)
 
     player.meta.nickname = nickname
-
-    io.to(data.roomId).emit('update players', {
-        room: rooms[data.roomId],
-    })
 }
 
 // New player has joined
@@ -273,21 +318,19 @@ function onNewPlayer(data) {
 
     // User to the room
     rooms[roomIdPlayerWillJoin].players[this.id] = newPlayer
+    // console.log('* LOG * roomIdPlayerWillJoin', roomIdPlayerWillJoin);
     this.join(roomIdPlayerWillJoin)
 
     // Tell the user's client to load the game
-    io.to(this.id).emit('load game', {
-        room: rooms[roomIdPlayerWillJoin],
-    })
-
-    // Tell everyone about the new player
-    io.to(roomIdPlayerWillJoin).emit('update players', {
-        room: rooms[roomIdPlayerWillJoin],
-    })
+    Server.sendToSocket(
+        this.id,
+        GameConsts.EVENT.LOAD_GAME,
+        rooms[roomIdPlayerWillJoin]
+    )
 }
 
 // Player has moved
-function onMovePlayer(buffer/*: Uint8Array*/) {
+function onMovePlayer(data) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
 
     if (! rooms[roomId]) return
@@ -296,27 +339,14 @@ function onMovePlayer(buffer/*: Uint8Array*/) {
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
 
-    const data = playerFromClientSchema.decode(buffer)
+    // const data = playerFromClientSchema.decode(buffer)
 
     // Update player position
     movePlayer.x = data.x
     movePlayer.y = data.y
     movePlayer.angle = data.angle
-
-    const packet = {
-        id: this.id,
-        x: data.x,
-        y: data.y,
-        angle: data.angle,
-        flying: data.flying,
-        shooting: data.shooting,
-        health: movePlayer.meta.health,
-        weaponId: data.weaponId,
-    }
-
-    // Broadcast updated position to connected socket clients
-    const newBuffer = playerFromServerSchema.encode(packet)
-    io.to(roomId).emit('move player', newBuffer)
+    movePlayer.flying = data.flying
+    movePlayer.shooting = data.shooting
 }
 
 // Socket client has disconnected
@@ -343,11 +373,6 @@ function onClientDisconnect() {
         delete rooms[roomId].players[this.id]
     })
 
-    // Broadcast removed player to connected socket clients
-    io.to(selectedRoomId).emit('update players', {
-        room: rooms[selectedRoomId],
-    })
-
     // If the room the player left is empty close the room
     if (rooms[selectedRoomId] && Object.keys(rooms[selectedRoomId].players).length === 0) {
         util.log('Removing room: ', selectedRoomId)
@@ -356,28 +381,35 @@ function onClientDisconnect() {
 }
 
 function onPlayerFullHealth(data) {
-    let player = getPlayerById(data.roomId, this.id, rooms)
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    let player = getPlayerById(roomId, this.id, rooms)
     player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
-    io.to(this.id).emit('player health update', {
-        health: player.meta.health,
-    })
+    Server.sendToSocket(
+        this.id,
+        GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
+        GameConsts.PLAYER_FULL_HEALTH
+    )
 }
 
-function onPlayerHealing(data) {
-    let player = getPlayerById(data.roomId, this.id, rooms)
+function onPlayerHealing() {
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    let player = getPlayerById(roomId, this.id, rooms)
     player.meta.health += 10
 
     if (player.meta.health > GameConsts.PLAYER_FULL_HEALTH)
         player.meta.health = GameConsts.PLAYER_FULL_HEALTH
 
-    io.to(this.id).emit('player health update', {
-        health: player.meta.health,
-    })
+    Server.sendToSocket(
+        this.id,
+        GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
+        player.meta.health
+    )
 }
 
 function onPlayerDamaged(data) {
-    let player = getPlayerById(data.roomId, data.damagedPlayerId, rooms)
+    const roomId = getRoomIdByPlayerId(this.id, rooms)
+    let player = getPlayerById(roomId, data.damagedPlayerId, rooms)
 
     if (! player || player.meta.health <= 0) return
 
@@ -394,7 +426,7 @@ function onPlayerDamaged(data) {
     player.meta.damageStats.attackingHits++
     player.meta.damageStats.weaponId = data.weaponId
 
-    const attackingPlayer = getPlayerById(data.roomId, data.attackingPlayerId, rooms)
+    const attackingPlayer = getPlayerById(roomId, data.attackingPlayerId, rooms)
     if (attackingPlayer) {
         attackingPlayer.meta.bulletsHit++
         if (data.wasHeadshot) attackingPlayer.meta.headshots++
@@ -414,55 +446,71 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.damageInflicted += Number(data.damage)
 
             if (player.meta.team === 'red') {
-                rooms[data.roomId].blueTeamScore += 10
+                rooms[roomId].blueTeamScore += 10
             }
 
             if (player.meta.team === 'blue') {
-                rooms[data.roomId].redTeamScore += 10
+                rooms[roomId].redTeamScore += 10
             }
 
             if (attackingPlayer.meta.killingSpree > attackingPlayer.meta.bestKillingSpree) {
                 attackingPlayer.meta.bestKillingSpree = attackingPlayer.meta.killingSpree
             }
 
-            io.to(this.id).emit('player kill confirmed', {
-                id: attackingPlayer.id,
-                damagedPlayerId: data.damagedPlayerId,
-                killingSpree: attackingPlayer.meta.killingSpree,
-                wasHeadshot: data.wasHeadshot,
-            })
+            Server.sendToSocket(
+                this.id,
+                GameConsts.EVENT.PLAYER_KILL_CONFIRMED,
+                {
+                    id: attackingPlayer.id,
+                    damagedPlayerId: data.damagedPlayerId,
+                    killingSpree: attackingPlayer.meta.killingSpree,
+                    wasHeadshot: data.wasHeadshot,
+                }
+            )
 
-            io.to(data.roomId).emit('player kill log', {
-                deadNickname: player.meta.nickname,
-                attackerNickname: attackingPlayer.meta.nickname,
-                weaponId: data.weaponId,
-                wasHeadshot: data.wasHeadshot,
-            })
+            Server.sendToRoom(
+                roomId,
+                GameConsts.EVENT.PLAYER_KILL_LOG,
+                {
+                    deadNickname: player.meta.nickname,
+                    attackerNickname: attackingPlayer.meta.nickname,
+                    weaponId: data.weaponId,
+                    wasHeadshot: data.wasHeadshot,
+                }
+            )
         } else {
             if (player.meta.score >= 10) {
                 player.meta.score -= 10
             }
 
-            io.to(data.roomId).emit('player kill log', {
-                deadNickname: player.meta.nickname,
-            })
+            Server.sendToRoom(
+                roomId,
+                GameConsts.EVENT.PLAYER_KILL_LOG,
+                {
+                    deadNickname: player.meta.nickname,
+                }
+            )
         }
 
         const attackingDamageStats = _.get(attackingPlayer, 'meta.damageStats.attackingPlayerId') === player.id
             ? _.get(attackingPlayer, 'meta.damageStats', {})
             : {}
 
-        io.to(data.roomId).emit('player damaged', {
-            id: this.id,
-            damagedPlayerId: data.damagedPlayerId,
-            damage: data.damage,
-            health: player.meta.health,
-            damageStats: player.meta.damageStats,
-            attackingDamageStats,
-            canRespawnTimestamp: player.meta.canRespawnTimestamp,
-            playerX: player.x,
-            playerY: player.y,
-        })
+        Server.sendToRoom(
+            roomId,
+            GameConsts.EVENT.PLAYER_DAMAGED,
+            {
+                id: this.id,
+                damagedPlayerId: data.damagedPlayerId,
+                damage: data.damage,
+                health: player.meta.health,
+                damageStats: player.meta.damageStats,
+                attackingDamageStats,
+                canRespawnTimestamp: player.meta.canRespawnTimestamp,
+                playerX: player.x,
+                playerY: player.y,
+            }
+        )
 
         player.meta.damageStats.attackingPlayerId = null
         player.meta.damageStats.attackingDamage = 0
@@ -473,25 +521,25 @@ function onPlayerDamaged(data) {
             attackingPlayer.meta.damageStats.attackingDamage = 0
             attackingPlayer.meta.damageStats.attackingHits = 0
         }
-
-        io.to(data.roomId).emit('update players', {
-            room: rooms[data.roomId],
-        })
         return
     }
 
-    io.to(data.roomId).emit('player damaged', {
-        id: this.id,
-        damagedPlayerId: data.damagedPlayerId,
-        damage: data.damage,
-        health: player.meta.health,
-        damageStats: {},
-        attackingDamageStats: {},
-    })
+    Server.sendToRoom(
+        roomId,
+        GameConsts.EVENT.PLAYER_DAMAGED,
+        {
+            id: this.id,
+            damagedPlayerId: data.damagedPlayerId,
+            damage: data.damage,
+            health: player.meta.health,
+            damageStats: {},
+            attackingDamageStats: {},
+        }
+    )
 }
 
-function onBulletFired(buffer/*: Uint8Array*/) {
-    const data = bulletSchema.decode(buffer)
+function onBulletFired(data) {
+    // const data = bulletSchema.decode(buffer)
     const roomId = getRoomIdByPlayerId(this.id, rooms)
     const player = getPlayerById(roomId, this.id, rooms)
     data.playerId = this.id
@@ -500,8 +548,13 @@ function onBulletFired(buffer/*: Uint8Array*/) {
     player.meta.bulletsFired++
 
     // Broadcast updated position to connected socket clients
-    var newBuffer/*: Uint8Array*/ = bulletSchema.encode(data)
-    io.to(roomId).emit('bullet fired', newBuffer)
+    // var newBuffer/*: Uint8Array*/ = bulletSchema.encode(data)
+
+    Server.sendToRoom(
+        roomId,
+        GameConsts.EVENT.BULLET_FIRED,
+        data
+    )
 }
 
 module.exports.init = init

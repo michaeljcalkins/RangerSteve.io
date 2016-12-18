@@ -28,7 +28,7 @@
         "mixpanel": true,
         "Phaser": true,
         "$": true,
-        "io": true,
+        "Primus": true,
         "_": true,
         "PIXI": true,
         "toastr": true,

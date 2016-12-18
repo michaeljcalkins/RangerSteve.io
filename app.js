@@ -1,22 +1,33 @@
 'use strict'
 
-let express = require('express')
-let socketIo = require('socket.io')
-let path = require('path')
-let favicon = require('serve-favicon')
-let logger = require('morgan')
-let cookieParser = require('cookie-parser')
-let bodyParser = require('body-parser')
-let compression = require('compression')
-let nunjucks = require('express-nunjucks')
-let SocketHandler = require('./app/sockets')
-let routes = require('./app/routes')
-let locals = require('./app/middleware/locals')
+const express = require('express')
+const Primus = require('primus')
+const Rooms = require('primus-rooms')
+const path = require('path')
+const favicon = require('serve-favicon')
+const logger = require('morgan')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const compression = require('compression')
+const nunjucks = require('express-nunjucks')
+const SocketHandler = require('./app/sockets')
+const routes = require('./app/routes')
+const locals = require('./app/middleware/locals')
 
-let app = express()
-let io = socketIo(1280, { wsEngine: 'uws' })
-app.io = io
-SocketHandler.init(io)
+const app = express()
+
+let primus
+
+app.init = function(server) {
+    const options = {
+        transformer: 'uws',
+        parser: 'binary',
+        perMessageDeflate: false,
+    };
+    primus = new Primus(server, options)
+    primus.plugin('rooms', Rooms);
+    SocketHandler.init(primus)
+}
 
 app.set('views', path.join(__dirname, 'resources/views'))
 app.set('view engine', 'nunjucks');
@@ -42,7 +53,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
 }));
 
 app.use(function(req, res, next){
-    res.io = io;
+    res.io = primus;
     next();
 });
 
@@ -50,7 +61,7 @@ app.use('/', routes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    let err = new Error(`Not Found: ${req.originalUrl}`)
+    const err = new Error(`Not Found: ${req.originalUrl}`)
     err.status = 404
     next(err)
 });
