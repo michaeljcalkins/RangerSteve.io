@@ -64,9 +64,8 @@ Deathmatch.prototype = {
 
         this.stats.showPanel(0)
         const statsPanelElement = document.getElementById('stats-panel')
-        if (! statsPanelElement.hasChildNodes()) {
-            document.getElementById('stats-panel').appendChild(this.stats.dom)
-        }
+        statsPanelElement.innerHTML = ''
+        statsPanelElement.appendChild(this.stats.dom)
     },
 
     update: function() {
@@ -173,6 +172,10 @@ Deathmatch.prototype = {
         })
     },
 
+    shutdown() {
+        this.stats = null
+        delete this.stats
+    },
 }
 
 export default Deathmatch
