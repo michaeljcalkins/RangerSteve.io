@@ -1,5 +1,5 @@
 // @flow
-// import playerFromClientSchema from 'lib/schemas/playerFromClientSchema'
+import movePlayerSchema from 'lib/schemas/movePlayerSchema'
 import GameConsts from 'lib/GameConsts'
 import Client from '../Client'
 
@@ -11,6 +11,6 @@ export default function(data: {
     x: number,
     y: number,
 }) {
-    // var buffer: Uint8Array = playerFromClientSchema.encode(data)
-    Client.send(GameConsts.EVENT.MOVE_PLAYER, data)
+    var buffer: Uint8Array = movePlayerSchema.encode(data)
+    Client.send(GameConsts.EVENT.MOVE_PLAYER, buffer)
 }
