@@ -21,7 +21,7 @@ let primus
 app.init = function(server) {
     const options = {
         transformer: 'uws',
-        // parser: 'binary',
+        parser: 'binary',
         perMessageDeflate: false,
     };
     primus = new Primus(server, options)

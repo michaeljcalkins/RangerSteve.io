@@ -31,8 +31,8 @@ export default function() {
         flying: RS.player.rightJumpjet.visible && RS.player.leftJumpjet.visible,
         shooting: isPlayerShooting(currentWeaponId, RS.player.rightArmSprite),
         weaponId: currentWeaponId,
-        x: Math.round(Math.abs(RS.player.x)),
-        y: Math.round(Math.abs(RS.player.y)),
+        x: Math.round(RS.player.x),
+        y: Math.round(RS.player.y),
     }
 
     if (JSON.stringify(lastPlayerData) === JSON.stringify(newPlayerData)) return

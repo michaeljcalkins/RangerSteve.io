@@ -18,7 +18,6 @@ const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
 // const bulletSchema = require('../lib/schemas/bulletSchema')
 // const playerIdSchema = require('../lib/schemas/playerIdSchema')
 const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
-const refreshRoomSchema = require('../lib/schemas/refreshRoomSchema')
 
 filter.seed(require('./seeds/profanity.json'))
 filter.setReplacementMethod('grawlix')
@@ -81,24 +80,13 @@ function getRooms() {
 
 gameloop.setGameLoop(function() {
     Object.keys(rooms).forEach((roomId) => {
-        const playersData = Object.keys(rooms[roomId].players).map(function(playerId) {
-            return {
-                angle: rooms[roomId].players[playerId].angle || 0,
-                flying: rooms[roomId].players[playerId].flying || false,
-                id: playerId,
-                shooting: rooms[roomId].players[playerId].shooting || false,
-                weaponId: rooms[roomId].players[playerId].meta.weaponId,
-                x: rooms[roomId].players[playerId].x,
-                y: rooms[roomId].players[playerId].y,
-            }
-        })
-
-        const buffer = refreshRoomSchema.encode(playersData)
+        const room = rooms[roomId]
+        const roomData = _.omit(room, ['messages'])
 
         Server.sendToRoom(
             roomId,
             GameConsts.EVENT.REFRESH_ROOM,
-            buffer
+            roomData
         )
     })
 }, GameConsts.TICK_RATE)
