@@ -78,6 +78,8 @@ export default function onRefreshRoom(data) {
 
         if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
 
+
+        player.visible = true
         player.meta.health = playerData.meta.health
 
         // 3. update the player
@@ -90,11 +92,9 @@ export default function onRefreshRoom(data) {
         this.game.add.tween(player).to({
             x: playerData.x,
             y: playerData.y,
-        }, GameConsts.TICK_RATE / 2, Phaser.Easing.Linear.None, true)
-        player.visible = true
+        }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
 
-        // Update currently held weapon
-        player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].frame
+
 
         // Control jump jet visibility
         player.rightJumpjet.visible = playerData.flying
