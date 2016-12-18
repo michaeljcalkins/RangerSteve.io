@@ -24,7 +24,7 @@ const Client = {
         const sizeOfData = sizeOf(data)
         _stats.dataSent += sizeOfData
 
-        if (type !== GameConsts.EVENT.MOVE_PLAYER) {
+        if (GameConsts.ENABLE_NETWORK_EVENT_LOGS && type !== GameConsts.EVENT.MOVE_PLAYER) {
             console.log('* LOG * Client.send', type, GameConsts.EVENTS[type], payload, formatByteSize(sizeOfData))
         }
         window.socket.write(data)
