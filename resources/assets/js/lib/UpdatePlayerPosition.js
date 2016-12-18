@@ -27,12 +27,12 @@ export default function() {
     const angle = (this.game.physics.arcade.angleToPointer(RS.player) * 180 / Math.PI) + 90
 
     let newPlayerData = {
-        angle: angle,
+        angle: Math.round(angle),
         flying: RS.player.rightJumpjet.visible && RS.player.leftJumpjet.visible,
         shooting: isPlayerShooting(currentWeaponId, RS.player.rightArmSprite),
         weaponId: currentWeaponId,
-        x: Math.abs(RS.player.x),
-        y: Math.abs(RS.player.y),
+        x: Math.round(RS.player.x),
+        y: Math.round(RS.player.y),
     }
 
     if (JSON.stringify(lastPlayerData) === JSON.stringify(newPlayerData)) return

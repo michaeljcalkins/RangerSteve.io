@@ -17,7 +17,7 @@ const createRoom = require('./services/createRoom')
 const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
 // const bulletSchema = require('../lib/schemas/bulletSchema')
 // const playerIdSchema = require('../lib/schemas/playerIdSchema')
-// const playerFromClientSchema = require('../lib/schemas/playerFromClientSchema')
+const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
 
 filter.seed(require('./seeds/profanity.json'))
 filter.setReplacementMethod('grawlix')
@@ -333,7 +333,7 @@ function onNewPlayer(data) {
 }
 
 // Player has moved
-function onMovePlayer(data) {
+function onMovePlayer(buffer) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
 
     if (! rooms[roomId]) return
@@ -342,7 +342,7 @@ function onMovePlayer(data) {
 
     if (! movePlayer || movePlayer.meta.health <= 0) return
 
-    // const data = playerFromClientSchema.decode(buffer)
+    const data = movePlayerSchema.decode(buffer)
 
     // Update player position
     movePlayer.x = data.x
