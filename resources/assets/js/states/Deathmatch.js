@@ -44,7 +44,7 @@ Deathmatch.prototype = {
         const mapName = store.getState().room.map
         Maps[mapName].preload.call(this)
 
-        this.game.stats = new Stats()
+        this.stats = new Stats()
     },
 
     create: function() {
@@ -62,12 +62,15 @@ Deathmatch.prototype = {
 
         this.game.paused = false
 
-        this.game.stats.showPanel(0)
-        document.getElementById('stats-panel').appendChild(this.game.stats.dom)
+        this.stats.showPanel(0)
+        const statsPanelElement = document.getElementById('stats-panel')
+        if (! statsPanelElement.hasChildNodes()) {
+            document.getElementById('stats-panel').appendChild(this.stats.dom)
+        }
     },
 
     update: function() {
-        this.game.stats.begin()
+        this.stats.begin()
 
         if (this.game.store.getState().game.resetEventsFlag) {
             this.game.store.dispatch(actions.game.setResetEventsFlag(false))
@@ -151,7 +154,7 @@ Deathmatch.prototype = {
         UpdateHurtBorder.call(this)
         UpdatePlayerPosition.call(this)
 
-        this.game.stats.end()
+        this.stats.end()
     },
 
     render() {
