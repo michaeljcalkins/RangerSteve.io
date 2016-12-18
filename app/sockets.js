@@ -80,10 +80,13 @@ function getRooms() {
 
 gameloop.setGameLoop(function() {
     Object.keys(rooms).forEach((roomId) => {
+        const room = rooms[roomId]
+        const roomData = _.omit(room, ['messages'])
+
         Server.sendToRoom(
             roomId,
             GameConsts.EVENT.REFRESH_ROOM,
-            rooms[roomId]
+            roomData
         )
     })
 }, GameConsts.TICK_RATE)
