@@ -36,7 +36,7 @@ export default function() {
     window.socket.on('data', (data) => {
         dataReceived += sizeOf(data)
         // console.log('* LOG * data', data.type, data.payload)
-        if (! data || ! data.type) return
+        if (! data || data.type === undefined) return
 
         if (! events[data.type]) return
 
