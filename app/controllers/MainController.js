@@ -1,8 +1,9 @@
 'use strict'
 
-let fs = require('fs')
-let moment = require('moment')
-let GameConsts = require('../../lib/GameConsts')
+const fs = require('fs')
+const moment = require('moment')
+const GameConsts = require('../../lib/GameConsts')
+const Server = require('../Server')
 
 let MainController = {
     home: function(req, res) {
@@ -55,7 +56,10 @@ let MainController = {
         if (! req.body || ! req.body.announcement) {
             error = 'Announcement cannot be empty.'
         } else {
-            res.io.write({type: GameConsts.EVENT.ANNOUNCEMENT, payload: req.body.announcement})
+            Server.send(
+                GameConsts.EVENT.ANNOUNCEMENT,
+                req.body.announcement
+            )
             success = true
         }
 
