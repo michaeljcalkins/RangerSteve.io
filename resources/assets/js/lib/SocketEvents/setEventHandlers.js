@@ -1,6 +1,5 @@
 import GameConsts from 'lib/GameConsts'
 import { NetworkStats, formatByteSize, sizeOf } from 'lib/helpers'
-import onUpdatePlayers from './onUpdatePlayers'
 import onSocketConnected from './onSocketConnected'
 import onSocketDisconnect from './onSocketDisconnect'
 import onBulletFired from './onBulletFired'
@@ -18,7 +17,6 @@ import storage from 'store'
 
 const events = {
     [GameConsts.EVENT.LOAD_GAME]: onLoadGame,
-    [GameConsts.EVENT.UPDATE_PLAYERS]: onUpdatePlayers,
     [GameConsts.EVENT.PLAYER_RESPAWN]: onPlayerRespawn,
     [GameConsts.EVENT.PLAYER_DAMAGED]: onPlayerDamaged,
     [GameConsts.EVENT.PLAYER_HEALTH_UPDATE]: onPlayerHealthUpdate,

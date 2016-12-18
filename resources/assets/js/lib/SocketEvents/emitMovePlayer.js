@@ -5,7 +5,6 @@ import Client from '../Client'
 
 export default function(data: {
     angle: number,
-    facing: string,
     flying: bool,
     shooting: bool,
     weaponId: string,

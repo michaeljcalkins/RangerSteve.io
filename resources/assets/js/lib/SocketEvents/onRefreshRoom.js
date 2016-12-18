@@ -93,6 +93,9 @@ export default function onRefreshRoom(data) {
         }, GameConsts.TICK_RATE / 2, Phaser.Easing.Linear.None, true)
         player.visible = true
 
+        // Update currently held weapon
+        player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].frame
+
         // Control jump jet visibility
         player.rightJumpjet.visible = playerData.flying
         player.leftJumpjet.visible = playerData.flying

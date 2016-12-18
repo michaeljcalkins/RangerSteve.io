@@ -347,6 +347,7 @@ function onMovePlayer(data) {
     movePlayer.angle = data.angle
     movePlayer.flying = data.flying
     movePlayer.shooting = data.shooting
+    movePlayer.meta.weaponId = data.weaponId
 }
 
 // Socket client has disconnected
