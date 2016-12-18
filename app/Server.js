@@ -36,7 +36,7 @@ const Server = {
         const sizeOfData = sizeOf(data)
         _stats.dataSent += sizeOfData
 
-        if (type !== GameConsts.EVENT.REFRESH_ROOM) {
+        if (GameConsts.ENABLE_NETWORK_EVENT_LOGS && type !== GameConsts.EVENT.REFRESH_ROOM) {
             console.log('* LOG * Server._prepareData', type, GameConsts.EVENTS[type], payload, formatByteSize(sizeOfData))
         }
 
