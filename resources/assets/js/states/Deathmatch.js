@@ -28,6 +28,8 @@ import UpdateGameScale from '../lib/UpdateGameScale'
 import logPointerWorldPosition from '../lib/logPointerWorldPosition'
 import createEnemyGroup from '../lib/createEnemyGroup'
 
+import Stats from 'stats.js'
+
 /**
  * Collisions and all game mode related interactions.
  */
@@ -41,6 +43,8 @@ Deathmatch.prototype = {
         const store = this.game.store
         const mapName = store.getState().room.map
         Maps[mapName].preload.call(this)
+
+        this.game.stats = new Stats()
     },
 
     create: function() {
@@ -57,9 +61,14 @@ Deathmatch.prototype = {
         UpdateGameScale.call(this)
 
         this.game.paused = false
+
+        this.game.stats.showPanel(0)
+        document.getElementById('stats-panel').appendChild(this.game.stats.dom)
     },
 
     update: function() {
+        this.game.stats.begin()
+
         if (this.game.store.getState().game.resetEventsFlag) {
             this.game.store.dispatch(actions.game.setResetEventsFlag(false))
             CreateKeyboardBindings.call(this)
@@ -141,6 +150,8 @@ Deathmatch.prototype = {
         RotateBulletsToTrajectory.call(this)
         UpdateHurtBorder.call(this)
         UpdatePlayerPosition.call(this)
+
+        this.game.stats.end()
     },
 
     render() {
