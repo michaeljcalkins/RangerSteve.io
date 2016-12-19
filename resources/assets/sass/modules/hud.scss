@@ -131,7 +131,7 @@
 
 .hud-network-stats {
     position: absolute;
-    bottom: 100px;
+    bottom: 125px;
     right: 5px;
     padding: 10px;
     font-size: 12px;
@@ -143,6 +143,12 @@
     td {
         padding: 3px;
     }
+}
+
+#stats-panel {
+    position: absolute;
+    right: 5px;
+    bottom: 70px;
 }
 
 @-webkit-keyframes killingSpree {
