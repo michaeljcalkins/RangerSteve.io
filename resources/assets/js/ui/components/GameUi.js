@@ -10,6 +10,7 @@ import HudChangeWeaponsButton from './Hud/HudChangeWeaponsButton'
 import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
 import HudLeaderboard from './Hud/HudLeaderboard'
+import HudStatsGraph from './Hud/HudStatsGraph'
 import SettingsModal from './SettingsModal/SettingsModal'
 import LeaderboardModal from './LeaderboardModal/LeaderboardModal'
 import RespawnModal from './RespawnModal/RespawnModal'
@@ -185,6 +186,7 @@ export default class GameUi extends React.Component {
                 { window.RS && window.RS.networkStats &&
                     <NetworkStats stats={window.RS.networkStats} />
                 }
+                <HudStatsGraph id="stats-panel" />
             </div>
         )
     }
