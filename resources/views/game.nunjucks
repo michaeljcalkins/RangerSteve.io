@@ -52,7 +52,9 @@
     </head>
     <body class="game" oncontextmenu="return false">
         <div id="ui-app"></div>
-        <div id="game"></div>
+        <div id="game">
+            <div id="stats-panel"></div>
+        </div>
 
         <script src="/js/phaser.min.js"></script>
         <script src="/js/phaser-arcade-slopes.min.js"></script>

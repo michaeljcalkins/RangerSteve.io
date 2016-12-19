@@ -11,6 +11,16 @@ body.game {
     overflow: hidden;
 }
 
+#stats-panel {
+    position: absolute;
+    right: 5px;
+    bottom: 200px;
+
+    > div {
+        position: static !important;
+    }
+}
+
 .option-heading {
     font-size: 22px;
     font-family: Bangers;
