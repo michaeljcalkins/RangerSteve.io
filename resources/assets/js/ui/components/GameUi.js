@@ -2,6 +2,7 @@
 import React from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
+import cs from 'classnames'
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudAnnouncement from './Hud/HudAnnouncement'
@@ -19,7 +20,24 @@ import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNic
 import NetworkStats from './NetworkStats/NetworkStats'
 
 export default class GameUi extends React.Component {
-    props: Props
+    static props = {
+        game: Object,
+        onCloseChatModal: Function,
+        onCloseSettingsModal: Function,
+        onKeyboardControlChange: Function,
+        onNicknameChange: Function,
+        onOpenChatModal: Function,
+        onOpenSettingsModal: Function,
+        onPrimaryWeaponIdChange: Function,
+        onQualityChange: Function,
+        onReduceToMaxChatMessages: Function,
+        onSecondaryWeaponIdChange: Function,
+        onSetResetEventsFlag: Function,
+        onSettingsViewChange: Function,
+        onSfxVolumeChange: Function,
+        player: Object,
+        room: Object,
+    }
 
     constructor(props) {
         super(props)
@@ -126,8 +144,13 @@ export default class GameUi extends React.Component {
             },
         } = this
 
+        const mainMenuButtonClasses = cs('hud-main-menu-button hud-item', {
+            'is-electron': window.IS_ELECTRON
+        })
+
         return (
             <div>
+                <a className={ mainMenuButtonClasses } href="/">Back to Main Menu</a>
                 <HudKillLog messages={ game.killLogMessages } />
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
                 <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
@@ -190,23 +213,4 @@ export default class GameUi extends React.Component {
             </div>
         )
     }
-}
-
-type Props = {
-    game: Object,
-    onCloseChatModal: Function,
-    onCloseSettingsModal: Function,
-    onKeyboardControlChange: Function,
-    onNicknameChange: Function,
-    onOpenChatModal: Function,
-    onOpenSettingsModal: Function,
-    onPrimaryWeaponIdChange: Function,
-    onQualityChange: Function,
-    onReduceToMaxChatMessages: Function,
-    onSecondaryWeaponIdChange: Function,
-    onSetResetEventsFlag: Function,
-    onSettingsViewChange: Function,
-    onSfxVolumeChange: Function,
-    player: Object,
-    room: Object,
 }
