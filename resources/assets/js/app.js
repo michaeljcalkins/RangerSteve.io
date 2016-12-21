@@ -6,6 +6,7 @@ import ui from './ui'
 import game from './game'
 import checkForIframeAndRedirect from './lib/checkForIframeAndRedirect'
 
+window.IS_ELECTRON = window && window.process && window.process.type
 checkForIframeAndRedirect()
 const store = createStore(rootReducer)
 

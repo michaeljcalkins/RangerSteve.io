@@ -43,6 +43,29 @@
     z-index: 1000000001; /* needs to be higher than z-index for .modal */
 }
 
+.hud-main-menu-button {
+    background: rgba(0, 0, 0, .4) 8px 6px;
+    font-size: 11px;
+    border: 0;
+    cursor: pointer;
+    padding: 5px 10px;
+    left: 5px;
+    top: 5px;
+    height: auto;
+    width: 140px;
+    text-align: center;
+    z-index: 1000000001; /* needs to be higher than z-index for .modal */
+
+    &:hover {
+        color: white;
+        text-decoration: none;
+    }
+}
+
+.hud-main-menu-button.is-electron {
+    left: 80px;
+}
+
 .hud-keyboard-controls-button {
     background: url(/images/icons/keyboard-2-48.png) rgba(0, 0, 0, .4) 8px 6px no-repeat;
     background-size: 20px;
@@ -113,7 +136,7 @@
 
 .hud-kill-log {
     position: absolute;
-    top: 5px;
+    top: 45px;
     left: 5px;
 
     li {

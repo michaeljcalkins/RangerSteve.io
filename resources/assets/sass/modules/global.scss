@@ -76,3 +76,14 @@ section {
 .table-middle > tbody > tr > td {
     vertical-align: middle;
 }
+
+.electron-drag-region {
+    -webkit-app-region: drag;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    opacity: 0;
+}
