@@ -206,7 +206,6 @@ function onMessageSend(data) {
     const player = getPlayerById(roomId, this.id, rooms)
 
     const newMessage = filter.clean(data.substr(0, GameConsts.MAX_CHAT_MESSAGE_LENGTH))
-    console.log('newMessage', newMessage)
     rooms[roomId].messages.push([
         player.meta.nickname.substr(0, GameConsts.MAX_NICKNAME_LENGTH),
         newMessage,
