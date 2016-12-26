@@ -10,7 +10,7 @@ export default function() {
             ! bullet.weaponId ||
             ! window.SOCKET_ID ||
             state.player.health <= 0 ||
-            state.room.players[bullet.playerId].meta.team === state.room.players[window.SOCKET_ID].meta.team
+            state.room.players[bullet.playerId].data.team === state.room.players[window.SOCKET_ID].data.team
         ) return
 
         bullet.kill()

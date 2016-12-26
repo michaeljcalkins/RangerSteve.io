@@ -3,7 +3,7 @@
 {% block title %}Credits{% endblock %}
 
 {% block head %}
-<meta property="og:url" content="https://rangersteve.io/credits">
+<data property="og:url" content="https://rangersteve.io/credits">
 <link rel="canonical" href="https://rangersteve.io/credits">
 {% endblock %}
 

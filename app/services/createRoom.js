@@ -25,7 +25,7 @@ module.exports = function(data) {
 
     if (gamemodeId === 'TeamDeathmatch') {
         Object.keys(players).forEach(playerId => {
-            players[playerId].meta.team = getTeam(players, 0, 0)
+            players[playerId].team = getTeam(players, 0, 0)
         })
     }
 

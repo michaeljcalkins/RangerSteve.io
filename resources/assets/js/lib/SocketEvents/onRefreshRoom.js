@@ -1,4 +1,5 @@
 import includes from 'lodash/includes'
+import find from 'lodash/find'
 
 import actions from 'actions'
 import PlayerById from'../PlayerById'
@@ -12,7 +13,13 @@ function isNotMoving(player) {
 
 export default function onRefreshRoom(data) {
     const store = this.game.store
-    store.dispatch(actions.room.setRoom(data))
+
+    const newRoomState = {
+        ...store.room,
+        state: data.state,
+    }
+
+    store.dispatch(actions.room.setRoom(newRoomState))
 
     if (
         includes(['Boot', 'Preloader'], this.game.state.current) ||
@@ -20,39 +27,29 @@ export default function onRefreshRoom(data) {
     ) return
 
     // Players should only be allowed to move when the room state is active
-    if (data.state !== 'active') {
-        this.game.paused = true
-    } else {
-        this.game.paused = false
-    }
+    this.game.paused = data.state !== 'active'
 
-    // 1. check for players that do not exist anymore
+    // 1. Check for players that do not exist anymore
     if (RS.enemies) {
         RS.enemies.forEach((player, index) => {
-            if (data.players[player.id]) return
-
-            // console.log('Removing', player.id)
-            RS.enemies.removeChildAt(index)
+            const enemy = find(data.players, { id: player.id })
+            if (enemy) return RS.enemies.removeChildAt(index)
             player.destroy(true)
         })
     }
 
-    Object.keys(data.players).forEach((playerId) => {
-        const playerData = data.players[playerId]
-
-        if (playerId === window.SOCKET_ID) {
-            store.dispatch(actions.player.setHealth(playerData.meta.health))
+    data.players.forEach((playerData) => {
+        if (playerData.id === window.SOCKET_ID) {
             return
         }
 
-        let player = PlayerById.call(this, playerId)
+        let player = PlayerById.call(this, playerData.id)
 
         // 2. if player is not found create them and continue
         if (! player) {
-            // console.log('Creating', playerId)
             let newRemotePlayer = RemotePlayer.call(this, playerData)
-            let enemyPlayerName = playerData.meta.nickname
-                ? playerData.meta.nickname
+            let enemyPlayerName = playerData.nickname
+                ? playerData.nickname
                 : 'Unnamed Ranger'
 
             const style = {
@@ -67,23 +64,24 @@ export default function onRefreshRoom(data) {
             text.x = (text.width / 2) * -1
             text.smoothed = true
 
-            if (playerData.meta.health <= 0) {
+            if (playerData.health <= 0) {
                 newRemotePlayer.visible = false
             }
 
             RS.enemies.add(newRemotePlayer)
-            player = PlayerById.call(this, playerId)
+            player = PlayerById.call(this, playerData.id)
+            player.data = {}
             this.game.world.bringToTop(RS.enemies)
         }
 
-        if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
-
-
+        // if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
         player.visible = true
-        player.meta.health = playerData.meta.health
+        player.data.health = playerData.health
+        player.data.weaponId = playerData.weaponId
+        player.data.team = playerData.team
 
         // 3. update the player
-        if (playerData.meta.health <= 0) {
+        if (playerData.health <= 0) {
             player.visible = false
             return
         }
@@ -94,20 +92,16 @@ export default function onRefreshRoom(data) {
             y: playerData.y,
         }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
 
-
-
         // Control jump jet visibility
         player.rightJumpjet.visible = playerData.flying
         player.leftJumpjet.visible = playerData.flying
 
-        player.meta.weaponId = playerData.weaponId
-
         // Control muzzle flash visibility
-        if (GameConsts.WEAPONS[playerData.meta.weaponId]) {
+        if (GameConsts.WEAPONS[playerData.weaponId]) {
             if (playerData.shooting) {
-                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].shootingFrame
+                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.weaponId].shootingFrame
             } else {
-                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].frame
+                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.weaponId].frame
             }
         }
 

@@ -57,9 +57,9 @@ export default class Leaderboard extends Component {
         if (! room.players) return null
 
         return values(room.players)
-            .sort((a, b) => a.meta.score < b.meta.score)
+            .sort((a, b) => a.data.score < b.data.score)
             .map((player, key) => {
-                const { meta: { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger' }, id } = player
+                const { data: { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger' }, id } = player
                 const kdRatio = deaths > 0 ? (kills / deaths) : kills
                 const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
                 const classes = cs({
@@ -89,9 +89,9 @@ export default class Leaderboard extends Component {
         if (! room.players) return null
 
         const players = values(room.players)
-            .sort((a, b) => a.meta.score < b.meta.score)
+            .sort((a, b) => a.data.score < b.data.score)
 
-        return get(players, '[0].meta.nickname')
+        return get(players, '[0].data.nickname')
     }
 
     renderPlayerAchievement(playerMeta, award) {

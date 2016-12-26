@@ -2,20 +2,20 @@
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" lang="en-us" content="Explosive multiplayer shooter em' up that lets you instantly play with your friends.">
-    <meta itemprop="name" content="RangerSteve.io">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <data name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <data name="description" lang="en-us" content="Explosive multiplayer shooter em' up that lets you instantly play with your friends.">
+    <data itemprop="name" content="RangerSteve.io">
+    <data name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <meta property="og:title" content="RangerSteve.io">
-    <meta property="og:site_name" content="RangerSteve.io">
-    <meta property="og:description" content="Explosive multiplayer shooter em' up that lets you instantly play with your friends.">
-    <meta property="og:image" content="https://rangersteve.io/images/ogimage.png">
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="700" />
-    <meta property="og:image:height" content="262" />
-    <meta property="og:url" content="https://rangersteve.io" />
-    <meta property="og:type" content="website" />
+    <data property="og:title" content="RangerSteve.io">
+    <data property="og:site_name" content="RangerSteve.io">
+    <data property="og:description" content="Explosive multiplayer shooter em' up that lets you instantly play with your friends.">
+    <data property="og:image" content="https://rangersteve.io/images/ogimage.png">
+    <data property="og:image:type" content="image/png" />
+    <data property="og:image:width" content="700" />
+    <data property="og:image:height" content="262" />
+    <data property="og:url" content="https://rangersteve.io" />
+    <data property="og:type" content="website" />
 
     <link rel="manifest" href="/manifest.json">
     <link rel="shortcut icon" href="/images/favicon.ico">
