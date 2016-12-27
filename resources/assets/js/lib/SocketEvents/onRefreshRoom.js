@@ -14,13 +14,7 @@ function isNotMoving(player) {
 export default function onRefreshRoom(data) {
     const store = this.game.store
 
-    const newRoomState = {
-        ...store.room,
-        state: data.state,
-        players: data.players,
-    }
-
-    store.dispatch(actions.room.setRoom(newRoomState))
+    store.dispatch(actions.room.setState(data.state))
 
     if (
         includes(['Boot', 'Preloader'], this.game.state.current) ||

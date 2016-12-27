@@ -44,7 +44,7 @@ export function HudLeaderboard({
                             style={ { width: '20px' } }
                             title="Player's current score"
                         >
-                            { player.score }
+                            { player.score || 0 }
                         </td>
                     </tr>
                 )

@@ -91,7 +91,7 @@ gameloop.setGameLoop(function() {
                 team: rooms[roomId].players[playerId].team,
                 weaponId: rooms[roomId].players[playerId].weaponId,
                 x: rooms[roomId].players[playerId].x,
-                y: rooms[roomId].players[playerId].y
+                y: rooms[roomId].players[playerId].y,
             }
         })
 
@@ -178,23 +178,12 @@ function onPlayerRespawn() {
     player.health = GameConsts.PLAYER_FULL_HEALTH
 
     const data = { id: this.id }
-    // const buffer = playerIdSchema.encode(data)
     Server.sendToRoom(
         roomId,
         GameConsts.EVENT.PLAYER_RESPAWN,
         data
     )
 }
-
-// function onLoadComplete(data) {
-//     Server.sendToRoom(
-//         data.roomId,
-//         GameConsts.EVENT.UPDATE_PLAYERS,
-//         {
-//             room: rooms[data.roomId],
-//         }
-//     )
-// }
 
 function onKickPlayer(data) {
     let players = _.values(rooms[data.roomId].players)
@@ -398,6 +387,7 @@ function onClientDisconnect() {
 function onPlayerFullHealth(data) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
     let player = getPlayerById(roomId, this.id, rooms)
+    if (! player) return
     player.health = GameConsts.PLAYER_FULL_HEALTH
 
     Server.sendToSocket(
@@ -472,25 +462,33 @@ function onPlayerDamaged(data) {
                 attackingPlayer.bestKillingSpree = attackingPlayer.killingSpree
             }
 
-            Server.sendToSocket(
-                this.id,
-                GameConsts.EVENT.PLAYER_KILL_CONFIRMED,
-                {
-                    id: attackingPlayer.id,
-                    damagedPlayerId: data.damagedPlayerId,
-                    killingSpree: attackingPlayer.killingSpree,
-                    wasHeadshot: data.wasHeadshot,
+            const playerScores = Object.keys(rooms[roomId].players).map(function(playerId) {
+                return {
+                    bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
+                    bulletsFired: rooms[roomId].players[playerId].bulletsFired,
+                    bulletsHit: rooms[roomId].players[playerId].bulletsHit,
+                    deaths: rooms[roomId].players[playerId].deaths,
+                    headshots: rooms[roomId].players[playerId].headshots,
+                    id: playerId,
+                    killingSpree: rooms[roomId].players[playerId].killingSpree,
+                    kills: rooms[roomId].players[playerId].kills,
+                    score: rooms[roomId].players[playerId].score,
+                    secondsInRound: rooms[roomId].players[playerId].secondsInRound,
                 }
-            )
+            })
 
             Server.sendToRoom(
                 roomId,
                 GameConsts.EVENT.PLAYER_KILL_LOG,
                 {
-                    deadNickname: player.nickname,
                     attackerNickname: attackingPlayer.nickname,
-                    weaponId: data.weaponId,
+                    damagedPlayerId: data.damagedPlayerId,
+                    deadNickname: player.nickname,
+                    id: attackingPlayer.id,
+                    killingSpree: attackingPlayer.killingSpree,
                     wasHeadshot: data.wasHeadshot,
+                    weaponId: data.weaponId,
+                    playerScores: playerScores
                 }
             )
         } else {

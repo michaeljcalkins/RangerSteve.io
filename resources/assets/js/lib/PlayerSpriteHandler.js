@@ -121,11 +121,8 @@ export default function PlayerSpriteHandler() {
 
     updatePlayerAngles.call(this, RS.player, 200)
 
-    const blue = 0x2578FF
-    const red = 0xFF2525
-
     const playerState = find(state.room.players, { id: window.SOCKET_ID })
-    if (playerState.team) updatePlayerColor(RS.player, playerState.team)
+    if (playerState && playerState.team) updatePlayerColor(RS.player, playerState.team)
     RS.player.data = playerState
 
     /**
