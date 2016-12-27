@@ -1,6 +1,8 @@
 const initialState = {
-    roundEndTime: 0,
     announcement: '',
+    players: [],
+    roundEndTime: 0,
+    state: null,
 }
 
 const room = (state = initialState, action) => {

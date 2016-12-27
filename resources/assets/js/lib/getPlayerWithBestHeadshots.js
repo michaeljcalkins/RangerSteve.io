@@ -1,10 +1,9 @@
-import find from 'lodash/find'
 import get from 'lodash/get'
 
 export default function(room) {
     let bestPlayer = false
-    room.players.forEach((player) => {
-        const selectedPlayer = find(room.players, { id: player.id })
+    Object.keys(room.players).forEach(playerId => {
+        const selectedPlayer = room.players[playerId]
         if (selectedPlayer.headshots > get(bestPlayer, 'headshots', 0)) {
             bestPlayer = selectedPlayer
         }

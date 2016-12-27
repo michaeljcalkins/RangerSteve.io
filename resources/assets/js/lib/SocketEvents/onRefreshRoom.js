@@ -14,7 +14,19 @@ function isNotMoving(player) {
 export default function onRefreshRoom(data) {
     const store = this.game.store
 
-    store.dispatch(actions.room.setState(data.state))
+    const room = store.getState().room
+    room.state = data.state
+
+    Object.keys(data.players).forEach(playerId => {
+        if (! data.players[playerId]) return
+
+        room.players[playerId] = {
+            ...room.players[playerId],
+            ...data.players[playerId],
+        }
+    })
+
+    store.dispatch(actions.room.setRoom(room))
 
     if (
         includes(['Boot', 'Preloader'], this.game.state.current) ||
@@ -27,16 +39,19 @@ export default function onRefreshRoom(data) {
     // 1. Check for players that do not exist anymore
     if (RS.enemies) {
         RS.enemies.forEach((player, index) => {
-            const enemy = find(data.players, { id: player.id })
+            const enemy = data.players[player.id]
             if (enemy) return RS.enemies.removeChildAt(index)
             player.destroy(true)
         })
     }
 
-    data.players.forEach((playerData) => {
-        if (playerData.id === window.SOCKET_ID) return
+    Object.keys(data.players).forEach(playerId => {
+        if (playerId === window.SOCKET_ID) return
 
-        let player = PlayerById.call(this, playerData.id)
+        const playerData = data.players[playerId]
+        if (! playerData) return
+
+        let player = PlayerById.call(this, playerId)
 
         // 2. if player is not found create them and continue
         if (! player) {
@@ -61,13 +76,14 @@ export default function onRefreshRoom(data) {
                 newRemotePlayer.visible = false
             }
 
+            newRemotePlayer.data = { id: playerId }
             RS.enemies.add(newRemotePlayer)
-            player = PlayerById.call(this, playerData.id)
-            player.data = {}
+            player = PlayerById.call(this, playerId)
             this.game.world.bringToTop(RS.enemies)
         }
 
-        // if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
+        if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
+        player.data.id = playerId
         player.data.health = playerData.health
         player.data.weaponId = playerData.weaponId
         player.data.team = playerData.team

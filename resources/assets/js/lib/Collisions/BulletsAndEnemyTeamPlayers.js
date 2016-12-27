@@ -45,7 +45,7 @@ export default function() {
         emitPlayerDamaged.call(this, {
             damage: bulletDamage,
             weaponId: state.player[currentWeapon].id,
-            damagedPlayerId: enemy.id,
+            damagedPlayerId: enemy.data.id,
             attackingPlayerId: window.SOCKET_ID,
             wasHeadshot,
         })

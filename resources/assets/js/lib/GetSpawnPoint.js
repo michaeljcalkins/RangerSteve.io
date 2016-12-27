@@ -12,7 +12,7 @@ export default function GetSpawnPoint(spawnPoints, enemies) {
 function filterSpawnPointsBasedOnEnemyPositions(spawnPoints, enemies) {
     const possibleSpawnPoints = [...spawnPoints]
 
-    enemies.forEach((enemy) => {
+    enemies.forEach(enemy => {
         remove(possibleSpawnPoints, (possibleSpawnPoint) => {
             const distanceBetweenEnemyAndSpawnPoint = Phaser.Math.distance(
                 enemy.x, enemy.y,

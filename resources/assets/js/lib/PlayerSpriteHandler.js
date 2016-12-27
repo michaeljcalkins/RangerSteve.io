@@ -1,5 +1,3 @@
-import find from 'lodash/find'
-
 import GameConsts from 'lib/GameConsts'
 import Maps from './Maps'
 import actions from '../actions'
@@ -121,7 +119,7 @@ export default function PlayerSpriteHandler() {
 
     updatePlayerAngles.call(this, RS.player, 200)
 
-    const playerState = find(state.room.players, { id: window.SOCKET_ID })
+    const playerState = state.room.players[window.SOCKET_ID]
     if (playerState && playerState.team) updatePlayerColor(RS.player, playerState.team)
     RS.player.data = playerState
 

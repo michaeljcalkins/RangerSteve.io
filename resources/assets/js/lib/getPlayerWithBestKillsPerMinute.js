@@ -1,4 +1,3 @@
-import find from 'lodash/find'
 import get from 'lodash/get'
 
 export default function(room) {
@@ -7,8 +6,8 @@ export default function(room) {
     // 180 / 60 = 3 minutes
     // 4 kills / 3 minutes
     let bestPlayer = false
-    room.players.forEach((player) => {
-        const selectedPlayer = find(room.players, { id: player.id })
+    Object.keys(room.players).forEach(playerId => {
+        const selectedPlayer = room.players[playerId]
         if (selectedPlayer.secondsInRound < 60) return
 
         const minutesInRound = selectedPlayer.secondsInRound / 60

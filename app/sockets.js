@@ -78,15 +78,15 @@ gameloop.setGameLoop(function() {
     Object.keys(rooms).forEach((roomId) => {
         const roomData = {
             state: rooms[roomId].state,
+            players: {},
         }
 
-        roomData.players = Object.keys(rooms[roomId].players).map(function(playerId) {
-            return {
+        Object.keys(rooms[roomId].players).forEach(function(playerId) {
+            roomData.players[playerId] = {
                 angle: rooms[roomId].players[playerId].angle || 0,
                 flying: rooms[roomId].players[playerId].flying || false,
                 health: rooms[roomId].players[playerId].health,
                 nickname: rooms[roomId].players[playerId].nickname,
-                id: playerId,
                 shooting: rooms[roomId].players[playerId].shooting || false,
                 team: rooms[roomId].players[playerId].team,
                 weaponId: rooms[roomId].players[playerId].weaponId,
@@ -144,10 +144,29 @@ setInterval(function() {
                 rooms[roomId].players[playerId].secondsInRound = 0
             })
 
+            const roomData = {
+                state: rooms[roomId].state,
+            }
+
+            roomData.players = Object.keys(rooms[roomId].players).map(function(playerId) {
+                return {
+                    angle: rooms[roomId].players[playerId].angle || 0,
+                    flying: rooms[roomId].players[playerId].flying || false,
+                    health: rooms[roomId].players[playerId].health,
+                    nickname: rooms[roomId].players[playerId].nickname, // TODO needs to be refactored to it's own event
+                    id: playerId,
+                    shooting: rooms[roomId].players[playerId].shooting || false,
+                    team: rooms[roomId].players[playerId].team, // TODO needs to be refactored to it's own event
+                    weaponId: rooms[roomId].players[playerId].weaponId, // TODO needs to be refactored to it's own event
+                    x: rooms[roomId].players[playerId].x,
+                    y: rooms[roomId].players[playerId].y,
+                }
+            })
+
             Server.sendToRoom(
                 roomId,
                 GameConsts.EVENT.LOAD_GAME,
-                rooms[roomId]
+                roomData
             )
             return
         }
@@ -414,8 +433,8 @@ function onPlayerHealing() {
 
 function onPlayerDamaged(data) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
+    console.log(data)
     let player = getPlayerById(roomId, data.damagedPlayerId, rooms)
-
     if (! player || player.health <= 0) return
 
     player.health -= Number(data.damage)
@@ -437,6 +456,8 @@ function onPlayerDamaged(data) {
         if (data.wasHeadshot) attackingPlayer.headshots++
     }
 
+    console.log(data)
+
     // Player was killed when shot
     if (player.health <= 0) {
         player.health = 0
@@ -450,32 +471,30 @@ function onPlayerDamaged(data) {
             attackingPlayer.killingSpree++
             attackingPlayer.damageInflicted += Number(data.damage)
 
-            if (player.team === 'red') {
-                rooms[roomId].blueTeamScore += 10
-            }
-
-            if (player.team === 'blue') {
-                rooms[roomId].redTeamScore += 10
-            }
+            if (player.team === 'red') rooms[roomId].blueTeamScore += 10
+            if (player.team === 'blue') rooms[roomId].redTeamScore += 10
 
             if (attackingPlayer.killingSpree > attackingPlayer.bestKillingSpree) {
                 attackingPlayer.bestKillingSpree = attackingPlayer.killingSpree
             }
 
-            const playerScores = Object.keys(rooms[roomId].players).map(function(playerId) {
-                return {
-                    bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
-                    bulletsFired: rooms[roomId].players[playerId].bulletsFired,
-                    bulletsHit: rooms[roomId].players[playerId].bulletsHit,
-                    deaths: rooms[roomId].players[playerId].deaths,
-                    headshots: rooms[roomId].players[playerId].headshots,
-                    id: playerId,
-                    killingSpree: rooms[roomId].players[playerId].killingSpree,
-                    kills: rooms[roomId].players[playerId].kills,
-                    score: rooms[roomId].players[playerId].score,
-                    secondsInRound: rooms[roomId].players[playerId].secondsInRound,
+            const playerScores = {}
+
+            Object.keys(rooms[roomId].players).forEach(function(playerId) {
+                playerScores[playerId] = {
+                    angle: rooms[roomId].players[playerId].angle || 0,
+                    flying: rooms[roomId].players[playerId].flying || false,
+                    health: rooms[roomId].players[playerId].health,
+                    nickname: rooms[roomId].players[playerId].nickname,
+                    shooting: rooms[roomId].players[playerId].shooting || false,
+                    team: rooms[roomId].players[playerId].team,
+                    weaponId: rooms[roomId].players[playerId].weaponId,
+                    x: rooms[roomId].players[playerId].x,
+                    y: rooms[roomId].players[playerId].y,
                 }
             })
+
+            console.log(playerScores)
 
             Server.sendToRoom(
                 roomId,
@@ -488,7 +507,7 @@ function onPlayerDamaged(data) {
                     killingSpree: attackingPlayer.killingSpree,
                     wasHeadshot: data.wasHeadshot,
                     weaponId: data.weaponId,
-                    playerScores: playerScores
+                    playerScores: playerScores,
                 }
             )
         } else {
@@ -537,6 +556,7 @@ function onPlayerDamaged(data) {
         return
     }
 
+    console.log('test')
     Server.sendToRoom(
         roomId,
         GameConsts.EVENT.PLAYER_DAMAGED,

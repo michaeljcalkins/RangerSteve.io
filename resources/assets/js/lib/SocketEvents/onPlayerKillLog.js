@@ -1,17 +1,10 @@
-// @flow
-import find from 'lodash/find'
-
 import actions from 'actions'
 import PlayKillingSpreeSound from '../PlayKillingSpreeSound'
 
 let killConfirmedHandle = null
 let lastKillingSpreeCount = 0
 
-export default function onPlayerKillLog(data: {
-    deadNickname: string,
-    attackerNickname: string,
-    weaponId: string,
-}) {
+export default function onPlayerKillLog(data) {
     const store = this.game.store
 
     /**
@@ -51,20 +44,17 @@ export default function onPlayerKillLog(data: {
     /**
      * Update player scores
      */
+    if (! data.players) return
     const room = store.getState().room
-    room.players.forEach(player => {
-        const playerScore = find(data.playerScores, { id: player.id })
-        if (! playerScore) return
+    room.state = data.state
 
-        player.bestKillingSpree = playerScore.bestKillingSpree
-        player.bulletsFired = playerScore.bulletsFired
-        player.bulletsHit = playerScore.bulletsHit
-        player.deaths = playerScore.deaths
-        player.headshots = playerScore.headshots
-        player.killingSpree = playerScore.killingSpree
-        player.kills = playerScore.kills
-        player.score = playerScore.score
-        player.secondsInRound = playerScore.secondsInRound
+    Object.keys(data.players).forEach(playerId => {
+        if (! data.playerScores[playerId]) return
+
+        room.players[playerId] = {
+            ...room.players[playerId],
+            ...data.playerScores[playerId],
+        }
     })
 
     store.dispatch(actions.room.setRoom(room))

@@ -8,7 +8,8 @@ export default function() {
 
     // Did enemy bullets hit you
     this.game.physics.arcade.overlap(RS.player, RS.enemyBullets, (player, bullet) => {
-        const enemy = find(state.room.players, { id: bullet.data.playerId })
+        const enemy = state.room.players[bullet.data.playerId]
+
         if (
             ! bullet.weaponId ||
             ! window.SOCKET_ID ||
