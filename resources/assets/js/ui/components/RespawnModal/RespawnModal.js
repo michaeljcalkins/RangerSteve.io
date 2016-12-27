@@ -186,10 +186,8 @@ export class RespawnModal extends React.PureComponent {
         })
 
         return (
-            <div
-                className="modal modal-respawn"
-                style={ { display: 'block' } }
-            >
+            <div>
+                <div className="modal modal-respawn show">
                     <div className="modal-dialog">
                         <div className={ modalContentClasses }>
                             <div className="modal-header">
@@ -226,6 +224,8 @@ export class RespawnModal extends React.PureComponent {
                         </div>
                     </div>
                 </div>
+                <div className="modal-backdrop show" />
+            </div>
         )
     }
 }

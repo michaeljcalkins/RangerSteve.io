@@ -171,10 +171,7 @@ export default class LeaderboardModal extends React.PureComponent {
 
         return (
             <div>
-                <div
-                    className="modal modal-leaderboard"
-                    style={ { display: 'block' } }
-                >
+                <div className="modal modal-leaderboard show">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -220,10 +217,7 @@ export default class LeaderboardModal extends React.PureComponent {
                         </div>
                     </div>
                 </div>
-                <div
-                    className="modal-backdrop"
-                    style={ { display: 'block' } }
-                 />
+                <div className="modal-backdrop show" />
             </div>
         )
     }
