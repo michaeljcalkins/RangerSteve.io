@@ -155,8 +155,10 @@ export default class GameUi extends React.PureComponent {
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
                 <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
                 <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />
-                <HudLeaderboard room={ room } />
-                <HudAnnouncement announcement={ room.announcement } />
+                <HudLeaderboard players={ room.players } gamemode={ room.gamemode } />
+                { room.announcement &&
+                    <HudAnnouncement announcement={ room.announcement }/>
+                }
                 <HudChatHistory
                     isOpen={ game.chatModalIsOpen }
                     messages={ game.chatMessages }
@@ -165,11 +167,7 @@ export default class GameUi extends React.PureComponent {
                 />
 
                 { this.isLeaderboardModalOpen() &&
-                    <LeaderboardModal
-                        players={ room.players }
-                        room={ room }
-                        roundStartTime={ room.roundStartTime }
-                    />
+                    <LeaderboardModal room={ room } />
                 }
 
                 { player.health <= 0 && room.state !== 'ended' &&
@@ -180,21 +178,21 @@ export default class GameUi extends React.PureComponent {
                     />
                 }
 
-                <SettingsModal
-                    game={ game }
+                    <SettingsModal
+                        game={ game }
                     isOpen={ game.settingsModalIsOpen }
-                    onClose={ onCloseSettingsModal }
-                    onKeyboardControlChange={ props.onKeyboardControlChange }
-                    onNicknameChange={ this.handleNicknameChange }
-                    onPrimaryGunClick={ this.handlePrimaryGunClick }
-                    onQualityChange={ this.handleQualityChange }
-                    onRespawnChange={ props.onSetAutoRespawn }
-                    onSecondaryGunClick={ this.handleSecondaryGunClick }
-                    onSetResetEventsFlag={ props.onSetResetEventsFlag }
-                    onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
-                    onViewChange={ onSettingsViewChange }
-                    player={ player }
-                />
+                        onClose={ onCloseSettingsModal }
+                        onKeyboardControlChange={ props.onKeyboardControlChange }
+                        onNicknameChange={ this.handleNicknameChange }
+                        onPrimaryGunClick={ this.handlePrimaryGunClick }
+                        onQualityChange={ this.handleQualityChange }
+                        onRespawnChange={ props.onSetAutoRespawn }
+                        onSecondaryGunClick={ this.handleSecondaryGunClick }
+                        onSetResetEventsFlag={ props.onSetResetEventsFlag }
+                        onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
+                        onViewChange={ onSettingsViewChange }
+                        player={ player }
+                    />
 
                 { (
                     (player.health <= 0 && room.state !== 'ended') ||

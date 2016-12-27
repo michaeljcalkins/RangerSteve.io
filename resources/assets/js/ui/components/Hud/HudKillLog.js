@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react'
 
 import GameConsts from 'lib/GameConsts'
 
-export default function HudKillLog({
-    messages,
-}) {
-    function renderMessages() {
+export default class HudKillLog extends React.PureComponent {
+    renderMessages() {
+        const { messages } = this.props
+
         return messages.slice(-5).map(function(message, index) {
             const selectedWeapon = GameConsts.WEAPONS[message.weaponId]
             const attackingPlayerNickname = message.attackerNickname ? message.attackerNickname : 'Unnamed Ranger'
@@ -37,13 +37,15 @@ export default function HudKillLog({
         })
     }
 
-    return (
-        <div className="hud-kill-log no-pointer-events">
-            <ul className="list-unstyled">
-                { renderMessages() }
-            </ul>
-        </div>
-    )
+    render() {
+        return (
+            <div className="hud-kill-log no-pointer-events">
+                <ul className="list-unstyled">
+                    { this.renderMessages() }
+                </ul>
+            </div>
+        )
+    }
 }
 
 HudKillLog.defaultProps = {

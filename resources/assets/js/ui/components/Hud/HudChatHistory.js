@@ -2,17 +2,12 @@ import React, { PropTypes } from 'react'
 
 import HudNewChatMessage from './HudNewChatMessage'
 
-export default function HudChatHistory({
-    isOpen,
-    messages,
-    newChatMessageCharacter,
-    onSendMessage,
-}) {
-    function renderMessages() {
-        let formattedMessages = []
+export default class HudChatHistory extends React.PureComponent {
+    renderMessages() {
+        const { messages, isOpen, newChatMessageCharacter } = this.props
 
         // Array: [nickname, message]
-        formattedMessages = messages.map((message, index) => {
+        const formattedMessages = messages.map((message, index) => {
             return (
                 <li className="dont-break-out" key={ 'chat-message' + index }>
                     <strong>{ message[0] }:</strong> { message[1] }
@@ -29,17 +24,22 @@ export default function HudChatHistory({
         return formattedMessages
     }
 
-    return (
-        <div className="hud-chat no-pointer-events">
-            <ul className="list-unstyled">
-                { renderMessages() }
-                <HudNewChatMessage
+    render() {
+        const { isOpen, onSendMessage } = this.props
+
+        return (
+            <div className="hud-chat no-pointer-events">
+                <ul className="list-unstyled">
+                    { this.renderMessages() }
+                        <HudNewChatMessage
                     isOpen={ isOpen }
-                    onSendMessage={ onSendMessage }
-                />
-            </ul>
-        </div>
-    )
+                            onSendMessage={ onSendMessage }
+                        />
+                    }
+                </ul>
+            </div>
+        )
+    }
 }
 
 HudChatHistory.defaultProps = {

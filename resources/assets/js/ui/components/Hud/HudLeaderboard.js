@@ -3,13 +3,12 @@ import values from 'lodash/values'
 import cs from 'classnames'
 import { connect } from 'react-redux'
 
-export function HudLeaderboard({
-    room,
-}) {
-    function renderPlayers() {
-        if (! room.players) return null
+export class HudLeaderboard extends React.PureComponent {
+    renderPlayers() {
+        const { players, gamemode } = this.props
+        if (! players) return null
 
-        return values(room.players)
+        return values(players)
             .sort((a, b) => a.meta.score < b.meta.score)
             .map(function(player) {
                 let playerNickname = player.meta.nickname
@@ -21,8 +20,8 @@ export function HudLeaderboard({
                     : null
 
                 const classes = cs({
-                    'text-red': player.meta.team === 'red' && room.gamemode === 'TeamDeathmatch',
-                    'text-blue': player.meta.team === 'blue' && room.gamemode === 'TeamDeathmatch',
+                    'text-red': player.meta.team === 'red' && gamemode === 'TeamDeathmatch',
+                    'text-blue': player.meta.team === 'blue' && gamemode === 'TeamDeathmatch',
                 })
 
                 return (
@@ -51,25 +50,29 @@ export function HudLeaderboard({
             })
     }
 
-    return (
-        <div className="hud-leaderboard hud-item no-pointer-events">
-            <h1>Scoreboard</h1>
-            <table className="table table-condensed">
-                <tbody>
-                    { renderPlayers() }
-                </tbody>
-            </table>
-        </div>
-    )
+    render() {
+        return (
+            <div className="hud-leaderboard hud-item no-pointer-events">
+                <h1>Scoreboard</h1>
+                <table className="table table-condensed">
+                    <tbody>
+                    { this.renderPlayers() }
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
 }
 
 HudLeaderboard.propTypes = {
-    room: PropTypes.object,
+    players: PropTypes.object,
+    gamemode: PropTypes.string,
 }
 
 const mapStateToProps = (state) => {
     return {
-        room: state.room,
+        players: state.room.players,
+        gamemode: state.room.gamemode,
     }
 }
 
