@@ -74,7 +74,6 @@ export default function onRefreshRoom(data) {
         }
 
         // if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
-        player.visible = true
         player.data.health = playerData.health
         player.data.weaponId = playerData.weaponId
         player.data.team = playerData.team
@@ -149,5 +148,6 @@ export default function onRefreshRoom(data) {
 
         player.lastPosition.x = player.x
         player.lastPosition.y = player.y
+        player.visible = playerData.health > 0
     })
 }
