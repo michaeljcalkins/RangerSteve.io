@@ -126,6 +126,7 @@ export default function PlayerSpriteHandler() {
 
     const playerState = find(state.room.players, { id: window.SOCKET_ID })
     if (playerState.team) updatePlayerColor(RS.player, playerState.team)
+    RS.player.data = playerState
 
     /**
      * Camera Settings

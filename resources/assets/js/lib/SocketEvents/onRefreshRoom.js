@@ -40,9 +40,7 @@ export default function onRefreshRoom(data) {
     }
 
     data.players.forEach((playerData) => {
-        if (playerData.id === window.SOCKET_ID) {
-            return
-        }
+        if (playerData.id === window.SOCKET_ID) return
 
         let player = PlayerById.call(this, playerData.id)
 

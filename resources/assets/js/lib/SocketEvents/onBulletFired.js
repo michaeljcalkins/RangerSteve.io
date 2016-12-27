@@ -1,24 +1,10 @@
 // @flow
 import includes from 'lodash/includes'
-// import schemapack from 'schemapack'
 
 import GameConsts from 'lib/GameConsts'
 let soundThrottle = false
 
-// var bulletSchema = schemapack.build({
-//     bulletId: 'string',
-//     x: 'varuint',
-//     y: 'varuint',
-//     pointerAngle: 'float32',
-//     bulletSpeed: 'varuint',
-//     playerId: 'string',
-//     damage: 'uint8',
-//     weaponId: 'string',
-// })
-
 export default function onBulletFired(data) {
-    // const data = bulletSchema.decode(buffer)
-
     const store = this.game.store
 
     if (includes(['Boot', 'Preloader'], this.game.state.current)) return
@@ -26,9 +12,11 @@ export default function onBulletFired(data) {
 
     let bullet = RS.enemyBullets.getFirstDead()
     bullet.reset(data.x, data.y)
-    bullet.bulletId = data.bulletId
-    bullet.playerId = data.playerId
-    bullet.damage = GameConsts.WEAPONS[data.weaponId].damage
+    bullet.data = {
+        bulletId: data.bulletId,
+        damage: GameConsts.WEAPONS[data.weaponId].damage,
+        playerId: data.playerId,
+    }
     bullet.rotation = data.pointerAngle
     bullet.weaponId = data.weaponId
     bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
