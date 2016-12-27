@@ -31,8 +31,8 @@ export default class HudChatHistory extends React.PureComponent {
             <div className="hud-chat no-pointer-events">
                 <ul className="list-unstyled">
                     { this.renderMessages() }
+                    { isOpen &&
                         <HudNewChatMessage
-                    isOpen={ isOpen }
                             onSendMessage={ onSendMessage }
                         />
                     }

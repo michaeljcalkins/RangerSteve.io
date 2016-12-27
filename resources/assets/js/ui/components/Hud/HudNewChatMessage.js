@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import autobind from 'react-autobind'
 
 import GameConsts from 'lib/GameConsts'
@@ -10,9 +9,12 @@ export default class HudNewChatMessage extends React.Component {
         autobind(this)
     }
 
+    componentDidMount() {
+        this.messageInput.focus();
+    }
+
     componentDidUpdate() {
-        if (this.props.isOpen)
-            ReactDOM.findDOMNode(this.refs.messageInput).focus()
+        this.messageInput.focus();
     }
 
     handleKeypressSendMessage(evt) {
@@ -21,21 +23,18 @@ export default class HudNewChatMessage extends React.Component {
     }
 
     handleSendMessage() {
-        this.props.onSendMessage(this.refs.messageInput.value)
-        this.refs.messageInput.value = ''
+        this.props.onSendMessage(this.messageInput.value)
+        this.messageInput.value = ''
     }
 
     render() {
-        if (! this.props.isOpen)
-            return null
-
         return (
             <li className="hud-chat-message">
                 <input
                     maxLength={ GameConsts.MAX_CHAT_MESSAGE_LENGTH }
                     onKeyPress={ this.handleKeypressSendMessage }
                     placeholder="Push enter to send..."
-                    ref="messageInput"
+                    ref={(input) => { this.messageInput = input }}
                     type="text"
                 />
             </li>
@@ -44,6 +43,5 @@ export default class HudNewChatMessage extends React.Component {
 }
 
 HudNewChatMessage.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
     onSendMessage: PropTypes.func.isRequired,
 }
