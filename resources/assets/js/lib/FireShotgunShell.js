@@ -66,8 +66,8 @@ export default function FireShotgunShell(currentWeaponId) {
             bulletId: bullet.bulletId,
             pointerAngle: socketPointerAngle,
             weaponId: currentWeaponId,
-            x: Math.abs(x),
-            y: Math.abs(y),
+            x: Math.max(0, x),
+            y: Math.max(0, y),
         })
     }
 
