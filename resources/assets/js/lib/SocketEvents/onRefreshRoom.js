@@ -17,6 +17,7 @@ export default function onRefreshRoom(data) {
     const newRoomState = {
         ...store.room,
         state: data.state,
+        players: data.players,
     }
 
     store.dispatch(actions.room.setRoom(newRoomState))

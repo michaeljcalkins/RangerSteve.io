@@ -1,8 +1,11 @@
+import find from 'lodash/find'
+
 import GameConsts from 'lib/GameConsts'
 import Maps from './Maps'
 import actions from '../actions'
 import GetSpawnPoint from './GetSpawnPoint'
 import updatePlayerAngles from './updatePlayerAngles'
+import updatePlayerColor from './updatePlayerColor'
 
 export default function PlayerSpriteHandler() {
     const state = this.game.store.getState()
@@ -117,6 +120,12 @@ export default function PlayerSpriteHandler() {
     RS.player.anchor.set(0.5)
 
     updatePlayerAngles.call(this, RS.player, 200)
+
+    const blue = 0x2578FF
+    const red = 0xFF2525
+
+    const playerState = find(state.room.players, { id: window.SOCKET_ID })
+    if (playerState.team) updatePlayerColor(RS.player, playerState.team)
 
     /**
      * Camera Settings
