@@ -1,5 +1,5 @@
 import autobind from 'react-autobind'
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import values from 'lodash/values'
 import get from 'lodash/get'
 import cs from 'classnames'
@@ -13,7 +13,7 @@ import getPlayerWithBestKillsPerMinute from '../../../lib/getPlayerWithBestKills
 
 const { object } = PropTypes
 
-export default class Leaderboard extends Component {
+export default class LeaderboardModal extends React.PureComponent {
     static propTypes = {
         room: object.isRequired,
     }

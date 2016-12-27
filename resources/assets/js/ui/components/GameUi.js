@@ -19,7 +19,7 @@ import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNickname'
 import NetworkStats from './NetworkStats/NetworkStats'
 
-export default class GameUi extends React.Component {
+export default class GameUi extends React.PureComponent {
     static props = {
         game: Object,
         onCloseChatModal: Function,

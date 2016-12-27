@@ -5,7 +5,7 @@ import storage from 'store'
 import NameGenerator from '../../../lib/NameGenerator'
 import GameConsts from 'lib/GameConsts'
 
-export default class SettingsView extends React.Component {
+export default class SettingsView extends React.PureComponent {
     constructor(props) {
         super(props)
         autobind(this)

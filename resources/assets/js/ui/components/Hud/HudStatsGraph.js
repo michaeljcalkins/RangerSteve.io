@@ -3,7 +3,7 @@ import autobind from 'react-autobind'
 
 import Stats from '../../../lib/Stats'
 
-export default class HudStatsGraph extends React.Component {
+export default class HudStatsGraph extends React.PureComponent {
     constructor(props) {
         super(props)
         autobind(this)

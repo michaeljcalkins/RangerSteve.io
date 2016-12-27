@@ -1,11 +1,11 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 import autobind from 'react-autobind'
 
 import GameConsts from 'lib/GameConsts'
 import WeaponButton from './WeaponButton'
 
-export default class WeaponsView extends Component {
+export default class WeaponsView extends React.PureComponent {
     constructor(props) {
         super(props)
         autobind(this)
