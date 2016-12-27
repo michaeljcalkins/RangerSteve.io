@@ -178,9 +178,9 @@ export default class GameUi extends React.PureComponent {
                     />
                 }
 
+                { game.settingsModalIsOpen &&
                     <SettingsModal
                         game={ game }
-                    isOpen={ game.settingsModalIsOpen }
                         onClose={ onCloseSettingsModal }
                         onKeyboardControlChange={ props.onKeyboardControlChange }
                         onNicknameChange={ this.handleNicknameChange }
@@ -192,15 +192,6 @@ export default class GameUi extends React.PureComponent {
                         onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
                         onViewChange={ onSettingsViewChange }
                         player={ player }
-                    />
-
-                { (
-                    (player.health <= 0 && room.state !== 'ended') ||
-                    game.settingsModalIsOpen
-                ) &&
-                    <div
-                        className="modal-backdrop"
-                        style={ { display: 'block' } }
                     />
                 }
 
