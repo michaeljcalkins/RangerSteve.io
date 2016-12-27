@@ -180,6 +180,16 @@ export default class GameUi extends React.Component {
                     />
                 }
 
+                { (
+                    (player.health <= 0 && room.state !== 'ended') ||
+                    game.settingsModalIsOpen
+                ) &&
+                <div
+                    className="modal-backdrop"
+                    style={ { display: 'block' } }
+                />
+                }
+
                 <SettingsModal
                     game={ game }
                     isOpen={ game.settingsModalIsOpen }
@@ -195,16 +205,6 @@ export default class GameUi extends React.Component {
                     onViewChange={ onSettingsViewChange }
                     player={ player }
                 />
-
-                { (
-                    (player.health <= 0 && room.state !== 'ended') ||
-                    game.settingsModalIsOpen
-                ) &&
-                    <div
-                        className="modal-backdrop"
-                        style={ { display: 'block' } }
-                    />
-                }
 
                 { window.RS && window.RS.networkStats &&
                     <NetworkStats stats={window.RS.networkStats} />
