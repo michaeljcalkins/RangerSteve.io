@@ -1,6 +1,6 @@
 const initialState = {
     announcement: '',
-    players: [],
+    players: {},
     roundEndTime: 0,
     state: null,
 }

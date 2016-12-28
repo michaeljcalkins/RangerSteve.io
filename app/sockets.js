@@ -144,31 +144,10 @@ setInterval(function() {
                 rooms[roomId].players[playerId].secondsInRound = 0
             })
 
-            const roomData = {
-                state: rooms[roomId].state,
-                messages: rooms[roomId].messages,
-                id: roomId,
-            }
-
-            roomData.players = Object.keys(rooms[roomId].players).map(function(playerId) {
-                return {
-                    angle: rooms[roomId].players[playerId].angle || 0,
-                    flying: rooms[roomId].players[playerId].flying || false,
-                    health: rooms[roomId].players[playerId].health,
-                    nickname: rooms[roomId].players[playerId].nickname, // TODO needs to be refactored to it's own event
-                    id: playerId,
-                    shooting: rooms[roomId].players[playerId].shooting || false,
-                    team: rooms[roomId].players[playerId].team, // TODO needs to be refactored to it's own event
-                    weaponId: rooms[roomId].players[playerId].weaponId, // TODO needs to be refactored to it's own event
-                    x: rooms[roomId].players[playerId].x,
-                    y: rooms[roomId].players[playerId].y,
-                }
-            })
-
             Server.sendToRoom(
                 roomId,
                 GameConsts.EVENT.LOAD_GAME,
-                roomData
+                rooms[roomId]
             )
             return
         }

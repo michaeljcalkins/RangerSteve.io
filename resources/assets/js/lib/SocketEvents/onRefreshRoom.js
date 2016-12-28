@@ -117,7 +117,7 @@ export default function onRefreshRoom(data) {
 
     let isNewState = false
 
-    if (room.state !== data.state) {
+    if (! isEqual(room.state, data.state)) {
         room.state = data.state
         isNewState = true
     }
