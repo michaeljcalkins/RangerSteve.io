@@ -7,7 +7,7 @@ import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from '../updatePlayerAngles'
 
 function isNotMoving(movePlayer) {
-    return movePlayer.x === movePlayer.lastPosition.x && movePlayer.y === movePlayer.lastPosition.y
+    return movePlayer.x === movePlayer.data.lastPosition.x && movePlayer.y === movePlayer.data.lastPosition.y
 }
 
 export default function onMovePlayer(data) {
@@ -63,32 +63,32 @@ export default function onMovePlayer(data) {
         movePlayer.playerSprite.animations.stop()
         movePlayer.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
     } else if (
-        movePlayer.x > movePlayer.lastPosition.x &&
+        movePlayer.x > movePlayer.data.lastPosition.x &&
         movePlayer.facing === 'right' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runRight-faceRight')
     }
     else if (
-        movePlayer.x < movePlayer.lastPosition.x &&
+        movePlayer.x < movePlayer.data.lastPosition.x &&
         movePlayer.facing === 'left' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runLeft-faceLeft')
     } else if (
-        movePlayer.x < movePlayer.lastPosition.x &&
+        movePlayer.x < movePlayer.data.lastPosition.x &&
         movePlayer.facing === 'right' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runLeft-faceRight')
     } else if (
-        movePlayer.x > movePlayer.lastPosition.x &&
+        movePlayer.x > movePlayer.data.lastPosition.x &&
         movePlayer.facing === 'left' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runRight-faceLeft')
     }
 
-    movePlayer.lastPosition.x = movePlayer.x
-    movePlayer.lastPosition.y = movePlayer.y
+    movePlayer.data.lastPosition.x = movePlayer.x
+    movePlayer.data.lastPosition.y = movePlayer.y
 }
