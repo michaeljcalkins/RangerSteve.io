@@ -23,11 +23,9 @@ module.exports = function(data) {
         ? data.gamemode
         : _.sample(GameConsts.GAMEMODES)
 
-    if (gamemodeId === 'TeamDeathmatch') {
-        Object.keys(players).forEach(playerId => {
-            players[playerId].team = getTeam(players, 0, 0)
-        })
-    }
+    Object.keys(players).forEach(playerId => {
+        players[playerId].team = (gamemodeId === 'TeamDeathmatch') ? getTeam(players, 0, 0) : null
+    })
 
     // Use the specified map if it exists
     const mapId = data.map && GameConsts.MAPS.indexOf(data.map) > -1
