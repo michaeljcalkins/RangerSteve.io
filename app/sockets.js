@@ -403,7 +403,7 @@ function onClientDisconnect() {
     }
 }
 
-function onPlayerFullHealth(data) {
+function onPlayerFullHealth() {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
     let player = getPlayerById(roomId, this.id, rooms)
     if (! player) return
@@ -433,7 +433,6 @@ function onPlayerHealing() {
 
 function onPlayerDamaged(data) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
-    console.log(data)
     let player = getPlayerById(roomId, data.damagedPlayerId, rooms)
     if (! player || player.health <= 0) return
 
@@ -456,8 +455,6 @@ function onPlayerDamaged(data) {
         if (data.wasHeadshot) attackingPlayer.headshots++
     }
 
-    console.log(data)
-
     // Player was killed when shot
     if (player.health <= 0) {
         player.health = 0
@@ -479,22 +476,19 @@ function onPlayerDamaged(data) {
             }
 
             const playerScores = {}
-
             Object.keys(rooms[roomId].players).forEach(function(playerId) {
                 playerScores[playerId] = {
-                    angle: rooms[roomId].players[playerId].angle || 0,
-                    flying: rooms[roomId].players[playerId].flying || false,
-                    health: rooms[roomId].players[playerId].health,
-                    nickname: rooms[roomId].players[playerId].nickname,
-                    shooting: rooms[roomId].players[playerId].shooting || false,
-                    team: rooms[roomId].players[playerId].team,
-                    weaponId: rooms[roomId].players[playerId].weaponId,
-                    x: rooms[roomId].players[playerId].x,
-                    y: rooms[roomId].players[playerId].y,
+                    deaths: rooms[roomId].players[playerId].deaths,
+                    kills: rooms[roomId].players[playerId].kills,
+                    bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
+                    killingSpree: rooms[roomId].players[playerId].killingSpree,
+                    bulletsFired: rooms[roomId].players[playerId].bulletsFired,
+                    bulletsHit: rooms[roomId].players[playerId].bulletsHit,
+                    score: rooms[roomId].players[playerId].score,
+                    headshots: rooms[roomId].players[playerId].headshots,
+                    secondsInRound: rooms[roomId].players[playerId].secondsInRound,
                 }
             })
-
-            console.log(playerScores)
 
             Server.sendToRoom(
                 roomId,
@@ -507,7 +501,7 @@ function onPlayerDamaged(data) {
                     killingSpree: attackingPlayer.killingSpree,
                     wasHeadshot: data.wasHeadshot,
                     weaponId: data.weaponId,
-                    playerScores: playerScores,
+                    players: playerScores,
                 }
             )
         } else {
@@ -515,11 +509,28 @@ function onPlayerDamaged(data) {
                 player.score -= 10
             }
 
+            const playerScores = {}
+            Object.keys(rooms[roomId].players).forEach(function(playerId) {
+                playerScores[playerId] = {
+                    deaths: rooms[roomId].players[playerId].deaths,
+                    kills: rooms[roomId].players[playerId].kills,
+                    bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
+                    killingSpree: rooms[roomId].players[playerId].killingSpree,
+                    bulletsFired: rooms[roomId].players[playerId].bulletsFired,
+                    bulletsHit: rooms[roomId].players[playerId].bulletsHit,
+                    score: rooms[roomId].players[playerId].score,
+                    headshots: rooms[roomId].players[playerId].headshots,
+                    secondsInRound: rooms[roomId].players[playerId].secondsInRound,
+                }
+            })
+
+
             Server.sendToRoom(
                 roomId,
                 GameConsts.EVENT.PLAYER_KILL_LOG,
                 {
                     deadNickname: player.nickname,
+                    players: playerScores,
                 }
             )
         }
