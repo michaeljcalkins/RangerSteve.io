@@ -146,6 +146,8 @@ setInterval(function() {
 
             const roomData = {
                 state: rooms[roomId].state,
+                messages: rooms[roomId].messages,
+                id: roomId,
             }
 
             roomData.players = Object.keys(rooms[roomId].players).map(function(playerId) {
@@ -340,7 +342,8 @@ function onNewPlayer(data) {
 
     // User to the room
     rooms[roomIdPlayerWillJoin].players[this.id] = newPlayer
-    // console.log('* LOG * roomIdPlayerWillJoin', roomIdPlayerWillJoin);
+    rooms[roomIdPlayerWillJoin].messages = []
+    rooms[roomIdPlayerWillJoin].id = roomIdPlayerWillJoin
     this.join(roomIdPlayerWillJoin)
 
     // Tell the user's client to load the game
