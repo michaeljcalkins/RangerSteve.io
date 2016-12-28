@@ -1,4 +1,5 @@
 import includes from 'lodash/includes'
+import isEqual from 'lodash/isEqual'
 
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
@@ -114,16 +115,27 @@ export default function onRefreshRoom(data) {
         player.visible = playerData.health > 0
     })
 
-    room.state = data.state
+    let isNewState = false
 
-    Object.keys(data.players).forEach(playerId => {
-        if (! data.players[playerId]) return
+    if (room.state !== data.state) {
+        room.state = data.state
+        isNewState = true
+    }
 
-        room.players[playerId] = {
-            ...room.players[playerId],
-            ...data.players[playerId],
-        }
-    })
+    if (! isEqual(data.players, room.players)) {
+        Object.keys(data.players).forEach(playerId => {
+            if (! data.players[playerId]) return
 
-    store.dispatch(actions.room.setRoom(room))
+            room.players[playerId] = {
+                ...room.players[playerId],
+                ...data.players[playerId],
+            }
+        })
+
+        isNewState = true
+    }
+
+    if (isNewState) {
+        store.dispatch(actions.room.setRoom(room))
+    }
 }

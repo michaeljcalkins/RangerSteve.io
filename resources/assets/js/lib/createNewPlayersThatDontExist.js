@@ -34,5 +34,5 @@ export default function createNewPlayersThatDontExist(room, playerId, playerData
     RS.enemies.add(newcreateRemotePlayer)
     const player = PlayerById.call(this, playerId)
     this.game.world.bringToTop(RS.enemies)
-    updatePlayerColor(player, playerData.team)
+    if (playerData.team) updatePlayerColor(player, playerData.team)
 }
