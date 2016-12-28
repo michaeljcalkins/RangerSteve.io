@@ -16,7 +16,6 @@ export default function removePlayersThatLeft(data) {
 
         // Enemy not found so remove them from game
         if (! enemy && playerId) {
-            console.log('Removing', player.data.id)
             RS.enemies.removeChildAt(index)
             player.destroy(true)
 

@@ -15,8 +15,6 @@ export default function createNewPlayersThatDontExist(room, playerId, playerData
 
     if (playerCheck) return
 
-    console.log('Creating', playerId)
-
     const newcreateRemotePlayer = createRemotePlayer.call(this, playerId, playerData)
     const enemyPlayerName = playerData.nickname
         ? playerData.nickname
