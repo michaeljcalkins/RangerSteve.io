@@ -1,7 +1,12 @@
 import get from 'lodash/get'
 
+import actions from 'actions'
+
 export default function removePlayersThatLeft(data) {
     if (! RS.enemies) return
+
+    const store = this.game.store
+    const room = this.game.store.getState().room
 
     RS.enemies.forEach((player, index) => {
         const playerId = get(player, 'data.id', false)
@@ -14,6 +19,9 @@ export default function removePlayersThatLeft(data) {
             console.log('Removing', player.data.id)
             RS.enemies.removeChildAt(index)
             player.destroy(true)
+
+            delete room.players[playerId]
+            store.dispatch(actions.room.setRoom(room))
         }
     })
 }
