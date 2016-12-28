@@ -1,11 +1,13 @@
 import includes from 'lodash/includes'
-import find from 'lodash/find'
+import get from 'lodash/get'
+import set from 'lodash/set'
 
 import actions from 'actions'
 import PlayerById from'../PlayerById'
 import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from '../updatePlayerAngles'
 import RemotePlayer from '../RemotePlayer'
+import updatePlayerColor from '../updatePlayerColor'
 
 function isNotMoving(player) {
     return player.x === player.lastPosition.x && player.y === player.lastPosition.y
@@ -13,20 +15,7 @@ function isNotMoving(player) {
 
 export default function onRefreshRoom(data) {
     const store = this.game.store
-
     const room = store.getState().room
-    room.state = data.state
-
-    Object.keys(data.players).forEach(playerId => {
-        if (! data.players[playerId]) return
-
-        room.players[playerId] = {
-            ...room.players[playerId],
-            ...data.players[playerId],
-        }
-    })
-
-    store.dispatch(actions.room.setRoom(room))
 
     if (
         includes(['Boot', 'Preloader'], this.game.state.current) ||
@@ -39,7 +28,8 @@ export default function onRefreshRoom(data) {
     // 1. Check for players that do not exist anymore
     if (RS.enemies) {
         RS.enemies.forEach((player, index) => {
-            const enemy = data.players[player.id]
+            const enemy = data.players[player.data.id]
+            console.log(enemy)
             if (enemy) return RS.enemies.removeChildAt(index)
             player.destroy(true)
         })
@@ -49,12 +39,12 @@ export default function onRefreshRoom(data) {
         if (playerId === window.SOCKET_ID) return
 
         const playerData = data.players[playerId]
-        if (! playerData) return
 
         let player = PlayerById.call(this, playerId)
 
         // 2. if player is not found create them and continue
-        if (! player) {
+        if (! get(room, `players[${playerId}].isDrawn`, false)) {
+            console.log('Creating', playerId)
             let newRemotePlayer = RemotePlayer.call(this, playerData)
             let enemyPlayerName = playerData.nickname
                 ? playerData.nickname
@@ -80,6 +70,8 @@ export default function onRefreshRoom(data) {
             RS.enemies.add(newRemotePlayer)
             player = PlayerById.call(this, playerId)
             this.game.world.bringToTop(RS.enemies)
+            updatePlayerColor(player, playerData.team)
+            set(room, `players[${playerId}].isDrawn`, true)
         }
 
         if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
@@ -160,4 +152,17 @@ export default function onRefreshRoom(data) {
         player.lastPosition.y = player.y
         player.visible = playerData.health > 0
     })
+
+    room.state = data.state
+
+    Object.keys(data.players).forEach(playerId => {
+        if (! data.players[playerId]) return
+
+        room.players[playerId] = {
+            ...room.players[playerId],
+            ...data.players[playerId],
+        }
+    })
+
+    store.dispatch(actions.room.setRoom(room))
 }
