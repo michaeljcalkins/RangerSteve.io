@@ -477,13 +477,15 @@ function onPlayerDamaged(data) {
                 GameConsts.EVENT.PLAYER_KILL_LOG,
                 {
                     attackerNickname: attackingPlayer.nickname,
+                    blueTeamScore: rooms[roomId].blueTeamScore,
                     damagedPlayerId: data.damagedPlayerId,
                     deadNickname: player.nickname,
                     id: attackingPlayer.id,
                     killingSpree: attackingPlayer.killingSpree,
+                    players: playerScores,
+                    redTeamScore: rooms[roomId].redTeamScore,
                     wasHeadshot: data.wasHeadshot,
                     weaponId: data.weaponId,
-                    players: playerScores,
                 }
             )
         } else {
@@ -511,6 +513,8 @@ function onPlayerDamaged(data) {
                 GameConsts.EVENT.PLAYER_KILL_LOG,
                 {
                     deadNickname: player.nickname,
+                    redTeamScore: rooms[roomId].redTeamScore,
+                    blueTeamScore: rooms[roomId].blueTeamScore,
                     players: playerScores,
                 }
             )
