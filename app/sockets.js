@@ -552,7 +552,6 @@ function onPlayerDamaged(data) {
         return
     }
 
-    console.log('test')
     Server.sendToRoom(
         roomId,
         GameConsts.EVENT.PLAYER_DAMAGED,
