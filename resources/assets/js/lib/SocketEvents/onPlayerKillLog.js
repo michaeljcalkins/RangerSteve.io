@@ -27,9 +27,10 @@ export default function onPlayerKillLog(data) {
 
         // Show the killing spree hud if applicable
         store.dispatch(actions.player.setKillingSpreeCount(data.killingSpree))
-        if (data.killingSpree === lastKillingSpreeCount) return
-        lastKillingSpreeCount = data.killingSpree
-        PlayKillingSpreeSound.call(this, data.killingSpree, store.getState().game.sfxVolume)
+        if (data.killingSpree !== lastKillingSpreeCount) {
+            lastKillingSpreeCount = data.killingSpree
+            PlayKillingSpreeSound.call(this, data.killingSpree, store.getState().game.sfxVolume)
+        }
 
         // This will hide the killing spree hud
         setTimeout(() => {
