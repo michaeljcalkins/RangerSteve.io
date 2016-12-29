@@ -506,7 +506,6 @@ function onPlayerDamaged(data) {
                 }
             })
 
-
             Server.sendToRoom(
                 roomId,
                 GameConsts.EVENT.PLAYER_KILL_LOG,
