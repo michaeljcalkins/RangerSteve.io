@@ -30,18 +30,18 @@ export default function onUpdatePlayers(data: {
     // RS.enemies = this.game.add.group()
 
     const rankedPlayers = values(store.getState().room.players)
-        .sort((a, b) => a.meta.score < b.meta.score) // TODO should consider meta.secondsInRound as well
+        .sort((a, b) => a.data.score < b.data.score) // TODO should consider data.secondsInRound as well
         .map(player => player)
 
     values(store.getState().room.players).forEach((player) => {
         if (player.id === window.SOCKET_ID) {
-            store.dispatch(actions.player.setScore(player.meta.score))
-            store.dispatch(actions.player.setHealth(player.meta.health))
+            store.dispatch(actions.player.setScore(player.data.score))
+            store.dispatch(actions.player.setHealth(player.data.health))
             return
         }
 
         let newRemotePlayer = RemotePlayer.call(this, player)
-        let enemyPlayerName = player.meta.nickname ? player.meta.nickname : 'Unnamed Ranger'
+        let enemyPlayerName = player.data.nickname ? player.data.nickname : 'Unnamed Ranger'
 
         if (rankedPlayers[0] && rankedPlayers[0].id === player.id) enemyPlayerName = `#1 ${enemyPlayerName}`
         if (rankedPlayers[1] && rankedPlayers[1].id === player.id) enemyPlayerName = `#2 ${enemyPlayerName}`
@@ -59,7 +59,7 @@ export default function onUpdatePlayers(data: {
         text.x = (text.width / 2) * -1
         text.smoothed = true
 
-        if (player.meta.health <= 0) {
+        if (player.data.health <= 0) {
             newRemotePlayer.visible = false
         }
 

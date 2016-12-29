@@ -1,23 +1,24 @@
 import get from 'lodash/get'
 
 export default function(room) {
-    let playerMeta = false
-    Object.keys(room.players).forEach(player => {
-        if (room.players[player].meta.bulletsFired === 0) return
+    let bestPlayer = false
+    Object.keys(room.players).forEach(playerId => {
+        const selectedPlayer = room.players[playerId]
+        if (! selectedPlayer || selectedPlayer.bulletsFired === 0) return
 
         // bullets fired / bullets that hit
-        const accuracy = room.players[player].meta.bulletsHit / room.players[player].meta.bulletsFired * 100
-        room.players[player].meta.accuracy = accuracy.toFixed(1)
+        const accuracy = selectedPlayer.bulletsHit / selectedPlayer.bulletsFired * 100
+        selectedPlayer.accuracy = accuracy.toFixed(1)
 
-        if (room.players[player].meta.accuracy > get(playerMeta, 'accuracy', 0)) {
-            playerMeta = room.players[player].meta
+        if (selectedPlayer.accuracy > get(selectedPlayer, 'accuracy', 0)) {
+            bestPlayer = selectedPlayer
         }
     })
 
-    if (! playerMeta) return false
+    if (! bestPlayer) return false
 
     return {
-        nickname: playerMeta.nickname,
-        score: playerMeta.accuracy + '%',
+        nickname: bestPlayer.nickname,
+        score: bestPlayer.accuracy + '%',
     }
 }

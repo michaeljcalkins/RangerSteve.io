@@ -10,19 +10,19 @@ export function HudLeaderboard({
         if (! room.players) return null
 
         return values(room.players)
-            .sort((a, b) => a.meta.score < b.meta.score)
+            .sort((a, b) => a.score < b.score)
             .map(function(player) {
-                let playerNickname = player.meta.nickname
-                    ? player.meta.nickname
+                let playerNickname = player.nickname
+                    ? player.nickname
                     : 'Unnamed Ranger'
 
-                const killingSpreeCount = player.meta.killingSpree > 1
-                    ? `${player.meta.killingSpree}x `
+                const killingSpreeCount = player.killingSpree > 1
+                    ? `${player.killingSpree}x `
                     : null
 
                 const classes = cs({
-                    'text-red': player.meta.team === 'red' && room.gamemode === 'TeamDeathmatch',
-                    'text-blue': player.meta.team === 'blue' && room.gamemode === 'TeamDeathmatch',
+                    'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
+                    'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch',
                 })
 
                 return (
@@ -44,7 +44,7 @@ export function HudLeaderboard({
                             style={ { width: '20px' } }
                             title="Player's current score"
                         >
-                            { player.meta.score }
+                            { player.score || 0 }
                         </td>
                     </tr>
                 )

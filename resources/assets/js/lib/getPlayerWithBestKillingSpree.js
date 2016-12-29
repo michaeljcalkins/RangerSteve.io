@@ -1,17 +1,19 @@
 import get from 'lodash/get'
 
 export default function(room) {
-    let playerMeta = false
-    Object.keys(room.players).forEach((player) => {
-        if (room.players[player].meta.bestKillingSpree > get(playerMeta, 'bestKillingSpree', 0)) {
-            playerMeta = room.players[player].meta
+    let bestPlayer = false
+    Object.keys(room.players).forEach(playerId => {
+        const selectedPlayer = room.players[playerId]
+
+        if (selectedPlayer.bestKillingSpree > get(bestPlayer, 'bestKillingSpree', 0)) {
+            bestPlayer = selectedPlayer
         }
     })
 
-    if (! playerMeta) return false
+    if (! bestPlayer) return false
 
     return {
-        nickname: playerMeta.nickname,
-        score: playerMeta.bestKillingSpree,
+        nickname: bestPlayer.nickname,
+        score: bestPlayer.bestKillingSpree,
     }
 }

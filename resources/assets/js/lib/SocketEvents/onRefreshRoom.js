@@ -1,18 +1,20 @@
 import includes from 'lodash/includes'
+import isEqual from 'lodash/isEqual'
 
 import actions from 'actions'
-import PlayerById from'../PlayerById'
 import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from '../updatePlayerAngles'
-import RemotePlayer from '../RemotePlayer'
+import removePlayersThatLeft from '../removePlayersThatLeft'
+import createNewPlayersThatDontExist from '../createNewPlayersThatDontExist'
+import PlayerById from'../PlayerById'
 
 function isNotMoving(player) {
-    return player.x === player.lastPosition.x && player.y === player.lastPosition.y
+    return player.x === player.data.lastPosition.x && player.y === player.data.lastPosition.y
 }
 
 export default function onRefreshRoom(data) {
     const store = this.game.store
-    store.dispatch(actions.room.setRoom(data))
+    const room = store.getState().room
 
     if (
         includes(['Boot', 'Preloader'], this.game.state.current) ||
@@ -20,70 +22,28 @@ export default function onRefreshRoom(data) {
     ) return
 
     // Players should only be allowed to move when the room state is active
-    if (data.state !== 'active') {
-        this.game.paused = true
-    } else {
-        this.game.paused = false
-    }
+    this.game.paused = data.state !== 'active'
 
-    // 1. check for players that do not exist anymore
-    if (RS.enemies) {
-        RS.enemies.forEach((player, index) => {
-            if (data.players[player.id]) return
+    // 1. Check for players that do not exist anymore and destroy their sprites
+    removePlayersThatLeft.call(this, data)
 
-            // console.log('Removing', player.id)
-            RS.enemies.removeChildAt(index)
-            player.destroy(true)
-        })
-    }
+    Object.keys(data.players).forEach(playerId => {
+        if (playerId === window.SOCKET_ID) return
 
-    Object.keys(data.players).forEach((playerId) => {
         const playerData = data.players[playerId]
-
-        if (playerId === window.SOCKET_ID) {
-            store.dispatch(actions.player.setHealth(playerData.meta.health))
-            return
-        }
-
         let player = PlayerById.call(this, playerId)
 
         // 2. if player is not found create them and continue
-        if (! player) {
-            // console.log('Creating', playerId)
-            let newRemotePlayer = RemotePlayer.call(this, playerData)
-            let enemyPlayerName = playerData.meta.nickname
-                ? playerData.meta.nickname
-                : 'Unnamed Ranger'
-
-            const style = {
-                font: "10px Arial",
-                fill: "#fff",
-                align: "center",
-                stroke: "black",
-                strokeThickness: 2,
-            }
-            const text = this.game.add.text(0, -50, enemyPlayerName, style)
-            newRemotePlayer.addChild(text)
-            text.x = (text.width / 2) * -1
-            text.smoothed = true
-
-            if (playerData.meta.health <= 0) {
-                newRemotePlayer.visible = false
-            }
-
-            RS.enemies.add(newRemotePlayer)
-            player = PlayerById.call(this, playerId)
-            this.game.world.bringToTop(RS.enemies)
-        }
+        createNewPlayersThatDontExist.call(this, room, playerId, playerData)
 
         if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
-
-
-        player.visible = true
-        player.meta.health = playerData.meta.health
+        player.data.id = playerId
+        player.data.health = playerData.health
+        player.data.weaponId = playerData.weaponId
+        player.data.team = playerData.team
 
         // 3. update the player
-        if (playerData.meta.health <= 0) {
+        if (playerData.health <= 0) {
             player.visible = false
             return
         }
@@ -94,20 +54,16 @@ export default function onRefreshRoom(data) {
             y: playerData.y,
         }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
 
-
-
         // Control jump jet visibility
         player.rightJumpjet.visible = playerData.flying
         player.leftJumpjet.visible = playerData.flying
 
-        player.meta.weaponId = playerData.weaponId
-
         // Control muzzle flash visibility
-        if (GameConsts.WEAPONS[playerData.meta.weaponId]) {
+        if (GameConsts.WEAPONS[playerData.weaponId]) {
             if (playerData.shooting) {
-                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].shootingFrame
+                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.weaponId].shootingFrame
             } else {
-                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.meta.weaponId].frame
+                player.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.weaponId].frame
             }
         }
 
@@ -128,33 +84,58 @@ export default function onRefreshRoom(data) {
             player.playerSprite.animations.stop()
             player.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
         } else if (
-            player.x > player.lastPosition.x &&
+            player.x > player.data.lastPosition.x &&
             player.facing === 'right' &&
             ! playerData.flying
         ) {
             player.playerSprite.animations.play('runRight-faceRight')
         }
         else if (
-            player.x < player.lastPosition.x &&
+            player.x < player.data.lastPosition.x &&
             player.facing === 'left' &&
             ! playerData.flying
         ) {
             player.playerSprite.animations.play('runLeft-faceLeft')
         } else if (
-            player.x < player.lastPosition.x &&
+            player.x < player.data.lastPosition.x &&
             player.facing === 'right' &&
             ! playerData.flying
         ) {
             player.playerSprite.animations.play('runLeft-faceRight')
         } else if (
-            player.x > player.lastPosition.x &&
+            player.x > player.data.lastPosition.x &&
             player.facing === 'left' &&
             ! playerData.flying
         ) {
             player.playerSprite.animations.play('runRight-faceLeft')
         }
 
-        player.lastPosition.x = player.x
-        player.lastPosition.y = player.y
+        player.data.lastPosition.x = player.x
+        player.data.lastPosition.y = player.y
+        player.visible = playerData.health > 0
     })
+
+    let isNewState = false
+
+    if (! isEqual(room.state, data.state)) {
+        room.state = data.state
+        isNewState = true
+    }
+
+    if (! isEqual(data.players, room.players)) {
+        Object.keys(data.players).forEach(playerId => {
+            if (! data.players[playerId]) return
+
+            room.players[playerId] = {
+                ...room.players[playerId],
+                ...data.players[playerId],
+            }
+        })
+
+        isNewState = true
+    }
+
+    if (isNewState) {
+        store.dispatch(actions.room.setRoom(room))
+    }
 }

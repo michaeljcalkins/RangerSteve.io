@@ -66,9 +66,7 @@ export default function onPlayerDamaged(data: {
         damageTimeout = setTimeout(() => {
             lastKnownHealth = store.getState().player.health
             healingInterval = setInterval(() => {
-                if (lastKnownHealth >= 100) {
-                    clearInterval(healingInterval)
-                }
+                if (lastKnownHealth >= 100) clearInterval(healingInterval)
 
                 lastKnownHealth += 10
 

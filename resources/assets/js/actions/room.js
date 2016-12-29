@@ -11,3 +11,10 @@ export const addAnnouncement = (value) => {
         value,
     }
 }
+
+export const setState = (value) => {
+    return {
+        type: 'SET_STATE',
+        value,
+    }
+}

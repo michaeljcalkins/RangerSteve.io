@@ -6,7 +6,6 @@ import onBulletFired from './onBulletFired'
 import onPlayerDamaged from './onPlayerDamaged'
 import onPlayerRespawn from './onPlayerRespawn'
 import onPlayerHealthUpdate from './onPlayerHealthUpdate'
-import onPlayerKillConfirmed from './onPlayerKillConfirmed'
 import onMessageReceived from './onMessageReceived'
 import onPlayerKillLog from './onPlayerKillLog'
 import onRefreshRoom from './onRefreshRoom'
@@ -20,7 +19,6 @@ const events = {
     [GameConsts.EVENT.PLAYER_RESPAWN]: onPlayerRespawn,
     [GameConsts.EVENT.PLAYER_DAMAGED]: onPlayerDamaged,
     [GameConsts.EVENT.PLAYER_HEALTH_UPDATE]: onPlayerHealthUpdate,
-    [GameConsts.EVENT.PLAYER_KILL_CONFIRMED]: onPlayerKillConfirmed,
     [GameConsts.EVENT.PLAYER_KILL_LOG]: onPlayerKillLog,
     [GameConsts.EVENT.MESSAGE_RECEIVED]: onMessageReceived,
     [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,

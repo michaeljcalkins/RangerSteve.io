@@ -13,7 +13,7 @@ export default function() {
             ! state.room.id ||
             state.player.health <= 0 ||
             state.room.state !== 'active' ||
-            enemy.meta.health <= 0
+            enemy.data.health <= 0
         ) return
 
         const yDiff = enemy.y - bullet.y
@@ -45,7 +45,7 @@ export default function() {
         emitPlayerDamaged.call(this, {
             damage: bulletDamage,
             weaponId: state.player[currentWeapon].id,
-            damagedPlayerId: enemy.id,
+            damagedPlayerId: enemy.data.id,
             attackingPlayerId: window.SOCKET_ID,
             wasHeadshot,
         })

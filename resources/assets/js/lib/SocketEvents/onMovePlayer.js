@@ -7,7 +7,7 @@ import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from '../updatePlayerAngles'
 
 function isNotMoving(movePlayer) {
-    return movePlayer.x === movePlayer.lastPosition.x && movePlayer.y === movePlayer.lastPosition.y
+    return movePlayer.x === movePlayer.data.lastPosition.x && movePlayer.y === movePlayer.data.lastPosition.y
 }
 
 export default function onMovePlayer(data) {
@@ -23,7 +23,7 @@ export default function onMovePlayer(data) {
 
     if (! movePlayer || (store.getState().room !== null && store.getState().room.state === 'ended')) return
 
-    if (movePlayer.meta.health <= 0) {
+    if (movePlayer.data.health <= 0) {
         movePlayer.visible = false
         return
     }
@@ -37,13 +37,13 @@ export default function onMovePlayer(data) {
     movePlayer.rightJumpjet.visible = data.flying
     movePlayer.leftJumpjet.visible = data.flying
 
-    movePlayer.meta.weaponId = data.weaponId
+    movePlayer.data.weaponId = data.weaponId
 
     // Control muzzle flash visibility
     if (data.shooting) {
-        movePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[movePlayer.meta.weaponId].shootingFrame
+        movePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[movePlayer.data.weaponId].shootingFrame
     } else {
-        movePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[movePlayer.meta.weaponId].frame
+        movePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[movePlayer.data.weaponId].frame
     }
 
     updatePlayerAngles.call(this, movePlayer, data.angle)
@@ -63,32 +63,32 @@ export default function onMovePlayer(data) {
         movePlayer.playerSprite.animations.stop()
         movePlayer.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
     } else if (
-        movePlayer.x > movePlayer.lastPosition.x &&
+        movePlayer.x > movePlayer.data.lastPosition.x &&
         movePlayer.facing === 'right' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runRight-faceRight')
     }
     else if (
-        movePlayer.x < movePlayer.lastPosition.x &&
+        movePlayer.x < movePlayer.data.lastPosition.x &&
         movePlayer.facing === 'left' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runLeft-faceLeft')
     } else if (
-        movePlayer.x < movePlayer.lastPosition.x &&
+        movePlayer.x < movePlayer.data.lastPosition.x &&
         movePlayer.facing === 'right' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runLeft-faceRight')
     } else if (
-        movePlayer.x > movePlayer.lastPosition.x &&
+        movePlayer.x > movePlayer.data.lastPosition.x &&
         movePlayer.facing === 'left' &&
         ! data.flying
     ) {
         movePlayer.playerSprite.animations.play('runRight-faceLeft')
     }
 
-    movePlayer.lastPosition.x = movePlayer.x
-    movePlayer.lastPosition.y = movePlayer.y
+    movePlayer.data.lastPosition.x = movePlayer.x
+    movePlayer.data.lastPosition.y = movePlayer.y
 }
