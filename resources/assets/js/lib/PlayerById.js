@@ -4,12 +4,9 @@ import get from 'lodash/get'
 export default function PlayerById(id) {
     if (! RS.enemies) return
 
-    let selectedEnemy = false
     for (let i = 0; i < RS.enemies.children.length; i++) {
         if (get(RS, `enemies.children[${i}].data.id`) === id) {
-            selectedEnemy = RS.enemies.children[i]
+            return RS.enemies.children[i]
         }
     }
-
-    return selectedEnemy
 }
