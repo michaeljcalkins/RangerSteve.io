@@ -55,7 +55,7 @@ export default function(bullet) {
             emitPlayerDamaged.call(this, {
                 damage: blastDamage,
                 weaponId: bullet.weaponId,
-                damagedPlayerId: enemy.id,
+                damagedPlayerId: enemy.data.id,
                 attackingPlayerId: window.SOCKET_ID,
             })
         }
