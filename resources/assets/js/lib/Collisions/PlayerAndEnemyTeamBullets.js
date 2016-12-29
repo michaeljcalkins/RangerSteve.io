@@ -1,3 +1,5 @@
+import find from 'lodash/find'
+
 import PlayBloodSpray from '../PlayBloodSpray'
 import PlayRocketExplosion from '../PlayRocketExplosion'
 
@@ -6,11 +8,13 @@ export default function() {
 
     // Did enemy bullets hit you
     this.game.physics.arcade.overlap(RS.player, RS.enemyBullets, (player, bullet) => {
+        const enemy = state.room.players[bullet.data.playerId]
+
         if (
             ! bullet.weaponId ||
             ! window.SOCKET_ID ||
             state.player.health <= 0 ||
-            state.room.players[bullet.playerId].meta.team === state.room.players[window.SOCKET_ID].meta.team
+            enemy.team === RS.player.team
         ) return
 
         bullet.kill()

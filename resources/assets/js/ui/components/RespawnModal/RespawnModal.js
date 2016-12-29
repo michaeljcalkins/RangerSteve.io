@@ -63,7 +63,7 @@ export class RespawnModal extends Component {
 
         if (! get(player, 'attackingDamageStats.attackingDamage')) return null
 
-        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
+        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
         const defendingHits = get(player, 'attackingDamageStats.attackingHits')
         const defendingDamage = get(player, 'attackingDamageStats.attackingDamage')
 
@@ -82,7 +82,7 @@ export class RespawnModal extends Component {
 
         if (! player.damageStats) return null
 
-        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
+        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
         const attackingHits = get(player, 'damageStats.attackingHits')
         const attackingDamage = get(player, 'damageStats.attackingDamage')
 
@@ -125,7 +125,7 @@ export class RespawnModal extends Component {
 
     renderCauseOfDeath() {
         const { player, room } = this.props
-        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].meta.nickname`, 'Enemy Player')
+        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
         const selectedWeapon = get(GameConsts, `WEAPONS[${player.damageStats.weaponId}]`)
         const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
 

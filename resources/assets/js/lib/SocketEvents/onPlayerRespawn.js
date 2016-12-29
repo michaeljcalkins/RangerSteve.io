@@ -20,7 +20,7 @@ export default function onPlayerRespawn(data) {
     if (data.id !== window.SOCKET_ID) {
         let enemyPlayer = PlayerById.call(this, data.id)
         if (! enemyPlayer) return
-        enemyPlayer.meta.health = GameConsts.PLAYER_FULL_HEALTH
+        enemyPlayer.data.health = GameConsts.PLAYER_FULL_HEALTH
         enemyPlayer.visible = true
         return
     }

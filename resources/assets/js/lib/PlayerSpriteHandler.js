@@ -3,6 +3,7 @@ import Maps from './Maps'
 import actions from '../actions'
 import GetSpawnPoint from './GetSpawnPoint'
 import updatePlayerAngles from './updatePlayerAngles'
+import updatePlayerColor from './updatePlayerColor'
 
 export default function PlayerSpriteHandler() {
     const state = this.game.store.getState()
@@ -117,6 +118,10 @@ export default function PlayerSpriteHandler() {
     RS.player.anchor.set(0.5)
 
     updatePlayerAngles.call(this, RS.player, 200)
+
+    const playerState = state.room.players[window.SOCKET_ID]
+    if (playerState && playerState.team) updatePlayerColor(RS.player, playerState.team)
+    RS.player.data = playerState
 
     /**
      * Camera Settings

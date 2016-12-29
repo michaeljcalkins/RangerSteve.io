@@ -1,6 +1,8 @@
 const initialState = {
-    roundEndTime: 0,
     announcement: '',
+    players: {},
+    roundEndTime: 0,
+    state: null,
 }
 
 const room = (state = initialState, action) => {
@@ -10,6 +12,13 @@ const room = (state = initialState, action) => {
                 ...state,
                 ...action.value,
             }
+
+        case 'SET_STATE':
+            return {
+                ...state,
+                state: action.value,
+            }
+
         case 'ADD_ANNOUNCEMENT':
             return {
                 ...state,
