@@ -7,7 +7,7 @@ const getTeam = function(players, redTeamScore, blueTeamScore) {
     if (redTeamScore === undefined) redTeamScore = 0
     if (blueTeamScore === undefined) blueTeamScore = 0
 
-    const playersByTeamCount = _.countBy(players, 'meta.team')
+    const playersByTeamCount = _.countBy(players, 'team')
     const redPlayerCount = _.get(playersByTeamCount, 'red', 0)
     const bluePlayerCount = _.get(playersByTeamCount, 'blue', 0)
 

@@ -19,7 +19,7 @@ import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNickname'
 import NetworkStats from './NetworkStats/NetworkStats'
 
-export default class GameUi extends React.PureComponent {
+export default class GameUi extends React.Component {
     static props = {
         game: Object,
         onCloseChatModal: Function,
@@ -155,7 +155,7 @@ export default class GameUi extends React.PureComponent {
                 <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
                 <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
                 <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />
-                <HudLeaderboard players={ room.players } gamemode={ room.gamemode } />
+                <HudLeaderboard room={ room } />
                 { room.announcement &&
                     <HudAnnouncement announcement={ room.announcement }/>
                 }

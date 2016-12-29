@@ -57,9 +57,9 @@ export default class LeaderboardModal extends React.PureComponent {
         if (! room.players) return null
 
         return values(room.players)
-            .sort((a, b) => a.meta.score < b.meta.score)
+            .sort((a, b) => a.score < b.score)
             .map((player, key) => {
-                const { meta: { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger' }, id } = player
+                const { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger', id } = player
                 const kdRatio = deaths > 0 ? (kills / deaths) : kills
                 const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
                 const classes = cs({
@@ -77,7 +77,7 @@ export default class LeaderboardModal extends React.PureComponent {
                         <td>{ kills }</td>
                         <td>{ deaths }</td>
                         <td>{ headshotsPerKill }</td>
-                        <td>{ kdRatio.toFixed(2) }</td>
+                        <td>{ kdRatio ? kdRatio.toFixed(2) : 0 }</td>
                     </tr>
                 )
             })
@@ -89,9 +89,9 @@ export default class LeaderboardModal extends React.PureComponent {
         if (! room.players) return null
 
         const players = values(room.players)
-            .sort((a, b) => a.meta.score < b.meta.score)
+            .sort((a, b) => a.score < b.score)
 
-        return get(players, '[0].meta.nickname')
+        return get(players, '[0].nickname')
     }
 
     renderPlayerAchievement(playerMeta, award) {

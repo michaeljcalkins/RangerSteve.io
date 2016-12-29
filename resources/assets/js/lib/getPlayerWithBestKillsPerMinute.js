@@ -5,22 +5,23 @@ export default function(room) {
     // 4 kills
     // 180 / 60 = 3 minutes
     // 4 kills / 3 minutes
-    let playerMeta = false
-    Object.keys(room.players).forEach((player) => {
-        if (room.players[player].meta.secondsInRound < 60) return
+    let bestPlayer = false
+    Object.keys(room.players).forEach(playerId => {
+        const selectedPlayer = room.players[playerId]
+        if (selectedPlayer.secondsInRound < 60) return
 
-        const minutesInRound = room.players[player].meta.secondsInRound / 60
-        room.players[player].meta.killsPerMinute = (room.players[player].meta.kills / minutesInRound).toFixed(1)
+        const minutesInRound = selectedPlayer.secondsInRound / 60
+        selectedPlayer.killsPerMinute = (selectedPlayer.kills / minutesInRound).toFixed(1)
 
-        if (room.players[player].meta.killsPerMinute > get(playerMeta, 'killsPerMinute', 0)) {
-            playerMeta = room.players[player].meta
+        if (selectedPlayer.killsPerMinute > get(bestPlayer, 'killsPerMinute', 0)) {
+            bestPlayer = selectedPlayer
         }
     })
 
-    if (! playerMeta) return false
+    if (! bestPlayer) return false
 
     return {
-        nickname: playerMeta.nickname,
-        score: playerMeta.killsPerMinute,
+        nickname: bestPlayer.nickname,
+        score: bestPlayer.killsPerMinute,
     }
 }

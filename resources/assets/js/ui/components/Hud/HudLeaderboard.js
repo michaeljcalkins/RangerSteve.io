@@ -3,25 +3,25 @@ import values from 'lodash/values'
 import cs from 'classnames'
 import { connect } from 'react-redux'
 
-export class HudLeaderboard extends React.PureComponent {
+export class HudLeaderboard extends React.Component {
     renderPlayers() {
-        const { players, gamemode } = this.props
-        if (! players) return null
+        const { room } = this.props
+        if (! room.players) return null
 
-        return values(players)
-            .sort((a, b) => a.meta.score < b.meta.score)
+        return values(room.players)
+            .sort((a, b) => a.score < b.score)
             .map(function(player) {
-                let playerNickname = player.meta.nickname
-                    ? player.meta.nickname
+                let playerNickname = player.nickname
+                    ? player.nickname
                     : 'Unnamed Ranger'
 
-                const killingSpreeCount = player.meta.killingSpree > 1
-                    ? `${player.meta.killingSpree}x `
+                const killingSpreeCount = player.killingSpree > 1
+                    ? `${player.killingSpree}x `
                     : null
 
                 const classes = cs({
-                    'text-red': player.meta.team === 'red' && gamemode === 'TeamDeathmatch',
-                    'text-blue': player.meta.team === 'blue' && gamemode === 'TeamDeathmatch',
+                    'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
+                    'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch',
                 })
 
                 return (
@@ -43,7 +43,7 @@ export class HudLeaderboard extends React.PureComponent {
                             style={ { width: '20px' } }
                             title="Player's current score"
                         >
-                            { player.meta.score }
+                            { player.score || 0 }
                         </td>
                     </tr>
                 )
@@ -56,7 +56,7 @@ export class HudLeaderboard extends React.PureComponent {
                 <h1>Scoreboard</h1>
                 <table className="table table-condensed">
                     <tbody>
-                    { this.renderPlayers() }
+                        { this.renderPlayers() }
                     </tbody>
                 </table>
             </div>
@@ -65,14 +65,12 @@ export class HudLeaderboard extends React.PureComponent {
 }
 
 HudLeaderboard.propTypes = {
-    players: PropTypes.object,
-    gamemode: PropTypes.string,
+    room: PropTypes.object,
 }
 
 const mapStateToProps = (state) => {
     return {
-        players: state.room.players,
-        gamemode: state.room.gamemode,
+        room: state.room,
     }
 }
 

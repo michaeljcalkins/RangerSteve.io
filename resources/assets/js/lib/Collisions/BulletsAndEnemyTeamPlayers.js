@@ -12,8 +12,8 @@ export default function() {
             ! state.room.id ||
             state.player.health <= 0 ||
             state.room.state !== 'active' ||
-            enemy.meta.health <= 0 ||
-            state.room.players[enemy.id].meta.team === state.room.players[window.SOCKET_ID].meta.team
+            enemy.data.health <= 0 ||
+            enemy.data.team === RS.player.data.team
         ) return
 
         const yDiff = enemy.y - bullet.y
@@ -27,25 +27,25 @@ export default function() {
             : state.player[currentWeapon].damage
 
         PlayBloodSpray.call(this, {
-            bulletY: bullet.y,
-            bulletX: bullet.x,
-            playerX: enemy.x,
             bulletRotation: bullet.rotation,
+            bulletX: bullet.x,
+            bulletY: bullet.y,
+            playerX: enemy.x,
         })
 
         if (bullet.weaponId === 'RPG') {
             damagePlayersInBlastDamageRadius.call(this, bullet)
 
             PlayRocketExplosion.call(this, {
-                bulletY: bullet.y,
                 bulletX: bullet.x,
+                bulletY: bullet.y,
             })
         }
 
         emitPlayerDamaged.call(this, {
             damage: bulletDamage,
             weaponId: state.player[currentWeapon].id,
-            damagedPlayerId: enemy.id,
+            damagedPlayerId: enemy.data.id,
             attackingPlayerId: window.SOCKET_ID,
             wasHeadshot,
         })

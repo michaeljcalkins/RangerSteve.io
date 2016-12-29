@@ -19,7 +19,6 @@ import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import CreateHud from '../lib/CreateHandler/CreateHud'
 import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
-import UpdateTeamColors from '../lib/UpdateTeamColors'
 import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
 import PlayerAndEnemyTeamBullets from '../lib/Collisions/PlayerAndEnemyTeamBullets'
 import BulletsAndEnemyTeamPlayers from '../lib/Collisions/BulletsAndEnemyTeamPlayers'
@@ -141,7 +140,6 @@ TeamDeathmatch.prototype = {
 
         RotateBulletsToTrajectory.call(this)
         UpdateHurtBorder.call(this)
-        UpdateTeamColors.call(this)
         UpdatePlayerPosition.call(this)
     },
 

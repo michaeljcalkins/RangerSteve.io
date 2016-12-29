@@ -1,21 +1,17 @@
-// @flow
 import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from './updatePlayerAngles'
 
-export default function RemotePlayer(player: {
-    id: string,
-    meta: Object,
-    x: number,
-    y: number,
-}) {
-    const newRemotePlayer = this.game.add.sprite(player.x, player.y, 'player-placeholder')
+export default function RemotePlayer(playerId, playerData) {
+    const newRemotePlayer = this.game.add.sprite(playerData.x, playerData.y, 'player-placeholder')
     newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
     newRemotePlayer.facing = 'right'
     newRemotePlayer.alive = true
-    newRemotePlayer.id = player.id
-    newRemotePlayer.lastPosition = {
-        x: player.x,
-        y: player.y,
+    newRemotePlayer.data = {
+        id: playerId,
+        lastPosition: {
+            x: playerData.x,
+            y: playerData.y,
+        },
     }
 
     //  Physics
@@ -87,7 +83,7 @@ export default function RemotePlayer(player: {
     newRemotePlayer.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
     newRemotePlayer.rightArmSprite.anchor.setTo(0.62, 0.4)
     newRemotePlayer.rightArmSprite.rotation = 83.4
-    newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[player.meta.weaponId].frame
+    newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.weaponId].frame
     newRemotePlayer.rightArmSprite.scale.y *= -1
     newRemotePlayer.rightArmGroup.angle = 87.67
     newRemotePlayer.rightArmGroup.add(newRemotePlayer.rightArmSprite)
@@ -100,7 +96,6 @@ export default function RemotePlayer(player: {
     newRemotePlayer.rightArmGroup.y = GameConsts.PLAYER_BODY.RIGHT_ARM_Y
 
     newRemotePlayer.anchor.set(0.5)
-    newRemotePlayer.meta = player.meta
     updatePlayerAngles(newRemotePlayer, 200)
     newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_LEFT_FRAME
 
