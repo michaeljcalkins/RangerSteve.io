@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react'
+import React, { PureComponent, PropTypes } from 'react'
 
 import HudNewChatMessage from './HudNewChatMessage'
 
-export default class HudChatHistory extends React.PureComponent {
+export default class HudChatHistory extends PureComponent {
     renderMessages() {
         const { messages, isOpen, newChatMessageCharacter } = this.props
 

@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import cs from 'classnames'
 
 import ChoosePrimaryView from './ChoosePrimaryView'
@@ -8,7 +8,7 @@ import ControlsView from './ControlsView'
 import WeaponsView from './WeaponsView'
 import SettingsView from './SettingsView'
 
-export default class SettingsModal extends React.PureComponent {
+export default class SettingsModal extends PureComponent {
     renderModalView() {
         const {
             game,

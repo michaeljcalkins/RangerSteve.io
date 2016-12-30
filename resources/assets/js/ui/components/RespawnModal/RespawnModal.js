@@ -1,6 +1,6 @@
 // @flow
 import autobind from 'react-autobind'
-import React from 'react'
+import React, { PureComponent } from 'react'
 import get from 'lodash/get'
 import cs from 'classnames'
 import storage from 'store'
@@ -13,7 +13,7 @@ import GameConsts from 'lib/GameConsts'
 import Client from '../../../lib/Client'
 // import emptyEventSchema from 'lib/schemas/emptyEventSchema'
 
-export class RespawnModal extends React.PureComponent {
+export class RespawnModal extends PureComponent {
     constructor(props) {
         super(props)
         autobind(this)

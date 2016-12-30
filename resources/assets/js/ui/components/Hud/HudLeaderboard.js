@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import values from 'lodash/values'
 import cs from 'classnames'
 import { connect } from 'react-redux'
 
-export class HudLeaderboard extends React.Component {
+export class HudLeaderboard extends Component {
     renderPlayers() {
         const { room } = this.props
         if (! room.players) return null

@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { Component } from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
 import cs from 'classnames'
@@ -19,7 +19,7 @@ import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNickname'
 import NetworkStats from './NetworkStats/NetworkStats'
 
-export default class GameUi extends React.Component {
+export default class GameUi extends Component {
     static props = {
         game: Object,
         onCloseChatModal: Function,

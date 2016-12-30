@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { PureComponent, PropTypes } from 'react'
 
-export default class HudKillingSpree extends React.PureComponent {
+export default class HudKillingSpree extends PureComponent {
     renderMessage() {
         let message = null
         const { killingSpreeCount } = this.props

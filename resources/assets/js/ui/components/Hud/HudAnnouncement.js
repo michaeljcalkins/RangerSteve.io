@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { PureComponent, PropTypes } from 'react'
 
-export default class HudAnnouncement extends React.PureComponent {
+export default class HudAnnouncement extends PureComponent {
     render() {
         const {announcement} = this.props
         if (!announcement || !announcement.trim().length) return

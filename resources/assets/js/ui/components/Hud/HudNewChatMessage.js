@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import autobind from 'react-autobind'
 
 import GameConsts from 'lib/GameConsts'
 
-export default class HudNewChatMessage extends React.Component {
+export default class HudNewChatMessage extends Component {
     constructor(props) {
         super(props)
         autobind(this)

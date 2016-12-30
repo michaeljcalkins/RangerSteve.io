@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react'
+import React, { PureComponent, PropTypes } from 'react'
 
 import GameConsts from 'lib/GameConsts'
 
-export default class HudKillLog extends React.PureComponent {
+export default class HudKillLog extends PureComponent {
     renderMessages() {
         const { messages } = this.props
 
