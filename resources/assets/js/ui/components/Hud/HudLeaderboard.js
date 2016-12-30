@@ -1,12 +1,11 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import values from 'lodash/values'
 import cs from 'classnames'
 import { connect } from 'react-redux'
 
-export function HudLeaderboard({
-    room,
-}) {
-    function renderPlayers() {
+export class HudLeaderboard extends Component {
+    renderPlayers() {
+        const { room } = this.props
         if (! room.players) return null
 
         return values(room.players)
@@ -51,16 +50,18 @@ export function HudLeaderboard({
             })
     }
 
-    return (
-        <div className="hud-leaderboard hud-item no-pointer-events">
-            <h1>Scoreboard</h1>
-            <table className="table table-condensed">
-                <tbody>
-                    { renderPlayers() }
-                </tbody>
-            </table>
-        </div>
-    )
+    render() {
+        return (
+            <div className="hud-leaderboard hud-item no-pointer-events">
+                <h1>Scoreboard</h1>
+                <table className="table table-condensed">
+                    <tbody>
+                        { this.renderPlayers() }
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
 }
 
 HudLeaderboard.propTypes = {

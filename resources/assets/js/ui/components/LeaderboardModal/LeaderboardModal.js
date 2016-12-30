@@ -1,5 +1,5 @@
 import autobind from 'react-autobind'
-import React, { Component, PropTypes } from 'react'
+import React, { PureComponent, PropTypes } from 'react'
 import values from 'lodash/values'
 import get from 'lodash/get'
 import cs from 'classnames'
@@ -13,7 +13,7 @@ import getPlayerWithBestKillsPerMinute from '../../../lib/getPlayerWithBestKills
 
 const { object } = PropTypes
 
-export default class Leaderboard extends Component {
+export default class LeaderboardModal extends PureComponent {
     static propTypes = {
         room: object.isRequired,
     }
@@ -171,10 +171,7 @@ export default class Leaderboard extends Component {
 
         return (
             <div>
-                <div
-                    className="modal modal-leaderboard"
-                    style={ { display: 'block' } }
-                >
+                <div className="modal modal-leaderboard show">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -220,10 +217,7 @@ export default class Leaderboard extends Component {
                         </div>
                     </div>
                 </div>
-                <div
-                    className="modal-backdrop"
-                    style={ { display: 'block' } }
-                 />
+                <div className="modal-backdrop show" />
             </div>
         )
     }

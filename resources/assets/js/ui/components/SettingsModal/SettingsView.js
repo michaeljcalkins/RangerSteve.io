@@ -1,11 +1,11 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import autobind from 'react-autobind'
 import storage from 'store'
 import NameGenerator from '../../../lib/NameGenerator'
 import GameConsts from 'lib/GameConsts'
 
-export default class SettingsView extends React.Component {
+export default class SettingsView extends PureComponent {
     constructor(props) {
         super(props)
         autobind(this)

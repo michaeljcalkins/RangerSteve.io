@@ -1,10 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { PureComponent, PropTypes } from 'react'
 
-export default function HudKillingSpree({
-    killingSpreeCount,
-}) {
-    function renderMessage() {
+export default class HudKillingSpree extends PureComponent {
+    renderMessage() {
         let message = null
+        const { killingSpreeCount } = this.props
 
         if (killingSpreeCount === 3) {
             message = 'TRIPLE KILL'
@@ -27,11 +26,13 @@ export default function HudKillingSpree({
         return message
     }
 
-    return (
-        <div className="hud-killing-spree no-pointer-events">
-            { renderMessage() }
-        </div>
-    )
+    render() {
+        return (
+            <div className="hud-killing-spree no-pointer-events">
+                { this.renderMessage() }
+            </div>
+        )
+    }
 }
 
 HudKillingSpree.defaultProps = {

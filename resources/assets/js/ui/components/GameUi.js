@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { Component } from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
 import cs from 'classnames'
@@ -19,7 +19,7 @@ import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNickname'
 import NetworkStats from './NetworkStats/NetworkStats'
 
-export default class GameUi extends React.Component {
+export default class GameUi extends Component {
     static props = {
         game: Object,
         onCloseChatModal: Function,
@@ -156,7 +156,9 @@ export default class GameUi extends React.Component {
                 <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
                 <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />
                 <HudLeaderboard room={ room } />
-                <HudAnnouncement announcement={ room.announcement } />
+                { room.announcement &&
+                    <HudAnnouncement announcement={ room.announcement }/>
+                }
                 <HudChatHistory
                     isOpen={ game.chatModalIsOpen }
                     messages={ game.chatMessages }
@@ -165,11 +167,7 @@ export default class GameUi extends React.Component {
                 />
 
                 { this.isLeaderboardModalOpen() &&
-                    <LeaderboardModal
-                        players={ room.players }
-                        room={ room }
-                        roundStartTime={ room.roundStartTime }
-                    />
+                    <LeaderboardModal room={ room } />
                 }
 
                 { player.health <= 0 && room.state !== 'ended' &&
@@ -180,31 +178,22 @@ export default class GameUi extends React.Component {
                     />
                 }
 
-                { (
-                    (player.health <= 0 && room.state !== 'ended') ||
-                    game.settingsModalIsOpen
-                ) &&
-                <div
-                    className="modal-backdrop"
-                    style={ { display: 'block' } }
-                />
+                { game.settingsModalIsOpen &&
+                    <SettingsModal
+                        game={ game }
+                        onClose={ onCloseSettingsModal }
+                        onKeyboardControlChange={ props.onKeyboardControlChange }
+                        onNicknameChange={ this.handleNicknameChange }
+                        onPrimaryGunClick={ this.handlePrimaryGunClick }
+                        onQualityChange={ this.handleQualityChange }
+                        onRespawnChange={ props.onSetAutoRespawn }
+                        onSecondaryGunClick={ this.handleSecondaryGunClick }
+                        onSetResetEventsFlag={ props.onSetResetEventsFlag }
+                        onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
+                        onViewChange={ onSettingsViewChange }
+                        player={ player }
+                    />
                 }
-
-                <SettingsModal
-                    game={ game }
-                    isOpen={ game.settingsModalIsOpen }
-                    onClose={ onCloseSettingsModal }
-                    onKeyboardControlChange={ props.onKeyboardControlChange }
-                    onNicknameChange={ this.handleNicknameChange }
-                    onPrimaryGunClick={ this.handlePrimaryGunClick }
-                    onQualityChange={ this.handleQualityChange }
-                    onRespawnChange={ props.onSetAutoRespawn }
-                    onSecondaryGunClick={ this.handleSecondaryGunClick }
-                    onSetResetEventsFlag={ props.onSetResetEventsFlag }
-                    onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
-                    onViewChange={ onSettingsViewChange }
-                    player={ player }
-                />
 
                 { window.RS && window.RS.networkStats &&
                     <NetworkStats stats={window.RS.networkStats} />

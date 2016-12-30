@@ -1,6 +1,6 @@
 // @flow
 import autobind from 'react-autobind'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import get from 'lodash/get'
 import cs from 'classnames'
 import storage from 'store'
@@ -13,7 +13,7 @@ import GameConsts from 'lib/GameConsts'
 import Client from '../../../lib/Client'
 // import emptyEventSchema from 'lib/schemas/emptyEventSchema'
 
-export class RespawnModal extends Component {
+export class RespawnModal extends PureComponent {
     constructor(props) {
         super(props)
         autobind(this)
@@ -186,45 +186,45 @@ export class RespawnModal extends Component {
         })
 
         return (
-            <div
-                className="modal modal-respawn"
-                style={ { display: 'block' } }
-            >
-                <div className="modal-dialog">
-                    <div className={ modalContentClasses }>
-                        <div className="modal-header">
-                            <h4 className="modal-title">Respawn</h4>
-                        </div>
-                        <div className="modal-body">
-                            { this.renderCauseOfDeath() }
+            <div>
+                <div className="modal modal-respawn show">
+                    <div className="modal-dialog">
+                        <div className={ modalContentClasses }>
+                            <div className="modal-header">
+                                <h4 className="modal-title">Respawn</h4>
+                            </div>
+                            <div className="modal-body">
+                                { this.renderCauseOfDeath() }
 
-                            <WeaponsView
-                                game={ game }
-                                onViewChange={ this.handleWeaponsViewClick }
-                                player={ player }
-                            />
+                                <WeaponsView
+                                    game={ game }
+                                    onViewChange={ this.handleWeaponsViewClick }
+                                    player={ player }
+                                />
 
-                            <div className="row">
-                                <div className="col-sm-4 col-sm-offset-4">
-                                    { this.renderRespawnButton() }
-                                </div>
-                                <div className="col-sm-4 text-left">
-                                    <div className="checkbox" style="margin-top: 15px;">
-                                        <label>
-                                            <input
-                                                checked={ this.state.autoRespawn }
-                                                onClick={ this.handleRespawnChange }
-                                                ref={ node => this.respawn = node }
-                                                type="checkbox"
-                                            />
-                                            Auto respawn
-                                        </label>
+                                <div className="row">
+                                    <div className="col-sm-4 col-sm-offset-4">
+                                        { this.renderRespawnButton() }
+                                    </div>
+                                    <div className="col-sm-4 text-left">
+                                        <div className="checkbox" style="margin-top: 15px;">
+                                            <label>
+                                                <input
+                                                    checked={ this.state.autoRespawn }
+                                                    onClick={ this.handleRespawnChange }
+                                                    ref={ node => this.respawn = node }
+                                                    type="checkbox"
+                                                />
+                                                Auto respawn
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div className="modal-backdrop show" />
             </div>
         )
     }
