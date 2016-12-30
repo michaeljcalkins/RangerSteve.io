@@ -64,8 +64,8 @@ export default function FireRocket(currentWeaponId) {
         bulletId: bullet.bulletId,
         pointerAngle,
         weaponId: currentWeaponId,
-        x: Math.abs(x),
-        y: Math.abs(y),
+        x: Math.round(Math.max(0, x)),
+        y: Math.round(Math.max(0, y)),
     })
 
     ReloadGunWhenEmpty.call(this, currentWeaponId)

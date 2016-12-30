@@ -15,6 +15,9 @@ const getPlayerById = require('./services/getPlayerById')
 const getTeam = require('./services/getTeam')
 const createRoom = require('./services/createRoom')
 const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
+// const bulletSchema = require('../lib/schemas/bulletSchema')
+// const playerIdSchema = require('../lib/schemas/playerIdSchema')
+const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
 
 filter.seed(require('./seeds/profanity.json'))
 filter.setReplacementMethod('grawlix')
@@ -50,7 +53,7 @@ function init(primusInstance) {
         socket.on('data', (data) => {
             dataReceived += sizeOf(data)
             // console.log('* LOG * data', data.type, data.payload)
-            if (! data || ! data.type) return
+            if (! data || data.type === undefined) return
 
             if (! events[data.type]) return
 
@@ -334,7 +337,7 @@ function onNewPlayer(data) {
 }
 
 // Player has moved
-function onMovePlayer(data) {
+function onMovePlayer(buffer) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
 
     if (! rooms[roomId]) return
@@ -343,7 +346,7 @@ function onMovePlayer(data) {
 
     if (! movePlayer || movePlayer.health <= 0) return
 
-    // const data = movePlayerSchema.decode(buffer)
+    const data = movePlayerSchema.decode(buffer)
 
     // Update player position
     movePlayer.x = data.x
