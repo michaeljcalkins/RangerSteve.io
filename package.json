@@ -67,7 +67,6 @@
     "install": "^0.8.1",
     "json-loader": "^0.5.4",
     "lodash": "^4.16.4",
-    "lodash-webpack-plugin": "^0.10.6",
     "mocha": "^3.1.2",
     "moment": "^2.15.2",
     "morgan": "~1.6.1",
@@ -96,7 +95,6 @@
     "webpack": "2.1.0-beta.25",
     "webpack-bundle-analyzer": "^1.4.1",
     "webpack-merge": "^2.0.0",
-    "webpack-obfuscator": "^0.7.3",
     "yargs": "^6.5.0"
   },
   "devDependencies": {
