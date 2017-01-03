@@ -29,10 +29,6 @@ export default class LeaderboardModal extends PureComponent {
 
   componentDidMount() {
     this.timer = setInterval(this.tick.bind(this), 100)
-    // TODO: check if needed
-    // Client.send(GameConsts.EVENT.REFRESH_ROOM, {
-    //     roomId: this.props.room.id,
-    // })
   }
 
   componentWillUnmount() {
