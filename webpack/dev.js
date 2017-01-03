@@ -10,6 +10,7 @@ module.exports = function (env) {
   return webpackMerge(commonConfig(), {
     devtool: 'eval-source-map',
     plugins: [
+      // new BundleAnalyzerPlugin(),
       new BrowserSyncPlugin({
         host: 'localhost',
         port: 3000,
@@ -26,7 +27,6 @@ module.exports = function (env) {
       new OptimizeJsPlugin({
         sourceMap: false,
       }),
-      // new BundleAnalyzerPlugin(),
     ],
   })
 }

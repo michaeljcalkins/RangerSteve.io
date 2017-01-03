@@ -10,7 +10,7 @@ module.exports = function (env) {
   return webpackMerge(commonConfig(), {
     devtool: 'source-map',
     plugins: [
-      new BundleAnalyzerPlugin(),
+      // new BundleAnalyzerPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': `'production'`,
