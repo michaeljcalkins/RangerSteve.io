@@ -1,7 +1,8 @@
 {
     "plugins": [ "react", "import", "flowtype" ],
     "extends": [
-        "eslint:recommended",
+        "standard-trailing-commas",
+        "standard-react",
         "plugin:react/recommended",
         "plugin:flowtype/recommended"
     ],
@@ -37,15 +38,6 @@
         "it": true
     },
     "rules": {
-        "indent": [2, 2, { "SwitchCase": 1 }],
-
-        "comma-dangle": ["error", "always-multiline"],
-        "no-console": 0,
-        "no-const-assign": 1,
-
-        # prevent accidentally importing constants that don’t exist to your reducers
-        "import/named": 2,
-
         "react/display-name": 0,
         "react/forbid-prop-types": 0,
         "react/jsx-boolean-value": 1,
