@@ -1,8 +1,8 @@
 {
     "presets": [
-        "es2015",
-        "stage-3",
-        "react"
+        ['latest', { modules: false }],
+        "react",
+        "stage-3"
     ],
     "plugins": [
         "transform-decorators-legacy",
