@@ -29,10 +29,7 @@ export default class LeaderboardModal extends PureComponent {
 
   componentDidMount() {
     this.timer = setInterval(this.tick.bind(this), 100)
-    // TODO: check if needed
-    // Client.send(GameConsts.EVENT.REFRESH_ROOM, {
-    //     roomId: this.props.room.id,
-    // })
+    Client.send(GameConsts.EVENT.REQUEST_PLAYER_SCORES)
   }
 
   componentWillUnmount() {
@@ -73,9 +70,9 @@ export default class LeaderboardModal extends PureComponent {
           >
             <td className="text-right">{ key + 1 }</td>
             <td>{ playerNickname }</td>
-            <td>{ score }</td>
-            <td>{ kills }</td>
-            <td>{ deaths }</td>
+            <td>{ score || 0 }</td>
+            <td>{ kills || 0 }</td>
+            <td>{ deaths || 0 }</td>
             <td>{ headshotsPerKill }</td>
             <td>{ kdRatio ? kdRatio.toFixed(2) : 0 }</td>
           </tr>

@@ -11,6 +11,7 @@ import onPlayerKillLog from './onPlayerKillLog'
 import onRefreshRoom from './onRefreshRoom'
 import onLoadGame from './onLoadGame'
 import onAnnouncement from './onAnnouncement'
+import onUpdatePlayerScores from './onUpdatePlayerScores'
 import Client from '../Client'
 import storage from 'store'
 
@@ -24,6 +25,7 @@ const events = {
     [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
     [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
     [GameConsts.EVENT.ANNOUNCEMENT]: onAnnouncement,
+    [GameConsts.EVENT.UPDATE_PLAYER_SCORES]: onUpdatePlayerScores,
 }
 
 let dataReceived = 0

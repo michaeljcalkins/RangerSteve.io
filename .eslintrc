@@ -25,6 +25,7 @@
         },
     },
     "globals": {
+        "Phaser": true,
         "RS": true,
         "mixpanel": true,
         "Phaser": true,

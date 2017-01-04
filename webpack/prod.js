@@ -1,10 +1,8 @@
 const webpackMerge = require('webpack-merge')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OptimizeJsPlugin = require('optimize-js-plugin')
-// const JavaScriptObfuscator = require('webpack-obfuscator')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const commonConfig = require('./base.js')
 
@@ -12,8 +10,7 @@ module.exports = function (env) {
   return webpackMerge(commonConfig(), {
     devtool: 'source-map',
     plugins: [
-      new LodashModuleReplacementPlugin,
-      new BundleAnalyzerPlugin(),
+      // new BundleAnalyzerPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': `'production'`,
@@ -38,9 +35,6 @@ module.exports = function (env) {
       new OptimizeJsPlugin({
         sourceMap: false,
       }),
-      // new JavaScriptObfuscator({
-      //   selfDefending: true,
-      // }),
     ],
   })
 }

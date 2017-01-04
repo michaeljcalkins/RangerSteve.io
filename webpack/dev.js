@@ -1,9 +1,8 @@
 const webpackMerge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OptimizeJsPlugin = require('optimize-js-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const commonConfig = require('./base.js')
 
@@ -11,7 +10,7 @@ module.exports = function (env) {
   return webpackMerge(commonConfig(), {
     devtool: 'eval-source-map',
     plugins: [
-      new LodashModuleReplacementPlugin,
+      // new BundleAnalyzerPlugin(),
       new BrowserSyncPlugin({
         host: 'localhost',
         port: 3000,
@@ -28,7 +27,6 @@ module.exports = function (env) {
       new OptimizeJsPlugin({
         sourceMap: false,
       }),
-      new BundleAnalyzerPlugin(),
     ],
   })
 }

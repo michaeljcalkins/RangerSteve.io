@@ -40,6 +40,7 @@ const events = {
     [GameConsts.EVENT.MESSAGE_SEND]: onMessageSend,
     [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
     [GameConsts.EVENT.KICK_PLAYER]: onKickPlayer,
+    [GameConsts.EVENT.REQUEST_PLAYER_SCORES]: onRequestPlayerScores,
 }
 
 let dataReceived = 0
@@ -168,6 +169,34 @@ setInterval(function() {
         })
     })
 }, 1000)
+
+function onRequestPlayerScores() {
+  const roomId = getRoomIdByPlayerId(this.id, rooms)
+  const playerScores = {}
+  Object.keys(rooms[roomId].players).forEach(function(playerId) {
+    playerScores[playerId] = {
+      deaths: rooms[roomId].players[playerId].deaths,
+      kills: rooms[roomId].players[playerId].kills,
+      bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
+      killingSpree: rooms[roomId].players[playerId].killingSpree,
+      bulletsFired: rooms[roomId].players[playerId].bulletsFired,
+      bulletsHit: rooms[roomId].players[playerId].bulletsHit,
+      score: rooms[roomId].players[playerId].score,
+      headshots: rooms[roomId].players[playerId].headshots,
+      secondsInRound: rooms[roomId].players[playerId].secondsInRound,
+    }
+  })
+
+  Server.sendToRoom(
+    roomId,
+    GameConsts.EVENT.UPDATE_PLAYER_SCORES,
+    {
+      blueTeamScore: rooms[roomId].blueTeamScore,
+      players: playerScores,
+      redTeamScore: rooms[roomId].redTeamScore,
+    }
+  )
+}
 
 function onPlayerRespawn() {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
