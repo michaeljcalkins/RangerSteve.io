@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import GameUiContainer from './ui/containers/GameUiContainer'
 
 export default function(store) {
-    render(
+  render(
         <Provider store={ store }>
             <GameUiContainer />
         </Provider>,

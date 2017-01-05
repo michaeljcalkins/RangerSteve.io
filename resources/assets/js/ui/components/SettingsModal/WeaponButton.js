@@ -6,14 +6,14 @@ export default function WeaponButton({
     onClick,
     weapon,
 }) {
-    function renderWeaponImage() {
-        if (! weapon) return null
-        return <img src={ '/images/guns/large/' + weapon.image } />
-    }
-
+  function renderWeaponImage() {
     if (! weapon) return null
+    return <img src={ '/images/guns/large/' + weapon.image } />
+  }
 
-    return (
+  if (! weapon) return null
+
+  return (
         <div
             className="option-group option-group-lg option-character-group align-middle"
             id="open-primary-weapon-menu-button"
@@ -29,6 +29,6 @@ export default function WeaponButton({
 }
 
 WeaponButton.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    weapon: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  weapon: PropTypes.object.isRequired,
 }

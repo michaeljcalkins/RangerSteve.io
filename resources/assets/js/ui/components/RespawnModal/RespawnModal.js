@@ -14,60 +14,60 @@ import Client from '../../../lib/Client'
 // import emptyEventSchema from 'lib/schemas/emptyEventSchema'
 
 export class RespawnModal extends PureComponent {
-    constructor(props) {
-        super(props)
-        autobind(this)
-    }
+  constructor(props) {
+    super(props)
+    autobind(this)
+  }
 
-    state: Object = {
-        autoRespawn: this.props.game.autoRespawn,
-        oneTimeAutoRespawn: false,
-        elapsed: 0,
-        view: 'default',
-    }
+  state: Object = {
+    autoRespawn: this.props.game.autoRespawn,
+    oneTimeAutoRespawn: false,
+    elapsed: 0,
+    view: 'default',
+  }
 
-    componentDidMount() {
-        this.timer = setInterval(this.tick.bind(this), 100)
-    }
+  componentDidMount() {
+    this.timer = setInterval(this.tick.bind(this), 100)
+  }
 
-    componentWillUnmount() {
-        clearInterval(this.timer)
-    }
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
 
-    props: {
+  props: {
         player: Object,
         room: Object,
     }
 
-    tick() {
-        const { respawnTime } = this.props.player
-        const currentTime = Math.floor(Date.now())
-        const timeRemaining = respawnTime - currentTime
-        let seconds = Number((timeRemaining / 1000).toFixed(1))
-        if (seconds % 1 === 0) seconds = seconds + '.0'
+  tick() {
+    const { respawnTime } = this.props.player
+    const currentTime = Math.floor(Date.now())
+    const timeRemaining = respawnTime - currentTime
+    let seconds = Number((timeRemaining / 1000).toFixed(1))
+    if (seconds % 1 === 0) seconds = seconds + '.0'
 
-        if (isNaN(seconds) || seconds <= 0) {
-            this.setState({ elapsed: 0 })
-            return
-        }
-
-        if ((this.state.autoRespawn || this.state.oneTimeAutoRespawn) && seconds <= 0.1) {
-            this.handleRespawnButtonClick()
-        }
-
-        this.setState({ elapsed: seconds })
+    if (isNaN(seconds) || seconds <= 0) {
+      this.setState({ elapsed: 0 })
+      return
     }
 
-    renderDamageGiven() {
-        const { player, room } = this.props
+    if ((this.state.autoRespawn || this.state.oneTimeAutoRespawn) && seconds <= 0.1) {
+      this.handleRespawnButtonClick()
+    }
 
-        if (! get(player, 'attackingDamageStats.attackingDamage')) return null
+    this.setState({ elapsed: seconds })
+  }
 
-        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
-        const defendingHits = get(player, 'attackingDamageStats.attackingHits')
-        const defendingDamage = get(player, 'attackingDamageStats.attackingDamage')
+  renderDamageGiven() {
+    const { player, room } = this.props
 
-        return (
+    if (! get(player, 'attackingDamageStats.attackingDamage')) return null
+
+    const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
+    const defendingHits = get(player, 'attackingDamageStats.attackingHits')
+    const defendingDamage = get(player, 'attackingDamageStats.attackingDamage')
+
+    return (
             <div>
                 <strong className="text-success">Damage given:</strong>
                 <strong>{ defendingDamage }</strong> in
@@ -75,35 +75,35 @@ export class RespawnModal extends PureComponent {
                 to { attackingPlayerName }
             </div>
         )
-    }
+  }
 
-    renderDamageTaken() {
-        const { player, room } = this.props
+  renderDamageTaken() {
+    const { player, room } = this.props
 
-        if (! player.damageStats) return null
+    if (! player.damageStats) return null
 
-        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
-        const attackingHits = get(player, 'damageStats.attackingHits')
-        const attackingDamage = get(player, 'damageStats.attackingDamage')
+    const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
+    const attackingHits = get(player, 'damageStats.attackingHits')
+    const attackingDamage = get(player, 'damageStats.attackingDamage')
 
-        return (
+    return (
             <div>
                 <strong className="text-danger">Damage taken:</strong> <strong>{ attackingDamage }</strong> in <strong>{ attackingHits } hits</strong> from { attackingPlayerName }
                 <br />
             </div>
         )
-    }
+  }
 
-    handleDisabledRespawnButtonClick() {
-        this.setState({
-            ...this.state,
-            oneTimeAutoRespawn: true,
-        })
-    }
+  handleDisabledRespawnButtonClick() {
+    this.setState({
+      ...this.state,
+      oneTimeAutoRespawn: true,
+    })
+  }
 
-    renderRespawnButton() {
-        if (this.state.elapsed > 0) {
-            return (
+  renderRespawnButton() {
+    if (this.state.elapsed > 0) {
+      return (
                 <button
                     className="btn btn-primary btn-lg btn-block disabled"
                     onClick={ this.handleDisabledRespawnButtonClick }
@@ -111,9 +111,9 @@ export class RespawnModal extends PureComponent {
                     Respawning in { this.state.elapsed } seconds
                 </button>
             )
-        }
+    }
 
-        return (
+    return (
             <button
                 className="btn btn-primary btn-lg btn-block"
                 onClick={ this.handleRespawnButtonClick }
@@ -121,16 +121,16 @@ export class RespawnModal extends PureComponent {
                 Respawn Now
             </button>
         )
-    }
+  }
 
-    renderCauseOfDeath() {
-        const { player, room } = this.props
-        const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
-        const selectedWeapon = get(GameConsts, `WEAPONS[${player.damageStats.weaponId}]`)
-        const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
+  renderCauseOfDeath() {
+    const { player, room } = this.props
+    const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
+    const selectedWeapon = get(GameConsts, `WEAPONS[${player.damageStats.weaponId}]`)
+    const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
 
-        if (! attackingPlayerId) {
-            return (
+    if (! attackingPlayerId) {
+      return (
                 <div className="row">
                     <div className="col-sm-6 text-right">
                         <img height="150" src="/images/ui/panel/suicide.png" />
@@ -140,8 +140,8 @@ export class RespawnModal extends PureComponent {
                     </div>
                 </div>
             )
-        } else {
-            return (
+    } else {
+      return (
                 <div className="row">
                     <div className="col-sm-5 text-right">
                         <img
@@ -158,34 +158,34 @@ export class RespawnModal extends PureComponent {
                     </div>
                 </div>
             )
-        }
     }
+  }
 
-    handleRespawnButtonClick() {
+  handleRespawnButtonClick() {
         // var buffer: Uint8Array = emptyEventSchema.encode()
-        Client.send(GameConsts.EVENT.PLAYER_RESPAWN, {})
-    }
+    Client.send(GameConsts.EVENT.PLAYER_RESPAWN, {})
+  }
 
-    handleWeaponsViewClick(view) {
-        this.props.onOpenSettingsModal()
-        this.props.onSettingsViewChange(view)
-    }
+  handleWeaponsViewClick(view) {
+    this.props.onOpenSettingsModal()
+    this.props.onSettingsViewChange(view)
+  }
 
-    handleRespawnChange(evt) {
-        const autoRespawn = evt.target.checked
-        this.setState({ autoRespawn })
-        storage.set('autoRespawn', autoRespawn)
-        this.props.onRespawnChange(autoRespawn)
-    }
+  handleRespawnChange(evt) {
+    const autoRespawn = evt.target.checked
+    this.setState({ autoRespawn })
+    storage.set('autoRespawn', autoRespawn)
+    this.props.onRespawnChange(autoRespawn)
+  }
 
-    render() {
-        const { player, game } = this.props
-        const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
-        const modalContentClasses = cs('modal-content', {
-            'modal-content-suicide': ! attackingPlayerId,
-        })
+  render() {
+    const { player, game } = this.props
+    const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
+    const modalContentClasses = cs('modal-content', {
+      'modal-content-suicide': ! attackingPlayerId,
+    })
 
-        return (
+    return (
             <div>
                 <div className="modal modal-respawn show">
                     <div className="modal-dialog">
@@ -212,7 +212,6 @@ export class RespawnModal extends PureComponent {
                                                 <input
                                                     checked={ this.state.autoRespawn }
                                                     onClick={ this.handleRespawnChange }
-                                                    ref={ node => this.respawn = node }
                                                     type="checkbox"
                                                 />
                                                 Auto respawn
@@ -227,23 +226,23 @@ export class RespawnModal extends PureComponent {
                 <div className="modal-backdrop show" />
             </div>
         )
-    }
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        player: state.player,
-        room: state.room,
-        game: state.game,
-    }
+  return {
+    player: state.player,
+    room: state.room,
+    game: state.game,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    const gameActions = bindActionCreators(actions.game, dispatch)
+  const gameActions = bindActionCreators(actions.game, dispatch)
 
-    return {
-        onRespawnChange: gameActions.setAutoRespawn,
-    }
+  return {
+    onRespawnChange: gameActions.setAutoRespawn,
+  }
 }
 
 export default connect(

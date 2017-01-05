@@ -6,10 +6,10 @@ import * as PunkFallout from './PunkFallout'
 import * as PunkLoop from './PunkLoop'
 
 export default {
-    DeathCycle,
-    EvilUnderground,
-    HighRuleJungle,
-    PunkCity,
-    PunkFallout,
-    PunkLoop,
+  DeathCycle,
+  EvilUnderground,
+  HighRuleJungle,
+  PunkCity,
+  PunkFallout,
+  PunkLoop,
 }

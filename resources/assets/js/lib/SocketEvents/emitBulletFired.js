@@ -11,5 +11,5 @@ export default function(data: {
     weaponId: string,
 }) {
     // let buffer: Uint8Array = bulletSchema.encode(data)
-    Client.send(GameConsts.EVENT.BULLET_FIRED, data)
+  Client.send(GameConsts.EVENT.BULLET_FIRED, data)
 }

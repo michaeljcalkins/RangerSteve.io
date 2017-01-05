@@ -11,12 +11,12 @@ let muzzleFlashHandler = null
 let nextFire = null
 
 export default function FireShotgunShell(currentWeaponId) {
-    const store = this.game.store
-    const state = store.getState()
-    const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
-    const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
+  const store = this.game.store
+  const state = store.getState()
+  const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
+  const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
 
-    if (
+  if (
         ! state.room.id ||
         state.player.health <= 0 ||
         state.room.state !== 'active' ||
@@ -24,71 +24,71 @@ export default function FireShotgunShell(currentWeaponId) {
         RS.bullets.countDead() <= 0
     ) return
 
-    if (this.game.time.time < nextFire || RS.bullets.countDead() <= 0)
-        return
+  if (this.game.time.time < nextFire || RS.bullets.countDead() <= 0)
+    return
 
-    nextFire = this.game.time.time + currentWeapon.fireRate
+  nextFire = this.game.time.time + currentWeapon.fireRate
 
-    let x = RS.player.x
-    let y = RS.player.y - 10
+  let x = RS.player.x
+  let y = RS.player.y - 10
 
-    let pointerAngle = null
-    for (var i = 0; i < 4; i++) {
-        let bullet = RS.bullets.getFirstDead()
-        bullet.bulletId = Math.round(Math.random() * 16000)
-        bullet.damage = currentWeapon.damage
-        bullet.weaponId = currentWeaponId
-        bullet.alpha = 0
-        bullet.height = 2
-        bullet.width = 40
-        bullet.reset(x, y)
+  let pointerAngle = null
+  for (var i = 0; i < 4; i++) {
+    let bullet = RS.bullets.getFirstDead()
+    bullet.bulletId = Math.round(Math.random() * 16000)
+    bullet.damage = currentWeapon.damage
+    bullet.weaponId = currentWeaponId
+    bullet.alpha = 0
+    bullet.height = 2
+    bullet.width = 40
+    bullet.reset(x, y)
 
-        let socketPointerAngle = null
-        if (pointerAngle === null) {
-            pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
-            bullet.rotation = pointerAngle
-            socketPointerAngle = pointerAngle
-        } else {
-            let randomPointerAngle = sample(rangeOfVariance) + pointerAngle
-            let newVelocity = this.game.physics.arcade.velocityFromRotation(randomPointerAngle, currentWeapon.bulletSpeed)
-            bullet.body.velocity.x += newVelocity.x
-            bullet.body.velocity.y += newVelocity.y
-            bullet.rotation = randomPointerAngle
-            socketPointerAngle = randomPointerAngle
-        }
+    let socketPointerAngle = null
+    if (pointerAngle === null) {
+      pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
+      bullet.rotation = pointerAngle
+      socketPointerAngle = pointerAngle
+    } else {
+      let randomPointerAngle = sample(rangeOfVariance) + pointerAngle
+      let newVelocity = this.game.physics.arcade.velocityFromRotation(randomPointerAngle, currentWeapon.bulletSpeed)
+      bullet.body.velocity.x += newVelocity.x
+      bullet.body.velocity.y += newVelocity.y
+      bullet.rotation = randomPointerAngle
+      socketPointerAngle = randomPointerAngle
+    }
 
         // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
-        setTimeout(function() {
-            bullet.alpha = 1
-        }, 40)
+    setTimeout(function() {
+      bullet.alpha = 1
+    }, 40)
 
-        emitBulletFired.call(this, {
-            bulletId: bullet.bulletId,
-            pointerAngle: socketPointerAngle,
-            weaponId: currentWeaponId,
-            x: Math.round(Math.max(0, x)),
-            y: Math.round(Math.max(0, y)),
-        })
-    }
+    emitBulletFired.call(this, {
+      bulletId: bullet.bulletId,
+      pointerAngle: socketPointerAngle,
+      weaponId: currentWeaponId,
+      x: Math.round(Math.max(0, x)),
+      y: Math.round(Math.max(0, y)),
+    })
+  }
 
     // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
-    RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
-    clearTimeout(muzzleFlashHandler)
-    muzzleFlashHandler = setTimeout(() => {
-        RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
-    }, 60)
+  RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+  clearTimeout(muzzleFlashHandler)
+  muzzleFlashHandler = setTimeout(() => {
+    RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+  }, 60)
 
     // Shake camera for gun recoil
-    this.camera.shake(0.0015, 100, true)
+  this.camera.shake(0.0015, 100, true)
 
-    RS.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
-    RS.weaponSoundEffects[currentWeaponId].play()
+  RS.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
+  RS.weaponSoundEffects[currentWeaponId].play()
 
-    if (isPrimarySelected) {
-        store.dispatch(actions.player.decrementPrimaryAmmoRemaining())
-    } else {
-        store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
-    }
+  if (isPrimarySelected) {
+    store.dispatch(actions.player.decrementPrimaryAmmoRemaining())
+  } else {
+    store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
+  }
 
-    ReloadGunWhenEmpty.call(this, currentWeaponId)
+  ReloadGunWhenEmpty.call(this, currentWeaponId)
 }

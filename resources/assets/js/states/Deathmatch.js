@@ -32,82 +32,82 @@ import createEnemyGroup from '../lib/createEnemyGroup'
  * Collisions and all game mode related interactions.
  */
 function Deathmatch(game) {
-    this.game = game
+  this.game = game
 }
 
 Deathmatch.prototype = {
 
-    preload: function() {
-        const store = this.game.store
-        const mapName = store.getState().room.map
-        Maps[mapName].preload.call(this)
-    },
+  preload: function() {
+    const store = this.game.store
+    const mapName = store.getState().room.map
+    Maps[mapName].preload.call(this)
+  },
 
-    create: function() {
-        createEnemyGroup.call(this)
-        CreateMapAndPlayer.call(this)
-        CreateHurtBorder.call(this)
-        CreateKillingSpreeAudio.call(this)
-        CreateBullets.call(this)
-        CreateHud.call(this)
-        CreateKeyboardBindings.call(this)
-        CreateDetectIdleUser()
+  create: function() {
+    createEnemyGroup.call(this)
+    CreateMapAndPlayer.call(this)
+    CreateHurtBorder.call(this)
+    CreateKillingSpreeAudio.call(this)
+    CreateBullets.call(this)
+    CreateHud.call(this)
+    CreateKeyboardBindings.call(this)
+    CreateDetectIdleUser()
 
-        window.onresize = UpdateGameScale.bind(this)
-        UpdateGameScale.call(this)
+    window.onresize = UpdateGameScale.bind(this)
+    UpdateGameScale.call(this)
 
-        this.game.paused = false
-    },
+    this.game.paused = false
+  },
 
-    update: function() {
-        if (this.game.store.getState().game.resetEventsFlag) {
-            this.game.store.dispatch(actions.game.setResetEventsFlag(false))
-            CreateKeyboardBindings.call(this)
-        }
+  update: function() {
+    if (this.game.store.getState().game.resetEventsFlag) {
+      this.game.store.dispatch(actions.game.setResetEventsFlag(false))
+      CreateKeyboardBindings.call(this)
+    }
 
-        const state = this.game.store.getState()
-        const player = state.player
-        const currentWeaponId = player.currentWeapon === 'primaryWeapon'
+    const state = this.game.store.getState()
+    const player = state.player
+    const currentWeaponId = player.currentWeapon === 'primaryWeapon'
             ? player.selectedPrimaryWeaponId
             : player.selectedSecondaryWeaponId
 
-        UpdateHudPositions.call(this)
+    UpdateHudPositions.call(this)
 
         // Pause controls so user can't do anything in the background accidentally
-        const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
-        this.game.input.enabled = ! isPaused
+    const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
+    this.game.input.enabled = ! isPaused
 
-        PlayerAndPlatforms.call(this)
-        PlayerAndEnemyBullets.call(this)
-        BulletsAndEnemyPlayers.call(this)
-        EnemyBulletsAndPlatforms.call(this)
-        BulletsAndPlatforms.call(this)
-        Maps[state.room.map].update.call(this)
+    PlayerAndPlatforms.call(this)
+    PlayerAndEnemyBullets.call(this)
+    BulletsAndEnemyPlayers.call(this)
+    EnemyBulletsAndPlatforms.call(this)
+    BulletsAndPlatforms.call(this)
+    Maps[state.room.map].update.call(this)
 
         /**
          * User related movement and sprite angles
          */
-        if (state.player.health > 0) {
-            PlayerMovementHandler.call(this)
-            PlayerJumpHandler.call(this)
-            updatePlayerAngles.call(this, RS.player)
-        }
+    if (state.player.health > 0) {
+      PlayerMovementHandler.call(this)
+      PlayerJumpHandler.call(this)
+      updatePlayerAngles.call(this, RS.player)
+    }
 
         /**
          * Fire current weapon
          */
         // TODO FireWeaponIfActive.call(this)
-        if (this.game.input.activePointer.leftButton.isDown) {
-            const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
+    if (this.game.input.activePointer.leftButton.isDown) {
+      const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
-            if (GameConsts.DEBUG) {
-                logPointerWorldPosition.call(this)
-            }
+      if (GameConsts.DEBUG) {
+        logPointerWorldPosition.call(this)
+      }
 
-            if (player.isSwitchingWeapon) return
+      if (player.isSwitchingWeapon) return
 
             // Check if primary gun has ammo and is selected
-            if (
+      if (
                 player.currentWeapon === 'primaryWeapon' &&
                 (
                     player.isPrimaryReloading ||
@@ -116,7 +116,7 @@ Deathmatch.prototype = {
             ) return
 
             // Check if secondary gun has ammo and is selected
-            if (
+      if (
                 player.currentWeapon === 'secondaryWeapon' &&
                 (
                     player.isSecondaryReloading ||
@@ -124,40 +124,40 @@ Deathmatch.prototype = {
                 )
             ) return
 
-            switch(currentWeapon.bulletType) {
-                case 'rocket':
-                    FireRocket.call(this, currentWeaponId)
-                    break;
+      switch(currentWeapon.bulletType) {
+      case 'rocket':
+        FireRocket.call(this, currentWeaponId)
+        break;
 
-                case 'shotgun':
-                    FireShotgunShell.call(this, currentWeaponId)
-                    break
+      case 'shotgun':
+        FireShotgunShell.call(this, currentWeaponId)
+        break
 
-                default:
-                    FireStandardBullet.call(this, currentWeaponId)
-            }
-        }
+      default:
+        FireStandardBullet.call(this, currentWeaponId)
+      }
+    }
 
-        RotateBulletsToTrajectory.call(this)
-        UpdateHurtBorder.call(this)
-        UpdatePlayerPosition.call(this)
-    },
+    RotateBulletsToTrajectory.call(this)
+    UpdateHurtBorder.call(this)
+    UpdatePlayerPosition.call(this)
+  },
 
-    render() {
-        if (! GameConsts.DEBUG || ! RS.player) return
+  render() {
+    if (! GameConsts.DEBUG || ! RS.player) return
 
-        this.game.debug.text('FPS: ' + (this.time.fps || '--'), 10, 20, "#ffffff")
-        this.game.debug.body(RS.player)
-        this.game.debug.inputInfo(32, 200)
-        this.game.debug.cameraInfo(this.camera, 32, 110)
-        RS.bullets.forEach((bullet) => {
-            this.game.debug.body(bullet)
-        })
+    this.game.debug.text('FPS: ' + (this.time.fps || '--'), 10, 20, "#ffffff")
+    this.game.debug.body(RS.player)
+    this.game.debug.inputInfo(32, 200)
+    this.game.debug.cameraInfo(this.camera, 32, 110)
+    RS.bullets.forEach((bullet) => {
+      this.game.debug.body(bullet)
+    })
 
-        RS.enemies.forEach((bullet) => {
-            this.game.debug.body(bullet)
-        })
-    },
+    RS.enemies.forEach((bullet) => {
+      this.game.debug.body(bullet)
+    })
+  },
 }
 
 export default Deathmatch

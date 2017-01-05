@@ -7,7 +7,7 @@ export default function ControlsView({
     onKeyboardControlChange,
     onSetResetEventsFlag,
 }) {
-    const options = [
+  const options = [
         { value: Phaser.Keyboard.A, label: 'A' },
         { value: Phaser.Keyboard.B, label: 'B' },
         { value: Phaser.Keyboard.C, label: 'C' },
@@ -35,71 +35,71 @@ export default function ControlsView({
         { value: Phaser.Keyboard.Y, label: 'Y' },
         { value: Phaser.Keyboard.Z, label: 'Z' },
         { value: Phaser.Keyboard.SPACEBAR, label: 'Space Bar' },
-    ]
+  ]
 
-    function handleSetAzerty() {
-        let obj = {}
+  function handleSetAzerty() {
+    let obj = {}
 
-        obj['left'] = Phaser.Keyboard.Q
-        storage.set('keyboardControl.left', Phaser.Keyboard.Q)
-        onKeyboardControlChange(obj)
+    obj['left'] = Phaser.Keyboard.Q
+    storage.set('keyboardControl.left', Phaser.Keyboard.Q)
+    onKeyboardControlChange(obj)
 
-        obj['right'] = Phaser.Keyboard.D
-        storage.set('keyboardControl.right', Phaser.Keyboard.D)
-        onKeyboardControlChange(obj)
+    obj['right'] = Phaser.Keyboard.D
+    storage.set('keyboardControl.right', Phaser.Keyboard.D)
+    onKeyboardControlChange(obj)
 
-        obj['up'] = Phaser.Keyboard.Z
-        storage.set('keyboardControl.up', Phaser.Keyboard.Z)
-        onKeyboardControlChange(obj)
+    obj['up'] = Phaser.Keyboard.Z
+    storage.set('keyboardControl.up', Phaser.Keyboard.Z)
+    onKeyboardControlChange(obj)
 
-        obj['switchWeapon'] = Phaser.Keyboard.A
-        storage.set('keyboardControl.switchWeapon', Phaser.Keyboard.A)
-        onKeyboardControlChange(obj)
+    obj['switchWeapon'] = Phaser.Keyboard.A
+    storage.set('keyboardControl.switchWeapon', Phaser.Keyboard.A)
+    onKeyboardControlChange(obj)
 
-        obj['newChatMessage'] = Phaser.Keyboard.T
-        storage.set('keyboardControl.newChatMessage', Phaser.Keyboard.T)
-        onKeyboardControlChange(obj)
+    obj['newChatMessage'] = Phaser.Keyboard.T
+    storage.set('keyboardControl.newChatMessage', Phaser.Keyboard.T)
+    onKeyboardControlChange(obj)
 
-        onSetResetEventsFlag(true)
-    }
+    onSetResetEventsFlag(true)
+  }
 
-    function handleSetQwerty() {
-        let obj = {}
+  function handleSetQwerty() {
+    let obj = {}
 
-        obj['left'] = Phaser.Keyboard.A
-        storage.set('keyboardControl.left', Phaser.Keyboard.A)
-        onKeyboardControlChange(obj)
+    obj['left'] = Phaser.Keyboard.A
+    storage.set('keyboardControl.left', Phaser.Keyboard.A)
+    onKeyboardControlChange(obj)
 
-        obj['right'] = Phaser.Keyboard.D
-        storage.set('keyboardControl.right', Phaser.Keyboard.D)
-        onKeyboardControlChange(obj)
+    obj['right'] = Phaser.Keyboard.D
+    storage.set('keyboardControl.right', Phaser.Keyboard.D)
+    onKeyboardControlChange(obj)
 
-        obj['up'] = Phaser.Keyboard.W
-        storage.set('keyboardControl.up', Phaser.Keyboard.W)
-        onKeyboardControlChange(obj)
+    obj['up'] = Phaser.Keyboard.W
+    storage.set('keyboardControl.up', Phaser.Keyboard.W)
+    onKeyboardControlChange(obj)
 
-        obj['switchWeapon'] = Phaser.Keyboard.Q
-        storage.set('keyboardControl.switchWeapon', Phaser.Keyboard.Q)
-        onKeyboardControlChange(obj)
+    obj['switchWeapon'] = Phaser.Keyboard.Q
+    storage.set('keyboardControl.switchWeapon', Phaser.Keyboard.Q)
+    onKeyboardControlChange(obj)
 
-        obj['newChatMessage'] = Phaser.Keyboard.T
-        storage.set('keyboardControl.newChatMessage', Phaser.Keyboard.T)
-        onKeyboardControlChange(obj)
+    obj['newChatMessage'] = Phaser.Keyboard.T
+    storage.set('keyboardControl.newChatMessage', Phaser.Keyboard.T)
+    onKeyboardControlChange(obj)
 
-        onSetResetEventsFlag(true)
-    }
+    onSetResetEventsFlag(true)
+  }
 
-    function handleControlChange(name, val) {
-        if (! val) return
-        const storageKey = 'keyboardControl.' + name
-        storage.set(storageKey, val.value)
-        let obj = {}
-        obj[name] = val.value
-        onKeyboardControlChange(obj)
-        onSetResetEventsFlag(true)
-    }
+  function handleControlChange(name, val) {
+    if (! val) return
+    const storageKey = 'keyboardControl.' + name
+    storage.set(storageKey, val.value)
+    let obj = {}
+    obj[name] = val.value
+    onKeyboardControlChange(obj)
+    onSetResetEventsFlag(true)
+  }
 
-    return (
+  return (
         <div className="row">
             <div className="col-sm-12">
                 <div className="row">
@@ -226,7 +226,7 @@ export default function ControlsView({
 }
 
 ControlsView.propTypes = {
-    game: PropTypes.object.isRequired,
-    onKeyboardControlChange: PropTypes.func.isRequired,
-    onSetResetEventsFlag: PropTypes.func.isRequired,
+  game: PropTypes.object.isRequired,
+  onKeyboardControlChange: PropTypes.func.isRequired,
+  onSetResetEventsFlag: PropTypes.func.isRequired,
 }

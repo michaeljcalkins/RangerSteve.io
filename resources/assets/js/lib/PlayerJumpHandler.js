@@ -8,25 +8,25 @@ import actions from '../actions'
 let jumpjetFxHandle = null
 
 function isJumpInputActive() {
-    const store = this.game.store
-    const userSelectedJumpKey = store.getState().game.keyboardControls.up
-    return upInputIsActive.call(this, 5, userSelectedJumpKey)
+  const store = this.game.store
+  const userSelectedJumpKey = store.getState().game.keyboardControls.up
+  return upInputIsActive.call(this, 5, userSelectedJumpKey)
 }
 
 export default function PlayerJumpHandler() {
-    if (includes(['Boot', 'Preloader'], this.game.state.current)) return
+  if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
-    const store = this.game.store
-    const onTheGround = RS.player.body.touching.down
+  const store = this.game.store
+  const onTheGround = RS.player.body.touching.down
 
     // Jump!
-    if (isJumpInputActive.call(this) && onTheGround) {
-        RS.player.body.velocity.y = -GameConsts.SLOPE_FEATURES.jump
-        store.dispatch(actions.player.setJumping(true))
-    }
+  if (isJumpInputActive.call(this) && onTheGround) {
+    RS.player.body.velocity.y = -GameConsts.SLOPE_FEATURES.jump
+    store.dispatch(actions.player.setJumping(true))
+  }
 
     // Jump Jet!
-    if (
+  if (
         (
             this.game.input.activePointer.rightButton.isDown ||
             isJumpJetInputActive.call(this)
@@ -37,34 +37,34 @@ export default function PlayerJumpHandler() {
         // This deadzone stops the rapid
         // sputtering of the sound
         // and animation
-        if (! jumpjetFxHandle && this.game.store.getState().player.jumpJetCounter > GameConsts.JUMP_JET_DEAD_ZONE_FUEL) {
+    if (! jumpjetFxHandle && this.game.store.getState().player.jumpJetCounter > GameConsts.JUMP_JET_DEAD_ZONE_FUEL) {
             // Limits the sound to only be started once
-            jumpjetFxHandle = true
-            RS.jumpjetFx.volume = store.getState().game.sfxVolume
-            RS.jumpjetFx.loopFull()
+      jumpjetFxHandle = true
+      RS.jumpjetFx.volume = store.getState().game.sfxVolume
+      RS.jumpjetFx.loopFull()
 
-            RS.player.rightJumpjet.visible = true
-            RS.player.leftJumpjet.visible = true
-        }
-
-        RS.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
-        store.dispatch(actions.player.incrementJumpJetCounter(GameConsts.JUMP_JET_SPEED))
-    } else {
-        jumpjetFxHandle = false
-        RS.player.body.acceleration.y = 0
-        RS.jumpjetFx.stop()
-        RS.player.rightJumpjet.visible = false
-        RS.player.leftJumpjet.visible = false
-        if (store.getState().player.jumpJetCounter < 0) {
-            store.dispatch(actions.player.decrementJumpJetCounter(GameConsts.JUMP_JET_SPEED_REGENERATION))
-        } else {
-            store.dispatch(actions.player.setJumpJetCounter(0))
-        }
+      RS.player.rightJumpjet.visible = true
+      RS.player.leftJumpjet.visible = true
     }
+
+    RS.player.body.acceleration.y = GameConsts.JUMP_JET_SPEED
+    store.dispatch(actions.player.incrementJumpJetCounter(GameConsts.JUMP_JET_SPEED))
+  } else {
+    jumpjetFxHandle = false
+    RS.player.body.acceleration.y = 0
+    RS.jumpjetFx.stop()
+    RS.player.rightJumpjet.visible = false
+    RS.player.leftJumpjet.visible = false
+    if (store.getState().player.jumpJetCounter < 0) {
+      store.dispatch(actions.player.decrementJumpJetCounter(GameConsts.JUMP_JET_SPEED_REGENERATION))
+    } else {
+      store.dispatch(actions.player.setJumpJetCounter(0))
+    }
+  }
 
     // Reduce the number of available jumps if the jump input is released
-    if (onTheGround && upInputReleased.call(this, store.getState().game.keyboardControls.up)) {
-        RS.player.body.acceleration.x = 0
-        RS.player.body.acceleration.y = 0
-    }
+  if (onTheGround && upInputReleased.call(this, store.getState().game.keyboardControls.up)) {
+    RS.player.body.acceleration.x = 0
+    RS.player.body.acceleration.y = 0
+  }
 }

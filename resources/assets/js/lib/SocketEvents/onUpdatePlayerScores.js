@@ -7,12 +7,12 @@ export default function (data) {
   const room = store.getState().room
 
   Object.keys(data.players).forEach(playerId => {
-      if (! data.players[playerId]) return
+    if (! data.players[playerId]) return
 
-      room.players[playerId] = {
-          ...room.players[playerId],
-          ...data.players[playerId],
-      }
+    room.players[playerId] = {
+      ...room.players[playerId],
+      ...data.players[playerId],
+    }
   })
 
   room.blueTeamScore = data.blueTeamScore

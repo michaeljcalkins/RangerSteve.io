@@ -65,8 +65,8 @@ export default class LeaderboardModal extends PureComponent {
 
         return (
           <tr
-            className={ classes }
-            key={ 'leaderboard-' + key + playerNickname }
+              className={ classes }
+              key={ 'leaderboard-' + key + playerNickname }
           >
             <td className="text-right">{ key + 1 }</td>
             <td>{ playerNickname }</td>
@@ -122,32 +122,32 @@ export default class LeaderboardModal extends PureComponent {
       : 'in the lead.'
 
     switch (room.gamemode) {
-      case 'Deathmatch':
-        return (
+    case 'Deathmatch':
+      return (
           <div className="winning-player">
             <div className="player-name">{ this.renderFirstPlacePlayerName() } { winningPhrase }</div>
           </div>
         )
 
-      case 'TeamDeathmatch':
-        const winningTeamName = room.redTeamScore > room.blueTeamScore
+    case 'TeamDeathmatch':
+      const winningTeamName = room.redTeamScore > room.blueTeamScore
           ? 'Red'
           : 'Blue'
 
-        const classes = cs('winning-player', {
-          'red-winning': room.redTeamScore > room.blueTeamScore,
-          'blue-winning': room.redTeamScore < room.blueTeamScore,
-        })
+      const classes = cs('winning-player', {
+        'red-winning': room.redTeamScore > room.blueTeamScore,
+        'blue-winning': room.redTeamScore < room.blueTeamScore,
+      })
 
-        if (room.redTeamScore === room.blueTeamScore) {
-          return (
+      if (room.redTeamScore === room.blueTeamScore) {
+        return (
             <div className="winning-player">
               <div className="player-name">Teams Are Tied.</div>
             </div>
           )
-        }
+      }
 
-        return (
+      return (
           <div className={ classes }>
             <div className="player-name">{ winningTeamName } Team { winningPhrase }</div>
           </div>
