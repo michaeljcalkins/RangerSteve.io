@@ -28,5 +28,16 @@ module.exports = function (env) {
         sourceMap: false,
       }),
     ],
+    module: {
+      loaders: [
+        {
+          test: /\.scss$/,
+          loader: ExtractTextPlugin.extract({
+            fallbackLoader: 'style-loader',
+            loader: 'css-loader!sass-loader',
+          }),
+        },
+      ],
+    },
   })
 }

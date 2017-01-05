@@ -19,7 +19,7 @@ module.exports = function() {
         'react-dom': 'preact-compat',
         'actions': `${ASSET_PATH}/js/actions/`,
       },
-      extensions: ['.scss', '.webpack.js', '.web.js', '.js'],
+      extensions: ['.scss', '.js'],
     },
     module: {
       loaders: [
@@ -30,14 +30,6 @@ module.exports = function() {
             `${ASSET_PATH}/js`,
             path.resolve('node_modules', 'preact-compat/src'),
           ],
-        },
-        {
-          test: /\.scss$/,
-          exclude: /node_modules/,
-          loader: ExtractTextPlugin.extract({
-            fallbackLoader: 'style',
-            loader: 'css!sass',
-          }),
         },
       ],
     },
