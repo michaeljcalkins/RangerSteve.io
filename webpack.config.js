@@ -1,6 +1,6 @@
 module.exports = function (env) {
   try {
-    if (!['dev', 'prod'].includes(env)) {
+    if (['dev', 'prod'].indexOf(env) === -1) {
       throw new Error('\'' + env + "' is not valid env flag.  Please pass '--env dev' or '--env prod'.")
     }
   } catch (e) {
