@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 export default function HudSettingsButton({
     onButtonClick,
 }) {
-    return (
+  return (
         <div
             className="hud-settings-button hud-item"
             onClick={ onButtonClick }
@@ -14,5 +14,5 @@ export default function HudSettingsButton({
 }
 
 HudSettingsButton.propTypes = {
-    onButtonClick: PropTypes.func.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
 }

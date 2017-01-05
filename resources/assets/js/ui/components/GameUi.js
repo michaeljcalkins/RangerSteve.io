@@ -20,112 +20,112 @@ import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNic
 import NetworkStats from './NetworkStats/NetworkStats'
 
 export default class GameUi extends Component {
-    static props = {
-        game: Object,
-        onCloseChatModal: Function,
-        onCloseSettingsModal: Function,
-        onKeyboardControlChange: Function,
-        onNicknameChange: Function,
-        onOpenChatModal: Function,
-        onOpenSettingsModal: Function,
-        onPrimaryWeaponIdChange: Function,
-        onReduceToMaxChatMessages: Function,
-        onSecondaryWeaponIdChange: Function,
-        onSetResetEventsFlag: Function,
-        onSettingsViewChange: Function,
-        onSfxVolumeChange: Function,
-        player: Object,
-        room: Object,
-    }
+  static props = {
+    game: Object,
+    onCloseChatModal: Function,
+    onCloseSettingsModal: Function,
+    onKeyboardControlChange: Function,
+    onNicknameChange: Function,
+    onOpenChatModal: Function,
+    onOpenSettingsModal: Function,
+    onPrimaryWeaponIdChange: Function,
+    onReduceToMaxChatMessages: Function,
+    onSecondaryWeaponIdChange: Function,
+    onSetResetEventsFlag: Function,
+    onSettingsViewChange: Function,
+    onSfxVolumeChange: Function,
+    player: Object,
+    room: Object,
+  }
 
-    constructor(props) {
-        super(props)
-        autobind(this)
-    }
+  constructor(props) {
+    super(props)
+    autobind(this)
+  }
 
-    componentDidMount() {
-        this.startEventHandler()
-    }
+  componentDidMount() {
+    this.startEventHandler()
+  }
 
-    startEventHandler() {
-        document.addEventListener('keyup', (e) => {
-            const game = this.props.game
+  startEventHandler() {
+    document.addEventListener('keyup', (e) => {
+      const game = this.props.game
 
-            if (e.keyCode === Phaser.Keyboard.ESC) {
-                e.preventDefault()
-                this.props.onCloseSettingsModal()
-                this.props.onCloseChatModal()
-            }
-
-            if (e.keyCode === parseInt(this.props.game.keyboardControls.newChatMessage) && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
-                e.preventDefault()
-                this.props.onOpenChatModal()
-            }
-        })
-    }
-
-    handleSendMessage(message) {
+      if (e.keyCode === Phaser.Keyboard.ESC) {
+        e.preventDefault()
+        this.props.onCloseSettingsModal()
         this.props.onCloseChatModal()
+      }
 
-        if (message.length === 0) return
+      if (e.keyCode === parseInt(this.props.game.keyboardControls.newChatMessage) && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
+        e.preventDefault()
+        this.props.onOpenChatModal()
+      }
+    })
+  }
 
-        this.props.onReduceToMaxChatMessages()
+  handleSendMessage(message) {
+    this.props.onCloseChatModal()
 
-        emitMessageSend.call(this, message)
-    }
+    if (message.length === 0) return
 
-    handleNicknameChange(nickname) {
-        storage.set('nickname', nickname)
-        this.props.onNicknameChange(nickname)
-        emitPlayerUpdateNickname(this.props.room.id, nickname)
-    }
+    this.props.onReduceToMaxChatMessages()
 
-    handleSoundEffectVolumeChange(volume) {
-        storage.set('sfxVolume', volume)
-        this.props.onSfxVolumeChange(volume)
-    }
+    emitMessageSend.call(this, message)
+  }
 
-    handleViewChange(view) {
-        this.setState({ settingsView: view })
-    }
+  handleNicknameChange(nickname) {
+    storage.set('nickname', nickname)
+    this.props.onNicknameChange(nickname)
+    emitPlayerUpdateNickname(this.props.room.id, nickname)
+  }
 
-    handlePrimaryGunClick(weapon) {
-        this.props.onPrimaryWeaponIdChange(weapon.id)
-        storage.set('selectedPrimaryWeaponId', weapon.id)
-    }
+  handleSoundEffectVolumeChange(volume) {
+    storage.set('sfxVolume', volume)
+    this.props.onSfxVolumeChange(volume)
+  }
 
-    handleSecondaryGunClick(weapon) {
-        storage.set('selectedSecondaryWeaponId', weapon.id)
-        this.props.onSecondaryWeaponIdChange(weapon.id)
-    }
+  handleViewChange(view) {
+    this.setState({ settingsView: view })
+  }
 
-    isLeaderboardModalOpen() {
-        const {
+  handlePrimaryGunClick(weapon) {
+    this.props.onPrimaryWeaponIdChange(weapon.id)
+    storage.set('selectedPrimaryWeaponId', weapon.id)
+  }
+
+  handleSecondaryGunClick(weapon) {
+    storage.set('selectedSecondaryWeaponId', weapon.id)
+    this.props.onSecondaryWeaponIdChange(weapon.id)
+  }
+
+  isLeaderboardModalOpen() {
+    const {
             props: {
                 room,
                 game,
             },
         } = this
 
-        return (game.leaderboardModalIsOpen || room.state === 'ended')
-    }
+    return (game.leaderboardModalIsOpen || room.state === 'ended')
+  }
 
-    handleOpenSettingsButton() {
-        const { onOpenSettingsModal, onSettingsViewChange } = this.props
+  handleOpenSettingsButton() {
+    const { onOpenSettingsModal, onSettingsViewChange } = this.props
 
-        onOpenSettingsModal()
-        onSettingsViewChange('settings')
-    }
+    onOpenSettingsModal()
+    onSettingsViewChange('settings')
+  }
 
-    handleChangeWeaponsButton() {
-        const { onOpenSettingsModal, onSettingsViewChange } = this.props
+  handleChangeWeaponsButton() {
+    const { onOpenSettingsModal, onSettingsViewChange } = this.props
 
-        onOpenSettingsModal()
-        onSettingsViewChange('default')
-    }
+    onOpenSettingsModal()
+    onSettingsViewChange('default')
+  }
 
-    render() {
-        const {
+  render() {
+    const {
             props: {
                 player,
                 room,
@@ -137,11 +137,11 @@ export default class GameUi extends Component {
             },
         } = this
 
-        const mainMenuButtonClasses = cs('hud-main-menu-button hud-item', {
-            'is-electron': window.IS_ELECTRON
-        })
+    const mainMenuButtonClasses = cs('hud-main-menu-button hud-item', {
+      'is-electron': window.IS_ELECTRON
+    })
 
-        return (
+    return (
             <div>
                 <a className={ mainMenuButtonClasses } href="/">Back to Main Menu</a>
                 <HudKillLog messages={ game.killLogMessages } />
@@ -165,9 +165,9 @@ export default class GameUi extends Component {
 
                 { player.health <= 0 && room.state !== 'ended' &&
                     <RespawnModal { ...{
-                        onOpenSettingsModal: onOpenSettingsModal,
-                        onSettingsViewChange: onSettingsViewChange,
-                        ...props } }
+                      onOpenSettingsModal: onOpenSettingsModal,
+                      onSettingsViewChange: onSettingsViewChange,
+                      ...props } }
                     />
                 }
 
@@ -188,10 +188,10 @@ export default class GameUi extends Component {
                 }
 
                 { window.RS && window.RS.networkStats &&
-                    <NetworkStats stats={window.RS.networkStats} />
+                    <NetworkStats stats={ window.RS.networkStats } />
                 }
                 <HudStatsGraph id="stats-panel" />
             </div>
         )
-    }
+  }
 }

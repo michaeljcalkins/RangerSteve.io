@@ -11,6 +11,6 @@ export default function(data: {
     x: number,
     y: number,
 }) {
-    var buffer: Uint8Array = movePlayerSchema.encode(data)
-    Client.send(GameConsts.EVENT.MOVE_PLAYER, buffer)
+  var buffer: Uint8Array = movePlayerSchema.encode(data)
+  Client.send(GameConsts.EVENT.MOVE_PLAYER, buffer)
 }

@@ -4,27 +4,27 @@ import cs from 'classnames'
 import { connect } from 'react-redux'
 
 export class HudLeaderboard extends Component {
-    renderPlayers() {
-        const { room } = this.props
-        if (! room.players) return null
+  renderPlayers() {
+    const { room } = this.props
+    if (! room.players) return null
 
-        return values(room.players)
+    return values(room.players)
             .sort((a, b) => a.score < b.score)
             .map(function(player) {
-                let playerNickname = player.nickname
+              let playerNickname = player.nickname
                     ? player.nickname
                     : 'Unnamed Ranger'
 
-                const killingSpreeCount = player.killingSpree > 1
+              const killingSpreeCount = player.killingSpree > 1
                     ? `${player.killingSpree}x `
                     : null
 
-                const classes = cs({
-                    'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
-                    'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch',
-                })
+              const classes = cs({
+                'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
+                'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch',
+              })
 
-                return (
+              return (
                     <tr key={ player.id }>
                         <td
                             className={ classes }
@@ -48,10 +48,10 @@ export class HudLeaderboard extends Component {
                     </tr>
                 )
             })
-    }
+  }
 
-    render() {
-        return (
+  render() {
+    return (
             <div className="hud-leaderboard hud-item no-pointer-events">
                 <h1>Scoreboard</h1>
                 <table className="table table-condensed">
@@ -61,17 +61,17 @@ export class HudLeaderboard extends Component {
                 </table>
             </div>
         )
-    }
+  }
 }
 
 HudLeaderboard.propTypes = {
-    room: PropTypes.object,
+  room: PropTypes.object,
 }
 
 const mapStateToProps = (state) => {
-    return {
-        room: state.room,
-    }
+  return {
+    room: state.room,
+  }
 }
 
 const HudLeaderboardContainer = connect(

@@ -9,8 +9,8 @@ import WeaponsView from './WeaponsView'
 import SettingsView from './SettingsView'
 
 export default class SettingsModal extends PureComponent {
-    renderModalView() {
-        const {
+  renderModalView() {
+    const {
             game,
             onKeyboardControlChange,
             onNicknameChange,
@@ -23,70 +23,70 @@ export default class SettingsModal extends PureComponent {
             player,
         } = this.props
 
-        switch (game.settingsView) {
-            case 'choosePrimary':
-                return (
+    switch (game.settingsView) {
+    case 'choosePrimary':
+      return (
                 <ChoosePrimaryView {...{
-                    onPrimaryGunClick,
-                    onViewChange,
+                  onPrimaryGunClick,
+                  onViewChange,
                 }}
                 />
                 )
 
-            case 'chooseSecondary':
-                return (
+    case 'chooseSecondary':
+      return (
                 <ChooseSecondaryView {...{
-                    onSecondaryGunClick,
-                    onViewChange,
+                  onSecondaryGunClick,
+                  onViewChange,
                 }}
                 />
                 )
 
-            case 'settings':
-                return (
+    case 'settings':
+      return (
                 <SettingsView {...{
-                    game,
-                    onNicknameChange,
-                    onSfxVolumeChange,
-                    onViewChange,
-                    onRespawnChange,
-                    player,
+                  game,
+                  onNicknameChange,
+                  onSfxVolumeChange,
+                  onViewChange,
+                  onRespawnChange,
+                  player,
                 }}
                 />
                 )
 
-            case 'controls':
-                return (
+    case 'controls':
+      return (
                 <ControlsView {...{
-                    game,
-                    onKeyboardControlChange,
-                    onSetResetEventsFlag,
-                    onViewChange,
+                  game,
+                  onKeyboardControlChange,
+                  onSetResetEventsFlag,
+                  onViewChange,
                 }}
                 />
                 )
 
-            default:
-                return (
+    default:
+      return (
                 <WeaponsView {...{
-                    game,
-                    onViewChange,
-                    player,
+                  game,
+                  onViewChange,
+                  player,
                 }}
                 />
                 )
-        }
     }
+  }
 
 
-    render() {
-        const {
+  render() {
+    const {
             game,
             onClose,
             onViewChange,
         } = this.props
 
-        return (
+    return (
             <div className="show">
                 <div className="modal modal-settings show">
                     <div className="modal-dialog">
@@ -108,8 +108,8 @@ export default class SettingsModal extends PureComponent {
                                             style={ { marginBottom: '15px', display: 'inline-block' } }>
                                             <li
                                                 className={ cs({
-                                                    pointer: true,
-                                                    active: game.settingsView === 'default',
+                                                  pointer: true,
+                                                  active: game.settingsView === 'default',
                                                 }) }
                                             >
                                                 <a onClick={ onViewChange.bind(this, 'default') }>
@@ -118,8 +118,8 @@ export default class SettingsModal extends PureComponent {
                                             </li>
                                             <li
                                                 className={ cs({
-                                                    pointer: true,
-                                                    active: game.settingsView === 'settings',
+                                                  pointer: true,
+                                                  active: game.settingsView === 'settings',
                                                 }) }
                                             >
                                                 <a onClick={ onViewChange.bind(this, 'settings') }>
@@ -128,8 +128,8 @@ export default class SettingsModal extends PureComponent {
                                             </li>
                                             <li
                                                 className={ cs({
-                                                    pointer: true,
-                                                    active: game.settingsView === 'controls',
+                                                  pointer: true,
+                                                  active: game.settingsView === 'controls',
                                                 }) }
                                             >
                                                 <a onClick={ onViewChange.bind(this, 'controls') }>
@@ -147,7 +147,7 @@ export default class SettingsModal extends PureComponent {
                 <div className="modal-backdrop show" />
             </div>
         )
-    }
+  }
 }
 
 type Props = {

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function({ weapon }) {
-    return (
+  return (
         <div className="option-stats">
             <div className="row">
                 <div className="col-sm-4">

@@ -6,20 +6,20 @@ import NameGenerator from '../../../lib/NameGenerator'
 import GameConsts from 'lib/GameConsts'
 
 export default class SettingsView extends PureComponent {
-    constructor(props) {
-        super(props)
-        autobind(this)
+  constructor(props) {
+    super(props)
+    autobind(this)
 
-        this.state = {
-            autoRespawn: props.game.autoRespawn,
-            nickname: props.player.nickname,
-            sfxVolume: props.game.sfxVolume,
-        }
+    this.state = {
+      autoRespawn: props.game.autoRespawn,
+      nickname: props.player.nickname,
+      sfxVolume: props.game.sfxVolume,
     }
+  }
 
-    state: Object
+  state: Object
 
-    props: {
+  props: {
         game: Object,
         onNicknameChange: Function,
         onSfxVolumeChange: Function,
@@ -27,33 +27,33 @@ export default class SettingsView extends PureComponent {
         player: Object,
     }
 
-    handleGenerateName() {
-        const nickname = NameGenerator()
-        this.refs.nicknameInput.value = nickname
-        this.setState({ nickname })
-        this.props.onNicknameChange(nickname)
-    }
+  handleGenerateName() {
+    const nickname = NameGenerator()
+    this.refs.nicknameInput.value = nickname
+    this.setState({ nickname })
+    this.props.onNicknameChange(nickname)
+  }
 
-    handleNicknameChange(evt) {
-        if (this.state.nickname.length > 100) return
-        const nickname = evt.target.value.slice(0, 100)
-        this.setState({ nickname })
-        this.props.onNicknameChange(nickname)
-    }
+  handleNicknameChange(evt) {
+    if (this.state.nickname.length > 100) return
+    const nickname = evt.target.value.slice(0, 100)
+    this.setState({ nickname })
+    this.props.onNicknameChange(nickname)
+  }
 
-    handleSoundEffectVolumeChange(evt) {
-        this.props.onSfxVolumeChange(Number(evt.target.value))
-    }
+  handleSoundEffectVolumeChange(evt) {
+    this.props.onSfxVolumeChange(Number(evt.target.value))
+  }
 
-    handleRespawnChange(evt) {
-        const autoRespawn = evt.target.checked
-        this.setState({ autoRespawn })
-        storage.set('autoRespawn', autoRespawn)
-        this.props.onRespawnChange(autoRespawn)
-    }
+  handleRespawnChange(evt) {
+    const autoRespawn = evt.target.checked
+    this.setState({ autoRespawn })
+    storage.set('autoRespawn', autoRespawn)
+    this.props.onRespawnChange(autoRespawn)
+  }
 
-    render() {
-        return (
+  render() {
+    return (
             <div>
                 <div className="row">
                     <div className="col-sm-8 col-sm-offset-2">
@@ -86,7 +86,6 @@ export default class SettingsView extends PureComponent {
                                 <input
                                     checked={ this.state.autoRespawn }
                                     onClick={ this.handleRespawnChange }
-                                    ref={ node => this.respawn = node }
                                     type="checkbox"
                                 />
                                 Auto respawn
@@ -107,5 +106,5 @@ export default class SettingsView extends PureComponent {
                 </div>
             </div>
         )
-    }
+  }
 }

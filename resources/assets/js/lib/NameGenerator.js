@@ -4,5 +4,5 @@ const firstNames = ['Ranger','Real Estate','Slim','Tree Hugger','Mad','Sarcastic
 const lastNames = ['Rick','Steve','Andrew','Mike','Jim','Josh','Nick','Sanchez','Rob','John','Luke','Nader','Andre']
 
 export default function() {
-    return sample(firstNames) + ' ' + sample(lastNames)
+  return sample(firstNames) + ' ' + sample(lastNames)
 }

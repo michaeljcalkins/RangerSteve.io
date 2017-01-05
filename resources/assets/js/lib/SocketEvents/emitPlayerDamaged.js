@@ -10,5 +10,5 @@ export default function(data: {
   weaponId: string,
   wasHeadshot: bool,
 }) {
-    Client.send(GameConsts.EVENT.PLAYER_DAMAGED, data)
+  Client.send(GameConsts.EVENT.PLAYER_DAMAGED, data)
 }

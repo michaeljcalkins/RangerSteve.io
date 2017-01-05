@@ -5,9 +5,9 @@ import room from './room'
 import game from './game'
 
 const reducer = combineReducers({
-    player,
-    room,
-    game,
+  player,
+  room,
+  game,
 })
 
 export default reducer

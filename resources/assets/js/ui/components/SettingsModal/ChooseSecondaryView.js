@@ -12,19 +12,19 @@ export function ChooseSecondaryMenu({
     onCloseSettingsModal,
     player,
 }) {
-    function handleSelectSecondaryClick(weapon) {
-        mixpanel.track('secondaryWeapon:selected:' + weapon.id)
-        onSecondaryGunClick(weapon)
-        player.health <= 0
+  function handleSelectSecondaryClick(weapon) {
+    mixpanel.track('secondaryWeapon:selected:' + weapon.id)
+    onSecondaryGunClick(weapon)
+    player.health <= 0
             ? onCloseSettingsModal()
             : onSettingsViewChange('main')
-    }
+  }
 
-    function renderWeapons() {
-        return GameConsts.SECONDARY_WEAPON_IDS.map(function(weaponId, index) {
-            const weapon = GameConsts.WEAPONS[weaponId]
+  function renderWeapons() {
+    return GameConsts.SECONDARY_WEAPON_IDS.map(function(weaponId, index) {
+      const weapon = GameConsts.WEAPONS[weaponId]
 
-            return (
+      return (
                 <div
                     className="option-group option-weapon-group align-middle"
                     key={ index }
@@ -37,10 +37,10 @@ export function ChooseSecondaryMenu({
                     <WeaponStats weapon={ weapon } />
                 </div>
             )
-        })
-    }
+    })
+  }
 
-    return (
+  return (
         <div>
             <div className="row">
                 <div className="col-sm-12">
@@ -65,25 +65,25 @@ export function ChooseSecondaryMenu({
 }
 
 ChooseSecondaryMenu.propTypes = {
-    onSecondaryGunClick: PropTypes.func.isRequired,
-    onCloseSettingsModal: PropTypes.func.isRequired,
-    onSettingsViewChange: PropTypes.func.isRequired,
-    player: PropTypes.object,
+  onCloseSettingsModal: PropTypes.func.isRequired,
+  onSecondaryGunClick: PropTypes.func.isRequired,
+  onSettingsViewChange: PropTypes.func.isRequired,
+  player: PropTypes.object,
 }
 
 const mapStateToProps = (state) => {
-    return {
-        player: state.player,
-    }
+  return {
+    player: state.player,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    const gameActions = bindActionCreators(actions.game, dispatch)
+  const gameActions = bindActionCreators(actions.game, dispatch)
 
-    return {
-        onCloseSettingsModal: gameActions.closeSettingsModal,
-        onSettingsViewChange: gameActions.setSettingsModalView,
-    }
+  return {
+    onCloseSettingsModal: gameActions.closeSettingsModal,
+    onSettingsViewChange: gameActions.setSettingsModalView,
+  }
 }
 
 export default connect(

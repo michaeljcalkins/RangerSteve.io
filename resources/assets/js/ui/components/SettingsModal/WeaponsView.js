@@ -6,31 +6,31 @@ import GameConsts from 'lib/GameConsts'
 import WeaponButton from './WeaponButton'
 
 export default class WeaponsView extends PureComponent {
-    constructor(props) {
-        super(props)
-        autobind(this)
-    }
+  constructor(props) {
+    super(props)
+    autobind(this)
+  }
 
-    props: Props
+  props: Props
 
-    handlePrimaryViewClick() {
-        this.props.onViewChange('choosePrimary')
-    }
+  handlePrimaryViewClick() {
+    this.props.onViewChange('choosePrimary')
+  }
 
-    handleSecondaryViewClick() {
-        this.props.onViewChange('chooseSecondary')
-    }
+  handleSecondaryViewClick() {
+    this.props.onViewChange('chooseSecondary')
+  }
 
-    render() {
-        const {
+  render() {
+    const {
             nextSelectedPrimaryWeaponId,
             nextSelectedSecondaryWeaponId,
         } = this.props.player
 
-        const primaryWeapon = GameConsts.WEAPONS[nextSelectedPrimaryWeaponId]
-        const secondaryWeapon = GameConsts.WEAPONS[nextSelectedSecondaryWeaponId]
+    const primaryWeapon = GameConsts.WEAPONS[nextSelectedPrimaryWeaponId]
+    const secondaryWeapon = GameConsts.WEAPONS[nextSelectedSecondaryWeaponId]
 
-        return (
+    return (
             <div>
                 <div className="row">
                     <div className="col-sm-6">
@@ -56,7 +56,7 @@ export default class WeaponsView extends PureComponent {
                 </div>
             </div>
         )
-    }
+  }
 }
 
 type Props = {

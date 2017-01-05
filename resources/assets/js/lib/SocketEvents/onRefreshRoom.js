@@ -95,7 +95,7 @@ export default function onRefreshRoom (data) {
       player.facing === 'left' &&
       ! playerData.flying
     ) {
-        player.playerSprite.animations.play('runLeft-faceLeft')
+      player.playerSprite.animations.play('runLeft-faceLeft')
     } else if (
         player.x < player.data.lastPosition.x &&
         player.facing === 'right' &&

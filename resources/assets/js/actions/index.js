@@ -3,9 +3,9 @@ import * as room from './room'
 import * as game from './game'
 
 const actions = {
-    player,
-    room,
-    game,
+  player,
+  room,
+  game,
 }
 
 export default actions

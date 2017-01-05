@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 export default function HudKeyboardControlsButton({
     onButtonClick,
 }) {
-    return (
+  return (
         <div
             className="hud-keyboard-controls-button hud-item"
             onClick={ onButtonClick }
@@ -14,5 +14,5 @@ export default function HudKeyboardControlsButton({
 }
 
 HudKeyboardControlsButton.propTypes = {
-    onButtonClick: PropTypes.func.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
 }
