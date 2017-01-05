@@ -17,7 +17,6 @@ const initialState = {
     nickname: storage.get('nickname', NameGenerator()),
     primaryAmmoRemaining: 0,
     primaryWeapon: null,
-    quality: storage.get('quality', GameConsts.MAX_QUALITY_SIZE),
     respawnTime: null,
     score: 0,
     secondaryAmmoRemaining: 0,
@@ -30,12 +29,6 @@ storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_QUALITY':
-            return {
-                ...state,
-                quality: action.value,
-            }
-
         case 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID':
             return {
                 ...state,

@@ -13,7 +13,6 @@ export default class SettingsView extends PureComponent {
         this.state = {
             autoRespawn: props.game.autoRespawn,
             nickname: props.player.nickname,
-            quality: props.player.quality,
             sfxVolume: props.game.sfxVolume,
         }
     }
@@ -23,7 +22,6 @@ export default class SettingsView extends PureComponent {
     props: {
         game: Object,
         onNicknameChange: Function,
-        onQualityChange: Function,
         onSfxVolumeChange: Function,
         onViewChange: Function,
         player: Object,
@@ -45,10 +43,6 @@ export default class SettingsView extends PureComponent {
 
     handleSoundEffectVolumeChange(evt) {
         this.props.onSfxVolumeChange(Number(evt.target.value))
-    }
-
-    handleQualityChange(evt) {
-        this.props.onQualityChange(evt.target.value)
     }
 
     handleRespawnChange(evt) {
@@ -108,18 +102,6 @@ export default class SettingsView extends PureComponent {
                                 step=".01"
                                 type="range"
                             />
-                        </div>
-                        <div className="form-group">
-                            <label>Game Quality</label>
-                            <input
-                                defaultValue={ this.state.quality }
-                                max={ GameConsts.MAX_QUALITY_SIZE }
-                                min={ GameConsts.MIN_QUALITY_SIZE }
-                                onChange={ this.handleQualityChange }
-                                step="50"
-                                type="range"
-                            />
-                            <span className="help-block">Low (Less demanding) <span className="pull-right">High (More demanding)</span></span>
                         </div>
                     </div>
                 </div>

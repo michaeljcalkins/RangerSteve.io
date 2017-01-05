@@ -1,21 +1,50 @@
 import GameConsts from 'lib/GameConsts'
 
 export default function() {
-    const state = this.game.store.getState()
-    const scaleFactor = state.player.quality <= GameConsts.MAX_QUALITY_SIZE
-        ? state.player.quality
-        : GameConsts.MAX_QUALITY_SIZE
-    const innerWidth = window.innerWidth
-    const innerHeight = window.innerHeight
-    const gameRatio = innerWidth / innerHeight
-    const widthScaleFactor = Math.ceil(scaleFactor * gameRatio)
-    const heightScaleFactor = scaleFactor
+  const state = this.game.store.getState()
+  const innerWidth = window.innerWidth
+  const innerHeight = window.innerHeight
 
-    this.game.scale.setGameSize(widthScaleFactor, heightScaleFactor)
-    RS.tiles && RS.tiles.resize(widthScaleFactor, heightScaleFactor)
+  let gameRatio, widthScaleFactor, heightScaleFactor
 
-    // $("#ui-app").css({
-    //     transform: "scale(" + Math.min(innerWidth / 1100, 1) + ")",
-    //     "transform-origin": "top right",
-    // })
+  // Dynamically adjust the scale of the game
+  if (innerWidth > innerHeight) {
+    gameRatio = innerHeight / innerWidth
+    widthScaleFactor = GameConsts.SCALING.SCALE_FACTOR
+    heightScaleFactor = Math.ceil(GameConsts.SCALING.SCALE_FACTOR * gameRatio)
+  } else {
+    gameRatio = innerWidth / innerHeight
+    widthScaleFactor = Math.ceil(GameConsts.SCALING.SCALE_FACTOR * gameRatio)
+    heightScaleFactor = GameConsts.SCALING.SCALE_FACTOR
+  }
+
+  /**
+   * If the client's height is greater than the allowed height limit we
+   * force a scale factor on them to discourage this window ratio.
+   * This gives all 16:9 ratio windows the best advantage.
+   *
+   * This is how the game should behave when resizing your window.
+   * 1600x300 = disadvantage
+   * 1600x900 = advantage
+   * 300x1600 = disadvantage
+   */
+  // Statically adjust the scale of the game
+  if (heightScaleFactor > GameConsts.SCALING.UPPER_HEIGHT_SCALE_FACTOR_LIMIT) {
+    this.scale.scaleMode = Phaser.ScaleManager.RESIZE
+    this.game.scale.setGameSize(
+      GameConsts.SCALING.STATIC_WIDTH_SCALE_FACTOR,
+      GameConsts.SCALING.STATIC_HEIGHT_SCALE_FACTOR
+    )
+    return
+  }
+
+  this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
+  this.game.scale.setGameSize(widthScaleFactor, heightScaleFactor)
+  RS.tiles && RS.tiles.resize(widthScaleFactor, heightScaleFactor)
+
+  // TODO resize ui with game
+  // $("#ui-app").css({
+  //     transform: "scale(" + Math.min(innerWidth / 1100, 1) + ")",
+  //     "transform-origin": "top right",
+  // })
 }

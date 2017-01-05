@@ -15,7 +15,6 @@ export default class SettingsModal extends PureComponent {
             onKeyboardControlChange,
             onNicknameChange,
             onPrimaryGunClick,
-            onQualityChange,
             onRespawnChange,
             onSecondaryGunClick,
             onSetResetEventsFlag,
@@ -48,7 +47,6 @@ export default class SettingsModal extends PureComponent {
                 <SettingsView {...{
                     game,
                     onNicknameChange,
-                    onQualityChange,
                     onSfxVolumeChange,
                     onViewChange,
                     onRespawnChange,
@@ -158,7 +156,6 @@ type Props = {
     onClose: Function,
     onNicknameChange: Function,
     onPrimaryGunClick: Function,
-    onQualityChange: Function,
     onSecondaryGunClick: Function,
     onSoundEffectVolumeChange: Function,
     onViewChange: Function,

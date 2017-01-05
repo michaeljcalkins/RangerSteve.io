@@ -29,7 +29,6 @@ export default class GameUi extends Component {
         onOpenChatModal: Function,
         onOpenSettingsModal: Function,
         onPrimaryWeaponIdChange: Function,
-        onQualityChange: Function,
         onReduceToMaxChatMessages: Function,
         onSecondaryWeaponIdChange: Function,
         onSetResetEventsFlag: Function,
@@ -79,12 +78,6 @@ export default class GameUi extends Component {
         storage.set('nickname', nickname)
         this.props.onNicknameChange(nickname)
         emitPlayerUpdateNickname(this.props.room.id, nickname)
-    }
-
-    handleQualityChange(quality) {
-        storage.set('quality', quality)
-        this.props.onQualityChange(quality)
-        window.dispatchEvent(new Event('resize'))
     }
 
     handleSoundEffectVolumeChange(volume) {
@@ -185,7 +178,6 @@ export default class GameUi extends Component {
                         onKeyboardControlChange={ props.onKeyboardControlChange }
                         onNicknameChange={ this.handleNicknameChange }
                         onPrimaryGunClick={ this.handlePrimaryGunClick }
-                        onQualityChange={ this.handleQualityChange }
                         onRespawnChange={ props.onSetAutoRespawn }
                         onSecondaryGunClick={ this.handleSecondaryGunClick }
                         onSetResetEventsFlag={ props.onSetResetEventsFlag }

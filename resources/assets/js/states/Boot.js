@@ -16,7 +16,7 @@ Boot.prototype = {
     },
 
     create: function() {
-        this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
+        this.scale.scaleMode = Phaser.ScaleManager.RESIZE
         // Smooths sprite rendering
         this.game.renderer.renderSession.roundPixels = true
         // Prevents game from pausing when tab loses focus
