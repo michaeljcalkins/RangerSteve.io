@@ -1,8 +1,6 @@
 {
     "plugins": [ "react", "import", "flowtype" ],
     "extends": [
-        "standard-trailing-commas",
-        "standard-react",
         "plugin:react/recommended",
         "plugin:flowtype/recommended"
     ],
