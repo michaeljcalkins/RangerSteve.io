@@ -172,6 +172,8 @@ setInterval(function() {
 
 function onRequestPlayerScores() {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
+  if (! rooms[roomId]) return
+
   const playerScores = {}
   Object.keys(rooms[roomId].players).forEach(function(playerId) {
     playerScores[playerId] = {
@@ -200,6 +202,8 @@ function onRequestPlayerScores() {
 
 function onPlayerRespawn() {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
+    if (! rooms[roomId]) return
+
     const player = getPlayerById(roomId, this.id, rooms)
 
     if (! player) {
@@ -236,6 +240,8 @@ function onKickPlayer(data) {
 
 function onMessageSend(data) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
+    if (! rooms[roomId]) return
+
     const player = getPlayerById(roomId, this.id, rooms)
 
     const newMessage = filter.clean(data.substr(0, GameConsts.MAX_CHAT_MESSAGE_LENGTH))
@@ -368,7 +374,6 @@ function onNewPlayer(data) {
 // Player has moved
 function onMovePlayer(buffer) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
-
     if (! rooms[roomId]) return
 
     const movePlayer = rooms[roomId].players[this.id]
@@ -419,6 +424,8 @@ function onClientDisconnect() {
 
 function onPlayerFullHealth() {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
+    if (! rooms[roomId]) return
+
     let player = getPlayerById(roomId, this.id, rooms)
     if (! player) return
     player.health = GameConsts.PLAYER_FULL_HEALTH
@@ -432,6 +439,8 @@ function onPlayerFullHealth() {
 
 function onPlayerHealing() {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
+    if (! rooms[roomId]) return
+
     let player = getPlayerById(roomId, this.id, rooms)
     player.health += 10
 
@@ -447,6 +456,8 @@ function onPlayerHealing() {
 
 function onPlayerDamaged(data) {
     const roomId = getRoomIdByPlayerId(this.id, rooms)
+    if (! rooms[roomId]) return
+
     let player = getPlayerById(roomId, data.damagedPlayerId, rooms)
     if (! player || player.health <= 0) return
 
@@ -601,6 +612,8 @@ function onPlayerDamaged(data) {
 function onBulletFired(data) {
     // const data = bulletSchema.decode(buffer)
     const roomId = getRoomIdByPlayerId(this.id, rooms)
+    if (! rooms[roomId]) return
+
     const player = getPlayerById(roomId, this.id, rooms)
     data.playerId = this.id
 
