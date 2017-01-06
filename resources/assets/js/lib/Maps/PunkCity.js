@@ -52,7 +52,7 @@ export function createOverlays() {
 export function create() {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
 
-  this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, "background")
+  this.background = this.game.add.sprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, "background")
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
   this.map = this.game.add.tilemap('tilemap')
