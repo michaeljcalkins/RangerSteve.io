@@ -1,10 +1,14 @@
 export default function() {
   const state = this.game.store.getState()
 
-  RS.leftHudBg = this.game.add.tileSprite(-100, this.camera.height - 45, 500, 100, 'leftHudBg')
+  RS.leftHudBg = this.game.add.sprite(-100, this.camera.height - 45, 'leftHudBg')
+  RS.leftHudBg.width = 500
+  RS.leftHudBg.height = 100
   RS.leftHudBg.fixedToCamera = true
 
-  RS.rightHudBg = this.game.add.tileSprite(this.camera.width - 400, this.camera.height - 45, 500, 100, 'rightHudBg')
+  RS.rightHudBg = this.game.add.sprite(this.camera.width - 400, this.camera.height - 45, 'rightHudBg')
+  RS.rightHudBg.width = 500
+  RS.rightHudBg.height = 100
   RS.rightHudBg.fixedToCamera = true
 
   const style = {
