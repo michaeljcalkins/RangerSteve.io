@@ -51,7 +51,7 @@ export function createOverlays() {}
 
 export function create() {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-  this.game.add.sprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
+  this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
   this.groundSprite = this.game.add.sprite(0, WORLD_HEIGHT - 90, 'ground')
   this.groundSprite.alpha = 0
