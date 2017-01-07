@@ -25,7 +25,6 @@ const initialState = {
   resetEventsFlag: false,
   autoRespawn: storage.get('autoRespawn', false),
   isFpsStatsVisible: storage.get('isFpsStatsVisible', false),
-  isNetworkStatsVisible: storage.get('isNetworkStatsVisible', false),
 }
 
 const player = (state = initialState, action) => {
@@ -153,12 +152,6 @@ const player = (state = initialState, action) => {
     return {
       ...state,
       autoRespawn: action.value,
-    }
-
-  case 'SET_IS_NETWORK_STATS_VISIBLE':
-    return {
-      ...state,
-      isNetworkStatsVisible: action.value
     }
 
   case 'SET_IS_FPS_STATS_VISIBLE':
