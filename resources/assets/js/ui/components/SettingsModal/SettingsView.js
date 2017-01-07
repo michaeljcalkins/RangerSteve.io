@@ -37,7 +37,7 @@ export class SettingsView extends PureComponent {
 
   handleNicknameChange(evt) {
     if (this.state.nickname.length > 100) return
-    const nickname = evt.target.value.substr(0, 100)
+    const nickname = evt.currentTarget.value.substr(0, 100)
 
     this.setState({ nickname })
     storage.set('nickname', nickname)
@@ -66,10 +66,10 @@ export class SettingsView extends PureComponent {
     this.props.onFpsStatsChange(isFpsStatsVisible)
   }
 
-  handleSoundEffectVolumeChange() {
+  handleSoundEffectVolumeChange(evt) {
     const volume = Number(evt.currentTarget.value)
     storage.set('sfxVolume', volume)
-    this.props.onSfxVolumeChange(volume)
+    this.props.onSetSfxVolume(volume)
   }
 
   render() {
