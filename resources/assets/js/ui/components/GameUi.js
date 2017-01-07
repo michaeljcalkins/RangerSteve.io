@@ -158,7 +158,7 @@ export default class GameUi extends Component {
           />
         }
 
-        { window.RS && window.RS.networkStats && game.isNetworkStatsVisible &&
+        { window.RS && window.RS.networkStats &&
           <NetworkStats stats={ window.RS.networkStats } />
         }
 

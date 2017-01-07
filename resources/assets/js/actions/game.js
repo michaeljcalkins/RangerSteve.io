@@ -136,10 +136,3 @@ export const setIsFpsStatsVisible = (value) => {
     value,
   }
 }
-
-export const setIsNetworkStatsVisible = (value) => {
-  return {
-    type: 'SET_IS_NETWORK_STATS_VISIBLE',
-    value,
-  }
-}
