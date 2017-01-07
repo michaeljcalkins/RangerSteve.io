@@ -130,9 +130,16 @@ export const setAutoRespawn = (value) => {
   }
 }
 
-export const setState = (value) => {
+export const setIsFpsStatsVisible = (value) => {
   return {
-    type: 'SET_STATE',
+    type: 'SET_IS_FPS_STATS_VISIBLE',
+    value,
+  }
+}
+
+export const setIsNetworkStatsVisible = (value) => {
+  return {
+    type: 'SET_IS_NETWORK_STATS_VISIBLE',
     value,
   }
 }

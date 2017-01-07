@@ -17,27 +17,22 @@ const mapDispatchToProps = (dispatch) => {
   const gameActions = bindActionCreators(actions.game, dispatch)
 
   return {
-    onSetSfxVolume: gameActions.setSfxVolume,
-    onSetNickname: playerActions.setNickname,
     onReduceToMaxChatMessages: gameActions.reduceToMaxChatMessages,
     onCloseSettingsModal: gameActions.closeSettingsModal,
     onOpenSettingsModal: gameActions.openSettingsModal,
     onCloseChatModal: gameActions.closeChatModal,
     onOpenChatModal: gameActions.openChatModal,
-    onNicknameChange: playerActions.setNickname,
-    onSfxVolumeChange: gameActions.setSfxVolume,
     onSettingsViewChange: gameActions.setSettingsModalView,
     onPrimaryWeaponIdChange: playerActions.setNextSelectedPrimaryWeaponId,
     onSecondaryWeaponIdChange: playerActions.setNextSelectedSecondaryWeaponId,
-    onSetAutoRespawn: gameActions.setAutoRespawn,
     onSetResetEventsFlag: gameActions.setResetEventsFlag,
     onKeyboardControlChange: gameActions.setKeyboardControl,
   }
 }
 
 const GameUiContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps,
 )(GameUi)
 
 export default GameUiContainer

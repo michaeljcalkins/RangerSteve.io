@@ -1,6 +1,8 @@
 import React from 'react'
 
-export default function ({stats}) {
+export default function ({
+  stats
+}) {
   return (
     <div className="hud-network-stats no-pointer-events">
       <table>
