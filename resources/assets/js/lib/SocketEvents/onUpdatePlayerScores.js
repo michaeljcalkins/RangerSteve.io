@@ -17,7 +17,7 @@ export default function (data) {
 
   room.blueTeamScore = data.blueTeamScore
   room.redTeamScore = data.redTeamScore
-
+  room.roundStartTime = data.roundStartTime
 
   store.dispatch(actions.room.setRoom(room))
 }

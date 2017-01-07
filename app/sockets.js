@@ -100,10 +100,10 @@ gameloop.setGameLoop(function() {
     })
 
     Server.sendToRoom(
-            roomId,
-            GameConsts.EVENT.REFRESH_ROOM,
-            roomData
-        )
+      roomId,
+      GameConsts.EVENT.REFRESH_ROOM,
+      roomData
+    )
   })
 }, GameConsts.TICK_RATE)
 
@@ -189,13 +189,14 @@ function onRequestPlayerScores() {
     }
   })
 
-  Server.sendToRoom(
-    roomId,
+  Server.sendToSocket(
+    this.id,
     GameConsts.EVENT.UPDATE_PLAYER_SCORES,
     {
       blueTeamScore: rooms[roomId].blueTeamScore,
       players: playerScores,
       redTeamScore: rooms[roomId].redTeamScore,
+      roundStartTime: rooms[roomId].roundStartTime,
     }
   )
 }
