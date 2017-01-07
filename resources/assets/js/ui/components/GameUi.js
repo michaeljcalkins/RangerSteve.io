@@ -55,12 +55,6 @@ export default class GameUi extends Component {
     emitMessageSend.call(this, message)
   }
 
-  handleNicknameChange(nickname) {
-    storage.set('nickname', nickname)
-    this.props.onNicknameChange(nickname)
-    emitPlayerUpdateNickname(this.props.room.id, nickname)
-  }
-
   handleSoundEffectVolumeChange(volume) {
     storage.set('sfxVolume', volume)
     this.props.onSfxVolumeChange(volume)
@@ -154,7 +148,6 @@ export default class GameUi extends Component {
             game={ game }
             onClose={ onCloseSettingsModal }
             onKeyboardControlChange={ onKeyboardControlChange }
-            onNicknameChange={ this.handleNicknameChange }
             onPrimaryGunClick={ this.handlePrimaryGunClick }
             onRespawnChange={ onSetAutoRespawn }
             onSecondaryGunClick={ this.handleSecondaryGunClick }
