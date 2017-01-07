@@ -23,7 +23,7 @@ export default function onPlayerDamaged(data: {
     attackingDamageStats: Object,
     canRespawnTimestamp: number,
 }) {
-    // When an enemy is killed play the death animation where they were.
+  // When an enemy is killed play the death animation where they were.
   if (data.damagedPlayerId !== window.SOCKET_ID && data.health <= 0) {
     const movePlayer = PlayerById.call(this, data.damagedPlayerId)
     movePlayer.visible = false
@@ -34,7 +34,7 @@ export default function onPlayerDamaged(data: {
     return
   }
 
-    // If player damaged was not you do not you and you're not dead don't do anything.
+  // If player damaged was not you do not you and you're not dead don't do anything.
   if (data.damagedPlayerId !== window.SOCKET_ID) return
 
   const store = this.game.store
@@ -54,12 +54,12 @@ export default function onPlayerDamaged(data: {
   if (store.getState().player.health > 55 && store.getState().player.health < 100) {
     clearTimeout(damageTimeout)
     damageTimeout = setTimeout(() => {
-            // Player's health will fully regenerate
+      // Player's health will fully regenerate
       Client.send(GameConsts.EVENT.PLAYER_FULL_HEALTH)
     }, 5000)
   }
 
-    // Wait 5 seconds to begin healing process
+  // Wait 5 seconds to begin healing process
   if (store.getState().player.health > 0 && store.getState().player.health <= 55) {
     clearTimeout(damageTimeout)
     clearInterval(healingInterval)

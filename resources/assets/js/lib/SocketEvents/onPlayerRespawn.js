@@ -21,11 +21,10 @@ export default function onPlayerRespawn(data) {
     let enemyPlayer = PlayerById.call(this, data.id)
     if (! enemyPlayer) return
     enemyPlayer.data.health = GameConsts.PLAYER_FULL_HEALTH
-    enemyPlayer.visible = true
     return
   }
 
-    // Create and set the new spawn point
+  // Create and set the new spawn point
   const spawnPoints = Maps[state.room.map].getSpawnPoints()
   const spawnPoint = GetSpawnPoint(spawnPoints, RS.enemies.children)
 
@@ -42,10 +41,9 @@ export default function onPlayerRespawn(data) {
   store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId]))
   store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
 
-  if (currentWeapon === 'primaryWeapon')
-    RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
-  else
-        RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
+  currentWeapon === 'primaryWeapon'
+    ? RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
+    : RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
 
   store.dispatch(actions.player.setPrimaryIsReloading(false))
   store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))

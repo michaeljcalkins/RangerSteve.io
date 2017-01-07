@@ -12,6 +12,9 @@ function isNotMoving (player) {
   return player.x === player.data.lastPosition.x && player.y === player.data.lastPosition.y
 }
 
+const lastPlayerHealth = {}
+const nextPlayerTween = {}
+
 export default function onRefreshRoom (data) {
   const store = this.game.store
   const room = store.getState().room
@@ -42,17 +45,33 @@ export default function onRefreshRoom (data) {
     player.data.weaponId = playerData.weaponId
     player.data.team = playerData.team
 
+    // Prevent the initial tween after respawning from visibly moving their sprite across the map.
+    if (playerData.health === 100 && lastPlayerHealth[playerId] <= 0) {
+      // The next time their position is tweened must be after this timestamp.
+      nextPlayerTween[playerId] = Date.now() / 1000 + 0.5
+    }
+
+    if (playerData.health > 0 && nextPlayerTween[playerId] < Date.now() / 1000) {
+      // Update player position when they are alive and have not respawned recently.
+      player.visible = true
+      this.game.add.tween(player).to({
+        x: playerData.x,
+        y: playerData.y,
+      }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
+    } else {
+      // Update player position when they are dead or have just respawned back in the game.
+      player.x = playerData.x
+      player.y = playerData.y
+    }
+
+    // When a player's health is 100 and this var is 0 that means that they literally just respawned
+    lastPlayerHealth[playerId] = playerData.health
+
     // 3. update the player
     if (playerData.health <= 0) {
       player.visible = false
       return
     }
-
-    // Update player position
-    this.game.add.tween(player).to({
-      x: playerData.x,
-      y: playerData.y,
-    }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
 
     // Control jump jet visibility
     player.rightJumpjet.visible = playerData.flying
@@ -112,7 +131,6 @@ export default function onRefreshRoom (data) {
 
     player.data.lastPosition.x = player.x
     player.data.lastPosition.y = player.y
-    player.visible = playerData.health > 0
   })
 
   let isNewState = false
