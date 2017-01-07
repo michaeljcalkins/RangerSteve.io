@@ -31,14 +31,18 @@ export class SettingsView extends PureComponent {
   handleGenerateName() {
     const nickname = NameGenerator()
     this.refs.nicknameInput.value = nickname
-    this.setState({ nickname })
-    this.handleNicknameChange(nickname)
+
+    this.setNickname(nickname)
   }
 
   handleNicknameChange(evt) {
-    if (this.state.nickname.length > 100) return
-    const nickname = evt.currentTarget.value.substr(0, 100)
+    if (this.state.nickname.length > GameConsts.MAX_NICKNAME_LENGTH) return
 
+    const nickname = evt.currentTarget.value.substr(0, GameConsts.MAX_NICKNAME_LENGTH)
+    this.setNickname(nickname)
+  }
+
+  setNickname(nickname) {
     this.setState({ nickname })
     storage.set('nickname', nickname)
     this.props.onNicknameChange(nickname)
