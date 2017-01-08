@@ -44,18 +44,15 @@ export default function() {
   window.socket.on('open', onSocketConnected.bind(this))
   window.socket.on('end', onSocketDisconnect.bind(this))
 
-  if (GameConsts.ENABLE_NETWORK_STATS || storage.get('ENABLE_NETWORK_STATS', false)) {
-    NetworkStats.loop(() => {
-      const dataSent = Client.getStats().dataSent
-      const data = NetworkStats.getDataPerSecond(dataSent, dataReceived)
+  NetworkStats.loop(() => {
+    const dataSent = Client.getStats().dataSent
+    const data = NetworkStats.getDataPerSecond(dataSent, dataReceived)
 
-      window.RS.networkStats = {
-        dataSent: formatByteSize(dataSent),
-        dataReceived: formatByteSize(dataReceived),
-        dataSentPerSecond: formatByteSize(data.dataSentPerSecond),
-        dataReceivedPerSecond: formatByteSize(data.dataReceivedPerSecond),
-      }
-            // NetworkStats.print(dataSent, dataReceived)
-    })
-  }
+    window.RS.networkStats = {
+      dataSent: formatByteSize(dataSent),
+      dataReceived: formatByteSize(dataReceived),
+      dataSentPerSecond: formatByteSize(data.dataSentPerSecond),
+      dataReceivedPerSecond: formatByteSize(data.dataReceivedPerSecond),
+    }
+  })
 }
