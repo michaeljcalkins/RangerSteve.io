@@ -16,8 +16,7 @@ export default function FireRocket(currentWeaponId) {
         ! state.room.id ||
         state.player.health <= 0 ||
         state.room.state !== 'active' ||
-        this.game.time.time < nextFire ||
-        RS.bullets.countDead() <= 0
+        this.game.time.time < nextFire
     ) return
 
   nextFire = this.game.time.time + currentWeapon.fireRate
@@ -26,6 +25,8 @@ export default function FireRocket(currentWeaponId) {
   let y = RS.player.y - 10
 
   let bullet = RS.bullets.getFirstDead()
+  if (! bullet) return console.error('No bullet sprite available.')
+
   bullet.bulletId = Math.round(Math.random() * 16000)
   bullet.damage = this.damage
   bullet.weaponId = currentWeaponId

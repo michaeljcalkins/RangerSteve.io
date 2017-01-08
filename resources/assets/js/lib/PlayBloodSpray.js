@@ -16,6 +16,8 @@ export default function(data: {
     bloodY += 25
   }
   const bloodSpray = RS.bloodSprays.getFirstExists(false)
+  if (! bloodSpray) return console.error('No blood sprite available.')
+
   bloodSpray.reset(bloodX, bloodY)
   bloodSpray.rotation = bloodRotation
   bloodSpray.animations.play('spray', 45, false, true)

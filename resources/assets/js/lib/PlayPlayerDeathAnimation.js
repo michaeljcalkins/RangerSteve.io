@@ -5,6 +5,8 @@ export default function(data: {
     y: number,
 }) {
   const playerDeath = RS.playerDeaths.getFirstExists(false)
+  if (! playerDeath) return console.error('No player death sprite available.')
+
   playerDeath.reset(data.x, data.y)
   playerDeath.anchor.setTo(.5)
   playerDeath.animations.play('death', 17)

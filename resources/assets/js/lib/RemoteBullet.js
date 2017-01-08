@@ -13,6 +13,8 @@ export default function RemoteBullet(data: {
     bulletSpeed: number,
 }) {
   let bullet = RS.enemyBullets.getFirstDead()
+  if (! bullet) return console.error('No bullet sprite available.')
+
   bullet.reset(data.x, data.y)
   bullet.bulletId = data.bulletId
   bullet.playerId = data.playerId

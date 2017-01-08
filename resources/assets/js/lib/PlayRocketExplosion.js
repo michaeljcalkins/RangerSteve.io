@@ -1,9 +1,7 @@
-// @flow
-export default function(data: {
-    bulletY: number,
-    bulletX: number,
-}) {
+export default function(data) {
   let rpgExplosion = RS.rpgExplosions.getFirstExists(false)
+  if (! rpgExplosion) return console.error('No RPG explosion sprite available.')
+
   rpgExplosion.reset(data.bulletX, data.bulletY - 50)
   rpgExplosion.anchor.setTo(.5, .5)
   rpgExplosion.animations.play('collision', 17, false, true)
