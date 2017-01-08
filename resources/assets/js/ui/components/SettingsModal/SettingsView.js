@@ -18,6 +18,7 @@ export class SettingsView extends PureComponent {
       autoRespawn: props.game.autoRespawn,
       nickname: props.player.nickname,
       sfxVolume: props.game.sfxVolume,
+      isNetworkStatsVisible: props.game.isNetworkStatsVisible,
       isFpsStatsVisible: props.game.isFpsStatsVisible,
     }
   }
@@ -53,6 +54,13 @@ export class SettingsView extends PureComponent {
     this.setState({ autoRespawn })
     storage.set('autoRespawn', autoRespawn)
     this.props.onAutoRespawnChange(autoRespawn)
+  }
+
+  handleNetworkStatsChange(evt) {
+    const isNetworkStatsVisible = evt.target.checked
+    this.setState({ isNetworkStatsVisible })
+    storage.set('isNetworkStatsVisible', isNetworkStatsVisible)
+    this.props.onNetworkStatsChange(isNetworkStatsVisible)
   }
 
   handleFpsStatsChange(evt) {
@@ -121,6 +129,16 @@ export class SettingsView extends PureComponent {
             <div className="checkbox">
               <label>
                 <input
+                  checked={ this.state.isNetworkStatsVisible }
+                  onClick={ this.handleNetworkStatsChange }
+                  type="checkbox"
+                />
+                Show network stats
+              </label>
+            </div>
+            <div className="checkbox">
+              <label>
+                <input
                   checked={ this.state.isFpsStatsVisible }
                   onClick={ this.handleFpsStatsChange }
                   type="checkbox"
@@ -152,6 +170,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetNickname: playerActions.setNickname,
     onNicknameChange: playerActions.setNickname,
     onAutoRespawnChange: gameActions.setAutoRespawn,
+    onNetworkStatsChange: gameActions.setIsNetworkStatsVisible,
     onFpsStatsChange: gameActions.setIsFpsStatsVisible,
   }
 }
