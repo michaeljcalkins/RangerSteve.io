@@ -11,6 +11,8 @@ export default function onBulletFired(data) {
   if (data.playerId === window.SOCKET_ID) return
 
   let bullet = RS.enemyBullets.getFirstDead()
+  if (! bullet) return console.error('No bullet sprite available.')
+
   bullet.reset(data.x, data.y)
   bullet.data = {
     bulletId: data.bulletId,
@@ -30,11 +32,11 @@ export default function onBulletFired(data) {
   let distanceBetweenBulletAndPlayer = Phaser.Math.distance(RS.player.x, RS.player.y, data.x, data.y)
   let enemyBulletVolume = distanceBetweenBulletAndPlayer > 0 ? 1 - (distanceBetweenBulletAndPlayer / 3000) : 0
 
-    /**
-     * Sound throttle stops the four bullets
-     * fired by the shotgun from being
-     * played four times.
-     */
+  /**
+   * Sound throttle stops the four bullets
+   * fired by the shotgun from being
+   * played four times.
+   */
   if (soundThrottle) return
   soundThrottle = true
   RS.weaponSoundEffects[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume

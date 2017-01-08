@@ -20,12 +20,8 @@ export default function FireShotgunShell(currentWeaponId) {
         ! state.room.id ||
         state.player.health <= 0 ||
         state.room.state !== 'active' ||
-        this.game.time.time < nextFire ||
-        RS.bullets.countDead() <= 0
+        this.game.time.time < nextFire
     ) return
-
-  if (this.game.time.time < nextFire || RS.bullets.countDead() <= 0)
-    return
 
   nextFire = this.game.time.time + currentWeapon.fireRate
 
@@ -35,6 +31,8 @@ export default function FireShotgunShell(currentWeaponId) {
   let pointerAngle = null
   for (var i = 0; i < 4; i++) {
     let bullet = RS.bullets.getFirstDead()
+    if (! bullet) return console.error('No bullet sprite available.')
+
     bullet.bulletId = Math.round(Math.random() * 16000)
     bullet.damage = currentWeapon.damage
     bullet.weaponId = currentWeaponId
