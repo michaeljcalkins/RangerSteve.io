@@ -59,10 +59,10 @@ Preloader.prototype = {
   create: function() {
     const state = this.game.store.getState()
 
-        // Enables advanced profiling features when debugging
+    // Enables advanced profiling features when debugging
     this.game.time.advancedTiming = true
 
-        // Start up Arcade Physics
+    // Start up Arcade Physics
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
     this.game.plugins.add(Phaser.Plugin.ArcadeSlopes)
     this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
