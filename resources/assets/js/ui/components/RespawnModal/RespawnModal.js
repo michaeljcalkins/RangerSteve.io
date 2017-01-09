@@ -68,13 +68,13 @@ export class RespawnModal extends PureComponent {
     const defendingDamage = get(player, 'attackingDamageStats.attackingDamage')
 
     return (
-            <div>
-                <strong className="text-success">Damage given:</strong>
-                <strong>{ defendingDamage }</strong> in
-                <strong>{ defendingHits } hits</strong>
-                to { attackingPlayerName }
-            </div>
-        )
+      <div>
+        <strong className="text-success">Damage given:</strong>
+        <strong>{ defendingDamage }</strong> in
+        <strong>{ defendingHits } hits</strong>
+        to { attackingPlayerName }
+      </div>
+    )
   }
 
   renderDamageTaken() {
@@ -87,11 +87,11 @@ export class RespawnModal extends PureComponent {
     const attackingDamage = get(player, 'damageStats.attackingDamage')
 
     return (
-            <div>
-                <strong className="text-danger">Damage taken:</strong> <strong>{ attackingDamage }</strong> in <strong>{ attackingHits } hits</strong> from { attackingPlayerName }
-                <br />
-            </div>
-        )
+      <div>
+        <strong className="text-danger">Damage taken:</strong> <strong>{ attackingDamage }</strong> in <strong>{ attackingHits } hits</strong> from { attackingPlayerName }
+        <br />
+      </div>
+    )
   }
 
   handleDisabledRespawnButtonClick() {

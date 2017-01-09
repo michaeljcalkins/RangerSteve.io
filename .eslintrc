@@ -37,6 +37,9 @@
     },
     "rules": {
         "indent": ["error", 2],
+        "space-before-function-paren": "never",
+        "space-infix-ops": "error",
+        "space-after-keywords": "error",
 
         "react/display-name": 0,
         "react/forbid-prop-types": 0,

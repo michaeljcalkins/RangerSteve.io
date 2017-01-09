@@ -20,8 +20,8 @@ export default function onRefreshRoom (data) {
   const room = store.getState().room
 
   if (
-      includes(['Boot', 'Preloader'], this.game.state.current) ||
-      !RS.enemies
+    includes(['Boot', 'Preloader'], this.game.state.current) ||
+    ! RS.enemies
   ) return
 
   // Players should only be allowed to move when the room state is active
@@ -31,7 +31,13 @@ export default function onRefreshRoom (data) {
   removePlayersThatLeft.call(this, data)
 
   Object.keys(data.players).forEach(playerId => {
-    if (playerId === window.SOCKET_ID) return
+    if (playerId === window.SOCKET_ID) {
+      if (lastPlayerHealth[playerId] !== data.players[playerId].health) {
+        store.dispatch(actions.player.setHealth(data.players[playerId].health))
+        lastPlayerHealth[playerId] = data.players[playerId].health
+      }
+      return
+    }
 
     const playerData = data.players[playerId]
     let player = PlayerById.call(this, playerId)
@@ -39,7 +45,7 @@ export default function onRefreshRoom (data) {
     // 2. if player is not found create them and continue
     createNewPlayersThatDontExist.call(this, room, playerId, playerData)
 
-    if (!player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
+    if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
     player.data.id = playerId
     player.data.health = playerData.health
     player.data.weaponId = playerData.weaponId
@@ -108,8 +114,7 @@ export default function onRefreshRoom (data) {
       ! playerData.flying
     ) {
       player.playerSprite.animations.play('runRight-faceRight')
-    }
-    else if (
+    } else if (
       player.x < player.data.lastPosition.x &&
       player.facing === 'left' &&
       ! playerData.flying
@@ -135,12 +140,12 @@ export default function onRefreshRoom (data) {
 
   let isNewState = false
 
-  if (!isEqual(room.state, data.state)) {
+  if (! isEqual(room.state, data.state)) {
     room.state = data.state
     isNewState = true
   }
 
-  if (!isEqual(data.players, room.players)) {
+  if (! isEqual(data.players, room.players)) {
     Object.keys(data.players).forEach(playerId => {
       if (!data.players[playerId]) return
 
