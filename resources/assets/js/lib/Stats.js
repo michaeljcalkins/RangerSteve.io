@@ -9,7 +9,7 @@
  * @param {Object} [opts.container] - container DOM node
  * @param {Object} [opts.cssText] - This style string will be applied to the conatiner. Use a falsey value (except `undefined`) to skip set.
  */
-var Stats = function (opts) {
+var Stats = function(opts) {
   opts = opts || {};
   opts.container = opts.container || document.createElement( 'div' );
   opts.cssText = opts.cssText !== undefined ? opts.cssText : 'position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000';
@@ -20,7 +20,7 @@ var Stats = function (opts) {
   if (opts.cssText) {
     container.style.cssText = opts.cssText;
   }
-  container.addEventListener( 'click', function ( event ) {
+  container.addEventListener( 'click', function( event ) {
 
     event.preventDefault();
     showPanel( ++ mode % container.children.length );
@@ -72,13 +72,13 @@ var Stats = function (opts) {
     addPanel: addPanel,
     showPanel: showPanel,
 
-    begin: function () {
+    begin: function() {
 
       beginTime = ( performance || Date ).now();
 
     },
 
-    end: function () {
+    end: function() {
 
       frames ++;
 
@@ -106,7 +106,7 @@ var Stats = function (opts) {
 
     },
 
-    update: function () {
+    update: function() {
 
       beginTime = this.end();
 
@@ -121,7 +121,7 @@ var Stats = function (opts) {
 
 };
 
-Stats.Panel = function ( name, fg, bg ) {
+Stats.Panel = function( name, fg, bg ) {
 
   var min = Infinity, max = 0, round = Math.round;
   var PR = round( window.devicePixelRatio || 1 );
@@ -155,7 +155,7 @@ Stats.Panel = function ( name, fg, bg ) {
 
     dom: canvas,
 
-    update: function ( value, maxValue ) {
+    update: function( value, maxValue ) {
 
       min = Math.min( min, value );
       max = Math.max( max, value );

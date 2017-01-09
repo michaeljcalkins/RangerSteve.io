@@ -55,9 +55,9 @@ export default function onPlayerRespawn(data) {
   this.game.input.reset()
   CreateKeyboardBindings.call(this)
 
-    // Allow Phaser to move the player
-    // so that the map doesn't
-    // kill them again.
+  // Allow Phaser to move the player
+  // so that the map doesn't
+  // kill them again.
   setTimeout(() => {
     store.dispatch(actions.player.setHealth(GameConsts.PLAYER_FULL_HEALTH))
   }, 100)

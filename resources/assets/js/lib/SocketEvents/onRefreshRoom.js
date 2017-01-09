@@ -8,14 +8,14 @@ import removePlayersThatLeft from '../removePlayersThatLeft'
 import createNewPlayersThatDontExist from '../createNewPlayersThatDontExist'
 import PlayerById from '../PlayerById'
 
-function isNotMoving (player) {
+function isNotMoving(player) {
   return player.x === player.data.lastPosition.x && player.y === player.data.lastPosition.y
 }
 
 const lastPlayerHealth = {}
 const nextPlayerTween = {}
 
-export default function onRefreshRoom (data) {
+export default function onRefreshRoom(data) {
   const store = this.game.store
   const room = store.getState().room
 
@@ -27,10 +27,16 @@ export default function onRefreshRoom (data) {
   // Players should only be allowed to move when the room state is active
   this.game.paused = data.state !== 'active'
 
-  // 1. Check for players that do not exist anymore and destroy their sprites
+  /**
+   * 1. Check for players that do not exist anymore and destroy their sprites
+   */
   removePlayersThatLeft.call(this, data)
 
+  // Update all players that we received with new data
   Object.keys(data.players).forEach(playerId => {
+    const playerData = data.players[playerId]
+
+    // Update local player's health if there is a change
     if (playerId === window.SOCKET_ID) {
       if (lastPlayerHealth[playerId] !== data.players[playerId].health) {
         store.dispatch(actions.player.setHealth(data.players[playerId].health))
@@ -39,13 +45,24 @@ export default function onRefreshRoom (data) {
       return
     }
 
-    const playerData = data.players[playerId]
+    /**
+     * 2. Find the player by their playerId
+     */
     let player = PlayerById.call(this, playerId)
 
-    // 2. if player is not found create them and continue
-    createNewPlayersThatDontExist.call(this, room, playerId, playerData)
+    /**
+     * 3. if player is not found create them and continue
+     */
+    if (! player) {
+      player = createNewPlayersThatDontExist.call(this, room, playerId, playerData)
+    }
 
+    // Stop updating players if the round is over
     if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return
+
+    /**
+     * 4. Update player data
+     */
     player.data.id = playerId
     player.data.health = playerData.health
     player.data.weaponId = playerData.weaponId
@@ -57,7 +74,10 @@ export default function onRefreshRoom (data) {
       nextPlayerTween[playerId] = Date.now() / 1000 + 0.5
     }
 
-    if (playerData.health > 0 && nextPlayerTween[playerId] < Date.now() / 1000) {
+    if (
+      (playerData.health > 0 && nextPlayerTween[playerId] < Date.now() / 1000) ||
+      (playerData.health > 0 && ! nextPlayerTween[playerId])
+    ) {
       // Update player position when they are alive and have not respawned recently.
       player.visible = true
       this.game.add.tween(player).to({
@@ -73,7 +93,7 @@ export default function onRefreshRoom (data) {
     // When a player's health is 100 and this var is 0 that means that they literally just respawned
     lastPlayerHealth[playerId] = playerData.health
 
-    // 3. update the player
+    // If player is dead hide them from view
     if (playerData.health <= 0) {
       player.visible = false
       return
@@ -158,7 +178,5 @@ export default function onRefreshRoom (data) {
     isNewState = true
   }
 
-  if (isNewState) {
-    store.dispatch(actions.room.setRoom(room))
-  }
+  if (isNewState) store.dispatch(actions.room.setRoom(room))
 }

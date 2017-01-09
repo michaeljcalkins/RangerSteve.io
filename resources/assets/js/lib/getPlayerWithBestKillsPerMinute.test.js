@@ -2,8 +2,8 @@ import { assert } from 'chai'
 
 import getPlayerWithBestKillsPerMinute from './getPlayerWithBestKillsPerMinute'
 
-describe ('getPlayerMetaWithBestAccuracy', function () {
-  it('should return false if there not enough data to calculate stat', function () {
+describe ('getPlayerMetaWithBestAccuracy', function() {
+  it('should return false if there not enough data to calculate stat', function() {
     const room = {
       "roundEndTime":1478015007,
       "players":{
@@ -19,7 +19,7 @@ describe ('getPlayerMetaWithBestAccuracy', function () {
     assert.equal(getPlayerWithBestKillsPerMinute(room), false)
   })
 
-  it('should return object if there is enough data to calculate stat', function () {
+  it('should return object if there is enough data to calculate stat', function() {
     const room = {
       "roundEndTime":1478015007,
       "players":{

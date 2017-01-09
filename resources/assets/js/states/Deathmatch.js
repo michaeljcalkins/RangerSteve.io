@@ -124,7 +124,7 @@ Deathmatch.prototype = {
                 )
             ) return
 
-      switch(currentWeapon.bulletType) {
+      switch (currentWeapon.bulletType) {
       case 'rocket':
         FireRocket.call(this, currentWeaponId)
         break;
