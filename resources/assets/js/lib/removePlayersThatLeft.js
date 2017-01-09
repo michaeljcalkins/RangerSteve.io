@@ -3,7 +3,7 @@ import get from 'lodash/get'
 import actions from 'actions'
 
 export default function removePlayersThatLeft(data) {
-  if (!RS.enemies) return
+  if (! RS.enemies) return
 
   const store = this.game.store
   const room = this.game.store.getState().room
