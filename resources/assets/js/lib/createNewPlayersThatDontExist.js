@@ -11,11 +11,7 @@ const usernameTextStyle = {
   strokeThickness: 2,
 }
 
-const createdPlayerIds = {}
-
 export default function createNewPlayersThatDontExist (room, playerId, playerData) {
-  if (createdPlayerIds[playerId]) return
-
   const newCreateRemotePlayer = createRemotePlayer.call(this, playerId, playerData)
   const enemyPlayerName = playerData.nickname
     ? playerData.nickname
@@ -34,5 +30,6 @@ export default function createNewPlayersThatDontExist (room, playerId, playerDat
   const player = PlayerById.call(this, playerId)
   this.game.world.bringToTop(RS.enemies)
   if (playerData.team) updatePlayerColor(player, playerData.team)
-  createdPlayerIds[playerId] = true
+
+  return player
 }
