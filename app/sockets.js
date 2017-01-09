@@ -112,13 +112,13 @@ setInterval(function() {
         // Room was likely deleted when the last player left
     if (! rooms[roomId]) return
 
-        // Round has ended and is restarting now
+    // Round has ended and is restarting now
     if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
       util.log('Restarting round for', roomId)
       const previousMap = rooms[roomId].map
       const previousGamemode = rooms[roomId].gamemode
 
-            // Randomly select a map that was not the previous map
+      // Randomly select a map that was not the previous map
       const potentialNextMaps = GameConsts.MAPS.filter(map => map !== previousMap)
       const potentialNextGamemodes = GameConsts.GAMEMODES.filter(gamemode => gamemode !== previousGamemode)
 
@@ -149,14 +149,14 @@ setInterval(function() {
       })
 
       Server.sendToRoom(
-                roomId,
-                GameConsts.EVENT.LOAD_GAME,
-                rooms[roomId]
-            )
+        roomId,
+        GameConsts.EVENT.LOAD_GAME,
+        rooms[roomId]
+      )
       return
     }
 
-        // Round has ended and setting the time the next round will start at
+    // Round has ended and setting the time the next round will start at
     if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
       util.log('Round has ended for', roomId)
       rooms[roomId].state = 'ended'
