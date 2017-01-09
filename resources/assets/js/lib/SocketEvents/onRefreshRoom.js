@@ -31,7 +31,13 @@ export default function onRefreshRoom (data) {
   removePlayersThatLeft.call(this, data)
 
   Object.keys(data.players).forEach(playerId => {
-    if (playerId === window.SOCKET_ID) return
+    if (playerId === window.SOCKET_ID) {
+      if (lastPlayerHealth[playerId] !== data.players[playerId].health) {
+        store.dispatch(actions.player.setHealth(data.players[playerId].health))
+        lastPlayerHealth[playerId] = data.players[playerId].health
+      }
+      return
+    }
 
     const playerData = data.players[playerId]
     let player = PlayerById.call(this, playerId)
