@@ -13,7 +13,6 @@ export default function onPlayerRespawn(data) {
     // const data = playerIdSchema.decode(buffer)
   const state = this.game.store.getState()
   const store = this.game.store
-  const currentWeapon = state.player.currentWeapon
 
   if (includes(['Boot', 'Preloader'], this.game.state.current)) return
 
@@ -41,16 +40,16 @@ export default function onPlayerRespawn(data) {
   store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId]))
   store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
 
-  currentWeapon === 'primaryWeapon'
-    ? RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
-    : RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].frame
-
   store.dispatch(actions.player.setPrimaryIsReloading(false))
   store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))
 
   store.dispatch(actions.player.setSecondaryIsReloading(false))
   store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].ammo))
 
+  store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
+  store.dispatch(actions.player.setIsSwitchingWeapon(false))
+
+  RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
   RS.player.visible = true
   this.game.input.enabled = true
   this.game.input.reset()
