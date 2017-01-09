@@ -63,16 +63,14 @@ export class RespawnModal extends PureComponent {
 
     if (! get(player, 'attackingDamageStats.attackingDamage')) return null
 
-    const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
+    const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].nickname`, 'Enemy Player')
     const defendingHits = get(player, 'attackingDamageStats.attackingHits')
     const defendingDamage = get(player, 'attackingDamageStats.attackingDamage')
 
     return (
       <div>
-        <strong className="text-success">Damage given:</strong>
-        <strong>{ defendingDamage }</strong> in
-        <strong>{ defendingHits } hits</strong>
-        to { attackingPlayerName }
+        <strong className="text-success">Damage given:</strong><strong> { defendingDamage } </strong>
+        in <strong>{ defendingHits } hits</strong> to { attackingPlayerName }
       </div>
     )
   }
@@ -82,13 +80,14 @@ export class RespawnModal extends PureComponent {
 
     if (! player.damageStats) return null
 
-    const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
+    const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].nickname`, 'Enemy Player')
     const attackingHits = get(player, 'damageStats.attackingHits')
     const attackingDamage = get(player, 'damageStats.attackingDamage')
 
     return (
       <div>
-        <strong className="text-danger">Damage taken:</strong> <strong>{ attackingDamage }</strong> in <strong>{ attackingHits } hits</strong> from { attackingPlayerName }
+        <strong className="text-danger">Damage taken:</strong><strong> { attackingDamage } </strong>
+        in <strong>{ attackingHits } hits</strong> from { attackingPlayerName }
         <br />
       </div>
     )
@@ -125,7 +124,8 @@ export class RespawnModal extends PureComponent {
 
   renderCauseOfDeath() {
     const { player, room } = this.props
-    const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].data.nickname`, 'Enemy Player')
+
+    const attackingPlayerName = get(room, `players[${player.damageStats.attackingPlayerId}].nickname`, 'Enemy Player')
     const selectedWeapon = get(GameConsts, `WEAPONS[${player.damageStats.weaponId}]`)
     const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
 
