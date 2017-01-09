@@ -86,20 +86,20 @@ export class SettingsView extends PureComponent {
                 <div className="form-group">
                   <label>Nickname</label>
                   <input
-                    className="form-control"
-                    defaultValue={ this.state.nickname }
-                    maxLength="25"
-                    onChange={ this.handleNicknameChange }
-                    ref="nicknameInput"
-                    type="text"
+                      className="form-control"
+                      defaultValue={ this.state.nickname }
+                      maxLength="25"
+                      onChange={ this.handleNicknameChange }
+                      ref="nicknameInput"
+                      type="text"
                   />
                 </div>
               </div>
               <div className="col-sm-6">
                 <button
-                  className="btn btn-primary btn-sm btn-block"
-                  onClick={ this.handleGenerateName }
-                  style={ { marginTop: '25px' } }
+                    className="btn btn-primary btn-sm btn-block"
+                    onClick={ this.handleGenerateName }
+                    style={ { marginTop: '25px' } }
                 >
                   Random Nickname
                 </button>
@@ -108,20 +108,20 @@ export class SettingsView extends PureComponent {
             <div className="form-group">
               <label>Sound Effects Volume</label>
               <input
-                defaultValue={ this.state.sfxVolume }
-                max=".13"
-                min="0"
-                onChange={ this.handleSoundEffectVolumeChange }
-                step=".01"
-                type="range"
+                  defaultValue={ this.state.sfxVolume }
+                  max=".13"
+                  min="0"
+                  onChange={ this.handleSoundEffectVolumeChange }
+                  step=".01"
+                  type="range"
               />
             </div>
             <div className="checkbox">
               <label>
                 <input
-                  checked={ this.state.autoRespawn }
-                  onClick={ this.handleRespawnChange }
-                  type="checkbox"
+                    checked={ this.state.autoRespawn }
+                    onClick={ this.handleRespawnChange }
+                    type="checkbox"
                 />
                 Auto respawn
               </label>
@@ -129,9 +129,9 @@ export class SettingsView extends PureComponent {
             <div className="checkbox">
               <label>
                 <input
-                  checked={ this.state.isNetworkStatsVisible }
-                  onClick={ this.handleNetworkStatsChange }
-                  type="checkbox"
+                    checked={ this.state.isNetworkStatsVisible }
+                    onClick={ this.handleNetworkStatsChange }
+                    type="checkbox"
                 />
                 Show network stats
               </label>
@@ -139,9 +139,9 @@ export class SettingsView extends PureComponent {
             <div className="checkbox">
               <label>
                 <input
-                  checked={ this.state.isFpsStatsVisible }
-                  onClick={ this.handleFpsStatsChange }
-                  type="checkbox"
+                    checked={ this.state.isFpsStatsVisible }
+                    onClick={ this.handleFpsStatsChange }
+                    type="checkbox"
                 />
                 Show FPS stats
               </label>

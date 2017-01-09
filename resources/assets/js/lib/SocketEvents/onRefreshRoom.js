@@ -8,14 +8,14 @@ import removePlayersThatLeft from '../removePlayersThatLeft'
 import createNewPlayersThatDontExist from '../createNewPlayersThatDontExist'
 import PlayerById from '../PlayerById'
 
-function isNotMoving (player) {
+function isNotMoving(player) {
   return player.x === player.data.lastPosition.x && player.y === player.data.lastPosition.y
 }
 
 const lastPlayerHealth = {}
 const nextPlayerTween = {}
 
-export default function onRefreshRoom (data) {
+export default function onRefreshRoom(data) {
   const store = this.game.store
   const room = store.getState().room
 

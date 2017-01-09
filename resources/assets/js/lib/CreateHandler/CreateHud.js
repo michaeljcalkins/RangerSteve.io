@@ -59,7 +59,7 @@ export default function() {
 
     // Gamemode
   let gamemodeText = state.room.gamemode === 'Deathmatch' ? 'DEATHMATCH' : null
-  gamemodeText = state.room.gamemode === 'TeamDeathmatch' ? 'TEAM DEATHMATCH': gamemodeText
+  gamemodeText = state.room.gamemode === 'TeamDeathmatch' ? 'TEAM DEATHMATCH' : gamemodeText
 
   RS.hudGamemodeText = this.game.add.text(0, 0, gamemodeText, {
     font: "12px Keep Calm",

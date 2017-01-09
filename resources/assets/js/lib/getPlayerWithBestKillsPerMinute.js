@@ -1,6 +1,6 @@
 import get from 'lodash/get'
 
-export default function (room) {
+export default function(room) {
   // 200 seconds tracked in game
   // 4 kills
   // 180 / 60 = 3 minutes

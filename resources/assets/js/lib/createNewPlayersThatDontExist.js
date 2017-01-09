@@ -11,7 +11,7 @@ const usernameTextStyle = {
   strokeThickness: 2,
 }
 
-export default function createNewPlayersThatDontExist (room, playerId, playerData) {
+export default function createNewPlayersThatDontExist(room, playerId, playerData) {
   const newCreateRemotePlayer = createRemotePlayer.call(this, playerId, playerData)
   const enemyPlayerName = playerData.nickname
     ? playerData.nickname

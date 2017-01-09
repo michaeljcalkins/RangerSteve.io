@@ -1,6 +1,6 @@
 import actions from 'actions'
 
-export default function (data) {
+export default function(data) {
   const store = this.game.store
 
   if (! data.players) return

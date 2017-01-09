@@ -126,10 +126,10 @@ export default class GameUi extends Component {
           <HudAnnouncement announcement={ room.announcement }/>
         }
         <HudChatHistory
-          isOpen={ game.chatModalIsOpen }
-          messages={ game.chatMessages }
-          newChatMessageCharacter={ +game.keyboardControls.newChatMessage }
-          onSendMessage={ this.handleSendMessage }
+            isOpen={ game.chatModalIsOpen }
+            messages={ game.chatMessages }
+            newChatMessageCharacter={ +game.keyboardControls.newChatMessage }
+            onSendMessage={ this.handleSendMessage }
         />
 
         { this.isLeaderboardModalOpen() &&
@@ -138,23 +138,23 @@ export default class GameUi extends Component {
 
         { player.health <= 0 && room.state !== 'ended' &&
           <RespawnModal
-            onOpenSettingsModal={ onOpenSettingsModal }
-            onSettingsViewChange={ onSettingsViewChange }
+              onOpenSettingsModal={ onOpenSettingsModal }
+              onSettingsViewChange={ onSettingsViewChange }
           />
         }
 
         { game.settingsModalIsOpen &&
           <SettingsModal
-            game={ game }
-            onClose={ onCloseSettingsModal }
-            onKeyboardControlChange={ onKeyboardControlChange }
-            onPrimaryGunClick={ this.handlePrimaryGunClick }
-            onRespawnChange={ onSetAutoRespawn }
-            onSecondaryGunClick={ this.handleSecondaryGunClick }
-            onSetResetEventsFlag={ onSetResetEventsFlag }
-            onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
-            onViewChange={ onSettingsViewChange }
-            player={ player }
+              game={ game }
+              onClose={ onCloseSettingsModal }
+              onKeyboardControlChange={ onKeyboardControlChange }
+              onPrimaryGunClick={ this.handlePrimaryGunClick }
+              onRespawnChange={ onSetAutoRespawn }
+              onSecondaryGunClick={ this.handleSecondaryGunClick }
+              onSetResetEventsFlag={ onSetResetEventsFlag }
+              onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
+              onViewChange={ onSettingsViewChange }
+              player={ player }
           />
         }
 
