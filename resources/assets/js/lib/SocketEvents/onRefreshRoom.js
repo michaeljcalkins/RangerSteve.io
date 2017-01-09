@@ -74,7 +74,10 @@ export default function onRefreshRoom (data) {
       nextPlayerTween[playerId] = Date.now() / 1000 + 0.5
     }
 
-    if (playerData.health > 0 && nextPlayerTween[playerId] < Date.now() / 1000) {
+    if (
+      (playerData.health > 0 && nextPlayerTween[playerId] < Date.now() / 1000) ||
+      (playerData.health > 0 && ! nextPlayerTween[playerId])
+    ) {
       // Update player position when they are alive and have not respawned recently.
       player.visible = true
       this.game.add.tween(player).to({
