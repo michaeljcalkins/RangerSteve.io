@@ -14,6 +14,7 @@ function isNotMoving(player) {
 }
 
 const lastPlayerHealth = {}
+const lastPlayerNickname = {}
 const nextPlayerTween = {}
 
 export default function onRefreshRoom(data) {
@@ -43,6 +44,12 @@ export default function onRefreshRoom(data) {
       if (lastPlayerHealth[playerId] !== playerData.health && typeof playerData.health !== 'undefined') {
         store.dispatch(actions.player.setHealth(playerData.health))
         lastPlayerHealth[playerId] = playerData.health
+      }
+      if (lastPlayerNickname[playerId] !== playerData.nickname && typeof playerData.nickname !== 'undefined') {
+        roomData[playerId] = {
+          nickname: playerData.nickname
+        }
+        lastPlayerNickname[playerId] = playerData.nickname
       }
       return
     }
