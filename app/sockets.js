@@ -78,6 +78,8 @@ function getRooms() {
   return rooms
 }
 
+let lastPlayerData = {}
+
 gameloop.setGameLoop(function() {
   Object.keys(rooms).forEach((roomId) => {
     const roomData = {
@@ -85,18 +87,20 @@ gameloop.setGameLoop(function() {
       players: {},
     }
 
+    const refreshPlayerProperties = ['angle', 'flying', 'health', 'nickname', 'shooting', 'team', 'weaponId', 'x', 'y']
     Object.keys(rooms[roomId].players).forEach(function(playerId) {
-      roomData.players[playerId] = {
-        angle: rooms[roomId].players[playerId].angle || 0,
-        flying: rooms[roomId].players[playerId].flying || false,
-        health: rooms[roomId].players[playerId].health,
-        nickname: rooms[roomId].players[playerId].nickname,
-        shooting: rooms[roomId].players[playerId].shooting || false,
-        team: rooms[roomId].players[playerId].team,
-        weaponId: rooms[roomId].players[playerId].weaponId,
-        x: rooms[roomId].players[playerId].x,
-        y: rooms[roomId].players[playerId].y,
-      }
+      roomData.players[playerId] = {}
+
+      refreshPlayerProperties.forEach(function(playerProperty) {
+        lastPlayerData[playerId] = lastPlayerData[playerId] || {}
+        if (lastPlayerData[playerId][playerProperty] !== rooms[roomId].players[playerId][playerProperty]) {
+          roomData.players[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
+          lastPlayerData[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
+        }
+      })
+
+      roomData.players[playerId].weaponId = rooms[roomId].players[playerId].weaponId
+      roomData.players[playerId].team = rooms[roomId].players[playerId].team
     })
 
     Server.sendToRoom(
