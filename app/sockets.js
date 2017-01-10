@@ -93,14 +93,14 @@ gameloop.setGameLoop(function() {
 
       refreshPlayerProperties.forEach(function(playerProperty) {
         lastPlayerData[playerId] = lastPlayerData[playerId] || {}
-        if (lastPlayerData[playerId][playerProperty] !== rooms[roomId].players[playerId][playerProperty]) {
+        if (
+          typeof lastPlayerData[playerId][playerProperty] === 'undefined' ||
+          lastPlayerData[playerId][playerProperty] !== rooms[roomId].players[playerId][playerProperty]
+        ) {
           roomData.players[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
           lastPlayerData[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
         }
       })
-
-      roomData.players[playerId].weaponId = rooms[roomId].players[playerId].weaponId
-      roomData.players[playerId].team = rooms[roomId].players[playerId].team
     })
 
     Server.sendToRoom(
@@ -217,6 +217,8 @@ function onPlayerRespawn() {
   }
 
   player.health = GameConsts.PLAYER_FULL_HEALTH
+
+  lastPlayerData[this.id] = {}
 
   const data = { id: this.id }
   Server.sendToRoom(
