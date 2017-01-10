@@ -2,6 +2,8 @@ html, body {
     height: 100%;
     width: 100%;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 html {

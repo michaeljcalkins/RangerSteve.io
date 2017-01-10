@@ -5,7 +5,6 @@ body.main {
 }
 
 body.main:after {
-    background: rgba(0, 0, 0, .3);
     content: '';
     display: block;
     position: absolute;
@@ -25,6 +24,10 @@ body.main:after {
     margin-top: 100px;
     height: auto;
     width: 100%;
+
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 400;
+    }
 
     .main-header {
         clear: both;
@@ -48,32 +51,32 @@ body.main:after {
     }
 
     .well {
-        background: rgba(0, 0, 0, 0.5);
-        box-shadow: none;
+        background: white;
         border-radius: 3px;
-        border: 0;
-        min-height: 510px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
         padding: 30px;
+        border: 0;
     }
 
     a {
-        color: rgba(255, 255, 255, 0.8);
+      color: #fff;
 
-        &:active,
-        &:hover {
-            color: #fff;
-        }
+      &:active,
+      &:hover {
+        color: #fff;
+      }
     }
 
     input {
+      box-shadow: 0;
+      border: 0;
         border-radius: 3px;
         margin: 0 auto;
     }
 
-    #nickname {
+    input#nickname {
         color: #fff;
         background: rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.5);
 
         &:focus {
             border-color: #fff;
@@ -96,6 +99,10 @@ body.main:after {
 
     table {
         margin: 0;
+    }
+
+    .footer-container a {
+      color: rgb(51, 51, 51);
     }
 }
 
@@ -131,7 +138,7 @@ body.main:after {
 
 .home-content {
     margin: 0 auto;
-    width: 660px;
+    width: 600px;
 }
 
 #browser-recommendation {
@@ -142,25 +149,6 @@ body.main:after {
 .rooms-content {
     margin: 0 auto;
     width: 660px;
-}
-
-.home-footer {
-    color: white;
-    margin-bottom: 20px;
-
-    .footer-content {
-        display: inline-block;
-        margin: 0 15px;
-        padding: 10px;
-        border-radius: 3px;
-        background: rgba(0, 0, 0, 0.5);
-        color: rgba(255, 255, 255, 0.5);
-        font-weight: bold;
-    }
-
-    a {
-        color: white;
-    }
 }
 
 #beta-label {

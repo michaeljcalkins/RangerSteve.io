@@ -9,6 +9,7 @@ var auth = basicAuth('admin', '!rs(;;)')
 
 router.get('/', MainController.home)
 router.get('/game', MainController.game)
+router.get('/how-to-play', MainController.howToPlay)
 router.get('/credits', MainController.credits)
 router.get('/admin', auth, MainController.admin)
 router.post('/admin', auth, MainController.adminAnnouncement)

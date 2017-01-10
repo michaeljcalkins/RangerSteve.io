@@ -42,13 +42,14 @@
 
     {% block head %}{% endblock %}
 </head>
-<body class="main" style="background-image: url(/images/home/bg{{ [1,2,3,4,5] | random }}.jpg)">
+<body class="main" style="background-image: url(/images/home/{{ [1,2,3,4,5] | random }}.png)">
     <div class="electron-drag-region"></div>
 
     {% block content %}{% endblock %}
 
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.min.js"></script>
     <script src="/js/scripts.js"></script>
     {% block scripts %}{% endblock %}
 </body>

@@ -24,6 +24,16 @@ let MainController = {
     })
   },
 
+  howToPlay: function(req, res) {
+    // Cache busting
+    const fileStat = fs.statSync('public/css/app.css')
+    const lastModifiedTime = moment(fileStat.mtime).unix()
+
+    res.render('how-to-play', {
+      lastModifiedTime: lastModifiedTime,
+    })
+  },
+
   game: function(req, res) {
     let fileStat = fs.statSync('public/js/app.js')
     let lastModifiedTime = moment(fileStat.mtime).unix()
