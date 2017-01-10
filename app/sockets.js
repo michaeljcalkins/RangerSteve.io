@@ -293,6 +293,7 @@ function onPlayerUpdateNickname(data) {
   if (nickname.length > 25)
     nickname = nickname.substr(0, 25)
 
+  lastPlayerData[this.id].nickname = player.nickname
   player.nickname = nickname
 }
 
