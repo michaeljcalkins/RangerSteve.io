@@ -83,7 +83,6 @@ export default function RemotePlayer(playerId, playerData) {
   newRemotePlayer.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
   newRemotePlayer.rightArmSprite.anchor.setTo(0.62, 0.4)
   newRemotePlayer.rightArmSprite.rotation = 83.4
-  newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.weaponId].frame
   newRemotePlayer.rightArmSprite.scale.y *= -1
   newRemotePlayer.rightArmGroup.angle = 87.67
   newRemotePlayer.rightArmGroup.add(newRemotePlayer.rightArmSprite)
