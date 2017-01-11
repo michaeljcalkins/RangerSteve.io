@@ -7,6 +7,8 @@ export default function(store) {
   const game = new Phaser.Game('100%', '100%', Phaser.AUTO, 'game')
   game.store = store
 
+  game.forceSingleUpdate = false
+
   window.RS = {
     Boot,
     Preloader,
