@@ -54,7 +54,7 @@ function init(primusInstance) {
 
     socket.on('data', (data) => {
       dataReceived += sizeOf(data)
-            // console.log('* LOG * data', data.type, data.payload)
+      // console.log('* LOG * data', data.type, data.payload)
       if (! data || data.type === undefined) return
 
       if (! events[data.type]) return
@@ -67,12 +67,12 @@ function init(primusInstance) {
     onClientDisconnect.call(socket)
   })
 
-    // if (GameConsts.ENABLE_NETWORK_STATS) {
-    //     NetworkStats.loop(() => {
-    //         const dataSent = Server.getStats().dataSent
-    //         NetworkStats.print(dataSent, dataReceived)
-    //     })
-    // }
+  // if (GameConsts.ENABLE_NETWORK_STATS) {
+  //     NetworkStats.loop(() => {
+  //         const dataSent = Server.getStats().dataSent
+  //         NetworkStats.print(dataSent, dataReceived)
+  //     })
+  // }
 }
 
 function getRooms() {
@@ -80,26 +80,30 @@ function getRooms() {
 }
 
 let lastPlayerData = {}
+let lastRoomData = {}
 
 gameloop.setGameLoop(function() {
   Object.keys(rooms).forEach((roomId) => {
-    const roomData = {
-      state: rooms[roomId].state,
+    let roomData = {
       players: {},
     }
 
-    const refreshPlayerProperties = ['angle', 'flying', 'health', 'nickname', 'shooting', 'team', 'weaponId', 'x', 'y']
+    // Only send new room states
+    lastRoomData[roomId] = lastRoomData[roomId] || {}
+    if (lastRoomData[roomId].state !== rooms[roomId].state) {
+      roomData.state = lastRoomData[roomId] = rooms[roomId].state
+    }
+
     Object.keys(rooms[roomId].players).forEach(function(playerId) {
       roomData.players[playerId] = {}
 
       refreshPlayerProperties.forEach(function(playerProperty) {
         lastPlayerData[playerId] = lastPlayerData[playerId] || {}
         if (
-          typeof lastPlayerData[playerId][playerProperty] === 'undefined' ||
-          lastPlayerData[playerId][playerProperty] !== rooms[roomId].players[playerId][playerProperty]
+          typeof lastPlayerData[playerId][playerProperty] === 'undefined' || // if the value has not been sent yet
+          lastPlayerData[playerId][playerProperty] !== rooms[roomId].players[playerId][playerProperty] // if the value is now different
         ) {
-          roomData.players[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
-          lastPlayerData[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
+          roomData.players[playerId][playerProperty] = lastPlayerData[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
         }
       })
     })
@@ -114,7 +118,7 @@ gameloop.setGameLoop(function() {
 
 setInterval(function() {
   Object.keys(rooms).forEach((roomId) => {
-        // Room was likely deleted when the last player left
+    // Room was likely deleted when the last player left
     if (! rooms[roomId]) return
 
     // Round has ended and is restarting now
@@ -223,10 +227,10 @@ function onPlayerRespawn() {
 
   const data = { id: this.id }
   Server.sendToRoom(
-        roomId,
-        GameConsts.EVENT.PLAYER_RESPAWN,
-        data
-    )
+    roomId,
+    GameConsts.EVENT.PLAYER_RESPAWN,
+    data
+  )
 }
 
 function onKickPlayer(data) {
@@ -391,7 +395,7 @@ function onMovePlayer(buffer) {
 
   const data = movePlayerSchema.decode(buffer)
 
-    // Update player position
+  // Update player position
   movePlayer.x = data.x
   movePlayer.y = data.y
   movePlayer.angle = data.angle
@@ -413,21 +417,22 @@ function onClientDisconnect() {
 
   var removePlayer = getPlayerById(selectedRoomId, this.id, rooms)
 
-    // Player not found
+  // Player not found
   if (! removePlayer) {
     util.log('Player not found when disconnecting: ' + this.id)
     return
   }
 
-    // Remove player from players array
+  // Remove player from players array
   Object.keys(rooms).forEach((roomId) => {
     delete rooms[roomId].players[this.id]
   })
 
-    // If the room the player left is empty close the room
+  // If the room the player left is empty close the room
   if (rooms[selectedRoomId] && Object.keys(rooms[selectedRoomId].players).length === 0) {
     util.log('Removing room: ', selectedRoomId)
     delete rooms[selectedRoomId]
+    delete lastRoomData[selectedRoomId]
   }
 }
 

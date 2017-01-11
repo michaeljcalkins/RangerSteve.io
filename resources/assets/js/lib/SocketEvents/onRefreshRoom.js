@@ -180,7 +180,10 @@ export default function onRefreshRoom(data) {
 
   let isNewState = false
 
-  if (! isEqual(room.state, data.state)) {
+  if (
+    typeof data.state !== 'undefined' &&
+    ! isEqual(room.state, data.state)
+  ) {
     room.state = data.state
     isNewState = true
   }
