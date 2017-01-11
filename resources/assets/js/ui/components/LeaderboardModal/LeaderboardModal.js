@@ -29,7 +29,7 @@ export default class LeaderboardModal extends PureComponent {
 
   componentDidMount() {
     this.timer = setInterval(this.tick.bind(this), 100)
-    Client.send(GameConsts.EVENT.REQUEST_PLAYER_SCORES)
+    Client.send(GameConsts.EVENT.PLAYER_SCORES)
   }
 
   componentWillUnmount() {

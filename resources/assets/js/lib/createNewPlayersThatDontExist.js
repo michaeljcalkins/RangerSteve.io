@@ -10,6 +10,7 @@ const usernameTextStyle = {
 }
 
 export default function createNewPlayersThatDontExist(room, playerId, playerData) {
+  console.log('Creating', playerId)
   const newCreateRemotePlayer = createRemotePlayer.call(this, playerId, playerData)
   const enemyPlayerName = playerData.nickname
     ? playerData.nickname

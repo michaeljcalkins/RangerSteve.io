@@ -17,10 +17,19 @@ const lastPlayerHealth = {}
 const lastPlayerNickname = {}
 const nextPlayerTween = {}
 
-export default function onRefreshRoom(data) {
+export default function onGameLoop(data) {
   const store = this.game.store
   const room = store.getState().room
   let roomData = {}
+  let isNewState = false
+
+  if (
+    typeof data.state !== 'undefined' &&
+    room.state !== data.state
+  ) {
+    room.state = data.state
+    isNewState = true
+  }
 
   if (
     includes(['Boot', 'Preloader'], this.game.state.current) ||
@@ -28,7 +37,7 @@ export default function onRefreshRoom(data) {
   ) return
 
   // Players should only be allowed to move when the room state is active
-  this.game.paused = data.state !== 'active'
+  this.game.paused = room.state !== 'active'
 
   /**
    * 1. Check for players that do not exist anymore and destroy their sprites
@@ -38,6 +47,7 @@ export default function onRefreshRoom(data) {
   // Update all players that we received with new data
   Object.keys(data.players).forEach(playerId => {
     const playerData = data.players[playerId]
+
 
     // Update local player's health if there is a change
     if (playerId === window.SOCKET_ID) {
@@ -84,7 +94,12 @@ export default function onRefreshRoom(data) {
     if (typeof playerData.y !== 'undefined') player.data.y = playerData.y
 
     // Update player's team color
-    if (typeof playerData.team !== 'undefined' && playerData.team && playerData.team.length > 0) {
+    console.log(player.data.team)
+    if (
+      typeof player.data.team !== 'undefined' &&
+      player.data.team &&
+      player.data.team.length > 0
+    ) {
       updatePlayerColor(player, player.data.team)
     }
 
@@ -177,16 +192,6 @@ export default function onRefreshRoom(data) {
 
     roomData[playerId] = player.data
   })
-
-  let isNewState = false
-
-  if (
-    typeof data.state !== 'undefined' &&
-    ! isEqual(room.state, data.state)
-  ) {
-    room.state = data.state
-    isNewState = true
-  }
 
   if (! isEqual(data.players, room.players)) {
     Object.keys(data.players).forEach(playerId => {
