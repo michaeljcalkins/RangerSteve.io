@@ -22,4 +22,7 @@ export default function(store) {
   game.state.add('TeamDeathmatch', RS.TeamDeathmatch)
 
   game.state.start('Boot')
+
+  // force unpausing the game after 1 second to prevent loading screen freeze bug
+  setTimeout(() => game.paused = false, 1000)
 }
