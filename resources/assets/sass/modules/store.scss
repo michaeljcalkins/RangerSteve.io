@@ -1,0 +1,97 @@
+.store-container {
+  margin: 0 auto;
+  width: 1000px;
+}
+
+.gold-container {
+  text-align: center;
+
+  .btn.btn-default {
+    background: white;
+    height: 170px;
+    position: relative;
+  }
+
+  a span {
+    // background: red;
+    clear: both;
+    color: #333;
+    display: block;
+    position: absolute;
+    left: 0; right: 0;
+    z-index: 1;
+  }
+
+  a img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+  }
+
+  .gold-title {
+    top: 5px;
+    font-size: 16px;
+  }
+
+  .gold-amount {
+    top: 25px;
+  }
+
+  .gold-price {
+    background: rgba(0, 0, 0, .6);
+    border-radius: 3px;
+    margin: 5px 10px;
+    padding: 3px;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    bottom: 5px;
+  }
+}
+
+.buy-button {
+  border: 5px solid #F9BF3B;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  margin-bottom: 30px;
+  margin-top: 10px;
+  padding-bottom: 25px;
+  position: relative;
+  width: 100%;
+
+  &:hover {
+    border: 5px solid #F9BF3B;
+  }
+
+  span:first-child {
+    background: #F9BF3B;
+    border-bottom :0;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #333;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: -28px;
+    margin-bottom: 10px;
+    padding: 4px 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  span:last-child {
+    background: #F9BF3B;
+    border-bottom: 0;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #333;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 4px 0;
+    left: 40px; right: 40px;
+    text-align: center;
+    position: absolute;
+    bottom: -18px;
+  }
+}

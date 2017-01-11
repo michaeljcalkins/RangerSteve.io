@@ -8,6 +8,7 @@ var MainController = require('./controllers/MainController')
 var auth = basicAuth('admin', '!rs(;;)')
 
 router.get('/', MainController.home)
+router.get('/buy', MainController.buy)
 router.get('/game', MainController.game)
 router.get('/how-to-play', MainController.howToPlay)
 router.get('/credits', MainController.credits)

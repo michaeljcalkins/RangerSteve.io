@@ -24,6 +24,16 @@ let MainController = {
     })
   },
 
+  buy: function(req, res) {
+    // Cache busting
+    const fileStat = fs.statSync('public/css/app.css')
+    const lastModifiedTime = moment(fileStat.mtime).unix()
+
+    res.render('buy', {
+      lastModifiedTime: lastModifiedTime,
+    })
+  },
+
   howToPlay: function(req, res) {
     // Cache busting
     const fileStat = fs.statSync('public/css/app.css')

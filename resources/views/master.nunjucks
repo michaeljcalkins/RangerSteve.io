@@ -42,7 +42,7 @@
 
     {% block head %}{% endblock %}
 </head>
-<body class="main" style="background-image: url(/images/home/{{ [1,2,3,4,5] | random }}.png)">
+<body class="main" style="background-image: url(/images/home/1.png)">
     <div class="electron-drag-region"></div>
 
     {% block content %}{% endblock %}
