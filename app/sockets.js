@@ -24,6 +24,7 @@ filter.setReplacementMethod('grawlix')
 
 const NetworkStats = helpers.NetworkStats
 const sizeOf = helpers.sizeOf
+const refreshPlayerProperties = ['angle', 'flying', 'health', 'nickname', 'shooting', 'team', 'weaponId', 'x', 'y']
 
 let rooms = {}
 let io = null
