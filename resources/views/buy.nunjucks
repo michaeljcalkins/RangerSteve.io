@@ -18,7 +18,7 @@
         <div class="col-sm-15">
           <a href="#" class="btn-block btn btn-default">
             <span class="gold-title">Pile of Gold</span>
-            <span class="gold-amount">500</span>
+            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 500</span>
             <img src="images/gold/pile-of-gold.jpg" style="width: 60px;" />
             <span class="gold-price">$4.99</span>
           </a>
@@ -27,7 +27,7 @@
         <div class="col-sm-15">
           <a href="#" class="btn btn-block btn-default">
             <span class="gold-title">Bag of Gold</span>
-            <span class="gold-amount">1200</span>
+            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 1200</span>
             <img src="images/gold/bag-of-gold.jpg" style="width: 90px;" />
             <span class="gold-price">$9.99</span>
           </a>
@@ -36,7 +36,7 @@
         <div class="col-sm-15">
           <a href="#" class="btn btn-block btn-default">
             <span class="gold-title">Sack of Gold</span>
-            <span class="gold-amount">2500</span>
+            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 2500</span>
             <img src="images/gold/sack-of-gold.jpg" style="width: 120px;" />
             <span class="gold-price">$19.99</span>
           </a>
@@ -45,7 +45,7 @@
         <div class="col-sm-15">
           <a href="#" class="btn btn-block btn-default">
             <span class="gold-title">Box of Gold</span>
-            <span class="gold-amount">6500</span>
+            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 6500</span>
             <img src="images/gold/box-of-gold.jpg" style="width: 120px;" />
             <span class="gold-price">$49.99</span>
           </a>
@@ -54,7 +54,7 @@
         <div class="col-sm-15">
           <a href="#" class="btn btn-block btn-default">
             <span class="gold-title">Chest of Gold</span>
-            <span class="gold-amount">14000</span>
+            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 14000</span>
             <img src="images/gold/chest-of-gold.jpg" style="width: 130px;" />
             <span class="gold-price">$99.99</span>
           </a>
@@ -76,21 +76,21 @@
               <a class="buy-button btn btn-default" href="/buy">
                 <span>Commando Mike</span>
                 <img src="/images/characters/CommandoMike.png" />
-                <span>300</span>
+                <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
             <div class="col-sm-3">
               <a class="buy-button btn btn-default" href="/buy">
                 <span>GI John</span>
                 <img src="/images/characters/GIJohn.png" />
-                <span>300</span>
+                <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
             <div class="col-sm-3">
               <a class="buy-button btn btn-default" href="/buy">
                 <span>Real Estate Job</span>
                 <img src="/images/characters/RealEstateRob.png" height="166" />
-                <span>300</span>
+                <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
           </div>
@@ -99,7 +99,7 @@
               <a class="buy-button btn btn-default" href="/buy">
                 <span>Terrorist Jim</span>
                 <img src="/images/characters/TerroristJim.png" height="166" />
-                <span>300</span>
+                <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
           </div>

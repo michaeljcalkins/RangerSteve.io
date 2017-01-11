@@ -22,7 +22,7 @@
     z-index: 1;
   }
 
-  a img {
+  a > img {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -37,6 +37,14 @@
 
   .gold-amount {
     top: 25px;
+    color: white;
+    text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+
+    img {
+      width: 14px;
+      margin-top: -3px;
+      margin-left: -14px;
+    }
   }
 
   .gold-price {
@@ -45,7 +53,8 @@
     margin: 5px 10px;
     padding: 3px;
     color: white;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+
     bottom: 5px;
   }
 }
@@ -55,7 +64,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   margin-bottom: 30px;
   margin-top: 10px;
-  padding-bottom: 25px;
+  padding-bottom: 40px;
   position: relative;
   width: 100%;
 
@@ -79,19 +88,27 @@
     width: 100%;
   }
 
+  & > img {
+    margin-right: -15px;
+  }
+
   span:last-child {
-    background: #F9BF3B;
     border-bottom: 0;
     border-radius: 3px;
-    font-size: 16px;
+    bottom: 5px;
     color: #333;
     display: block;
+    font-size: 16px;
     font-weight: bold;
-    text-transform: uppercase;
+    left: 40px;
     padding: 4px 0;
-    left: 40px; right: 40px;
-    text-align: center;
     position: absolute;
-    bottom: -18px;
+    right: 40px;
+    text-align: center;
+    text-transform: uppercase;
+
+    img {
+      margin-top: -3px;
+    }
   }
 }
