@@ -24,7 +24,6 @@ filter.setReplacementMethod('grawlix')
 
 const NetworkStats = helpers.NetworkStats
 const sizeOf = helpers.sizeOf
-const refreshPlayerProperties = ['angle', 'flying', 'health', 'nickname', 'shooting', 'team', 'weaponId', 'x', 'y']
 
 let rooms = {}
 let io = null
@@ -80,7 +79,6 @@ function getRooms() {
   return rooms
 }
 
-
 gameloop.setGameLoop(function() {
   Object.keys(rooms).forEach((roomId) => {
     let roomData = {
@@ -96,7 +94,7 @@ gameloop.setGameLoop(function() {
     Object.keys(rooms[roomId].players).forEach(function(playerId) {
       roomData.players[playerId] = {}
 
-      refreshPlayerProperties.forEach(function(playerProperty) {
+      GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(function(playerProperty) {
         lastPlayerData[playerId] = lastPlayerData[playerId] || {}
         if (
           typeof lastPlayerData[playerId][playerProperty] === 'undefined' || // if the value has not been sent yet
@@ -183,30 +181,30 @@ function onRefreshRoom() {
   if (! rooms[roomId]) return
 
   let roomData = {
-    state: rooms[roomIdPlayerWillJoin].state,
+    state: rooms[roomId].state,
     players: {},
   }
 
-  Object.keys(rooms[roomIdPlayerWillJoin].players).forEach(function(playerId) {
-    if (! _.has(rooms, '[' + roomIdPlayerWillJoin + '].players[' + playerId + ']')) {
+  Object.keys(rooms[roomId].players).forEach(function(playerId) {
+    if (! _.has(rooms, '[' + roomId + '].players[' + playerId + ']')) {
       return util.error('Could not find', playerId, 'during refresh room event.')
     }
 
     roomData.players[playerId] = {
-      angle: rooms[roomIdPlayerWillJoin].players[playerId].angle || 0,
-      flying: rooms[roomIdPlayerWillJoin].players[playerId].flying || false,
-      health: rooms[roomIdPlayerWillJoin].players[playerId].health,
-      nickname: rooms[roomIdPlayerWillJoin].players[playerId].nickname,
-      shooting: rooms[roomIdPlayerWillJoin].players[playerId].shooting || false,
-      team: rooms[roomIdPlayerWillJoin].players[playerId].team,
-      weaponId: rooms[roomIdPlayerWillJoin].players[playerId].weaponId,
-      x: rooms[roomIdPlayerWillJoin].players[playerId].x,
-      y: rooms[roomIdPlayerWillJoin].players[playerId].y,
+      angle: rooms[roomId].players[playerId].angle || 0,
+      flying: rooms[roomId].players[playerId].flying || false,
+      health: rooms[roomId].players[playerId].health,
+      nickname: rooms[roomId].players[playerId].nickname,
+      shooting: rooms[roomId].players[playerId].shooting || false,
+      team: rooms[roomId].players[playerId].team,
+      weaponId: rooms[roomId].players[playerId].weaponId,
+      x: rooms[roomId].players[playerId].x,
+      y: rooms[roomId].players[playerId].y,
     }
   })
 
   Server.sendToRoom(
-    roomIdPlayerWillJoin,
+    roomId,
     GameConsts.EVENT.GAME_LOOP,
     roomData
   )

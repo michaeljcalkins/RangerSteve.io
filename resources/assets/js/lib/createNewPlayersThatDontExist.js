@@ -16,10 +16,10 @@ export default function createNewPlayersThatDontExist(room, playerId, playerData
     ? playerData.nickname
     : 'Unnamed Ranger'
 
-  const text = this.game.add.text(0, -50, enemyPlayerName, usernameTextStyle)
-  newCreateRemotePlayer.addChild(text)
-  text.x = (text.width / 2) * -1
-  text.smoothed = true
+  newCreateRemotePlayer.usernameText = this.game.add.text(0, -50, enemyPlayerName, usernameTextStyle)
+  newCreateRemotePlayer.addChild(newCreateRemotePlayer.usernameText)
+  newCreateRemotePlayer.usernameText.x = (newCreateRemotePlayer.usernameText.width / 2) * -1
+  newCreateRemotePlayer.usernameText.smoothed = true
 
   if (playerData.health <= 0) {
     newCreateRemotePlayer.visible = false

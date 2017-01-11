@@ -48,7 +48,6 @@ export default function onGameLoop(data) {
   Object.keys(data.players).forEach(playerId => {
     const playerData = data.players[playerId]
 
-
     // Update local player's health if there is a change
     if (playerId === window.SOCKET_ID) {
       if (lastPlayerHealth[playerId] !== playerData.health && typeof playerData.health !== 'undefined') {
@@ -59,7 +58,6 @@ export default function onGameLoop(data) {
         roomData[playerId] = {
           nickname: playerData.nickname
         }
-        lastPlayerNickname[playerId] = playerData.nickname
       }
       return
     }
@@ -83,18 +81,17 @@ export default function onGameLoop(data) {
      * 4. Update player data
      */
     player.data.id = playerId
-    if (typeof playerData.angle !== 'undefined') player.data.angle = playerData.angle
-    if (typeof playerData.flying !== 'undefined') player.data.flying = playerData.flying
-    if (typeof playerData.health !== 'undefined') player.data.health = playerData.health
-    if (typeof playerData.nickname !== 'undefined') player.data.nickname = playerData.nickname
-    if (typeof playerData.shooting !== 'undefined') player.data.shooting = playerData.shooting
-    if (typeof playerData.team !== 'undefined') player.data.team = playerData.team
-    if (typeof playerData.weaponId !== 'undefined') player.data.weaponId = playerData.weaponId
-    if (typeof playerData.x !== 'undefined') player.data.x = playerData.x
-    if (typeof playerData.y !== 'undefined') player.data.y = playerData.y
+    GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(propName => {
+      if (typeof playerData[propName] !== 'undefined') player.data[propName] = playerData[propName]
+    })
+
+    if (lastPlayerNickname[playerId] !== player.data.nickname) {
+      player.usernameText.setText(player.data.nickname)
+      player.usernameText.x = (player.usernameText.width / 2) * -1
+      player.usernameText.smoothed = true
+    }
 
     // Update player's team color
-    console.log(player.data.team)
     if (
       typeof player.data.team !== 'undefined' &&
       player.data.team &&
@@ -190,6 +187,7 @@ export default function onGameLoop(data) {
     player.data.lastPosition.x = player.x
     player.data.lastPosition.y = player.y
 
+    lastPlayerNickname[playerId] = playerData.nickname
     roomData[playerId] = player.data
   })
 
