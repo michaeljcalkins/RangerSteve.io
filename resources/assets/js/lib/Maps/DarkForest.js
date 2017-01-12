@@ -44,18 +44,17 @@ export function preload() {
   this.game.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 32, 32)
 }
 
-export function createOverlays() {
-}
+export function createOverlays() {}
 
 export function create() {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
   this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
-    // Add the demo tilemap and attach a tilesheet for its collision layer
+  // Add the demo tilemap and attach a tilesheet for its collision layer
   this.map = this.game.add.tilemap('tilemap')
   this.map.addTilesetImage('collision', 'ninja-tiles32')
 
-    // Create a TilemapLayer object from the collision layer of the map
+  // Create a TilemapLayer object from the collision layer of the map
   this.ground = this.map.createLayer('collision')
   this.ground.renderSettings.enableScrollDelta = false
   if (! GameConsts.DEBUG) this.ground.alpha = 0
