@@ -3,24 +3,31 @@ import sample from 'lodash/sample'
 import GameConsts from 'lib/GameConsts'
 import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 
-const WORLD_WIDTH = 2625
-const WORLD_HEIGHT = 1125
+const WORLD_WIDTH = 3500
+const WORLD_HEIGHT = 1500
 
 const SPAWN_POINTS = [
-    { x: 1900, y: 890 },
-    { x: 1650, y: 770 },
-    { x: 1750, y: 550 },
-    { x: 2150, y: 650 },
-    { x: 1250, y: 370 },
-    { x: 1500, y: 390 },
-    { x: 280, y: 530 },
-    { x: 540, y: 630 },
-    { x: 700, y: 900 },
-    { x: 850, y: 570 },
-    { x: 350, y: 280 },
-    { x: 2160, y: 310 },
-    { x: 1130, y: 730 },
-    { x: 375, y: 840 },
+  { x: 93, y: 176 },
+  { x: 510, y: 456 },
+  { x: 1031, y: 271 },
+  { x: 1383, y: 282 },
+  { x: 537, y: 1280 },
+  { x: 712, y: 993 },
+  { x: 1148, y: 760 },
+  { x: 1676, y: 618 },
+  { x: 1970, y: 235 },
+  { x: 2473, y: 237 },
+  { x: 1502, y: 1133 },
+  { x: 2157, y: 948 },
+  { x: 969, y: 1350 },
+  { x: 1916, y: 631 },
+  { x: 2591, y: 750 },
+  { x: 3333, y: 998 },
+  { x: 3105, y: 308 },
+  { x: 2837, y: 1290 },
+  { x: 2479, y: 1323 },
+  { x: 1970, y: 1114 },
+  { x: 2189, y: 220 },
 ]
 
 export function getRandomSpawnPoint() {
@@ -32,32 +39,31 @@ export function getSpawnPoints() {
 }
 
 export function preload() {
-  this.game.load.image('background', '/images/maps/dark-forest/background.jpg', true)
-  this.game.load.tilemap('tilemap', '/maps/dark-forest/dark-forest.json', null, Phaser.Tilemap.TILED_JSON);
-  this.game.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
+  this.game.load.image('background', '/maps/dark-forest/background.jpg', true)
+  this.game.load.tilemap('tilemap', '/maps/dark-forest/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+  this.game.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 32, 32)
 }
 
-export function createOverlays() {
-}
+export function createOverlays() {}
 
 export function create() {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
   this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
-    // Add the demo tilemap and attach a tilesheet for its collision layer
+  // Add the demo tilemap and attach a tilesheet for its collision layer
   this.map = this.game.add.tilemap('tilemap')
-  this.map.addTilesetImage('collision', 'ninja-tiles24')
+  this.map.addTilesetImage('collision', 'ninja-tiles32')
 
-    // Create a TilemapLayer object from the collision layer of the map
+  // Create a TilemapLayer object from the collision layer of the map
   this.ground = this.map.createLayer('collision')
   this.ground.renderSettings.enableScrollDelta = false
   if (! GameConsts.DEBUG) this.ground.alpha = 0
 
-    // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
-    // preparing slope data for each of tile in the layer
+  // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
+  // preparing slope data for each of tile in the layer
   this.game.slopes.convertTilemapLayer(this.ground, GameConsts.SLOPE_TILES)
 
-    // Enable collision between tile indexes 2 and 34
+  // Enable collision between tile indexes 2 and 34
   this.map.setCollisionBetween(2, 34, true, 'collision')
 
   if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
