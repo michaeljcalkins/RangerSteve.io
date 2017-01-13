@@ -69,8 +69,8 @@ Deathmatch.prototype = {
     const state = this.game.store.getState()
     const player = state.player
     const currentWeaponId = player.currentWeapon === 'primaryWeapon'
-            ? player.selectedPrimaryWeaponId
-            : player.selectedSecondaryWeaponId
+      ? player.selectedPrimaryWeaponId
+      : player.selectedSecondaryWeaponId
 
     UpdateHudPositions.call(this)
 
