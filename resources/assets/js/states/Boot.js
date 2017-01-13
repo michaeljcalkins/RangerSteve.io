@@ -17,13 +17,13 @@ Boot.prototype = {
 
   create: function() {
     this.scale.scaleMode = Phaser.ScaleManager.RESIZE
-        // Smooths sprite rendering
+    // Smooths sprite rendering
     this.game.renderer.renderSession.roundPixels = true
-        // Prevents game from pausing when tab loses focus
+    // Prevents game from pausing when tab loses focus
     this.game.stage.disableVisibilityChange = true
     this.game.scale.refresh()
 
-        // Loading screen
+    // Loading screen
     this.game.stage.backgroundColor = '#2B2825'
     RS.rangerSteveSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'ranger-steve')
     RS.rangerSteveSprite.anchor.setTo(0.5)

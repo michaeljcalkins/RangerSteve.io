@@ -40,6 +40,7 @@
         "space-before-function-paren": [2, "never"],
         "space-infix-ops": "error",
         "keyword-spacing": "error",
+        "no-unused-vars": ["error", { "vars": "local" }],
 
         "react/display-name": 0,
         "react/forbid-prop-types": 0,

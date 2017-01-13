@@ -55,6 +55,7 @@ Deathmatch.prototype = {
 
     window.onresize = UpdateGameScale.bind(this)
     UpdateGameScale.call(this)
+    Client.send(GameConsts.EVENT.REFRESH_ROOM)
 
     this.game.paused = false
   },
@@ -68,8 +69,8 @@ Deathmatch.prototype = {
     const state = this.game.store.getState()
     const player = state.player
     const currentWeaponId = player.currentWeapon === 'primaryWeapon'
-            ? player.selectedPrimaryWeaponId
-            : player.selectedSecondaryWeaponId
+      ? player.selectedPrimaryWeaponId
+      : player.selectedSecondaryWeaponId
 
     UpdateHudPositions.call(this)
 
@@ -84,19 +85,19 @@ Deathmatch.prototype = {
     BulletsAndPlatforms.call(this)
     Maps[state.room.map].update.call(this)
 
-        /**
-         * User related movement and sprite angles
-         */
+    /**
+     * User related movement and sprite angles
+     */
     if (state.player.health > 0) {
       PlayerMovementHandler.call(this)
       PlayerJumpHandler.call(this)
       updatePlayerAngles.call(this, RS.player)
     }
 
-        /**
-         * Fire current weapon
-         */
-        // TODO FireWeaponIfActive.call(this)
+    /**
+     * Fire current weapon
+     */
+    // TODO FireWeaponIfActive.call(this)
     if (this.game.input.activePointer.leftButton.isDown) {
       const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 

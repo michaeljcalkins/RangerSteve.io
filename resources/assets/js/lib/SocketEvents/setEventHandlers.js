@@ -8,12 +8,11 @@ import onPlayerRespawn from './onPlayerRespawn'
 import onPlayerHealthUpdate from './onPlayerHealthUpdate'
 import onMessageReceived from './onMessageReceived'
 import onPlayerKillLog from './onPlayerKillLog'
-import onRefreshRoom from './onRefreshRoom'
 import onLoadGame from './onLoadGame'
 import onAnnouncement from './onAnnouncement'
-import onUpdatePlayerScores from './onUpdatePlayerScores'
+import onPlayerScores from './onPlayerScores'
+import onGameLoop from './onGameLoop'
 import Client from '../Client'
-import storage from 'store'
 
 const events = {
   [GameConsts.EVENT.LOAD_GAME]: onLoadGame,
@@ -22,10 +21,10 @@ const events = {
   [GameConsts.EVENT.PLAYER_HEALTH_UPDATE]: onPlayerHealthUpdate,
   [GameConsts.EVENT.PLAYER_KILL_LOG]: onPlayerKillLog,
   [GameConsts.EVENT.MESSAGE_RECEIVED]: onMessageReceived,
-  [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
+  [GameConsts.EVENT.GAME_LOOP]: onGameLoop,
   [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
   [GameConsts.EVENT.ANNOUNCEMENT]: onAnnouncement,
-  [GameConsts.EVENT.UPDATE_PLAYER_SCORES]: onUpdatePlayerScores,
+  [GameConsts.EVENT.PLAYER_SCORES]: onPlayerScores,
 }
 
 let dataReceived = 0
