@@ -406,7 +406,6 @@ function onMovePlayer(buffer) {
   if (! rooms[roomId]) return
 
   const movePlayer = rooms[roomId].players[this.id]
-
   if (! movePlayer || movePlayer.health <= 0) return
 
   const data = movePlayerSchema.decode(buffer)
