@@ -1,10 +1,15 @@
+import storage from 'store'
 import Boot from './states/Boot'
 import Preloader from './states/Preloader'
 import Deathmatch from './states/Deathmatch'
 import TeamDeathmatch from './states/TeamDeathmatch'
 
 export default function(store) {
-  const game = new Phaser.Game('100%', '100%', Phaser.AUTO, 'game')
+  const useWebgl = storage.get('useWebgl', true)
+  let renderer = Phaser.AUTO
+  if (! useWebgl) renderer = Phaser.CANVAS
+  
+  const game = new Phaser.Game('100%', '100%', renderer, 'game')
   game.store = store
 
   game.forceSingleUpdate = false

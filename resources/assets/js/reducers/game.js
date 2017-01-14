@@ -26,6 +26,7 @@ const initialState = {
   autoRespawn: storage.get('autoRespawn', false),
   isFpsStatsVisible: storage.get('isFpsStatsVisible', false),
   isNetworkStatsVisible: storage.get('isNetworkStatsVisible', false),
+  useWebgl: storage.get('useWebgl', true),
 }
 
 const player = (state = initialState, action) => {
