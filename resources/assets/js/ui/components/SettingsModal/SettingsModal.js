@@ -1,4 +1,3 @@
-// @flow
 import React, { PureComponent } from 'react'
 import cs from 'classnames'
 
@@ -11,16 +10,16 @@ import SettingsView from './SettingsView'
 export default class SettingsModal extends PureComponent {
   renderModalView() {
     const {
-            game,
-            onKeyboardControlChange,
-            onPrimaryGunClick,
-            onRespawnChange,
-            onSecondaryGunClick,
-            onSetResetEventsFlag,
-            onSfxVolumeChange,
-            onViewChange,
-            player,
-        } = this.props
+      game,
+      onKeyboardControlChange,
+      onPrimaryGunClick,
+      onRespawnChange,
+      onSecondaryGunClick,
+      onSetResetEventsFlag,
+      onSfxVolumeChange,
+      onViewChange,
+      player,
+    } = this.props
 
     switch (game.settingsView) {
     case 'choosePrimary':

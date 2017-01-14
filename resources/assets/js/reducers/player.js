@@ -17,7 +17,7 @@ const initialState = {
   nickname: storage.get('nickname', NameGenerator()),
   primaryAmmoRemaining: 0,
   primaryWeapon: null,
-  respawnTime: null,
+  canRespawnTimestamp: null,
   score: 0,
   secondaryAmmoRemaining: 0,
   secondaryWeapon: null,
@@ -98,7 +98,7 @@ const player = (state = initialState, action) => {
   case 'SET_RESPAWN_TIME':
     return {
       ...state,
-      respawnTime: action.value,
+      canRespawnTimestamp: action.value,
     }
 
   case 'SET_KILLING_SPREE_COUNT':

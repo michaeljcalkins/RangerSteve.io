@@ -1,9 +1,4 @@
-// @flow
-
-export default function(data: {
-    x: number,
-    y: number,
-}) {
+export default function(data) {
   const playerDeath = RS.playerDeaths.getFirstExists(false)
   if (! playerDeath) return console.error('No player death sprite available.')
 

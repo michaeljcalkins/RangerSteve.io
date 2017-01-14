@@ -82,6 +82,7 @@ function getRooms() {
 gameloop.setGameLoop(function() {
   Object.keys(rooms).forEach((roomId) => {
     let roomData = {
+      currentTime: Date.now(),
       players: {},
     }
 
@@ -597,8 +598,8 @@ function onPlayerDamaged(data) {
             : {}
 
     Server.sendToRoom(
-            roomId,
-            GameConsts.EVENT.PLAYER_DAMAGED,
+      roomId,
+      GameConsts.EVENT.PLAYER_DAMAGED,
       {
         id: this.id,
         damagedPlayerId: data.damagedPlayerId,
@@ -610,7 +611,7 @@ function onPlayerDamaged(data) {
         playerX: player.x,
         playerY: player.y,
       }
-        )
+    )
 
     player.damageStats.attackingPlayerId = null
     player.damageStats.attackingDamage = 0

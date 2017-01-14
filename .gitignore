@@ -16,7 +16,6 @@ dist
 dll
 old
 stats.json
-flow-coverage
 .happypack
 
 # python

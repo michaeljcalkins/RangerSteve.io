@@ -37,11 +37,10 @@ export default class LeaderboardModal extends PureComponent {
   }
 
   tick() {
-    const { room } = this.props
-    const currentTime = Math.floor(Date.now() / 1000)
-    let timeRemaining = room.roundStartTime - currentTime
+    const { currentTime, roundStartTime } = this.props.room
+    let timeRemaining = roundStartTime - currentTime / 1000
     let minutes = Math.floor(timeRemaining / 60)
-    let seconds = timeRemaining - minutes * 60
+    let seconds = (timeRemaining - minutes * 60).toFixed(1)
 
     if (isNaN(minutes) || isNaN(seconds) || minutes < 0) return '0'
 

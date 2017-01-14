@@ -1,8 +1,4 @@
-// @flow
-export default function(data: {
-  bulletY: number,
-  bulletX: number,
-}) {
+export default function(data) {
   const ricochet = RS.ricochets.getFirstExists(false)
   if (! ricochet) return console.error('No ricochet sprite available.')
 

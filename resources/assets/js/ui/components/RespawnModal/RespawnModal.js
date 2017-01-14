@@ -1,4 +1,3 @@
-// @flow
 import autobind from 'react-autobind'
 import React, { PureComponent } from 'react'
 import get from 'lodash/get'
@@ -11,7 +10,6 @@ import actions from 'actions'
 import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
 import Client from '../../../lib/Client'
-// import emptyEventSchema from 'lib/schemas/emptyEventSchema'
 
 export class RespawnModal extends PureComponent {
   constructor(props) {
@@ -35,14 +33,14 @@ export class RespawnModal extends PureComponent {
   }
 
   props: {
-        player: Object,
-        room: Object,
-    }
+    player: Object,
+    room: Object,
+  }
 
   tick() {
-    const { respawnTime } = this.props.player
-    const currentTime = Math.floor(Date.now())
-    const timeRemaining = respawnTime - currentTime
+    const { canRespawnTimestamp } = this.props.player
+    const { currentTime } = this.props.room
+    const timeRemaining = canRespawnTimestamp - currentTime
     let seconds = Number((timeRemaining / 1000).toFixed(1))
     if (seconds % 1 === 0) seconds = seconds + '.0'
 

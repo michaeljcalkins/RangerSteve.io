@@ -138,9 +138,9 @@ export class SettingsView extends PureComponent {
             <div className="checkbox">
               <label>
                 <input
-                    checked={ this.state.isFpsStatsVisible }
-                    onClick={ this.handleFpsStatsChange }
-                    type="checkbox"
+                  checked={ this.state.isFpsStatsVisible }
+                  onClick={ this.handleFpsStatsChange }
+                  type="checkbox"
                 />
                 Show FPS stats
               </label>
