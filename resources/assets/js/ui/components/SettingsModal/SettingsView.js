@@ -162,7 +162,7 @@ export class SettingsView extends PureComponent {
                   onClick={ this.handleWebglChange }
                   type="checkbox"
                 />
-                Use WebGL renderer<i>(Changing this will reload the game)</i>
+                Use WebGL renderer <i>(Changing this will reload the game)</i>
               </label>
             </div>
           </div>
