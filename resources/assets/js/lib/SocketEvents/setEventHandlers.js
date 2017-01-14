@@ -13,6 +13,7 @@ import onAnnouncement from './onAnnouncement'
 import onPlayerScores from './onPlayerScores'
 import onGameLoop from './onGameLoop'
 import Client from '../Client'
+import storage from 'store'
 
 const events = {
   [GameConsts.EVENT.LOAD_GAME]: onLoadGame,
@@ -32,7 +33,7 @@ let dataReceived = 0
 export default function() {
   window.socket.on('data', (data) => {
     dataReceived += sizeOf(data)
-        // console.log('* LOG * data', data.type, data.payload)
+    // console.log('* LOG * data', data.type, data.payload)
     if (! data || data.type === undefined) return
 
     if (! events[data.type]) return
@@ -43,15 +44,17 @@ export default function() {
   window.socket.on('open', onSocketConnected.bind(this))
   window.socket.on('end', onSocketDisconnect.bind(this))
 
-  NetworkStats.loop(() => {
-    const dataSent = Client.getStats().dataSent
-    const data = NetworkStats.getDataPerSecond(dataSent, dataReceived)
+  if (storage.get('isNetworkStatsVisible', false)) {
+    NetworkStats.loop(() => {
+      const dataSent = Client.getStats().dataSent
+      const data = NetworkStats.getDataPerSecond(dataSent, dataReceived)
 
-    window.RS.networkStats = {
-      dataSent: formatByteSize(dataSent),
-      dataReceived: formatByteSize(dataReceived),
-      dataSentPerSecond: formatByteSize(data.dataSentPerSecond),
-      dataReceivedPerSecond: formatByteSize(data.dataReceivedPerSecond),
-    }
-  })
+      window.RS.networkStats = {
+        dataSent: formatByteSize(dataSent),
+        dataReceived: formatByteSize(dataReceived),
+        dataSentPerSecond: formatByteSize(data.dataSentPerSecond),
+        dataReceivedPerSecond: formatByteSize(data.dataReceivedPerSecond),
+      }
+    })
+  }
 }
