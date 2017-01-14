@@ -1,10 +1,4 @@
-// @flow
-export default function(data: {
-    bulletY: number,
-    bulletX: number,
-    playerX: number,
-    bulletRotation: number,
-}) {
+export default function(data) {
   let bloodY = data.bulletY
   let bloodX = data.playerX
   const bloodRotation = data.bulletRotation

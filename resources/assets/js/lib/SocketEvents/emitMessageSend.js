@@ -1,4 +1,3 @@
-// @flow
 import GameConsts from 'lib/GameConsts'
 import Client from '../Client'
 

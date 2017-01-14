@@ -77,7 +77,7 @@ export default function() {
   }
 
     // Timer HUD
-  let timeRemaining = state.room.roundEndTime - Math.floor(Date.now() / 1000)
+  let timeRemaining = state.room.roundEndTime - Math.floor(state.room.currentTime / 1000)
   var minutes = Math.floor(timeRemaining / 60)
   var seconds = timeRemaining - minutes * 60
   seconds = `0${seconds}`.substr(-2)

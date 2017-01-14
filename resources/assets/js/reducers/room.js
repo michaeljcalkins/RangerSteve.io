@@ -3,6 +3,7 @@ const initialState = {
   players: {},
   roundEndTime: 0,
   state: null,
+  currentTime: null,
 }
 
 const room = (state = initialState, action) => {

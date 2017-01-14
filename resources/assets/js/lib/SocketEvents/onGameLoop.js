@@ -20,15 +20,14 @@ const nextPlayerTween = {}
 export default function onGameLoop(data) {
   const store = this.game.store
   const room = store.getState().room
+  room.currentTime = data.currentTime
   let roomData = {}
-  let isNewState = false
 
   if (
     typeof data.state !== 'undefined' &&
     room.state !== data.state
   ) {
     room.state = data.state
-    isNewState = true
   }
 
   if (
@@ -103,11 +102,11 @@ export default function onGameLoop(data) {
     // Prevent the initial tween after respawning from visibly moving their sprite across the map.
     if (player.data.health === 100 && lastPlayerHealth[playerId] <= 0) {
       // The next time their position is tweened must be after this timestamp.
-      nextPlayerTween[playerId] = Date.now() / 1000 + 0.5
+      nextPlayerTween[playerId] = room.currentTime + 0.5
     }
 
     if (
-      (player.data.health > 0 && nextPlayerTween[playerId] < Date.now() / 1000) ||
+      (player.data.health > 0 && nextPlayerTween[playerId] < room.currentTime) ||
       (player.data.health > 0 && ! nextPlayerTween[playerId])
     ) {
       // Update player position when they are alive and have not respawned recently.
@@ -191,16 +190,12 @@ export default function onGameLoop(data) {
     roomData[playerId] = player.data
   })
 
-  if (! isEqual(data.players, room.players)) {
-    Object.keys(data.players).forEach(playerId => {
-      room.players[playerId] = {
-        ...room.players[playerId],
-        ...roomData[playerId],
-      }
-    })
+  Object.keys(data.players).forEach(playerId => {
+    room.players[playerId] = {
+      ...room.players[playerId],
+      ...roomData[playerId],
+    }
+  })
 
-    isNewState = true
-  }
-
-  if (isNewState) store.dispatch(actions.room.setRoom(room))
+  store.dispatch(actions.room.setRoom(room))
 }

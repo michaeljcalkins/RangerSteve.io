@@ -140,6 +140,7 @@ export default class GameUi extends Component {
           <RespawnModal
               onOpenSettingsModal={ onOpenSettingsModal }
               onSettingsViewChange={ onSettingsViewChange }
+              room={ room }
           />
         }
 

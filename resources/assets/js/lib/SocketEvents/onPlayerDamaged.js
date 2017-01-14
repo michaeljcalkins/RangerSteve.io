@@ -1,4 +1,3 @@
-// @flow
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
 import Client from '../Client'
@@ -9,20 +8,7 @@ let damageTimeout = null
 let healingInterval = null
 let lastKnownHealth = null
 
-export default function onPlayerDamaged(data: {
-    id: string,
-    playerX: number,
-    playerY: number,
-    damagedPlayerId: string,
-    health: number,
-    damageStats: {
-        attackingPlayerId: string,
-        attackingHits: number,
-        attackingDamage: number,
-    },
-    attackingDamageStats: Object,
-    canRespawnTimestamp: number,
-}) {
+export default function onPlayerDamaged(data) {
   // When an enemy is killed play the death animation where they were.
   if (data.damagedPlayerId !== window.SOCKET_ID && data.health <= 0) {
     const movePlayer = PlayerById.call(this, data.damagedPlayerId)

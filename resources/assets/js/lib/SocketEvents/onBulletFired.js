@@ -1,4 +1,3 @@
-// @flow
 import includes from 'lodash/includes'
 
 import GameConsts from 'lib/GameConsts'
