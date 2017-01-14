@@ -144,11 +144,9 @@ export class SettingsView extends PureComponent {
                   onClick={ this.handleNetworkStatsChange }
                   type="checkbox"
                 />
-                Show Network stats <i>*</i>
+                Show Network stats <i>(Changing this will reload the game)</i>
               </label>
             </div>
-            <hr/>
-            <i>* Changing this option will reload the game automatically</i>
           </div>
         </div>
       </div>
