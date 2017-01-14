@@ -16,19 +16,19 @@ export default function() {
     fill: "#fff",
   }
 
-    // Health
+  // Health
   RS.hudHealthText = this.game.add.text(60, this.camera.height - 39, state.player.health, style)
   RS.hudHealthText.smoothed = true
   RS.hudHealthText.fixedToCamera = true
 
-    // Health Icon
+  // Health Icon
   RS.hudHealthIcon = this.game.add.sprite(25, this.camera.height - 34,  'hudHealthIcon')
   RS.hudHealthIcon.fixedToCamera = true
 
-    // Ammo
+  // Ammo
   const currentAmmoRemaining = state.player.currentWeapon === 'primaryWeapon'
-        ? state.player.primaryAmmoRemaining
-        : state.player.secondaryAmmoRemaining
+    ? state.player.primaryAmmoRemaining
+    : state.player.secondaryAmmoRemaining
   RS.hudAmmoText = this.game.add.text(this.camera.width - 230, this.camera.height - 39, currentAmmoRemaining, style)
   RS.hudAmmoText.smoothed = true
   RS.hudAmmoText.fixedToCamera = true
