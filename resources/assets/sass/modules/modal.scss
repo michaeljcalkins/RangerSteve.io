@@ -135,16 +135,9 @@
  * Leaderboard Modal
  */
 .modal-leaderboard {
-    .modal-content {
-        background: url(/images/ui/panel/5.png) no-repeat top center;
-        width: 600px;
-        height: 583px;
-        margin: inherit;
-    }
-
     .winning-player {
         background: url(/images/ui/panel/dark-sword.png) no-repeat center top;
-        background-size: 80%;
+        background-size: 55%;
         height: 190px;
         width: 100%;
 
