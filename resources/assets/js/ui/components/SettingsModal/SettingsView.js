@@ -61,6 +61,7 @@ export class SettingsView extends PureComponent {
     this.setState({ isNetworkStatsVisible })
     storage.set('isNetworkStatsVisible', isNetworkStatsVisible)
     this.props.onNetworkStatsChange(isNetworkStatsVisible)
+    document.location.reload()
   }
 
   handleFpsStatsChange(evt) {
@@ -129,21 +130,21 @@ export class SettingsView extends PureComponent {
             <div className="checkbox">
               <label>
                 <input
-                    checked={ this.state.isNetworkStatsVisible }
-                    onClick={ this.handleNetworkStatsChange }
-                    type="checkbox"
-                />
-                Show network stats
-              </label>
-            </div>
-            <div className="checkbox">
-              <label>
-                <input
                     checked={ this.state.isFpsStatsVisible }
                     onClick={ this.handleFpsStatsChange }
                     type="checkbox"
                 />
                 Show FPS stats
+              </label>
+            </div>
+            <div className="checkbox">
+              <label>
+                <input
+                  checked={ this.state.isNetworkStatsVisible }
+                  onClick={ this.handleNetworkStatsChange }
+                  type="checkbox"
+                />
+                Show Network stats <i>(Changing this will reload the game)</i>
               </label>
             </div>
           </div>
