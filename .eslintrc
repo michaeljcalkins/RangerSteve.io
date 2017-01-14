@@ -1,8 +1,7 @@
 {
-    "plugins": [ "react", "import", "flowtype" ],
+    "plugins": [ "react", "import" ],
     "extends": [
         "plugin:react/recommended",
-        "plugin:flowtype/recommended"
     ],
     "installedESLint": true,
     "ecmaFeatures": {
@@ -73,10 +72,6 @@
         "react/require-extension": 1,
         "react/self-closing-comp": 1,
         "react/sort-comp": 1,
-        "react/wrap-multilines": 1,
-
-        # flowtype
-        "flowtype/boolean-style": [2, "bool"],
-        "flowtype/delimiter-dangle": [2, "always"],
+        "react/wrap-multilines": 1
     }
 }
