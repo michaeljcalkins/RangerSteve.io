@@ -115,7 +115,7 @@ export default function onGameLoop(data) {
       this.game.add.tween(player).to({
         x: player.data.x,
         y: player.data.y,
-      }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
+      }, 10, Phaser.Easing.Linear.None, true)
     } else {
       // Update player position when they are dead or have just respawned back in the game.
       player.x = player.data.x
