@@ -13,15 +13,15 @@ function isPlayerShooting(weaponId, rightArmSprite) {
 export default function() {
   const state = this.game.store.getState()
 
-    /**
-     * Emit player's latest position on the map
-     */
+  /**
+   * Emit player's latest position on the map
+   */
   if (
-        ! state.room.id ||
-        state.player.health <= 0 ||
-        state.room.state !== 'active' ||
-        state.player.facing === null
-    ) return
+    ! state.room.id ||
+    state.player.health <= 0 ||
+    state.room.state !== 'active' ||
+    state.player.facing === null
+  ) return
 
   const currentWeaponId = state.player.currentWeapon === 'primaryWeapon'
     ? state.player.selectedPrimaryWeaponId
