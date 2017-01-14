@@ -112,7 +112,7 @@ export default function onGameLoop(data) {
     ) {
       // Update player position when they are alive and have not respawned recently.
       player.visible = true
-      this.game.add.tween(player).to({
+      this.game.add.tween(player).stop().to({
         x: player.data.x,
         y: player.data.y,
       }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
