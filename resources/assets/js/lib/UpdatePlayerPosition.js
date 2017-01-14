@@ -1,5 +1,8 @@
-import emitMovePlayer from '../lib/SocketEvents/emitMovePlayer'
+import isEqual from 'lodash/isEqual'
+
 import GameConsts from 'lib/GameConsts'
+import Client from './Client'
+import movePlayerSchema from 'lib/schemas/movePlayerSchema'
 
 let lastPlayerData = {}
 
@@ -10,19 +13,19 @@ function isPlayerShooting(weaponId, rightArmSprite) {
 export default function() {
   const state = this.game.store.getState()
 
-    /**
-     * Emit player's latest position on the map
-     */
+  /**
+   * Emit player's latest position on the map
+   */
   if (
-        ! state.room.id ||
-        state.player.health <= 0 ||
-        state.room.state !== 'active' ||
-        state.player.facing === null
-    ) return
+    ! state.room.id ||
+    state.player.health <= 0 ||
+    state.room.state !== 'active' ||
+    state.player.facing === null
+  ) return
 
   const currentWeaponId = state.player.currentWeapon === 'primaryWeapon'
-        ? state.player.selectedPrimaryWeaponId
-        : state.player.selectedSecondaryWeaponId
+    ? state.player.selectedPrimaryWeaponId
+    : state.player.selectedSecondaryWeaponId
 
   const angle = (this.game.physics.arcade.angleToPointer(RS.player) * 180 / Math.PI) + 90
 
@@ -35,8 +38,13 @@ export default function() {
     y: Math.round(Math.max(0, RS.player.y)),
   }
 
-  if (JSON.stringify(lastPlayerData) === JSON.stringify(newPlayerData)) return
+  if (isEqual(newPlayerData, lastPlayerData)) return
 
-  emitMovePlayer.call(this, newPlayerData)
-  lastPlayerData = newPlayerData
+  let playerDataToBeEmitted = {}
+  GameConsts.MOVE_PLAYER_PROPERTIES.forEach(propName => {
+    lastPlayerData[propName] = playerDataToBeEmitted[propName] = newPlayerData[propName]
+  })
+
+  const buffer = movePlayerSchema.encode(playerDataToBeEmitted)
+  Client.send(GameConsts.EVENT.MOVE_PLAYER, buffer)
 }
