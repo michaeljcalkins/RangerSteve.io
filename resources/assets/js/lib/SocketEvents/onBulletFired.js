@@ -6,7 +6,11 @@ let soundThrottle = false
 export default function onBulletFired(data) {
   const store = this.game.store
 
-  if (includes(['Boot', 'Preloader'], this.game.state.current)) return
+  if (
+    includes(['Boot', 'Preloader'], this.game.state.current) ||
+    ! RS.enemyBullets ||
+    store.getState().room.state === 'ended'
+  ) return
   if (data.playerId === window.SOCKET_ID) return
 
   let bullet = RS.enemyBullets.getFirstDead()

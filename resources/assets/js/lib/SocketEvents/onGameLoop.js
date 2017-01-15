@@ -1,5 +1,4 @@
 import includes from 'lodash/includes'
-import isEqual from 'lodash/isEqual'
 
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
@@ -11,6 +10,45 @@ import updatePlayerColor from '../updatePlayerColor'
 
 function isNotMoving(player) {
   return player.x === player.data.lastPosition.x && player.y === player.data.lastPosition.y
+}
+
+const isFlying = player => player.data.flying === true
+const isNotFlying = player => player.data.flying === false
+const isFacingRight = player => player.data.facing === 'right'
+const isFacingLeft = player => player.data.facing === 'left'
+
+function isNotMovingAndFacingRight(player) {
+  return (isFlying(player) && isFacingRight(player)) ||
+    (isNotMoving(player) && isFacingRight(player))
+}
+
+function isNotMovingAndFacingLeft(player) {
+  return (isFlying(player) && isFacingLeft(player)) ||
+    (isNotMoving(player) && isFacingLeft(player))
+}
+
+function isRunningRightAndFacingRight(player) {
+  return player.x > player.data.lastPosition.x &&
+    isFacingRight(player) &&
+    isNotFlying(player)
+}
+
+function isRunningLeftAndFacingLeft(player) {
+  return player.x < player.data.lastPosition.x &&
+    isFacingLeft(player) &&
+    isNotFlying(player)
+}
+
+function isRunningLeftAndFacingRight(player) {
+  return player.x < player.data.lastPosition.x &&
+    isFacingRight(player) &&
+    isNotFlying(player)
+}
+
+function isRunningRightAndFacingLeft(player) {
+  return player.x > player.data.lastPosition.x &&
+    isFacingLeft(player) &&
+    isNotFlying(player)
 }
 
 const lastPlayerHealth = {}
@@ -32,7 +70,8 @@ export default function onGameLoop(data) {
 
   if (
     includes(['Boot', 'Preloader'], this.game.state.current) ||
-    ! RS.enemies
+    ! RS.enemies ||
+    room.state === 'ended'
   ) return
 
   // Players should only be allowed to move when the room state is active
@@ -74,7 +113,7 @@ export default function onGameLoop(data) {
     }
 
     // Stop updating players if the round is over
-    if (! player || (store.getState().room !== null && store.getState().room.state === 'ended')) return console.error('Player not found or created.')
+    if (! player) return console.error('Player not found or created.')
 
     /**
      * 4. Update player data
@@ -109,17 +148,13 @@ export default function onGameLoop(data) {
       (player.data.health > 0 && nextPlayerTween[playerId] < room.currentTime) ||
       (player.data.health > 0 && ! nextPlayerTween[playerId])
     ) {
-      // Update player position when they are alive and have not respawned recently.
+      // Show players when they are alive and have not respawned recently.
       player.visible = true
-      this.game.add.tween(player).stop().to({
-        x: player.data.x,
-        y: player.data.y,
-      }, GameConsts.TICK_RATE, Phaser.Easing.Linear.None, true)
-    } else {
-      // Update player position when they are dead or have just respawned back in the game.
-      player.x = player.data.x
-      player.y = player.data.y
     }
+
+    // Update player position
+    player.x = player.data.x
+    player.y = player.data.y
 
     // When a player's health is 100 and this var is 0 that means that they literally just respawned
     lastPlayerHealth[playerId] = player.data.health
@@ -143,43 +178,27 @@ export default function onGameLoop(data) {
 
     updatePlayerAngles.call(this, player, player.data.angle)
 
-    if (
-      (player.data.flying && player.facing === 'right') ||
-      (isNotMoving(player) && player.facing === 'right')
-    ) {
+    // Decide what animation or frame to show
+    if (isNotMovingAndFacingRight(player)) {
       // Standing still or flying and facing right
       player.playerSprite.animations.stop()
       player.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
-    } else if (
-      (player.data.flying && player.facing === 'left') ||
-      (isNotMoving(player) && player.facing === 'left')
-    ) {
+    }
+    else if (isNotMovingAndFacingLeft(player)) {
       // Standing still or flying and facing left
       player.playerSprite.animations.stop()
       player.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
-    } else if (
-      player.x > player.data.lastPosition.x &&
-      player.facing === 'right' &&
-      ! player.data.flying
-    ) {
+    }
+    else if (isRunningRightAndFacingRight(player)) {
       player.playerSprite.animations.play('runRight-faceRight')
-    } else if (
-      player.x < player.data.lastPosition.x &&
-      player.facing === 'left' &&
-      ! player.data.flying
-    ) {
+    }
+    else if (isRunningLeftAndFacingLeft(player)) {
       player.playerSprite.animations.play('runLeft-faceLeft')
-    } else if (
-        player.x < player.data.lastPosition.x &&
-        player.facing === 'right' &&
-        ! player.data.flying
-    ) {
+    }
+    else if (isRunningLeftAndFacingRight(player)) {
       player.playerSprite.animations.play('runLeft-faceRight')
-    } else if (
-      player.x > player.data.lastPosition.x &&
-      player.facing === 'left' &&
-      ! player.data.flying
-    ) {
+    }
+    else if (isRunningRightAndFacingLeft(player)) {
       player.playerSprite.animations.play('runRight-faceLeft')
     }
 
@@ -190,6 +209,7 @@ export default function onGameLoop(data) {
     roomData[playerId] = player.data
   })
 
+  // Merge the differences from the server to client's room state
   Object.keys(data.players).forEach(playerId => {
     room.players[playerId] = {
       ...room.players[playerId],
