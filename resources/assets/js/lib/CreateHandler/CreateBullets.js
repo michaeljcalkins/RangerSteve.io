@@ -2,11 +2,11 @@ import GameConsts from 'lib/GameConsts'
 
 export default function() {
   RS.rpgExplosions = this.game.add.group()
-  RS.rpgExplosions.createMultiple(20, 'rpgExplosion')
+  RS.rpgExplosions.createMultiple(7, 'rpgExplosion')
   RS.rpgExplosions.forEach(rpgExplosion => rpgExplosion.animations.add('collision'))
 
   RS.ricochets = this.game.add.group()
-  RS.ricochets.createMultiple(300, 'ricochet')
+  RS.ricochets.createMultiple(150, 'ricochet')
   RS.ricochets.forEach(ricochet => ricochet.animations.add('collision'))
 
   RS.bloodSprays = this.game.add.group()
@@ -14,11 +14,11 @@ export default function() {
   RS.bloodSprays.forEach(bloodSpray => bloodSpray.animations.add('spray'))
 
   RS.playerDeaths = this.game.add.group()
-  RS.playerDeaths.createMultiple(20, 'player-death')
+  RS.playerDeaths.createMultiple(8, 'player-death')
   RS.playerDeaths.forEach(playerDeath => playerDeath.animations.add('death'))
 
   RS.bullets = this.game.add.group()
-  RS.bullets.createMultiple(300, 'bullet')
+  RS.bullets.createMultiple(50, 'bullet')
   RS.bullets.setAll('checkWorldBounds', true)
   RS.bullets.setAll('outOfBoundsKill', true)
 
@@ -48,7 +48,7 @@ export default function() {
 
   RS.enemyBullets = this.game.add.group()
   RS.enemyBullets.enableBody = true
-  RS.enemyBullets.createMultiple(200, 'bullet')
+  RS.enemyBullets.createMultiple(350, 'bullet')
   RS.enemyBullets.setAll('checkWorldBounds', true)
   RS.enemyBullets.setAll('outOfBoundsKill', true)
 
