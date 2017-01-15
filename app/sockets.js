@@ -3,7 +3,7 @@
 const util = require('util')
 const _ = require('lodash')
 const moment = require('moment')
-const filter = require('profanity-filter')
+const Filter = require('bad-words')
 const gameloop = require('node-gameloop')
 
 const Server = require('./Server')
@@ -19,8 +19,7 @@ const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
 // const playerIdSchema = require('../lib/schemas/playerIdSchema')
 const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
 
-filter.seed(require('./seeds/profanity.json'))
-filter.setReplacementMethod('grawlix')
+const filter = new Filter()
 
 const NetworkStats = helpers.NetworkStats
 const sizeOf = helpers.sizeOf
