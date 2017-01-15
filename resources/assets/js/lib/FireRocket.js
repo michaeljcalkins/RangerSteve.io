@@ -13,11 +13,12 @@ export default function FireRocket(currentWeaponId) {
   const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
 
   if (
-        ! state.room.id ||
-        state.player.health <= 0 ||
-        state.room.state !== 'active' ||
-        this.game.time.time < nextFire
-    ) return
+    ! state.room.id ||
+    state.player.health <= 0 ||
+    state.room.state !== 'active' ||
+    this.game.time.time < nextFire ||
+    ! RS.bullets
+  ) return
 
   nextFire = this.game.time.time + currentWeapon.fireRate
 
