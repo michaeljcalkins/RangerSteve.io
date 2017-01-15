@@ -8,7 +8,7 @@ export default function(store) {
   const useWebgl = storage.get('useWebgl', true)
   let renderer = Phaser.AUTO
   if (! useWebgl) renderer = Phaser.CANVAS
-  
+
   const game = new Phaser.Game('100%', '100%', renderer, 'game')
   game.store = store
 
@@ -27,6 +27,9 @@ export default function(store) {
   game.state.add('TeamDeathmatch', RS.TeamDeathmatch)
 
   game.state.start('Boot')
+
+  // Make sure this game instance isn't exposed to clients via Phaser.GAMES
+  Phaser.GAMES[0] = null
 
   // force unpausing the game after 1 second to prevent loading screen freeze bug
   setTimeout(() => game.paused = false, 1000)
