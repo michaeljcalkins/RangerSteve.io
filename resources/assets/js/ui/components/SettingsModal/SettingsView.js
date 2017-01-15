@@ -96,7 +96,6 @@ export class SettingsView extends PureComponent {
                   <label>Nickname</label>
                   <input
                       className="form-control"
-
                       value={ this.state.nickname }
                       maxLength="25"
                       onChange={ this.handleNicknameChange }
