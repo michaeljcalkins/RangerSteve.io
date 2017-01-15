@@ -5,14 +5,15 @@ export default function(player, angle) {
     angle = (this.game.physics.arcade.angleToPointer(player) * 180 / Math.PI) + 90
   }
 
+  player.data = player.data || {}
   let leftAngle = angle
   let rightAngle = angle
 
   if (angle >= 0 && angle <= 180) {
-    const previousFacingValue = player.facing
-    player.facing = 'right'
+    const previousFacingValue = player.data.facing
+    player.data.facing = 'right'
 
-    if (previousFacingValue !== player.facing) {
+    if (previousFacingValue !== player.data.facing) {
       player.rightArmSprite.scale.y *= -1
       player.rightArmGroup.x = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_X
       player.rightArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.RIGHT_ARM_Y
@@ -82,10 +83,10 @@ export default function(player, angle) {
       rightAngle -= 10
     }
   } else {
-    const previousFacingValue = player.facing
-    player.facing = 'left'
+    const previousFacingValue = player.data.facing
+    player.data.facing = 'left'
 
-    if (previousFacingValue !== player.facing) {
+    if (previousFacingValue !== player.data.facing) {
       player.rightArmSprite.scale.y *= -1
       player.rightArmGroup.x = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_X
       player.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
