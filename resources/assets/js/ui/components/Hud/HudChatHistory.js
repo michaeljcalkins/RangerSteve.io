@@ -25,7 +25,7 @@ export default class HudChatHistory extends PureComponent {
   }
 
   render() {
-    const { isOpen, onSendMessage } = this.props
+    const { isOpen, onSendMessage, onNewChatMessageBlur } = this.props
 
     return (
             <div className="hud-chat no-pointer-events">
@@ -34,6 +34,7 @@ export default class HudChatHistory extends PureComponent {
                     { isOpen &&
                         <HudNewChatMessage
                             onSendMessage={ onSendMessage }
+                            onBlur={ onNewChatMessageBlur }
                         />
                     }
                 </ul>
@@ -51,4 +52,5 @@ HudChatHistory.propTypes = {
   messages: PropTypes.array,
   newChatMessageCharacter: PropTypes.number,
   onSendMessage: PropTypes.func,
+  onNewChatMessageBlur: PropTypes.func,
 }

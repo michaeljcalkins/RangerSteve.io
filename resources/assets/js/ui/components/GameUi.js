@@ -108,6 +108,7 @@ export default class GameUi extends Component {
       onKeyboardControlChange,
       onSetAutoRespawn,
       onSetResetEventsFlag,
+      onCloseChatModal,
     } = this.props
 
     const mainMenuButtonClasses = cs('hud-main-menu-button hud-item', {
@@ -130,6 +131,7 @@ export default class GameUi extends Component {
             messages={ game.chatMessages }
             newChatMessageCharacter={ +game.keyboardControls.newChatMessage }
             onSendMessage={ this.handleSendMessage }
+            onNewChatMessageBlur={ onCloseChatModal }
         />
 
         { this.isLeaderboardModalOpen() &&

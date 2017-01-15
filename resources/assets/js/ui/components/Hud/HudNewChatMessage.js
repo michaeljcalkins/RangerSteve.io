@@ -33,6 +33,7 @@ export default class HudNewChatMessage extends Component {
         <input
             maxLength={ GameConsts.MAX_CHAT_MESSAGE_LENGTH }
             onKeyPress={ this.handleKeypressSendMessage }
+            onBlur={ this.props.onBlur }
             placeholder="Push enter to send..."
             ref="messageInput"
             type="text"
@@ -44,4 +45,5 @@ export default class HudNewChatMessage extends Component {
 
 HudNewChatMessage.propTypes = {
   onSendMessage: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
 }
