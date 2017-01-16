@@ -7,17 +7,12 @@ const Server = require('../Server')
 
 let MainController = {
   home: function(req, res) {
-        // Cache busting
-    const fileStat = fs.statSync('public/css/app.css')
-    const lastModifiedTime = moment(fileStat.mtime).unix()
-
-        // Room table
+    // Room table
     const rooms = require('../sockets').getRooms()
     const numberOfRooms = Object.keys(rooms).length
     const maxRoomSize = GameConsts.MAX_ROOM_SIZE
 
     res.render('home', {
-      lastModifiedTime: lastModifiedTime,
       maxRoomSize: maxRoomSize,
       numberOfRooms: numberOfRooms,
       rooms: rooms,
@@ -25,12 +20,7 @@ let MainController = {
   },
 
   buy: function(req, res) {
-    // Cache busting
-    const fileStat = fs.statSync('public/css/app.css')
-    const lastModifiedTime = moment(fileStat.mtime).unix()
-
     res.render('buy', {
-      lastModifiedTime: lastModifiedTime,
     })
   },
 
@@ -40,6 +30,14 @@ let MainController = {
 
   createARoom: function(req, res) {
     res.render('create-a-room')
+  },
+
+  leaderboard: function(req, res) {
+    res.render('leaderboard')
+  },
+
+  battleStats: function(req, res) {
+    res.render('battle-stats', req.params)
   },
 
   game: function(req, res) {
