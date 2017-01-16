@@ -35,13 +35,11 @@ let MainController = {
   },
 
   howToPlay: function(req, res) {
-    // Cache busting
-    const fileStat = fs.statSync('public/css/app.css')
-    const lastModifiedTime = moment(fileStat.mtime).unix()
+    res.render('how-to-play')
+  },
 
-    res.render('how-to-play', {
-      lastModifiedTime: lastModifiedTime,
-    })
+  createARoom: function(req, res) {
+    res.render('create-a-room')
   },
 
   game: function(req, res) {

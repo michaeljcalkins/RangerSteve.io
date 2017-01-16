@@ -58,34 +58,23 @@ body.main:after {
     border: 0;
   }
 
-  a {
-    color: #fff;
-
-    &:active,
-    &:hover {
-    color: #fff;
-    }
+  input {
+    border-radius: 3px;
+    height: 40px;
   }
 
-  input {
+  #username {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
     box-shadow: 0;
     border: 0;
     border-radius: 3px;
     margin: 0 auto;
-  }
-
-  input#nickname {
-    color: #fff;
-    background: rgba(0, 0, 0, 0.5);
-    font-weight: bold;
 
     &:focus {
       border-color: #fff;
     }
-  }
-
-  .form-group {
-    margin: 0;
   }
 
   .btn-lg {
@@ -140,6 +129,32 @@ body.main:after {
 .home-content {
   margin: 0 auto;
   width: 600px;
+
+  .buy-button {
+    padding-bottom: 10px;
+    margin: 0;
+  }
+
+  hr {
+    border-width: 2px;
+    border-color: #ddd;
+  }
+
+  fieldset {
+    border-top: 2px solid #ddd;
+    margin-bottom: 15px;
+    padding: 25px 0 15px;
+  }
+
+  legend {
+    font-size: 16px;
+    width: auto;
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 10px;
+    border: 0;
+  }
 }
 
 #browser-recommendation {
