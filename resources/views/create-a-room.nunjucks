@@ -7,11 +7,11 @@
 
 <section class="main-section">
   <div class="col-xs-12">
-      <div class="text-center">
-          <span class="main-header">
-              Ranger Steve
-          </span>
-      </div>
+    <div class="text-center">
+      <span class="main-header">
+        Create a Room
+      </span>
+    </div>
 
         <div class="home-content">
             <div id="browser-recommendation" class="alert alert-info text-center">
