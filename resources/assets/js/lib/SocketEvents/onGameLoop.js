@@ -56,10 +56,11 @@ const lastPlayerNickname = {}
 const nextPlayerTween = {}
 
 export default function onGameLoop(data) {
-  if (! data.currentTime) return
   const store = this.game.store
   const room = store.getState().room
-  room.currentTime = data.currentTime
+  if (data.currentTime) {
+    room.currentTime = data.currentTime
+  }
   let roomData = {}
 
   if (
