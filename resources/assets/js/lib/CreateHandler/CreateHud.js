@@ -1,11 +1,6 @@
 export default function() {
   const state = this.game.store.getState()
 
-  RS.leftHudBg = this.game.add.sprite(-100, this.camera.height - 45, 'leftHudBg')
-  RS.leftHudBg.width = 500
-  RS.leftHudBg.height = 100
-  RS.leftHudBg.fixedToCamera = true
-
   RS.rightHudBg = this.game.add.sprite(this.camera.width - 400, this.camera.height - 45, 'rightHudBg')
   RS.rightHudBg.width = 500
   RS.rightHudBg.height = 100
@@ -15,15 +10,6 @@ export default function() {
     font: "24px Keep Calm",
     fill: "#fff",
   }
-
-  // Health
-  RS.hudHealthText = this.game.add.text(60, this.camera.height - 39, state.player.health, style)
-  RS.hudHealthText.smoothed = true
-  RS.hudHealthText.fixedToCamera = true
-
-  // Health Icon
-  RS.hudHealthIcon = this.game.add.sprite(25, this.camera.height - 34,  'hudHealthIcon')
-  RS.hudHealthIcon.fixedToCamera = true
 
   // Ammo
   const currentAmmoRemaining = state.player.currentWeapon === 'primaryWeapon'

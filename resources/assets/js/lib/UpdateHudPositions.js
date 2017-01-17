@@ -7,23 +7,9 @@ export default function() {
   const state = this.game.store.getState()
 
     // HUD Backgrounds
-  RS.leftHudBg.x = -100
-  RS.leftHudBg.y = this.camera.height - 45
-  RS.leftHudBg.fixedToCamera = true
-
   RS.rightHudBg.x = this.camera.width - 400
   RS.rightHudBg.y = this.camera.height - 45
   RS.rightHudBg.fixedToCamera = true
-
-    // Health
-  RS.hudHealthText.x = 60
-  RS.hudHealthText.y = this.camera.height - TEXT_Y_OFFSET
-  RS.hudHealthText.fixedToCamera = true
-
-    // Health Icon
-  RS.hudHealthIcon.x = 25
-  RS.hudHealthIcon.y = this.camera.height - ICON_Y_OFFSET
-  RS.hudHealthIcon.fixedToCamera = true
 
     // Ammo
   RS.hudAmmoText.x = this.camera.width - 230
@@ -58,9 +44,6 @@ export default function() {
   RS.hudKillConfirmed.y = (this.camera.height / 2) - (RS.hudKillConfirmed.height / 2) - 110
   RS.hudKillConfirmed.fixedToCamera = true
   RS.hudKillConfirmed.visible = state.game.showKillConfirmed
-
-    // Health HUD
-  RS.hudHealthText.setText(state.player.health)
 
     // Ammo Hud
   const currentAmmoRemaining = state.player.currentWeapon === 'primaryWeapon'
