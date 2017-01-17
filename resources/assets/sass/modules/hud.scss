@@ -161,7 +161,8 @@
   text-align: center;
   padding: 17px;
   color: #fff;
-  text-shadow: #000 0px 0px 2px, #000 0px 0px 2px, #000 0px 0px 2px, #000 0px 0px 2px;
+  text-shadow: #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px,
+               #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
   background: none;
   box-shadow: none;
   width: 200px;
@@ -178,11 +179,42 @@
   font-size: 12px;
   padding: 0;
   color: #fff;
-  text-shadow: #000 0px 0px 2px, #000 0px 0px 2px, #000 0px 0px 2px, #000 0px 0px 2px;
+  text-shadow: #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px,
+               #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
   background: none;
   box-shadow: none;
   width: 200px;
   height: 22px;
+}
+
+.hud-team-score {
+  pointer-events: none;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 0;
+  color: #fff;
+  text-shadow: #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px,
+               #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
+  background: none;
+  box-shadow: none;
+  width: 350px;
+
+  .hud-team-score-1 {
+    width: 90px;
+    float: left;
+    text-align: right;
+    color: #FF2525;
+  }
+
+  .hud-team-score-2 {
+    width: 90px;
+    float: right;
+    text-align: left;
+    color: #2578FF;
+  }
 }
 
 .hud-health {

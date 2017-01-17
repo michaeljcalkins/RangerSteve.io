@@ -46,24 +46,4 @@ export default function() {
   RS.hudKillConfirmed.stroke = '#000'
   RS.hudKillConfirmed.strokeThickness = 3
   RS.hudKillConfirmed.visible = false
-
-  if (state.room.gamemode === 'TeamDeathmatch') {
-    RS.redTeamScore = this.game.add.text(0, 0, state.room.redTeamScore, {
-      font: "24px Keep Calm",
-      fill: "#FF2525",
-    })
-    RS.redTeamScore.smoothed = true
-    RS.redTeamScore.fixedToCamera = true
-    RS.redTeamScore.stroke = '#000'
-    RS.redTeamScore.strokeThickness = 1
-
-    RS.blueTeamScore = this.game.add.text(0, 0, state.room.blueTeamScore, {
-      font: "24px Keep Calm",
-      fill: "#2578FF",
-    })
-    RS.blueTeamScore.smoothed = true
-    RS.blueTeamScore.fixedToCamera = true
-    RS.blueTeamScore.stroke = '#000'
-    RS.blueTeamScore.strokeThickness = 1
-  }
 }

@@ -49,29 +49,7 @@ export default function() {
     RS.hudAmmoText.setText(currentAmmoRemaining)
   }
 
-    // Timer HUD
-  let timeRemaining = state.room.roundEndTime - Math.floor(state.room.currentTime / 1000)
-  var minutes = Math.floor(timeRemaining / 60)
-  var seconds = timeRemaining - minutes * 60
-  seconds = `0${seconds}`.substr(-2)
-
     // Jump Jet HUD
   const widthPercent = RemainingFuelPercent(state.player.jumpJetCounter)
   RS.hudJumpJetBar.width = widthPercent
-
-  if (state.room.gamemode === 'TeamDeathmatch') {
-    if (! RS.redTeamScore || ! RS.blueTeamScore) {
-      console.log('* LOG * No RS.redTeamScore or RS.blueTeamScore');
-      return
-    }
-    RS.redTeamScore.y = 25
-    RS.redTeamScore.x = (this.camera.width / 2) - (RS.redTeamScore.width / 2) - 100
-    RS.redTeamScore.fixedToCamera = true
-    RS.redTeamScore.setText(state.room.redTeamScore)
-
-    RS.blueTeamScore.y = 25
-    RS.blueTeamScore.x = (this.camera.width / 2) - (RS.blueTeamScore.width / 2) + 100
-    RS.blueTeamScore.fixedToCamera = true
-    RS.blueTeamScore.setText(state.room.blueTeamScore)
-  }
 }
