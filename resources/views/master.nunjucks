@@ -47,6 +47,28 @@
 
     {% block content %}{% endblock %}
 
+    <footer>
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <a class="btn btn-link" href="https://rangersteve.userecho.com/" target="_blank">
+                    Give Feedback or Report Bugs
+                </a>
+                <a style="color: #7289DA;" href="https://discord.gg/GqKgsmy" class="btn btn-link" target="_blank">
+                    <i class="fa fa-commenting"></i> Discord
+                </a>
+                <a style="color: #3b5998;" href="https://www.facebook.com/rangerstevegame/" class="btn btn-link" target="_blank">
+                    <i class="fa fa-facebook"></i> Facebook
+                </a>
+                <a style="color: #1da1f2;" href="https://twitter.com/michaeljcalkins" class="btn btn-link" target="_blank">
+                    <i class="fa fa-twitter"></i> Twitter
+                </a>
+                <a class="btn btn-link" target="_blank" href="/credits">
+                    Credits
+                </a>
+            </div>
+        </div>
+    </footer>
+
     <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
     <script>
       // Initialize Firebase

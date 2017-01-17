@@ -127,6 +127,10 @@ body.main:after {
   width: 600px;
   font-weight: bold;
 
+  .well {
+    position: relative;
+  }
+
   .gold-button {
     padding-bottom: 10px;
     margin: 0;
@@ -228,13 +232,6 @@ body.main:after {
     text-transform: uppercase;
     width: 100%;
   }
-}
-
-#feedback-button {
-  color: #333;
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
 }
 
 /* Large Devices, Wide Screens */
