@@ -10,6 +10,7 @@ import HudChangeWeaponsButton from './Hud/HudChangeWeaponsButton'
 import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
 import HudTimer from './Hud/HudTimer'
+import HudGamemode from './Hud/HudGamemode'
 import HudHealth from './Hud/HudHealth'
 import HudLeaderboard from './Hud/HudLeaderboard'
 import HudStatsGraph from './Hud/HudStatsGraph'
@@ -125,6 +126,7 @@ export default class GameUi extends Component {
         <HudKillLog messages={ game.killLogMessages } />
         <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
         <HudTimer secondsRemaining={ secondsRemaining } />
+        <HudGamemode gamemode={ room.gamemode } />
         <HudHealth health={ player.health } />
         <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
         <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />

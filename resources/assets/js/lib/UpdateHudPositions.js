@@ -29,11 +29,6 @@ export default function() {
   RS.hudJumpJetIcon.y = this.camera.height - ICON_Y_OFFSET
   RS.hudJumpJetIcon.fixedToCamera = true
 
-    // Gamemode
-  RS.hudGamemodeText.y = 45
-  RS.hudGamemodeText.x = (this.camera.width / 2) - (RS.hudGamemodeText.width / 2)
-  RS.hudGamemodeText.fixedToCamera = true
-
     // Kill confirmed
   RS.hudKillConfirmed.x = (this.camera.width / 2) - (RS.hudKillConfirmed.width / 2)
   RS.hudKillConfirmed.y = (this.camera.height / 2) - (RS.hudKillConfirmed.height / 2) - 110
