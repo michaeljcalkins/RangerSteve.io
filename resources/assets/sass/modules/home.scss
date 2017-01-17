@@ -5,6 +5,7 @@ body.main {
 }
 
 body.main:after {
+  background: rgba(0, 0, 0, .3);
   content: '';
   display: block;
   position: absolute;
