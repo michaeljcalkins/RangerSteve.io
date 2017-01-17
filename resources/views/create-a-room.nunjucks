@@ -14,10 +14,18 @@
     </div>
 
         <div class="home-content">
-            <div id="browser-recommendation" class="alert alert-info text-center">
-                We recommend using Chrome browser for the best game performance
-            </div>
             <div class="well">
+                    <div class="row">
+          <div class="col-sm-6">
+            <a class="btn btn-primary btn-lg btn-block" href="/">Back to Menu</a>
+          </div>
+          <div class="col-sm-6">
+          </div>
+        </div>
+
+        <br />
+        <br />
+
                 <form action="/game" method="GET">
                   <div class="form-group">
                     <label>Name of Room</label>

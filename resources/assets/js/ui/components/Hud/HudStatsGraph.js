@@ -4,32 +4,32 @@ import autobind from 'react-autobind'
 import Stats from '../../../lib/Stats'
 
 export default class HudStatsGraph extends PureComponent {
-  constructor(props) {
+  constructor (props) {
     super(props)
     autobind(this)
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate () {
     return false
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this._stats = new Stats({
       container: this.refs.statsContainer,
-      cssText: '',
+      cssText: ''
     })
 
-    requestAnimationFrame(this.loop)
+    window.requestAnimationFrame(this.loop)
   }
 
-  loop() {
+  loop () {
     this._stats.update()
-    requestAnimationFrame(this.loop)
+    window.requestAnimationFrame(this.loop)
   }
 
-  render() {
+  render () {
     return (
-            <div ref="statsContainer" {...this.props} />
-        )
+      <div ref='statsContainer' {...this.props} />
+    )
   }
 }

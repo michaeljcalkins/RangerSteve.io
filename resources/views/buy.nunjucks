@@ -66,28 +66,28 @@
           <legend>Characters</legend>
           <div class="row">
             <div class="col-sm-3">
-              <a class="buy-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default" href="/buy">
                 <span>Ranger Steve</span>
                 <img src="/images/characters/RangerSteve.png" width="95" />
                 <span>Free</span>
               </a>
             </div>
             <div class="col-sm-3">
-              <a class="buy-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default" href="/buy">
                 <span>Commando Mike</span>
                 <img src="/images/characters/CommandoMike.png" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
             <div class="col-sm-3">
-              <a class="buy-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default" href="/buy">
                 <span>GI John</span>
                 <img src="/images/characters/GIJohn.png" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
             <div class="col-sm-3">
-              <a class="buy-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default" href="/buy">
                 <span>Real Estate Job</span>
                 <img src="/images/characters/RealEstateRob.png" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
@@ -96,7 +96,7 @@
           </div>
           <div class="row">
             <div class="col-sm-3">
-              <a class="buy-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default" href="/buy">
                 <span>Terrorist Jim</span>
                 <img src="/images/characters/TerroristJim.png" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>

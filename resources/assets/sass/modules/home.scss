@@ -130,7 +130,7 @@ body.main:after {
   margin: 0 auto;
   width: 600px;
 
-  .buy-button {
+  .gold-button {
     padding-bottom: 10px;
     margin: 0;
   }
@@ -201,24 +201,33 @@ body.main:after {
   border-top-width: 0;
 }
 
-#buy-button {
+.gold-button {
   border: 5px solid #F9BF3B;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   width: 100%;
+
+  &:hover,
+  &:link,
+  &:visited,
+  &:active {
+    border: 5px solid #F9BF3B;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    width: 100%;
+  }
 
   span {
     background: #F9BF3B;
     border-bottom :0;
     border-radius: 3px;
-    font-size: 16px;
     color: #333;
     display: block;
+    font-size: 16px;
     font-weight: bold;
-    text-transform: uppercase;
-    margin-top: -28px;
     margin-bottom: 10px;
+    margin-top: -28px;
     padding: 4px 0;
     text-align: center;
+    text-transform: uppercase;
     width: 100%;
   }
 }
