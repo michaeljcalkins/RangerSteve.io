@@ -29,11 +29,6 @@ export default function() {
   RS.hudJumpJetIcon.y = this.camera.height - ICON_Y_OFFSET
   RS.hudJumpJetIcon.fixedToCamera = true
 
-    // Timer
-  RS.hudTimerText.y = 10
-  RS.hudTimerText.x = (this.camera.width / 2) - (RS.hudTimerText.width / 2)
-  RS.hudTimerText.fixedToCamera = true
-
     // Gamemode
   RS.hudGamemodeText.y = 45
   RS.hudGamemodeText.x = (this.camera.width / 2) - (RS.hudGamemodeText.width / 2)
@@ -64,12 +59,6 @@ export default function() {
   var minutes = Math.floor(timeRemaining / 60)
   var seconds = timeRemaining - minutes * 60
   seconds = `0${seconds}`.substr(-2)
-
-  if (isNaN(minutes) || isNaN(seconds) || minutes < 0) {
-    RS.hudTimerText.setText('0:00')
-  } else {
-    RS.hudTimerText.setText(`${minutes}:${seconds}`)
-  }
 
     // Jump Jet HUD
   const widthPercent = RemainingFuelPercent(state.player.jumpJetCounter)

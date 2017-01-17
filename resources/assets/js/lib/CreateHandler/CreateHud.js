@@ -36,13 +36,6 @@ export default function() {
   RS.hudJumpJetIcon = this.game.add.sprite(this.camera.width - 165, this.camera.height - 34,  'hudGasIcon')
   RS.hudJumpJetIcon.fixedToCamera = true
 
-    // Timer
-  RS.hudTimerText = this.game.add.text(this.camera.width / 2, 10, '--', style)
-  RS.hudTimerText.smoothed = true
-  RS.hudTimerText.fixedToCamera = true
-  RS.hudTimerText.stroke = '#000'
-  RS.hudTimerText.strokeThickness = 3
-
     // Gamemode
   let gamemodeText = state.room.gamemode === 'Deathmatch' ? 'DEATHMATCH' : null
   gamemodeText = state.room.gamemode === 'TeamDeathmatch' ? 'TEAM DEATHMATCH' : gamemodeText

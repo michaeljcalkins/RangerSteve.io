@@ -9,6 +9,7 @@ import HudKillLog from './Hud/HudKillLog'
 import HudChangeWeaponsButton from './Hud/HudChangeWeaponsButton'
 import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
+import HudTimer from './Hud/HudTimer'
 import HudHealth from './Hud/HudHealth'
 import HudLeaderboard from './Hud/HudLeaderboard'
 import HudStatsGraph from './Hud/HudStatsGraph'
@@ -116,11 +117,14 @@ export default class GameUi extends Component {
       'is-electron': window.IS_ELECTRON
     })
 
+    const secondsRemaining = (room.currentTime) ? room.roundEndTime - Math.floor(room.currentTime / 1000) : 0
+
     return (
       <div>
         <a className={ mainMenuButtonClasses } href="/">Back to Main Menu</a>
         <HudKillLog messages={ game.killLogMessages } />
         <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
+        <HudTimer secondsRemaining={ secondsRemaining } />
         <HudHealth health={ player.health } />
         <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
         <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />

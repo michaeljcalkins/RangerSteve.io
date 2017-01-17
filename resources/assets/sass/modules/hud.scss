@@ -152,7 +152,24 @@
     }
 }
 
+.hud-timer {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 17px;
+  color: #fff;
+  text-shadow: #000 0px 0px 2px, #000 0px 0px 2px, #000 0px 0px 2px, #000 0px 0px 2px;
+  background: none;
+  box-shadow: none;
+  width: 200px;
+  height: 45px;
+}
+
 .hud-health {
+  pointer-events: none;
   position: absolute;
   bottom: 0;
   left: 0;
