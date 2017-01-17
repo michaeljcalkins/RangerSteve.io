@@ -13,6 +13,8 @@ import HudTimer from './Hud/HudTimer'
 import HudGamemode from './Hud/HudGamemode'
 import HudTeamScore from './Hud/HudTeamScore'
 import HudHealth from './Hud/HudHealth'
+import HudJetpack from './Hud/HudJetpack'
+import HudAmmo from './Hud/HudAmmo'
 import HudLeaderboard from './Hud/HudLeaderboard'
 import HudStatsGraph from './Hud/HudStatsGraph'
 import SettingsModal from './SettingsModal/SettingsModal'
@@ -20,6 +22,7 @@ import LeaderboardModal from './LeaderboardModal/LeaderboardModal'
 import RespawnModal from './RespawnModal/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNickname'
+import RemainingFuelPercent from '../../lib/RemainingFuelPercent'
 import NetworkStats from './NetworkStats/NetworkStats'
 
 export default class GameUi extends Component {
@@ -121,6 +124,17 @@ export default class GameUi extends Component {
 
     const secondsRemaining = (room.currentTime) ? room.roundEndTime - Math.floor(room.currentTime / 1000) : 0
 
+    const fuelRemaining = RemainingFuelPercent(player.jumpJetCounter)
+
+    const ammoRemaining = player.currentWeapon === 'primaryWeapon'
+      ? player.primaryAmmoRemaining
+      : player.secondaryAmmoRemaining
+
+    const isWeaponReloading = (
+      player.currentWeapon === 'primaryWeapon' && player.isPrimaryReloading ||
+      player.currentWeapon === 'secondaryWeapon' && player.isSecondaryReloading
+    )
+
     return (
       <div>
         <a className={ mainMenuButtonClasses } href="/">Back to Main Menu</a>
@@ -135,6 +149,8 @@ export default class GameUi extends Component {
           />
         }
         <HudHealth health={ player.health } />
+        <HudJetpack fuelRemaining={ fuelRemaining } />
+        <HudAmmo ammo={ ammoRemaining } isReloading={ isWeaponReloading } />
         <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
         <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />
         <HudLeaderboard room={ room } />

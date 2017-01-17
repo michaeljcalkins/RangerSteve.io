@@ -12,9 +12,6 @@ Preloader.prototype = {
   preload: function() {
     this.game.load.image('ground', '/images/platform.png')
     this.game.load.image('bullet', '/images/bullet.png')
-    this.game.load.image('rightHudBg', '/images/rightHudBg.png')
-    this.game.load.image('hudAmmoIcon', '/images/icons/ammo-tin-24.png')
-    this.game.load.image('hudGasIcon', '/images/icons/gas-24.png')
     this.game.load.image('left-arm', '/images/body/left-arm.png')
     this.game.load.image('player-placeholder', '/images/player-placeholder.png')
 

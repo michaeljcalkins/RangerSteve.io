@@ -230,6 +230,42 @@
   height: 45px;
 }
 
+.hud-jetpack {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: right;
+  width: 200px;
+  padding: 12px 25px;
+  background: url(/images/icons/gas-24.png) rgba(0, 0, 0, 0.4) 25px 11px no-repeat;
+  background-size: 24px;
+  height: 45px;
+
+  .hud-jetpack-fuel-cointainer {
+    width: 120px;
+    float: right;
+  }
+
+  .hud-jetpack-fuel {
+    background: #fff;
+  }
+}
+
+.hud-ammo {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: right;
+  width: 125px;
+  padding-right: 25px;
+  background: url(/images/icons/ammo-tin-24.png) rgba(0, 0, 0, 0.4) 25px 11px no-repeat;
+  background-size: 24px;
+  height: 45px;
+}
+
 .hud-network-stats {
     position: absolute;
     bottom: 125px;
