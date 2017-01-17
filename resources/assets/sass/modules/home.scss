@@ -5,7 +5,7 @@ body.main {
 }
 
 body.main:after {
-  background: rgba(0, 0, 0, .3);
+  background: rgba(0, 0, 0, .1);
   content: '';
   display: block;
   position: absolute;
@@ -52,11 +52,11 @@ body.main:after {
   }
 
   .well {
-    background: white;
-    border-radius: 3px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
-    padding: 30px;
+    background: rgba(51, 46, 44, 0.8);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
     border: 0;
+    padding: 30px;
   }
 
   input {
@@ -90,6 +90,15 @@ body.main:after {
 
   table {
     margin: 0;
+    color: #eee;
+
+    tr {
+      &:hover {
+        td {
+          color: #333;
+        }
+      }
+    }
   }
 
   .footer-container a {
@@ -142,12 +151,13 @@ body.main:after {
   }
 
   fieldset {
-    border-top: 2px solid #ddd;
+    border-top: 1px solid rgba(255, 255, 255, .3);
     margin-bottom: 15px;
     padding: 25px 0 15px;
   }
 
   legend {
+    color: #eee;
     font-size: 16px;
     width: auto;
     margin: 0;

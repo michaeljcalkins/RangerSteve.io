@@ -13,9 +13,105 @@
       </span>
     </div>
 
-    <div class="home-content">
+    <div class="home-content" style="width: 800px;">
       <div class="well">
+        <div class="row text-center">
+          <div class="col-sm-4">
+            <div className="player-achievement">
+              <img src="http://placehold.it/150x150" />
+              <h1>Lvl 32</h1>
+              <h4>Corporal</h4>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="row text-center">
+              <div class="col-sm-6">
+                <div className="player-achievement">
+                  <h2>42.2</h2>
+                  <h4>Score / Min</h4>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div className="player-achievement">
+                  <h2>44.43%</h2>
+                  <h4>Win Percentage</h4>
+                </div>
+              </div>
+            </div>
 
+            <div class="row text-center">
+              <div class="col-sm-6">
+                <div className="player-achievement">
+                  <h2>1.59</h2>
+                  <h4>KDR</h4>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div className="player-achievement">
+                  <h2>110/300</h2>
+                  <h4>Achievements</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br />
+        <br />
+
+        <fieldset>
+          <legend>Statistics</legend>
+
+          <div class="row text-center">
+            <div class="col-sm-3">
+              <div className="player-achievement">
+                <h3>Accuracy</h3>
+                <h4>23.3%</h4>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div className="player-achievement">
+                <h3>Shots Fired</h3>
+                <h4>234</h4>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div className="player-achievement">
+                <h3>Shots Hits</h3>
+                <h4>234</h4>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div className="player-achievement">
+                <h3>Headshots</h3>
+                <h4>234</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="row text-center">
+            <div class="col-sm-3">
+              <div className="player-achievement">
+                <h3>Times Hit</h3>
+                <h4>827</h4>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div className="player-achievement">
+                <h3>Body</h3>
+                <h4>234</h4>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div className="player-achievement">
+                <h3>Head</h3>
+                <h4>234</h4>
+              </div>
+            </div>
+            <div class="col-sm-3">
+            </div>
+          </div>
+        </fieldset>
       </div>
     </div>
   </div>
