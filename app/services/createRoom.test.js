@@ -15,7 +15,7 @@ describe('createRoom', function() {
 
   it('should create room with a shortened custom room id', function() {
     const newRoom = createRoom({
-      id: 'test.test/@#$asdf-asdfadsflhgaweurghalw3ur23jghatkwjfuwajkgjku3gjgb4k3ygtkajsgdfkjasgdfkagwefkyweaaadsflhgaweurghalw3ur23jghatkwjfuwajkgjku3gjgb4k3ygtkajsgdfkjasgdfkagwefkyweaaadsflhgaweurghalw3ur23jghatkwjfuwajkgjku3gjgb4k3ygtkajsgdfkjasgdfkagwefkyweaa',
+      id: 'test.test/@#$asdf-asdfadsflhgaweurghalw3ur23jghatkwjfuwajkgjku3gjgb4k3ygtkajsgdfkjasgdfkagw',
     })
 
     assert.equal(newRoom.id.length, 25)
