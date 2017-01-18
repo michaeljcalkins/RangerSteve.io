@@ -72,8 +72,7 @@ export default function onGameLoop(data) {
 
   if (
     includes(['Boot', 'Preloader'], this.game.state.current) ||
-    ! RS.enemies ||
-    room.state === 'ended'
+    ! RS.enemies
   ) return
 
   // Players should only be allowed to move when the room state is active
