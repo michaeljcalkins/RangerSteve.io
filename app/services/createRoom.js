@@ -15,6 +15,7 @@ module.exports = function(data) {
     players[data.player.id] = data.player
   } else {
         // Add existing players to this room
+  } else if (data.players) {
     players = data.players
   }
 
