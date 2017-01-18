@@ -198,10 +198,3 @@ export const setSecondaryWeapon = (value) => {
     value,
   }
 }
-
-export const setShowKillConfirmed = (value) => {
-  return {
-    type: 'SET_SHOW_KILL_CONFIRMED',
-    value,
-  }
-}

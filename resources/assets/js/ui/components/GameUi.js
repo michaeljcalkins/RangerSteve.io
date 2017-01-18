@@ -9,6 +9,13 @@ import HudKillLog from './Hud/HudKillLog'
 import HudChangeWeaponsButton from './Hud/HudChangeWeaponsButton'
 import HudSettingsButton from './Hud/HudSettingsButton'
 import HudKillingSpree from './Hud/HudKillingSpree'
+import HudTimer from './Hud/HudTimer'
+import HudGamemode from './Hud/HudGamemode'
+import HudTeamScore from './Hud/HudTeamScore'
+import HudHealth from './Hud/HudHealth'
+import HudJetpack from './Hud/HudJetpack'
+import HudAmmo from './Hud/HudAmmo'
+import HudKillConfirmed from './Hud/HudKillConfirmed'
 import HudLeaderboard from './Hud/HudLeaderboard'
 import HudStatsGraph from './Hud/HudStatsGraph'
 import SettingsModal from './SettingsModal/SettingsModal'
@@ -16,6 +23,7 @@ import LeaderboardModal from './LeaderboardModal/LeaderboardModal'
 import RespawnModal from './RespawnModal/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNickname'
+import RemainingFuelPercent from '../../lib/RemainingFuelPercent'
 import NetworkStats from './NetworkStats/NetworkStats'
 
 export default class GameUi extends Component {
@@ -115,11 +123,35 @@ export default class GameUi extends Component {
       'is-electron': window.IS_ELECTRON
     })
 
+    const secondsRemaining = (room.currentTime) ? room.roundEndTime - Math.floor(room.currentTime / 1000) : 0
+
+    const fuelRemaining = RemainingFuelPercent(player.jumpJetCounter)
+
+    const ammoRemaining = player.currentWeapon === 'primaryWeapon'
+      ? player.primaryAmmoRemaining
+      : player.secondaryAmmoRemaining
+
+    const isWeaponReloading = (
+      player.currentWeapon === 'primaryWeapon' && player.isPrimaryReloading ||
+      player.currentWeapon === 'secondaryWeapon' && player.isSecondaryReloading
+    )
+
     return (
       <div>
         <a className={ mainMenuButtonClasses } href="/">Back to Main Menu</a>
         <HudKillLog messages={ game.killLogMessages } />
         <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
+        <HudTimer secondsRemaining={ secondsRemaining } />
+        <HudGamemode gamemode={ room.gamemode } />
+        { room.gamemode === 'TeamDeathmatch' &&
+          <HudTeamScore
+            score1={ room.redTeamScore }
+            score2={ room.blueTeamScore }
+          />
+        }
+        <HudHealth health={ player.health } />
+        <HudJetpack fuelRemaining={ fuelRemaining } />
+        <HudAmmo ammo={ ammoRemaining } isReloading={ isWeaponReloading } />
         <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
         <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />
         <HudLeaderboard room={ room } />
@@ -168,6 +200,11 @@ export default class GameUi extends Component {
         { game.isFpsStatsVisible &&
           <HudStatsGraph id="stats-panel" />
         }
+
+        { game.showKillConfirmed &&
+          <HudKillConfirmed />
+        }
+
       </div>
     )
   }

@@ -1,9 +1,9 @@
 .hud-item {
-    background: rgba(80, 79, 77, 1) no-repeat 10px;
+    background: rgba(0, 0, 0, .4) no-repeat 10px;
     background-size: 24px;
     box-shadow: 0px 1px 2px 0 #202021;
     color: #E3DFD4;
-    font-family: "Keep Calm";
+    font-family: "Keep Calm", Tahoma, sans-serif;
     font-size: 24px;
     height: 42px;
     line-height: 22px;
@@ -150,6 +150,137 @@
             margin: 0 10px;
         }
     }
+}
+
+.hud-timer {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 17px;
+  color: #fff;
+  text-shadow: #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px,
+               #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
+  background: none;
+  box-shadow: none;
+  width: 200px;
+  height: 45px;
+}
+
+.hud-gamemode {
+  pointer-events: none;
+  position: absolute;
+  top: 44px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 12px;
+  padding: 0;
+  color: #fff;
+  text-shadow: #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px,
+               #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
+  background: none;
+  box-shadow: none;
+  width: 200px;
+  height: 22px;
+}
+
+.hud-team-score {
+  pointer-events: none;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 0;
+  color: #fff;
+  text-shadow: #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px,
+               #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
+  background: none;
+  box-shadow: none;
+  width: 350px;
+
+  .hud-team-score-1 {
+    width: 90px;
+    float: left;
+    text-align: right;
+    color: #FF2525;
+  }
+
+  .hud-team-score-2 {
+    width: 90px;
+    float: right;
+    text-align: left;
+    color: #2578FF;
+  }
+}
+
+.hud-health {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: right;
+  width: 135px;
+  padding-right: 25px;
+  background: url(/images/icons/cross-24.png) rgba(0, 0, 0, 0.4) 25px 11px no-repeat;
+  background-size: 24px;
+  height: 45px;
+}
+
+.hud-jetpack {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: right;
+  width: 200px;
+  padding: 12px 25px;
+  background: url(/images/icons/gas-24.png) rgba(0, 0, 0, 0.4) 20px 11px no-repeat;
+  background-size: 24px;
+  height: 45px;
+
+  .hud-jetpack-fuel-cointainer {
+    width: 120px;
+    float: right;
+  }
+
+  .hud-jetpack-fuel {
+    background: #fff;
+  }
+}
+
+.hud-ammo {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: right;
+  width: 125px;
+  padding-right: 25px;
+  background: url(/images/icons/ammo-tin-24.png) rgba(0, 0, 0, 0.4) 25px 11px no-repeat;
+  background-size: 24px;
+  height: 45px;
+}
+
+.hud-kill-confirmed {
+  pointer-events: none;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100px;
+  color: #fff;
+  padding: 0;
+  text-shadow: #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px,
+               #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
+  background: none;
+  box-shadow: none;
+  height: 45px;
 }
 
 .hud-network-stats {
