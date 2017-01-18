@@ -2,7 +2,7 @@
 
 const _ = require('lodash')
 
-const getTeam = function(players, redTeamScore, blueTeamScore) {
+const getTeam = function (players, redTeamScore, blueTeamScore) {
   if (players === undefined) players = []
   if (redTeamScore === undefined) redTeamScore = 0
   if (blueTeamScore === undefined) blueTeamScore = 0
@@ -12,9 +12,9 @@ const getTeam = function(players, redTeamScore, blueTeamScore) {
   const bluePlayerCount = _.get(playersByTeamCount, 'blue', 0)
 
   if (
-        redPlayerCount > bluePlayerCount ||
-        (redPlayerCount === bluePlayerCount && redTeamScore > blueTeamScore)
-    ) {
+    redPlayerCount > bluePlayerCount ||
+    (redPlayerCount === bluePlayerCount && redTeamScore > blueTeamScore)
+  ) {
     return 'blue'
   }
 
