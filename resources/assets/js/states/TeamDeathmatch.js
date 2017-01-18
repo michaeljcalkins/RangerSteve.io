@@ -9,7 +9,6 @@ import Maps from '../lib/Maps'
 import Client from '../lib/Client'
 import actions from '../actions'
 import GameConsts from 'lib/GameConsts'
-import UpdateHudPositions from '../lib/UpdateHudPositions'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
 import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
@@ -17,7 +16,6 @@ import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
 import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
 import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
-import CreateHud from '../lib/CreateHandler/CreateHud'
 import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
 import PlayerAndEnemyTeamBullets from '../lib/Collisions/PlayerAndEnemyTeamBullets'
@@ -49,7 +47,6 @@ TeamDeathmatch.prototype = {
     CreateHurtBorder.call(this)
     CreateKillingSpreeAudio.call(this)
     CreateBullets.call(this)
-    CreateHud.call(this)
     CreateKeyboardBindings.call(this)
     CreateDetectIdleUser()
 
@@ -71,8 +68,6 @@ TeamDeathmatch.prototype = {
     const currentWeaponId = player.currentWeapon === 'primaryWeapon'
             ? player.selectedPrimaryWeaponId
             : player.selectedSecondaryWeaponId
-
-    UpdateHudPositions.call(this)
 
         // Pause controls so user can't do anything in the background accidentally
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0

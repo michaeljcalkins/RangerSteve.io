@@ -15,6 +15,7 @@ import HudTeamScore from './Hud/HudTeamScore'
 import HudHealth from './Hud/HudHealth'
 import HudJetpack from './Hud/HudJetpack'
 import HudAmmo from './Hud/HudAmmo'
+import HudKillConfirmed from './Hud/HudKillConfirmed'
 import HudLeaderboard from './Hud/HudLeaderboard'
 import HudStatsGraph from './Hud/HudStatsGraph'
 import SettingsModal from './SettingsModal/SettingsModal'
@@ -199,6 +200,11 @@ export default class GameUi extends Component {
         { game.isFpsStatsVisible &&
           <HudStatsGraph id="stats-panel" />
         }
+
+        { game.showKillConfirmed &&
+          <HudKillConfirmed />
+        }
+
       </div>
     )
   }

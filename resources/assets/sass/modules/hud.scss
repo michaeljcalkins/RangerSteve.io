@@ -266,6 +266,23 @@
   height: 45px;
 }
 
+.hud-kill-confirmed {
+  pointer-events: none;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100px;
+  color: #fff;
+  padding: 0;
+  text-shadow: #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px,
+               #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
+  background: none;
+  box-shadow: none;
+  height: 45px;
+}
+
 .hud-network-stats {
     position: absolute;
     bottom: 125px;
