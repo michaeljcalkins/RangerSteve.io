@@ -1,6 +1,6 @@
 import get from 'lodash/get'
 
-export default function(room) {
+export default function (room) {
   let bestPlayer = false
   Object.keys(room.players).forEach(playerId => {
     const selectedPlayer = room.players[playerId]
@@ -10,10 +10,10 @@ export default function(room) {
     }
   })
 
-  if (! bestPlayer) return false
+  if (!bestPlayer) return false
 
   return {
     nickname: bestPlayer.nickname,
-    score: bestPlayer.bestKillingSpree,
+    score: bestPlayer.bestKillingSpree
   }
 }

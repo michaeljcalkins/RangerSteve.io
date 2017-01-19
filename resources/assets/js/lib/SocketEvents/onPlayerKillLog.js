@@ -4,7 +4,7 @@ import PlayKillingSpreeSound from '../PlayKillingSpreeSound'
 let killConfirmedHandle = null
 let lastKillingSpreeCount = 0
 
-export default function onPlayerKillLog(data) {
+export default function onPlayerKillLog (data) {
   const store = this.game.store
 
   /**
@@ -39,23 +39,23 @@ export default function onPlayerKillLog(data) {
 
     // Play headshot soundeffect
     if (data.wasHeadshot) {
-      RS.headshotSound.volume = store.getState().game.sfxVolume
-      RS.headshotSound.play()
+      window.RS.headshotSound.volume = store.getState().game.sfxVolume
+      window.RS.headshotSound.play()
     }
   }
 
   /**
    * Update player scores
    */
-  if (! data.players) return
+  if (!data.players) return
   const room = store.getState().room
 
   Object.keys(data.players).forEach(playerId => {
-    if (! data.players[playerId]) return
+    if (!data.players[playerId]) return
 
     room.players[playerId] = {
       ...room.players[playerId],
-      ...data.players[playerId],
+      ...data.players[playerId]
     }
   })
 

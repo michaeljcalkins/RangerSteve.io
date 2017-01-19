@@ -22,25 +22,24 @@ import SettingsModal from './SettingsModal/SettingsModal'
 import LeaderboardModal from './LeaderboardModal/LeaderboardModal'
 import RespawnModal from './RespawnModal/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
-import emitPlayerUpdateNickname from '../../lib/SocketEvents/emitPlayerUpdateNickname'
 import RemainingFuelPercent from '../../lib/RemainingFuelPercent'
 import NetworkStats from './NetworkStats/NetworkStats'
 
 export default class GameUi extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     autobind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.startEventHandler()
   }
 
-  startEventHandler() {
+  startEventHandler () {
     document.addEventListener('keyup', (e) => {
       const game = this.props.game
 
-      if (e.keyCode === Phaser.Keyboard.ESC) {
+      if (e.keyCode === window.Phaser.Keyboard.ESC) {
         e.preventDefault()
         this.props.onCloseSettingsModal()
         this.props.onCloseChatModal()
@@ -53,7 +52,7 @@ export default class GameUi extends Component {
     })
   }
 
-  handleSendMessage(message) {
+  handleSendMessage (message) {
     this.props.onCloseChatModal()
 
     if (message.length === 0) return
@@ -63,49 +62,49 @@ export default class GameUi extends Component {
     emitMessageSend.call(this, message)
   }
 
-  handleSoundEffectVolumeChange(volume) {
+  handleSoundEffectVolumeChange (volume) {
     storage.set('sfxVolume', volume)
     this.props.onSfxVolumeChange(volume)
   }
 
-  handleViewChange(view) {
+  handleViewChange (view) {
     this.setState({ settingsView: view })
   }
 
-  handlePrimaryGunClick(weapon) {
+  handlePrimaryGunClick (weapon) {
     this.props.onPrimaryWeaponIdChange(weapon.id)
     storage.set('selectedPrimaryWeaponId', weapon.id)
   }
 
-  handleSecondaryGunClick(weapon) {
+  handleSecondaryGunClick (weapon) {
     storage.set('selectedSecondaryWeaponId', weapon.id)
     this.props.onSecondaryWeaponIdChange(weapon.id)
   }
 
-  isLeaderboardModalOpen() {
+  isLeaderboardModalOpen () {
     const {
       room,
-      game,
+      game
     } = this.props
 
     return (game.leaderboardModalIsOpen || room.state === 'ended')
   }
 
-  handleOpenSettingsButton() {
+  handleOpenSettingsButton () {
     const { onOpenSettingsModal, onSettingsViewChange } = this.props
 
     onOpenSettingsModal()
     onSettingsViewChange('settings')
   }
 
-  handleChangeWeaponsButton() {
+  handleChangeWeaponsButton () {
     const { onOpenSettingsModal, onSettingsViewChange } = this.props
 
     onOpenSettingsModal()
     onSettingsViewChange('default')
   }
 
-  render() {
+  render () {
     const {
       player,
       room,
@@ -116,7 +115,7 @@ export default class GameUi extends Component {
       onKeyboardControlChange,
       onSetAutoRespawn,
       onSetResetEventsFlag,
-      onCloseChatModal,
+      onCloseChatModal
     } = this.props
 
     const mainMenuButtonClasses = cs('hud-main-menu-button hud-item', {
@@ -138,67 +137,67 @@ export default class GameUi extends Component {
 
     return (
       <div>
-        <a className={ mainMenuButtonClasses } href="/">Back to Main Menu</a>
-        <HudKillLog messages={ game.killLogMessages } />
-        <HudKillingSpree killingSpreeCount={ player.killingSpreeCount } />
-        <HudTimer secondsRemaining={ secondsRemaining } />
-        <HudGamemode gamemode={ room.gamemode } />
+        <a className={mainMenuButtonClasses} href='/'>Back to Main Menu</a>
+        <HudKillLog messages={game.killLogMessages} />
+        <HudKillingSpree killingSpreeCount={player.killingSpreeCount} />
+        <HudTimer secondsRemaining={secondsRemaining} />
+        <HudGamemode gamemode={room.gamemode} />
         { room.gamemode === 'TeamDeathmatch' &&
           <HudTeamScore
-            score1={ room.redTeamScore }
-            score2={ room.blueTeamScore }
+            score1={room.redTeamScore}
+            score2={room.blueTeamScore}
           />
         }
-        <HudHealth health={ player.health } />
-        <HudJetpack fuelRemaining={ fuelRemaining } />
-        <HudAmmo ammo={ ammoRemaining } isReloading={ isWeaponReloading } />
-        <HudChangeWeaponsButton onButtonClick={ this.handleChangeWeaponsButton } />
-        <HudSettingsButton onButtonClick={ this.handleOpenSettingsButton } />
-        <HudLeaderboard room={ room } />
+        <HudHealth health={player.health} />
+        <HudJetpack fuelRemaining={fuelRemaining} />
+        <HudAmmo ammo={ammoRemaining} isReloading={isWeaponReloading} />
+        <HudChangeWeaponsButton onButtonClick={this.handleChangeWeaponsButton} />
+        <HudSettingsButton onButtonClick={this.handleOpenSettingsButton} />
+        <HudLeaderboard room={room} />
         { room.announcement &&
-          <HudAnnouncement announcement={ room.announcement }/>
+          <HudAnnouncement announcement={room.announcement} />
         }
         <HudChatHistory
-            isOpen={ game.chatModalIsOpen }
-            messages={ game.chatMessages }
-            newChatMessageCharacter={ +game.keyboardControls.newChatMessage }
-            onSendMessage={ this.handleSendMessage }
-            onNewChatMessageBlur={ onCloseChatModal }
+          isOpen={game.chatModalIsOpen}
+          messages={game.chatMessages}
+          newChatMessageCharacter={+game.keyboardControls.newChatMessage}
+          onSendMessage={this.handleSendMessage}
+          onNewChatMessageBlur={onCloseChatModal}
         />
 
         { this.isLeaderboardModalOpen() &&
-          <LeaderboardModal room={ room } />
+          <LeaderboardModal room={room} />
         }
 
         { player.health <= 0 && room.state !== 'ended' &&
           <RespawnModal
-              onOpenSettingsModal={ onOpenSettingsModal }
-              onSettingsViewChange={ onSettingsViewChange }
-              room={ room }
+            onOpenSettingsModal={onOpenSettingsModal}
+            onSettingsViewChange={onSettingsViewChange}
+            room={room}
           />
         }
 
         { game.settingsModalIsOpen &&
           <SettingsModal
-              game={ game }
-              onClose={ onCloseSettingsModal }
-              onKeyboardControlChange={ onKeyboardControlChange }
-              onPrimaryGunClick={ this.handlePrimaryGunClick }
-              onRespawnChange={ onSetAutoRespawn }
-              onSecondaryGunClick={ this.handleSecondaryGunClick }
-              onSetResetEventsFlag={ onSetResetEventsFlag }
-              onSfxVolumeChange={ this.handleSoundEffectVolumeChange }
-              onViewChange={ onSettingsViewChange }
-              player={ player }
+            game={game}
+            onClose={onCloseSettingsModal}
+            onKeyboardControlChange={onKeyboardControlChange}
+            onPrimaryGunClick={this.handlePrimaryGunClick}
+            onRespawnChange={onSetAutoRespawn}
+            onSecondaryGunClick={this.handleSecondaryGunClick}
+            onSetResetEventsFlag={onSetResetEventsFlag}
+            onSfxVolumeChange={this.handleSoundEffectVolumeChange}
+            onViewChange={onSettingsViewChange}
+            player={player}
           />
         }
 
-        { window.RS && window.RS.networkStats && game.isNetworkStatsVisible &&
-          <NetworkStats stats={ window.RS.networkStats } />
+        { window.RS && window.window.RS.networkStats && game.isNetworkStatsVisible &&
+          <NetworkStats stats={window.window.RS.networkStats} />
         }
 
         { game.isFpsStatsVisible &&
-          <HudStatsGraph id="stats-panel" />
+          <HudStatsGraph id='stats-panel' />
         }
 
         { game.showKillConfirmed &&

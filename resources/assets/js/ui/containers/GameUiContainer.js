@@ -8,7 +8,7 @@ const mapStateToProps = (state) => {
   return {
     player: state.player,
     room: state.room,
-    game: state.game,
+    game: state.game
   }
 }
 
@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
     onPrimaryWeaponIdChange: playerActions.setNextSelectedPrimaryWeaponId,
     onSecondaryWeaponIdChange: playerActions.setNextSelectedSecondaryWeaponId,
     onSetResetEventsFlag: gameActions.setResetEventsFlag,
-    onKeyboardControlChange: gameActions.setKeyboardControl,
+    onKeyboardControlChange: gameActions.setKeyboardControl
   }
 }
 

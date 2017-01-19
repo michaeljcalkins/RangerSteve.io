@@ -5,18 +5,18 @@ import UpdateGameScale from '../lib/UpdateGameScale'
 /**
  * Connect to the server and start Preloader.
  */
-function Boot(game) {
+function Boot (game) {
   this.game = game
 }
 
 Boot.prototype = {
 
-  preload: function() {
+  preload: function () {
     this.game.load.image('ranger-steve', '/images/ranger-steve.png')
   },
 
-  create: function() {
-    this.scale.scaleMode = Phaser.ScaleManager.RESIZE
+  create: function () {
+    this.scale.scaleMode = window.Phaser.ScaleManager.RESIZE
     // Smooths sprite rendering
     this.game.renderer.renderSession.roundPixels = true
     // Prevents game from pausing when tab loses focus
@@ -25,14 +25,14 @@ Boot.prototype = {
 
     // Loading screen
     this.game.stage.backgroundColor = '#2B2825'
-    RS.rangerSteveSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'ranger-steve')
-    RS.rangerSteveSprite.anchor.setTo(0.5)
+    window.RS.rangerSteveSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'ranger-steve')
+    window.RS.rangerSteveSprite.anchor.setTo(0.5)
 
     const style = {
-      font: "35px Bangers",
-      fill: "#fff",
+      font: '35px Bangers',
+      fill: '#fff'
     }
-    let text = this.game.add.text(RS.rangerSteveSprite.x - 20, RS.rangerSteveSprite.y + 110, 'Loading...', style)
+    let text = this.game.add.text(window.RS.rangerSteveSprite.x - 20, window.RS.rangerSteveSprite.y + 110, 'Loading...', style)
     text.anchor.set(0.5)
     text.smoothed = true
 
@@ -43,15 +43,16 @@ Boot.prototype = {
     setEventHandlers.call(this)
 
     if (GameConsts.PHASER_DEBUG) {
-      this.game.add.plugin(Phaser.Plugin.Debug)
+      this.game.add.plugin(window.Phaser.Plugin.Debug)
 
             // needed to correctly style other elements in css
-      if (document.getElementsByTagName('body').classList)
+      if (document.getElementsByTagName('body').classList) {
         document.getElementsByTagName('body').classList.add('phaser-debug')
-      else
-                document.getElementsByTagName.className += ' phaser-debug'
+      } else {
+        document.getElementsByTagName.className += ' phaser-debug'
+      }
     }
-  },
+  }
 
 }
 

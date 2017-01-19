@@ -2,7 +2,7 @@
 
 const GameConsts = require('../../lib/GameConsts')
 
-module.exports = function(id, startX, startY) {
+module.exports = function (id, startX, startY) {
   return {
     x: startX,
     y: startY,
@@ -20,6 +20,6 @@ module.exports = function(id, startX, startY) {
     score: 0,
     secondsInRound: 0,
     team: null,
-    weaponId: null,
+    weaponId: null
   }
 }

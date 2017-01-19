@@ -1,6 +1,6 @@
 import GameConsts from 'lib/GameConsts'
 
-export default function() {
+export default function () {
   const state = this.game.store.getState()
   const innerWidth = window.innerWidth
   const innerHeight = window.innerHeight
@@ -30,7 +30,7 @@ export default function() {
    */
   // Statically adjust the scale of the game
   if (heightScaleFactor > GameConsts.SCALING.UPPER_HEIGHT_SCALE_FACTOR_LIMIT) {
-    this.scale.scaleMode = Phaser.ScaleManager.RESIZE
+    this.scale.scaleMode = window.Phaser.ScaleManager.RESIZE
     this.game.scale.setGameSize(
       GameConsts.SCALING.STATIC_WIDTH_SCALE_FACTOR,
       GameConsts.SCALING.STATIC_HEIGHT_SCALE_FACTOR
@@ -38,9 +38,9 @@ export default function() {
     return
   }
 
-  this.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT
+  this.scale.scaleMode = window.Phaser.ScaleManager.EXACT_FIT
   this.game.scale.setGameSize(widthScaleFactor, heightScaleFactor)
-  RS.tiles && RS.tiles.resize(widthScaleFactor, heightScaleFactor)
+  window.RS.tiles && window.RS.tiles.resize(widthScaleFactor, heightScaleFactor)
 
   // TODO resize ui with game
   // $("#ui-app").css({

@@ -1,4 +1,3 @@
-import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
@@ -6,33 +5,33 @@ import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 import range from 'lodash/range'
 import sample from 'lodash/sample'
 
-const rangeOfVariance = range(-.12, .12, .01)
+const rangeOfVariance = range(-0.12, 0.12, 0.01)
 let muzzleFlashHandler = null
 let nextFire = null
 
-export default function FireShotgunShell(currentWeaponId) {
+export default function FireShotgunShell (currentWeaponId) {
   const store = this.game.store
   const state = store.getState()
   const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
   const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
 
   if (
-    ! state.room.id ||
+    !state.room.id ||
     state.player.health <= 0 ||
     state.room.state !== 'active' ||
     this.game.time.time < nextFire ||
-    ! RS.bullets
+    !window.RS.bullets
   ) return
 
   nextFire = this.game.time.time + currentWeapon.fireRate
 
-  let x = RS.player.x
-  let y = RS.player.y - 10
+  let x = window.RS.player.x
+  let y = window.RS.player.y - 10
 
   let pointerAngle = null
   for (var i = 0; i < 4; i++) {
-    let bullet = RS.bullets.getFirstDead()
-    if (! bullet) return console.error('No bullet sprite available.')
+    let bullet = window.RS.bullets.getFirstDead()
+    if (!bullet) return console.error('No bullet sprite available.')
 
     bullet.bulletId = Math.round(Math.random() * 16000)
     bullet.damage = currentWeapon.damage
@@ -57,7 +56,7 @@ export default function FireShotgunShell(currentWeaponId) {
     }
 
         // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
-    setTimeout(function() {
+    setTimeout(function () {
       bullet.alpha = 1
     }, 40)
 
@@ -66,22 +65,22 @@ export default function FireShotgunShell(currentWeaponId) {
       pointerAngle: socketPointerAngle,
       weaponId: currentWeaponId,
       x: Math.round(Math.max(0, x)),
-      y: Math.round(Math.max(0, y)),
+      y: Math.round(Math.max(0, y))
     })
   }
 
     // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
-  RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+  window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
   clearTimeout(muzzleFlashHandler)
   muzzleFlashHandler = setTimeout(() => {
-    RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+    window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
   }, 60)
 
     // Shake camera for gun recoil
   this.camera.shake(0.0015, 100, true)
 
-  RS.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
-  RS.weaponSoundEffects[currentWeaponId].play()
+  window.RS.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
+  window.RS.weaponSoundEffects[currentWeaponId].play()
 
   if (isPrimarySelected) {
     store.dispatch(actions.player.decrementPrimaryAmmoRemaining())

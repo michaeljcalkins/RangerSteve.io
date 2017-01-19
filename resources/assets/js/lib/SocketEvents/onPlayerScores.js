@@ -1,17 +1,17 @@
 import actions from 'actions'
 
-export default function(data) {
+export default function (data) {
   const store = this.game.store
 
-  if (! data.players) return
+  if (!data.players) return
   const room = store.getState().room
 
   Object.keys(data.players).forEach(playerId => {
-    if (! data.players[playerId]) return
+    if (!data.players[playerId]) return
 
     room.players[playerId] = {
       ...room.players[playerId],
-      ...data.players[playerId],
+      ...data.players[playerId]
     }
   })
 

@@ -1,2 +1,2 @@
-export default function onSocketDisconnect() {
+export default function onSocketDisconnect () {
 }

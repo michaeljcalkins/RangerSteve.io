@@ -1,20 +1,20 @@
 export const setRoom = (value) => {
   return {
     type: 'SET_ROOM',
-    value,
+    value
   }
 }
 
 export const addAnnouncement = (value) => {
   return {
     type: 'ADD_ANNOUNCEMENT',
-    value,
+    value
   }
 }
 
 export const setState = (value) => {
   return {
     type: 'SET_STATE',
-    value,
+    value
   }
 }

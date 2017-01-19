@@ -7,7 +7,7 @@ import game from './game'
 const reducer = combineReducers({
   player,
   room,
-  game,
+  game
 })
 
 export default reducer

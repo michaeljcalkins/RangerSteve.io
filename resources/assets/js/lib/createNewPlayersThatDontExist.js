@@ -6,10 +6,10 @@ const usernameTextStyle = {
   fill: '#fff',
   font: '10px Arial',
   stroke: 'black',
-  strokeThickness: 2,
+  strokeThickness: 2
 }
 
-export default function createNewPlayersThatDontExist(room, playerId, playerData) {
+export default function createNewPlayersThatDontExist (room, playerId, playerData) {
   const newCreateRemotePlayer = createRemotePlayer.call(this, playerId, playerData)
   const enemyPlayerName = playerData.nickname
     ? playerData.nickname
@@ -24,9 +24,9 @@ export default function createNewPlayersThatDontExist(room, playerId, playerData
     newCreateRemotePlayer.visible = false
   }
 
-  RS.enemies.add(newCreateRemotePlayer)
+  window.RS.enemies.add(newCreateRemotePlayer)
   const player = PlayerById.call(this, playerId)
-  this.game.world.bringToTop(RS.enemies)
+  this.game.world.bringToTop(window.RS.enemies)
 
   return player
 }

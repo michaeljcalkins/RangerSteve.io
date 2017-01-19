@@ -8,14 +8,14 @@ let damageTimeout = null
 let healingInterval = null
 let lastKnownHealth = null
 
-export default function onPlayerDamaged(data) {
+export default function onPlayerDamaged (data) {
   // When an enemy is killed play the death animation where they were.
   if (data.damagedPlayerId !== window.SOCKET_ID && data.health <= 0) {
     const movePlayer = PlayerById.call(this, data.damagedPlayerId)
     movePlayer.visible = false
     PlayPlayerDeathAnimation.call(this, {
       x: data.playerX,
-      y: data.playerY,
+      y: data.playerY
     })
     return
   }
@@ -64,10 +64,10 @@ export default function onPlayerDamaged(data) {
 
     // Player has died
   if (store.getState().player.health <= 0) {
-    RS.player.visible = false
+    window.RS.player.visible = false
     PlayPlayerDeathAnimation.call(this, {
-      x: RS.player.x,
-      y: RS.player.y,
+      x: window.RS.player.x,
+      y: window.RS.player.y
     })
   }
 }

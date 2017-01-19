@@ -1,4 +1,3 @@
-import Guid from './Guid'
 import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
@@ -8,7 +7,7 @@ let muzzleFlashHandler = null
 let nextFire = null
 let lastWeaponId = null
 
-export default function FireStandardBullet(currentWeaponId) {
+export default function FireStandardBullet (currentWeaponId) {
   const store = this.game.store
   const state = store.getState()
   const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
@@ -22,20 +21,20 @@ export default function FireStandardBullet(currentWeaponId) {
   lastWeaponId = currentWeaponId
 
   if (
-    ! state.room.id ||
+    !state.room.id ||
     state.player.health <= 0 ||
     state.room.state !== 'active' ||
     this.game.time.time < nextFire ||
-    ! RS.bullets
+    !window.RS.bullets
   ) return
 
   nextFire = this.game.time.time + currentWeapon.fireRate
 
-  let x = RS.player.x
-  let y = RS.player.y - 10
+  let x = window.RS.player.x
+  let y = window.RS.player.y - 10
 
-  let bullet = RS.bullets.getFirstDead()
-  if (! bullet) return console.error('No bullet sprite available.')
+  let bullet = window.RS.bullets.getFirstDead()
+  if (!bullet) return console.error('No bullet sprite available.')
 
   bullet.bulletId = Math.round(Math.random() * 16000)
   bullet.damage = currentWeapon.damage
@@ -48,11 +47,11 @@ export default function FireStandardBullet(currentWeaponId) {
   bullet.rotation = pointerAngle
 
     // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
-  RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+  window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
 
   clearTimeout(muzzleFlashHandler)
   muzzleFlashHandler = setTimeout(() => {
-    RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+    window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
   }, 60)
 
     // Shake camera for gun recoil
@@ -63,8 +62,8 @@ export default function FireStandardBullet(currentWeaponId) {
     bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
   }, 40)
 
-  RS.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
-  RS.weaponSoundEffects[currentWeaponId].play()
+  window.RS.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
+  window.RS.weaponSoundEffects[currentWeaponId].play()
 
   if (isPrimarySelected) {
     store.dispatch(actions.player.decrementPrimaryAmmoRemaining())
@@ -77,7 +76,7 @@ export default function FireStandardBullet(currentWeaponId) {
     pointerAngle,
     weaponId: currentWeaponId,
     x: Math.round(Math.max(0, x)),
-    y: Math.round(Math.max(0, y)),
+    y: Math.round(Math.max(0, y))
   })
 
   ReloadGunWhenEmpty.call(this, currentWeaponId)

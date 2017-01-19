@@ -24,31 +24,31 @@ const SPAWN_POINTS = [
     { x: 1700, y: 1750 },
     { x: 1600, y: 1030 },
     { x: 660, y: 1640 },
-    { x: 2730, y: 110 },
+    { x: 2730, y: 110 }
 ]
 
-export function getRandomSpawnPoint() {
+export function getRandomSpawnPoint () {
   return sample(SPAWN_POINTS)
 }
 
-export function getSpawnPoints() {
+export function getSpawnPoints () {
   return SPAWN_POINTS
 }
 
-export function preload() {
+export function preload () {
   this.game.load.image('background', '/maps/punk-loop/background.png')
-  this.game.load.tilemap('tilemap', '/maps/punk-loop/punk-loop.json', null, Phaser.Tilemap.TILED_JSON)
+  this.game.load.tilemap('tilemap', '/maps/punk-loop/punk-loop.json', null, window.Phaser.Tilemap.TILED_JSON)
   this.game.load.spritesheet('tiles', '/maps/punk-loop/tiles.png', 24, 24)
   this.game.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 24, 24)
 }
 
-export function createOverlays() {
+export function createOverlays () {
 }
 
-export function create() {
+export function create () {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
 
-  this.background = this.game.add.sprite(0, 0, "background")
+  this.background = this.game.add.sprite(0, 0, 'background')
   this.background.scale.setTo(3.4)
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
@@ -57,10 +57,10 @@ export function create() {
   this.map.addTilesetImage('collision', 'ninja-tiles32')
 
     // Create a TilemapLayer object from the collision layer of the map
-  RS.tiles = this.map.createLayer('tiles')
+  window.RS.tiles = this.map.createLayer('tiles')
   this.ground = this.map.createLayer('collision')
   this.ground.renderSettings.enableScrollDelta = false
-  if (! GameConsts.DEBUG) this.ground.alpha = 0
+  if (!GameConsts.DEBUG) this.ground.alpha = 0
 
     // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
     // preparing slope data for each of tile in the layer
@@ -72,5 +72,5 @@ export function create() {
   if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
 }
 
-export function update() {
+export function update () {
 }

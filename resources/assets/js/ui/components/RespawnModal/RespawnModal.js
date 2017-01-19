@@ -17,7 +17,7 @@ export class RespawnModal extends PureComponent {
     autobind(this)
   }
 
-  state: Object = {
+  state = {
     autoRespawn: this.props.game.autoRespawn,
     oneTimeAutoRespawn: false,
     elapsed: 0,

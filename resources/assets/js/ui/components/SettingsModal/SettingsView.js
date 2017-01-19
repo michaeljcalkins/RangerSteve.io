@@ -6,7 +6,6 @@ import storage from 'store'
 
 import NameGenerator from '../../../lib/NameGenerator'
 import GameConsts from 'lib/GameConsts'
-import emitPlayerUpdateNickname from '../../../lib/SocketEvents/emitPlayerUpdateNickname'
 import actions from 'actions'
 
 export class SettingsView extends PureComponent {
@@ -16,7 +15,6 @@ export class SettingsView extends PureComponent {
 
     this.state = {
       autoRespawn: props.game.autoRespawn,
-      nickname: props.player.nickname,
       sfxVolume: props.game.sfxVolume,
       isNetworkStatsVisible: props.game.isNetworkStatsVisible,
       isFpsStatsVisible: props.game.isFpsStatsVisible,
@@ -27,27 +25,6 @@ export class SettingsView extends PureComponent {
   props: {
     game: PropTypes.object,
     player: PropTypes.object,
-  }
-
-  handleGenerateName() {
-    const nickname = NameGenerator()
-    this.refs.nicknameInput.value = nickname
-
-    this.setNickname(nickname)
-  }
-
-  handleNicknameChange(evt) {
-    if (this.state.nickname.length > GameConsts.MAX_NICKNAME_LENGTH) return
-
-    const nickname = evt.currentTarget.value.substr(0, GameConsts.MAX_NICKNAME_LENGTH)
-    this.setNickname(nickname)
-  }
-
-  setNickname(nickname) {
-    this.setState({ nickname })
-    storage.set('nickname', nickname)
-    this.props.onNicknameChange(nickname)
-    emitPlayerUpdateNickname(this.props.room.id, nickname)
   }
 
   handleRespawnChange(evt) {
@@ -90,30 +67,6 @@ export class SettingsView extends PureComponent {
       <div>
         <div className="row">
           <div className="col-sm-8 col-sm-offset-2">
-            <div className="row">
-              <div className="col-sm-6">
-                <div className="form-group">
-                  <label>Nickname</label>
-                  <input
-                      className="form-control"
-                      value={ this.state.nickname }
-                      maxLength="25"
-                      onChange={ this.handleNicknameChange }
-                      ref="nicknameInput"
-                      type="text"
-                  />
-                </div>
-              </div>
-              <div className="col-sm-6">
-                <button
-                    className="btn btn-primary btn-sm btn-block"
-                    onClick={ this.handleGenerateName }
-                    style={ { marginTop: '25px' } }
-                >
-                  Random Nickname
-                </button>
-              </div>
-            </div>
             <div className="form-group">
               <label>Sound Effects Volume</label>
               <input
@@ -186,8 +139,6 @@ const mapDispatchToProps = (dispatch) => {
 
   return {
     onSetSfxVolume: gameActions.setSfxVolume,
-    onSetNickname: playerActions.setNickname,
-    onNicknameChange: playerActions.setNickname,
     onAutoRespawnChange: gameActions.setAutoRespawn,
     onNetworkStatsChange: gameActions.setIsNetworkStatsVisible,
     onFpsStatsChange: gameActions.setIsFpsStatsVisible,

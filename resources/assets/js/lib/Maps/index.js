@@ -13,5 +13,5 @@ export default {
   HighRuleJungle,
   PunkCity,
   PunkFallout,
-  PunkLoop,
+  PunkLoop
 }

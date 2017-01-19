@@ -1,4 +1,4 @@
-export default function() {
+export default function () {
   const state = this.game.store.getState()
 
     /**

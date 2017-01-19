@@ -4,13 +4,13 @@ import PlayRocketExplosion from '../PlayRocketExplosion'
 import damagePlayersInBlastDamageRadius from '../damagePlayersInBlastDamageRadius'
 import GameConsts from 'lib/GameConsts'
 
-export default function() {
+export default function () {
   const state = this.game.store.getState()
   const currentWeapon = state.player.currentWeapon
 
-  this.game.physics.arcade.overlap(RS.bullets, RS.enemies, function(bullet, enemy) {
+  this.game.physics.arcade.overlap(window.RS.bullets, window.RS.enemies, function (bullet, enemy) {
     if (
-            ! state.room.id ||
+            !state.room.id ||
             state.player.health <= 0 ||
             state.room.state !== 'active' ||
             enemy.data.health <= 0
@@ -30,7 +30,7 @@ export default function() {
       bulletY: bullet.y,
       bulletX: bullet.x,
       playerX: enemy.x,
-      bulletRotation: bullet.rotation,
+      bulletRotation: bullet.rotation
     })
 
     if (bullet.weaponId === 'RPG') {
@@ -38,7 +38,7 @@ export default function() {
 
       PlayRocketExplosion.call(this, {
         bulletY: bullet.y,
-        bulletX: bullet.x,
+        bulletX: bullet.x
       })
     }
 
@@ -47,7 +47,7 @@ export default function() {
       weaponId: state.player[currentWeapon].id,
       damagedPlayerId: enemy.data.id,
       attackingPlayerId: window.SOCKET_ID,
-      wasHeadshot,
+      wasHeadshot
     })
   }, null, this)
 }

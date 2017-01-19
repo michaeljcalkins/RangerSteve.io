@@ -1,9 +1,9 @@
 import GameConsts from 'lib/GameConsts'
 
-export default function RemoteBullet(data) {
-  if (! RS.enemyBullets) return
-  let bullet = RS.enemyBullets.getFirstDead()
-  if (! bullet) return console.error('No bullet sprite available.')
+export default function RemoteBullet (data) {
+  if (!window.RS.enemyBullets) return
+  let bullet = window.RS.enemyBullets.getFirstDead()
+  if (!bullet) return console.error('No bullet sprite available.')
 
   bullet.reset(data.x, data.y)
   bullet.bulletId = data.bulletId

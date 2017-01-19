@@ -1,11 +1,10 @@
 import actions from '../actions'
 import GameConsts from 'lib/GameConsts'
 
-export default function(currentWeaponId) {
+export default function (currentWeaponId) {
   const store = this.game.store
   const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
   const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
-
 
     // Get ammo remaining in current gun
   const currentAmmoRemaining = isPrimarySelected
@@ -15,8 +14,8 @@ export default function(currentWeaponId) {
   if (
         currentAmmoRemaining <= 0 &&
         (
-            (isPrimarySelected && ! store.getState().player.isPrimaryReloading) ||
-            (! isPrimarySelected && ! store.getState().player.isSecondaryReloading)
+            (isPrimarySelected && !store.getState().player.isPrimaryReloading) ||
+            (!isPrimarySelected && !store.getState().player.isSecondaryReloading)
         )
     ) {
         // If empty set current gun to reloading

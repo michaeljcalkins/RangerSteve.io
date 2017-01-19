@@ -30,26 +30,26 @@ const SPAWN_POINTS = [
     { x: 1624, y: 913 },
     { x: 154, y: 908 },
     { x: 2562, y: 715 },
-    { x: 666, y: 716 },
+    { x: 666, y: 716 }
 ]
 
-export function getRandomSpawnPoint() {
+export function getRandomSpawnPoint () {
   return sample(SPAWN_POINTS)
 }
 
-export function getSpawnPoints() {
+export function getSpawnPoints () {
   return SPAWN_POINTS
 }
 
-export function preload() {
+export function preload () {
   this.game.load.image('background', '/maps/evil-underground/background.jpg', true)
-  this.game.load.tilemap('tilemap', '/maps/evil-underground/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
+  this.game.load.tilemap('tilemap', '/maps/evil-underground/tilemap.json', null, window.Phaser.Tilemap.TILED_JSON)
   this.game.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 32, 32)
 }
 
-export function createOverlays() {}
+export function createOverlays () {}
 
-export function create() {
+export function create () {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
   this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
@@ -58,9 +58,9 @@ export function create() {
   this.groundSprite.width = WORLD_WIDTH
   this.groundSprite.height = 90
   this.game.physics.arcade.enable(this.groundSprite)
-  this.game.physics.enable(this.groundSprite, Phaser.Physics.ARCADE)
+  this.game.physics.enable(this.groundSprite, window.Phaser.Physics.ARCADE)
   this.groundSprite.enableBody = true
-  this.groundSprite.physicsBodyType = Phaser.Physics.ARCADE
+  this.groundSprite.physicsBodyType = window.Phaser.Physics.ARCADE
   this.groundSprite.body.immovable = true
   this.groundSprite.body.allowGravity = false
 
@@ -71,7 +71,7 @@ export function create() {
     // Create a TilemapLayer object from the collision layer of the map
   this.ground = this.map.createLayer('collision')
   this.ground.renderSettings.enableScrollDelta = false
-  if (! GameConsts.DEBUG) this.ground.alpha = 0
+  if (!GameConsts.DEBUG) this.ground.alpha = 0
 
   // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
   // preparing slope data for each of tile in the layer
@@ -83,15 +83,15 @@ export function create() {
   if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
 }
 
-export function createLedges() {
+export function createLedges () {
 }
 
-export function update() {
+export function update () {
   const store = this.game.store
 
   if (store.getState().player.health <= 0) return
 
-  this.game.physics.arcade.overlap(RS.player, this.groundSprite, () => {
+  this.game.physics.arcade.overlap(window.RS.player, this.groundSprite, () => {
     KillCurrentPlayer.call(this)
   })
 }

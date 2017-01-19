@@ -4,17 +4,17 @@ import KillCurrentPlayer from '../KillCurrentPlayer'
 
 let lastSwitchWeaponKey = null
 
-export default function() {
+export default function () {
   const store = this.game.store
 
   /**
    * Open settings modal
    */
-  this.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
+  this.input.keyboard.addKey(window.Phaser.Keyboard.TAB).onDown.add(() => {
     store.dispatch(actions.game.openLeaderboardModal())
   })
 
-  this.input.keyboard.addKey(Phaser.Keyboard.TAB).onUp.add(() => {
+  this.input.keyboard.addKey(window.Phaser.Keyboard.TAB).onUp.add(() => {
     store.dispatch(actions.game.closeLeaderboardModal())
   })
 
@@ -38,7 +38,7 @@ export default function() {
     ) return
 
     if (
-      ! isPrimarySelected &&
+      !isPrimarySelected &&
       (
         // Is ammo full already
         GameConsts.WEAPONS[store.getState().player.selectedSecondaryWeaponId].ammo === store.getState().player.secondaryAmmoRemaining ||
@@ -86,8 +86,8 @@ export default function() {
     const volumeGain = 17
 
     // Audio cue to let the user know their gun is switching
-    RS.switchingWeaponsFx.volume = store.getState().game.sfxVolume * volumeGain
-    RS.switchingWeaponsFx.play()
+    window.RS.switchingWeaponsFx.volume = store.getState().game.sfxVolume * volumeGain
+    window.RS.switchingWeaponsFx.play()
 
     setTimeout(() => {
       store.dispatch(actions.player.setCurrentWeapon(nextWeapon))
@@ -98,10 +98,10 @@ export default function() {
         ? store.getState().player.selectedPrimaryWeaponId
         : store.getState().player.selectedSecondaryWeaponId
 
-      RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+      window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
 
       // The sound effect is two seconds long so stop it once switching guns is complete.
-      RS.switchingWeaponsFx.stop()
+      window.RS.switchingWeaponsFx.stop()
     }, switchDelay)
   })
 

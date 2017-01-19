@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
 
 export default class HudKillConfirmed extends PureComponent {
-  render() {
+  render () {
     return (
-      <div className="hud-kill-confirmed hud-item">+10</div>
+      <div className='hud-kill-confirmed hud-item'>+10</div>
     )
   }
 }
