@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux'
 import autobind from 'react-autobind'
 import storage from 'store'
 
-import NameGenerator from '../../../lib/NameGenerator'
-import GameConsts from 'lib/GameConsts'
 import actions from 'actions'
 
 export class SettingsView extends PureComponent {
@@ -22,7 +20,7 @@ export class SettingsView extends PureComponent {
     }
   }
 
-  props = {
+  static props = {
     game: PropTypes.object,
     player: PropTypes.object
   }
@@ -134,7 +132,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  const playerActions = bindActionCreators(actions.player, dispatch)
   const gameActions = bindActionCreators(actions.game, dispatch)
 
   return {

@@ -198,7 +198,7 @@ export class RespawnModal extends PureComponent {
                   game={game}
                   onViewChange={this.handleWeaponsViewClick}
                   player={player}
-                                />
+                />
 
                 <div className='row'>
                   <div className='col-sm-4 col-sm-offset-4'>
@@ -208,12 +208,12 @@ export class RespawnModal extends PureComponent {
                     <div className='checkbox' style='margin-top: 15px;'>
                       <label>
                         <input
-                                checked={this.state.autoRespawn}
-                                onClick={this.handleRespawnChange}
-                                type='checkbox'
-                                                />
-                                                Auto respawn
-                                            </label>
+                          checked={this.state.autoRespawn}
+                          onClick={this.handleRespawnChange}
+                          type='checkbox'
+                        />
+                          Auto respawn
+                      </label>
                     </div>
                   </div>
                 </div>

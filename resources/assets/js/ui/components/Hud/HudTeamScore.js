@@ -1,5 +1,4 @@
 import React, { PureComponent, PropTypes } from 'react'
-import upperCase from 'lodash/upperCase'
 
 export default class HudTeamScore extends PureComponent {
   static propTypes = {

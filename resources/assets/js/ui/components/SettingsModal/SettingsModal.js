@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PropTypes, PureComponent } from 'react'
 import cs from 'classnames'
 
 import ChoosePrimaryView from './ChoosePrimaryView'
@@ -8,6 +8,20 @@ import WeaponsView from './WeaponsView'
 import SettingsView from './SettingsView'
 
 export default class SettingsModal extends PureComponent {
+  static props = {
+    defaultNicknameValue: PropTypes.string,
+    defaultSoundEffectValue: PropTypes.number,
+    onClose: PropTypes.func,
+    onPrimaryGunClick: PropTypes.func,
+    onSecondaryGunClick: PropTypes.func,
+    onSoundEffectVolumeChange: PropTypes.func,
+    onViewChange: PropTypes.func,
+    player: PropTypes.object,
+    selectedPrimaryWeapon: PropTypes.string,
+    selectedSecondaryWeapon: PropTypes.string,
+    settingsView: PropTypes.string
+  }
+
   renderModalView () {
     const {
       game,
@@ -27,8 +41,7 @@ export default class SettingsModal extends PureComponent {
           <ChoosePrimaryView {...{
             onPrimaryGunClick,
             onViewChange
-          }}
-                />
+          }} />
         )
 
       case 'chooseSecondary':
@@ -48,8 +61,7 @@ export default class SettingsModal extends PureComponent {
             onViewChange,
             onRespawnChange,
             player
-          }}
-                />
+          }} />
         )
 
       case 'controls':
@@ -59,8 +71,7 @@ export default class SettingsModal extends PureComponent {
             onKeyboardControlChange,
             onSetResetEventsFlag,
             onViewChange
-          }}
-                />
+          }} />
         )
 
       default:
@@ -69,18 +80,17 @@ export default class SettingsModal extends PureComponent {
             game,
             onViewChange,
             player
-          }}
-                />
+          }} />
         )
     }
   }
 
   render () {
     const {
-            game,
-            onClose,
-            onViewChange
-        } = this.props
+      game,
+      onClose,
+      onViewChange
+    } = this.props
 
     return (
       <div className='show'>
@@ -104,33 +114,33 @@ export default class SettingsModal extends PureComponent {
                       style={{ marginBottom: '15px', display: 'inline-block' }}>
                       <li
                         className={cs({
-                                pointer: true,
-                                active: game.settingsView === 'default'
-                              })}
-                                            >
+                          pointer: true,
+                          active: game.settingsView === 'default'
+                        })}
+                      >
                         <a onClick={onViewChange.bind(this, 'default')}>
-                                                    Weapons
-                                                </a>
+                          Weapons
+                        </a>
                       </li>
                       <li
                         className={cs({
-                                pointer: true,
-                                active: game.settingsView === 'settings'
-                              })}
-                                            >
+                          pointer: true,
+                          active: game.settingsView === 'settings'
+                        })}
+                      >
                         <a onClick={onViewChange.bind(this, 'settings')}>
-                                                    Settings
-                                                </a>
+                          Settings
+                        </a>
                       </li>
                       <li
                         className={cs({
-                                pointer: true,
-                                active: game.settingsView === 'controls'
-                              })}
-                                            >
+                          pointer: true,
+                          active: game.settingsView === 'controls'
+                        })}
+                      >
                         <a onClick={onViewChange.bind(this, 'controls')}>
-                                                    Controls
-                                                </a>
+                          Controls
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -144,18 +154,4 @@ export default class SettingsModal extends PureComponent {
       </div>
     )
   }
-}
-
-type Props = {
-    defaultNicknameValue: string,
-    defaultSoundEffectValue: number,
-    onClose: Function,
-    onPrimaryGunClick: Function,
-    onSecondaryGunClick: Function,
-    onSoundEffectVolumeChange: Function,
-    onViewChange: Function,
-    player: Object,
-    selectedPrimaryWeapon: string,
-    selectedSecondaryWeapon: string,
-    settingsView: string,
 }

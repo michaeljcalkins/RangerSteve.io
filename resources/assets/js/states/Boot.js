@@ -35,16 +35,16 @@ Boot.prototype = {
     text.anchor.set(0.5)
     text.smoothed = true
 
-        // Initializes the socket connection and
-        // when connected the next game
-        // state will be started.
-    window.socket = Primus.connect()
+    // Initializes the socket connection and
+    // when connected the next game
+    // state will be started.
+    window.socket = window.Primus.connect()
     setEventHandlers.call(this)
 
     if (GameConsts.PHASER_DEBUG) {
       this.game.add.plugin(window.Phaser.Plugin.Debug)
 
-            // needed to correctly style other elements in css
+      // needed to correctly style other elements in css
       if (document.getElementsByTagName('body').classList) {
         document.getElementsByTagName('body').classList.add('phaser-debug')
       } else {

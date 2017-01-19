@@ -25,8 +25,6 @@ var Stats = function (opts) {
     showPanel(++mode % container.children.length)
   }, false)
 
-    //
-
   function addPanel (panel) {
     container.appendChild(panel.dom)
     return panel
@@ -40,9 +38,9 @@ var Stats = function (opts) {
     mode = id
   }
 
-    //
-
-  var beginTime = (performance || Date).now(), prevTime = beginTime, frames = 0
+  var beginTime = (performance || Date).now()
+  var prevTime = beginTime
+  var frames = 0
 
   var fpsPanel = addPanel(new Stats.Panel('FPS', '#0ff', '#002'))
   var msPanel = addPanel(new Stats.Panel('MS', '#0f0', '#020'))
@@ -92,11 +90,9 @@ var Stats = function (opts) {
       beginTime = this.end()
     },
 
-        // Backwards Compatibility
-
+    // Backwards Compatibility
     domElement: container,
     setMode: showPanel
-
   }
 }
 
