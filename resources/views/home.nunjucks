@@ -124,7 +124,7 @@
           <legend>Your Account</legend>
 
           <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
               <div class="form-group">
                 <input
                   id="username"
@@ -137,24 +137,26 @@
                 />
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <button class="btn btn-primary btn-block" onClick="claimUsername(writeUserData)">
                 Claim Name
               </button>
             </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-12">
-            {#<a class="btn btn-primary btn-sm" onClick="goToBattleStats()">
-              Battle Stats
-            </a>#}
-            <button class="btn btn-warning btn-sm pull-right" onClick="logoutUser()">
-              Logout
-            </button>
+            <div class="col-sm-3">
+              <button class="btn btn-warning btn-block" onClick="logoutUser()">
+                Logout
+              </button>
+            </div>
           </div>
-        </div>
-      </fieldset>
+
+          {#<div class="row">#}
+            {#<div class="col-sm-12">#}
+              {#<a class="btn btn-primary btn-sm" onClick="goToBattleStats()">#}
+                {#Battle Stats#}
+              {#</a>#}
+            {#</div>#}
+          {#</div>#}
+        </fieldset>
 
       <fieldset style="margin-bottom: 0; padding-bottom: 0;">
         <legend>Subscribe To Our Newsletter</legend>
