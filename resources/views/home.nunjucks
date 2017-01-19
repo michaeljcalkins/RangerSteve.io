@@ -123,6 +123,11 @@
         <fieldset id="user-container" class="hidden">
           <legend>Your Account</legend>
 
+          <div>
+            <div class="alert alert-danger hidden" id="account-error-component"></div>
+            <div class="alert alert-success hidden" id="account-success-component"></div>
+          </div>
+
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
@@ -242,8 +247,15 @@
     var username = $('#username').val()
     if (state.auth && state.user && username === state.user.username) return
 
+    $('#account-error-component').addClass('hidden')
+    $('#account-success-component').addClass('hidden')
+
     firebase.database().ref('username_lookup/' + username).set(state.auth.uid, function(err) {
-      if (err) return alert('Username already taken.')
+      if (err) {
+        $('#account-error-component').removeClass('hidden')
+        $('#account-error-component').html('Username already taken.')
+        return
+      }
 
       if (state.user && state.user.username) {
         firebase.database().ref('username_lookup/' + state.user.username).remove(function(err) {
@@ -260,7 +272,8 @@
       username: $('#username').val(),
     })
     fetchUser()
-    alert('Changes saved!')
+    $('#account-success-component').removeClass('hidden')
+    $('#account-success-component').html('Changes saved!')
   }
 
   function logoutUser() {
