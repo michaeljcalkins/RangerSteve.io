@@ -261,6 +261,7 @@
   function logoutUser() {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
+      localStorage.setItem('nickname', null)
       showLoginContainer()
     }, function(error) {
       // An error happened.
