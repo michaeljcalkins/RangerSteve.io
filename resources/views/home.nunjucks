@@ -62,13 +62,7 @@
 
           <br />
 
-          {% if numberOfRooms === 0 %}
-            <div class="text-center">
-              <a class="btn btn-primary" href="/create-a-room">
-                Create a Room
-              </a>
-            </div>
-          {% else %}
+          {% if numberOfRooms > 0 %}
             <table class="table table-middle table-hover">
               <thead>
                 <tr>
@@ -93,7 +87,15 @@
                 {% endfor %}
               </tbody>
             </table>
+
+            <br />
           {% endif %}
+
+          <div class="text-center">
+            <a class="btn btn-primary" href="/create-a-room">
+              Create a Room
+            </a>
+          </div>
         </fieldset>
 
         <fieldset id="login-container" class="hidden">
