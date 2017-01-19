@@ -1,8 +1,6 @@
 {
     "plugins": [ "react", "import" ],
-    "extends": [
-        "plugin:react/recommended",
-    ],
+    "extends": "standard",
     "installedESLint": true,
     "ecmaFeatures": {
         "jsx": true
@@ -35,12 +33,6 @@
         "it": true
     },
     "rules": {
-        "indent": ["error", 2],
-        "space-before-function-paren": [2, "never"],
-        "space-infix-ops": "error",
-        "keyword-spacing": "error",
-        "no-unused-vars": ["error", { "vars": "local" }],
-
         "react/display-name": 0,
         "react/forbid-prop-types": 0,
         "react/jsx-boolean-value": 1,

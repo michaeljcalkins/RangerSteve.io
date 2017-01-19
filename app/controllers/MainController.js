@@ -2,58 +2,80 @@
 
 const fs = require('fs')
 const moment = require('moment')
+const hri = require('human-readable-ids').hri
+
 const GameConsts = require('../../lib/GameConsts')
 const Server = require('../Server')
 
 let MainController = {
-  home: function(req, res) {
-        // Cache busting
-    const fileStat = fs.statSync('public/css/app.css')
-    const lastModifiedTime = moment(fileStat.mtime).unix()
-
-        // Room table
+  home: function (req, res) {
+    // Room table
     const rooms = require('../sockets').getRooms()
     const numberOfRooms = Object.keys(rooms).length
     const maxRoomSize = GameConsts.MAX_ROOM_SIZE
 
     res.render('home', {
-      lastModifiedTime: lastModifiedTime,
       maxRoomSize: maxRoomSize,
       numberOfRooms: numberOfRooms,
-      rooms: rooms,
+      rooms: rooms
     })
   },
 
-  game: function(req, res) {
+  buy: function (req, res) {
+    res.render('buy', {
+    })
+  },
+
+  howToPlay: function (req, res) {
+    res.render('how-to-play')
+  },
+
+  createARoom: function (req, res) {
+    res.render('create-a-room', {
+      gamemodes: GameConsts.GAMEMODES,
+      maps: GameConsts.MAPS,
+      randomRoomName: hri.random().replace(/[^a-zA-Z0-9 -]/g, '')
+    })
+  },
+
+  leaderboard: function (req, res) {
+    res.render('leaderboard')
+  },
+
+  battleStats: function (req, res) {
+    res.render('battle-stats', req.params)
+  },
+
+  game: function (req, res) {
     let fileStat = fs.statSync('public/js/app.js')
     let lastModifiedTime = moment(fileStat.mtime).unix()
 
     res.render('game', {
       lastModifiedTime: lastModifiedTime,
-      isProduction: process.env.NODE_ENV === "production",
+      isProduction: process.env.NODE_ENV === 'production'
     })
   },
 
-  credits: function(req, res) {
+  credits: function (req, res) {
     let fileStat = fs.statSync('public/css/app.css')
     let lastModifiedTime = moment(fileStat.mtime).unix()
 
     res.render('credits', {
-      lastModifiedTime: lastModifiedTime,
+      lastModifiedTime: lastModifiedTime
     })
   },
 
-  admin: function(req, res) {
+  admin: function (req, res) {
     res.render('admin', {
-      announcement: 'A new version of the game will be deployed in a moment...',
+      announcement: 'A new version of the game will be deployed in a moment...'
     })
   },
 
-  adminAnnouncement: function(req, res) {
+  adminAnnouncement: function (req, res) {
     let error = false
     let success = false
 
-    if (! req.body || ! req.body.announcement) {
+    if (!req.body || !req.body.announcement) {
       error = 'Announcement cannot be empty.'
     } else {
       Server.send(
@@ -66,9 +88,9 @@ let MainController = {
     res.render('admin', {
       error: error,
       success: success,
-      announcement: req.body.announcement,
+      announcement: req.body.announcement
     })
-  },
+  }
 }
 
 module.exports = MainController

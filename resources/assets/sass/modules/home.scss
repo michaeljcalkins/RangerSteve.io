@@ -1,208 +1,237 @@
 body.main {
-    height: 100%;
-    background: url(/images/home/bg1.png) no-repeat center center;
-    background-size: cover;
+  height: 100%;
+  background: url(/images/home/bg1.png) no-repeat center center;
+  background-size: cover;
 }
 
 body.main:after {
-    background: rgba(0, 0, 0, .3);
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+  background: rgba(0, 0, 0, .1);
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 .align-middle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-section {
-    margin-top: 100px;
-    height: auto;
-    width: 100%;
+  height: auto;
+  width: 100%;
 
-    .main-header {
-        clear: both;
-        color: #fff;
-        display: inline-block;
-        font-family: Bangers, Arial, sans-serif;
-        font-size: 110px;
-        font-weight: 300;
-        letter-spacing: 2px;
-        line-height: 110px;
-        margin-bottom: 10px;
-        position: relative;
-        text-align: center;
-        text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
-        width: auto;
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+  }
 
-        &:active,
-        &:hover {
-            text-decoration: none;
+  .main-header {
+    clear: both;
+    color: #fff;
+    display: inline-block;
+    font-family: Bangers, Arial, sans-serif;
+    font-size: 110px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    line-height: 110px;
+    margin-top: 70px;
+    margin-bottom: 10px;
+    position: relative;
+    text-align: center;
+    text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+    width: auto;
+
+    &:active,
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .well {
+    background: rgba(51, 46, 44, 0.8);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    border: 0;
+    padding: 30px;
+  }
+
+  input {
+    border-radius: 3px;
+    height: 40px;
+  }
+
+  .btn-lg {
+    padding: 12px 35px 11px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  table {
+    margin: 0;
+    color: #eee;
+
+    tr {
+      &:hover {
+        td {
+          color: #333;
         }
+      }
     }
+  }
 
-    .well {
-        background: rgba(0, 0, 0, 0.5);
-        box-shadow: none;
-        border-radius: 3px;
-        border: 0;
-        min-height: 510px;
-        padding: 30px;
-    }
-
-    a {
-        color: rgba(255, 255, 255, 0.8);
-
-        &:active,
-        &:hover {
-            color: #fff;
-        }
-    }
-
-    input {
-        border-radius: 3px;
-        margin: 0 auto;
-    }
-
-    #nickname {
-        color: #fff;
-        background: rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-
-        &:focus {
-            border-color: #fff;
-        }
-    }
-
-    .form-group {
-        margin: 0;
-    }
-
-    .btn-lg {
-        padding: 12px 35px 11px;
-        font-weight: bold;
-        margin: 0;
-    }
-
-    p {
-        margin: 0;
-    }
-
-    table {
-        margin: 0;
-    }
+  .footer-container a {
+    color: rgb(51, 51, 51);
+  }
 }
 
 .buy-section {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    height: auto;
-    transform: translate(-50%, -50%);
-    width: 600px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  width: 600px;
 }
 
 .well-section {
-    background: white;
-    box-shadow: none;
-    border-radius: 3px;
-    border: 0;
-    padding: 30px;
+  background: white;
+  box-shadow: none;
+  border-radius: 3px;
+  border: 0;
+  padding: 30px;
 }
 
 .server-option {
-    color: #aaa;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.8);
+  color: #aaa;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 .server-option.active {
-    color: #fff;
-    border-color: #3d8b3d;
-    background-image: linear-gradient(#5cb85c, #4cae4c);
-    cursor: default;
+  color: #fff;
+  border-color: #3d8b3d;
+  background-image: linear-gradient(#5cb85c, #4cae4c);
+  cursor: default;
 }
 
 .home-content {
-    margin: 0 auto;
-    width: 660px;
+  margin: 0 auto 100px;
+  width: 700px;
+  font-weight: bold;
+
+  .well {
+    position: relative;
+  }
+
+  .gold-button {
+    padding-bottom: 10px;
+    margin: 0;
+  }
+
+  hr {
+    border-width: 2px;
+    border-color: #ddd;
+  }
+
+  fieldset {
+    border-top: 1px solid rgba(255, 255, 255, .3);
+    margin-bottom: 15px;
+    padding: 25px 0 15px;
+  }
+
+  legend {
+    color: #eee;
+    font-size: 16px;
+    width: auto;
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 10px;
+    border: 0;
+  }
 }
 
 #browser-recommendation {
-    border-radius: 3px;
-    display: none;
+  border-radius: 3px;
+  display: none;
 }
 
 .rooms-content {
-    margin: 0 auto;
-    width: 660px;
-}
-
-.home-footer {
-    color: white;
-    margin-bottom: 20px;
-
-    .footer-content {
-        display: inline-block;
-        margin: 0 15px;
-        padding: 10px;
-        border-radius: 3px;
-        background: rgba(0, 0, 0, 0.5);
-        color: rgba(255, 255, 255, 0.5);
-        font-weight: bold;
-    }
-
-    a {
-        color: white;
-    }
+  margin: 0 auto;
+  width: 660px;
 }
 
 #beta-label {
-    color: white;
-    font-size: 60px;
-    font-family: Bangers;
-    position: absolute;
-    top: 45px;
-    left: 20px;
-    transform: rotate(-45deg);
-    text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
+  color: white;
+  font-size: 60px;
+  font-family: Bangers;
+  position: absolute;
+  top: 45px;
+  left: 20px;
+  transform: rotate(-45deg);
+  text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
 }
 
 #views {
-    margin-top: 1em;
+  margin-top: 1em;
 
-    .nav {
-        font-weight: bold;
+  .nav {
+    font-weight: bold;
 
-        a {
-            background: transparent;
-            border-color: transparent;
-            border-radius: 3px 3px 0 0;
-        }
-
-        .active a {
-            background: #fff;
-            border-bottom: 1px dashed #EEE;
-        }
+    a {
+      background: transparent;
+      border-color: transparent;
+      border-radius: 3px 3px 0 0;
     }
+
+    .active a {
+      background: #fff;
+      border-bottom: 1px dashed #EEE;
+    }
+  }
 }
 
 .view-container {
-    border-top-width: 0;
+  border-top-width: 0;
 }
 
-#how-to-play-container {
-    border-radius: 0 3px 3px;
-}
+.gold-button {
+  border: 5px solid #F9BF3B;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  width: 100%;
 
-#rooms-container {
-    border-radius: 3px 0 3px 3px;
+  &:hover,
+  &:link,
+  &:visited,
+  &:active {
+    border: 5px solid #F9BF3B;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    width: 100%;
+  }
+
+  span {
+    background: #F9BF3B;
+    border-bottom :0;
+    border-radius: 3px;
+    color: #333;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: -28px;
+    padding: 4px 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+  }
 }
 
 /* Large Devices, Wide Screens */
@@ -217,26 +246,26 @@ body.main:after {
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
-    div.main-header {
-        line-height: 90px !important;
-        font-size: 90px !important;
-    }
+  div.main-header {
+    line-height: 90px !important;
+    font-size: 90px !important;
+  }
 }
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
-    input.form-control {
-        margin-bottom: 10px;
-    }
+  input.form-control {
+    margin-bottom: 10px;
+  }
 
-    div.main-header {
-        line-height: 60px !important;
-        font-size: 60px !important;
-    }
+  div.main-header {
+    line-height: 60px !important;
+    font-size: 60px !important;
+  }
 
-    .home-content {
-        width: 100%;
-    }
+  .home-content {
+    width: 100%;
+  }
 }
 
 /* Custom, iPhone Retina */

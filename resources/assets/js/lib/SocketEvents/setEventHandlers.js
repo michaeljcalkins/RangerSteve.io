@@ -25,18 +25,18 @@ const events = {
   [GameConsts.EVENT.GAME_LOOP]: onGameLoop,
   [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
   [GameConsts.EVENT.ANNOUNCEMENT]: onAnnouncement,
-  [GameConsts.EVENT.PLAYER_SCORES]: onPlayerScores,
+  [GameConsts.EVENT.PLAYER_SCORES]: onPlayerScores
 }
 
 let dataReceived = 0
 
-export default function() {
+export default function () {
   window.socket.on('data', (data) => {
     dataReceived += sizeOf(data)
     // console.log('* LOG * data', data.type, data.payload)
-    if (! data || data.type === undefined) return
+    if (!data || data.type === undefined) return
 
-    if (! events[data.type]) return
+    if (!events[data.type]) return
 
     events[data.type].call(this, data.payload)
   })
@@ -53,7 +53,7 @@ export default function() {
         dataSent: formatByteSize(dataSent),
         dataReceived: formatByteSize(dataReceived),
         dataSentPerSecond: formatByteSize(data.dataSentPerSecond),
-        dataReceivedPerSecond: formatByteSize(data.dataReceivedPerSecond),
+        dataReceivedPerSecond: formatByteSize(data.dataReceivedPerSecond)
       }
     })
   }

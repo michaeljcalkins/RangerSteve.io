@@ -174,7 +174,6 @@ export default class LeaderboardModal extends PureComponent {
                 <h4 className="modal-title">Leaderboard</h4>
               </div>
               <div className="modal-body">
-
                 <div className="row" style={ { marginBottom: '15px' } }>
                   <div className="col-sm-5">
                     { this.renderWinningPlayerOrTeam() }

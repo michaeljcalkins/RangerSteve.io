@@ -8,12 +8,9 @@ $danger:  #d9534f;
 
 // Reset and Sizing
 .btn {
-  margin: .2em .1em; // Demo Only
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
   font-size: 1em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   border: none;
   border-bottom: .15em solid black;
   border-radius: 3px;
@@ -38,6 +35,10 @@ $danger:  #d9534f;
   &:hover {
     background: linear-gradient(darken($btncolor,5%), darken($btncolor,10%));
   }
+}
+
+.btn-link {
+  border: 0;
 }
 
 .btn-default { @include btn($default);}

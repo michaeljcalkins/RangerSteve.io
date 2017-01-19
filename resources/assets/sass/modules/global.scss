@@ -1,89 +1,136 @@
 html, body {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 html {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 body {
-    font: 14px 'Open Sans', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+  font: 14px Arial, sans-serif;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
 }
 
 a {
-    color: #00B7FF;
+  color: #00B7FF;
 }
 
 section {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .progress .progress-bar {
-    -webkit-transition: none;
-    -moz-transition: none;
-    -ms-transition: none;
-    -o-transition: none;
-    transition: none;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
 }
 
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .no-pointer-events {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 #game {
-    height: 100%;
+  height: 100%;
 }
 
 .phaser-debug #game {
-    height: calc(100% - 35px);
+  height: calc(100% - 35px);
 }
 
 .text-red {
-    color: #FF2525;
+  color: #FF2525;
 }
 
 .text-blue {
-    color: #2578FF;
+  color: #2578FF;
 }
 
 .dont-break-out {
-    /* These are technically the same, but use both */
-    overflow-wrap: break-word;
-    word-wrap: break-word;
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 
-    -ms-word-break: break-all;
-    /* This is the dangerous one in WebKit, as it breaks things wherever */
-    word-break: break-all;
-    /* Instead use this non-standard one: */
-    word-break: break-word;
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
 
-    /* Adds a hyphen where the word breaks, if supported (No Blink) */
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto;
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 .table-middle > tbody > tr > td {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .electron-drag-region {
-    -webkit-app-region: drag;
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
-    opacity: 0;
+  -webkit-app-region: drag;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  opacity: 0;
+}
+
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-15 {
+    width: 20%;
+    float: left;
+}
+@media (min-width: 768px) {
+    .col-sm-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-15 {
+        width: 20%;
+        float: left;
+    }
+}
+
+footer {
+  padding-bottom: 0;
+  margin: 0;
+  background: rgba(255, 255, 255, .8);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
 }
