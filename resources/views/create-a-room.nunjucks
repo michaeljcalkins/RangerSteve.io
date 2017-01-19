@@ -13,46 +13,51 @@
       </span>
     </div>
 
-        <div class="home-content">
-            <div class="well">
-                    <div class="row">
-          <div class="col-sm-6">
-            <a class="btn btn-primary btn-lg btn-block" href="/">Back to Menu</a>
+    <div class="home-content">
+      <div class="well">
+
+        <form action="/game" method="GET">
+          <div class="form-group">
+            <label class="tcw">Name of Room</label>
+            <input maxlength="25" name="roomId" type="text" class="form-control">
           </div>
-          <div class="col-sm-6">
+
+          <div class="form-group">
+            <label class="tcw">Starting Map</label>
+            <select name="map" class="form-control">
+              {% for map in maps %}
+                <option value="{{ map }}">{{ map }}</option>
+              {% endfor %}
+            </select>
           </div>
-        </div>
 
-        <br />
-        <br />
+          <div class="form-group">
+            <label class="tcw">Starting Gamemode</label>
+            <select name="gamemode" class="form-control">
+              {% for gamemode in gamemodes %}
+                <option value="{{ gamemode }}">{{ gamemode }}</option>
+              {% endfor %}
+            </select>
+          </div>
 
-                <form action="/game" method="GET">
-                  <div class="form-group">
-                    <label>Name of Room</label>
-                    <input name="roomId" type="text" class="form-control">
-                  </div>
-
-                  <div class="form-group">
-                    <label>Starting Map</label>
-                    <input name="map" type="text" class="form-control">
-                  </div>
-
-                  <div class="form-group">
-                    <label>Starting Gamemode</label>
-                    <input name="gamemode" type="text" class="form-control">
-                  </div>
-
-                  <button
-                      type="submit"
-                      class="btn btn-success btn-lg btn-block"
-                      id="play-button"
-                  >
-                      Play Now
-                  </button>
-                </form>
+          <div class="row">
+            <div class="col-sm-6">
+              <button
+                type="submit"
+                class="btn btn-success btn-lg btn-block"
+                id="play-button"
+              >
+                Play Now
+              </button>
             </div>
-        </div>
+            <div class="col-sm-6">
+              <a class="btn btn-primary btn-lg btn-block" href="/">Back to Menu</a>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </section>
 {% endblock %}
 

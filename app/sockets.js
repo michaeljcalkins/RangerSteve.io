@@ -42,10 +42,10 @@ const events = {
   [GameConsts.EVENT.PLAYER_RESPAWN]: onPlayerRespawn,
   [GameConsts.EVENT.PLAYER_UPDATE_NICKNAME]: onPlayerUpdateNickname,
   [GameConsts.EVENT.PLAYER_SCORES]: onPlayerScores,
-  [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom,
+  [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom
 }
 
-function init(primusInstance) {
+function init (primusInstance) {
   io = primusInstance
   Server.init(io)
   io.on('connection', (socket) => {
@@ -54,9 +54,9 @@ function init(primusInstance) {
     socket.on('data', (data) => {
       dataReceived += sizeOf(data)
       // console.log('* LOG * data', data.type, data.payload)
-      if (! data || data.type === undefined) return
+      if (!data || data.type === undefined) return
 
-      if (! events[data.type]) return
+      if (!events[data.type]) return
 
       events[data.type].call(socket, data.payload)
     })
@@ -74,15 +74,15 @@ function init(primusInstance) {
   // }
 }
 
-function getRooms() {
+function getRooms () {
   return rooms
 }
 
-gameloop.setGameLoop(function() {
+gameloop.setGameLoop(function () {
   Object.keys(rooms).forEach((roomId) => {
     let roomData = {
       currentTime: Date.now(),
-      players: {},
+      players: {}
     }
 
     // Only send new room states
@@ -91,10 +91,10 @@ gameloop.setGameLoop(function() {
       roomData.state = lastRoomData[roomId].state = rooms[roomId].state
     }
 
-    Object.keys(rooms[roomId].players).forEach(function(playerId) {
+    Object.keys(rooms[roomId].players).forEach(function (playerId) {
       roomData.players[playerId] = {}
 
-      GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(function(playerProperty) {
+      GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(function (playerProperty) {
         lastPlayerData[playerId] = lastPlayerData[playerId] || {}
         if (
           typeof lastPlayerData[playerId][playerProperty] === 'undefined' || // if the value has not been sent yet
@@ -113,10 +113,10 @@ gameloop.setGameLoop(function() {
   })
 }, GameConsts.TICK_RATE)
 
-setInterval(function() {
+setInterval(function () {
   Object.keys(rooms).forEach((roomId) => {
     // Room was likely deleted when the last player left
-    if (! rooms[roomId]) return
+    if (!rooms[roomId]) return
 
     // Round has ended and is restarting now
     if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
@@ -136,7 +136,7 @@ setInterval(function() {
         players: rooms[roomId].players,
         messages: rooms[roomId].messages,
         map: nextMap,
-        gamemode: nextGamemode,
+        gamemode: nextGamemode
       })
 
       util.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} for room ${roomId}`)
@@ -176,17 +176,17 @@ setInterval(function() {
   })
 }, 1000)
 
-function onRefreshRoom() {
+function onRefreshRoom () {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (! rooms[roomId]) return
+  if (!rooms[roomId]) return
 
   let roomData = {
     state: rooms[roomId].state,
-    players: {},
+    players: {}
   }
 
-  Object.keys(rooms[roomId].players).forEach(function(playerId) {
-    if (! _.has(rooms, '[' + roomId + '].players[' + playerId + ']')) {
+  Object.keys(rooms[roomId].players).forEach(function (playerId) {
+    if (!_.has(rooms, '[' + roomId + '].players[' + playerId + ']')) {
       return util.error('Could not find', playerId, 'during refresh room event.')
     }
 
@@ -199,7 +199,7 @@ function onRefreshRoom() {
       team: rooms[roomId].players[playerId].team,
       weaponId: rooms[roomId].players[playerId].weaponId,
       x: rooms[roomId].players[playerId].x,
-      y: rooms[roomId].players[playerId].y,
+      y: rooms[roomId].players[playerId].y
     }
   })
 
@@ -210,13 +210,13 @@ function onRefreshRoom() {
   )
 }
 
-function onPlayerScores() {
+function onPlayerScores () {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (! rooms[roomId]) return
+  if (!rooms[roomId]) return
 
   const playerScores = {}
-  Object.keys(rooms[roomId].players).forEach(function(playerId) {
-    if (! _.has(rooms, '[' + roomId + '].players[' + playerId + ']')) {
+  Object.keys(rooms[roomId].players).forEach(function (playerId) {
+    if (!_.has(rooms, '[' + roomId + '].players[' + playerId + ']')) {
       return util.error('Could not find', playerId, 'during player scores event.')
     }
 
@@ -229,7 +229,7 @@ function onPlayerScores() {
       bulletsHit: rooms[roomId].players[playerId].bulletsHit,
       score: rooms[roomId].players[playerId].score,
       headshots: rooms[roomId].players[playerId].headshots,
-      secondsInRound: rooms[roomId].players[playerId].secondsInRound,
+      secondsInRound: rooms[roomId].players[playerId].secondsInRound
     }
   })
 
@@ -240,18 +240,18 @@ function onPlayerScores() {
       blueTeamScore: rooms[roomId].blueTeamScore,
       players: playerScores,
       redTeamScore: rooms[roomId].redTeamScore,
-      roundStartTime: rooms[roomId].roundStartTime,
+      roundStartTime: rooms[roomId].roundStartTime
     }
   )
 }
 
-function onPlayerRespawn() {
+function onPlayerRespawn () {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (! rooms[roomId]) return
+  if (!rooms[roomId]) return
 
   const player = getPlayerById(roomId, this.id, rooms)
 
-  if (! player) {
+  if (!player) {
     util.log('Player not found when trying to respawn', this.id)
     return
   }
@@ -268,16 +268,16 @@ function onPlayerRespawn() {
   )
 }
 
-function onMessageSend(data) {
+function onMessageSend (data) {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (! rooms[roomId]) return
+  if (!rooms[roomId]) return
 
   const player = getPlayerById(roomId, this.id, rooms)
 
   const newMessage = filter.clean(data.substr(0, GameConsts.MAX_CHAT_MESSAGE_LENGTH))
   rooms[roomId].messages.push([
     player.nickname.substr(0, GameConsts.MAX_NICKNAME_LENGTH),
-    newMessage,
+    newMessage
   ])
   rooms[roomId].messages = rooms[roomId].messages.slice(-5)
 
@@ -287,15 +287,15 @@ function onMessageSend(data) {
     GameConsts.EVENT.MESSAGE_RECEIVED,
     [
       player.nickname,
-      newMessage,
+      newMessage
     ]
   )
 }
 
-function onPlayerAdjustScore(data) {
+function onPlayerAdjustScore (data) {
   const player = getPlayerById(data.roomId, this.id, rooms)
 
-  if (! player) {
+  if (!player) {
     util.log('Player not found when adjust score', data)
     return
   }
@@ -304,24 +304,24 @@ function onPlayerAdjustScore(data) {
   player.score = player.score <= 0 ? 0 : player.score
 }
 
-function onPlayerUpdateNickname(data) {
+function onPlayerUpdateNickname (data) {
   let nickname = data.nickname
   var player = getPlayerById(data.roomId, this.id, rooms)
 
-  if (! player) {
+  if (!player) {
     util.log('Player not found when updating nickname: ' + this.id)
     return
   }
 
   if (nickname.length > 25)
-    nickname = nickname.substr(0, 25)
+    {nickname = nickname.substr(0, 25)}
 
   lastPlayerData[this.id].nickname = player.nickname
   player.nickname = nickname
 }
 
 // New player has joined
-function onNewPlayer(data) {
+function onNewPlayer (data) {
   util.log('New player has joined: ', this.id)
 
   // Check for duplicate players
@@ -336,12 +336,12 @@ function onNewPlayer(data) {
   let roomIdPlayerWillJoin = null
 
   // Specified room id and room has not been created
-  if (data.roomId && ! rooms[data.roomId]) {
+  if (data.roomId && !rooms[data.roomId]) {
     const newRoom = createRoom({
       id: data.roomId,
       player: newPlayer,
       map: data.map,
-      gamemode: data.gamemode,
+      gamemode: data.gamemode
     })
 
     rooms[newRoom.id] = newRoom
@@ -358,14 +358,16 @@ function onNewPlayer(data) {
   } else {
     // Either find a room to put the user in or create one
     // Find available room with space for player
-    let availableRooms = Object.keys(rooms).filter(function(room) {
-      if (! rooms[room].players) return true
+    let availableRooms = Object.keys(rooms).filter(function (room) {
+      if (!rooms[room].players) return true
       return Object.keys(rooms[room].players).length < GameConsts.MAX_ROOM_SIZE
     })
 
     // No available rooms were found so we create one.
     if (availableRooms.length <= 0) {
       const newRoom = createRoom({
+        gamemode: data.gamemode,
+        map: data.map,
         player: newPlayer,
       })
 
@@ -401,12 +403,12 @@ function onNewPlayer(data) {
 }
 
 // Player has moved
-function onMovePlayer(buffer) {
+function onMovePlayer (buffer) {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (! rooms[roomId]) return
+  if (!rooms[roomId]) return
 
   const movePlayer = rooms[roomId].players[this.id]
-  if (! movePlayer || movePlayer.health <= 0) return
+  if (!movePlayer || movePlayer.health <= 0) return
 
   const data = movePlayerSchema.decode(buffer)
 
@@ -420,7 +422,7 @@ function onMovePlayer(buffer) {
 }
 
 // Socket client has disconnected
-function onClientDisconnect() {
+function onClientDisconnect () {
   util.log('Player has disconnected: ' + this.id)
 
   let selectedRoomId = null
@@ -433,7 +435,7 @@ function onClientDisconnect() {
   var removePlayer = getPlayerById(selectedRoomId, this.id, rooms)
 
   // Player not found
-  if (! removePlayer) {
+  if (!removePlayer) {
     util.log('Player not found when disconnecting: ' + this.id)
     return
   }
@@ -451,12 +453,12 @@ function onClientDisconnect() {
   }
 }
 
-function onPlayerFullHealth() {
+function onPlayerFullHealth () {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (! rooms[roomId]) return
+  if (!rooms[roomId]) return
 
   let player = getPlayerById(roomId, this.id, rooms)
-  if (! player) return
+  if (!player) return
   player.health = GameConsts.PLAYER_FULL_HEALTH
 
   Server.sendToSocket(
@@ -466,15 +468,15 @@ function onPlayerFullHealth() {
     )
 }
 
-function onPlayerHealing() {
+function onPlayerHealing () {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (! rooms[roomId]) return
+  if (!rooms[roomId]) return
 
   let player = getPlayerById(roomId, this.id, rooms)
   player.health += 10
 
   if (player.health > GameConsts.PLAYER_FULL_HEALTH)
-    player.health = GameConsts.PLAYER_FULL_HEALTH
+    {player.health = GameConsts.PLAYER_FULL_HEALTH}
 
   Server.sendToSocket(
         this.id,
@@ -483,12 +485,12 @@ function onPlayerHealing() {
     )
 }
 
-function onPlayerDamaged(data) {
+function onPlayerDamaged (data) {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (! rooms[roomId]) return
+  if (!rooms[roomId]) return
 
   let player = getPlayerById(roomId, data.damagedPlayerId, rooms)
-  if (! player || player.health <= 0) return
+  if (!player || player.health <= 0) return
 
   player.health -= Number(data.damage)
   player.damageStats = player.damageStats || {}
@@ -530,7 +532,7 @@ function onPlayerDamaged(data) {
       }
 
       const playerScores = {}
-      Object.keys(rooms[roomId].players).forEach(function(playerId) {
+      Object.keys(rooms[roomId].players).forEach(function (playerId) {
         playerScores[playerId] = {
           deaths: rooms[roomId].players[playerId].deaths,
           kills: rooms[roomId].players[playerId].kills,
@@ -540,7 +542,7 @@ function onPlayerDamaged(data) {
           bulletsHit: rooms[roomId].players[playerId].bulletsHit,
           score: rooms[roomId].players[playerId].score,
           headshots: rooms[roomId].players[playerId].headshots,
-          secondsInRound: rooms[roomId].players[playerId].secondsInRound,
+          secondsInRound: rooms[roomId].players[playerId].secondsInRound
         }
       })
 
@@ -557,7 +559,7 @@ function onPlayerDamaged(data) {
           players: playerScores,
           redTeamScore: rooms[roomId].redTeamScore,
           wasHeadshot: data.wasHeadshot,
-          weaponId: data.weaponId,
+          weaponId: data.weaponId
         }
             )
     } else {
@@ -566,7 +568,7 @@ function onPlayerDamaged(data) {
       }
 
       const playerScores = {}
-      Object.keys(rooms[roomId].players).forEach(function(playerId) {
+      Object.keys(rooms[roomId].players).forEach(function (playerId) {
         playerScores[playerId] = {
           deaths: rooms[roomId].players[playerId].deaths,
           kills: rooms[roomId].players[playerId].kills,
@@ -576,7 +578,7 @@ function onPlayerDamaged(data) {
           bulletsHit: rooms[roomId].players[playerId].bulletsHit,
           score: rooms[roomId].players[playerId].score,
           headshots: rooms[roomId].players[playerId].headshots,
-          secondsInRound: rooms[roomId].players[playerId].secondsInRound,
+          secondsInRound: rooms[roomId].players[playerId].secondsInRound
         }
       })
 
@@ -587,7 +589,7 @@ function onPlayerDamaged(data) {
           deadNickname: player.nickname,
           redTeamScore: rooms[roomId].redTeamScore,
           blueTeamScore: rooms[roomId].blueTeamScore,
-          players: playerScores,
+          players: playerScores
         }
             )
     }
@@ -608,7 +610,7 @@ function onPlayerDamaged(data) {
         attackingDamageStats,
         canRespawnTimestamp: player.canRespawnTimestamp,
         playerX: player.x,
-        playerY: player.y,
+        playerY: player.y
       }
     )
 
@@ -633,20 +635,20 @@ function onPlayerDamaged(data) {
       damage: data.damage,
       health: player.health,
       damageStats: {},
-      attackingDamageStats: {},
+      attackingDamageStats: {}
     }
     )
 }
 
-function onBulletFired(data) {
+function onBulletFired (data) {
     // const data = bulletSchema.decode(buffer)
   const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (! rooms[roomId]) return
+  if (!rooms[roomId]) return
 
   const player = getPlayerById(roomId, this.id, rooms)
   data.playerId = this.id
 
-  if (! player || player.health <= 0) return
+  if (!player || player.health <= 0) return
   player.bulletsFired++
 
     // Broadcast updated position to connected socket clients

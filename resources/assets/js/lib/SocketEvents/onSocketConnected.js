@@ -2,7 +2,7 @@ import GameConsts from 'lib/GameConsts'
 import getParameterByName from '../GetParameterByName.js'
 import Client from '../Client'
 
-export default function onSocketConnected() {
+export default function onSocketConnected () {
   const { store } = this.game
   const state = store.getState()
 
@@ -13,20 +13,25 @@ export default function onSocketConnected() {
       x: 0,
       y: 0,
       weaponId: state.player.currentWeapon === 'primaryWeapon'
-                ? state.player.selectedPrimaryWeaponId
-                : state.player.selectedSecondaryWeaponId,
-      nickname: state.player.nickname,
+        ? state.player.selectedPrimaryWeaponId
+        : state.player.selectedSecondaryWeaponId,
+      nickname: state.player.nickname
     }
 
     // Only specify roomId if specified in url
     if (getParameterByName('roomId')) {
-      mixpanel.track('player:joinedByRoomId')
+      window.mixpanel.track('player:joinedByRoomId')
       data.roomId = getParameterByName('roomId')
     }
 
     // Only specify map if specified in url
     if (getParameterByName('map')) {
       data.map = getParameterByName('map')
+    }
+
+    // Only specify gamemode if specified in url
+    if (getParameterByName('gamemode')) {
+      data.gamemode = getParameterByName('gamemode')
     }
 
     Client.send(GameConsts.EVENT.NEW_PLAYER, data)

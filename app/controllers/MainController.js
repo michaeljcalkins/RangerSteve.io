@@ -6,7 +6,7 @@ const GameConsts = require('../../lib/GameConsts')
 const Server = require('../Server')
 
 let MainController = {
-  home: function(req, res) {
+  home: function (req, res) {
     // Room table
     const rooms = require('../sockets').getRooms()
     const numberOfRooms = Object.keys(rooms).length
@@ -15,61 +15,64 @@ let MainController = {
     res.render('home', {
       maxRoomSize: maxRoomSize,
       numberOfRooms: numberOfRooms,
-      rooms: rooms,
+      rooms: rooms
     })
   },
 
-  buy: function(req, res) {
+  buy: function (req, res) {
     res.render('buy', {
     })
   },
 
-  howToPlay: function(req, res) {
+  howToPlay: function (req, res) {
     res.render('how-to-play')
   },
 
-  createARoom: function(req, res) {
-    res.render('create-a-room')
+  createARoom: function (req, res) {
+    res.render('create-a-room', {
+      gamemodes: GameConsts.GAMEMODES,
+      maps: GameConsts.MAPS
+    })
   },
 
-  leaderboard: function(req, res) {
+  leaderboard: function (req, res) {
     res.render('leaderboard')
   },
 
-  battleStats: function(req, res) {
+  battleStats: function (req, res) {
     res.render('battle-stats', req.params)
   },
 
-  game: function(req, res) {
+  game: function (req, res) {
     let fileStat = fs.statSync('public/js/app.js')
     let lastModifiedTime = moment(fileStat.mtime).unix()
 
     res.render('game', {
       lastModifiedTime: lastModifiedTime,
-      isProduction: process.env.NODE_ENV === "production",
+      isProduction: process.env.NODE_ENV === 'production'
     })
   },
 
-  credits: function(req, res) {
+  credits: function (req, res) {
     let fileStat = fs.statSync('public/css/app.css')
     let lastModifiedTime = moment(fileStat.mtime).unix()
 
     res.render('credits', {
-      lastModifiedTime: lastModifiedTime,
+      lastModifiedTime: lastModifiedTime
     })
   },
 
-  admin: function(req, res) {
+  admin: function (req, res) {
     res.render('admin', {
-      announcement: 'A new version of the game will be deployed in a moment...',
+      announcement: 'A new version of the game will be deployed in a moment...'
     })
   },
 
-  adminAnnouncement: function(req, res) {
+  adminAnnouncement: function (req, res) {
     let error = false
     let success = false
 
-    if (! req.body || ! req.body.announcement) {
+    if (!req.body || !req.body.announcement) {
       error = 'Announcement cannot be empty.'
     } else {
       Server.send(
@@ -82,9 +85,9 @@ let MainController = {
     res.render('admin', {
       error: error,
       success: success,
-      announcement: req.body.announcement,
+      announcement: req.body.announcement
     })
-  },
+  }
 }
 
 module.exports = MainController
