@@ -1,7 +1,6 @@
 import GameConsts from 'lib/GameConsts'
 
 export default function () {
-  const state = this.game.store.getState()
   const innerWidth = window.innerWidth
   const innerHeight = window.innerHeight
 

@@ -13,11 +13,11 @@ export function ChooseSecondaryMenu ({
     player
 }) {
   function handleSelectSecondaryClick (weapon) {
-    mixpanel.track('secondaryWeapon:selected:' + weapon.id)
+    window.mixpanel.track('secondaryWeapon:selected:' + weapon.id)
     onSecondaryGunClick(weapon)
     player.health <= 0
-            ? onCloseSettingsModal()
-            : onSettingsViewChange('main')
+      ? onCloseSettingsModal()
+      : onSettingsViewChange('main')
   }
 
   function renderWeapons () {

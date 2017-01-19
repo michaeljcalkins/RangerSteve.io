@@ -44,5 +44,5 @@ export default function onBulletFired (data) {
   soundThrottle = true
   window.RS.weaponSoundEffects[bullet.weaponId].volume = store.getState().game.sfxVolume * enemyBulletVolume
   window.RS.weaponSoundEffects[bullet.weaponId].play()
-  setTimeout(() => soundThrottle = false, 100)
+  setTimeout(() => { soundThrottle = false }, 100)
 }

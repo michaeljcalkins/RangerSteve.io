@@ -5,7 +5,7 @@ export default function PlayerById (id) {
   if (!window.RS.enemies) return
 
   for (let i = 0; i < window.RS.enemies.children.length; i++) {
-    if (get(RS, `enemies.children[${i}].data.id`) === id) {
+    if (get(window.RS, `enemies.children[${i}].data.id`) === id) {
       return window.RS.enemies.children[i]
     }
   }

@@ -14,6 +14,10 @@
     "build:dev": "webpack --env dev --progress --profile --colors",
     "build:prod": "webpack --env prod --progress --profile --colors"
   },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [ "describe", "it" ]
+  },
   "dependencies": {
     "autoprefixer": "^6.5.1",
     "babel-core": "^6.17.0",
