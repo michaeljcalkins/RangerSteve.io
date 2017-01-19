@@ -98,6 +98,9 @@
 
         <fieldset id="login-container" class="hidden">
           <legend>Login With</legend>
+
+          <div class="alert alert-danger hidden" id="login-error-component"></div>
+
           <div class="row">
             <div class="col-sm-4">
               <button style="background: #dd4b39;" class="btn btn-primary btn-block" onClick="attemptLoginWithGoogle()">
@@ -273,6 +276,8 @@
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function(result) {
       console.log(result)
+      $('#login-error-component').addClass('hidden')
+
       state.auth = result.user
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
@@ -281,6 +286,9 @@
       // ...
     }).catch(function(error) {
       console.log(error)
+      $('#login-error-component').removeClass('hidden')
+      $('#login-error-component').html(error.message)
+
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -296,6 +304,8 @@
     var provider = new firebase.auth.FacebookAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function(result) {
       console.log(result)
+      $('#login-error-component').addClass('hidden')
+
       state.auth = result.user
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
@@ -304,6 +314,9 @@
       // ...
     }).catch(function(error) {
       console.log(error)
+      $('#login-error-component').removeClass('hidden')
+      $('#login-error-component').html(error.message)
+
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -319,6 +332,8 @@
     var provider = new firebase.auth.TwitterAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function(result) {
       console.log(result)
+      $('#login-error-component').addClass('hidden')
+
       state.auth = result.user
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
@@ -327,6 +342,9 @@
       // ...
     }).catch(function(error) {
       console.log(error)
+      $('#login-error-component').removeClass('hidden')
+      $('#login-error-component').html(error.message)
+
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
