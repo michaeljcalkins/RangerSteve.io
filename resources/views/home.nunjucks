@@ -21,7 +21,7 @@
         <form action="/game" method="GET">
           <div class="row">
             <div class="col-sm-6">
-              <span class="gold-button btn btn-default no-pointer" href="#">
+              <span class="gold-button btn btn-default no-pointer-events" href="#">
                 <span>Ranger Steve</span>
                 <img src="/images/characters/RangerSteve.png" width="95" />
               </span>
