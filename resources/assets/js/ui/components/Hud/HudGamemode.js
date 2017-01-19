@@ -3,18 +3,18 @@ import upperCase from 'lodash/upperCase'
 
 export default class HudGamemode extends PureComponent {
   static propTypes = {
-    gamemode: PropTypes.string.isRequired,
+    gamemode: PropTypes.string.isRequired
   }
 
   static defaultProps = {
-    gamemode: '',
+    gamemode: ''
   }
 
-  render() {
+  render () {
     const { gamemode } = this.props
 
     return (
-      <div className="hud-gamemode hud-item">{ upperCase(gamemode) }</div>
+      <div className='hud-gamemode hud-item'>{ upperCase(gamemode) }</div>
     )
   }
 }

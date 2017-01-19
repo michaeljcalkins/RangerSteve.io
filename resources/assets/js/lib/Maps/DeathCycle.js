@@ -21,30 +21,30 @@ const SPAWN_POINTS = [
     { x: 1730, y: 251 },
     { x: 2342, y: 616 },
     { x: 3019, y: 1461 },
-    { x: 2957, y: 2359 },
+    { x: 2957, y: 2359 }
 ]
 
-export function getRandomSpawnPoint() {
+export function getRandomSpawnPoint () {
   return sample(SPAWN_POINTS)
 }
 
-export function getSpawnPoints() {
+export function getSpawnPoints () {
   return SPAWN_POINTS
 }
 
-export function preload() {
+export function preload () {
   this.game.load.image('background', '/maps/death-cycle/background.png')
-  this.game.load.tilemap('tilemap', '/maps/death-cycle/death-cycle.json', null, Phaser.Tilemap.TILED_JSON)
+  this.game.load.tilemap('tilemap', '/maps/death-cycle/death-cycle.json', null, window.Phaser.Tilemap.TILED_JSON)
   this.game.load.spritesheet('tiles', '/maps/death-cycle/tiles.png', 24, 24)
   this.game.load.spritesheet('ninja-tiles32', '/images/ninja-tiles32.png', 24, 24)
 }
 
-export function createOverlays() {}
+export function createOverlays () {}
 
-export function create() {
+export function create () {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
 
-  this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, "background")
+  this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
     // Add the demo tilemap and attach a tilesheet for its collision layer
   this.map = this.game.add.tilemap('tilemap')
@@ -52,10 +52,10 @@ export function create() {
   this.map.addTilesetImage('collision', 'ninja-tiles32')
 
     // Create a TilemapLayer object from the collision layer of the map
-  RS.tiles = this.map.createLayer('tiles')
+  window.RS.tiles = this.map.createLayer('tiles')
   this.ground = this.map.createLayer('collision')
   this.ground.renderSettings.enableScrollDelta = false
-  if (! GameConsts.DEBUG) this.ground.alpha = 0
+  if (!GameConsts.DEBUG) this.ground.alpha = 0
 
     // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
     // preparing slope data for each of tile in the layer
@@ -67,4 +67,4 @@ export function create() {
   if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
 }
 
-export function update() {}
+export function update () {}

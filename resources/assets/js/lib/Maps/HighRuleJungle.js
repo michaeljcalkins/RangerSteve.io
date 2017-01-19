@@ -27,31 +27,31 @@ const SPAWN_POINTS = [
     { x: 5100, y: 1110 },
     { x: 5500, y: 1400 },
     { x: 4900, y: 1420 },
-    { x: 2290, y: 730 },
+    { x: 2290, y: 730 }
 ]
 
-export function getRandomSpawnPoint() {
+export function getRandomSpawnPoint () {
   return sample(SPAWN_POINTS)
 }
 
-export function getSpawnPoints() {
+export function getSpawnPoints () {
   return SPAWN_POINTS
 }
 
-export function preload() {
+export function preload () {
   this.game.load.image('background', '/maps/high-rule-jungle/background.jpg', true)
   this.game.load.image('bridge', '/maps/high-rule-jungle/bridge.png', true)
   this.game.load.image('tower-rail', '/maps/high-rule-jungle/tower-rail.png', true)
-  this.game.load.tilemap('tilemap', '/maps/high-rule-jungle/high-rule-jungle.json', null, Phaser.Tilemap.TILED_JSON);
+  this.game.load.tilemap('tilemap', '/maps/high-rule-jungle/high-rule-jungle.json', null, window.Phaser.Tilemap.TILED_JSON)
   this.game.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
 }
 
-export function createOverlays() {
+export function createOverlays () {
   this.bridge = this.game.add.sprite(1313, 1240, 'bridge')
   this.towerRail = this.game.add.sprite(4230, 1140, 'tower-rail')
 }
 
-export function create() {
+export function create () {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
   let background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
     // FireFox allows a max width of 4000px for this image
@@ -63,9 +63,9 @@ export function create() {
   this.groundSprite.width = WORLD_WIDTH
   this.groundSprite.height = 10
   this.game.physics.arcade.enable(this.groundSprite)
-  this.game.physics.enable(this.groundSprite, Phaser.Physics.ARCADE)
+  this.game.physics.enable(this.groundSprite, window.Phaser.Physics.ARCADE)
   this.groundSprite.enableBody = true
-  this.groundSprite.physicsBodyType = Phaser.Physics.ARCADE
+  this.groundSprite.physicsBodyType = window.Phaser.Physics.ARCADE
   this.groundSprite.body.immovable = true
   this.groundSprite.body.allowGravity = false
 
@@ -76,7 +76,7 @@ export function create() {
     // Create a TilemapLayer object from the collision layer of the map
   this.ground = this.map.createLayer('collision')
   this.ground.renderSettings.enableScrollDelta = false
-  if (! GameConsts.DEBUG) this.ground.alpha = 0
+  if (!GameConsts.DEBUG) this.ground.alpha = 0
 
     // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
     // preparing slope data for each of tile in the layer
@@ -88,15 +88,15 @@ export function create() {
   if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
 }
 
-export function createLedges() {
+export function createLedges () {
 }
 
-export function update() {
+export function update () {
   const store = this.game.store
 
   if (store.getState().player.health <= 0) return
 
-  this.game.physics.arcade.overlap(RS.player, this.groundSprite, () => {
+  this.game.physics.arcade.overlap(window.RS.player, this.groundSprite, () => {
     KillCurrentPlayer.call(this)
   })
 }

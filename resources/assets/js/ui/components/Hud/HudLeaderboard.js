@@ -4,13 +4,13 @@ import cs from 'classnames'
 import { connect } from 'react-redux'
 
 export class HudLeaderboard extends Component {
-  renderPlayers() {
+  renderPlayers () {
     const { room } = this.props
-    if (! room.players) return null
+    if (!room.players) return null
 
     return values(room.players)
             .sort((a, b) => a.score < b.score)
-            .map(function(player) {
+            .map(function (player) {
               let playerNickname = player.nickname
                     ? player.nickname
                     : 'Unnamed Ranger'
@@ -21,56 +21,56 @@ export class HudLeaderboard extends Component {
 
               const classes = cs({
                 'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
-                'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch',
+                'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch'
               })
 
               return (
-                    <tr key={ player.id }>
-                        <td
-                            className={ classes }
-                            style={ { width: '120px', overflow: 'hidden' } }
-                            title="Player's nickname"
+                <tr key={player.id}>
+                  <td
+                    className={classes}
+                    style={{ width: '120px', overflow: 'hidden' }}
+                    title="Player's nickname"
                         >
-                            { playerNickname }
-                        </td>
-                        <td
-                            style={ { width: '20px' } }
-                            title="Player's current killing spree"
+                    { playerNickname }
+                  </td>
+                  <td
+                    style={{ width: '20px' }}
+                    title="Player's current killing spree"
                         >
-                            <strong>{ killingSpreeCount }</strong>
-                        </td>
-                        <td
-                            style={ { width: '20px' } }
-                            title="Player's current score"
+                    <strong>{ killingSpreeCount }</strong>
+                  </td>
+                  <td
+                    style={{ width: '20px' }}
+                    title="Player's current score"
                         >
-                            { player.score || 0 }
-                        </td>
-                    </tr>
-                )
+                    { player.score || 0 }
+                  </td>
+                </tr>
+              )
             })
   }
 
-  render() {
+  render () {
     return (
-            <div className="hud-leaderboard hud-item no-pointer-events">
-                <h1>Scoreboard</h1>
-                <table className="table table-condensed">
-                    <tbody>
-                        { this.renderPlayers() }
-                    </tbody>
-                </table>
-            </div>
-        )
+      <div className='hud-leaderboard hud-item no-pointer-events'>
+        <h1>Scoreboard</h1>
+        <table className='table table-condensed'>
+          <tbody>
+            { this.renderPlayers() }
+          </tbody>
+        </table>
+      </div>
+    )
   }
 }
 
 HudLeaderboard.propTypes = {
-  room: PropTypes.object,
+  room: PropTypes.object
 }
 
 const mapStateToProps = (state) => {
   return {
-    room: state.room,
+    room: state.room
   }
 }
 

@@ -29,19 +29,19 @@ import createEnemyGroup from '../lib/createEnemyGroup'
 /**
  * Collisions and all game mode related interactions.
  */
-function Deathmatch(game) {
+function Deathmatch (game) {
   this.game = game
 }
 
 Deathmatch.prototype = {
 
-  preload: function() {
+  preload: function () {
     const store = this.game.store
     const mapName = store.getState().room.map
     Maps[mapName].preload.call(this)
   },
 
-  create: function() {
+  create: function () {
     createEnemyGroup.call(this)
     CreateMapAndPlayer.call(this)
     CreateHurtBorder.call(this)
@@ -57,7 +57,7 @@ Deathmatch.prototype = {
     this.game.paused = false
   },
 
-  update: function() {
+  update: function () {
     if (this.game.store.getState().game.resetEventsFlag) {
       this.game.store.dispatch(actions.game.setResetEventsFlag(false))
       CreateKeyboardBindings.call(this)
@@ -71,7 +71,7 @@ Deathmatch.prototype = {
 
         // Pause controls so user can't do anything in the background accidentally
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
-    this.game.input.enabled = ! isPaused
+    this.game.input.enabled = !isPaused
 
     PlayerAndPlatforms.call(this)
     PlayerAndEnemyBullets.call(this)
@@ -86,7 +86,7 @@ Deathmatch.prototype = {
     if (state.player.health > 0) {
       PlayerMovementHandler.call(this)
       PlayerJumpHandler.call(this)
-      updatePlayerAngles.call(this, RS.player)
+      updatePlayerAngles.call(this, window.RS.player)
     }
 
     /**
@@ -121,16 +121,16 @@ Deathmatch.prototype = {
             ) return
 
       switch (currentWeapon.bulletType) {
-      case 'rocket':
-        FireRocket.call(this, currentWeaponId)
-        break;
+        case 'rocket':
+          FireRocket.call(this, currentWeaponId)
+          break
 
-      case 'shotgun':
-        FireShotgunShell.call(this, currentWeaponId)
-        break
+        case 'shotgun':
+          FireShotgunShell.call(this, currentWeaponId)
+          break
 
-      default:
-        FireStandardBullet.call(this, currentWeaponId)
+        default:
+          FireStandardBullet.call(this, currentWeaponId)
       }
     }
 
@@ -139,21 +139,21 @@ Deathmatch.prototype = {
     UpdatePlayerPosition.call(this)
   },
 
-  render() {
-    if (! GameConsts.DEBUG || ! RS.player) return
+  render () {
+    if (!GameConsts.DEBUG || !window.RS.player) return
 
-    this.game.debug.text('FPS: ' + (this.time.fps || '--'), 10, 20, "#ffffff")
-    this.game.debug.body(RS.player)
+    this.game.debug.text('FPS: ' + (this.time.fps || '--'), 10, 20, '#ffffff')
+    this.game.debug.body(window.RS.player)
     this.game.debug.inputInfo(32, 200)
     this.game.debug.cameraInfo(this.camera, 32, 110)
-    RS.bullets.forEach((bullet) => {
+    window.RS.bullets.forEach((bullet) => {
       this.game.debug.body(bullet)
     })
 
-    RS.enemies.forEach((bullet) => {
+    window.RS.enemies.forEach((bullet) => {
       this.game.debug.body(bullet)
     })
-  },
+  }
 }
 
 export default Deathmatch

@@ -8,7 +8,7 @@ import CreateKeyboardBindings from '../CreateHandler/CreateKeyboardBindings'
 import GetSpawnPoint from '../GetSpawnPoint'
 // import playerIdSchema from 'lib/schemas/playerIdSchema'
 
-export default function onPlayerRespawn(data) {
+export default function onPlayerRespawn (data) {
     // const data = playerIdSchema.decode(buffer)
   const state = this.game.store.getState()
   const store = this.game.store
@@ -17,22 +17,22 @@ export default function onPlayerRespawn(data) {
 
   if (data.id !== window.SOCKET_ID) {
     let enemyPlayer = PlayerById.call(this, data.id)
-    if (! enemyPlayer) return
+    if (!enemyPlayer) return
     enemyPlayer.data.health = GameConsts.PLAYER_FULL_HEALTH
     return
   }
 
   // Create and set the new spawn point
   const spawnPoints = Maps[state.room.map].getSpawnPoints()
-  const spawnPoint = GetSpawnPoint(spawnPoints, RS.enemies.children)
+  const spawnPoint = GetSpawnPoint(spawnPoints, window.RS.enemies.children)
 
-  RS.player.x = spawnPoint.x
-  RS.player.y = spawnPoint.y
+  window.RS.player.x = spawnPoint.x
+  window.RS.player.y = spawnPoint.y
 
-  RS.player.body.acceleration.x = 0
-  RS.player.body.acceleration.y = 0
-  RS.player.body.velocity.x = 0
-  RS.player.body.velocity.y = 0
+  window.RS.player.body.acceleration.x = 0
+  window.RS.player.body.acceleration.y = 0
+  window.RS.player.body.velocity.x = 0
+  window.RS.player.body.velocity.y = 0
 
   store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
   store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
@@ -48,8 +48,8 @@ export default function onPlayerRespawn(data) {
   store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
   store.dispatch(actions.player.setIsSwitchingWeapon(false))
 
-  RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
-  RS.player.visible = true
+  window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
+  window.RS.player.visible = true
   this.game.input.enabled = true
   this.game.input.reset()
   CreateKeyboardBindings.call(this)

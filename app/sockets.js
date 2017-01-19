@@ -21,7 +21,7 @@ const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
 
 const filter = new Filter()
 
-const NetworkStats = helpers.NetworkStats
+// const NetworkStats = helpers.NetworkStats
 const sizeOf = helpers.sizeOf
 
 let rooms = {}
@@ -40,7 +40,6 @@ const events = {
   [GameConsts.EVENT.PLAYER_FULL_HEALTH]: onPlayerFullHealth,
   [GameConsts.EVENT.PLAYER_HEALING]: onPlayerHealing,
   [GameConsts.EVENT.PLAYER_RESPAWN]: onPlayerRespawn,
-  [GameConsts.EVENT.PLAYER_UPDATE_NICKNAME]: onPlayerUpdateNickname,
   [GameConsts.EVENT.PLAYER_SCORES]: onPlayerScores,
   [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom
 }
@@ -304,23 +303,6 @@ function onPlayerAdjustScore (data) {
   player.score = player.score <= 0 ? 0 : player.score
 }
 
-function onPlayerUpdateNickname (data) {
-  let nickname = data.nickname
-  var player = getPlayerById(data.roomId, this.id, rooms)
-
-  if (!player) {
-    util.log('Player not found when updating nickname: ' + this.id)
-    return
-  }
-
-  if (nickname.length > 25) {
-    nickname = nickname.substr(0, 25)
-  }
-
-  lastPlayerData[this.id].nickname = player.nickname
-  player.nickname = nickname
-}
-
 // New player has joined
 function onNewPlayer (data) {
   util.log('New player has joined: ', this.id)
@@ -369,7 +351,7 @@ function onNewPlayer (data) {
       const newRoom = createRoom({
         gamemode: data.gamemode,
         map: data.map,
-        player: newPlayer,
+        player: newPlayer
       })
 
       rooms[newRoom.id] = newRoom
@@ -463,10 +445,10 @@ function onPlayerFullHealth () {
   player.health = GameConsts.PLAYER_FULL_HEALTH
 
   Server.sendToSocket(
-        this.id,
-        GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
-        GameConsts.PLAYER_FULL_HEALTH
-    )
+    this.id,
+    GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
+    GameConsts.PLAYER_FULL_HEALTH
+  )
 }
 
 function onPlayerHealing () {
@@ -476,14 +458,15 @@ function onPlayerHealing () {
   let player = getPlayerById(roomId, this.id, rooms)
   player.health += 10
 
-  if (player.health > GameConsts.PLAYER_FULL_HEALTH)
-    {player.health = GameConsts.PLAYER_FULL_HEALTH}
+  if (player.health > GameConsts.PLAYER_FULL_HEALTH) {
+    player.health = GameConsts.PLAYER_FULL_HEALTH
+  }
 
   Server.sendToSocket(
-        this.id,
-        GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
-        player.health
-    )
+    this.id,
+    GameConsts.EVENT.PLAYER_HEALTH_UPDATE,
+    player.health
+  )
 }
 
 function onPlayerDamaged (data) {
@@ -584,20 +567,20 @@ function onPlayerDamaged (data) {
       })
 
       Server.sendToRoom(
-                roomId,
-                GameConsts.EVENT.PLAYER_KILL_LOG,
+        roomId,
+        GameConsts.EVENT.PLAYER_KILL_LOG,
         {
           deadNickname: player.nickname,
           redTeamScore: rooms[roomId].redTeamScore,
           blueTeamScore: rooms[roomId].blueTeamScore,
           players: playerScores
         }
-            )
+      )
     }
 
     const attackingDamageStats = _.get(attackingPlayer, 'damageStats.attackingPlayerId') === player.id
-            ? _.get(attackingPlayer, 'damageStats', {})
-            : {}
+      ? _.get(attackingPlayer, 'damageStats', {})
+      : {}
 
     Server.sendToRoom(
       roomId,
@@ -628,8 +611,8 @@ function onPlayerDamaged (data) {
   }
 
   Server.sendToRoom(
-        roomId,
-        GameConsts.EVENT.PLAYER_DAMAGED,
+    roomId,
+    GameConsts.EVENT.PLAYER_DAMAGED,
     {
       id: this.id,
       damagedPlayerId: data.damagedPlayerId,
@@ -638,11 +621,11 @@ function onPlayerDamaged (data) {
       damageStats: {},
       attackingDamageStats: {}
     }
-    )
+  )
 }
 
 function onBulletFired (data) {
-    // const data = bulletSchema.decode(buffer)
+  // const data = bulletSchema.decode(buffer)
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
@@ -652,14 +635,14 @@ function onBulletFired (data) {
   if (!player || player.health <= 0) return
   player.bulletsFired++
 
-    // Broadcast updated position to connected socket clients
-    // var newBuffer/*: Uint8Array*/ = bulletSchema.encode(data)
+  // Broadcast updated position to connected socket clients
+  // var newBuffer/*: Uint8Array*/ = bulletSchema.encode(data)
 
   Server.sendToRoom(
-        roomId,
-        GameConsts.EVENT.BULLET_FIRED,
-        data
-    )
+    roomId,
+    GameConsts.EVENT.BULLET_FIRED,
+    data
+  )
 }
 
 module.exports.init = init

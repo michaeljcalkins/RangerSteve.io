@@ -1,21 +1,19 @@
-import find from 'lodash/find'
-
 import PlayBloodSpray from '../PlayBloodSpray'
 import PlayRocketExplosion from '../PlayRocketExplosion'
 
-export default function() {
+export default function () {
   const state = this.game.store.getState()
 
     // Did enemy bullets hit you
-  this.game.physics.arcade.overlap(RS.player, RS.enemyBullets, (player, bullet) => {
+  this.game.physics.arcade.overlap(window.RS.player, window.RS.enemyBullets, (player, bullet) => {
     const enemy = state.room.players[bullet.data.playerId]
 
     if (
-            ! bullet.weaponId ||
-            ! window.SOCKET_ID ||
-            state.player.health <= 0 ||
-            enemy.team === RS.player.team
-        ) return
+      !bullet.weaponId ||
+      !window.SOCKET_ID ||
+      state.player.health <= 0 ||
+      enemy.team === window.RS.player.team
+    ) return
 
     bullet.kill()
 
@@ -23,13 +21,13 @@ export default function() {
       bulletY: bullet.y,
       bulletX: bullet.x,
       playerX: player.x,
-      bulletRotation: bullet.rotation,
+      bulletRotation: bullet.rotation
     })
 
     if (bullet.weaponId === 'RPG') {
       PlayRocketExplosion.call(this, {
         bulletY: bullet.y,
-        bulletX: bullet.x,
+        bulletX: bullet.x
       })
     }
   }, null, this)

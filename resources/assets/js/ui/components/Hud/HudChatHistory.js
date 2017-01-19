@@ -3,48 +3,48 @@ import React, { PureComponent, PropTypes } from 'react'
 import HudNewChatMessage from './HudNewChatMessage'
 
 export default class HudChatHistory extends PureComponent {
-  renderMessages() {
+  renderMessages () {
     const { messages, isOpen, newChatMessageCharacter } = this.props
 
-        // Array: [nickname, message]
+      // Array: [nickname, message]
     const formattedMessages = messages.map((message, index) => {
       return (
-                <li className="dont-break-out" key={ 'chat-message' + index }>
-                    <strong>{ message[0] }:</strong> { message[1] }
-                </li>
-            )
+        <li className='dont-break-out' key={'chat-message' + index}>
+          <strong>{ message[0] }:</strong> { message[1] }
+        </li>
+      )
     })
 
-    if (! isOpen) {
+    if (!isOpen) {
       formattedMessages.push((
-                <li>Press { String.fromCharCode(newChatMessageCharacter) } to chat</li>
+        <li>Press { String.fromCharCode(newChatMessageCharacter) } to chat</li>
             ))
     }
 
     return formattedMessages
   }
 
-  render() {
+  render () {
     const { isOpen, onSendMessage, onNewChatMessageBlur } = this.props
 
     return (
-            <div className="hud-chat no-pointer-events">
-                <ul className="list-unstyled">
-                    { this.renderMessages() }
-                    { isOpen &&
-                        <HudNewChatMessage
-                            onSendMessage={ onSendMessage }
-                            onBlur={ onNewChatMessageBlur }
-                        />
-                    }
-                </ul>
-            </div>
-        )
+      <div className='hud-chat no-pointer-events'>
+        <ul className='list-unstyled'>
+          { this.renderMessages() }
+          { isOpen &&
+            <HudNewChatMessage
+              onSendMessage={onSendMessage}
+              onBlur={onNewChatMessageBlur}
+            />
+          }
+        </ul>
+      </div>
+    )
   }
 }
 
 HudChatHistory.defaultProps = {
-  messages: [],
+  messages: []
 }
 
 HudChatHistory.propTypes = {
@@ -52,5 +52,5 @@ HudChatHistory.propTypes = {
   messages: PropTypes.array,
   newChatMessageCharacter: PropTypes.number,
   onSendMessage: PropTypes.func,
-  onNewChatMessageBlur: PropTypes.func,
+  onNewChatMessageBlur: PropTypes.func
 }

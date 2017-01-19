@@ -15,28 +15,28 @@ const { object } = PropTypes
 
 export default class LeaderboardModal extends PureComponent {
   static propTypes = {
-    room: object.isRequired,
+    room: object.isRequired
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     autobind(this)
   }
 
   state = {
-    elapsed: 0,
+    elapsed: 0
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.timer = setInterval(this.tick.bind(this), 100)
     Client.send(GameConsts.EVENT.PLAYER_SCORES)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     clearInterval(this.timer)
   }
 
-  tick() {
+  tick () {
     const { currentTime, roundStartTime } = this.props.room
     let timeRemaining = roundStartTime - currentTime / 1000
     let minutes = Math.floor(timeRemaining / 60)
@@ -47,10 +47,10 @@ export default class LeaderboardModal extends PureComponent {
     this.setState({ elapsed: `${seconds}` })
   }
 
-  renderPlayers() {
+  renderPlayers () {
     const { room } = this.props
 
-    if (! room.players) return null
+    if (!room.players) return null
 
     return values(room.players)
       .sort((a, b) => a.score < b.score)
@@ -59,15 +59,15 @@ export default class LeaderboardModal extends PureComponent {
         const kdRatio = deaths > 0 ? (kills / deaths) : kills
         const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
         const classes = cs({
-          'active-player': id === window.SOCKET_ID,
+          'active-player': id === window.SOCKET_ID
         })
 
         return (
           <tr
-              className={ classes }
-              key={ 'leaderboard-' + key + playerNickname }
+            className={classes}
+            key={'leaderboard-' + key + playerNickname}
           >
-            <td className="text-right">{ key + 1 }</td>
+            <td className='text-right'>{ key + 1 }</td>
             <td>{ playerNickname }</td>
             <td>{ score || 0 }</td>
             <td>{ kills || 0 }</td>
@@ -79,10 +79,10 @@ export default class LeaderboardModal extends PureComponent {
       })
   }
 
-  renderFirstPlacePlayerName() {
+  renderFirstPlacePlayerName () {
     const { room } = this.props
 
-    if (! room.players) return null
+    if (!room.players) return null
 
     const players = values(room.players)
       .sort((a, b) => a.score < b.score)
@@ -90,10 +90,10 @@ export default class LeaderboardModal extends PureComponent {
     return get(players, '[0].nickname')
   }
 
-  renderPlayerAchievement(playerMeta, award) {
-    if (! playerMeta) {
+  renderPlayerAchievement (playerMeta, award) {
+    if (!playerMeta) {
       return (
-        <div className="player-achievement">
+        <div className='player-achievement'>
           <h2>--</h2>
           <h6>{ award }</h6>
           <h4>--</h4>
@@ -105,7 +105,7 @@ export default class LeaderboardModal extends PureComponent {
     const nickname = playerMeta.nickname ? playerMeta.nickname : 'Unnamed Ranger'
 
     return (
-      <div className="player-achievement">
+      <div className='player-achievement'>
         <h2>{ score }</h2>
         <h6>{ award }</h6>
         <h4>{ nickname }</h4>
@@ -113,7 +113,7 @@ export default class LeaderboardModal extends PureComponent {
     )
   }
 
-  renderWinningPlayerOrTeam() {
+  renderWinningPlayerOrTeam () {
     const { room } = this.props
 
     const winningPhrase = room.state === 'ended'
@@ -121,43 +121,43 @@ export default class LeaderboardModal extends PureComponent {
       : 'in the lead.'
 
     switch (room.gamemode) {
-    case 'Deathmatch':
-      return (
-          <div className="winning-player">
-            <div className="player-name">{ this.renderFirstPlacePlayerName() } { winningPhrase }</div>
+      case 'Deathmatch':
+        return (
+          <div className='winning-player'>
+            <div className='player-name'>{ this.renderFirstPlacePlayerName() } { winningPhrase }</div>
           </div>
         )
 
-    case 'TeamDeathmatch':
-      const winningTeamName = room.redTeamScore > room.blueTeamScore
+      case 'TeamDeathmatch':
+        const winningTeamName = room.redTeamScore > room.blueTeamScore
           ? 'Red'
           : 'Blue'
 
-      const classes = cs('winning-player', {
-        'red-winning': room.redTeamScore > room.blueTeamScore,
-        'blue-winning': room.redTeamScore < room.blueTeamScore,
-      })
+        const classes = cs('winning-player', {
+          'red-winning': room.redTeamScore > room.blueTeamScore,
+          'blue-winning': room.redTeamScore < room.blueTeamScore
+        })
 
-      if (room.redTeamScore === room.blueTeamScore) {
-        return (
-            <div className="winning-player">
-              <div className="player-name">Teams Are Tied.</div>
+        if (room.redTeamScore === room.blueTeamScore) {
+          return (
+            <div className='winning-player'>
+              <div className='player-name'>Teams Are Tied.</div>
             </div>
           )
-      }
+        }
 
-      return (
-          <div className={ classes }>
-            <div className="player-name">{ winningTeamName } Team { winningPhrase }</div>
+        return (
+          <div className={classes}>
+            <div className='player-name'>{ winningTeamName } Team { winningPhrase }</div>
           </div>
         )
     }
   }
 
-  render() {
+  render () {
     const {
       state: { elapsed },
-      props: { room },
+      props: { room }
     } = this
 
     const playerWithBestAccuracy = getPlayerWithBestAccuracy(room)
@@ -167,25 +167,25 @@ export default class LeaderboardModal extends PureComponent {
 
     return (
       <div>
-        <div className="modal modal-leaderboard show">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h4 className="modal-title">Leaderboard</h4>
+        <div className='modal modal-leaderboard show'>
+          <div className='modal-dialog'>
+            <div className='modal-content'>
+              <div className='modal-header'>
+                <h4 className='modal-title'>Leaderboard</h4>
               </div>
-              <div className="modal-body">
-                <div className="row" style={ { marginBottom: '15px' } }>
-                  <div className="col-sm-5">
+              <div className='modal-body'>
+                <div className='row' style={{ marginBottom: '15px' }}>
+                  <div className='col-sm-5'>
                     { this.renderWinningPlayerOrTeam() }
                   </div>
-                  <div className="col-sm-7">
+                  <div className='col-sm-7'>
                     { this.renderPlayerAchievement(playerWithBestHeadshots, 'Most headshots') }
                     { this.renderPlayerAchievement(playerWithBestAccuracy, 'Most accurate') }
                     { this.renderPlayerAchievement(playerWithKillingSpree, 'Longest kill streak') }
                     { this.renderPlayerAchievement(playerWithBestKillsPerMinute, 'Best kills per minute') }
                   </div>
                 </div>
-                <table className="table table-condensed">
+                <table className='table table-condensed'>
                   <thead>
                     <tr>
                       <th />
@@ -202,8 +202,8 @@ export default class LeaderboardModal extends PureComponent {
                   </tbody>
                 </table>
                 { room.state === 'ended' &&
-                  <div className="row">
-                    <div className="col-sm-12 text-center">
+                  <div className='row'>
+                    <div className='col-sm-12 text-center'>
                       <h5>Next round starting in { elapsed } seconds...</h5>
                     </div>
                   </div>
@@ -212,7 +212,7 @@ export default class LeaderboardModal extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="modal-backdrop show" />
+        <div className='modal-backdrop show' />
       </div>
     )
   }

@@ -2,22 +2,22 @@ import GameConsts from 'lib/GameConsts'
 import { sizeOf, formatByteSize } from 'lib/helpers'
 
 const _stats = {
-  dataSent: 0,
+  dataSent: 0
 }
 
 const Client = {
-  getId(callback: Function) {
+  getId: (callback) => {
     window.socket.id(callback)
   },
 
-  getStats() {
+  getStats: () => {
     return _stats
   },
 
-  send(type: number, payload: Object) {
+  send: (type, payload) => {
     const data = {
       type,
-      payload,
+      payload
     }
 
     const sizeOfData = sizeOf(data)
@@ -27,7 +27,7 @@ const Client = {
       console.log('* LOG * Client.send', type, GameConsts.EVENTS[type], payload, formatByteSize(sizeOfData))
     }
     window.socket.write(data)
-  },
+  }
 }
 
 export default Client

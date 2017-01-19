@@ -1,8 +1,8 @@
 /**
  * Prevent our site from being iframed
  */
-export default function() {
+export default function () {
   if (window.self !== window.top) {
-    top.location = window.location // redirect the window to our website
+    window.top.location = window.location // redirect the window to our website
   }
 }

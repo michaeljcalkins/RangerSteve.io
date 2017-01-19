@@ -1,7 +1,7 @@
 import GameConsts from 'lib/GameConsts'
 
-export default function(player, angle) {
-  if (! angle) {
+export default function (player, angle) {
+  if (!angle) {
     angle = (this.game.physics.arcade.angleToPointer(player) * 180 / Math.PI) + 90
   }
 
@@ -51,7 +51,7 @@ export default function(player, angle) {
     }
 
         // User is aiming down and to the right
-    if (angle >= 81 && angle <= 91 ) {
+    if (angle >= 81 && angle <= 91) {
       leftAngle -= -5
       rightAngle -= 7
     } else if (angle > 91 && angle <= 99) {

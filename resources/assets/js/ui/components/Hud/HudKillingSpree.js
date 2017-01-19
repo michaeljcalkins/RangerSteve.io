@@ -1,7 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react'
 
 export default class HudKillingSpree extends PureComponent {
-  renderMessage() {
+  renderMessage () {
     let message = null
     const { killingSpreeCount } = this.props
 
@@ -26,19 +26,19 @@ export default class HudKillingSpree extends PureComponent {
     return message
   }
 
-  render() {
+  render () {
     return (
-            <div className="hud-killing-spree no-pointer-events">
-                { this.renderMessage() }
-            </div>
-        )
+      <div className='hud-killing-spree no-pointer-events'>
+        { this.renderMessage() }
+      </div>
+    )
   }
 }
 
 HudKillingSpree.defaultProps = {
-  killingSpreeCount: 0,
+  killingSpreeCount: 0
 }
 
 HudKillingSpree.propTypes = {
-  killingSpreeCount: PropTypes.number.isRequired,
+  killingSpreeCount: PropTypes.number.isRequired
 }

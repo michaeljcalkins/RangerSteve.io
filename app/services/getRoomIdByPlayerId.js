@@ -1,7 +1,7 @@
 'use strict'
 
-module.exports = function(playerId, rooms) {
-  if (! playerId || ! rooms) return false
+module.exports = function (playerId, rooms) {
+  if (!playerId || !rooms) return false
 
   let selectedRoomId = false
   Object.keys(rooms).forEach(roomId => {

@@ -22,27 +22,27 @@ const SPAWN_POINTS = [
     { x: 630, y: 1100 },
     { x: 600, y: 820 },
     { x: 900, y: 520 },
-    { x: 800, y: 1950 },
+    { x: 800, y: 1950 }
 ]
 
-export function getRandomSpawnPoint() {
+export function getRandomSpawnPoint () {
   return sample(SPAWN_POINTS)
 }
 
-export function getSpawnPoints() {
+export function getSpawnPoints () {
   return SPAWN_POINTS
 }
 
-export function preload() {
+export function preload () {
   this.game.load.image('background', '/maps/punk-fallout/background.png', true)
-  this.game.load.tilemap('tilemap', '/maps/punk-fallout/punk-fallout.json', null, Phaser.Tilemap.TILED_JSON);
-  this.game.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24);
+  this.game.load.tilemap('tilemap', '/maps/punk-fallout/punk-fallout.json', null, window.Phaser.Tilemap.TILED_JSON)
+  this.game.load.spritesheet('ninja-tiles24', '/images/ninja-tiles24.png', 24, 24)
 }
 
-export function createOverlays() {
+export function createOverlays () {
 }
 
-export function create() {
+export function create () {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
   this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
@@ -53,7 +53,7 @@ export function create() {
     // Create a TilemapLayer object from the collision layer of the map
   this.ground = this.map.createLayer('collision')
   this.ground.renderSettings.enableScrollDelta = false
-  if (! GameConsts.DEBUG) this.ground.alpha = 0
+  if (!GameConsts.DEBUG) this.ground.alpha = 0
 
     // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
     // preparing slope data for each of tile in the layer
@@ -65,5 +65,5 @@ export function create() {
   if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
 }
 
-export function update() {
+export function update () {
 }

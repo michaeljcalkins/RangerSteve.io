@@ -1,7 +1,7 @@
 import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from './updatePlayerAngles'
 
-export default function RemotePlayer(playerId, playerData) {
+export default function RemotePlayer (playerId, playerData) {
   const newRemotePlayer = this.game.add.sprite(playerData.x, playerData.y, 'player-placeholder')
   newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
   newRemotePlayer.alive = true
@@ -10,8 +10,8 @@ export default function RemotePlayer(playerId, playerData) {
     facing: 'right',
     lastPosition: {
       x: playerData.x,
-      y: playerData.y,
-    },
+      y: playerData.y
+    }
   }
 
   //  Physics
@@ -33,7 +33,7 @@ export default function RemotePlayer(playerId, playerData) {
   // Left jump jet
   newRemotePlayer.leftJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
   newRemotePlayer.leftJumpjet.anchor.setTo(0)
-  newRemotePlayer.leftJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
+  newRemotePlayer.leftJumpjet.animations.add('thrust', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 20, true)
   newRemotePlayer.leftJumpjet.animations.play('thrust')
   newRemotePlayer.leftJumpjet.y = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_X
   newRemotePlayer.leftJumpjet.x = GameConsts.PLAYER_BODY.LEFT_JUMP_JET_Y
@@ -43,7 +43,7 @@ export default function RemotePlayer(playerId, playerData) {
   // Right jump jet
   newRemotePlayer.rightJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
   newRemotePlayer.rightJumpjet.anchor.setTo(0)
-  newRemotePlayer.rightJumpjet.animations.add('thrust', [0,1,2,3,4,5,6,7,8,9,10,11,12], 20, true)
+  newRemotePlayer.rightJumpjet.animations.add('thrust', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 20, true)
   newRemotePlayer.rightJumpjet.animations.play('thrust')
   newRemotePlayer.rightJumpjet.y = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_X
   newRemotePlayer.rightJumpjet.x = GameConsts.PLAYER_BODY.RIGHT_JUMP_JET_Y
@@ -56,14 +56,14 @@ export default function RemotePlayer(playerId, playerData) {
   newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_RIGHT_FRAME
 
   //  Our two animations, walking left and right.
-  newRemotePlayer.playerSprite.animations.add('runRight-faceRight', [0,1,2,3,4,5], GameConsts.ANIMATION_FRAMERATE, true)
-  newRemotePlayer.playerSprite.animations.add('runLeft-faceLeft', [7,8,9,10,11,12], GameConsts.ANIMATION_FRAMERATE, true)
-  newRemotePlayer.playerSprite.animations.add('runRight-faceLeft', [14,15,16,17,18,19], GameConsts.ANIMATION_FRAMERATE, true)
-  newRemotePlayer.playerSprite.animations.add('runLeft-faceRight', [21,22,23,24,25,26], GameConsts.ANIMATION_FRAMERATE, true)
+  newRemotePlayer.playerSprite.animations.add('runRight-faceRight', [0, 1, 2, 3, 4, 5], GameConsts.ANIMATION_FRAMERATE, true)
+  newRemotePlayer.playerSprite.animations.add('runLeft-faceLeft', [7, 8, 9, 10, 11, 12], GameConsts.ANIMATION_FRAMERATE, true)
+  newRemotePlayer.playerSprite.animations.add('runRight-faceLeft', [14, 15, 16, 17, 18, 19], GameConsts.ANIMATION_FRAMERATE, true)
+  newRemotePlayer.playerSprite.animations.add('runLeft-faceRight', [21, 22, 23, 24, 25, 26], GameConsts.ANIMATION_FRAMERATE, true)
 
   // Left arm
   newRemotePlayer.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
-  newRemotePlayer.leftArmSprite.anchor.setTo(0.8, .2)
+  newRemotePlayer.leftArmSprite.anchor.setTo(0.8, 0.2)
   newRemotePlayer.leftArmSprite.rotation = 83
   newRemotePlayer.leftArmSprite.scale.y *= -1
   newRemotePlayer.leftArmGroup.add(newRemotePlayer.leftArmSprite)

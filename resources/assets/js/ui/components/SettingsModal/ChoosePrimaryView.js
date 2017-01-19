@@ -6,74 +6,74 @@ import GameConsts from 'lib/GameConsts'
 import WeaponStats from './WeaponStats'
 import actions from 'actions'
 
-export function ChoosePrimaryMenu({
+export function ChoosePrimaryMenu ({
     onSettingsViewChange,
     onPrimaryGunClick,
     onCloseSettingsModal,
-    player,
+    player
 }) {
-  function handleSelectPrimaryClick(weapon) {
-    mixpanel.track('primaryWeapon:selected:' + weapon.id)
+  function handleSelectPrimaryClick (weapon) {
+    window.mixpanel.track('primaryWeapon:selected:' + weapon.id)
     onPrimaryGunClick(weapon)
     player.health <= 0
             ? onCloseSettingsModal()
             : onSettingsViewChange('main')
   }
 
-  function renderWeapons() {
-    return GameConsts.PRIMARY_WEAPON_IDS.map(function(weaponId) {
+  function renderWeapons () {
+    return GameConsts.PRIMARY_WEAPON_IDS.map(function (weaponId) {
       const weapon = GameConsts.WEAPONS[weaponId]
 
       return (
-                <div
-                    className="option-group align-middle"
-                    key={ 'primary' + weaponId }
-                    onClick={ handleSelectPrimaryClick.bind(this, weapon) }
+        <div
+          className='option-group align-middle'
+          key={'primary' + weaponId}
+          onClick={handleSelectPrimaryClick.bind(this, weapon)}
                 >
-                    <div>
-                        <img src={ '/images/guns/large/' + weapon.image } />
-                    </div>
-                    <span className="option-name">{ weapon.name }</span>
-                    <WeaponStats weapon={ weapon } />
-                </div>
-            )
+          <div>
+            <img src={'/images/guns/large/' + weapon.image} />
+          </div>
+          <span className='option-name'>{ weapon.name }</span>
+          <WeaponStats weapon={weapon} />
+        </div>
+      )
     })
   }
 
   return (
-        <div>
-            <div className="row">
-                <div className="col-sm-12">
-                    <label>Choose Your Primary Weapon</label>
-                    <em className="pull-right">(Changes take effect when you respawn)</em>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-sm-12">
-                    <div className="options-menu">
-                        { renderWeapons() }
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-sm-12">
-                    <em>Fire rate calculated in rounds per second.</em>
-                </div>
-            </div>
+    <div>
+      <div className='row'>
+        <div className='col-sm-12'>
+          <label>Choose Your Primary Weapon</label>
+          <em className='pull-right'>(Changes take effect when you respawn)</em>
         </div>
-    )
+      </div>
+      <div className='row'>
+        <div className='col-sm-12'>
+          <div className='options-menu'>
+            { renderWeapons() }
+          </div>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-sm-12'>
+          <em>Fire rate calculated in rounds per second.</em>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 ChoosePrimaryMenu.propTypes = {
   onCloseSettingsModal: PropTypes.func.isRequired,
   onPrimaryGunClick: PropTypes.func.isRequired,
   onSettingsViewChange: PropTypes.func.isRequired,
-  player: PropTypes.object,
+  player: PropTypes.object
 }
 
 const mapStateToProps = (state) => {
   return {
-    player: state.player,
+    player: state.player
   }
 }
 
@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch) => {
 
   return {
     onCloseSettingsModal: gameActions.closeSettingsModal,
-    onSettingsViewChange: gameActions.setSettingsModalView,
+    onSettingsViewChange: gameActions.setSettingsModalView
   }
 }
 

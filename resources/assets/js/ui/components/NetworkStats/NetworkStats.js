@@ -1,10 +1,10 @@
 import React from 'react'
 
-export default function({
+export default function ({
   stats
 }) {
   return (
-    <div className="hud-network-stats no-pointer-events">
+    <div className='hud-network-stats no-pointer-events'>
       <table>
         <tr>
           <td>Data Sent:</td>

@@ -49,7 +49,7 @@ export default function () {
       const dataSent = Client.getStats().dataSent
       const data = NetworkStats.getDataPerSecond(dataSent, dataReceived)
 
-      window.RS.networkStats = {
+      window.window.RS.networkStats = {
         dataSent: formatByteSize(dataSent),
         dataReceived: formatByteSize(dataReceived),
         dataSentPerSecond: formatByteSize(data.dataSentPerSecond),

@@ -8,7 +8,7 @@ import createNewPlayersThatDontExist from '../createNewPlayersThatDontExist'
 import PlayerById from '../PlayerById'
 import updatePlayerColor from '../updatePlayerColor'
 
-function isNotMoving(player) {
+function isNotMoving (player) {
   return player.x === player.data.lastPosition.x && player.y === player.data.lastPosition.y
 }
 
@@ -17,35 +17,35 @@ const isNotFlying = player => player.data.flying === false
 const isFacingRight = player => player.data.facing === 'right'
 const isFacingLeft = player => player.data.facing === 'left'
 
-function isNotMovingAndFacingRight(player) {
+function isNotMovingAndFacingRight (player) {
   return (isFlying(player) && isFacingRight(player)) ||
     (isNotMoving(player) && isFacingRight(player))
 }
 
-function isNotMovingAndFacingLeft(player) {
+function isNotMovingAndFacingLeft (player) {
   return (isFlying(player) && isFacingLeft(player)) ||
     (isNotMoving(player) && isFacingLeft(player))
 }
 
-function isRunningRightAndFacingRight(player) {
+function isRunningRightAndFacingRight (player) {
   return player.x > player.data.lastPosition.x &&
     isFacingRight(player) &&
     isNotFlying(player)
 }
 
-function isRunningLeftAndFacingLeft(player) {
+function isRunningLeftAndFacingLeft (player) {
   return player.x < player.data.lastPosition.x &&
     isFacingLeft(player) &&
     isNotFlying(player)
 }
 
-function isRunningLeftAndFacingRight(player) {
+function isRunningLeftAndFacingRight (player) {
   return player.x < player.data.lastPosition.x &&
     isFacingRight(player) &&
     isNotFlying(player)
 }
 
-function isRunningRightAndFacingLeft(player) {
+function isRunningRightAndFacingLeft (player) {
   return player.x > player.data.lastPosition.x &&
     isFacingLeft(player) &&
     isNotFlying(player)
@@ -55,7 +55,7 @@ const lastPlayerHealth = {}
 const lastPlayerNickname = {}
 const nextPlayerTween = {}
 
-export default function onGameLoop(data) {
+export default function onGameLoop (data) {
   const store = this.game.store
   const room = store.getState().room
   if (data.currentTime) {
@@ -72,7 +72,7 @@ export default function onGameLoop(data) {
 
   if (
     includes(['Boot', 'Preloader'], this.game.state.current) ||
-    ! RS.enemies
+    !window.RS.enemies
   ) return
 
   // Players should only be allowed to move when the room state is active
@@ -109,12 +109,12 @@ export default function onGameLoop(data) {
     /**
      * 3. if player is not found create them and continue
      */
-    if (! player) {
+    if (!player) {
       player = createNewPlayersThatDontExist.call(this, room, playerId, playerData)
     }
 
     // Stop updating players if the round is over
-    if (! player) return console.error('Player not found or created.')
+    if (!player) return console.error('Player not found or created.')
 
     /**
      * 4. Update player data
@@ -147,7 +147,7 @@ export default function onGameLoop(data) {
 
     if (
       (player.data.health > 0 && nextPlayerTween[playerId] < room.currentTime) ||
-      (player.data.health > 0 && ! nextPlayerTween[playerId])
+      (player.data.health > 0 && !nextPlayerTween[playerId])
     ) {
       // Show players when they are alive and have not respawned recently.
       player.visible = true
@@ -184,22 +184,17 @@ export default function onGameLoop(data) {
       // Standing still or flying and facing right
       player.playerSprite.animations.stop()
       player.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
-    }
-    else if (isNotMovingAndFacingLeft(player)) {
+    } else if (isNotMovingAndFacingLeft(player)) {
       // Standing still or flying and facing left
       player.playerSprite.animations.stop()
       player.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
-    }
-    else if (isRunningRightAndFacingRight(player)) {
+    } else if (isRunningRightAndFacingRight(player)) {
       player.playerSprite.animations.play('runRight-faceRight')
-    }
-    else if (isRunningLeftAndFacingLeft(player)) {
+    } else if (isRunningLeftAndFacingLeft(player)) {
       player.playerSprite.animations.play('runLeft-faceLeft')
-    }
-    else if (isRunningLeftAndFacingRight(player)) {
+    } else if (isRunningLeftAndFacingRight(player)) {
       player.playerSprite.animations.play('runLeft-faceRight')
-    }
-    else if (isRunningRightAndFacingLeft(player)) {
+    } else if (isRunningRightAndFacingLeft(player)) {
       player.playerSprite.animations.play('runRight-faceLeft')
     }
 
@@ -214,7 +209,7 @@ export default function onGameLoop(data) {
   Object.keys(data.players).forEach(playerId => {
     room.players[playerId] = {
       ...room.players[playerId],
-      ...roomData[playerId],
+      ...roomData[playerId]
     }
   })
 

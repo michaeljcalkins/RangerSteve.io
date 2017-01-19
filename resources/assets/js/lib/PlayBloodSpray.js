@@ -1,4 +1,4 @@
-export default function(data) {
+export default function (data) {
   let bloodY = data.bulletY
   let bloodX = data.playerX
   const bloodRotation = data.bulletRotation
@@ -9,8 +9,8 @@ export default function(data) {
     bloodX -= 10
     bloodY += 25
   }
-  const bloodSpray = RS.bloodSprays.getFirstExists(false)
-  if (! bloodSpray) return console.error('No blood sprite available.')
+  const bloodSpray = window.RS.bloodSprays.getFirstExists(false)
+  if (!bloodSpray) return console.error('No blood sprite available.')
 
   bloodSpray.reset(bloodX, bloodY)
   bloodSpray.rotation = bloodRotation

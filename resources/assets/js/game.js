@@ -4,12 +4,12 @@ import Preloader from './states/Preloader'
 import Deathmatch from './states/Deathmatch'
 import TeamDeathmatch from './states/TeamDeathmatch'
 
-export default function(store) {
+export default function (store) {
   const useWebgl = storage.get('useWebgl', true)
-  let renderer = Phaser.AUTO
-  if (! useWebgl) renderer = Phaser.CANVAS
+  let renderer = window.Phaser.AUTO
+  if (!useWebgl) renderer = window.Phaser.CANVAS
 
-  const game = new Phaser.Game('100%', '100%', renderer, 'game')
+  const game = new window.Phaser.Game('100%', '100%', renderer, 'game')
   game.store = store
 
   game.forceSingleUpdate = false
@@ -18,19 +18,20 @@ export default function(store) {
     Boot,
     Preloader,
     Deathmatch,
-    TeamDeathmatch,
+    TeamDeathmatch
   }
 
-  game.state.add('Boot', RS.Boot)
-  game.state.add('Preloader', RS.Preloader)
-  game.state.add('Deathmatch', RS.Deathmatch)
-  game.state.add('TeamDeathmatch', RS.TeamDeathmatch)
+  game.state.add('Boot', window.RS.Boot)
+  game.state.add('Preloader', window.RS.Preloader)
+  game.state.add('Deathmatch', window.RS.Deathmatch)
+  game.state.add('TeamDeathmatch', window.RS.TeamDeathmatch)
 
   game.state.start('Boot')
 
-  // Make sure this game instance isn't exposed to clients via Phaser.GAMES
-  Phaser.GAMES[0] = null
+  // Make sure this game instance isn't exposed to clients via window.Phaser.GAMES
+  window.Phaser.GAMES[0] = null
 
-  // force unpausing the game after 1 second to prevent loading screen freeze bug
-  setTimeout(() => game.paused = false, 1000)
+  // Force unpausing the game after 1 second to prevent loading screen freeze bug
+  // Wrap the arrow function to prevent returning an assignment
+  setTimeout(() => { game.paused = false }, 1000)
 }

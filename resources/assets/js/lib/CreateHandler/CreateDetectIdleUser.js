@@ -5,7 +5,7 @@ const playerIsIdle = debounce(() => {
   document.location.href = '/'
 }, GameConsts.MAX_IDLE_SECONDS * 1000)
 
-export default function() {
+export default function () {
   window.onload = playerIsIdle
   document.onmousemove = playerIsIdle
   document.onkeypress = playerIsIdle

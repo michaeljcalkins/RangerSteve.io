@@ -3,13 +3,13 @@
  */
 import GameConsts from 'lib/GameConsts'
 
-function Preloader(game) {
+function Preloader (game) {
   this.game = game
 }
 
 Preloader.prototype = {
 
-  preload: function() {
+  preload: function () {
     this.game.load.image('ground', '/images/platform.png')
     this.game.load.image('bullet', '/images/bullet.png')
     this.game.load.image('left-arm', '/images/body/left-arm.png')
@@ -21,9 +21,9 @@ Preloader.prototype = {
     this.game.load.spritesheet('player', '/sprites/player.png', 62, 62)
     this.game.load.spritesheet('right-arm-and-weapons', '/sprites/right-arm-and-weapons.png', 138, 30)
 
-    this.game.load.atlas('rpgExplosion', '/sprites/rpgExplosion.png', '/sprites/rpgExplosion.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH)
-    this.game.load.atlas('ricochet', '/sprites/ricochet.png', '/sprites/ricochet.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH)
-    this.game.load.atlas('player-death', '/sprites/player-death.png', '/sprites/player-death.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH)
+    this.game.load.atlas('rpgExplosion', '/sprites/rpgExplosion.png', '/sprites/rpgExplosion.json', window.Phaser.Loader.TEXTURE_ATLAS_JSON_HASH)
+    this.game.load.atlas('ricochet', '/sprites/ricochet.png', '/sprites/ricochet.json', window.Phaser.Loader.TEXTURE_ATLAS_JSON_HASH)
+    this.game.load.atlas('player-death', '/sprites/player-death.png', '/sprites/player-death.json', window.Phaser.Loader.TEXTURE_ATLAS_JSON_HASH)
 
     this.game.load.audio('jumpjet', '/audio/jumpjet.mp3')
     this.game.load.audio('switching-weapons', '/audio/switching-weapons.mp3')
@@ -50,23 +50,23 @@ Preloader.prototype = {
     this.game.load.audio('headshot', '/audio/headshot.mp3')
   },
 
-  create: function() {
+  create: function () {
     const state = this.game.store.getState()
 
     // Enables advanced profiling features when debugging
     this.game.time.advancedTiming = true
 
     // Start up Arcade Physics
-    this.game.physics.startSystem(Phaser.Physics.ARCADE)
-    this.game.plugins.add(Phaser.Plugin.ArcadeSlopes)
+    this.game.physics.startSystem(window.Phaser.Physics.ARCADE)
+    this.game.plugins.add(window.Phaser.Plugin.ArcadeSlopes)
     this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
-    RS.jumpjetFx = this.game.add.audio('jumpjet')
-    RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
-    RS.headshotSound = this.game.add.audio('headshot')
+    window.RS.jumpjetFx = this.game.add.audio('jumpjet')
+    window.RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
+    window.RS.headshotSound = this.game.add.audio('headshot')
 
     this.game.state.start(state.room.gamemode)
-  },
+  }
 
 }
 

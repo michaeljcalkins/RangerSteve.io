@@ -5,7 +5,7 @@ import * as game from './game'
 const actions = {
   player,
   room,
-  game,
+  game
 }
 
 export default actions
