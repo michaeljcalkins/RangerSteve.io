@@ -2,6 +2,8 @@
 
 const fs = require('fs')
 const moment = require('moment')
+const hri = require('human-readable-ids').hri
+
 const GameConsts = require('../../lib/GameConsts')
 const Server = require('../Server')
 
@@ -31,7 +33,8 @@ let MainController = {
   createARoom: function (req, res) {
     res.render('create-a-room', {
       gamemodes: GameConsts.GAMEMODES,
-      maps: GameConsts.MAPS
+      maps: GameConsts.MAPS,
+      randomRoomName: hri.random().replace(/[^a-zA-Z0-9 -]/g, '')
     })
   },
 
