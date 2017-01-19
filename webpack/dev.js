@@ -2,7 +2,7 @@ const webpackMerge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeJsPlugin = require('optimize-js-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const commonConfig = require('./base.js')
 

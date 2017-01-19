@@ -58,7 +58,7 @@ export default function PlayerSpriteHandler () {
   window.RS.player.leftJumpjet.visible = false
   window.RS.player.addChild(window.RS.player.leftJumpjet)
 
-    // Right jump jet
+  // Right jump jet
   window.RS.player.rightJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
   window.RS.player.rightJumpjet.anchor.setTo(0)
   window.RS.player.rightJumpjet.animations.add('thrust', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 20, true)
@@ -68,11 +68,11 @@ export default function PlayerSpriteHandler () {
   window.RS.player.rightJumpjet.visible = false
   window.RS.player.addChild(window.RS.player.rightJumpjet)
 
-    // Player sprite
+  // Player sprite
   window.RS.player.playerSprite = this.game.add.sprite(0, 0, 'player')
   window.RS.player.playerSprite.anchor.setTo(0.5)
 
-    //  Our two animations, walking left and right.
+  //  Our two animations, walking left and right.
   window.RS.player.playerSprite.animations.add('runRight-faceRight', [0, 1, 2, 3, 4, 5], GameConsts.ANIMATION_FRAMERATE, true)
   window.RS.player.playerSprite.animations.add('runLeft-faceLeft', [7, 8, 9, 10, 11, 12], GameConsts.ANIMATION_FRAMERATE, true)
   window.RS.player.playerSprite.animations.add('runRight-faceLeft', [14, 15, 16, 17, 18, 19], GameConsts.ANIMATION_FRAMERATE, true)
@@ -82,24 +82,24 @@ export default function PlayerSpriteHandler () {
   this.game.store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[primaryWeaponId]))
   this.game.store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[secondaryWeaponId]))
 
-    // Left arm
+  // Left arm
   window.RS.player.leftArmGroup = this.game.add.group()
   window.RS.player.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
   window.RS.player.leftArmSprite.anchor.setTo(0.8, 0.2)
   window.RS.player.leftArmSprite.rotation = 83
   window.RS.player.leftArmGroup.add(window.RS.player.leftArmSprite)
 
-    // Add left arm to player as child then offset it
+  // Add left arm to player as child then offset it
   window.RS.player.addChild(window.RS.player.leftArmGroup)
   window.RS.player.leftArmGroup.pivot.x = 0
   window.RS.player.leftArmGroup.pivot.y = 0
   window.RS.player.leftArmGroup.x = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_X
   window.RS.player.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
 
-    // So that the left arm is behind the player
+  // So that the left arm is behind the player
   window.RS.player.addChild(window.RS.player.playerSprite)
 
-    // Right arm
+  // Right arm
   window.RS.player.rightArmGroup = this.game.add.group()
   window.RS.player.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
   window.RS.player.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
@@ -107,7 +107,7 @@ export default function PlayerSpriteHandler () {
   window.RS.player.rightArmSprite.rotation = 83.4
   window.RS.player.rightArmGroup.add(window.RS.player.rightArmSprite)
 
-    // Add right arm to player as child then offset it
+  // Add right arm to player as child then offset it
   window.RS.player.addChild(window.RS.player.rightArmGroup)
   window.RS.player.rightArmGroup.pivot.x = 0
   window.RS.player.rightArmGroup.pivot.y = 0
