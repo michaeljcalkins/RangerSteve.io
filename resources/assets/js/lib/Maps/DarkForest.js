@@ -3,8 +3,8 @@ import sample from 'lodash/sample'
 import GameConsts from 'lib/GameConsts'
 import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 
-const WORLD_WIDTH = 3500
-const WORLD_HEIGHT = 1500
+const WORLD_WIDTH = 3488
+const WORLD_HEIGHT = 1696
 
 const SPAWN_POINTS = [
   { x: 93, y: 176 },
