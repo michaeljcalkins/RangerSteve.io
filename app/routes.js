@@ -9,7 +9,7 @@ var auth = basicAuth('admin', '!rs(;;)')
 
 router.get('/', MainController.home)
 router.get('/buy', MainController.buy)
-router.get('/leaderboards', MainController.leaderboard)
+router.get('/leaderboards', MainController.leaderboards)
 router.get('/battle-stats/:username', MainController.battleStats)
 router.get('/game', MainController.game)
 router.get('/how-to-play', MainController.howToPlay)

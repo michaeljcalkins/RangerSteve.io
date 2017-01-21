@@ -92,6 +92,9 @@
           {% endif %}
 
           <div class="text-center">
+            <a class="btn btn-warning" href="/leaderboards">
+              Leaderboards
+            </a>
             <a class="btn btn-primary" href="/create-a-room">
               Create a Room
             </a>

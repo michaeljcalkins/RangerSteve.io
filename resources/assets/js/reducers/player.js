@@ -2,6 +2,7 @@ import storage from 'store'
 import NameGenerator from '../lib/NameGenerator'
 
 const initialState = {
+  canRespawnTimestamp: null,
   currentWeapon: 'primaryWeapon',
   damageStats: {},
   facing: 'right',
@@ -16,18 +17,24 @@ const initialState = {
   nickname: storage.get('nickname', NameGenerator()),
   primaryAmmoRemaining: 0,
   primaryWeapon: null,
-  canRespawnTimestamp: null,
   score: 0,
   secondaryAmmoRemaining: 0,
   secondaryWeapon: null,
   selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
-  selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle')
+  selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
+  uid: null,
 }
 
 storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_PLAYER':
+      return {
+        ...state,
+        ...action.value
+      }
+
     case 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID':
       return {
         ...state,

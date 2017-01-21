@@ -10,14 +10,15 @@ const Server = require('./Server')
 
 const GameConsts = require('../lib/GameConsts')
 const helpers = require('../lib/helpers')
-const createPlayer = require('./services/createPlayer')
-const getPlayerById = require('./services/getPlayerById')
-const getTeam = require('./services/getTeam')
-const createRoom = require('./services/createRoom')
-const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
+const createPlayer = require('../lib/createPlayer')
+const getPlayerById = require('../lib/getPlayerById')
+const getTeam = require('../lib/getTeam')
+const createRoom = require('../lib/createRoom')
+const getRoomIdByPlayerId = require('../lib/getRoomIdByPlayerId')
 // const bulletSchema = require('../lib/schemas/bulletSchema')
 // const playerIdSchema = require('../lib/schemas/playerIdSchema')
 const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
+const savePlayerScoresToFirebase = require('../lib/savePlayerScoresToFirebase')
 
 const filter = new Filter()
 
@@ -166,6 +167,7 @@ setInterval(function () {
       util.log('Round has ended for', roomId)
       rooms[roomId].state = 'ended'
       rooms[roomId].roundStartTime = moment().add(GameConsts.END_OF_ROUND_BREAK_SECONDS, 'seconds').unix()
+      savePlayerScoresToFirebase(rooms[roomId])
       return
     }
 
@@ -315,6 +317,7 @@ function onNewPlayer (data) {
   var newPlayer = createPlayer(this.id, data.x, data.y)
   newPlayer.weaponId = data.weaponId
   newPlayer.nickname = data.nickname
+  newPlayer.uid = data.uid
 
   let roomIdPlayerWillJoin = null
 

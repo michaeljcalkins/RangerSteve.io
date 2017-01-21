@@ -1,4 +1,6 @@
 import storage from 'store'
+
+import actions from './actions'
 import Boot from './states/Boot'
 import Preloader from './states/Preloader'
 import Deathmatch from './states/Deathmatch'
@@ -26,7 +28,16 @@ export default function (store) {
   game.state.add('Deathmatch', window.RS.Deathmatch)
   game.state.add('TeamDeathmatch', window.RS.TeamDeathmatch)
 
-  game.state.start('Boot')
+  // Check if the user is signed in
+  window.firebase.auth().onAuthStateChanged(function (auth) {
+    if (auth) {
+      store.dispatch(actions.player.setPlayer({
+        uid: auth.uid,
+      }))
+    }
+
+    game.state.start('Boot')
+  })
 
   // Make sure this game instance isn't exposed to clients via window.Phaser.GAMES
   window.Phaser.GAMES[0] = null
