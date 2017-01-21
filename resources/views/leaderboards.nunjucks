@@ -101,7 +101,7 @@
       $('table')
         .find('tbody')
         .append('<tr>' +
-          '<td>' + playerScore.name + '</td>' +
+          '<td><a href="/battle-stats/' + playerScore.name + '">' + playerScore.name + '</a></td>' +
           '<td>' + playerScore.kills + '</td>' +
           '<td>' + playerScore.deaths + '</td>' +
           '<td>' + playerScore.bestKillingSpree + '</td>' +

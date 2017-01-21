@@ -28,15 +28,20 @@
             </div>
             <div class="col-sm-6">
               <button
-                class="btn btn-success btn-lg btn-block"
+                class="btn btn-success btn-lg btn-block mb3"
                 id="play-button"
                 type="submit"
               >
                 Play Now
               </button>
-              <br />
               <a
-                class="btn btn-primary btn-lg btn-block"
+                class="btn btn-primary btn-lg btn-block mb3"
+                href="/leaderboards"
+              >
+                Leaderboards
+              </a>
+              <a
+                class="btn btn-primary btn-lg btn-block mb3"
                 href="/how-to-play"
               >
                 How To Play
@@ -91,13 +96,15 @@
             <br />
           {% endif %}
 
-          <div class="text-center">
-            <a class="btn btn-warning" href="/leaderboards">
-              Leaderboards
-            </a>
-            <a class="btn btn-primary" href="/create-a-room">
-              Create a Room
-            </a>
+          <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+              <a
+                class="btn btn-primary btn-block"
+                href="/create-a-room"
+              >
+                Create a Room
+              </a>
+            </div>
           </div>
         </fieldset>
 
@@ -134,7 +141,7 @@
           </div>
 
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-8">
               <div class="form-group">
                 <input
                   id="username"
@@ -147,25 +154,28 @@
                 />
               </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
               <button class="btn btn-primary btn-block" onClick="claimUsername(writeUserData)">
                 Claim Name
               </button>
             </div>
-            <div class="col-sm-3">
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <button
+                class="btn btn-primary btn-block"
+                onClick="goToBattleStats()"
+              >
+                My Battle Stats
+              </button>
+            </div>
+            <div class="col-sm-4 col-sm-offset-4">
               <button class="btn btn-warning btn-block" onClick="logoutUser()">
                 Logout
               </button>
             </div>
           </div>
-
-          {#<div class="row">#}
-            {#<div class="col-sm-12">#}
-              {#<a class="btn btn-primary btn-sm" onClick="goToBattleStats()">#}
-                {#Battle Stats#}
-              {#</a>#}
-            {#</div>#}
-          {#</div>#}
         </fieldset>
 
       <fieldset style="margin-bottom: 0; padding-bottom: 0;">
@@ -180,10 +190,10 @@
               </div>
 
               <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-8">
                   <input type="email" placeholder="Enter your email address" value="" name="EMAIL" class="required email form-control" required id="mce-EMAIL">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                   <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-block btn-primary" style="height: auto;">
                 </div>
               </div>

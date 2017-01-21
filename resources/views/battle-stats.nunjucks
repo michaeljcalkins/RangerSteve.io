@@ -14,7 +14,7 @@
     </div>
 
     <div class="home-content" style="width: 800px;">
-      <div class="well">
+      <div class="well tcw">
         <div class="row text-center">
           <div class="col-sm-4">
             <div className="player-achievement">
