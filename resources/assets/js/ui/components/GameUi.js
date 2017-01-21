@@ -150,7 +150,11 @@ export default class GameUi extends Component {
         }
         <HudHealth health={player.health} />
         <HudJetpack fuelRemaining={fuelRemaining} />
-        <HudAmmo ammo={ammoRemaining} isReloading={isWeaponReloading} />
+        <HudAmmo
+          ammo={ammoRemaining}
+          isReloading={isWeaponReloading}
+          isSwitching={player.isSwitchingWeapon}
+        />
         <HudChangeWeaponsButton onButtonClick={this.handleChangeWeaponsButton} />
         <HudSettingsButton onButtonClick={this.handleOpenSettingsButton} />
         <HudLeaderboard room={room} />
