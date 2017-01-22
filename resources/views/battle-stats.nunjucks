@@ -59,7 +59,7 @@
                       <div class="col-xs-3">
                         <div className="player-achievement">
                           <h4>Win Percentage</h4>
-                          <h2 class="fwbold">${ playerScore.winPercentage }</h2>
+                          <h2 class="fwbold">${ playerScore.winPercentage }%</h2>
                         </div>
                       </div>
                     </div>
@@ -74,7 +74,7 @@
                   <div class="col-xs-3">
                     <div className="player-achievement">
                       <h4>Accuracy</h4>
-                      <h4 class="fwbold">${ playerScore.accuracy }</h4>
+                      <h4 class="fwbold">${ playerScore.accuracy }%</h4>
                     </div>
                   </div>
                   <div class="col-xs-3">
@@ -139,8 +139,21 @@
     el: '#battle-stats-container',
     delimiters: ['${', '}'],
     data: {
-      leaderboards: {},
-      playerScore: {},
+      playerScore: {
+        kdr: 0,
+        accuracy: 0,
+        killsPerMinute: 0,
+        scorePerMinute: 0,
+        winPercentage: 0,
+        kills: 0,
+        deaths: 0,
+        bestKillingSpree: 0,
+        damageInflicted: 0,
+        headshots: 0,
+        bulletsHit: 0,
+        bulletsFired: 0,
+        timesHit: 0,
+      },
       uid: {},
     },
     beforeMount: function() {
@@ -161,40 +174,39 @@
         var ref = firebase.database()
           .ref('leaderboards/' + self.uid)
           .once('value', function(snapshot) {
-            self.leaderboards = snapshot.val()
+            const leaderboards = snapshot.val()
 
-            self.playerScore.kdr = _.get(self, 'leaderboards.deaths', 0) > 0
-              ? self.leaderboards.kills / self.leaderboards.deaths
-              : _.get(self, 'leaderboards.kills', 0)
+            self.playerScore.kdr = _.get(leaderboards, 'kills', 0) > 0 && _.get(leaderboards, 'deaths', 0) > 0
+              ? (leaderboards.kills / leaderboards.deaths).toFixed(1)
+              : _.get(leaderboards, 'kills', 0)
 
-            self.playerScore.accuracy = _.get(self, 'leaderboards.bulletsFired', 0) > 0
-              ? (self.leaderboards.bulletsHit / self.leaderboards.bulletsFired).toFixed(1)
-              : _.get(self, 'leaderboards.bulletsHit', 0)
+            self.playerScore.accuracy = _.get(leaderboards, 'bulletsFired', 0) > 0
+              ? (leaderboards.bulletsHit / leaderboards.bulletsFired * 100).toFixed(1)
+              : 0
 
-            var minutesInRound = _.get(self, 'leaderboards.secondsInRound', 0) / 60
+            var minutesInRound = _.get(leaderboards, 'secondsInRound', 0) / 60
             self.playerScore.killsPerMinute = minutesInRound > 0
-              ? (_.get(self, 'leaderboards.kills', 0) / minutesInRound).toFixed(1)
+              ? (_.get(leaderboards, 'kills', 0) / minutesInRound).toFixed(1)
               : 0
             self.playerScore.scorePerMinute = minutesInRound > 0
-              ? (_.get(self, 'leaderboards.score', 0) / minutesInRound).toFixed(1)
+              ? (_.get(leaderboards, 'score', 0) / minutesInRound).toFixed(1)
               : 0
 
-            var roundsWon = _.get(self, 'leaderboards.roundsWon', 0)
-            var roundsLost = _.get(self, 'leaderboards.roundsLost', 0)
+            var roundsWon = _.get(leaderboards, 'roundsWon', 0)
+            var roundsLost = _.get(leaderboards, 'roundsLost', 0)
             var totalRounds = roundsWon + roundsLost
             self.playerScore.winPercentage = totalRounds > 0
-              ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0) + '%'
-              : '0%'
+              ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0)
+              : 0
 
-            self.playerScore.kills = _.get(self, 'leaderboards.kills', 0)
-            self.playerScore.deaths = _.get(self, 'leaderboards.deaths', 0)
-            self.playerScore.bestKillingSpree = _.get(self, 'leaderboards.bestKillingSpree', 0)
-            self.playerScore.damageInflicted = _.get(self, 'leaderboards.damageInflicted', 0)
-            self.playerScore.headshots = _.get(self, 'leaderboards.headshots', 0)
-            self.playerScore.bulletsHit = _.get(self, 'leaderboards.bulletsHit', 0)
-            self.playerScore.bulletsFired = _.get(self, 'leaderboards.bulletsFired', 0)
-            self.playerScore.timesHit = _.get(self, 'leaderboards.timesHit', 0)
-            self.$forceUpdate()
+            self.playerScore.kills = _.get(leaderboards, 'kills', 0)
+            self.playerScore.deaths = _.get(leaderboards, 'deaths', 0)
+            self.playerScore.bestKillingSpree = _.get(leaderboards, 'bestKillingSpree', 0)
+            self.playerScore.damageInflicted = _.get(leaderboards, 'damageInflicted', 0)
+            self.playerScore.headshots = _.get(leaderboards, 'headshots', 0)
+            self.playerScore.bulletsHit = _.get(leaderboards, 'bulletsHit', 0)
+            self.playerScore.bulletsFired = _.get(leaderboards, 'bulletsFired', 0)
+            self.playerScore.timesHit = _.get(leaderboards, 'timesHit', 0)
           })
       }
     }
