@@ -5,7 +5,7 @@
 {% block content %}
 <span id="beta-label">Beta</span>
 
-<section class="main-section">
+<section class="main-section" id="battle-stats-container" v-cloak>
   <div class="col-xs-12">
     <div class="text-center">
       <span class="main-header">
@@ -41,25 +41,25 @@
                       <div class="col-xs-3">
                         <div className="player-achievement">
                           <h4>KDR</h4>
-                          <h2 class="fwbold" id="stat-kdr">&nbsp;</h2>
+                          <h2 class="fwbold">${ playerScore.kdr }</h2>
                         </div>
                       </div>
                       <div class="col-xs-3">
                         <div className="player-achievement">
                           <h4>Score / Min</h4>
-                          <h2 class="fwbold" id="stat-score-per-minute">&nbsp;</h2>
+                          <h2 class="fwbold">${ playerScore.scorePerMinute }</h2>
                         </div>
                       </div>
                       <div class="col-xs-3">
                         <div className="player-achievement">
                           <h4>Kills / Min</h4>
-                          <h2 class="fwbold" id="stat-kills-per-minute">&nbsp;</h2>
+                          <h2 class="fwbold">${ playerScore.killsPerMinute }</h2>
                         </div>
                       </div>
                       <div class="col-xs-3">
                         <div className="player-achievement">
                           <h4>Win Percentage</h4>
-                          <h2 class="fwbold" id="stat-win-percentage">&nbsp;</h2>
+                          <h2 class="fwbold">${ playerScore.winPercentage }</h2>
                         </div>
                       </div>
                     </div>
@@ -74,25 +74,25 @@
                   <div class="col-xs-3">
                     <div className="player-achievement">
                       <h4>Accuracy</h4>
-                      <h4 class="fwbold" id="stat-accuracy">&nbsp;</h4>
+                      <h4 class="fwbold">${ playerScore.accuracy }</h4>
                     </div>
                   </div>
                   <div class="col-xs-3">
                     <div className="player-achievement">
                       <h4>Kills</h4>
-                      <h4 class="fwbold" id="stat-kills">&nbsp;</h4>
+                      <h4 class="fwbold">${ playerScore.kills }</h4>
                     </div>
                   </div>
                   <div class="col-xs-3">
                     <div className="player-achievement">
                       <h4>Deaths</h4>
-                      <h4 class="fwbold" id="stat-deaths">&nbsp;</h4>
+                      <h4 class="fwbold">${ playerScore.deaths }</h4>
                     </div>
                   </div>
                   <div class="col-xs-3">
                     <div className="player-achievement">
                       <h4>Headshots</h4>
-                      <h4 class="fwbold" id="stat-headshots">&nbsp;</h4>
+                      <h4 class="fwbold">${ playerScore.headshots }</h4>
                     </div>
                   </div>
                 </div>
@@ -101,25 +101,25 @@
                   <div class="col-xs-3">
                     <div className="player-achievement">
                       <h4>Shots Fired</h4>
-                      <h4 class="fwbold" id="stat-bullets-fired">&nbsp;</h4>
+                      <h4 class="fwbold">${ playerScore.bulletsFired }</h4>
                     </div>
                   </div>
                   <div class="col-xs-3">
                     <div className="player-achievement">
                       <h4>Shots Hit</h4>
-                      <h4 class="fwbold" id="stat-bullets-hit">&nbsp;</h4>
+                      <h4 class="fwbold">${ playerScore.bulletsHit }</h4>
                     </div>
                   </div>
                   <div class="col-xs-3">
                     <div className="player-achievement">
                       <h4>Times Hit</h4>
-                      <h4 class="fwbold" id="stat-times-hit">&nbsp;</h4>
+                      <h4 class="fwbold">${ playerScore.timesHit }</h4>
                     </div>
                   </div>
                   <div class="col-xs-3">
                     <div className="player-achievement">
                       <h4>Best Killing Spree</h4>
-                      <h4 class="fwbold" id="stat-best-killing-spree">&nbsp;</h4>
+                      <h4 class="fwbold">${ playerScore.bestKillingSpree }</h4>
                     </div>
                   </div>
                 </div>
@@ -134,67 +134,70 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script>
-  var state = {
-    leaderboards: {},
-    uid: {},
-  }
+  new Vue({
+    el: '#battle-stats-container',
+    delimiters: ['${', '}'],
+    data: {
+      leaderboards: {},
+      playerScore: {},
+      uid: {},
+    },
+    beforeMount: function() {
+      this.fetchUsernameLookup()
+    },
+    methods: {
+      fetchUsernameLookup: function () {
+        var self = this
+        var ref = firebase.database()
+          .ref('username_lookup/{{ username }}')
+          .once('value', function(snapshot) {
+            self.uid = snapshot.val()
+            self.renderBattleStats()
+          })
+      },
+      renderBattleStats: function () {
+        var self = this
+        var ref = firebase.database()
+          .ref('leaderboards/' + self.uid)
+          .once('value', function(snapshot) {
+            self.leaderboards = snapshot.val()
 
-  function fetchUsernameLookup() {
-    var ref = firebase.database()
-      .ref('username_lookup/{{ username }}')
-      .once('value', function(snapshot) {
-        state.uid = snapshot.val()
-        renderBattleStats()
-      })
-  }
+            self.playerScore.kdr = _.get(self, 'leaderboards.deaths', 0) > 0
+              ? self.leaderboards.kills / self.leaderboards.deaths
+              : _.get(self, 'leaderboards.kills', 0)
 
-  function renderBattleStats() {
-    var ref = firebase.database()
-      .ref('leaderboards/' + state.uid)
-      .once('value', function(snapshot) {
-        state.leaderboards = snapshot.val()
+            self.playerScore.accuracy = _.get(self, 'leaderboards.bulletsFired', 0) > 0
+              ? (self.leaderboards.bulletsHit / self.leaderboards.bulletsFired).toFixed(1)
+              : _.get(self, 'leaderboards.bulletsHit', 0)
 
-        var kdr = _.get(state, 'leaderboards.deaths', 0) > 0
-          ? state.leaderboards.kills / state.leaderboards.deaths
-          : _.get(state, 'leaderboards.kills', 0)
+            var minutesInRound = _.get(self, 'leaderboards.secondsInRound', 0) / 60
+            self.playerScore.killsPerMinute = minutesInRound > 0
+              ? (_.get(self, 'leaderboards.kills', 0) / minutesInRound).toFixed(1)
+              : 0
+            self.playerScore.scorePerMinute = minutesInRound > 0
+              ? (_.get(self, 'leaderboards.score', 0) / minutesInRound).toFixed(1)
+              : 0
 
-        var accuracy = _.get(state, 'leaderboards.bulletsFired', 0) > 0
-          ? state.leaderboards.bulletsHit / state.leaderboards.bulletsFired
-          : _.get(state, 'leaderboards.bulletsHit', 0)
+            var roundsWon = _.get(self, 'leaderboards.roundsWon', 0)
+            var roundsLost = _.get(self, 'leaderboards.roundsLost', 0)
+            var totalRounds = roundsWon + roundsLost
+            self.playerScore.winPercentage = totalRounds > 0
+              ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0) + '%'
+              : '0%'
 
-        var minutesInRound = _.get(state, 'leaderboards.secondsInRound', 0) / 60
-        var killsPerMinute = minutesInRound > 0
-          ? (_.get(state, 'leaderboards.kills', 0) / minutesInRound).toFixed(1)
-          : 0
-        var scorePerMinute = minutesInRound > 0
-          ? (_.get(state, 'leaderboards.score', 0) / minutesInRound).toFixed(1)
-          : 0
-
-        var roundsWon = _.get(state, 'leaderboards.roundsWon', 0)
-        var roundsLost = _.get(state, 'leaderboards.roundsLost', 0)
-        var totalRounds = roundsWon + roundsLost
-        var winPercentage = totalRounds > 0
-          ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0) + '%'
-          : '0%'
-
-        $('#stat-kdr').text(kdr.toFixed(2))
-        $('#stat-accuracy').text(accuracy.toFixed(1) + '%')
-        $('#stat-kills').text(_.get(state, 'leaderboards.kills', 0))
-        $('#stat-deaths').text(_.get(state, 'leaderboards.deaths', 0))
-        $('#stat-best-killing-spree').text(_.get(state, 'leaderboards.bestKillingSpree', 0))
-        $('#stat-damage-inflicted').text(_.get(state, 'leaderboards.damageInflicted', 0))
-        $('#stat-headshots').text(_.get(state, 'leaderboards.headshots', 0))
-        $('#stat-bullets-hit').text(_.get(state, 'leaderboards.bulletsHit', 0))
-        $('#stat-bullets-fired').text(_.get(state, 'leaderboards.bulletsFired', 0))
-        $('#stat-kills-per-minute').text(killsPerMinute)
-        $('#stat-score-per-minute').text(scorePerMinute)
-        $('#stat-times-hit').text(_.get(state, 'leaderboards.timesHit', 0))
-        $('#stat-win-percentage').text(winPercentage)
-      })
-  }
-
-  fetchUsernameLookup()
+            self.playerScore.kills = _.get(self, 'leaderboards.kills', 0)
+            self.playerScore.deaths = _.get(self, 'leaderboards.deaths', 0)
+            self.playerScore.bestKillingSpree = _.get(self, 'leaderboards.bestKillingSpree', 0)
+            self.playerScore.damageInflicted = _.get(self, 'leaderboards.damageInflicted', 0)
+            self.playerScore.headshots = _.get(self, 'leaderboards.headshots', 0)
+            self.playerScore.bulletsHit = _.get(self, 'leaderboards.bulletsHit', 0)
+            self.playerScore.bulletsFired = _.get(self, 'leaderboards.bulletsFired', 0)
+            self.playerScore.timesHit = _.get(self, 'leaderboards.timesHit', 0)
+            self.$forceUpdate()
+          })
+      }
+    }
+  })
 </script>
 {% endblock %}
