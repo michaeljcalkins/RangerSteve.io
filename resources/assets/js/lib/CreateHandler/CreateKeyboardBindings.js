@@ -74,6 +74,11 @@ export default function () {
       store.getState().player.isSwitchingWeapon
     ) return
 
+    // cancel reload action
+    store.dispatch(actions.player.setHasCanceledReloading(true))
+    store.dispatch(actions.player.setPrimaryIsReloading(false))
+    store.dispatch(actions.player.setSecondaryIsReloading(false))
+
     const currentWeapon = store.getState().player.currentWeapon
 
     const nextWeapon = (currentWeapon === 'primaryWeapon') ? 'secondaryWeapon' : 'primaryWeapon'

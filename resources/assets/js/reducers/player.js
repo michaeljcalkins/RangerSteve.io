@@ -9,6 +9,7 @@ const initialState = {
   health: 100,
   isPrimaryReloading: false,
   isSecondaryReloading: false,
+  hasCanceledReloading: false,
   isSwitchingWeapon: false,
   jumping: false,
   jumpJetCounter: 0,
@@ -57,6 +58,12 @@ const player = (state = initialState, action) => {
       return {
         ...state,
         isSecondaryReloading: action.value
+      }
+
+    case 'SET_HAS_CANCELED_RELOADING':
+      return {
+        ...state,
+        hasCanceledReloading: action.value
       }
 
     case 'SET_IS_SWITCHING_WEAPON':
