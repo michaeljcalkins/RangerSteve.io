@@ -16,13 +16,17 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none !important;
 }
 
 section {
   position: relative;
   width: 100%;
 }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+  }
 
 .progress .progress-bar {
   -webkit-transition: none;

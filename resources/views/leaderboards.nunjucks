@@ -25,21 +25,18 @@
             </div>
           </div>
 
-          <table class="table table-middle table-hover">
+          <table class="table table-middle tcw">
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Kills</th>
-                <th>Deaths</th>
-                <th>Best Killing Spree</th>
-                <th>Bullets Fired</th>
-                <th>Bullets Hit</th>
-                <th>Damage Inflicted</th>
-                <th>Headshots</th>
+                <th>Score</th>
+                <th>KDR</th>
+                <th>Kills / Min</th>
+                <th>Score / Min</th>
+                <th>Win Percentage</th>
               </tr>
             </thead>
-            <tbody>
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </div>
@@ -49,6 +46,7 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 <script>
   var state = {
     leaderboards: {},
@@ -57,7 +55,7 @@
 
   function fetchLeaderboards() {
     var ref = firebase.database().ref('leaderboards')
-    ref.on('value', function(snapshot) {
+    ref.once('value', function(snapshot) {
       state.leaderboards = snapshot.val()
       fetchUsernameLookup()
     })
@@ -72,9 +70,9 @@
   }
 
   function compare (a, b) {
-    if (a.kills < b.kills)
+    if (a.score < b.score)
       return -1
-    if (a.kills > b.kills)
+    if (a.score > b.score)
       return 1
     return 0
   }
@@ -98,17 +96,30 @@
     playerScores = playerScores.sort(compare).reverse()
 
     playerScores.forEach(function (playerScore) {
+      var kdr = playerScore.deaths > 0
+        ? playerScore.kills / playerScore.deaths
+        : 0
+
+      var minutesInRound = playerScore.secondsInRound / 60
+      var killsPerMinute = (playerScore.kills / minutesInRound).toFixed(1)
+      var scorePerMinute = (playerScore.score / minutesInRound).toFixed(1)
+
+      var roundsWon = _.get(playerScore, 'roundsWon', 0)
+      var roundsLost = _.get(playerScore, 'roundsLost', 0)
+      var totalRounds = roundsWon + roundsLost
+      var winPercentage = totalRounds > 0
+        ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0) + '%'
+        : '0%'
+
       $('table')
         .find('tbody')
         .append('<tr>' +
-          '<td><a href="/battle-stats/' + playerScore.name + '">' + playerScore.name + '</a></td>' +
-          '<td>' + playerScore.kills + '</td>' +
-          '<td>' + playerScore.deaths + '</td>' +
-          '<td>' + playerScore.bestKillingSpree + '</td>' +
-          '<td>' + playerScore.bulletsFired + '</td>' +
-          '<td>' + playerScore.bulletsHit + '</td>' +
-          '<td>' + playerScore.damageInflicted + '</td>' +
-          '<td>' + playerScore.headshots + '</td>' +
+          '<td><a class="tcw fwbold" href="/battle-stats/' + playerScore.name + '">' + playerScore.name + '</a></td>' +
+          '<td>' + playerScore.score + '</td>' +
+          '<td>' + kdr.toFixed(2) + '</td>' +
+          '<td>' + killsPerMinute + '</td>' +
+          '<td>' + scorePerMinute + '</td>' +
+          '<td>' + winPercentage + '</td>' +
         '</tr>')
     })
   }
