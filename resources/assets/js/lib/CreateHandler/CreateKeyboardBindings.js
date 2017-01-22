@@ -1,6 +1,7 @@
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
 import KillCurrentPlayer from '../KillCurrentPlayer'
+import ReloadGunWhenEmpty from '../ReloadGunWhenEmpty'
 
 let lastSwitchWeaponKey = null
 
@@ -104,6 +105,8 @@ export default function () {
         : store.getState().player.selectedSecondaryWeaponId
 
       window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+
+      ReloadGunWhenEmpty.call(this, currentWeaponId)
 
       // The sound effect is two seconds long so stop it once switching guns is complete.
       window.RS.switchingWeaponsFx.stop()
