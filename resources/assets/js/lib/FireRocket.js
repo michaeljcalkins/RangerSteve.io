@@ -5,11 +5,19 @@ import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 
 let muzzleFlashHandler = null
 let nextFire = null
+let lastWeaponId = null
 
 export default function FireRocket (currentWeaponId) {
   const store = this.game.store
   const state = store.getState()
   const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
+
+  // Reset the fire rate if the user switched to a new gun (i.e. Barrett to Desert Eagle)
+  nextFire = lastWeaponId === currentWeaponId
+    ? nextFire
+    : null
+
+  lastWeaponId = currentWeaponId
 
   if (
     !state.room.id ||
@@ -37,17 +45,17 @@ export default function FireRocket (currentWeaponId) {
   let pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
   bullet.rotation = pointerAngle
 
-    // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
+  // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
   window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
   clearTimeout(muzzleFlashHandler)
   muzzleFlashHandler = setTimeout(() => {
     window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
   }, 60)
 
-    // Shake camera for gun recoil
+  // Shake camera for gun recoil
   this.camera.shake(0.01, 150, true)
 
-    // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
+  // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
   setTimeout(() => {
     bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
   }, 60)
