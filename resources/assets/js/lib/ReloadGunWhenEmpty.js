@@ -31,15 +31,13 @@ export default function (currentWeaponId) {
       return
     }
 
-    if (isPrimarySelected && store.getState().player.isPrimaryReloading) {
+    if (isPrimarySelected) {
       store.dispatch(actions.player.setPrimaryIsReloading(false))
       store.dispatch(actions.player.setPrimaryAmmoRemaining(currentWeapon.ammo))
       return
     }
 
-    if (store.getState().player.isSecondaryReloading) {
-      store.dispatch(actions.player.setSecondaryIsReloading(false))
-      store.dispatch(actions.player.setSecondaryAmmoRemaining(currentWeapon.ammo))
-    }
+    store.dispatch(actions.player.setSecondaryIsReloading(false))
+    store.dispatch(actions.player.setSecondaryAmmoRemaining(currentWeapon.ammo))
   }, currentWeapon.reloadTime)
 }
