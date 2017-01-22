@@ -101,8 +101,8 @@
         : playerScore.kills
 
       var minutesInRound = playerScore.secondsInRound / 60
-      var killsPerMinute = (playerScore.kills / minutesInRound).toFixed(1)
-      var scorePerMinute = (playerScore.score / minutesInRound).toFixed(1)
+      var killsPerMinute = minutesInRound > 0 ? (playerScore.kills / minutesInRound).toFixed(1) : 0
+      var scorePerMinute = minutesInRound > 0 ? (playerScore.score / minutesInRound).toFixed(1) : 0
 
       var roundsWon = _.get(playerScore, 'roundsWon', 0)
       var roundsLost = _.get(playerScore, 'roundsLost', 0)
