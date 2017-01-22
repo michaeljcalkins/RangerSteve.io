@@ -5,113 +5,128 @@
 {% block content %}
 <span id="beta-label">Beta</span>
 
-<section class="main-section">
+<section class="main-section" id="battle-stats-container" v-cloak>
   <div class="col-xs-12">
     <div class="text-center">
       <span class="main-header">
-        Battle Stats: {{ username }}
+        Battle Stats
       </span>
     </div>
 
-    <div class="home-content" style="width: 800px;">
-      <div class="well">
-        <div class="row text-center">
-          <div class="col-sm-4">
-            <div className="player-achievement">
-              <img src="http://placehold.it/150x150" />
-              <h1>Lvl 32</h1>
-              <h4>Corporal</h4>
+    <div class="container">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="well tcw">
+          <div class="row mb3">
+            <div class="col-sm-4">
+              <a class="btn btn-primary btn-lg btn-block" href="/">Back to Menu</a>
+            </div>
+            <div class="col-sm-4">
+              <a class="btn btn-primary btn-lg btn-block" href="/leaderboards">Leaderboards</a>
+            </div>
+            <div class="col-sm-4">
+              <a class="btn btn-success btn-lg btn-block" href="/game">Play Now</a>
             </div>
           </div>
-          <div class="col-sm-8">
-            <div class="row text-center">
-              <div class="col-sm-6">
-                <div className="player-achievement">
-                  <h2>42.2</h2>
-                  <h4>Score / Min</h4>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div className="player-achievement">
-                  <h2>44.43%</h2>
-                  <h4>Win Percentage</h4>
-                </div>
-              </div>
-            </div>
 
-            <div class="row text-center">
-              <div class="col-sm-6">
-                <div className="player-achievement">
-                  <h2>1.59</h2>
-                  <h4>KDR</h4>
+          <div class="row">
+            <div class="col-sm-12">
+              <h1 class="fwbold text-center mt3 mb6">{{ username }}</h1>
+
+              <fieldset class="text-center">
+                <legend>Overview</legend>
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="row text-center">
+                      <div class="col-xs-3">
+                        <div className="player-achievement">
+                          <h4>KDR</h4>
+                          <h2 class="fwbold">${ playerScore.kdr }</h2>
+                        </div>
+                      </div>
+                      <div class="col-xs-3">
+                        <div className="player-achievement">
+                          <h4>Score / Min</h4>
+                          <h2 class="fwbold">${ playerScore.scorePerMinute }</h2>
+                        </div>
+                      </div>
+                      <div class="col-xs-3">
+                        <div className="player-achievement">
+                          <h4>Kills / Min</h4>
+                          <h2 class="fwbold">${ playerScore.killsPerMinute }</h2>
+                        </div>
+                      </div>
+                      <div class="col-xs-3">
+                        <div className="player-achievement">
+                          <h4>Win Percentage</h4>
+                          <h2 class="fwbold">${ playerScore.winPercentage }%</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-sm-6">
-                <div className="player-achievement">
-                  <h2>110/300</h2>
-                  <h4>Achievements</h4>
+              </fieldset>
+
+              <fieldset class="text-center mb0">
+                <legend>Statistics</legend>
+
+                <div class="row">
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Accuracy</h4>
+                      <h4 class="fwbold">${ playerScore.accuracy }%</h4>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Kills</h4>
+                      <h4 class="fwbold">${ playerScore.kills }</h4>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Deaths</h4>
+                      <h4 class="fwbold">${ playerScore.deaths }</h4>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Headshots</h4>
+                      <h4 class="fwbold">${ playerScore.headshots }</h4>
+                    </div>
+                  </div>
                 </div>
-              </div>
+
+                <div class="row">
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Shots Fired</h4>
+                      <h4 class="fwbold">${ playerScore.bulletsFired }</h4>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Shots Hit</h4>
+                      <h4 class="fwbold">${ playerScore.bulletsHit }</h4>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Times Hit</h4>
+                      <h4 class="fwbold">${ playerScore.timesHit }</h4>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Best Killing Spree</h4>
+                      <h4 class="fwbold">${ playerScore.bestKillingSpree }</h4>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
             </div>
           </div>
         </div>
-
-        <br />
-        <br />
-
-        <fieldset>
-          <legend>Statistics</legend>
-
-          <div class="row text-center">
-            <div class="col-sm-3">
-              <div className="player-achievement">
-                <h3>Accuracy</h3>
-                <h4>23.3%</h4>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div className="player-achievement">
-                <h3>Shots Fired</h3>
-                <h4>234</h4>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div className="player-achievement">
-                <h3>Shots Hits</h3>
-                <h4>234</h4>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div className="player-achievement">
-                <h3>Headshots</h3>
-                <h4>234</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="row text-center">
-            <div class="col-sm-3">
-              <div className="player-achievement">
-                <h3>Times Hit</h3>
-                <h4>827</h4>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div className="player-achievement">
-                <h3>Body</h3>
-                <h4>234</h4>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div className="player-achievement">
-                <h3>Head</h3>
-                <h4>234</h4>
-              </div>
-            </div>
-            <div class="col-sm-3">
-            </div>
-          </div>
-        </fieldset>
       </div>
     </div>
   </div>
@@ -120,10 +135,81 @@
 
 {% block scripts %}
 <script>
-  var state = {}
-  var ref = firebase.database().ref('battleStats/' + {{ username }})
-  ref.on('value', function(snapshot) {
-    state.battleStats = snapshot.val()
+  new Vue({
+    el: '#battle-stats-container',
+    delimiters: ['${', '}'],
+    data: {
+      playerScore: {
+        kdr: 0,
+        accuracy: 0,
+        killsPerMinute: 0,
+        scorePerMinute: 0,
+        winPercentage: 0,
+        kills: 0,
+        deaths: 0,
+        bestKillingSpree: 0,
+        damageInflicted: 0,
+        headshots: 0,
+        bulletsHit: 0,
+        bulletsFired: 0,
+        timesHit: 0,
+      },
+      uid: {},
+    },
+    beforeMount: function() {
+      this.fetchUsernameLookup()
+    },
+    methods: {
+      fetchUsernameLookup: function () {
+        var self = this
+        var ref = firebase.database()
+          .ref('username_lookup/{{ username }}')
+          .once('value', function(snapshot) {
+            self.uid = snapshot.val()
+            self.renderBattleStats()
+          })
+      },
+      renderBattleStats: function () {
+        var self = this
+        var ref = firebase.database()
+          .ref('leaderboards/' + self.uid)
+          .once('value', function(snapshot) {
+            const leaderboards = snapshot.val()
+
+            self.playerScore.kdr = _.get(leaderboards, 'kills', 0) > 0 && _.get(leaderboards, 'deaths', 0) > 0
+              ? (leaderboards.kills / leaderboards.deaths).toFixed(1)
+              : _.get(leaderboards, 'kills', 0)
+
+            self.playerScore.accuracy = _.get(leaderboards, 'bulletsFired', 0) > 0
+              ? (leaderboards.bulletsHit / leaderboards.bulletsFired * 100).toFixed(1)
+              : 0
+
+            var minutesInRound = _.get(leaderboards, 'secondsInRound', 0) / 60
+            self.playerScore.killsPerMinute = minutesInRound > 0
+              ? (_.get(leaderboards, 'kills', 0) / minutesInRound).toFixed(1)
+              : 0
+            self.playerScore.scorePerMinute = minutesInRound > 0
+              ? (_.get(leaderboards, 'score', 0) / minutesInRound).toFixed(1)
+              : 0
+
+            var roundsWon = _.get(leaderboards, 'roundsWon', 0)
+            var roundsLost = _.get(leaderboards, 'roundsLost', 0)
+            var totalRounds = roundsWon + roundsLost
+            self.playerScore.winPercentage = totalRounds > 0
+              ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0)
+              : 0
+
+            self.playerScore.kills = _.get(leaderboards, 'kills', 0)
+            self.playerScore.deaths = _.get(leaderboards, 'deaths', 0)
+            self.playerScore.bestKillingSpree = _.get(leaderboards, 'bestKillingSpree', 0)
+            self.playerScore.damageInflicted = _.get(leaderboards, 'damageInflicted', 0)
+            self.playerScore.headshots = _.get(leaderboards, 'headshots', 0)
+            self.playerScore.bulletsHit = _.get(leaderboards, 'bulletsHit', 0)
+            self.playerScore.bulletsFired = _.get(leaderboards, 'bulletsFired', 0)
+            self.playerScore.timesHit = _.get(leaderboards, 'timesHit', 0)
+          })
+      }
+    }
   })
 </script>
 {% endblock %}

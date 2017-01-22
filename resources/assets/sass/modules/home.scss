@@ -25,10 +25,6 @@ body.main:after {
   height: auto;
   width: 100%;
 
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 400;
-  }
-
   .main-header {
     clear: both;
     color: #fff;
@@ -67,24 +63,10 @@ body.main:after {
   .btn-lg {
     padding: 12px 35px 11px;
     font-weight: bold;
-    margin: 0;
   }
 
   p {
     margin: 0;
-  }
-
-  table {
-    margin: 0;
-    color: #eee;
-
-    tr {
-      &:hover {
-        td {
-          color: #333;
-        }
-      }
-    }
   }
 
   .footer-container a {
@@ -140,23 +122,23 @@ body.main:after {
     border-width: 2px;
     border-color: #ddd;
   }
+}
 
-  fieldset {
-    border-top: 1px solid rgba(255, 255, 255, .3);
-    margin-bottom: 15px;
-    padding: 25px 0 15px;
-  }
+fieldset {
+  border-top: 1px solid rgba(255, 255, 255, .3);
+  margin-bottom: 15px;
+  padding: 25px 0 15px;
+}
 
-  legend {
-    color: #eee;
-    font-size: 16px;
-    width: auto;
-    margin: 0;
-    font-weight: bold;
-    text-align: center;
-    padding: 0 10px;
-    border: 0;
-  }
+legend {
+  color: #eee;
+  font-size: 16px;
+  width: auto;
+  margin: 0;
+  font-weight: bold;
+  text-align: center;
+  padding: 0 10px;
+  border: 0;
 }
 
 #browser-recommendation {

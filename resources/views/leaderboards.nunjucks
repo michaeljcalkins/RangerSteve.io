@@ -1,294 +1,139 @@
 {% extends 'master.nunjucks' %}
 
-{% block title %}RangerSteve.io{% endblock %}
+{% block title %}Leaderboards | RangerSteve.io{% endblock %}
 
 {% block content %}
 <span id="beta-label">Beta</span>
 
-<section class="main-section">
-  <div class="col-xs-12">
-      <div class="text-center">
-          <span class="main-header">
-              Ranger Steve
-          </span>
-      </div>
+<section class="main-section" id="leaderboards-container" v-cloak>
+  <div class="text-center">
+    <span class="main-header">
+      Leaderboards
+    </span>
+  </div>
 
-        <div class="home-content">
-            <div id="browser-recommendation" class="alert alert-info text-center">
-                We recommend using Chrome browser for the best game performance
-            </div>
-            <div class="well">
-              <form action="/game" method="GET">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <a class="buy-button btn btn-default" href="/buy">
-                      <span>Ranger Steve</span>
-                      <img src="/images/characters/RangerSteve.png" width="95" />
-                    </a>
-                  </div>
-                  <div class="col-sm-6">
-                    <button
-                      class="btn btn-success btn-lg btn-block"
-                      id="play-button"
-                      type="submit"
-                    >
-                      Play Now
-                    </button>
-                    <br />
-                    <a
-                      class="btn btn-primary btn-lg btn-block"
-                      href="/how-to-play"
-                    >
-                      How To Play
-                    </a>
-                  </div>
-                </div>
-              </form>
-
-              <br />
-
-              <fieldset>
-                <legend>Rooms ( {{ numberOfRooms }} )</legend>
-
-                <div class="row">
-                  <div class="col-sm-12">
-                    <div class="btn-group btn-group-justified" id="servers-container">
-                      <a href="https://rangersteve.io" class="server-option btn btn-sm">America</a>
-                      <a href="https://eu.rangersteve.io" class="server-option btn btn-sm">Europe</a>
-                    </div>
-                  </div>
-                </div>
-
-                <br />
-
-                {% if numberOfRooms === 0 %}
-                  <div class="text-center">
-                    <a class="btn btn-primary btn-lg" href="/create-a-room">
-                      Create a Room
-                    </a>
-                  </div>
-                {% else %}
-                  <table class="table table-middle table-hover">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Game mode</th>
-                        <th>Map</th>
-                        <th>Players</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for id, room in rooms %}
-                        <tr class="room-link pointer" data-href="/game?roomId={{ id }}">
-                          <td class="dont-break-out">{{ id }}</td>
-                          <td>{{ room.gamemode }}</td>
-                          <td>{{ room.map }}</td>
-                          <td>{{ room.players | length }} / {{ maxRoomSize }}</td>
-                          <td class="text-right" >
-                            <button class="btn btn-sm btn-primary">Join Room</button>
-                          </td>
-                        </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
-                {% endif %}
-              </fieldset>
-
-              <fieldset id="login-container" class="hidden">
-                <legend>Login With</legend>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <button style="background: #dd4b39;" class="btn btn-primary btn-block" onClick="attemptLoginWithGoogle()">
-                            <i class="fa fa-google"></i> Google
-                        </button>
-                    </div>
-                    <div class="col-sm-4">
-                        <button style="background: #3b5998;" class="btn btn-primary btn-block" onClick="attemptLoginWithFacebook()">
-                            <i class="fa fa-facebook"></i> Facebook
-                        </button>
-                    </div>
-                    <div class="col-sm-4">
-                        <button style="background: #1da1f2;"  class="btn btn-primary btn-block" onClick="attemptLoginWithTwitter()">
-                            <i class="fa fa-twitter"></i> Twitter
-                        </button>
-                    </div>
-                </div>
-              </fieldset>
-
-              <fieldset id="user-container" class="hidden">
-                <legend>Your Account</legend>
-
-                <div class="row">
-                  <div class="col-sm-8">
-                    <div class="form-group">
-                      <input
-                        id="username"
-                        class="form-control"
-                        placeholder="Enter your nickname..."
-                        autofocus
-                        maxlength="25"
-                        style="margin-bottom: 15px"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <button class="btn btn-primary btn-block" onClick="claimUsername(writeUserData)">
-                      Claim Name
-                    </button>
-                  </div>
-              </div>
-
-              <div class="row">
-                <div class="col-sm-12">
-                  <a class="btn btn-primary btn-sm" onClick="goToBattleStats()">
-                    Battle Stats
-                  </a>
-                  <button class="btn btn-warning btn-sm pull-right" onClick="logoutUser()">
-                    Logout
-                  </button>
-                </div>
-              </div>
-            </fieldset>
-
-            <hr />
-
-            <div class="row">
-              <div class="col-sm-4">
-                <a style="background: #7289DA;" href="https://discord.gg/GqKgsmy" class="btn btn-primary btn-block btn-sm" target="_blank">
-                  <i class="fa fa-commenting"></i> Discord
-                </a>
-              </div>
-              <div class="col-sm-4">
-                <a style="background: #3b5998;" href="https://www.facebook.com/rangersteveio/" class="btn btn-primary btn-block btn-sm" target="_blank">
-                  <i class="fa fa-facebook"></i> Facebook
-                </a>
-              </div>
-              <div class="col-sm-4">
-                <a style="background: #1da1f2;" href="https://twitter.com/michaeljcalkins" class="btn btn-primary btn-block btn-sm" target="_blank">
-                  <i class="fa fa-twitter"></i> Twitter
-                </a>
-              </div>
-            </div>
-
-            <br />
-
-            <div class="row">
-              <div class="col-sm-12 text-center">
-                <a href="https://rangersteve.userecho.com/" target="_blank">Feature Requests and Bugs</a>
-                |
-                <a href="/credits">Credits</a>
-              </div>
-            </div>
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="well">
+        <div class="row mb3">
+          <div class="col-xs-6">
+            <a class="btn btn-primary btn-lg btn-block" href="/">Back to Menu</a>
           </div>
+          <div class="col-xs-6">
+            <a class="btn btn-success btn-lg btn-block" href="/game">Play Now</a>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-middle tcw mb0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Score</th>
+                <th>KDR</th>
+                <th>Kills / Min</th>
+                <th>Score / Min</th>
+                <th>Win Percentage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="playerScore in playerScores">
+                <td><a class="tcw fwbold" v-bind:href="'/battle-stats/' + playerScore.name">${ playerScore.name }</a></td>
+                <td>${ playerScore.score }</td>
+                <td>${ playerScore.kdr }</td>
+                <td>${ playerScore.killsPerMinute }</td>
+                <td>${ playerScore.scorePerMinute }</td>
+                <td>${ playerScore.winPercentage }</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+    </div>
   </div>
 </section>
 {% endblock %}
 
 {% block scripts %}
 <script>
-  var state = {
-    auth: null
+  function compare (a, b, prop) {
+    if (a[prop] < b[prop]) return -1
+    if (a[prop] > b[prop]) return 1
+    return 0
   }
 
-  // Check if the user is signed in
-  firebase.auth().onAuthStateChanged(function(auth) {
-    if (auth) {
-      state.auth = auth
-      showUserContainer()
-      fetchUser()
-      updateUsernameInput()
-    } else {
-      showLoginContainer()
+  new Vue({
+    el: '#leaderboards-container',
+    delimiters: ['${', '}'],
+    data: {
+      leaderboards: {},
+      usernameLookup: {},
+      playerScores: {}
+    },
+    beforeMount: function() {
+      this.fetchLeaderboards()
+    },
+    methods: {
+      fetchLeaderboards: function () {
+        var self = this
+        var ref = firebase.database()
+          .ref('leaderboards')
+          .once('value', function(snapshot) {
+            self.leaderboards = snapshot.val()
+            self.fetchUsernameLookup()
+          })
+      },
+      fetchUsernameLookup: function () {
+        var self = this
+        var ref = firebase.database()
+          .ref('username_lookup')
+          .once('value', function(snapshot) {
+            self.usernameLookup = snapshot.val()
+            self.renderLeaderboards()
+          })
+      },
+      renderLeaderboards: function () {
+        var self = this
+        if (! this.leaderboards) return
+
+        var newUsernameLookup = {}
+        Object.keys(this.usernameLookup)
+          .forEach(function (username) {
+            var playerId = self.usernameLookup[username]
+            newUsernameLookup[playerId] = username
+          })
+
+        this.playerScores = Object.keys(this.leaderboards)
+          .map(function (id) {
+            var newPlayerObj = self.leaderboards[id]
+            newPlayerObj.name = newUsernameLookup[id]
+            return self.leaderboards[id]
+          })
+        this.playerScores = this.playerScores.sort(compare, 'score').reverse()
+
+        this.playerScores.forEach(function (playerScore) {
+          playerScore.kdr = playerScore.deaths > 0
+            ? (playerScore.kills / playerScore.deaths).toFixed(2)
+            : playerScore.kills
+
+          var minutesInRound = playerScore.secondsInRound / 60
+          playerScore.killsPerMinute = minutesInRound > 0 ?
+            (playerScore.kills / minutesInRound).toFixed(1)
+            : 0
+
+          playerScore.scorePerMinute = minutesInRound > 0
+            ? (playerScore.score / minutesInRound).toFixed(1)
+            : 0
+
+          var roundsWon = _.get(playerScore, 'roundsWon', 0)
+          var roundsLost = _.get(playerScore, 'roundsLost', 0)
+          var totalRounds = roundsWon + roundsLost
+          playerScore.winPercentage = totalRounds > 0
+            ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0) + '%'
+            : '0%'
+        })
+      }
     }
   })
-
-  function fetchUser() {
-    var ref = firebase.database().ref('users/' + state.auth.uid)
-    ref.on('value', function(snapshot) {
-      state.user = snapshot.val()
-      localStorage.setItem('nickname', JSON.stringify(state.user.username))
-    })
-  }
-
-  function goToBattleStats() {
-    window.location.href = '/battle-stats/' + state.user.username
-  }
-
-  function updateUsernameInput() {
-    var usernameRef = firebase.database().ref('users/' + state.auth.uid + '/username')
-    usernameRef.on('value', function(snapshot) {
-      $('#username').val(snapshot.val())
-    })
-  }
-
-  function showUserContainer() {
-    $('#user-container').removeClass('hidden')
-    $('#login-container').addClass('hidden')
-  }
-
-  function showLoginContainer() {
-    $('#user-container').addClass('hidden')
-    $('#login-container').removeClass('hidden')
-  }
-
-  function claimUsername(next) {
-    var username = $('#username').val()
-    if (username === state.user.username) return
-
-    firebase.database().ref('username_lookup/' + username).set(state.auth.uid, function(err) {
-      if (err) { return alert('Username already taken.') }
-      next()
-    })
-  }
-
-  function writeUserData() {
-    firebase.database().ref('users/' + state.auth.uid).set({
-      username: $('#username').val(),
-    })
-    fetchUser()
-    alert('Changes saved!')
-  }
-
-  function logoutUser() {
-    firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-      showLoginContainer()
-    }, function(error) {
-      // An error happened.
-      showUserContainer()
-    });
-  }
-
-  function attemptLoginWithGoogle() {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      // ...
-    }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
-  }
-
-  if (
-    window.location.href.indexOf('https://rangersteve.io') > -1 ||
-    window.location.href.indexOf('http://localhost') > -1
-  ) {
-    $('#servers-container').find('a:first-child').addClass('active')
-  } else if (window.location.href.indexOf('https://eu.rangersteve.io') > -1) {
-    $('#servers-container').find('a:last-child').addClass('active')
-  }
 </script>
 {% endblock %}

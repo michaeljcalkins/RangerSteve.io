@@ -14,8 +14,7 @@
     "bin/",
     "app/",
     "app.js",
-    "lib/GameConsts.js",
-    "lib/GameConsts.dev.js"
+    "lib/"
   ],
   "env": {
     "NODE_ENV": "development"
