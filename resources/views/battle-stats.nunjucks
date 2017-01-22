@@ -164,7 +164,7 @@
             self.leaderboards = snapshot.val()
 
             self.playerScore.kdr = _.get(self, 'leaderboards.deaths', 0) > 0
-              ? self.leaderboards.kills / self.leaderboards.deaths
+              ? (self.leaderboards.kills / self.leaderboards.deaths).toFixed(1)
               : _.get(self, 'leaderboards.kills', 0)
 
             self.playerScore.accuracy = _.get(self, 'leaderboards.bulletsFired', 0) > 0
