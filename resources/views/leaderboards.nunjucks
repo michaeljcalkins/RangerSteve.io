@@ -80,6 +80,8 @@
   function renderLeaderboards() {
     $('table').find('tbody').html('')
 
+    if (! state.leaderboards) return
+
     var newUsernameLookup = {}
     Object.keys(state.usernameLookup)
       .forEach(function (username) {

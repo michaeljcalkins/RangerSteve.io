@@ -156,17 +156,21 @@
       .once('value', function(snapshot) {
         state.leaderboards = snapshot.val()
 
-        var kdr = state.leaderboards.deaths > 0
+        var kdr = _.get(state, 'leaderboards.deaths', 0) > 0
           ? state.leaderboards.kills / state.leaderboards.deaths
-          : state.leaderboards.kills
+          : _.get(state, 'leaderboards.kills', 0)
 
-        var accuracy = state.leaderboards.bulletsFired > 0
+        var accuracy = _.get(state, 'leaderboards.bulletsFired', 0) > 0
           ? state.leaderboards.bulletsHit / state.leaderboards.bulletsFired
-          : state.leaderboards.bulletsHit
+          : _.get(state, 'leaderboards.bulletsHit', 0)
 
-        var minutesInRound = state.leaderboards.secondsInRound / 60
-        var killsPerMinute = (state.leaderboards.kills / minutesInRound).toFixed(1)
-        var scorePerMinute = (state.leaderboards.score / minutesInRound).toFixed(1)
+        var minutesInRound = _.get(state, 'leaderboards.secondsInRound', 0) / 60
+        var killsPerMinute = minutesInRound > 0
+          ? (_.get(state, 'leaderboards.kills', 0) / minutesInRound).toFixed(1)
+          : 0
+        var scorePerMinute = minutesInRound > 0
+          ? (_.get(state, 'leaderboards.score', 0) / minutesInRound).toFixed(1)
+          : 0
 
         var roundsWon = _.get(state, 'leaderboards.roundsWon', 0)
         var roundsLost = _.get(state, 'leaderboards.roundsLost', 0)
@@ -177,16 +181,16 @@
 
         $('#stat-kdr').text(kdr.toFixed(2))
         $('#stat-accuracy').text(accuracy.toFixed(1) + '%')
-        $('#stat-kills').text(state.leaderboards.kills)
-        $('#stat-deaths').text(state.leaderboards.deaths)
-        $('#stat-best-killing-spree').text(state.leaderboards.bestKillingSpree)
-        $('#stat-damage-inflicted').text(state.leaderboards.damageInflicted)
-        $('#stat-headshots').text(state.leaderboards.headshots)
-        $('#stat-bullets-hit').text(state.leaderboards.bulletsHit)
-        $('#stat-bullets-fired').text(state.leaderboards.bulletsFired)
+        $('#stat-kills').text(_.get(state, 'leaderboards.kills', 0))
+        $('#stat-deaths').text(_.get(state, 'leaderboards.deaths', 0))
+        $('#stat-best-killing-spree').text(_.get(state, 'leaderboards.bestKillingSpree', 0))
+        $('#stat-damage-inflicted').text(_.get(state, 'leaderboards.damageInflicted', 0))
+        $('#stat-headshots').text(_.get(state, 'leaderboards.headshots', 0))
+        $('#stat-bullets-hit').text(_.get(state, 'leaderboards.bulletsHit', 0))
+        $('#stat-bullets-fired').text(_.get(state, 'leaderboards.bulletsFired', 0))
         $('#stat-kills-per-minute').text(killsPerMinute)
         $('#stat-score-per-minute').text(scorePerMinute)
-        $('#stat-times-hit').text(state.leaderboards.timesHit)
+        $('#stat-times-hit').text(_.get(state, 'leaderboards.timesHit', 0))
         $('#stat-win-percentage').text(winPercentage)
       })
   }
