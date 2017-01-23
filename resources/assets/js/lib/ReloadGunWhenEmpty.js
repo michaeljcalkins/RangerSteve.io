@@ -1,6 +1,8 @@
 import actions from '../actions'
 import GameConsts from 'lib/GameConsts'
 
+let reloadTimeout = null
+
 export default function (currentWeaponId) {
   const store = this.game.store
   const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
@@ -13,8 +15,9 @@ export default function (currentWeaponId) {
 
   if (
     currentAmmoRemaining > 0 ||
-    store.getState().player.isPrimaryReloading ||
-    store.getState().player.isSecondaryReloading
+    store.getState().player.isSwitchingWeapon ||
+    isPrimarySelected && store.getState().player.isPrimaryReloading ||
+    !isPrimarySelected && store.getState().player.isSecondaryReloading
   ) return
 
   // If empty set current gun to reloading
@@ -24,10 +27,14 @@ export default function (currentWeaponId) {
     store.dispatch(actions.player.setSecondaryIsReloading(true))
   }
 
-  // Get reload time in seconds
-  setTimeout(() => {
-    if (store.getState().player.hasCaneledReloading) {
+  clearTimeout(reloadTimeout)
+  store.dispatch(actions.player.setHasCanceledReloading(false))
+
+  reloadTimeout = setTimeout(() => {
+    if (store.getState().player.hasCanceledReloading) {
       store.dispatch(actions.player.setHasCanceledReloading(false))
+      store.dispatch(actions.player.setPrimaryIsReloading(false))
+      store.dispatch(actions.player.setSecondaryIsReloading(false))
       return
     }
 
