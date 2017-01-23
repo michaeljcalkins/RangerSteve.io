@@ -33,6 +33,13 @@ export const setSecondaryIsReloading = (value) => {
   }
 }
 
+export const setHasCanceledReloading = (value) => {
+  return {
+    type: 'SET_HAS_CANCELED_RELOADING',
+    value
+  }
+}
+
 export const setIsSwitchingWeapon = (value) => {
   return {
     type: 'SET_IS_SWITCHING_WEAPON',

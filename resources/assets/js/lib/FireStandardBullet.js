@@ -1,7 +1,6 @@
 import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
-import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 
 let muzzleFlashHandler = null
 let nextFire = null
@@ -13,10 +12,10 @@ export default function FireStandardBullet (currentWeaponId) {
   const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
   const isPrimarySelected = store.getState().player.currentWeapon === 'primaryWeapon'
 
-    // Reset the fire rate if the user switched to a new gun (i.e. Barrett to Desert Eagle)
+  // Reset the fire rate if the user switched to a new gun (i.e. Barrett to Desert Eagle)
   nextFire = lastWeaponId === currentWeaponId
-        ? nextFire
-        : null
+    ? nextFire
+    : null
 
   lastWeaponId = currentWeaponId
 
@@ -46,7 +45,7 @@ export default function FireStandardBullet (currentWeaponId) {
   let pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
   bullet.rotation = pointerAngle
 
-    // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
+  // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
   window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
 
   clearTimeout(muzzleFlashHandler)
@@ -54,10 +53,10 @@ export default function FireStandardBullet (currentWeaponId) {
     window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
   }, 60)
 
-    // Shake camera for gun recoil
+  // Shake camera for gun recoil
   this.camera.shake(0.0015, 100, true)
 
-    // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
+  // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
   setTimeout(() => {
     bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
   }, 40)
@@ -78,6 +77,4 @@ export default function FireStandardBullet (currentWeaponId) {
     x: Math.round(Math.max(0, x)),
     y: Math.round(Math.max(0, y))
   })
-
-  ReloadGunWhenEmpty.call(this, currentWeaponId)
 }

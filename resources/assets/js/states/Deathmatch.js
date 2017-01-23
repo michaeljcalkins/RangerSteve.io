@@ -1,9 +1,6 @@
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import updatePlayerAngles from '../lib/updatePlayerAngles'
-import FireStandardBullet from '../lib/FireStandardBullet'
-import FireShotgunShell from '../lib/FireShotgunShell'
-import FireRocket from '../lib/FireRocket'
 import RotateBulletsToTrajectory from '../lib/RotateBulletsToTrajectory'
 import Maps from '../lib/Maps'
 import Client from '../lib/Client'
@@ -23,8 +20,9 @@ import BulletsAndEnemyPlayers from '../lib/Collisions/BulletsAndEnemyPlayers'
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
 import UpdateGameScale from '../lib/UpdateGameScale'
-import logPointerWorldPosition from '../lib/logPointerWorldPosition'
 import createEnemyGroup from '../lib/createEnemyGroup'
+import FireWeapon from '../lib/FireWeapon'
+import ReloadGunWhenEmpty from '../lib/ReloadGunWhenEmpty'
 
 /**
  * Collisions and all game mode related interactions.
@@ -69,7 +67,7 @@ Deathmatch.prototype = {
       ? player.selectedPrimaryWeaponId
       : player.selectedSecondaryWeaponId
 
-        // Pause controls so user can't do anything in the background accidentally
+    // Pause controls so user can't do anything in the background accidentally
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
     this.game.input.enabled = !isPaused
 
@@ -92,47 +90,11 @@ Deathmatch.prototype = {
     /**
      * Fire current weapon
      */
-    // TODO FireWeaponIfActive.call(this)
     if (this.game.input.activePointer.leftButton.isDown) {
-      const currentWeapon = GameConsts.WEAPONS[currentWeaponId]
-
-      if (GameConsts.DEBUG) {
-        logPointerWorldPosition.call(this)
-      }
-
-      if (player.isSwitchingWeapon) return
-
-            // Check if primary gun has ammo and is selected
-      if (
-                player.currentWeapon === 'primaryWeapon' &&
-                (
-                    player.isPrimaryReloading ||
-                    player.primaryAmmoRemaining <= 0
-                )
-            ) return
-
-            // Check if secondary gun has ammo and is selected
-      if (
-                player.currentWeapon === 'secondaryWeapon' &&
-                (
-                    player.isSecondaryReloading ||
-                    player.secondaryAmmoRemaining <= 0
-                )
-            ) return
-
-      switch (currentWeapon.bulletType) {
-        case 'rocket':
-          FireRocket.call(this, currentWeaponId)
-          break
-
-        case 'shotgun':
-          FireShotgunShell.call(this, currentWeaponId)
-          break
-
-        default:
-          FireStandardBullet.call(this, currentWeaponId)
-      }
+      FireWeapon.call(this, currentWeaponId)
     }
+
+    ReloadGunWhenEmpty.call(this, currentWeaponId)
 
     RotateBulletsToTrajectory.call(this)
     UpdateHurtBorder.call(this)
