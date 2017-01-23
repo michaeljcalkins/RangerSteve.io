@@ -22,6 +22,7 @@ import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms
 import UpdateGameScale from '../lib/UpdateGameScale'
 import createEnemyGroup from '../lib/createEnemyGroup'
 import FireWeapon from '../lib/FireWeapon'
+import ReloadGunWhenEmpty from '../lib/ReloadGunWhenEmpty'
 
 /**
  * Collisions and all game mode related interactions.
@@ -92,6 +93,8 @@ Deathmatch.prototype = {
     if (this.game.input.activePointer.leftButton.isDown) {
       FireWeapon.call(this, currentWeaponId)
     }
+
+    ReloadGunWhenEmpty.call(this, currentWeaponId)
 
     RotateBulletsToTrajectory.call(this)
     UpdateHurtBorder.call(this)

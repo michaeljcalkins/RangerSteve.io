@@ -1,7 +1,6 @@
 import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
-import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 import range from 'lodash/range'
 import sample from 'lodash/sample'
 
@@ -95,6 +94,4 @@ export default function FireShotgunShell (currentWeaponId) {
   } else {
     store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
   }
-
-  ReloadGunWhenEmpty.call(this, currentWeaponId)
 }

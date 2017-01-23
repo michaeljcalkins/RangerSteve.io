@@ -1,7 +1,6 @@
 import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
-import ReloadGunWhenEmpty from './ReloadGunWhenEmpty'
 
 let muzzleFlashHandler = null
 let nextFire = null
@@ -78,6 +77,4 @@ export default function FireStandardBullet (currentWeaponId) {
     x: Math.round(Math.max(0, x)),
     y: Math.round(Math.max(0, y))
   })
-
-  ReloadGunWhenEmpty.call(this, currentWeaponId)
 }
