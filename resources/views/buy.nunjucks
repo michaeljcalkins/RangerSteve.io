@@ -14,7 +14,7 @@
     </div>
 
     <div class="store-container">
-      <div class="row gold-container">
+      <div class="row gold-container mb3">
         <div class="col-sm-15">
           <a href="#" class="btn-block btn btn-default">
             <span class="gold-title">Pile of Gold</span>
@@ -112,5 +112,6 @@
 
 {% block scripts %}
 <script>
+
 </script>
 {% endblock %}
