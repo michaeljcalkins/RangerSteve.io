@@ -1,6 +1,6 @@
 {% extends 'master.nunjucks' %}
 
-{% block title %}Buy Skins | RangerSteve.io{% endblock %}
+{% block title %}Buy | RangerSteve.io{% endblock %}
 
 {% block content %}
 <span id="beta-label">Beta</span>
@@ -13,51 +13,111 @@
       </span>
     </div>
 
-    <div class="store-container">
+    <div class="store-container" id="buy-container" v-cloak>
       <div class="row gold-container mb3">
         <div class="col-sm-15">
-          <a href="#" class="btn-block btn btn-default">
-            <span class="gold-title">Pile of Gold</span>
-            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 500</span>
-            <img src="images/gold/pile-of-gold.jpg" style="width: 60px;" />
-            <span class="gold-price">$4.99</span>
-          </a>
+          <form action="/charge" method="POST">
+            <stripe-checkout
+              form-id="pile-of-gold"
+              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-name="RangerSteve.io"
+              stripe-description='500 Gold'
+              stripe-amount="499"
+              stripe-image="/images/tile-logo.png"
+              button='<a href="#" class="btn-block btn btn-default">
+                <span class="gold-title">Pile of Gold</span>
+                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 500</span>
+                <img src="images/gold/pile-of-gold.jpg" style="width: 60px;" />
+                <span class="gold-price">$4.99</span>
+              </a>'
+            ></stripe-checkout>
+          </form>
         </div>
 
         <div class="col-sm-15">
-          <a href="#" class="btn btn-block btn-default">
-            <span class="gold-title">Bag of Gold</span>
-            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 1200</span>
-            <img src="images/gold/bag-of-gold.jpg" style="width: 90px;" />
-            <span class="gold-price">$9.99</span>
-          </a>
+          <form action="/charge" method="POST">
+            <stripe-checkout
+              form-id="bag-of-gold"
+              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-name="RangerSteve.io"
+              stripe-description='1200 Gold'
+              stripe-amount="999"
+              stripe-image="/images/tile-logo.png"
+              button='<a href="#" class="btn btn-block btn-default">
+                <span class="gold-title">Bag of Gold</span>
+                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 1200</span>
+                <img src="images/gold/bag-of-gold.jpg" style="width: 90px;" />
+                <span class="gold-price">$9.99</span>
+              </a>'
+            ></stripe-checkout>
+          </form>
         </div>
 
         <div class="col-sm-15">
-          <a href="#" class="btn btn-block btn-default">
-            <span class="gold-title">Sack of Gold</span>
-            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 2500</span>
-            <img src="images/gold/sack-of-gold.jpg" style="width: 120px;" />
-            <span class="gold-price">$19.99</span>
-          </a>
+          <form action="/charge" method="POST">
+            <stripe-checkout
+              form-id="sack-of-gold"
+              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-name="RangerSteve.io"
+              stripe-description='2500 Gold'
+              stripe-amount="1999"
+              stripe-image="/images/tile-logo.png"
+              button='<a href="#" class="btn btn-block btn-default">
+                <span class="gold-title">Sack of Gold</span>
+                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 2500</span>
+                <img src="images/gold/sack-of-gold.jpg" style="width: 120px;" />
+                <span class="gold-price">$19.99</span>
+              </a>'
+            ></stripe-checkout>
+          </form>
         </div>
 
         <div class="col-sm-15">
-          <a href="#" class="btn btn-block btn-default">
-            <span class="gold-title">Box of Gold</span>
-            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 6500</span>
-            <img src="images/gold/box-of-gold.jpg" style="width: 120px;" />
-            <span class="gold-price">$49.99</span>
-          </a>
+          <form action="/charge" method="POST">
+            <stripe-checkout
+              form-id="box-of-gold"
+              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-name="RangerSteve.io"
+              stripe-description='6500 Gold'
+              stripe-amount="4999"
+              stripe-image="/images/tile-logo.png"
+              button='<a href="#" class="btn btn-block btn-default">
+                <span class="gold-title">Box of Gold</span>
+                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 6500</span>
+                <img src="images/gold/box-of-gold.jpg" style="width: 120px;" />
+                <span class="gold-price">$49.99</span>
+              </a>'
+            ></stripe-checkout>
+          </form>
         </div>
 
         <div class="col-sm-15">
-          <a href="#" class="btn btn-block btn-default">
-            <span class="gold-title">Chest of Gold</span>
-            <span class="gold-amount"><img src="/images/icons/gold-16.png"> 14000</span>
-            <img src="images/gold/chest-of-gold.jpg" style="width: 130px;" />
-            <span class="gold-price">$99.99</span>
-          </a>
+          <form action="/charge" method="POST">
+            <stripe-checkout
+              form-id="chest-of-gold"
+              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-name="RangerSteve.io"
+              stripe-description='14000 Gold'
+              stripe-amount="9999"
+              stripe-image="/images/tile-logo.png"
+              button='<a href="#" class="btn btn-block btn-default">
+                <span class="gold-title">Chest of Gold</span>
+                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 14000</span>
+                <img src="images/gold/chest-of-gold.jpg" style="width: 130px;" />
+                <span class="gold-price">$99.99</span>
+              </a>'
+            ></stripe-checkout>
+          </form>
+        </div>
+      </div>
+
+      <div class="row mb3">
+        <div class="col-sm-3">
+          <span class="btn btn-primary btn-block no-pointer-events">
+            <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
+          </span>
+        </div>
+        <div class="col-sm-9 text-right">
         </div>
       </div>
 
@@ -111,7 +171,87 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="https://unpkg.com/merge@1.2.0"></script>
+<script src="https://js.stripe.com/v2/"></script>
+<script src="/js/stripe-checkout.js"></script>
 <script>
+  Stripe.setPublishableKey('pk_test_vPvmFwHiHdPIeH3CTdyEd7NE')
 
+  new Vue({
+    el: '#buy-container',
+    delimiters: ['${', '}'],
+    data: {
+      accountSuccessMessage: null,
+      accountErrorMessage: null,
+      newUsername: null,
+      auth: null,
+      user: null,
+      transactions: null,
+    },
+    computed: {
+      totalGold: function () {
+        var self = this
+        if (!this.transactions) return 0
+        return Object.keys(this.transactions)
+          .map(function (key) {
+            return Number(self.transactions[key].gold)
+          })
+          .reduce(function (a, b) {
+            return a + b
+          })
+      }
+    },
+    beforeMount: function() {
+      this.checkAuthStatus()
+    },
+    methods: {
+      addAccountSuccessMessage: function (msg) {
+        var self = this
+        this.accountSuccessMessage = msg
+        this.accountErrorMessage = null
+        setTimeout(function () {
+          self.accountSuccessMessage = null
+        }, 5000)
+      },
+      addAccountErrorMessage: function (msg) {
+        var self = this
+        this.accountErrorMessage = msg
+        this.accountSuccessMessage = null
+        setTimeout(function () {
+          self.accountErrorMessage = null
+        }, 5000)
+      },
+      checkAuthStatus: function () {
+        var self = this
+        // Check if the user is signed in
+        firebase.auth().onAuthStateChanged(function(auth) {
+          if (!auth) return
+          self.auth = auth
+          self.fetchUser()
+          self.fetchUserTransactions()
+        })
+      },
+      fetchUserTransactions: function() {
+        var self = this
+        firebase.database()
+          .ref('user_transactions/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.transactions = snapshot.val()
+            self.$forceUpdate()
+          })
+      },
+      fetchUser: function () {
+        var self = this
+        firebase.database()
+          .ref('users/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.user = snapshot.val()
+            self.newUsername = self.user.username
+            if (self.user)
+              localStorage.setItem('nickname', JSON.stringify(self.user.username))
+          })
+      }
+    }
+  })
 </script>
 {% endblock %}

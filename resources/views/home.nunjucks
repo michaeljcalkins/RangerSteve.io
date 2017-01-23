@@ -265,7 +265,7 @@
         if (!this.transactions) return 0
         return Object.keys(this.transactions)
           .map(function (key) {
-            return self.transactions[key].coins
+            return Number(self.transactions[key].gold)
           })
           .reduce(function (a, b) {
             return a + b

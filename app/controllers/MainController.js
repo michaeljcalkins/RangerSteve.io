@@ -79,9 +79,9 @@ let MainController = {
       error = 'Announcement cannot be empty.'
     } else {
       Server.send(
-                GameConsts.EVENT.ANNOUNCEMENT,
-                req.body.announcement
-            )
+        GameConsts.EVENT.ANNOUNCEMENT,
+        req.body.announcement
+      )
       success = true
     }
 
