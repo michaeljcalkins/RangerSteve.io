@@ -111,13 +111,9 @@
         </div>
       </div>
 
-      <div class="row mb3">
-        <div class="col-sm-3">
-          <span class="btn btn-primary btn-block no-pointer-events">
+      <div class="row">
+        <div id="store-gold-info">
             <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
-          </span>
-        </div>
-        <div class="col-sm-9 text-right">
         </div>
       </div>
 
