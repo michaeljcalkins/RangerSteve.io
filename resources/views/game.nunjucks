@@ -62,6 +62,19 @@
             <!-- Phaser debug plugin -->
             <script src="https://cdn.rawgit.com/englercj/phaser-debug/master/dist/phaser-debug.js"></script>
         {% endif %}
+        <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyCUB7iZ5M_UizQ3Y4uXKsV18cm_ISr5-Nk",
+            authDomain: "rangersteve-5d1fc.firebaseapp.com",
+            databaseURL: "https://rangersteve-5d1fc.firebaseio.com",
+            storageBucket: "rangersteve-5d1fc.appspot.com",
+            messagingSenderId: "452510793270"
+          };
+          firebase.initializeApp(config);
+        </script>
+
         <script src="/js/app.js?v={{ lastModifiedTime }}"></script>
     </body>
 </html>

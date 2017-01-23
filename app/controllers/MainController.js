@@ -38,8 +38,8 @@ let MainController = {
     })
   },
 
-  leaderboard: function (req, res) {
-    res.render('leaderboard')
+  leaderboards: function (req, res) {
+    res.render('leaderboards')
   },
 
   battleStats: function (req, res) {

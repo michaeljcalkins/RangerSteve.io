@@ -1,3 +1,10 @@
+export const setPlayer = (value) => {
+  return {
+    type: 'SET_PLAYER',
+    value
+  }
+}
+
 export const setNextSelectedPrimaryWeaponId = (value) => {
   return {
     type: 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID',

@@ -10,14 +10,15 @@ const Server = require('./Server')
 
 const GameConsts = require('../lib/GameConsts')
 const helpers = require('../lib/helpers')
-const createPlayer = require('./services/createPlayer')
-const getPlayerById = require('./services/getPlayerById')
-const getTeam = require('./services/getTeam')
-const createRoom = require('./services/createRoom')
-const getRoomIdByPlayerId = require('./services/getRoomIdByPlayerId')
+const createPlayer = require('../lib/createPlayer')
+const getPlayerById = require('../lib/getPlayerById')
+const getTeam = require('../lib/getTeam')
+const createRoom = require('../lib/createRoom')
+const getRoomIdByPlayerId = require('../lib/getRoomIdByPlayerId')
 // const bulletSchema = require('../lib/schemas/bulletSchema')
 // const playerIdSchema = require('../lib/schemas/playerIdSchema')
 const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
+const savePlayerScoresToFirebase = require('../lib/savePlayerScoresToFirebase')
 
 const filter = new Filter()
 
@@ -148,6 +149,7 @@ setInterval(function () {
         rooms[roomId].players[playerId].killingSpree = 0
         rooms[roomId].players[playerId].bulletsFired = 0
         rooms[roomId].players[playerId].bulletsHit = 0
+        rooms[roomId].players[playerId].timesHit = 0
         rooms[roomId].players[playerId].score = 0
         rooms[roomId].players[playerId].headshots = 0
         rooms[roomId].players[playerId].secondsInRound = 0
@@ -166,6 +168,7 @@ setInterval(function () {
       util.log('Round has ended for', roomId)
       rooms[roomId].state = 'ended'
       rooms[roomId].roundStartTime = moment().add(GameConsts.END_OF_ROUND_BREAK_SECONDS, 'seconds').unix()
+      savePlayerScoresToFirebase(rooms[roomId])
       return
     }
 
@@ -220,15 +223,16 @@ function onPlayerScores () {
     }
 
     playerScores[playerId] = {
-      deaths: rooms[roomId].players[playerId].deaths,
-      kills: rooms[roomId].players[playerId].kills,
       bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
-      killingSpree: rooms[roomId].players[playerId].killingSpree,
       bulletsFired: rooms[roomId].players[playerId].bulletsFired,
       bulletsHit: rooms[roomId].players[playerId].bulletsHit,
-      score: rooms[roomId].players[playerId].score,
+      deaths: rooms[roomId].players[playerId].deaths,
       headshots: rooms[roomId].players[playerId].headshots,
-      secondsInRound: rooms[roomId].players[playerId].secondsInRound
+      killingSpree: rooms[roomId].players[playerId].killingSpree,
+      kills: rooms[roomId].players[playerId].kills,
+      score: rooms[roomId].players[playerId].score,
+      secondsInRound: rooms[roomId].players[playerId].secondsInRound,
+      timesHit: rooms[roomId].players[playerId].timesHit,
     }
   })
 
@@ -315,6 +319,7 @@ function onNewPlayer (data) {
   var newPlayer = createPlayer(this.id, data.x, data.y)
   newPlayer.weaponId = data.weaponId
   newPlayer.nickname = data.nickname
+  newPlayer.uid = data.uid
 
   let roomIdPlayerWillJoin = null
 
@@ -488,6 +493,7 @@ function onPlayerDamaged (data) {
   player.damageStats.attackingDamage += data.damage
   player.damageStats.attackingHits++
   player.damageStats.weaponId = data.weaponId
+  player.timesHit++
 
   const attackingPlayer = getPlayerById(roomId, data.attackingPlayerId, rooms)
   if (attackingPlayer) {
@@ -495,7 +501,7 @@ function onPlayerDamaged (data) {
     if (data.wasHeadshot) attackingPlayer.headshots++
   }
 
-    // Player was killed when shot
+  // Player was killed when shot
   if (player.health <= 0) {
     player.health = 0
     player.killingSpree = 0
@@ -524,6 +530,7 @@ function onPlayerDamaged (data) {
           killingSpree: rooms[roomId].players[playerId].killingSpree,
           bulletsFired: rooms[roomId].players[playerId].bulletsFired,
           bulletsHit: rooms[roomId].players[playerId].bulletsHit,
+          timesHit: rooms[roomId].players[playerId].timesHit,
           score: rooms[roomId].players[playerId].score,
           headshots: rooms[roomId].players[playerId].headshots,
           secondsInRound: rooms[roomId].players[playerId].secondsInRound
@@ -531,8 +538,8 @@ function onPlayerDamaged (data) {
       })
 
       Server.sendToRoom(
-                roomId,
-                GameConsts.EVENT.PLAYER_KILL_LOG,
+        roomId,
+        GameConsts.EVENT.PLAYER_KILL_LOG,
         {
           attackerNickname: attackingPlayer.nickname,
           blueTeamScore: rooms[roomId].blueTeamScore,
@@ -545,7 +552,7 @@ function onPlayerDamaged (data) {
           wasHeadshot: data.wasHeadshot,
           weaponId: data.weaponId
         }
-            )
+      )
     } else {
       if (player.score >= 10) {
         player.score -= 10
@@ -560,6 +567,7 @@ function onPlayerDamaged (data) {
           killingSpree: rooms[roomId].players[playerId].killingSpree,
           bulletsFired: rooms[roomId].players[playerId].bulletsFired,
           bulletsHit: rooms[roomId].players[playerId].bulletsHit,
+          timesHit: rooms[roomId].players[playerId].timesHit,
           score: rooms[roomId].players[playerId].score,
           headshots: rooms[roomId].players[playerId].headshots,
           secondsInRound: rooms[roomId].players[playerId].secondsInRound

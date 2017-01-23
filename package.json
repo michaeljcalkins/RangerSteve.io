@@ -70,6 +70,7 @@
     "express-nunjucks": "^1.0.0",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "file-loader": "^0.9.0",
+    "firebase-admin": "^4.0.5",
     "happypack": "^2.2.1",
     "html-webpack-plugin": "^2.22.0",
     "human-readable-ids": "^1.0.1",
