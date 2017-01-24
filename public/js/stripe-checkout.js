@@ -1,9 +1,11 @@
 window.Vue.component('stripe-checkout', {
-  template: '<div :id="formId">\
-    <div @click.prevent="purchase()"\
-      :disabled="!loaded"\
-      v-html="button"></div>\
-  </div>',
+  template: `
+    <div :id="formId">
+      <div @click.prevent="purchase()" :disabled="!loaded">
+        <slot></slot>
+      </div>
+    </div>
+  `,
   props: {
     formId: {
       required: false,
@@ -23,11 +25,6 @@ window.Vue.component('stripe-checkout', {
     },
     stripeAmount: {
       required: true,
-      default: null
-    },
-    button: {
-      type: String,
-      require: false,
       default: null
     },
     options: {

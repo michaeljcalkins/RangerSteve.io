@@ -25,11 +25,14 @@ let ApiStripeController = {
         return
       }
 
+      var price = charge.amount / 100
+      var gold = GameConsts.STORE_PAYMENTS[price] && GameConsts.STORE_PAYMENTS[price].gold || 0
+
       firebaseDb.database()
         .ref('user_transactions/' + req.body.uid)
         .push({
           amount: charge.amount,
-          gold: GameConsts.STORE_PRICES[charge.amount],
+          gold: gold,
           method: 'stripe',
           created_at: Date.now()
         }, function (err) {

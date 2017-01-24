@@ -22,103 +22,28 @@
         </p>
       </div>
       <div class="row gold-container mb3">
-        <div class="col-sm-15">
+        <div class="col-sm-15" v-for="(payment, price) in payments">
           <form action="/charge" method="POST">
             <input type="hidden" v-bind:value="uid" name="uid" />
             <stripe-checkout
-              form-id="pile-of-gold"
+              :form-id="payment.id"
               stripe-key="{{ stripePublicKey }}"
               stripe-name="RangerSteve.io"
-              stripe-description='500 Gold'
-              stripe-amount="499"
+              :stripe-description="payment.gold + ' Gold'"
+              :stripe-amount="payment.stripeAmount"
               stripe-image="/images/tile-logo.png"
-              button='<a href="#" class="btn-block btn btn-default">
-                <span class="gold-title">Pile of Gold</span>
-                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 500</span>
-                <img src="images/gold/pile-of-gold.jpg" style="width: 60px;" />
-                <span class="gold-price">$4.99</span>
-              </a>'
-            ></stripe-checkout>
-          </form>
-        </div>
-
-        <div class="col-sm-15">
-          <form action="/charge" method="POST">
-            <input type="hidden" v-bind:value="uid" name="uid" />
-            <stripe-checkout
-              form-id="bag-of-gold"
-              stripe-key="{{ stripePublicKey }}"
-              stripe-name="RangerSteve.io"
-              stripe-description='1200 Gold'
-              stripe-amount="999"
-              stripe-image="/images/tile-logo.png"
-              button='<a href="#" class="btn btn-block btn-default">
-                <span class="gold-title">Bag of Gold</span>
-                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 1200</span>
-                <img src="images/gold/bag-of-gold.jpg" style="width: 90px;" />
-                <span class="gold-price">$9.99</span>
-              </a>'
-            ></stripe-checkout>
-          </form>
-        </div>
-
-        <div class="col-sm-15">
-          <form action="/charge" method="POST">
-            <input type="hidden" v-bind:value="uid" name="uid" />
-            <stripe-checkout
-              form-id="sack-of-gold"
-              stripe-key="{{ stripePublicKey }}"
-              stripe-name="RangerSteve.io"
-              stripe-description='2500 Gold'
-              stripe-amount="1999"
-              stripe-image="/images/tile-logo.png"
-              button='<a href="#" class="btn btn-block btn-default">
-                <span class="gold-title">Sack of Gold</span>
-                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 2500</span>
-                <img src="images/gold/sack-of-gold.jpg" style="width: 120px;" />
-                <span class="gold-price">$19.99</span>
-              </a>'
-            ></stripe-checkout>
-          </form>
-        </div>
-
-        <div class="col-sm-15">
-          <form action="/charge" method="POST">
-            <input type="hidden" v-bind:value="uid" name="uid" />
-            <stripe-checkout
-              form-id="box-of-gold"
-              stripe-key="{{ stripePublicKey }}"
-              stripe-name="RangerSteve.io"
-              stripe-description='6500 Gold'
-              stripe-amount="4999"
-              stripe-image="/images/tile-logo.png"
-              button='<a href="#" class="btn btn-block btn-default">
-                <span class="gold-title">Box of Gold</span>
-                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 6500</span>
-                <img src="images/gold/box-of-gold.jpg" style="width: 120px;" />
-                <span class="gold-price">$49.99</span>
-              </a>'
-            ></stripe-checkout>
-          </form>
-        </div>
-
-        <div class="col-sm-15">
-          <form action="/charge" method="POST">
-            <input type="hidden" v-bind:value="uid" name="uid" />
-            <stripe-checkout
-              form-id="chest-of-gold"
-              stripe-key="{{ stripePublicKey }}"
-              stripe-name="RangerSteve.io"
-              stripe-description='14000 Gold'
-              stripe-amount="9999"
-              stripe-image="/images/tile-logo.png"
-              button='<a href="#" class="btn btn-block btn-default">
-                <span class="gold-title">Chest of Gold</span>
-                <span class="gold-amount"><img src="/images/icons/gold-16.png"> 14000</span>
-                <img src="images/gold/chest-of-gold.jpg" style="width: 130px;" />
-                <span class="gold-price">$99.99</span>
-              </a>'
-            ></stripe-checkout>
+            >
+              <a href="#" class="btn-block btn btn-default">
+                <span class="gold-title">${ payment.title }</span>
+                <span class="gold-amount"><img src="/images/icons/gold-16.png"> ${ payment.gold }</span>
+                <img :src="'images/gold/' + payment.id + '.jpg'" style="width: 100px;" />
+                <span v-if="isDiscount" class="gold-price" :class="{ isDiscount: isDiscount }">
+                  <strike>${ payment.basePrice | currency }</strike>
+                  <span class="new-price">${ payment.price | currency }</span>
+                </span>
+                <span v-else class="gold-price">${ payment.price | currency }</span>
+              </a>
+            </stripe-checkout>
           </form>
         </div>
       </div>
@@ -215,6 +140,9 @@
 <script>
   Stripe.setPublishableKey('{{ stripePublicKey }}')
 
+  var payments = {{ payments | dump | safe }}
+  var isDiscount = {{ discount }} > 0
+
   new Vue({
     el: '#store-container',
     delimiters: ['${', '}'],
@@ -225,7 +153,14 @@
       auth: null,
       user: null,
       transactions: null,
-      uid: null
+      uid: null,
+      isDiscount: isDiscount,
+      payments: payments
+    },
+    filters: {
+      currency: function (value) {
+        return '$' + parseFloat(value).toFixed(2)
+      }
     },
     computed: {
       totalGold: function () {
