@@ -132,7 +132,7 @@
           </div>
         </div>
 
-        <fieldset>
+        <fieldset class="mb0">
           <legend>Characters</legend>
           <div class="row">
             <div class="col-sm-3">
@@ -167,8 +167,29 @@
           <div class="row">
             <div class="col-sm-3">
               <a class="gold-button btn btn-default" href="/buy">
-                <span>Terrorist Jim</span>
+                <span>Terrorist Jack</span>
                 <img src="/images/characters/TerroristJim.png" height="166" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default" href="/buy">
+                <span>KGB Victor</span>
+                <img src="/images/characters/KGBViktor.png" width="125" height="166" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default" href="/buy">
+                <span>Scooba Steve</span>
+                <img src="/images/characters/Scooba.png" width="125" height="166" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default" href="/buy">
+                <span>Redneck Jim</span>
+                <img src="/images/characters/RedneckJim.png" width="125" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
