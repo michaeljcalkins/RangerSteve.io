@@ -2,7 +2,7 @@
 
 // Set your secret key: remember to change this to your live secret key in production
 // See your keys here: https://dashboard.stripe.com/account/apikeys
-var stripe = require('stripe')('sk_test_Vp8wJlAaaqm1rDQAR7JBT8zB')
+var stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 var firebaseDb = require('../../lib/firebaseDb')
 const GameConsts = require('../../lib/GameConsts')
 
@@ -26,7 +26,7 @@ let ApiStripeController = {
       }
 
       firebaseDb.database()
-        .ref('user_transactions/XDDJmMdiAfgQDWE1ec4aPocqNzk2')
+        .ref('user_transactions/' + req.body.uid)
         .push({
           amount: charge.amount,
           gold: GameConsts.STORE_PRICES[charge.amount],

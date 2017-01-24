@@ -17,9 +17,10 @@
       <div class="row gold-container mb3">
         <div class="col-sm-15">
           <form action="/charge" method="POST">
+            <input type="hidden" v-bind:value="uid" name="uid" />
             <stripe-checkout
               form-id="pile-of-gold"
-              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-key="{{ stripePublicKey }}"
               stripe-name="RangerSteve.io"
               stripe-description='500 Gold'
               stripe-amount="499"
@@ -36,9 +37,10 @@
 
         <div class="col-sm-15">
           <form action="/charge" method="POST">
+            <input type="hidden" v-bind:value="uid" name="uid" />
             <stripe-checkout
               form-id="bag-of-gold"
-              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-key="{{ stripePublicKey }}"
               stripe-name="RangerSteve.io"
               stripe-description='1200 Gold'
               stripe-amount="999"
@@ -55,9 +57,10 @@
 
         <div class="col-sm-15">
           <form action="/charge" method="POST">
+            <input type="hidden" v-bind:value="uid" name="uid" />
             <stripe-checkout
               form-id="sack-of-gold"
-              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-key="{{ stripePublicKey }}"
               stripe-name="RangerSteve.io"
               stripe-description='2500 Gold'
               stripe-amount="1999"
@@ -74,9 +77,10 @@
 
         <div class="col-sm-15">
           <form action="/charge" method="POST">
+            <input type="hidden" v-bind:value="uid" name="uid" />
             <stripe-checkout
               form-id="box-of-gold"
-              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-key="{{ stripePublicKey }}"
               stripe-name="RangerSteve.io"
               stripe-description='6500 Gold'
               stripe-amount="4999"
@@ -93,9 +97,10 @@
 
         <div class="col-sm-15">
           <form action="/charge" method="POST">
+            <input type="hidden" v-bind:value="uid" name="uid" />
             <stripe-checkout
               form-id="chest-of-gold"
-              stripe-key="pk_test_vPvmFwHiHdPIeH3CTdyEd7NE"
+              stripe-key="{{ stripePublicKey }}"
               stripe-name="RangerSteve.io"
               stripe-description='14000 Gold'
               stripe-amount="9999"
@@ -180,7 +185,7 @@
 <script src="https://js.stripe.com/v2/"></script>
 <script src="/js/stripe-checkout.js"></script>
 <script>
-  Stripe.setPublishableKey('pk_test_vPvmFwHiHdPIeH3CTdyEd7NE')
+  Stripe.setPublishableKey('{{ stripePublicKey }}')
 
   new Vue({
     el: '#buy-container',
@@ -192,6 +197,7 @@
       auth: null,
       user: null,
       transactions: null,
+      uid: null
     },
     computed: {
       totalGold: function () {
@@ -232,6 +238,7 @@
         firebase.auth().onAuthStateChanged(function(auth) {
           if (!auth) return
           self.auth = auth
+          self.uid = auth.uid
           self.fetchUser()
           self.fetchUserTransactions()
         })

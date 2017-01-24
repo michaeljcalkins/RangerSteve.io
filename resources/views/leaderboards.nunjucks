@@ -68,7 +68,9 @@
     data: {
       leaderboards: {},
       usernameLookup: {},
-      playerScores: {}
+      playerScores: {},
+      auth: null,
+      user: null
     },
     beforeMount: function() {
       this.fetchLeaderboards()

@@ -18,15 +18,6 @@ old
 stats.json
 .happypack
 
-# python
-.Python
-*.pyc
-venv
-
-# java
-*.class
-.gradle
-
 # node
 node_modules
 logs
@@ -46,3 +37,4 @@ public/css/app.css.map
 lib/GameConsts.dev.js
 /.vscode
 /lib/GameConsts.dev.js
+.env
