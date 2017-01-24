@@ -109,7 +109,7 @@
             newPlayerObj.name = newUsernameLookup[id]
             return self.leaderboards[id]
           })
-        this.playerScores = this.playerScores.sort(compare, 'score').reverse()
+        this.playerScores = this.playerScores.sort(compare, 'score')
 
         this.playerScores.forEach(function (playerScore) {
           playerScore.kdr = playerScore.deaths > 0
