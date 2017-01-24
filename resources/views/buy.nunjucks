@@ -181,7 +181,7 @@
             </div>
             <div class="col-sm-3">
               <a class="gold-button btn btn-default" href="/buy">
-                <span>Scooba Steve</span>
+                <span>Scuba Steve</span>
                 <img src="/images/characters/Scooba.png" width="125" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
