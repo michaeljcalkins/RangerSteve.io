@@ -68,9 +68,7 @@
     data: {
       leaderboards: {},
       usernameLookup: {},
-      playerScores: {},
-      auth: null,
-      user: null
+      playerScores: {}
     },
     beforeMount: function() {
       this.fetchLeaderboards()
@@ -98,6 +96,7 @@
         var self = this
         if (! this.leaderboards) return
 
+        // Flip the object of uid: username -> username: uid
         var newUsernameLookup = {}
         Object.keys(this.usernameLookup)
           .forEach(function (username) {
@@ -105,28 +104,38 @@
             newUsernameLookup[playerId] = username
           })
 
+        // Construct a new array of player objects
+        // containing their name and leaderboard
+        // record stats
         this.playerScores = Object.keys(this.leaderboards)
           .map(function (id) {
             var newPlayerObj = self.leaderboards[id]
             newPlayerObj.name = newUsernameLookup[id]
             return self.leaderboards[id]
           })
+
+        // Sort player array by score
         this.playerScores = this.playerScores.sort(compare, 'score')
 
+        // Calculate special stats for each player
         this.playerScores.forEach(function (playerScore) {
+          // Calculate kill death ratio
           playerScore.kdr = playerScore.deaths > 0
             ? (playerScore.kills / playerScore.deaths).toFixed(2)
             : playerScore.kills
 
+          // Calculate kills per minute
           var minutesInRound = playerScore.secondsInRound / 60
           playerScore.killsPerMinute = minutesInRound > 0 ?
             (playerScore.kills / minutesInRound).toFixed(1)
             : 0
 
+          // Calculate score per minute
           playerScore.scorePerMinute = minutesInRound > 0
             ? (playerScore.score / minutesInRound).toFixed(1)
             : 0
 
+          // Caluclate win percentage
           var roundsWon = _.get(playerScore, 'roundsWon', 0)
           var roundsLost = _.get(playerScore, 'roundsLost', 0)
           var totalRounds = roundsWon + roundsLost
