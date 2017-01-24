@@ -9,7 +9,7 @@ var StripeController = require('./controllers/StripeController')
 var auth = basicAuth('admin', '!rs(;;)')
 
 router.get('/', MainController.home)
-router.get('/buy', MainController.buy)
+router.get('/store', MainController.store)
 router.get('/leaderboards', MainController.leaderboards)
 router.get('/battle-stats/:username', MainController.battleStats)
 router.get('/game', MainController.game)

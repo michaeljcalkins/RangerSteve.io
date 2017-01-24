@@ -21,8 +21,8 @@ let MainController = {
     })
   },
 
-  buy: function (req, res) {
-    res.render('buy', {
+  store: function (req, res) {
+    res.render('store', {
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY
     })
   },

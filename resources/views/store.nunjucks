@@ -1,6 +1,6 @@
 {% extends 'master.nunjucks' %}
 
-{% block title %}Buy | RangerSteve.io{% endblock %}
+{% block title %}Store | RangerSteve.io{% endblock %}
 
 {% block content %}
 <span id="beta-label">Beta</span>
@@ -13,7 +13,14 @@
       </span>
     </div>
 
-    <div class="store-container" id="buy-container" v-cloak>
+    <div id="store-container" v-cloak>
+      <div class="alert alert-info text-center pr5 pl5">
+        <h3 class="mt0 mb1 fwbold">20% Off Pre-launch Discount!</h3>
+        <p class="ft8 lh13">
+          The core of the game will still be free, but we are going to extend gameplay by<br />
+          creating new characters to play as without over powering them.
+        </p>
+      </div>
       <div class="row gold-container mb3">
         <div class="col-sm-15">
           <form action="/charge" method="POST">
@@ -134,60 +141,60 @@
 
         <fieldset class="mb0">
           <legend>Characters</legend>
-          <div class="row">
+          <div class="row no-pointer-events">
             <div class="col-sm-3">
-              <a class="gold-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default" href="/store">
                 <span>Ranger Steve</span>
                 <img src="/images/characters/RangerSteve.png" width="95" />
                 <span>Free</span>
               </a>
             </div>
             <div class="col-sm-3">
-              <a class="gold-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default" href="/store">
                 <span>Commando Mike</span>
                 <img src="/images/characters/CommandoMike.png" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
             <div class="col-sm-3">
-              <a class="gold-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default" href="/store">
                 <span>GI John</span>
                 <img src="/images/characters/GIJohn.png" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
             <div class="col-sm-3">
-              <a class="gold-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default" href="/store">
                 <span>Real Estate Job</span>
                 <img src="/images/characters/RealEstateRob.png" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
           </div>
-          <div class="row">
+          <div class="row no-pointer-events">
             <div class="col-sm-3">
-              <a class="gold-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default mb0" href="/store">
                 <span>Terrorist Jack</span>
                 <img src="/images/characters/TerroristJim.png" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
             <div class="col-sm-3">
-              <a class="gold-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default mb0" href="/store">
                 <span>KGB Victor</span>
                 <img src="/images/characters/KGBViktor.png" width="125" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
             <div class="col-sm-3">
-              <a class="gold-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default mb0" href="/store">
                 <span>Scuba Steve</span>
                 <img src="/images/characters/Scooba.png" width="125" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
             <div class="col-sm-3">
-              <a class="gold-button btn btn-default" href="/buy">
+              <a class="gold-button btn btn-default mb0" href="/store">
                 <span>Redneck Jim</span>
                 <img src="/images/characters/RedneckJim.png" width="125" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
@@ -209,7 +216,7 @@
   Stripe.setPublishableKey('{{ stripePublicKey }}')
 
   new Vue({
-    el: '#buy-container',
+    el: '#store-container',
     delimiters: ['${', '}'],
     data: {
       accountSuccessMessage: null,

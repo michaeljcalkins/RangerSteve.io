@@ -19,6 +19,18 @@ $i: 6;
     $i: $i - 1;
 }
 
+$i: 20;
+@while $i > -1 {
+    .ft#{$i} { font-size: 2px * $i; }
+    $i: $i - 1;
+}
+
+$i: 20;
+@while $i > -1 {
+    .lh#{$i} { line-height: 2px * $i; }
+    $i: $i - 1;
+}
+
 .pointer { cursor: pointer }
 
 .no-border { border: 0 }

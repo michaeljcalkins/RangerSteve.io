@@ -36,9 +36,9 @@ let ApiStripeController = {
           if (err) {
             // The card has been declined.
             console.error(err)
-            return res.redirect('/buy?success=false')
+            return res.redirect('/store?success=false')
           }
-          res.redirect('/buy?success=true')
+          res.redirect('/store?success=true')
         })
     })
   }

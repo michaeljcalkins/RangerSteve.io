@@ -197,7 +197,7 @@
             <div class="col-sm-4">
               <a
                 class="btn btn-primary btn-block"
-                href="/buy"
+                href="/store"
               >
                 <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
               </a>
