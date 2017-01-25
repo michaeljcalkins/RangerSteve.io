@@ -29,11 +29,11 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Score</th>
-                <th>KDR</th>
-                <th>Kills / Min</th>
-                <th>Score / Min</th>
-                <th>Win Percentage</th>
+                <th class="pointer" v-on:click="setSortColumn('score')">Score</th>
+                <th class="pointer" v-on:click="setSortColumn('kdr')">KDR</th>
+                <th class="pointer" v-on:click="setSortColumn('killsPerMinute')">Kills / Min</th>
+                <th class="pointer" v-on:click="setSortColumn('scorePerMinute')">Score / Min</th>
+                <th class="pointer" v-on:click="setSortColumn('winPercentage')">Win Percentage</th>
               </tr>
             </thead>
             <tbody>
@@ -43,7 +43,7 @@
                 <td>${ playerScore.kdr }</td>
                 <td>${ playerScore.killsPerMinute }</td>
                 <td>${ playerScore.scorePerMinute }</td>
-                <td>${ playerScore.winPercentage }</td>
+                <td>${ playerScore.winPercentage }%</td>
               </tr>
             </tbody>
           </table>
@@ -56,26 +56,23 @@
 
 {% block scripts %}
 <script>
-  function compare (a, b) {
-    if (a.score > b.score)
-      return -1
-    if (a.score < b.score)
-      return 1
-    return 0
-  }
-
   new Vue({
     el: '#leaderboards-container',
     delimiters: ['${', '}'],
     data: {
       leaderboards: {},
       usernameLookup: {},
-      playerScores: {}
+      playerScores: {},
+      sortColumn: 'score'
     },
     beforeMount: function() {
       this.fetchLeaderboards()
     },
     methods: {
+      setSortColumn: function (column) {
+        this.sortColumn = column
+        this.fetchLeaderboards()
+      },
       fetchLeaderboards: function () {
         var self = this
         var ref = firebase.database()
@@ -115,7 +112,6 @@
             newPlayerObj.name = newUsernameLookup[id]
             return self.leaderboards[id]
           })
-          .sort(compare)
 
         // Calculate special stats for each player
         this.playerScores.forEach(function (playerScore) {
@@ -140,8 +136,12 @@
           var roundsLost = _.get(playerScore, 'roundsLost', 0)
           var totalRounds = roundsWon + roundsLost
           playerScore.winPercentage = totalRounds > 0
-            ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0) + '%'
-            : '0%'
+            ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0)
+            : 0
+        })
+
+        this.playerScores = this.playerScores.sort(function (a, b) {
+          return  b[self.sortColumn] - a[self.sortColumn]
         })
       }
     }
