@@ -17,7 +17,6 @@
     <meta property="og:url" content="https://rangersteve.io" />
     <meta property="og:type" content="website" />
 
-    <link rel="manifest" href="/manifest.json">
     <link rel="shortcut icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css">
     <link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css">
