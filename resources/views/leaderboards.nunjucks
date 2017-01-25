@@ -29,11 +29,11 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th class="pointer" v-on:click="setSortColumn('score')">Score</th>
-                <th class="pointer" v-on:click="setSortColumn('kdr')">KDR</th>
-                <th class="pointer" v-on:click="setSortColumn('killsPerMinute')">Kills / Min</th>
-                <th class="pointer" v-on:click="setSortColumn('scorePerMinute')">Score / Min</th>
-                <th class="pointer" v-on:click="setSortColumn('winPercentage')">Win Percentage</th>
+                <th class="pointer" v-on:click="setSortColumn('score')">Score <span v-if="sortColumn === 'score'">▼</span></th>
+                <th class="pointer" v-on:click="setSortColumn('kdr')">KDR <span v-if="sortColumn === 'kdr'">▼</span></th>
+                <th class="pointer" v-on:click="setSortColumn('killsPerMinute')">Kills / Min <span v-if="sortColumn === 'killsPerMinute'">▼</span></th>
+                <th class="pointer" v-on:click="setSortColumn('scorePerMinute')">Score / Min <span v-if="sortColumn === 'scorePerMinute'">▼</span></th>
+                <th class="pointer" v-on:click="setSortColumn('winPercentage')">Win Percentage <span v-if="sortColumn === 'winPercentage'">▼</span></th>
               </tr>
             </thead>
             <tbody>
