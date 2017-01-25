@@ -124,7 +124,8 @@ export default function onGameLoop (data) {
     })
 
     if (lastPlayerNickname[playerId] !== player.data.nickname) {
-      player.usernameText.setText(player.data.nickname)
+      const username = player.data.nickname || ''
+      player.usernameText.setText(username)
       player.usernameText.x = (player.usernameText.width / 2) * -1
       player.usernameText.smoothed = true
     }
