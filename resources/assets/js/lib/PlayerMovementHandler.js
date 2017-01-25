@@ -7,7 +7,7 @@ function isFacingLeft (angle) {
 }
 
 function isFacingRight (angle) {
-  return ! isFacingLeft(angle)
+  return !isFacingLeft(angle)
 }
 
 function isRunningLeftAndFacingLeft (isMovingLeft, isMovingRight, mouseX, playerX) {
