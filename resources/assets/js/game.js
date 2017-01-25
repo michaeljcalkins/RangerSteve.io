@@ -1,5 +1,6 @@
 import storage from 'store'
 
+import GameConsts from 'lib/GameConsts'
 import actions from './actions'
 import Boot from './states/Boot'
 import Preloader from './states/Preloader'
@@ -7,7 +8,7 @@ import Deathmatch from './states/Deathmatch'
 import TeamDeathmatch from './states/TeamDeathmatch'
 
 export default function (store) {
-  const useWebgl = storage.get('useWebgl', true)
+  const useWebgl = storage.get('useWebgl', GameConsts.USE_WEBGL_BY_DEFAULT)
   let renderer = window.Phaser.AUTO
   if (!useWebgl) renderer = window.Phaser.CANVAS
 

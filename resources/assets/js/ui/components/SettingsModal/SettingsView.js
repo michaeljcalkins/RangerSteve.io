@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import autobind from 'react-autobind'
 import storage from 'store'
 
+import GameConsts from 'lib/GameConsts'
 import actions from 'actions'
 
 export class SettingsView extends PureComponent {
@@ -16,7 +17,7 @@ export class SettingsView extends PureComponent {
       sfxVolume: props.game.sfxVolume,
       isNetworkStatsVisible: props.game.isNetworkStatsVisible,
       isFpsStatsVisible: props.game.isFpsStatsVisible,
-      useWebgl: storage.get('useWebgl', true)
+      useWebgl: storage.get('useWebgl', GameConsts.USE_WEBGL_BY_DEFAULT)
     }
   }
 
