@@ -3,9 +3,15 @@ import React from 'react'
 export default function ({
   stats
 }) {
+  const latency = window.socket.latency
+
   return (
     <div className='hud-network-stats no-pointer-events'>
       <table>
+        <tr>
+          <td>Ping:</td>
+          <td>{ latency }</td>
+        </tr>
         <tr>
           <td>Data Sent:</td>
           <td>{ stats.dataSent }</td>
