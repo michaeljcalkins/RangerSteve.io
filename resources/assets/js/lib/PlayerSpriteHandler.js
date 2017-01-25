@@ -86,7 +86,6 @@ export default function PlayerSpriteHandler () {
   window.RS.player.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
   window.RS.player.leftArmSprite.anchor.setTo(0.8, 0.2)
   window.RS.player.leftArmSprite.rotation = 83
-  window.RS.player.leftArmSprite.scale.y = -1
   window.RS.player.leftArmGroup.add(window.RS.player.leftArmSprite)
 
   // Add left arm to player as child then offset it
@@ -105,7 +104,6 @@ export default function PlayerSpriteHandler () {
   window.RS.player.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
   window.RS.player.rightArmSprite.anchor.setTo(0.62, 0.4)
   window.RS.player.rightArmSprite.rotation = 83.4
-  window.RS.player.rightArmSprite.scale.y = -1
   window.RS.player.rightArmGroup.add(window.RS.player.rightArmSprite)
 
   // Add right arm to player as child then offset it
@@ -116,10 +114,9 @@ export default function PlayerSpriteHandler () {
   window.RS.player.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
   window.RS.player.anchor.set(0.5)
 
-  // updatePlayerAngles.call(this, window.RS.player, 200)
-
   const playerState = state.room.players[window.SOCKET_ID]
   if (playerState && playerState.team) updatePlayerColor(window.RS.player, playerState.team)
+  playerState.facing = 'left'
   window.RS.player.data = playerState
 
   /**
