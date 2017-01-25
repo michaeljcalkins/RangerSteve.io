@@ -116,8 +116,10 @@ export default function PlayerSpriteHandler () {
 
   const playerState = state.room.players[window.SOCKET_ID]
   if (playerState && playerState.team) updatePlayerColor(window.RS.player, playerState.team)
-  playerState.facing = 'left'
-  window.RS.player.data = playerState
+  window.RS.player.data = {
+    facing: 'left',
+    ...playerState
+  }
 
   /**
    * Camera Settings
