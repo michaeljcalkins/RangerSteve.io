@@ -232,7 +232,7 @@ function onPlayerScores () {
       kills: rooms[roomId].players[playerId].kills,
       score: rooms[roomId].players[playerId].score,
       secondsInRound: rooms[roomId].players[playerId].secondsInRound,
-      timesHit: rooms[roomId].players[playerId].timesHit,
+      timesHit: rooms[roomId].players[playerId].timesHit
     }
   })
 
