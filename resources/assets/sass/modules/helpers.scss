@@ -1,5 +1,5 @@
-.tcw, .tcw-hover:hover { color: white }
-.tcb, .tcb-hover:hover { color: #333 }
+.tcw, .tcw-hover:hover, .tcb.table-hover > tbody > tr:hover { color: white }
+.tcb, .tcb-hover:hover, .tcw.table-hover > tbody > tr:hover { color: #333 }
 
 $i: 6;
 @while $i > -1 {
