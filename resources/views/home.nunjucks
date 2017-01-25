@@ -80,7 +80,7 @@
               </thead>
               <tbody>
                 {% for id, room in rooms %}
-                  <tr class="room-link pointer tcb-hover" data-href="/game?roomId={{ id }}">
+                  <tr class="room-link pointer" data-href="/game?roomId={{ id }}">
                     <td class="dont-break-out">{{ id }}</td>
                     <td>{{ room.gamemode }}</td>
                     <td>{{ room.map }}</td>

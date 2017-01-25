@@ -25,7 +25,7 @@
         </div>
 
         <div class="table-responsive">
-          <table class="table table-middle tcw mb0">
+          <table class="table table-middle table-hover tcw mb0">
             <thead>
               <tr>
                 <th>Name</th>
@@ -37,8 +37,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="playerScore in playerScores">
-                <td><a class="tcw fwbold" v-bind:href="'/battle-stats/' + playerScore.name">${ playerScore.name }</a></td>
+              <tr v-for="playerScore in playerScores" class="pointer" v-on:click="openBattleStats(playerScore.name)">
+                <td class="fwbold">${ playerScore.name }</td>
                 <td>${ playerScore.score }</td>
                 <td>${ playerScore.kdr }</td>
                 <td>${ playerScore.killsPerMinute }</td>
@@ -72,6 +72,9 @@
       setSortColumn: function (column) {
         this.sortColumn = column
         this.fetchLeaderboards()
+      },
+      openBattleStats: function (playerName) {
+        window.location = '/battle-stats/' + playerName
       },
       fetchLeaderboards: function () {
         var self = this

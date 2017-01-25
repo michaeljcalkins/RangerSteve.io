@@ -30,7 +30,7 @@
         <fieldset>
           <legend>Keyboard Controls</legend>
 
-          <table class="table table-hover tcw">
+          <table class="table tcw">
               <thead>
                 <tr>
                   <th>Action</th>
