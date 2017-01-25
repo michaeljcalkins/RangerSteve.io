@@ -1,18 +1,11 @@
 import GameConsts from 'lib/GameConsts'
 
 export default function (player, angle) {
-  /**
-   * Angles are typically provided when it's coming
-   * from a remote player or we are creating
-   * the client's player.
-   */
-  if (!angle) {
-    angle = (this.game.physics.arcade.angleToPointer(player) * 180 / Math.PI) + 90
-  }
-
   player.data = player.data || {}
   let leftAngle = angle
   let rightAngle = angle
+
+  if (!player.data.facing) return
 
   if (angle >= 0 && angle <= 180) {
     const previousFacingValue = player.data.facing
