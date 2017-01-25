@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "postinstall": "npm run build:prod",
-    "test": "NODE_ENV=test mocha --require babel-core/register app/services/**/*.test.js && standard",
+    "test": "NODE_ENV=test mocha --require babel-core/register lib/**/*.test.js && standard",
     "test-report": "NODE_ENV=test mocha --recursive -R xunit tests/browser.js tests/**/*.test.js > test-reports.xml",
     "test-watch": "nodemon --watch app/services/**/*.js -q -x 'npm test'",
     "watch": "webpack --env dev -w",

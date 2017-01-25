@@ -13,9 +13,9 @@ export default class HudAmmo extends PureComponent {
     isSwitching: false
   }
 
-  renderAmmo(ammo, isReloading, isSwitching) {
-    if (isSwitching) return <i className="switching-weapon" />
-    if (isReloading) return <i className="reloading-weapon" />
+  renderAmmo (ammo, isReloading, isSwitching) {
+    if (isSwitching) return <i className='switching-weapon' />
+    if (isReloading) return <i className='reloading-weapon' />
     return ammo
   }
 

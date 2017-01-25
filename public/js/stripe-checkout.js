@@ -90,42 +90,42 @@ window.Vue.component('stripe-checkout', {
             reject('vue-stripe: Unable to load checkout.js')
             clearInterval(handle)
           }
-          }, 5)
-        })
-      },
-      configureStripe: function () {
-        let self = this
-        let options = window.merge.recursive(true, {
-          key: self.stripeKey,
-          image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-          token: function (token) {
-            self.$nextTick(function () {
-              var formElement = document.querySelector('#' + self.formId)
+        }, 5)
+      })
+    },
+    configureStripe: function () {
+      let self = this
+      let options = window.merge.recursive(true, {
+        key: self.stripeKey,
+        image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+        token: function (token) {
+          self.$nextTick(function () {
+            var formElement = document.querySelector('#' + self.formId)
 
-              var tokenInput = document.createElement('input')
-              tokenInput.type = 'hidden'
-              tokenInput.name = 'stripeToken'
-              tokenInput.value = token.id
-              formElement.parentElement.appendChild(tokenInput)
+            var tokenInput = document.createElement('input')
+            tokenInput.type = 'hidden'
+            tokenInput.name = 'stripeToken'
+            tokenInput.value = token.id
+            formElement.parentElement.appendChild(tokenInput)
 
-              var emailInput = document.createElement('input')
-              emailInput.type = 'hidden'
-              emailInput.name = 'stripeEmail'
-              emailInput.value = token.email
-              formElement.parentElement.appendChild(emailInput)
+            var emailInput = document.createElement('input')
+            emailInput.type = 'hidden'
+            emailInput.name = 'stripeEmail'
+            emailInput.value = token.email
+            formElement.parentElement.appendChild(emailInput)
 
-              var amountInput = document.createElement('input')
-              amountInput.type = 'hidden'
-              amountInput.name = 'amount'
-              amountInput.value = self.stripeAmount
-              formElement.parentElement.appendChild(amountInput)
+            var amountInput = document.createElement('input')
+            amountInput.type = 'hidden'
+            amountInput.name = 'amount'
+            amountInput.value = self.stripeAmount
+            formElement.parentElement.appendChild(amountInput)
 
-              formElement.parentElement.submit()
-            })
-          }
-        }, this.options)
-        this.stripe = window.StripeCheckout.configure(options)
-      },
+            formElement.parentElement.submit()
+          })
+        }
+      }, this.options)
+      this.stripe = window.StripeCheckout.configure(options)
+    },
     purchase () {
       let product = this.selectedProduct()
       if (typeof product === 'object' && product.hasOwnProperty('promise')) {

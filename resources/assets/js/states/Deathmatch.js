@@ -1,6 +1,5 @@
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
-import updatePlayerAngles from '../lib/updatePlayerAngles'
 import RotateBulletsToTrajectory from '../lib/RotateBulletsToTrajectory'
 import Maps from '../lib/Maps'
 import Client from '../lib/Client'
@@ -84,7 +83,6 @@ Deathmatch.prototype = {
     if (state.player.health > 0) {
       PlayerMovementHandler.call(this)
       PlayerJumpHandler.call(this)
-      updatePlayerAngles.call(this, window.RS.player)
     }
 
     /**
