@@ -33,7 +33,7 @@ export default function (store) {
   window.firebase.auth().onAuthStateChanged(function (auth) {
     if (auth) {
       store.dispatch(actions.player.setPlayer({
-        uid: auth.uid,
+        uid: auth.uid
       }))
     }
 
