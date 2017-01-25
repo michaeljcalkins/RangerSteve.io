@@ -1,11 +1,10 @@
 import GameConsts from 'lib/GameConsts'
 
 export default function (player, angle) {
-  player.data = player.data || {}
+  if (!player.data.facing) return
+
   let leftAngle = angle
   let rightAngle = angle
-
-  if (!player.data.facing) return
 
   if (angle >= 0 && angle <= 180) {
     const previousFacingValue = player.data.facing
