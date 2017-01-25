@@ -19,36 +19,36 @@ export default function PlayerSpriteHandler () {
   this.game.store.dispatch(actions.player.setPrimaryAmmoRemaining(selectedPrimaryWeapon.ammo))
   this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
 
-    // Player sprite
+  // Player sprite
   window.RS.player = this.game.add.sprite(spawnPoint.x, spawnPoint.y, 'player-placeholder')
   window.RS.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
-    // Physics
+  // Physics
   this.game.physics.arcade.enable(window.RS.player)
   this.game.slopes.enable(window.RS.player)
   this.game.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
 
-    // Add a touch of tile padding for the collision detection
+  // Add a touch of tile padding for the collision detection
   window.RS.player.body.tilePadding.x = 1
   window.RS.player.body.tilePadding.y = 1
 
-    // Set player minimum and maximum movement speed
+  // Set player minimum and maximum movement speed
   window.RS.player.body.maxVelocity.x = GameConsts.MAX_VELOCITY_X
   window.RS.player.body.maxVelocity.y = GameConsts.MAX_VELOCITY_Y
 
-    // Add drag to the player that slows them down when they are not accelerating
+  // Add drag to the player that slows them down when they are not accelerating
   window.RS.player.body.drag.x = GameConsts.SLOPE_FEATURES.dragX
   window.RS.player.body.drag.y = GameConsts.SLOPE_FEATURES.dragY
 
-    // Update player body Arcade Slopes properties
+  // Update player body Arcade Slopes properties
   window.RS.player.body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
   window.RS.player.body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
   window.RS.player.body.slopes.preferY = GameConsts.SLOPE_FEATURES.minimumOffsetY
 
-    // Make player collide with world boundaries so he doesn't leave the stage
+  // Make player collide with world boundaries so he doesn't leave the stage
   window.RS.player.body.collideWorldBounds = true
 
-    // Left jump jet
+  // Left jump jet
   window.RS.player.leftJumpjet = this.game.make.sprite(0, 0, 'jumpjet')
   window.RS.player.leftJumpjet.anchor.setTo(0)
   window.RS.player.leftJumpjet.animations.add('thrust', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 20, true)
@@ -77,7 +77,6 @@ export default function PlayerSpriteHandler () {
   window.RS.player.playerSprite.animations.add('runLeft-faceLeft', [7, 8, 9, 10, 11, 12], GameConsts.ANIMATION_FRAMERATE, true)
   window.RS.player.playerSprite.animations.add('runRight-faceLeft', [14, 15, 16, 17, 18, 19], GameConsts.ANIMATION_FRAMERATE, true)
   window.RS.player.playerSprite.animations.add('runLeft-faceRight', [21, 22, 23, 24, 25, 26], GameConsts.ANIMATION_FRAMERATE, true)
-  window.RS.player.playerSprite.animations.frame = GameConsts.STANDING_RIGHT_FRAME
 
   this.game.store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[primaryWeaponId]))
   this.game.store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[secondaryWeaponId]))
@@ -87,6 +86,7 @@ export default function PlayerSpriteHandler () {
   window.RS.player.leftArmSprite = this.game.add.sprite(0, 0, 'left-arm')
   window.RS.player.leftArmSprite.anchor.setTo(0.8, 0.2)
   window.RS.player.leftArmSprite.rotation = 83
+  window.RS.player.leftArmSprite.scale.y = -1
   window.RS.player.leftArmGroup.add(window.RS.player.leftArmSprite)
 
   // Add left arm to player as child then offset it
@@ -105,6 +105,7 @@ export default function PlayerSpriteHandler () {
   window.RS.player.rightArmSprite.animations.frame = selectedPrimaryWeapon.frame
   window.RS.player.rightArmSprite.anchor.setTo(0.62, 0.4)
   window.RS.player.rightArmSprite.rotation = 83.4
+  window.RS.player.rightArmSprite.scale.y = -1
   window.RS.player.rightArmGroup.add(window.RS.player.rightArmSprite)
 
   // Add right arm to player as child then offset it
@@ -115,15 +116,19 @@ export default function PlayerSpriteHandler () {
   window.RS.player.rightArmGroup.y = GameConsts.PLAYER_FACE.LEFT.RIGHT_ARM_Y
   window.RS.player.anchor.set(0.5)
 
-  updatePlayerAngles.call(this, window.RS.player)
+  // updatePlayerAngles.call(this, window.RS.player, 200)
 
   const playerState = state.room.players[window.SOCKET_ID]
   if (playerState && playerState.team) updatePlayerColor(window.RS.player, playerState.team)
   window.RS.player.data = playerState
 
-    /**
-     * Camera Settings
-     */
+  /**
+   * Camera Settings
+   */
   this.camera.follow(window.RS.player)
   this.camera.lerp.setTo(0.2, 0.2)
+
+  this.game.store.dispatch(actions.player.setPlayer({
+    isRendered: true
+  }))
 }

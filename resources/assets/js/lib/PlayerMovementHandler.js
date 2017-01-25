@@ -29,7 +29,7 @@ export default function PlayerMovementHandler () {
 
   if (state.player.health <= 0) return
 
-  updatePlayerAngles.call(this, window.RS.player)
+  // updatePlayerAngles.call(this, window.RS.player)
 
   if (isRunningLeftAndFacingLeft(isMovingLeft, isMovingRight, this.game.input.worldX, window.RS.player.x)) {
     window.RS.player.playerSprite.animations.play('runLeft-faceLeft')
@@ -41,40 +41,40 @@ export default function PlayerMovementHandler () {
     window.RS.player.playerSprite.animations.play('runRight-faceRight')
   }
 
-    // Standing still and facing right
+  // Standing still and facing right
   if (
-        (
-            isNotMoving(isMovingLeft, isMovingRight) ||
-            this.game.input.activePointer.rightButton.isDown ||
-            isJumpJetInputActive.call(this)
-        ) &&
-        this.game.input.worldX >= window.RS.player.x
-    ) {
+    (
+      isNotMoving(isMovingLeft, isMovingRight) ||
+      this.game.input.activePointer.rightButton.isDown ||
+      isJumpJetInputActive.call(this)
+    ) &&
+      this.game.input.worldX >= window.RS.player.x
+  ) {
     window.RS.player.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
   }
 
-    // Standing still and facing left
+  // Standing still and facing left
   if (
-        (isNotMoving(isMovingLeft, isMovingRight) ||
-        this.game.input.activePointer.rightButton.isDown ||
-        isJumpJetInputActive.call(this)
-        ) &&
-        this.game.input.worldX < window.RS.player.x
-    ) {
+    (isNotMoving(isMovingLeft, isMovingRight) ||
+      this.game.input.activePointer.rightButton.isDown ||
+      isJumpJetInputActive.call(this)
+    ) &&
+    this.game.input.worldX < window.RS.player.x
+  ) {
     window.RS.player.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
   }
 
-    // If the LEFT key is down, set the player velocity to move left
+  // If the LEFT key is down, set the player velocity to move left
   if (isMovingLeft) {
     window.RS.player.body.acceleration.x = -GameConsts.SLOPE_FEATURES.acceleration
   }
 
-    // If the RIGHT key is down, set the player velocity to move right
+  // If the RIGHT key is down, set the player velocity to move right
   if (isMovingRight) {
     window.RS.player.body.acceleration.x = GameConsts.SLOPE_FEATURES.acceleration
   }
 
-    // Stand still
+  // Stand still
   if (isNotMoving(isMovingLeft, isMovingRight)) {
     window.RS.player.body.acceleration.x = 0
     window.RS.player.playerSprite.animations.stop()

@@ -1,6 +1,11 @@
 import GameConsts from 'lib/GameConsts'
 
 export default function (player, angle) {
+  /**
+   * Angles are typically provided when it's coming
+   * from a remote player or we are creating
+   * the client's player.
+   */
   if (!angle) {
     angle = (this.game.physics.arcade.angleToPointer(player) * 180 / Math.PI) + 90
   }
@@ -23,7 +28,7 @@ export default function (player, angle) {
       player.leftArmGroup.y = GameConsts.PLAYER_FACE.RIGHT.LEFT_ARM_Y
     }
 
-        // User is aiming up and to the right
+    // User is aiming up and to the right
     if (angle <= 81 && angle >= 71) {
       leftAngle -= -10
       rightAngle -= 3
@@ -50,7 +55,7 @@ export default function (player, angle) {
       rightAngle -= 5
     }
 
-        // User is aiming down and to the right
+    // User is aiming down and to the right
     if (angle >= 81 && angle <= 91) {
       leftAngle -= -5
       rightAngle -= 7
@@ -96,7 +101,7 @@ export default function (player, angle) {
       player.leftArmGroup.y = GameConsts.PLAYER_FACE.LEFT.LEFT_ARM_Y
     }
 
-        // User is aiming up and to the left
+    // User is aiming up and to the left
     if (angle >= -91 && angle <= -81) {
       leftAngle += 20
       rightAngle -= 9
@@ -126,7 +131,7 @@ export default function (player, angle) {
       rightAngle -= 5
     }
 
-        // User is aiming down and to the left
+    // User is aiming down and to the left
     if (angle <= 270 && angle >= 260) {
       leftAngle += 10
       rightAngle -= 9

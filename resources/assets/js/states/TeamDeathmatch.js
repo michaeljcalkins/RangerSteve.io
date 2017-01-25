@@ -84,7 +84,7 @@ TeamDeathmatch.prototype = {
     if (state.player.health > 0) {
       PlayerMovementHandler.call(this)
       PlayerJumpHandler.call(this)
-      updatePlayerAngles.call(this, window.RS.player)
+      // updatePlayerAngles.call(this, window.RS.player)
     }
 
     /**

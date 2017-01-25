@@ -53,7 +53,6 @@ function isRunningRightAndFacingLeft (player) {
 
 const lastPlayerHealth = {}
 const lastPlayerNickname = {}
-const nextPlayerTween = {}
 
 export default function onGameLoop (data) {
   const store = this.game.store
@@ -139,16 +138,7 @@ export default function onGameLoop (data) {
       updatePlayerColor(player, player.data.team)
     }
 
-    // Prevent the initial tween after respawning from visibly moving their sprite across the map.
-    if (player.data.health === 100 && lastPlayerHealth[playerId] <= 0) {
-      // The next time their position is tweened must be after this timestamp.
-      nextPlayerTween[playerId] = room.currentTime + 0.5
-    }
-
-    if (
-      (player.data.health > 0 && nextPlayerTween[playerId] < room.currentTime) ||
-      (player.data.health > 0 && !nextPlayerTween[playerId])
-    ) {
+    if (player.data.health > 0) {
       // Show players when they are alive and have not respawned recently.
       player.visible = true
     }
@@ -177,7 +167,7 @@ export default function onGameLoop (data) {
         : GameConsts.WEAPONS[player.data.weaponId].frame
     }
 
-    updatePlayerAngles.call(this, player, player.data.angle)
+    // updatePlayerAngles.call(this, player, player.data.angle)
 
     // Decide what animation or frame to show
     if (isNotMovingAndFacingRight(player)) {
