@@ -15,10 +15,10 @@
 
     <div id="store-container" v-cloak>
       <div class="alert alert-info text-center pr5 pl5">
-        <h3 class="mt0 mb1 fwbold">20% Off Pre-launch Discount!</h3>
+        <h3 class="mt0 mb1 fwbold">20% Off Early Bird Discount!</h3>
         <p class="ft8 lh13">
-          The core of the game will still be free, but we are going to extend gameplay by<br />
-          creating new characters to play as without over powering them.
+          The game will still be free, but we are going to extend gameplay by creating<br />
+           new characters to play as without over powering them.
         </p>
       </div>
       <div class="row gold-container mb3">
@@ -90,7 +90,7 @@
             </div>
             <div class="col-sm-3">
               <a class="gold-button btn btn-default" href="/store">
-                <span>Real Estate Job</span>
+                <span>Real Estate Rob</span>
                 <img src="/images/characters/RealEstateRob.png" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
@@ -106,7 +106,7 @@
             </div>
             <div class="col-sm-3">
               <a class="gold-button btn btn-default mb0" href="/store">
-                <span>KGB Victor</span>
+                <span>Secret Agent Sam</span>
                 <img src="/images/characters/KGBViktor.png" width="125" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
