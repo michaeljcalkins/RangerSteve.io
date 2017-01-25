@@ -126,8 +126,4 @@ export default function PlayerSpriteHandler () {
    */
   this.camera.follow(window.RS.player)
   this.camera.lerp.setTo(0.2, 0.2)
-
-  this.game.store.dispatch(actions.player.setPlayer({
-    isRendered: true
-  }))
 }
