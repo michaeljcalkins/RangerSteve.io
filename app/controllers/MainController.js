@@ -2,6 +2,8 @@
 
 const fs = require('fs')
 const moment = require('moment')
+const map = require('lodash/map')
+const kebabCase = require('lodash/kebabCase')
 const hri = require('human-readable-ids').hri
 
 const GameConsts = require('../../lib/GameConsts')
@@ -21,8 +23,19 @@ let MainController = {
     })
   },
 
-  buy: function (req, res) {
-    res.render('buy', {
+  store: function (req, res) {
+    const payments = map(GameConsts.STORE_PAYMENTS, (payment, price) => {
+      return Object.assign({}, payment, {
+        id: kebabCase(payment.title),
+        price: price,
+        stripeAmount: Math.round(price * 100)
+      })
+    })
+
+    res.render('store', {
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
+      payments: payments,
+      discount: GameConsts.STORE_DISCOUNT
     })
   },
 
@@ -79,9 +92,9 @@ let MainController = {
       error = 'Announcement cannot be empty.'
     } else {
       Server.send(
-                GameConsts.EVENT.ANNOUNCEMENT,
-                req.body.announcement
-            )
+        GameConsts.EVENT.ANNOUNCEMENT,
+        req.body.announcement
+      )
       success = true
     }
 

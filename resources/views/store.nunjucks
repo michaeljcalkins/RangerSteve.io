@@ -1,0 +1,232 @@
+{% extends 'master.nunjucks' %}
+
+{% block title %}Store | RangerSteve.io{% endblock %}
+
+{% block content %}
+<span id="beta-label">Beta</span>
+
+<section class="main-section">
+  <div class="col-xs-12">
+    <div class="text-center">
+      <span class="main-header">
+        Store
+      </span>
+    </div>
+
+    <div id="store-container" v-cloak>
+      <div class="alert alert-info text-center pr5 pl5">
+        <h3 class="mt0 mb1 fwbold">20% Off Early Bird Discount!</h3>
+        <p class="ft8 lh13">
+          The game will still be free, but we are going to extend gameplay by creating<br />
+           new characters to play as without over powering them.
+        </p>
+      </div>
+      <div class="row gold-container mb3">
+        <div class="col-sm-15" v-for="(payment, price) in payments">
+          <form action="/charge" method="POST">
+            <input type="hidden" v-bind:value="uid" name="uid" />
+            <stripe-checkout
+              :form-id="payment.id"
+              stripe-key="{{ stripePublicKey }}"
+              stripe-name="RangerSteve.io"
+              :stripe-description="payment.gold + ' Gold'"
+              :stripe-amount="payment.stripeAmount"
+              stripe-image="/images/tile-logo.png"
+            >
+              <a href="#" class="btn-block btn btn-default">
+                <span class="gold-title">${ payment.title }</span>
+                <span class="gold-amount"><img src="/images/icons/gold-16.png"> ${ payment.gold }</span>
+                <img :src="'images/gold/' + payment.id + '.jpg'" style="width: 100px;" />
+                <span v-if="isDiscount" class="gold-price" :class="{ isDiscount: isDiscount }">
+                  <strike>${ payment.basePrice | currency }</strike>
+                  <span class="new-price">${ payment.price | currency }</span>
+                </span>
+                <span v-else class="gold-price">${ payment.price | currency }</span>
+              </a>
+            </stripe-checkout>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="store-gold-info">
+            <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
+        </div>
+      </div>
+
+      <div class="well">
+        <div class="row mb3">
+          <div class="col-xs-6">
+            <a class="btn btn-primary btn-lg btn-block" href="/">Back to Menu</a>
+          </div>
+          <div class="col-xs-6">
+            <a class="btn btn-success btn-lg btn-block" href="/game">Play Now</a>
+          </div>
+        </div>
+
+        <fieldset class="mb0">
+          <legend>Characters</legend>
+          <div class="row no-pointer-events">
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default" href="/store">
+                <span>Ranger Steve</span>
+                <img src="/images/characters/RangerSteve.png" width="95" />
+                <span>Free</span>
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default" href="/store">
+                <span>Commando Mike</span>
+                <img src="/images/characters/CommandoMike.png" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default" href="/store">
+                <span>GI John</span>
+                <img src="/images/characters/GIJohn.png" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default" href="/store">
+                <span>Real Estate Rob</span>
+                <img src="/images/characters/RealEstateRob.png" height="166" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+          </div>
+          <div class="row no-pointer-events">
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default mb0" href="/store">
+                <span>Terrorist Jack</span>
+                <img src="/images/characters/TerroristJim.png" height="166" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default mb0" href="/store">
+                <span>Secret Agent Sam</span>
+                <img src="/images/characters/KGBViktor.png" width="125" height="166" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default mb0" href="/store">
+                <span>Scuba Steve</span>
+                <img src="/images/characters/Scooba.png" width="125" height="166" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a class="gold-button btn btn-default mb0" href="/store">
+                <span>Redneck Jim</span>
+                <img src="/images/characters/RedneckJim.png" width="125" height="166" />
+                <span><img src="/images/icons/gold-16.png"> 300</span>
+              </a>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/merge@1.2.0"></script>
+<script src="https://js.stripe.com/v2/"></script>
+<script src="/js/stripe-checkout.js"></script>
+<script>
+  Stripe.setPublishableKey('{{ stripePublicKey }}')
+
+  var payments = {{ payments | dump | safe }}
+  var isDiscount = {{ discount }} > 0
+
+  new Vue({
+    el: '#store-container',
+    delimiters: ['${', '}'],
+    data: {
+      accountSuccessMessage: null,
+      accountErrorMessage: null,
+      newUsername: null,
+      auth: null,
+      user: null,
+      transactions: null,
+      uid: null,
+      isDiscount: isDiscount,
+      payments: payments
+    },
+    filters: {
+      currency: function (value) {
+        return '$' + parseFloat(value).toFixed(2)
+      }
+    },
+    computed: {
+      totalGold: function () {
+        var self = this
+        if (!this.transactions) return 0
+        return Object.keys(this.transactions)
+          .map(function (key) {
+            return Number(self.transactions[key].gold)
+          })
+          .reduce(function (a, b) {
+            return a + b
+          })
+      }
+    },
+    beforeMount: function() {
+      this.checkAuthStatus()
+    },
+    methods: {
+      addAccountSuccessMessage: function (msg) {
+        var self = this
+        this.accountSuccessMessage = msg
+        this.accountErrorMessage = null
+        setTimeout(function () {
+          self.accountSuccessMessage = null
+        }, 5000)
+      },
+      addAccountErrorMessage: function (msg) {
+        var self = this
+        this.accountErrorMessage = msg
+        this.accountSuccessMessage = null
+        setTimeout(function () {
+          self.accountErrorMessage = null
+        }, 5000)
+      },
+      checkAuthStatus: function () {
+        var self = this
+        // Check if the user is signed in
+        firebase.auth().onAuthStateChanged(function(auth) {
+          if (!auth) return
+          self.auth = auth
+          self.uid = auth.uid
+          self.fetchUser()
+          self.fetchUserTransactions()
+        })
+      },
+      fetchUserTransactions: function() {
+        var self = this
+        firebase.database()
+          .ref('user_transactions/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.transactions = snapshot.val()
+            self.$forceUpdate()
+          })
+      },
+      fetchUser: function () {
+        var self = this
+        firebase.database()
+          .ref('users/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.user = snapshot.val()
+            self.newUsername = self.user.username
+            if (self.user)
+              localStorage.setItem('nickname', JSON.stringify(self.user.username))
+          })
+      }
+    }
+  })
+</script>
+{% endblock %}

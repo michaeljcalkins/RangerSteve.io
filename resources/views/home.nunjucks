@@ -5,7 +5,7 @@
 {% block content %}
 <span id="beta-label">Beta</span>
 
-<section class="main-section">
+<section class="main-section" id="home-container" v-cloak>
   <div class="col-xs-12">
     <div class="text-center">
       <span class="main-header">
@@ -108,54 +108,78 @@
           </div>
         </fieldset>
 
-        <fieldset id="login-container" class="hidden">
+        <fieldset v-if="!auth">
           <legend>Login With</legend>
 
           <div class="alert alert-danger hidden" id="login-error-component"></div>
 
           <div class="row">
             <div class="col-sm-4">
-              <button style="background: #dd4b39;" class="btn btn-primary btn-block" onClick="attemptLoginWithGoogle()">
+              <button
+                class="btn btn-primary btn-block"
+                style="background: #dd4b39;"
+                v-on:click="attemptLoginWithGoogle()"
+              >
                 Google
               </button>
             </div>
             <div class="col-sm-4">
-              <button style="background: #3b5998;" class="btn btn-primary btn-block" onClick="attemptLoginWithFacebook()">
+              <button
+                class="btn btn-primary btn-block"
+                style="background: #3b5998;"
+                v-on:click="attemptLoginWithFacebook()"
+              >
                 Facebook
               </button>
             </div>
             <div class="col-sm-4">
-              <button style="background: #1da1f2;"  class="btn btn-primary btn-block" onClick="attemptLoginWithTwitter()">
+              <button
+                class="btn btn-primary btn-block"
+                style="background: #1da1f2;"
+                v-on:click="attemptLoginWithTwitter()"
+              >
                 Twitter
               </button>
             </div>
           </div>
         </fieldset>
 
-        <fieldset id="user-container" class="hidden">
+        <fieldset v-if="auth && user">
           <legend>Your Account</legend>
 
-          <div>
-            <div class="alert alert-danger hidden" id="account-error-component"></div>
-            <div class="alert alert-success hidden" id="account-success-component"></div>
+          <div
+            class="alert alert-danger"
+            v-if="accountErrorMessage"
+          >
+            ${ accountErrorMessage }
+          </div>
+          <div
+            class="alert alert-success"
+            v-if="accountSuccessMessage"
+          >
+            ${ accountSuccessMessage }
           </div>
 
           <div class="row">
             <div class="col-sm-8">
               <div class="form-group">
                 <input
-                  id="username"
-                  class="form-control"
-                  placeholder="Enter your nickname..."
+                  @keyup.13="claimUsername()"
                   autofocus
+                  class="form-control"
                   maxlength="25"
+                  placeholder="Enter your nickname..."
                   style="margin-bottom: 15px"
                   type="text"
+                  v-model.trim="newUsername"
                 />
               </div>
             </div>
             <div class="col-sm-4">
-              <button class="btn btn-primary btn-block" onClick="claimUsername(writeUserData)">
+              <button
+                class="btn btn-primary btn-block"
+                v-on:click="claimUsername()"
+              >
                 Claim Name
               </button>
             </div>
@@ -163,22 +187,33 @@
 
           <div class="row">
             <div class="col-sm-4">
-              <button
+              <a
                 class="btn btn-primary btn-block"
-                onClick="goToBattleStats()"
+                v-bind:href="'/battle-stats/' + user.username"
               >
                 My Battle Stats
-              </button>
+              </a>
             </div>
-            <div class="col-sm-4 col-sm-offset-4">
-              <button class="btn btn-warning btn-block" onClick="logoutUser()">
+            <div class="col-sm-4">
+              <a
+                class="btn btn-primary btn-block"
+                href="/store"
+              >
+                <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
+              </a>
+            </div>
+            <div class="col-sm-4">
+              <button
+                class="btn btn-warning btn-block"
+                v-on:click="logoutUser()"
+              >
                 Logout
               </button>
             </div>
           </div>
         </fieldset>
 
-        <fieldset style="margin-bottom: 0; padding-bottom: 0;">
+        <fieldset class="mb0 pb0">
           <legend>Subscribe To Our Newsletter</legend>
 
           <div id="mc_embed_signup" class="text-center">
@@ -213,179 +248,166 @@
 
 {% block scripts %}
 <script>
-  var state = {
-    auth: null
-  }
-
-  // Check if the user is signed in
-  firebase.auth().onAuthStateChanged(function(auth) {
-    if (auth) {
-      state.auth = auth
-      showUserContainer()
-      fetchUser()
-      updateUsernameInput()
-    } else {
-      showLoginContainer()
-    }
-  })
-
-  function fetchUser() {
-    var ref = firebase.database().ref('users/' + state.auth.uid)
-    ref.on('value', function(snapshot) {
-      state.user = snapshot.val()
-      if (state.user)
-        localStorage.setItem('nickname', JSON.stringify(state.user.username))
-    })
-  }
-
-  function goToBattleStats() {
-    window.location.href = '/battle-stats/' + state.user.username
-  }
-
-  function updateUsernameInput() {
-    var usernameRef = firebase.database().ref('users/' + state.auth.uid + '/username')
-    usernameRef.on('value', function(snapshot) {
-      $('#user-container').find('#username').val(snapshot.val())
-    })
-  }
-
-  function showUserContainer() {
-    $('#user-container').removeClass('hidden')
-    $('#login-container').addClass('hidden')
-  }
-
-  function showLoginContainer() {
-    $('#user-container').addClass('hidden')
-    $('#login-container').removeClass('hidden')
-  }
-
-  function claimUsername(next) {
-    var username = $('#username').val()
-    if (state.auth && state.user && username === state.user.username) return
-
-    $('#account-error-component').addClass('hidden')
-    $('#account-success-component').addClass('hidden')
-
-    firebase.database().ref('username_lookup/' + username).set(state.auth.uid, function(err) {
-      if (err) {
-        $('#account-error-component').removeClass('hidden')
-        $('#account-error-component').html('Username already taken.')
-        return
+  new Vue({
+    el: '#home-container',
+    delimiters: ['${', '}'],
+    data: {
+      accountSuccessMessage: null,
+      accountErrorMessage: null,
+      newUsername: null,
+      auth: null,
+      user: null,
+      transactions: null,
+    },
+    computed: {
+      totalGold: function () {
+        var self = this
+        if (!this.transactions) return 0
+        return Object.keys(this.transactions)
+          .map(function (key) {
+            return Number(self.transactions[key].gold)
+          })
+          .reduce(function (a, b) {
+            return a + b
+          })
       }
+    },
+    beforeMount: function() {
+      this.checkAuthStatus()
+    },
+    methods: {
+      addAccountSuccessMessage: function (msg) {
+        var self = this
+        this.accountSuccessMessage = msg
+        this.accountErrorMessage = null
+        setTimeout(function () {
+          self.accountSuccessMessage = null
+        }, 5000)
+      },
+      addAccountErrorMessage: function (msg) {
+        var self = this
+        this.accountErrorMessage = msg
+        this.accountSuccessMessage = null
+        setTimeout(function () {
+          self.accountErrorMessage = null
+        }, 5000)
+      },
+      checkAuthStatus: function () {
+        var self = this
+        // Check if the user is signed in
+        firebase.auth().onAuthStateChanged(function(auth) {
+          if (!auth) return
+          self.auth = auth
+          self.fetchUser()
+          self.fetchUserTransactions()
+        })
+      },
+      fetchUserTransactions: function() {
+        var self = this
+        firebase.database()
+          .ref('user_transactions/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.transactions = snapshot.val()
+            self.$forceUpdate()
+          })
+      },
+      fetchUser: function () {
+        var self = this
+        firebase.database()
+          .ref('users/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.user = snapshot.val()
+            self.newUsername = self.user.username
+            if (self.user)
+              localStorage.setItem('nickname', JSON.stringify(self.user.username))
+          })
+      },
+      goToBattleStats: function () {
+        window.location.href = '/battle-stats/' + this.user.username
+      },
+      claimUsername: function (next) {
+        var self = this
+        if (!this.auth || !this.user || this.newUsername === this.user.username) return
 
-      if (state.user && state.user.username) {
-        firebase.database().ref('username_lookup/' + state.user.username).remove(function(err) {
-          if (err) return console.error('Could not remove previous nickname', err)
+        firebase.database()
+          .ref('username_lookup/' + self.newUsername)
+          .remove(function(err) {
+            if (err) {
+              console.error(err)
+              self.addAccountErrorMessage('Username is taken, please try a different one.')
+              return
+            }
+
+            firebase.database()
+              .ref('username_lookup/' + self.newUsername)
+              .set(self.auth.uid, function(err) {
+                if (err) {
+                  console.error(err)
+                  self.addAccountErrorMessage('There was a problem changing your username.')
+                  return
+                }
+
+                self.writeUserData()
+              })
+          })
+      },
+      writeUserData: function () {
+        var self = this
+        firebase.database()
+          .ref('users/' + self.auth.uid)
+          .set({
+            username: self.newUsername,
+          }, function (err) {
+            if (err) {
+              console.error(err)
+              this.addAccountErrorMessage('We were unable to update your user data.')
+            }
+          })
+
+        this.addAccountSuccessMessage('Changes saved!')
+        this.fetchUser()
+      },
+      logoutUser: function () {
+        var self = this
+        firebase.auth().signOut().then(function() {
+          // Sign-out successful.
+          localStorage.setItem('nickname', null)
+          self.auth = null
+          self.user = null
+        }, function(error) {
+          // An error happened.
+          console.error(error)
+        })
+      },
+      attemptLoginWithGoogle: function () {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          self.auth = result.user
+        }).catch(function(error) {
+          console.error(error)
+          this.addAccountErrorMessage(error.message)
+        })
+      },
+      attemptLoginWithFacebook: function () {
+        var provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          self.auth = result.user
+        }).catch(function(error) {
+          console.error(error)
+          this.addAccountErrorMessage(error.message)
+        })
+      },
+      attemptLoginWithTwitter: function () {
+        var provider = new firebase.auth.TwitterAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          self.auth = result.user
+        }).catch(function(error) {
+          console.log(error)
+          this.addAccountErrorMessage(error.message)
         })
       }
-
-      next()
-    })
-  }
-
-  function writeUserData() {
-    firebase.database().ref('users/' + state.auth.uid).set({
-      username: $('#username').val(),
-    })
-    fetchUser()
-    $('#account-success-component').removeClass('hidden')
-    $('#account-success-component').html('Changes saved!')
-  }
-
-  function logoutUser() {
-    firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-      localStorage.setItem('nickname', null)
-      showLoginContainer()
-    }, function(error) {
-      // An error happened.
-      showUserContainer()
-    })
-  }
-
-  function attemptLoginWithGoogle() {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      console.log(result)
-      $('#login-error-component').addClass('hidden')
-
-      state.auth = result.user
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      // ...
-    }).catch(function(error) {
-      console.log(error)
-      $('#login-error-component').removeClass('hidden')
-      $('#login-error-component').html(error.message)
-
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
-  }
-
-  function attemptLoginWithFacebook() {
-    var provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      console.log(result)
-      $('#login-error-component').addClass('hidden')
-
-      state.auth = result.user
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      // ...
-    }).catch(function(error) {
-      console.log(error)
-      $('#login-error-component').removeClass('hidden')
-      $('#login-error-component').html(error.message)
-
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
-  }
-
-  function attemptLoginWithTwitter() {
-    var provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      console.log(result)
-      $('#login-error-component').addClass('hidden')
-
-      state.auth = result.user
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      // ...
-    }).catch(function(error) {
-      console.log(error)
-      $('#login-error-component').removeClass('hidden')
-      $('#login-error-component').html(error.message)
-
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
-  }
+    }
+  })
 
   if (! isChromeBrowser()) showBrowserRecommendation()
 

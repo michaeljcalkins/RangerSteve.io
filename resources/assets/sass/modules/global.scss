@@ -24,9 +24,11 @@ section {
   width: 100%;
 }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 400;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+}
+
+[v-cloak] { display:none; }
 
 .progress .progress-bar {
   -webkit-transition: none;
@@ -99,8 +101,8 @@ section {
 .col-lg-15 {
     position: relative;
     min-height: 1px;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .col-xs-15 {
@@ -127,14 +129,10 @@ section {
 }
 
 footer {
-  padding-bottom: 0;
-  margin: 0;
   background: rgba(255, 255, 255, .8);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0;
   border: 0;
-  margin: 0;
+  clear: both;
+  float: left;
+  padding: 0;
+  width: 100%;
 }
