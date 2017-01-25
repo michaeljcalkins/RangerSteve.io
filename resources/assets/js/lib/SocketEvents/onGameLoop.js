@@ -167,7 +167,7 @@ export default function onGameLoop (data) {
         : GameConsts.WEAPONS[player.data.weaponId].frame
     }
 
-    // updatePlayerAngles.call(this, player, player.data.angle)
+    updatePlayerAngles.call(this, player, player.data.angle)
 
     // Decide what animation or frame to show
     if (isNotMovingAndFacingRight(player)) {
