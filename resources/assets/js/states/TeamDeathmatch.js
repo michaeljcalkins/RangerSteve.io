@@ -75,7 +75,7 @@ TeamDeathmatch.prototype = {
     BulletsAndEnemyTeamPlayers.call(this)
     EnemyBulletsAndPlatforms.call(this)
     BulletsAndPlatforms.call(this)
-    Maps[state.room.map].update.call(this)
+    Maps[state.room.map].update && Maps[state.room.map].update.call(this)
 
     /**
      * User related movement and sprite angles

@@ -8,6 +8,7 @@ const gameloop = require('node-gameloop')
 
 const Server = require('./Server')
 
+const getSpawnPoint = require('../lib/getSpawnPoint')
 const GameConsts = require('../lib/GameConsts')
 const helpers = require('../lib/helpers')
 const createPlayer = require('../lib/createPlayer')
@@ -15,8 +16,6 @@ const getPlayerById = require('../lib/getPlayerById')
 const getTeam = require('../lib/getTeam')
 const createRoom = require('../lib/createRoom')
 const getRoomIdByPlayerId = require('../lib/getRoomIdByPlayerId')
-// const bulletSchema = require('../lib/schemas/bulletSchema')
-// const playerIdSchema = require('../lib/schemas/playerIdSchema')
 const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
 const savePlayerScoresToFirebase = require('../lib/savePlayerScoresToFirebase')
 
@@ -264,7 +263,15 @@ function onPlayerRespawn () {
 
   lastPlayerData[this.id] = {}
 
-  const data = { id: this.id }
+  const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
+  const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
+
+  const data = {
+    id: this.id,
+    noDamageBeforeTime: Date.now() + GameConsts.NO_DAMAGE_BEFORE_SECONDS,
+    x: spawnPoint.x,
+    y: spawnPoint.y
+  }
   Server.sendToRoom(
     roomId,
     GameConsts.EVENT.PLAYER_RESPAWN,
@@ -377,6 +384,12 @@ function onNewPlayer (data) {
     newPlayer.team = getTeam(players, redTeamScore, blueTeamScore)
   }
 
+  // Get initial spawn point
+  const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomIdPlayerWillJoin].map]
+  const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomIdPlayerWillJoin].players)
+  newPlayer.x = spawnPoint.x
+  newPlayer.y = spawnPoint.y
+
   // User to the room
   rooms[roomIdPlayerWillJoin].players[this.id] = newPlayer
   rooms[roomIdPlayerWillJoin].messages = _.get(rooms, '[' + roomIdPlayerWillJoin + '].messages') || []
@@ -387,7 +400,11 @@ function onNewPlayer (data) {
   Server.sendToSocket(
     this.id,
     GameConsts.EVENT.LOAD_GAME,
-    rooms[roomIdPlayerWillJoin]
+    {
+      room: rooms[roomIdPlayerWillJoin],
+      x: newPlayer.x,
+      y: newPlayer.y
+    }
   )
 }
 
