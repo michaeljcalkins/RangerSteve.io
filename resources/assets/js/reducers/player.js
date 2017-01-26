@@ -1,4 +1,5 @@
 import storage from 'store'
+import getRandomName from '../lib/getRandomName'
 
 const initialState = {
   canRespawnTimestamp: null,
@@ -14,7 +15,7 @@ const initialState = {
   jumpJetCounter: 0,
   nextSelectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
   nextSelectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
-  nickname: null,
+  nickname: getRandomName(),
   primaryAmmoRemaining: 0,
   primaryWeapon: null,
   score: 0,
@@ -28,7 +29,6 @@ const initialState = {
 const player = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_PLAYER':
-      console.log(action.value)
       return {
         ...state,
         ...action.value

@@ -19,8 +19,6 @@ export default function onSocketConnected () {
       uid: state.player.uid
     }
 
-    console.log(state.player.nickname)
-
     // Only specify roomId if specified in url
     if (getParameterByName('roomId')) {
       window.mixpanel.track('player:joinedByRoomId')
