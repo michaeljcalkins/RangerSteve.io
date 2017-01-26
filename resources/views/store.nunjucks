@@ -148,7 +148,6 @@
     data: {
       accountSuccessMessage: null,
       accountErrorMessage: null,
-      newUsername: null,
       auth: null,
       user: null,
       transactions: null,
@@ -220,9 +219,6 @@
           .ref('users/' + self.auth.uid)
           .once('value', function(snapshot) {
             self.user = snapshot.val()
-            self.newUsername = self.user.username
-            if (self.user)
-              localStorage.setItem('nickname', JSON.stringify(self.user.username))
           })
       }
     }

@@ -1,4 +1,5 @@
 import storage from 'store'
+import get from 'lodash/get'
 
 import GameConsts from 'lib/GameConsts'
 import actions from './actions'
@@ -6,6 +7,7 @@ import Boot from './states/Boot'
 import Preloader from './states/Preloader'
 import Deathmatch from './states/Deathmatch'
 import TeamDeathmatch from './states/TeamDeathmatch'
+import getRandomName from './lib/getRandomName'
 
 export default function (store) {
   const useWebgl = storage.get('useWebgl', GameConsts.USE_WEBGL_BY_DEFAULT)
@@ -32,12 +34,26 @@ export default function (store) {
   // Check if the user is signed in
   window.firebase.auth().onAuthStateChanged(function (auth) {
     if (auth) {
-      store.dispatch(actions.player.setPlayer({
-        uid: auth.uid
-      }))
-    }
+      window.firebase.database()
+        .ref('users/' + auth.uid)
+        .once('value', (snapshot) => {
+          const user = snapshot.val()
+          if (!user) return
 
-    game.state.start('Boot')
+          store.dispatch(actions.player.setPlayer({
+            uid: auth.uid,
+            nickname: get(user, 'username', 'Unnamed Ranger')
+          }))
+
+          game.state.start('Boot')
+        })
+    } else {
+      store.dispatch(actions.player.setPlayer({
+        nickname: getRandomName()
+      }))
+
+      game.state.start('Boot')
+    }
   })
 
   // Make sure this game instance isn't exposed to clients via window.Phaser.GAMES
