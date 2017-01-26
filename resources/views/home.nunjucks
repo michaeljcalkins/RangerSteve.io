@@ -178,6 +178,7 @@
             <div class="col-sm-4">
               <button
                 class="btn btn-primary btn-block"
+                :class="{ disabled: isEmptyUsername || isSameUsername }"
                 v-on:click="claimUsername()"
               >
                 Claim Name
@@ -270,7 +271,13 @@
           .reduce(function (a, b) {
             return a + b
           })
-      }
+      },
+      isSameUsername: function () {
+        return this.user.username === this.newUsername
+      },
+      isEmptyUsername: function () {
+        return this.newUsername.length === 0
+      },
     },
     beforeMount: function() {
       this.checkAuthStatus()
@@ -327,10 +334,21 @@
         var self = this
         if (
           !this.auth ||
-          !this.user ||
-          this.newUsername.length === 0 ||
-          this.newUsername === this.user.username
-        ) return
+          !this.user
+        ) {
+          self.addAccountErrorMessage('There was a problem changing your username.')
+          return
+        }
+
+        if (this.isEmptyUsername) {
+          self.addAccountErrorMessage('Username cannot be empty.')
+          return
+        }
+
+        if (this.isSameUsername) {
+          self.addAccountErrorMessage('Username is the same as your current one.')
+          return
+        }
 
         firebase.database()
           .ref('username_lookup/' + this.user.username)
