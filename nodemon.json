@@ -19,5 +19,5 @@
   "env": {
     "NODE_ENV": "development"
   },
-  "ext": "js json nunjucks md"
+  "ext": "js json njk nunjucks md"
 }
