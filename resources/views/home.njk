@@ -144,7 +144,7 @@
           </div>
         </fieldset>
 
-        <fieldset v-if="auth && user">
+        <fieldset v-if="auth">
           <legend>Your Account</legend>
 
           <div
@@ -190,6 +190,7 @@
             <div class="col-sm-4">
               <a
                 class="btn btn-primary btn-block"
+                v-if="user"
                 v-bind:href="'/battle-stats/' + user.username"
               >
                 My Battle Stats
@@ -249,6 +250,13 @@
 
 {% block scripts %}
 <script>
+  var firstNames = ['Ranger', 'Real Estate', 'Slim', 'Tree Hugger', 'Mad', 'Sarcastic', 'Cactus', 'Deadeye', 'Pale Face', 'Texas', 'Horseface', 'Crazy', 'Cotton Mouth', 'Whiskey', '3 Fingers', 'Ace', 'Amarillo', 'Apache', 'Bearcat', 'Bitter Creek', 'Black', 'Black Rock', 'Blackjack', 'Bloody', 'Blueridge', 'Brawney', 'Bronco', 'Buck', 'Buckskin', 'Buffalo', 'Bull', 'Bushwack', 'Cajun', 'Captain', 'Cheerful', 'Cherokee', 'Cheyenne', 'Colonel', 'Coonskin', 'Dakota', 'Dead Eye', 'Deadwood', 'Digger', 'Dirty', 'Durango', 'Frontier', 'Gentleman', 'Gravedigger', 'Gunner', 'Hole Card', 'Hoodoo', 'Joker', 'Lawless', 'Lightning', 'Loco', 'Lucky', 'Major', 'Mustang', 'Natchez', 'Navajo', 'Nevada', 'Nightrider', 'One-Eyed', 'Pecos', 'Preacher', 'Rattlesnake', 'Rawhide', 'Red', 'Reno', 'Reverend', 'Riverboat', 'English', 'Insane', 'Shotgun', 'Sweaty', 'Sideways', 'Sidewinder', 'Six Gun', 'Skull', 'Slaughter', 'Slick', 'Slippery', 'Smiley', 'Smokey', 'Snake-bite', 'Snake-eyes', 'Stone River', 'Stumpy', 'Three Rivers', 'Tombstone', 'Trapper', 'Two Gun', 'Ugly', 'Waco', 'Whip', 'Whiskey', 'Whitey', 'Wichitaw', 'Wild', 'Trigger Finger', 'Lead Engineer', 'Waterfall', 'Black', 'Milktoast', 'Dogface', 'Grunt', 'Leatherneck', 'Rebel', 'Stealthy', 'Flasher', 'Nasty', 'Frantic', 'Armored', 'Noob', 'Commando', 'Ninja', 'Silver', 'Salty', 'Wrecker', 'Frenzied']
+  var lastNames = ['Rick', 'Steve', 'Andrew', 'Mike', 'Jim', 'James', 'Josh', 'Nick', 'Rob', 'John', 'Luke']
+
+  function getRandomName () {
+    return _.sample(firstNames) + ' ' + _.sample(lastNames)
+  }
+
   new Vue({
     el: '#home-container',
     delimiters: ['${', '}'],
@@ -273,10 +281,10 @@
           })
       },
       isSameUsername: function () {
-        return this.user.username === this.newUsername
+        return this.user && this.user.username === this.newUsername
       },
       isEmptyUsername: function () {
-        return this.newUsername.length === 0
+        return !this.newUsername || this.newUsername.length === 0
       },
     },
     beforeMount: function() {
@@ -324,19 +332,21 @@
           .ref('users/' + self.auth.uid)
           .once('value', function(snapshot) {
             self.user = snapshot.val()
+            if (!self.user) {
+              self.newUsername = getRandomName()
+              self.claimUsername()
+              return
+            }
             self.newUsername = self.user.username
           })
       },
       goToBattleStats: function () {
         window.location.href = '/battle-stats/' + this.user.username
       },
-      claimUsername: function (next) {
+      claimUsername: function () {
         var self = this
-        if (
-          !this.auth ||
-          !this.user
-        ) {
-          self.addAccountErrorMessage('There was a problem changing your username.')
+        if (!this.auth) {
+          self.addAccountErrorMessage('You must be signed in to claim a username.')
           return
         }
 
@@ -350,27 +360,38 @@
           return
         }
 
+        if (this.user) {
+          /**
+           * Remove username from lookup before writing new username.
+           */
+          firebase.database()
+            .ref('username_lookup/' + this.user.username)
+            .remove(function(err) {
+              if (err) {
+                console.error(err)
+                self.addAccountErrorMessage('Username is taken, please try a different one.')
+                return
+              }
+
+              self.writeUsernameLookupData()
+            })
+          return
+        }
+        self.writeUsernameLookupData()
+      },
+      writeUsernameLookupData: function () {
+        var self = this
         firebase.database()
-          .ref('username_lookup/' + this.user.username)
-          .remove(function(err) {
-            if (err) {
-              console.error(err)
-              self.addAccountErrorMessage('Username is taken, please try a different one.')
-              return
-            }
+        .ref('username_lookup/' + self.newUsername)
+        .set(self.auth.uid, function(err) {
+          if (err) {
+            console.error(err)
+            self.addAccountErrorMessage('There was a problem changing your username.')
+            return
+          }
 
-            firebase.database()
-              .ref('username_lookup/' + self.newUsername)
-              .set(self.auth.uid, function(err) {
-                if (err) {
-                  console.error(err)
-                  self.addAccountErrorMessage('There was a problem changing your username.')
-                  return
-                }
-
-                self.writeUserData()
-              })
-          })
+          self.writeUserData()
+        })
       },
       writeUserData: function () {
         var self = this
