@@ -55,14 +55,15 @@
         <div id="ui-app"></div>
         <div id="game"></div>
 
-        <script src="/js/phaser.min.js"></script>
-        <script src="/js/phaser-arcade-slopes.min.js"></script>
         <script src="/primus/primus.js"></script>
-        {% if isProduction !== true %}
-            <!-- Phaser debug plugin -->
-            <script src="https://cdn.rawgit.com/englercj/phaser-debug/master/dist/phaser-debug.js"></script>
-        {% endif %}
         <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+        <script src="/js/phaser{{ '.min' if isProduction }}.js"></script>
+        <script src="/js/phaser-arcade-slopes.min.js"></script>
+        {% if isProduction %}
+          <!-- Phaser debug plugin -->
+          <script src="https://cdn.rawgit.com/englercj/phaser-debug/master/dist/phaser-debug.js"></script>
+        {% endif %}
+
         <script>
           // Initialize Firebase
           var config = {
