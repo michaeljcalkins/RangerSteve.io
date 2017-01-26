@@ -40,17 +40,6 @@ Boot.prototype = {
     // state will be started.
     window.socket = window.Primus.connect()
     setEventHandlers.call(this)
-
-    if (GameConsts.PHASER_DEBUG) {
-      this.game.add.plugin(window.Phaser.Plugin.Debug)
-
-      // needed to correctly style other elements in css
-      if (document.getElementsByTagName('body').classList) {
-        document.getElementsByTagName('body').classList.add('phaser-debug')
-      } else {
-        document.getElementsByTagName.className += ' phaser-debug'
-      }
-    }
   }
 
 }
