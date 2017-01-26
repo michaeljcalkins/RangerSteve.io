@@ -67,7 +67,6 @@
         </div>
     </footer>
 
-
     {% block content %}{% endblock %}
 
     <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>

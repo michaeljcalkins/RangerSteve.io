@@ -318,8 +318,6 @@
           .once('value', function(snapshot) {
             self.user = snapshot.val()
             self.newUsername = self.user.username
-            if (self.user)
-              localStorage.setItem('nickname', JSON.stringify(self.user.username))
           })
       },
       goToBattleStats: function () {
@@ -371,7 +369,6 @@
         var self = this
         firebase.auth().signOut().then(function() {
           // Sign-out successful.
-          localStorage.setItem('nickname', null)
           self.auth = null
           self.user = null
         }, function(error) {
