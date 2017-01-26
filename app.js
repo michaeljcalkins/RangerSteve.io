@@ -30,7 +30,7 @@ app.init = function (server) {
 }
 
 app.set('views', path.join(__dirname, 'resources/views'))
-app.set('view engine', 'nunjucks')
+app.set('view engine', 'njk')
 
 nunjucks.setup({
   autoescape: true,
