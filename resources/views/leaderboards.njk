@@ -112,6 +112,7 @@
         this.playerScores = Object.keys(this.leaderboards)
           .map(function (id) {
             var newPlayerObj = self.leaderboards[id]
+            if (!newUsernameLookup[id]) console.error(id, 'not found in username lookup.')
             newPlayerObj.name = newUsernameLookup[id]
             return self.leaderboards[id]
           })
