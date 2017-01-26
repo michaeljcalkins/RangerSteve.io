@@ -30,16 +30,17 @@ const events = {
 
 let dataReceived = 0
 
+function onData (data) {
+  dataReceived += sizeOf(data)
+  if (!data || data.type === undefined) return
+
+  if (!events[data.type]) return
+
+  events[data.type].call(this, data.payload)
+}
+
 export default function () {
-  window.socket.on('data', (data) => {
-    dataReceived += sizeOf(data)
-    // console.log('* LOG * data', data.type, data.payload)
-    if (!data || data.type === undefined) return
-
-    if (!events[data.type]) return
-
-    events[data.type].call(this, data.payload)
-  })
+  window.socket.on('data', onData.bind(this))
 
   window.socket.on('open', onSocketConnected.bind(this))
   window.socket.on('end', onSocketDisconnect.bind(this))

@@ -45,26 +45,27 @@ const events = {
   [GameConsts.EVENT.REFRESH_ROOM]: onRefreshRoom
 }
 
+function onClientConnect (socket) {
+  util.log('New connection: ' + socket.id + ', ' + JSON.stringify(socket.address))
+
+  socket.on('data', onData)
+}
+
+function onData (data) {
+  dataReceived += sizeOf(data)
+  if (!data || data.type === undefined) return
+
+  if (!events[data.type]) return
+
+  events[data.type].call(this, data.payload)
+}
+
 function init (primusInstance) {
   io = primusInstance
   Server.init(io)
-  io.on('connection', (socket) => {
-    util.log('New connection: ' + socket.id + ', ' + JSON.stringify(socket.address))
 
-    socket.on('data', (data) => {
-      dataReceived += sizeOf(data)
-      // console.log('* LOG * data', data.type, data.payload)
-      if (!data || data.type === undefined) return
-
-      if (!events[data.type]) return
-
-      events[data.type].call(socket, data.payload)
-    })
-  })
-
-  io.on('disconnection', (socket) => {
-    onClientDisconnect.call(socket)
-  })
+  io.on('connection', onClientConnect)
+  io.on('disconnection', onClientDisconnect)
 
   // if (GameConsts.ENABLE_NETWORK_STATS) {
   //     NetworkStats.loop(() => {
@@ -410,27 +411,27 @@ function onMovePlayer (buffer) {
 }
 
 // Socket client has disconnected
-function onClientDisconnect () {
-  util.log('Player has disconnected: ' + this.id)
+function onClientDisconnect (socket) {
+  util.log('Player has disconnected: ' + socket.id)
 
   let selectedRoomId = null
   Object.keys(rooms).forEach((roomId) => {
-    if (_.find(rooms[roomId].players, { id: this.id })) {
+    if (_.find(rooms[roomId].players, { id: socket.id })) {
       selectedRoomId = roomId
     }
   })
 
-  var removePlayer = getPlayerById(selectedRoomId, this.id, rooms)
+  var removePlayer = getPlayerById(selectedRoomId, socket.id, rooms)
 
   // Player not found
   if (!removePlayer) {
-    util.log('Player not found when disconnecting: ' + this.id)
+    util.log('Player not found when disconnecting: ' + socket.id)
     return
   }
 
   // Remove player from players array
   Object.keys(rooms).forEach((roomId) => {
-    delete rooms[roomId].players[this.id]
+    delete rooms[roomId].players[socket.id]
   })
 
   // If the room the player left is empty close the room
