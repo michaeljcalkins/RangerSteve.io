@@ -325,10 +325,15 @@
       },
       claimUsername: function (next) {
         var self = this
-        if (!this.auth || !this.user || this.newUsername === this.user.username) return
+        if (
+          !this.auth ||
+          !this.user ||
+          this.newUsername.length === 0 ||
+          this.newUsername === this.user.username
+        ) return
 
         firebase.database()
-          .ref('username_lookup/' + self.newUsername)
+          .ref('username_lookup/' + this.user.username)
           .remove(function(err) {
             if (err) {
               console.error(err)
