@@ -295,6 +295,9 @@ function onPlayerRespawn () {
 
   const data = {
     id: this.id,
+    // If a player died at the bottom of
+    // HighRuleJungle this prevents it
+    // from killing them inmmediately.
     noDamageBeforeTime: Date.now() + GameConsts.NO_DAMAGE_BEFORE_SECONDS,
     x: spawnPoint.x,
     y: spawnPoint.y
