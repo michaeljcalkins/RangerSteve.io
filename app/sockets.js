@@ -157,23 +157,17 @@ setInterval(function () {
         player.headshots = 0
         player.secondsInRound = 0
 
-        // Reset player posisitions so
-        // we can create new
-        // respawn points
+        // Reset player posisitions so we can create new respawn points
         player.x = 0
         player.y = 0
       })
 
-      // Now that player positions are
-      // reset we can spread players
-      // throughout the map
+      // Now that player positions are reset we can spread players throughout the map
       Object.keys(rooms[roomId].players).forEach((playerId) => {
         const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
         const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
 
-        // Tell each player to reload the map
-        // and give them their initial
-        // spawn locations
+        // Tell each player to reload the map and give them their initial spawn locations
         Server.sendToSocket(
           playerId,
           GameConsts.EVENT.LOAD_GAME,
@@ -295,9 +289,7 @@ function onPlayerRespawn () {
 
   const data = {
     id: this.id,
-    // If a player died at the bottom of
-    // HighRuleJungle this prevents it
-    // from killing them inmmediately.
+    // If a player died at the bottom of HighRuleJungle this prevents it from killing them inmmediately.
     noDamageBeforeTime: Date.now() + GameConsts.NO_DAMAGE_BEFORE_SECONDS,
     x: spawnPoint.x,
     y: spawnPoint.y
@@ -684,7 +676,6 @@ function onPlayerDamaged (data) {
 }
 
 function onBulletFired (data) {
-  // const data = bulletSchema.decode(buffer)
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
@@ -693,9 +684,6 @@ function onBulletFired (data) {
 
   if (!player || player.health <= 0) return
   player.bulletsFired++
-
-  // Broadcast updated position to connected socket clients
-  // var newBuffer/*: Uint8Array*/ = bulletSchema.encode(data)
 
   Server.sendToRoom(
     roomId,
