@@ -7,10 +7,13 @@ export default function onLoadGame (data) {
   store.dispatch(actions.room.setRoom(data.room))
   store.dispatch(actions.game.setChatMessages(get(data.room, 'messages', []).slice(-5)))
   store.dispatch(actions.player.setPlayer({
-    initialPosition: { x: data.x, y: data.y }
+    initialPosition: {
+      x: data.player.x,
+      y: data.player.y
+    }
   }))
 
-  const newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomId=' + data.id
+  const newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomId=' + data.room.id
   window.history.pushState({ path: newurl }, '', newurl)
 
   this.game.state.start('Preloader', true, true)

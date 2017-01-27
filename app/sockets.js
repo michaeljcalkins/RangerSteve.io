@@ -142,24 +142,44 @@ setInterval(function () {
       util.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} for room ${roomId}`)
 
       Object.keys(rooms[roomId].players).forEach((playerId) => {
-        rooms[roomId].players[playerId].health = GameConsts.PLAYER_FULL_HEALTH
-        rooms[roomId].players[playerId].deaths = 0
-        rooms[roomId].players[playerId].kills = 0
-        rooms[roomId].players[playerId].bestKillingSpree = 0
-        rooms[roomId].players[playerId].killingSpree = 0
-        rooms[roomId].players[playerId].bulletsFired = 0
-        rooms[roomId].players[playerId].bulletsHit = 0
-        rooms[roomId].players[playerId].timesHit = 0
-        rooms[roomId].players[playerId].score = 0
-        rooms[roomId].players[playerId].headshots = 0
-        rooms[roomId].players[playerId].secondsInRound = 0
+        const player = rooms[roomId].players[playerId]
+        player.health = GameConsts.PLAYER_FULL_HEALTH
+
+        // Reset player scores
+        player.deaths = 0
+        player.kills = 0
+        player.bestKillingSpree = 0
+        player.killingSpree = 0
+        player.bulletsFired = 0
+        player.bulletsHit = 0
+        player.timesHit = 0
+        player.score = 0
+        player.headshots = 0
+        player.secondsInRound = 0
+
+        // Reset player posisitions so we can create new respawn points
+        player.x = 0
+        player.y = 0
       })
 
-      Server.sendToRoom(
-        roomId,
-        GameConsts.EVENT.LOAD_GAME,
-        rooms[roomId]
-      )
+      // Now that player positions are reset we can spread players throughout the map
+      Object.keys(rooms[roomId].players).forEach((playerId) => {
+        const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
+        const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
+
+        Server.sendToSocket(
+          playerId,
+          GameConsts.EVENT.LOAD_GAME,
+          {
+            room: rooms[roomId],
+            player: {
+              x: spawnPoint.x,
+              y: spawnPoint.y
+            }
+          }
+        )
+      })
+
       return
     }
 
@@ -272,8 +292,9 @@ function onPlayerRespawn () {
     x: spawnPoint.x,
     y: spawnPoint.y
   }
-  Server.sendToRoom(
-    roomId,
+
+  Server.sendToSocket(
+    this.id,
     GameConsts.EVENT.PLAYER_RESPAWN,
     data
   )
@@ -402,8 +423,10 @@ function onNewPlayer (data) {
     GameConsts.EVENT.LOAD_GAME,
     {
       room: rooms[roomIdPlayerWillJoin],
-      x: newPlayer.x,
-      y: newPlayer.y
+      player: {
+        x: newPlayer.x,
+        y: newPlayer.y
+      }
     }
   )
 }
