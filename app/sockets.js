@@ -157,16 +157,23 @@ setInterval(function () {
         player.headshots = 0
         player.secondsInRound = 0
 
-        // Reset player posisitions so we can create new respawn points
+        // Reset player posisitions so
+        // we can create new
+        // respawn points
         player.x = 0
         player.y = 0
       })
 
-      // Now that player positions are reset we can spread players throughout the map
+      // Now that player positions are
+      // reset we can spread players
+      // throughout the map
       Object.keys(rooms[roomId].players).forEach((playerId) => {
         const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
         const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
 
+        // Tell each player to reload the map
+        // and give them their initial
+        // spawn locations
         Server.sendToSocket(
           playerId,
           GameConsts.EVENT.LOAD_GAME,
