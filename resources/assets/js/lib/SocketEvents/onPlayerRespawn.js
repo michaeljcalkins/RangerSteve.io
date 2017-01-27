@@ -52,7 +52,6 @@ export default function onPlayerRespawn (data) {
   window.RS.player.visible = true
   this.game.input.enabled = true
   this.game.input.reset()
-  CreateKeyboardBindings.call(this)
 
   // Allow Phaser to move the player
   // so that the map doesn't
