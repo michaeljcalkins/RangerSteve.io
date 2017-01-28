@@ -17,6 +17,10 @@
   "standard": {
     "parser": "babel-eslint",
     "globals": [
+      "nativeMax",
+      "nativeMin",
+      "onmessage",
+      "postMessage",
       "describe",
       "it"
     ]
