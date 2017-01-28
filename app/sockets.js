@@ -281,6 +281,7 @@ function onPlayerRespawn () {
   }
 
   player.health = GameConsts.PLAYER_FULL_HEALTH
+  player.state = 1
 
   lastPlayerData[this.id] = {}
 
@@ -547,6 +548,8 @@ function onPlayerDamaged (data) {
     player.health = 0
     player.killingSpree = 0
     player.deaths++
+    // player is dead so tell everyone to hide this player in game
+    player.state = 0
     player.canRespawnTimestamp = moment().add(GameConsts.RESPAWN_TIME_SECONDS, 'seconds').unix()
 
     if (attackingPlayer) {
@@ -564,17 +567,18 @@ function onPlayerDamaged (data) {
 
       const playerScores = {}
       Object.keys(rooms[roomId].players).forEach(function (playerId) {
+        const player = rooms[roomId].players[playerId]
         playerScores[playerId] = {
-          deaths: rooms[roomId].players[playerId].deaths,
-          kills: rooms[roomId].players[playerId].kills,
-          bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
-          killingSpree: rooms[roomId].players[playerId].killingSpree,
-          bulletsFired: rooms[roomId].players[playerId].bulletsFired,
-          bulletsHit: rooms[roomId].players[playerId].bulletsHit,
-          timesHit: rooms[roomId].players[playerId].timesHit,
-          score: rooms[roomId].players[playerId].score,
-          headshots: rooms[roomId].players[playerId].headshots,
-          secondsInRound: rooms[roomId].players[playerId].secondsInRound
+          deaths: player.deaths,
+          kills: player.kills,
+          bestKillingSpree: player.bestKillingSpree,
+          killingSpree: player.killingSpree,
+          bulletsFired: player.bulletsFired,
+          bulletsHit: player.bulletsHit,
+          timesHit: player.timesHit,
+          score: player.score,
+          headshots: player.headshots,
+          secondsInRound: player.secondsInRound
         }
       })
 
@@ -601,17 +605,18 @@ function onPlayerDamaged (data) {
 
       const playerScores = {}
       Object.keys(rooms[roomId].players).forEach(function (playerId) {
+        const player = rooms[roomId].players[playerId]
         playerScores[playerId] = {
-          deaths: rooms[roomId].players[playerId].deaths,
-          kills: rooms[roomId].players[playerId].kills,
-          bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
-          killingSpree: rooms[roomId].players[playerId].killingSpree,
-          bulletsFired: rooms[roomId].players[playerId].bulletsFired,
-          bulletsHit: rooms[roomId].players[playerId].bulletsHit,
-          timesHit: rooms[roomId].players[playerId].timesHit,
-          score: rooms[roomId].players[playerId].score,
-          headshots: rooms[roomId].players[playerId].headshots,
-          secondsInRound: rooms[roomId].players[playerId].secondsInRound
+          deaths: player.deaths,
+          kills: player.kills,
+          bestKillingSpree: player.bestKillingSpree,
+          killingSpree: player.killingSpree,
+          bulletsFired: player.bulletsFired,
+          bulletsHit: player.bulletsHit,
+          timesHit: player.timesHit,
+          score: player.score,
+          headshots: player.headshots,
+          secondsInRound: player.secondsInRound
         }
       })
 

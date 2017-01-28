@@ -115,14 +115,17 @@ export default function onGameLoop (data) {
     // Stop updating players if the round is over
     if (!player) return console.error('Player not found or created.')
 
-    /**
-     * 4. Update player data
-     */
+    // 4. Update player data
     player.data.id = playerId
     GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(propName => {
       if (typeof playerData[propName] !== 'undefined') player.data[propName] = playerData[propName]
     })
 
+    // Update player position in the arena
+    player.x = player.data.x
+    player.y = player.data.y
+
+    // Update player's name above their player in game
     if (lastPlayerNickname[playerId] !== player.data.nickname) {
       const username = player.data.nickname || ''
       player.usernameText.setText(username)
@@ -139,23 +142,8 @@ export default function onGameLoop (data) {
       updatePlayerColor(player, player.data.team)
     }
 
-    if (player.data.health > 0) {
-      // Show players when they are alive and have not respawned recently.
-      player.visible = true
-    }
-
-    // Update player position
-    player.x = player.data.x
-    player.y = player.data.y
-
     // When a player's health is 100 and this var is 0 that means that they literally just respawned
     lastPlayerHealth[playerId] = player.data.health
-
-    // If player is dead hide them from view
-    if (player.data.health <= 0) {
-      player.visible = false
-      return
-    }
 
     // Control jump jet visibility
     player.rightJumpjet.visible = player.data.flying
@@ -194,6 +182,23 @@ export default function onGameLoop (data) {
 
     lastPlayerNickname[playerId] = playerData.nickname
     roomData[playerId] = player.data
+
+    // This allows us to move the player to their new position and change their visibility in the next frame.
+    // This prevents a single frame flicker where the player becomes visible and moves in one frame.
+    if (player.data.lastState === player.data.state) {
+      // dead: 0, alive: 1
+      switch (player.data.state) {
+        case 1:
+          player.visible = true
+          break
+
+        case 0:
+          player.visible = false
+          break
+      }
+    }
+
+    player.data.lastState = player.data.state
   })
 
   // Merge the differences from the server to client's room state

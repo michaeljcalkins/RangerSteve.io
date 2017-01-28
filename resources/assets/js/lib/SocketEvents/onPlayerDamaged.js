@@ -56,7 +56,7 @@ export default function onPlayerDamaged (data) {
 
         lastKnownHealth += 10
 
-                // Increase player health by 10 every 1/2 a second
+        // Increase player health by 10 every 1/2 a second
         Client.send(GameConsts.EVENT.PLAYER_HEALING)
       }, 500)
     }, 5000)
