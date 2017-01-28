@@ -602,17 +602,18 @@ function onPlayerDamaged (data) {
 
       const playerScores = {}
       Object.keys(rooms[roomId].players).forEach(function (playerId) {
+        const player = rooms[roomId].players[playerId]
         playerScores[playerId] = {
-          deaths: rooms[roomId].players[playerId].deaths,
-          kills: rooms[roomId].players[playerId].kills,
-          bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
-          killingSpree: rooms[roomId].players[playerId].killingSpree,
-          bulletsFired: rooms[roomId].players[playerId].bulletsFired,
-          bulletsHit: rooms[roomId].players[playerId].bulletsHit,
-          timesHit: rooms[roomId].players[playerId].timesHit,
-          score: rooms[roomId].players[playerId].score,
-          headshots: rooms[roomId].players[playerId].headshots,
-          secondsInRound: rooms[roomId].players[playerId].secondsInRound
+          deaths: player.deaths,
+          kills: player.kills,
+          bestKillingSpree: player.bestKillingSpree,
+          killingSpree: player.killingSpree,
+          bulletsFired: player.bulletsFired,
+          bulletsHit: player.bulletsHit,
+          timesHit: player.timesHit,
+          score: player.score,
+          headshots: player.headshots,
+          secondsInRound: player.secondsInRound
         }
       })
 
