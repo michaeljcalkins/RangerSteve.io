@@ -471,7 +471,7 @@ function onClientDisconnect (socket) {
   util.log('Player has disconnected: ' + socket.id)
   const roomId = getRoomIdByPlayerId(socket.id, rooms)
 
-  if (!roomId) return util.error('Room not found that disconnectin player was in.')
+  if (!roomId) return util.error('Room not found that disconnecting player was in.')
 
   const player = getPlayerById(rooms[roomId], socket.id)
 
