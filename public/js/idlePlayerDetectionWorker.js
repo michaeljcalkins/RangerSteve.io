@@ -1,4 +1,4 @@
-var MAX_IDLE_SECONDS = 5
+var MAX_IDLE_SECONDS = 30
 
 // Triggered by postMessage in the page
 onmessage = debounce(function (evt) {
