@@ -108,10 +108,21 @@
           </div>
         </fieldset>
 
+        <div
+          class="alert alert-danger"
+          v-if="accountErrorMessage"
+        >
+          ${ accountErrorMessage }
+        </div>
+        <div
+          class="alert alert-success"
+          v-if="accountSuccessMessage"
+        >
+          ${ accountSuccessMessage }
+        </div>
+
         <fieldset v-if="!auth">
           <legend>Login With</legend>
-
-          <div class="alert alert-danger hidden" id="login-error-component"></div>
 
           <div class="row">
             <div class="col-sm-4">
@@ -146,19 +157,6 @@
 
         <fieldset v-if="auth">
           <legend>Your Account</legend>
-
-          <div
-            class="alert alert-danger"
-            v-if="accountErrorMessage"
-          >
-            ${ accountErrorMessage }
-          </div>
-          <div
-            class="alert alert-success"
-            v-if="accountSuccessMessage"
-          >
-            ${ accountSuccessMessage }
-          </div>
 
           <div class="row">
             <div class="col-sm-8">
@@ -402,7 +400,7 @@
           }, function (err) {
             if (err) {
               console.error(err)
-              this.addAccountErrorMessage('We were unable to update your user data.')
+              self.addAccountErrorMessage('We were unable to update your user data.')
             }
           })
 
@@ -421,30 +419,33 @@
         })
       },
       attemptLoginWithGoogle: function () {
+        var self = this
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then(function(result) {
           self.auth = result.user
         }).catch(function(error) {
           console.error(error)
-          this.addAccountErrorMessage(error.message)
+          self.addAccountErrorMessage(error.message)
         })
       },
       attemptLoginWithFacebook: function () {
+        var self = this
         var provider = new firebase.auth.FacebookAuthProvider();
         firebase.auth().signInWithPopup(provider).then(function(result) {
           self.auth = result.user
         }).catch(function(error) {
           console.error(error)
-          this.addAccountErrorMessage(error.message)
+          self.addAccountErrorMessage(error.message)
         })
       },
       attemptLoginWithTwitter: function () {
+        var self = this
         var provider = new firebase.auth.TwitterAuthProvider();
         firebase.auth().signInWithPopup(provider).then(function(result) {
           self.auth = result.user
         }).catch(function(error) {
           console.log(error)
-          this.addAccountErrorMessage(error.message)
+          self.addAccountErrorMessage(error.message)
         })
       }
     }
