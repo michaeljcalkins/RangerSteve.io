@@ -57,6 +57,9 @@ function onData (data) {
   if (!events[data.type]) return
 
   events[data.type].call(this, data.payload)
+
+  lastPlayerData[this.id] = lastPlayerData[this.id] || {}
+  lastPlayerData[this.id].lastMessageTime = Date.now()
 }
 
 function init (primusInstance) {
@@ -93,9 +96,21 @@ gameloop.setGameLoop(function () {
 
     Object.keys(rooms[roomId].players).forEach(function (playerId) {
       roomData.players[playerId] = {}
+      lastPlayerData[playerId] = lastPlayerData[playerId] || {}
+      lastPlayerData[playerId].lastMessageTime = lastPlayerData[playerId].lastMessageTime || Date.now()
+
+      // Find out how long it's been since this player sent us data
+      const messageTimeDiff = Date.now() - lastPlayerData[playerId].lastMessageTime
+      if (messageTimeDiff > (GameConsts.MAX_IDLE_SECONDS * 1000)) {
+        // Disconnect this player's socket and remove references to the player in game
+        // The game loop on the client's end will remove this player's sprite when they are found to be missing
+        io.spark(playerId).end()
+        delete lastPlayerData[playerId]
+        delete roomData.players[playerId]
+        return
+      }
 
       GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(function (playerProperty) {
-        lastPlayerData[playerId] = lastPlayerData[playerId] || {}
         if (
           typeof lastPlayerData[playerId][playerProperty] === 'undefined' || // if the value has not been sent yet
           lastPlayerData[playerId][playerProperty] !== rooms[roomId].players[playerId][playerProperty] // if the value is now different
@@ -273,7 +288,7 @@ function onPlayerRespawn () {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
-  const player = getPlayerById(roomId, this.id, rooms)
+  const player = getPlayerById(rooms[roomId], this.id)
 
   if (!player) {
     util.log('Player not found when trying to respawn', this.id)
@@ -305,7 +320,7 @@ function onMessageSend (data) {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
-  const player = getPlayerById(roomId, this.id, rooms)
+  const player = getPlayerById(rooms[roomId], this.id)
 
   const newMessage = filter.clean(data.substr(0, GameConsts.MAX_CHAT_MESSAGE_LENGTH))
   rooms[roomId].messages.push([
@@ -326,7 +341,7 @@ function onMessageSend (data) {
 }
 
 function onPlayerAdjustScore (data) {
-  const player = getPlayerById(data.roomId, this.id, rooms)
+  const player = getPlayerById(rooms[data.roomId], this.id)
 
   if (!player) {
     util.log('Player not found when adjust score', data)
@@ -342,7 +357,7 @@ function onNewPlayer (data) {
   util.log('New player has joined: ', this.id)
 
   // Check for duplicate players
-  var player = getPlayerById(data.roomId, this.id, rooms)
+  var player = getPlayerById(rooms[data.roomId], this.id)
   if (player) return util.log('Player already in room: ' + this.id)
 
   // Create a new player
@@ -437,49 +452,46 @@ function onMovePlayer (buffer) {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
-  const movePlayer = rooms[roomId].players[this.id]
-  if (!movePlayer || movePlayer.health <= 0) return
+  const player = rooms[roomId].players[this.id]
+  if (!player || player.health <= 0) return
 
   const data = movePlayerSchema.decode(buffer)
 
   // Update player position
-  movePlayer.x = data.x
-  movePlayer.y = data.y
-  movePlayer.angle = data.angle
-  movePlayer.flying = data.flying
-  movePlayer.shooting = data.shooting
-  movePlayer.weaponId = data.weaponId
+  player.x = data.x
+  player.y = data.y
+  player.angle = data.angle
+  player.flying = data.flying
+  player.shooting = data.shooting
+  player.weaponId = data.weaponId
 }
 
 // Socket client has disconnected
 function onClientDisconnect (socket) {
   util.log('Player has disconnected: ' + socket.id)
+  const roomId = getRoomIdByPlayerId(socket.id, rooms)
 
-  let selectedRoomId = null
-  Object.keys(rooms).forEach((roomId) => {
-    if (_.find(rooms[roomId].players, { id: socket.id })) {
-      selectedRoomId = roomId
-    }
-  })
+  if (!roomId) return util.error('Room not found that disconnecting player was in.')
 
-  var removePlayer = getPlayerById(selectedRoomId, socket.id, rooms)
+  const player = getPlayerById(rooms[roomId], socket.id)
 
   // Player not found
-  if (!removePlayer) {
+  if (!player) {
     util.log('Player not found when disconnecting: ' + socket.id)
     return
   }
 
-  // Remove player from players array
-  Object.keys(rooms).forEach((roomId) => {
-    delete rooms[roomId].players[socket.id]
-  })
+  // Remove player's cached data
+  delete lastPlayerData[socket.id]
 
-  // If the room the player left is empty close the room
-  if (rooms[selectedRoomId] && Object.keys(rooms[selectedRoomId].players).length === 0) {
-    util.log('Removing room: ', selectedRoomId)
-    delete rooms[selectedRoomId]
-    delete lastRoomData[selectedRoomId]
+  // Remove player from any rooms that may have a reference
+  delete rooms[roomId].players[socket.id]
+
+  // If this was the last player in this room delete the whole room
+  if (Object.keys(rooms[roomId].players).length === 0) {
+    util.log('Removing room: ', roomId)
+    delete rooms[roomId]
+    delete lastRoomData[roomId]
   }
 }
 
@@ -487,7 +499,7 @@ function onPlayerFullHealth () {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
-  let player = getPlayerById(roomId, this.id, rooms)
+  let player = getPlayerById(rooms[roomId], this.id)
   if (!player) return
   player.health = GameConsts.PLAYER_FULL_HEALTH
 
@@ -502,7 +514,7 @@ function onPlayerHealing () {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
-  let player = getPlayerById(roomId, this.id, rooms)
+  let player = getPlayerById(rooms[roomId], this.id)
   player.health += 10
 
   if (player.health > GameConsts.PLAYER_FULL_HEALTH) {
@@ -520,7 +532,7 @@ function onPlayerDamaged (data) {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
-  let player = getPlayerById(roomId, data.damagedPlayerId, rooms)
+  let player = getPlayerById(rooms[roomId], this.damagedPlayerId)
   if (!player || player.health <= 0) return
 
   player.health -= Number(data.damage)
@@ -537,7 +549,7 @@ function onPlayerDamaged (data) {
   player.damageStats.weaponId = data.weaponId
   player.timesHit++
 
-  const attackingPlayer = getPlayerById(roomId, data.attackingPlayerId, rooms)
+  const attackingPlayer = getPlayerById(rooms[roomId], data.attackingPlayerId)
   if (attackingPlayer) {
     attackingPlayer.bulletsHit++
     if (data.wasHeadshot) attackingPlayer.headshots++
@@ -682,7 +694,7 @@ function onBulletFired (data) {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
-  const player = getPlayerById(roomId, this.id, rooms)
+  const player = getPlayerById(rooms[roomId], this.id)
   data.playerId = this.id
 
   if (!player || player.health <= 0) return

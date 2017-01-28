@@ -12,7 +12,6 @@ import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
 import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
 import CreateBullets from '../lib/CreateHandler/CreateBullets'
 import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
-import CreateDetectIdleUser from '../lib/CreateHandler/CreateDetectIdleUser'
 import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
 import PlayerAndEnemyTeamBullets from '../lib/Collisions/PlayerAndEnemyTeamBullets'
 import BulletsAndEnemyTeamPlayers from '../lib/Collisions/BulletsAndEnemyTeamPlayers'
@@ -45,7 +44,6 @@ TeamDeathmatch.prototype = {
     CreateKillingSpreeAudio.call(this)
     CreateBullets.call(this)
     CreateKeyboardBindings.call(this)
-    CreateDetectIdleUser()
 
     window.onresize = UpdateGameScale.bind(this)
     UpdateGameScale.call(this)
