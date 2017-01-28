@@ -281,6 +281,7 @@ function onPlayerRespawn () {
   }
 
   player.health = GameConsts.PLAYER_FULL_HEALTH
+  player.state = 1
 
   lastPlayerData[this.id] = {}
 
@@ -547,6 +548,8 @@ function onPlayerDamaged (data) {
     player.health = 0
     player.killingSpree = 0
     player.deaths++
+    // player is dead so tell everyone to hide this player in game
+    player.state = 0
     player.canRespawnTimestamp = moment().add(GameConsts.RESPAWN_TIME_SECONDS, 'seconds').unix()
 
     if (attackingPlayer) {
