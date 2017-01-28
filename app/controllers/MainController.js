@@ -15,9 +15,11 @@ let MainController = {
     const rooms = require('../sockets').getRooms()
     const numberOfRooms = Object.keys(rooms).length
     const maxRoomSize = GameConsts.MAX_ROOM_SIZE
+    const maxIdleSeconds = GameConsts.MAX_IDLE_SECONDS
 
     res.render('home', {
       maxRoomSize: maxRoomSize,
+      maxIdleSeconds: maxIdleSeconds,
       numberOfRooms: numberOfRooms,
       rooms: rooms
     })

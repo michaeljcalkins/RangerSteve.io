@@ -17,6 +17,14 @@
       <div id="browser-recommendation" class="alert alert-info text-center">
         We recommend using Chrome browser for the best game performance
       </div>
+
+      <div
+        class="alert alert-info text-center"
+        v-if="showIdlePlayerMessage"
+      >
+        You have been kicked for being idle for {{ maxIdleSeconds }} seconds.
+      </div>
+
       <div class="well">
         <form action="/game" method="GET">
           <div class="row">
@@ -261,6 +269,7 @@
     data: {
       accountSuccessMessage: null,
       accountErrorMessage: null,
+      showIdlePlayerMessage: localStorage.getItem('showIdlePlayerMessage'),
       newUsername: null,
       auth: null,
       user: null,
@@ -450,6 +459,8 @@
       }
     }
   })
+
+  localStorage.removeItem('showIdlePlayerMessage')
 
   if (! isChromeBrowser()) showBrowserRecommendation()
 
