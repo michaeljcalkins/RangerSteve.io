@@ -32,11 +32,13 @@ export default function (store) {
 
   // Check if the user is signed in
   window.firebase.auth().onAuthStateChanged(function (auth) {
+    // If user is guest just boot the game and a random username will be assigned.
     if (!auth) {
       game.state.start('Boot')
       return
     }
 
+    // If the user is signed in get any info needed here and put it into the redux state
     window.firebase.database()
       .ref('users/' + auth.uid)
       .once('value', (snapshot) => {
