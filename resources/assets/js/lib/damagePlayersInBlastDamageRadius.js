@@ -38,7 +38,7 @@ export default function (bullet) {
 
     // Find all players in the vicinity of this explosion and deal them damage
   window.RS.enemies.forEach(enemy => {
-    if (enemy.team === window.RS.player.data.team && state.room.gamemode === 'TeamDeathmatch') return
+    if (enemy.team === window.RS.player.team && state.room.gamemode === 'TeamDeathmatch') return
 
     const a = enemy.x - bullet.x
     const b = enemy.y - bullet.y
