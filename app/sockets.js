@@ -21,7 +21,7 @@ const savePlayerScoresToFirebase = require('../lib/savePlayerScoresToFirebase')
 
 const filter = new Filter()
 
-// const NetworkStats = helpers.NetworkStats
+const NetworkStats = helpers.NetworkStats
 const sizeOf = helpers.sizeOf
 
 let rooms = {}
@@ -66,12 +66,12 @@ function init (primusInstance) {
   io.on('connection', onClientConnect)
   io.on('disconnection', onClientDisconnect)
 
-  // if (GameConsts.ENABLE_NETWORK_STATS) {
-  //     NetworkStats.loop(() => {
-  //         const dataSent = Server.getStats().dataSent
-  //         NetworkStats.print(dataSent, dataReceived)
-  //     })
-  // }
+  if (GameConsts.ENABLE_NETWORK_STATS) {
+    NetworkStats.loop(() => {
+      const dataSent = Server.getStats().dataSent
+      NetworkStats.print(dataSent, dataReceived)
+    })
+  }
 }
 
 function getRooms () {
@@ -289,8 +289,6 @@ function onPlayerRespawn () {
 
   const data = {
     id: this.id,
-    // If a player died at the bottom of HighRuleJungle this prevents it from killing them inmmediately.
-    noDamageBeforeTime: Date.now() + GameConsts.NO_DAMAGE_BEFORE_SECONDS,
     x: spawnPoint.x,
     y: spawnPoint.y
   }

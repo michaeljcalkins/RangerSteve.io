@@ -56,10 +56,6 @@ export function create () {
 }
 
 export function update () {
-  const state = this.game.store.getState()
-
-  if (state.player.noDamageBeforeTime >= state.room.currentTime) return
-
   this.game.physics.arcade.overlap(window.RS.player, this.groundSprite, () => {
     KillCurrentPlayer.call(this)
   })

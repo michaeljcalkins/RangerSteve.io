@@ -37,9 +37,6 @@ export default function onPlayerRespawn (data) {
 
   store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
   store.dispatch(actions.player.setIsSwitchingWeapon(false))
-  store.dispatch(actions.player.setPlayer({
-    noDamageBeforeTime: data.noDamageBeforeTime
-  }))
 
   window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
   window.RS.player.visible = true
