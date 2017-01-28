@@ -66,7 +66,7 @@ function init (primusInstance) {
   io.on('connection', onClientConnect)
   io.on('disconnection', onClientDisconnect)
 
-  if (GameConsts.ENABLE_NETWORK_STATS) {
+  if (GameConsts.ENABLE_SERVER_NETWORK_STATS_LOG) {
     NetworkStats.loop(() => {
       const dataSent = Server.getStats().dataSent
       NetworkStats.print(dataSent, dataReceived)
