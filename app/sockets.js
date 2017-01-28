@@ -8,6 +8,7 @@ const gameloop = require('node-gameloop')
 
 const Server = require('./Server')
 
+const getSpawnPoint = require('../lib/getSpawnPoint')
 const GameConsts = require('../lib/GameConsts')
 const helpers = require('../lib/helpers')
 const createPlayer = require('../lib/createPlayer')
@@ -15,14 +16,12 @@ const getPlayerById = require('../lib/getPlayerById')
 const getTeam = require('../lib/getTeam')
 const createRoom = require('../lib/createRoom')
 const getRoomIdByPlayerId = require('../lib/getRoomIdByPlayerId')
-// const bulletSchema = require('../lib/schemas/bulletSchema')
-// const playerIdSchema = require('../lib/schemas/playerIdSchema')
 const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
 const savePlayerScoresToFirebase = require('../lib/savePlayerScoresToFirebase')
 
 const filter = new Filter()
 
-// const NetworkStats = helpers.NetworkStats
+const NetworkStats = helpers.NetworkStats
 const sizeOf = helpers.sizeOf
 
 let rooms = {}
@@ -67,12 +66,12 @@ function init (primusInstance) {
   io.on('connection', onClientConnect)
   io.on('disconnection', onClientDisconnect)
 
-  // if (GameConsts.ENABLE_NETWORK_STATS) {
-  //     NetworkStats.loop(() => {
-  //         const dataSent = Server.getStats().dataSent
-  //         NetworkStats.print(dataSent, dataReceived)
-  //     })
-  // }
+  if (GameConsts.ENABLE_SERVER_NETWORK_STATS_LOG) {
+    NetworkStats.loop(() => {
+      const dataSent = Server.getStats().dataSent
+      NetworkStats.print(dataSent, dataReceived)
+    })
+  }
 }
 
 function getRooms () {
@@ -143,24 +142,45 @@ setInterval(function () {
       util.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} for room ${roomId}`)
 
       Object.keys(rooms[roomId].players).forEach((playerId) => {
-        rooms[roomId].players[playerId].health = GameConsts.PLAYER_FULL_HEALTH
-        rooms[roomId].players[playerId].deaths = 0
-        rooms[roomId].players[playerId].kills = 0
-        rooms[roomId].players[playerId].bestKillingSpree = 0
-        rooms[roomId].players[playerId].killingSpree = 0
-        rooms[roomId].players[playerId].bulletsFired = 0
-        rooms[roomId].players[playerId].bulletsHit = 0
-        rooms[roomId].players[playerId].timesHit = 0
-        rooms[roomId].players[playerId].score = 0
-        rooms[roomId].players[playerId].headshots = 0
-        rooms[roomId].players[playerId].secondsInRound = 0
+        const player = rooms[roomId].players[playerId]
+        player.health = GameConsts.PLAYER_FULL_HEALTH
+
+        // Reset player scores
+        player.deaths = 0
+        player.kills = 0
+        player.bestKillingSpree = 0
+        player.killingSpree = 0
+        player.bulletsFired = 0
+        player.bulletsHit = 0
+        player.timesHit = 0
+        player.score = 0
+        player.headshots = 0
+        player.secondsInRound = 0
+
+        // Reset player posisitions so we can create new respawn points
+        player.x = 0
+        player.y = 0
       })
 
-      Server.sendToRoom(
-        roomId,
-        GameConsts.EVENT.LOAD_GAME,
-        rooms[roomId]
-      )
+      // Now that player positions are reset we can spread players throughout the map
+      Object.keys(rooms[roomId].players).forEach((playerId) => {
+        const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
+        const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
+
+        // Tell each player to reload the map and give them their initial spawn locations
+        Server.sendToSocket(
+          playerId,
+          GameConsts.EVENT.LOAD_GAME,
+          {
+            room: rooms[roomId],
+            player: {
+              x: spawnPoint.x,
+              y: spawnPoint.y
+            }
+          }
+        )
+      })
+
       return
     }
 
@@ -264,9 +284,17 @@ function onPlayerRespawn () {
 
   lastPlayerData[this.id] = {}
 
-  const data = { id: this.id }
-  Server.sendToRoom(
-    roomId,
+  const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
+  const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
+
+  const data = {
+    id: this.id,
+    x: spawnPoint.x,
+    y: spawnPoint.y
+  }
+
+  Server.sendToSocket(
+    this.id,
     GameConsts.EVENT.PLAYER_RESPAWN,
     data
   )
@@ -377,6 +405,12 @@ function onNewPlayer (data) {
     newPlayer.team = getTeam(players, redTeamScore, blueTeamScore)
   }
 
+  // Get initial spawn point
+  const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomIdPlayerWillJoin].map]
+  const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomIdPlayerWillJoin].players)
+  newPlayer.x = spawnPoint.x
+  newPlayer.y = spawnPoint.y
+
   // User to the room
   rooms[roomIdPlayerWillJoin].players[this.id] = newPlayer
   rooms[roomIdPlayerWillJoin].messages = _.get(rooms, '[' + roomIdPlayerWillJoin + '].messages') || []
@@ -387,7 +421,13 @@ function onNewPlayer (data) {
   Server.sendToSocket(
     this.id,
     GameConsts.EVENT.LOAD_GAME,
-    rooms[roomIdPlayerWillJoin]
+    {
+      room: rooms[roomIdPlayerWillJoin],
+      player: {
+        x: newPlayer.x,
+        y: newPlayer.y
+      }
+    }
   )
 }
 
@@ -634,7 +674,6 @@ function onPlayerDamaged (data) {
 }
 
 function onBulletFired (data) {
-  // const data = bulletSchema.decode(buffer)
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
@@ -643,9 +682,6 @@ function onBulletFired (data) {
 
   if (!player || player.health <= 0) return
   player.bulletsFired++
-
-  // Broadcast updated position to connected socket clients
-  // var newBuffer/*: Uint8Array*/ = bulletSchema.encode(data)
 
   Server.sendToRoom(
     roomId,

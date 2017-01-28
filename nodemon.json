@@ -12,9 +12,9 @@
   },
   "watch": [
     "bin/",
-    "app/",
+    "app/**/*.js",
     "app.js",
-    "lib/"
+    "lib/**/*.js"
   ],
   "env": {
     "NODE_ENV": "development"

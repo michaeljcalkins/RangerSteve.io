@@ -1,14 +1,10 @@
 import includes from 'lodash/includes'
 
-import Maps from '../Maps'
 import PlayerById from '../PlayerById'
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
-import GetSpawnPoint from '../GetSpawnPoint'
-// import playerIdSchema from 'lib/schemas/playerIdSchema'
 
 export default function onPlayerRespawn (data) {
-    // const data = playerIdSchema.decode(buffer)
   const state = this.game.store.getState()
   const store = this.game.store
 
@@ -21,17 +17,12 @@ export default function onPlayerRespawn (data) {
     return
   }
 
-  // Create and set the new spawn point
-  const spawnPoints = Maps[state.room.map].getSpawnPoints()
-  const spawnPoint = GetSpawnPoint(spawnPoints, window.RS.enemies.children)
-
-  window.RS.player.x = spawnPoint.x
-  window.RS.player.y = spawnPoint.y
-
   window.RS.player.body.acceleration.x = 0
   window.RS.player.body.acceleration.y = 0
   window.RS.player.body.velocity.x = 0
   window.RS.player.body.velocity.y = 0
+  window.RS.player.x = data.x
+  window.RS.player.y = data.y
 
   store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
   store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
@@ -52,9 +43,7 @@ export default function onPlayerRespawn (data) {
   this.game.input.enabled = true
   this.game.input.reset()
 
-  // Allow Phaser to move the player
-  // so that the map doesn't
-  // kill them again.
+  // Allow Phaser to move the player so that the map doesn't kill them again.
   setTimeout(() => {
     store.dispatch(actions.player.setHealth(GameConsts.PLAYER_FULL_HEALTH))
   }, 100)

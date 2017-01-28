@@ -1,14 +1,9 @@
 import GameConsts from 'lib/GameConsts'
-import Maps from './Maps'
 import actions from '../actions'
-import GetSpawnPoint from './GetSpawnPoint'
 import updatePlayerColor from './updatePlayerColor'
 
 export default function PlayerSpriteHandler () {
   const state = this.game.store.getState()
-
-  const spawnPoints = Maps[state.room.map].getSpawnPoints()
-  const spawnPoint = GetSpawnPoint(spawnPoints, window.RS.enemies.children)
 
   const primaryWeaponId = this.game.store.getState().player.selectedPrimaryWeaponId
   const selectedPrimaryWeapon = GameConsts.WEAPONS[primaryWeaponId]
@@ -19,7 +14,7 @@ export default function PlayerSpriteHandler () {
   this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
 
   // Player sprite
-  window.RS.player = this.game.add.sprite(spawnPoint.x, spawnPoint.y, 'player-placeholder')
+  window.RS.player = this.game.add.sprite(0, 0, 'player-placeholder')
   window.RS.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
   // Physics
@@ -125,4 +120,7 @@ export default function PlayerSpriteHandler () {
    */
   this.camera.follow(window.RS.player)
   this.camera.lerp.setTo(0.2, 0.2)
+
+  window.RS.player.x = state.player.initialPosition.x
+  window.RS.player.y = state.player.initialPosition.y
 }
