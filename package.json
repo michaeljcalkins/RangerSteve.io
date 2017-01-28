@@ -7,9 +7,9 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "postinstall": "npm run build:prod",
-    "test": "NODE_ENV=test mocha --require babel-core/register lib/**/*.test.js && standard",
-    "test-report": "NODE_ENV=test mocha --recursive -R xunit tests/browser.js tests/**/*.test.js > test-reports.xml",
-    "test-watch": "nodemon --watch app/services/**/*.js -q -x 'npm test'",
+    "test": "NODE_ENV=test mocha --require babel-core/register {lib,resources/assets}/**/*.test.js && npm run lint",
+    "test-watch": "nodemon -q -x 'npm test'",
+    "lint": "standard {app/**/*.js,resources/**/*.js,lib/**/*.js}",
     "watch": "webpack --env dev -w",
     "build:dev": "webpack --env dev --progress --profile --colors",
     "build:prod": "webpack --env prod --progress --profile --colors"

@@ -4,7 +4,6 @@ import Maps from '../Maps'
 import PlayerById from '../PlayerById'
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
-import CreateKeyboardBindings from '../CreateHandler/CreateKeyboardBindings'
 import GetSpawnPoint from '../GetSpawnPoint'
 // import playerIdSchema from 'lib/schemas/playerIdSchema'
 
