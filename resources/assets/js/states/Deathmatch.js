@@ -7,6 +7,7 @@ import actions from '../actions'
 import GameConsts from 'lib/GameConsts'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
+import UpdateEnemyPositions from '../lib/UpdateEnemyPositions'
 import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
 import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
 import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
@@ -95,6 +96,7 @@ Deathmatch.prototype = {
     RotateBulletsToTrajectory.call(this)
     UpdateHurtBorder.call(this)
     UpdatePlayerPosition.call(this)
+    UpdateEnemyPositions.call(this)
   },
 
   render () {
