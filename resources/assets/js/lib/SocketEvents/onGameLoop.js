@@ -121,9 +121,12 @@ export default function onGameLoop (data) {
       if (typeof playerData[propName] !== 'undefined') player.data[propName] = playerData[propName]
     })
 
-    // Update player position in the arena
-    player.x = player.data.x
-    player.y = player.data.y
+    // Prepare player data for interpolation
+    player.data.targetPosition = {
+      x: player.data.x,
+      y: player.data.y,
+      millisRemaining: GameConsts.TICK_RATE
+    }
 
     // Update player's name above their player in game
     if (lastPlayerNickname[playerId] !== player.data.nickname) {
