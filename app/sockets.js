@@ -532,7 +532,7 @@ function onPlayerDamaged (data) {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
   if (!rooms[roomId]) return
 
-  let player = getPlayerById(rooms[roomId], this.damagedPlayerId)
+  let player = getPlayerById(rooms[roomId], data.damagedPlayerId)
   if (!player || player.health <= 0) return
 
   player.health -= Number(data.damage)
