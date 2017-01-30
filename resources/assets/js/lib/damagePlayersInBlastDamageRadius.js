@@ -1,4 +1,5 @@
-import emitPlayerDamaged from './SocketEvents/emitPlayerDamaged'
+import Client from './Client'
+import GameConsts from 'lib/GameConsts'
 
 let lastBulletId = null
 const blastRadius = 120
@@ -29,7 +30,7 @@ export default function (bullet) {
     lastBulletId = bullet.bulletId
     const blastDamage = getBlastDamage(distanceFromExplosion)
 
-    emitPlayerDamaged.call(this, {
+    Client.send(GameConsts.EVENT.PLAYER_DAMAGED, {
       damage: blastDamage,
       weaponId: bullet.weaponId,
       damagedPlayerId: window.SOCKET_ID
@@ -49,7 +50,7 @@ export default function (bullet) {
       enemy.lastBulletId = bullet.bulletId
       const blastDamage = getBlastDamage(distanceFromExplosion)
 
-      emitPlayerDamaged.call(this, {
+      Client.send(GameConsts.EVENT.PLAYER_DAMAGED, {
         damage: blastDamage,
         weaponId: bullet.weaponId,
         damagedPlayerId: enemy.data.id,

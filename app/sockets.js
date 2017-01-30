@@ -535,6 +535,8 @@ function onPlayerDamaged (data) {
   let player = getPlayerById(rooms[roomId], data.damagedPlayerId)
   if (!player || player.health <= 0) return
 
+  if (player.noDamageUntilTime > Date.now()) return
+
   player.health -= Number(data.damage)
   player.damageStats = player.damageStats || {}
 
@@ -560,6 +562,8 @@ function onPlayerDamaged (data) {
     player.health = 0
     player.killingSpree = 0
     player.deaths++
+    player.noDamageUntilTime = Date.now() + (GameConsts.RESPAWN_TIME_SECONDS * 1000) + (GameConsts.NO_DAMAGE_BEFORE_SECONDS * 1000)
+
     // player is dead so tell everyone to hide this player in game
     player.state = 0
     player.canRespawnTimestamp = moment().add(GameConsts.RESPAWN_TIME_SECONDS, 'seconds').unix()
