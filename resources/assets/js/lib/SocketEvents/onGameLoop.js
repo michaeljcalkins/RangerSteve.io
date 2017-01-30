@@ -88,15 +88,27 @@ export default function onGameLoop (data) {
 
     // Update local player's health if there is a change
     if (playerId === window.SOCKET_ID) {
+      if (playerData.state === 0) {
+        this.game.input.enabled = false
+        this.game.input.reset()
+        window.RS.player.body.acceleration.x = 0
+        window.RS.player.body.acceleration.y = 0
+        window.RS.player.body.velocity.x = 0
+        window.RS.player.body.velocity.y = 0
+        window.RS.player.visible = false
+      }
+
       if (lastPlayerHealth[playerId] !== playerData.health && typeof playerData.health !== 'undefined') {
         store.dispatch(actions.player.setHealth(playerData.health))
         lastPlayerHealth[playerId] = playerData.health
       }
+
       if (lastPlayerNickname[playerId] !== playerData.nickname && typeof playerData.nickname !== 'undefined') {
         roomData[playerId] = {
           nickname: playerData.nickname
         }
       }
+
       return
     }
 

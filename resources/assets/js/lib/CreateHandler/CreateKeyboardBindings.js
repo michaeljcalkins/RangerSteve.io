@@ -117,6 +117,7 @@ export default function () {
    * Self-kill
    */
   this.input.keyboard.addKey(store.getState().game.keyboardControls.selfkill).onUp.add(() => {
-    if (store.getState().room.state === 'active') KillCurrentPlayer.call(this)
+    if (store.getState().room.state !== 'active') return
+    KillCurrentPlayer.call(this)
   })
 }
