@@ -1,4 +1,5 @@
 import Client from './Client'
+import GameConsts from 'lib/GameConsts'
 
 let lastBulletId = null
 const blastRadius = 120
