@@ -36,32 +36,55 @@
                 <legend>Overview</legend>
 
                 <div class="row">
-                  <div class="col-sm-12">
-                    <div class="row text-center">
-                      <div class="col-xs-3">
-                        <div className="player-achievement">
-                          <h4>KDR</h4>
-                          <h2 class="fwbold">${ playerScore.kdr }</h2>
-                        </div>
-                      </div>
-                      <div class="col-xs-3">
-                        <div className="player-achievement">
-                          <h4>Score / Min</h4>
-                          <h2 class="fwbold">${ playerScore.scorePerMinute }</h2>
-                        </div>
-                      </div>
-                      <div class="col-xs-3">
-                        <div className="player-achievement">
-                          <h4>Kills / Min</h4>
-                          <h2 class="fwbold">${ playerScore.killsPerMinute }</h2>
-                        </div>
-                      </div>
-                      <div class="col-xs-3">
-                        <div className="player-achievement">
-                          <h4>Win Percentage</h4>
-                          <h2 class="fwbold">${ playerScore.winPercentage }%</h2>
-                        </div>
-                      </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Time In Game</h4>
+                      <h2 class="fwbold">${ timeInGame }</h2>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>KDR</h4>
+                      <h2 class="fwbold">${ kdr }</h2>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Accuracy</h4>
+                      <h2 class="fwbold">${ accuracy }%</h2>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Win Percentage</h4>
+                      <h2 class="fwbold">${ winPercentage }%</h2>
+                    </div>
+                  </div>
+                  
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Score / Min</h4>
+                      <h2 class="fwbold">${ scorePerMinute }</h2>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Kills / Min</h4>
+                      <h2 class="fwbold">${ killsPerMinute }</h2>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Deaths / Min</h4>
+                      <h2 class="fwbold">${ deathsPerMin }</h2>
+                    </div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div className="player-achievement">
+                      <h4>Damage / Min</h4>
+                      <h2 class="fwbold">${ damagePerMinute }</h2>
                     </div>
                   </div>
                 </div>
@@ -70,57 +93,78 @@
               <fieldset class="text-center mb0">
                 <legend>Statistics</legend>
 
-                <div class="row">
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Accuracy</h4>
-                      <h4 class="fwbold">${ playerScore.accuracy }%</h4>
-                    </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Score</h4>
+                    <h4 class="fwbold">${ stats.score }</h4>
                   </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Kills</h4>
-                      <h4 class="fwbold">${ playerScore.kills }</h4>
-                    </div>
+                </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Kills</h4>
+                    <h4 class="fwbold">${ stats.kills }</h4>
                   </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Deaths</h4>
-                      <h4 class="fwbold">${ playerScore.deaths }</h4>
-                    </div>
+                </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Deaths</h4>
+                    <h4 class="fwbold">${ stats.deaths }</h4>
                   </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Headshots</h4>
-                      <h4 class="fwbold">${ playerScore.headshots }</h4>
-                    </div>
+                </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Damage Inlicted</h4>
+                    <h4 class="fwbold">${ stats.damageInflicted }</h4>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Shots Fired</h4>
-                      <h4 class="fwbold">${ playerScore.bulletsFired }</h4>
-                    </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Shots Fired</h4>
+                    <h4 class="fwbold">${ stats.bulletsFired }</h4>
                   </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Shots Hit</h4>
-                      <h4 class="fwbold">${ playerScore.bulletsHit }</h4>
-                    </div>
+                </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Shots Hit</h4>
+                    <h4 class="fwbold">${ stats.bulletsHit }</h4>
                   </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Times Hit</h4>
-                      <h4 class="fwbold">${ playerScore.timesHit }</h4>
-                    </div>
+                </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Headshots</h4>
+                    <h4 class="fwbold">${ stats.headshots }</h4>
                   </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Best Killing Spree</h4>
-                      <h4 class="fwbold">${ playerScore.bestKillingSpree }</h4>
-                    </div>
+                </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>HS Accuracy</h4>
+                    <h4 class="fwbold">${ hsAccuracy }%</h4>
+                  </div>
+                </div>
+
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Rounds Won</h4>
+                    <h4 class="fwbold">${ stats.roundsWon }</h4>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Rounds Lost</h4>
+                    <h4 class="fwbold">${ stats.roundsLost }</h4>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Best Killing Spree</h4>
+                    <h4 class="fwbold">${ stats.bestKillingSpree }</h4>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Times Hit</h4>
+                    <h4 class="fwbold">${ stats.timesHit }</h4>
                   </div>
                 </div>
               </fieldset>
@@ -139,27 +183,80 @@
     el: '#battle-stats-container',
     delimiters: ['${', '}'],
     data: {
-      playerScore: {
+      stats: {
+        bestKillingSpree: 0,
+        bulletsFired: 0,
+        bulletsHit: 0,
+        damageInflicted: 0,
+        deaths: 0,
+        headshots: 0,
+        kills: 0,
+        roundsLost: 0,
+        roundsWon: 0,
+        score: 0,
+        secondsInRound: 0,
+        timesHit: 0,
+        // computed
         kdr: 0,
         accuracy: 0,
+        hsAccuracy: 0,
         killsPerMinute: 0,
         scorePerMinute: 0,
+        damagePerMinute: 0,
         winPercentage: 0,
-        kills: 0,
-        deaths: 0,
-        bestKillingSpree: 0,
-        damageInflicted: 0,
-        headshots: 0,
-        bulletsHit: 0,
-        bulletsFired: 0,
-        timesHit: 0,
+        timeInGame: '0:00:00'
       },
       uid: {},
     },
     beforeMount: function() {
       this.fetchUsernameLookup()
     },
+    computed: {
+      kdr: function() {
+        return this.ratio(this.stats.kills, this.stats.deaths, 1)
+      },
+      accuracy: function() {
+        return this.percentage(this.stats.bulletsHit, this.stats.bulletsFired, 1)
+      },
+      hsAccuracy: function() {
+        return this.percentage(this.stats.headshots, this.stats.bulletsHit, 1)
+      },
+      winPercentage: function() {
+        var totalRounds = this.stats.roundsWon + this.stats.roundsLost
+        return this.percentage(this.stats.roundsWon, totalRounds, 1)
+      },
+      killsPerMinute: function() {
+        return this.perMinute(this.stats.kills)
+      },
+      deathsPerMin: function() {
+        return this.perMinute(this.stats.deaths)
+      },
+      scorePerMinute: function() {
+        return this.perMinute(this.stats.score)
+      },
+      damagePerMinute: function() {
+        return this.perMinute(this.stats.damageInflicted)
+      },
+      timeInGame: function() {
+        var secondsInRound = this.stats.secondsInRound
+        var hours = Math.floor(secondsInRound / 3600)
+        var minutes = _.padStart(Math.floor(secondsInRound % 3600 / 60), 2, '0')
+        var seconds = _.padStart(Math.floor(secondsInRound % 60), 2, '0')
+
+        return `${hours}:${minutes}:${seconds}`
+      },
+    },
     methods: {
+      perMinute: function(value) {
+        var minutesInRound = this.stats.secondsInRound / 60
+        return minutesInRound > 0 ? (value / minutesInRound).toFixed(1) : 0
+      },
+      ratio: function(numerator, denominator, precision) {
+        return numerator > 0 && denominator > 0 ? (numerator / denominator).toFixed(precision) : numerator
+      },
+      percentage: function(numerator, denominator, precision) {
+        return (this.ratio(numerator, denominator, 3) * 100).toFixed(precision)
+      },
       fetchUsernameLookup: function () {
         var self = this
         var ref = firebase.database()
@@ -176,37 +273,18 @@
           .once('value', function(snapshot) {
             const leaderboards = snapshot.val()
 
-            self.playerScore.kdr = _.get(leaderboards, 'kills', 0) > 0 && _.get(leaderboards, 'deaths', 0) > 0
-              ? (leaderboards.kills / leaderboards.deaths).toFixed(1)
-              : _.get(leaderboards, 'kills', 0)
-
-            self.playerScore.accuracy = _.get(leaderboards, 'bulletsFired', 0) > 0
-              ? (leaderboards.bulletsHit / leaderboards.bulletsFired * 100).toFixed(1)
-              : 0
-
-            var minutesInRound = _.get(leaderboards, 'secondsInRound', 0) / 60
-            self.playerScore.killsPerMinute = minutesInRound > 0
-              ? (_.get(leaderboards, 'kills', 0) / minutesInRound).toFixed(1)
-              : 0
-            self.playerScore.scorePerMinute = minutesInRound > 0
-              ? (_.get(leaderboards, 'score', 0) / minutesInRound).toFixed(1)
-              : 0
-
-            var roundsWon = _.get(leaderboards, 'roundsWon', 0)
-            var roundsLost = _.get(leaderboards, 'roundsLost', 0)
-            var totalRounds = roundsWon + roundsLost
-            self.playerScore.winPercentage = totalRounds > 0
-              ? (roundsWon / (roundsWon + roundsLost) * 100).toFixed(0)
-              : 0
-
-            self.playerScore.kills = _.get(leaderboards, 'kills', 0)
-            self.playerScore.deaths = _.get(leaderboards, 'deaths', 0)
-            self.playerScore.bestKillingSpree = _.get(leaderboards, 'bestKillingSpree', 0)
-            self.playerScore.damageInflicted = _.get(leaderboards, 'damageInflicted', 0)
-            self.playerScore.headshots = _.get(leaderboards, 'headshots', 0)
-            self.playerScore.bulletsHit = _.get(leaderboards, 'bulletsHit', 0)
-            self.playerScore.bulletsFired = _.get(leaderboards, 'bulletsFired', 0)
-            self.playerScore.timesHit = _.get(leaderboards, 'timesHit', 0)
+            self.stats.bestKillingSpree = _.get(leaderboards, 'bestKillingSpree', 0)
+            self.stats.bulletsFired = _.get(leaderboards, 'bulletsFired', 0)
+            self.stats.bulletsHit = _.get(leaderboards, 'bulletsHit', 0)
+            self.stats.damageInflicted = _.get(leaderboards, 'damageInflicted', 0)
+            self.stats.deaths = _.get(leaderboards, 'deaths', 0)
+            self.stats.headshots = _.get(leaderboards, 'headshots', 0)
+            self.stats.kills = _.get(leaderboards, 'kills', 0)
+            self.stats.roundsLost = _.get(leaderboards, 'roundsLost', 0)
+            self.stats.roundsWon = _.get(leaderboards, 'roundsWon', 0)
+            self.stats.score = _.get(leaderboards, 'score', 0)
+            self.stats.secondsInRound = _.get(leaderboards, 'secondsInRound', 0)
+            self.stats.timesHit = _.get(leaderboards, 'timesHit', 0)
           })
       }
     }
