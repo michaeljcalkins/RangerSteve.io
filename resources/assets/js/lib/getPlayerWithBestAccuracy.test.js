@@ -10,6 +10,11 @@ describe('getPlayerMetaWithBestAccuracy', function () {
           'nickname': 'Noob',
           'bulletsFired': 0,
           'bulletsHit': 0
+        },
+        '1Nd8DVD3GMWBlYVsAAAK': {
+          'nickname': 'Noob 2',
+          'bulletsFired': 19,
+          'bulletsHit': 0
         }
       }
     }
@@ -22,6 +27,16 @@ describe('getPlayerMetaWithBestAccuracy', function () {
         'VNd8DVD3GMWBlYVsAAAK': {
           'nickname': 'Noob',
           'bulletsFired': 0,
+          'bulletsHit': 0
+        },
+        'undefined': {
+          'nickname': undefined,
+          'bulletsFired': undefined,
+          'bulletsHit': undefined
+        },
+        '1Nd8DVD3GMWBlYVsAAAK': {
+          'nickname': 'Noob 2',
+          'bulletsFired': 19,
           'bulletsHit': 0
         },
         'gpjE8jZgPNseoxfVAAAJ': {
