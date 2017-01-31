@@ -258,17 +258,19 @@ function onPlayerScores () {
       return util.error('Could not find', playerId, 'during player scores event.')
     }
 
+    const player = rooms[roomId].players[playerId]
+
     playerScores[playerId] = {
-      bestKillingSpree: rooms[roomId].players[playerId].bestKillingSpree,
-      bulletsFired: rooms[roomId].players[playerId].bulletsFired,
-      bulletsHit: rooms[roomId].players[playerId].bulletsHit,
-      deaths: rooms[roomId].players[playerId].deaths,
-      headshots: rooms[roomId].players[playerId].headshots,
-      killingSpree: rooms[roomId].players[playerId].killingSpree,
-      kills: rooms[roomId].players[playerId].kills,
-      score: rooms[roomId].players[playerId].score,
-      secondsInRound: rooms[roomId].players[playerId].secondsInRound,
-      timesHit: rooms[roomId].players[playerId].timesHit
+      bestKillingSpree: player.bestKillingSpree || 0,
+      bulletsFired: player.bulletsFired || 0,
+      bulletsHit: player.bulletsHit || 0,
+      deaths: player.deaths || 0,
+      headshots: player.headshots || 0,
+      killingSpree: player.killingSpree || 0,
+      kills: player.kills || 0,
+      score: player.score || 0,
+      secondsInRound: player.secondsInRound || 0,
+      timesHit: player.timesHit || 0
     }
   })
 
