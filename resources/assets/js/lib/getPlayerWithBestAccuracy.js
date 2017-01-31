@@ -4,7 +4,7 @@ export default function (room) {
   let bestPlayer = false
   Object.keys(room.players).forEach(playerId => {
     const selectedPlayer = room.players[playerId]
-    if (!selectedPlayer || selectedPlayer.bulletsFired === 0) return
+    if (!selectedPlayer || !selectedPlayer.bulletsFired > 0) return
 
     // bullets fired / bullets that hit
     const accuracy = selectedPlayer.bulletsHit / selectedPlayer.bulletsFired * 100
