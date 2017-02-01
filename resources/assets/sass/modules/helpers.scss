@@ -1,6 +1,15 @@
 .tcw, .tcw-hover:hover, .tcb.table-hover > tbody > tr:hover { color: white }
 .tcb, .tcb-hover:hover, .tcw.table-hover > tbody > tr:hover { color: #333 }
 
+.table-text-right {
+  th, td {
+    text-align: right;
+  }
+  .text-left {
+    text-align: left;
+  }
+}
+
 $i: 6;
 @while $i > -1 {
     .mt#{$i} { margin-top: 5px * $i; }
