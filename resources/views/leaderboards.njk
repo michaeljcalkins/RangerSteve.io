@@ -29,6 +29,7 @@
             <table class="table table-middle table-hover tcw mb0 table-text-right">
               <thead>
                 <tr>
+                  <th>&nbsp;</th>
                   <th class="text-left">Name</th>
                   <th class="pointer" v-on:click="setSortColumn('score')">Score <span v-if="sortColumn === 'score'">▼</span></th>
                   <th class="pointer" v-on:click="setSortColumn('secondsInRound')">Time In Game <span v-if="sortColumn === 'secondsInRound'">▼</span></th>
@@ -39,7 +40,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="playerScore in playerScores" class="pointer text-right" v-on:click="openBattleStats(playerScore.name)">
+                <tr v-for="(playerScore, index) in playerScores" class="pointer" v-on:click="openBattleStats(playerScore.name)">
+                  <td>${ index + 1 }</td>
                   <td class="fwbold text-left">${ playerScore.name }</td>
                   <td>${ playerScore.score }</td>
                   <td>${ playerScore.timeInGame }</td>
@@ -158,7 +160,7 @@
         })
 
         this.playerScores = this.playerScores.sort(function (a, b) {
-          return  b[self.sortColumn] - a[self.sortColumn]
+          return b[self.sortColumn] - a[self.sortColumn]
         })
       }
     }
