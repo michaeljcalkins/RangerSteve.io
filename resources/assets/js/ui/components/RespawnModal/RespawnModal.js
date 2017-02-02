@@ -38,10 +38,10 @@ export class RespawnModal extends PureComponent {
   }
 
   tick () {
-    const { canRespawnTimestamp } = this.props.player
+    const { canRespawnTime } = this.props.player
     const { currentTime } = this.props.room
-    const timeRemaining = canRespawnTimestamp - currentTime
-    let seconds = Number((timeRemaining / 1000).toFixed(1))
+    const timeRemaining = (canRespawnTime / 1000) - (currentTime / 1000)
+    let seconds = Number((timeRemaining).toFixed(1))
     if (seconds % 1 === 0) seconds = seconds + '.0'
 
     // This allows you to have the auto respawn unchecked and then check it after

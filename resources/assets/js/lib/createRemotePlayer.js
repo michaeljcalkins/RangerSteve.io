@@ -3,6 +3,7 @@ import updatePlayerAngles from './updatePlayerAngles'
 
 export default function RemotePlayer (playerId, playerData) {
   const newRemotePlayer = this.game.add.sprite(playerData.x, playerData.y, 'player-placeholder')
+  newRemotePlayer.visible = false
   newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
   newRemotePlayer.alive = true
   newRemotePlayer.data = {
@@ -17,7 +18,6 @@ export default function RemotePlayer (playerId, playerData) {
   //  Physics
   this.game.physics.arcade.enable(newRemotePlayer)
   newRemotePlayer.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
-
   this.game.slopes.enable(newRemotePlayer)
 
   // This stops the effect of gravity on remote players

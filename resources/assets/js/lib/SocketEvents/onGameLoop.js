@@ -8,49 +8,6 @@ import createNewPlayersThatDontExist from '../createNewPlayersThatDontExist'
 import PlayerById from '../PlayerById'
 import updatePlayerColor from '../updatePlayerColor'
 
-function isNotMoving (player) {
-  return player.x === player.data.lastPosition.x && player.y === player.data.lastPosition.y
-}
-
-const isFlying = player => player.data.flying === true
-const isNotFlying = player => player.data.flying === false
-const isFacingRight = player => player.data.facing === 'right'
-const isFacingLeft = player => player.data.facing === 'left'
-
-function isNotMovingAndFacingRight (player) {
-  return (isFlying(player) && isFacingRight(player)) ||
-    (isNotMoving(player) && isFacingRight(player))
-}
-
-function isNotMovingAndFacingLeft (player) {
-  return (isFlying(player) && isFacingLeft(player)) ||
-    (isNotMoving(player) && isFacingLeft(player))
-}
-
-function isRunningRightAndFacingRight (player) {
-  return player.x > player.data.lastPosition.x &&
-    isFacingRight(player) &&
-    isNotFlying(player)
-}
-
-function isRunningLeftAndFacingLeft (player) {
-  return player.x < player.data.lastPosition.x &&
-    isFacingLeft(player) &&
-    isNotFlying(player)
-}
-
-function isRunningLeftAndFacingRight (player) {
-  return player.x < player.data.lastPosition.x &&
-    isFacingRight(player) &&
-    isNotFlying(player)
-}
-
-function isRunningRightAndFacingLeft (player) {
-  return player.x > player.data.lastPosition.x &&
-    isFacingLeft(player) &&
-    isNotFlying(player)
-}
-
 const lastPlayerHealth = {}
 const lastPlayerNickname = {}
 
@@ -77,9 +34,7 @@ export default function onGameLoop (data) {
   // Players should only be allowed to move when the room state is active
   this.game.paused = room.state !== 'active'
 
-  /**
-   * 1. Check for players that do not exist anymore and destroy their sprites
-   */
+  // 1. Check for players that do not exist anymore and destroy their sprites
   removePlayersThatLeft.call(this, data)
 
   // Update all players that we received with new data
@@ -91,11 +46,11 @@ export default function onGameLoop (data) {
       if (playerData.state === 0) {
         this.game.input.enabled = false
         this.game.input.reset()
+        window.RS.player.visible = false
         window.RS.player.body.acceleration.x = 0
         window.RS.player.body.acceleration.y = 0
         window.RS.player.body.velocity.x = 0
         window.RS.player.body.velocity.y = 0
-        window.RS.player.visible = false
       }
 
       if (lastPlayerHealth[playerId] !== playerData.health && typeof playerData.health !== 'undefined') {
@@ -112,14 +67,10 @@ export default function onGameLoop (data) {
       return
     }
 
-    /**
-     * 2. Find the player by their playerId
-     */
+    // 2. Find the player by their playerId
     let player = PlayerById.call(this, playerId)
 
-    /**
-     * 3. if player is not found create them and continue
-     */
+    // 3. if player is not found create them and continue
     if (!player) {
       player = createNewPlayersThatDontExist.call(this, room, playerId, playerData)
     }
@@ -198,22 +149,7 @@ export default function onGameLoop (data) {
     lastPlayerNickname[playerId] = playerData.nickname
     roomData[playerId] = player.data
 
-    // This allows us to move the player to their new position and change their visibility in the next frame.
-    // This prevents a single frame flicker where the player becomes visible and moves in one frame.
-    if (player.data.lastState === player.data.state) {
-      // dead: 0, alive: 1
-      switch (player.data.state) {
-        case 1:
-          player.visible = true
-          break
-
-        case 0:
-          player.visible = false
-          break
-      }
-    }
-
-    player.data.lastState = player.data.state
+    player.visible = player.data.isVisibleAfterTime < room.currentTime || !player.data.isVisibleAfterTime
   })
 
   // Merge the differences from the server to client's room state
@@ -225,4 +161,47 @@ export default function onGameLoop (data) {
   })
 
   store.dispatch(actions.room.setRoom(room))
+}
+
+function isNotMoving (player) {
+  return player.x === player.data.lastPosition.x && player.y === player.data.lastPosition.y
+}
+
+const isFlying = player => player.data.flying === true
+const isNotFlying = player => player.data.flying === false
+const isFacingRight = player => player.data.facing === 'right'
+const isFacingLeft = player => player.data.facing === 'left'
+
+function isNotMovingAndFacingRight (player) {
+  return (isFlying(player) && isFacingRight(player)) ||
+    (isNotMoving(player) && isFacingRight(player))
+}
+
+function isNotMovingAndFacingLeft (player) {
+  return (isFlying(player) && isFacingLeft(player)) ||
+    (isNotMoving(player) && isFacingLeft(player))
+}
+
+function isRunningRightAndFacingRight (player) {
+  return player.x > player.data.lastPosition.x &&
+    isFacingRight(player) &&
+    isNotFlying(player)
+}
+
+function isRunningLeftAndFacingLeft (player) {
+  return player.x < player.data.lastPosition.x &&
+    isFacingLeft(player) &&
+    isNotFlying(player)
+}
+
+function isRunningLeftAndFacingRight (player) {
+  return player.x < player.data.lastPosition.x &&
+    isFacingRight(player) &&
+    isNotFlying(player)
+}
+
+function isRunningRightAndFacingLeft (player) {
+  return player.x > player.data.lastPosition.x &&
+    isFacingLeft(player) &&
+    isNotFlying(player)
 }

@@ -2,7 +2,6 @@
 
 const util = require('util')
 const _ = require('lodash')
-const moment = require('moment')
 const Filter = require('bad-words')
 const gameloop = require('node-gameloop')
 
@@ -101,7 +100,7 @@ gameloop.setGameLoop(function () {
 
       // Find out how long it's been since this player sent us data
       const messageTimeDiff = Date.now() - lastPlayerData[playerId].lastMessageTime
-      if (messageTimeDiff > (GameConsts.MAX_IDLE_SECONDS * 1000)) {
+      if (messageTimeDiff > (GameConsts.MAX_IDLE_TIME_IN_MS)) {
         // Disconnect this player's socket and remove references to the player in game
         // The game loop on the client's end will remove this player's sprite when they are found to be missing
         io.spark(playerId).end()
@@ -118,6 +117,8 @@ gameloop.setGameLoop(function () {
           roomData.players[playerId][playerProperty] = lastPlayerData[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
         }
       })
+
+      roomData.players[playerId].state = rooms[roomId].players[playerId].state
     })
 
     Server.sendToRoom(
@@ -128,13 +129,13 @@ gameloop.setGameLoop(function () {
   })
 }, GameConsts.TICK_RATE)
 
-setInterval(function () {
+gameloop.setGameLoop(function () {
   Object.keys(rooms).forEach((roomId) => {
     // Room was likely deleted when the last player left
     if (!rooms[roomId]) return
 
     // Round has ended and is restarting now
-    if (rooms[roomId].roundStartTime <= moment().unix() && rooms[roomId].state === 'ended') {
+    if (rooms[roomId].roundStartTime <= Date.now() && rooms[roomId].state === 'ended') {
       util.log('Restarting round for', roomId)
       const previousMap = rooms[roomId].map
       const previousGamemode = rooms[roomId].gamemode
@@ -200,10 +201,10 @@ setInterval(function () {
     }
 
     // Round has ended and setting the time the next round will start at
-    if (rooms[roomId].roundEndTime <= moment().unix() && rooms[roomId].state === 'active') {
+    if (rooms[roomId].roundEndTime <= Date.now() && rooms[roomId].state === 'active') {
       util.log('Round has ended for', roomId)
       rooms[roomId].state = 'ended'
-      rooms[roomId].roundStartTime = moment().add(GameConsts.END_OF_ROUND_BREAK_SECONDS, 'seconds').unix()
+      rooms[roomId].roundStartTime = Date.now() + GameConsts.END_OF_ROUND_BREAK_IN_MS
       savePlayerScoresToFirebase(rooms[roomId])
       return
     }
@@ -298,23 +299,19 @@ function onPlayerRespawn () {
   }
 
   player.health = GameConsts.PLAYER_FULL_HEALTH
-  player.state = 1
 
   lastPlayerData[this.id] = {}
 
   const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
   const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
 
-  const data = {
-    id: this.id,
-    x: spawnPoint.x,
-    y: spawnPoint.y
-  }
-
   Server.sendToSocket(
     this.id,
     GameConsts.EVENT.PLAYER_RESPAWN,
-    data
+    {
+      x: spawnPoint.x,
+      y: spawnPoint.y
+    }
   )
 }
 
@@ -564,11 +561,16 @@ function onPlayerDamaged (data) {
     player.health = 0
     player.killingSpree = 0
     player.deaths++
-    player.noDamageUntilTime = Date.now() + (GameConsts.RESPAWN_TIME_SECONDS * 1000) + (GameConsts.NO_DAMAGE_BEFORE_SECONDS * 1000)
+    player.noDamageUntilTime = Date.now() + (GameConsts.RESPAWN_TIME_IN_MS) + (GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS)
 
     // player is dead so tell everyone to hide this player in game
-    player.state = 0
-    player.canRespawnTimestamp = moment().add(GameConsts.RESPAWN_TIME_SECONDS, 'seconds').unix()
+    player.canRespawnTime = Date.now() + GameConsts.RESPAWN_TIME_IN_MS
+    player.isVisibleAfterTime = Date.now() + GameConsts.RESPAWN_TIME_IN_MS + 1000
+
+    const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
+    const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
+    player.x = spawnPoint.x
+    player.y = spawnPoint.y
 
     if (attackingPlayer) {
       attackingPlayer.score += 10
@@ -664,7 +666,7 @@ function onPlayerDamaged (data) {
         health: player.health,
         damageStats: player.damageStats,
         attackingDamageStats,
-        canRespawnTimestamp: player.canRespawnTimestamp,
+        canRespawnTime: player.canRespawnTime,
         playerX: player.x,
         playerY: player.y
       }

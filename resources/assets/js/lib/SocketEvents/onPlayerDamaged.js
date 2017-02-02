@@ -13,9 +13,10 @@ export default function onPlayerDamaged (data) {
   if (data.damagedPlayerId !== window.SOCKET_ID && data.health <= 0) {
     const movePlayer = PlayerById.call(this, data.damagedPlayerId)
     movePlayer.visible = false
+
     PlayPlayerDeathAnimation.call(this, {
-      x: data.playerX,
-      y: data.playerY
+      x: movePlayer.x,
+      y: movePlayer.y
     })
     return
   }
@@ -33,7 +34,7 @@ export default function onPlayerDamaged (data) {
   store.dispatch(actions.player.setAttackingDamageStats(data.attackingDamageStats))
 
   if (data.health <= 0) {
-    const newRespawnTime = data.canRespawnTimestamp * 1000
+    const newRespawnTime = data.canRespawnTime
     store.dispatch(actions.player.setRespawnTime(newRespawnTime))
   }
 
