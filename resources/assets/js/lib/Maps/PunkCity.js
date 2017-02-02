@@ -1,5 +1,3 @@
-import sample from 'lodash/sample'
-
 import GameConsts from 'lib/GameConsts'
 import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 
@@ -30,14 +28,6 @@ const SPAWN_POINTS = [
     { x: 220, y: 1080 },
     { x: 1590, y: 940 }
 ]
-
-export function getRandomSpawnPoint () {
-  return sample(SPAWN_POINTS)
-}
-
-export function getSpawnPoints () {
-  return SPAWN_POINTS
-}
 
 export function preload () {
   this.game.load.image('background', '/maps/punk-city/concrete_wall.png')

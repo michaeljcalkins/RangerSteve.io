@@ -1,3 +1,10 @@
+export const setPlayer = (value) => {
+  return {
+    type: 'SET_PLAYER',
+    value
+  }
+}
+
 export const setNextSelectedPrimaryWeaponId = (value) => {
   return {
     type: 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID',
@@ -22,6 +29,13 @@ export const setPrimaryIsReloading = (value) => {
 export const setSecondaryIsReloading = (value) => {
   return {
     type: 'SET_SECONDARY_IS_RELOADING',
+    value
+  }
+}
+
+export const setHasCanceledReloading = (value) => {
+  return {
+    type: 'SET_HAS_CANCELED_RELOADING',
     value
   }
 }

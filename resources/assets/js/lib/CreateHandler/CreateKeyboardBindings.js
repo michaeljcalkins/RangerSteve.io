@@ -1,6 +1,7 @@
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
 import KillCurrentPlayer from '../KillCurrentPlayer'
+import ReloadGunWhenEmpty from '../ReloadGunWhenEmpty'
 
 let lastSwitchWeaponKey = null
 
@@ -74,6 +75,11 @@ export default function () {
       store.getState().player.isSwitchingWeapon
     ) return
 
+    // cancel reload action
+    store.dispatch(actions.player.setHasCanceledReloading(true))
+    store.dispatch(actions.player.setPrimaryIsReloading(false))
+    store.dispatch(actions.player.setSecondaryIsReloading(false))
+
     const currentWeapon = store.getState().player.currentWeapon
 
     const nextWeapon = (currentWeapon === 'primaryWeapon') ? 'secondaryWeapon' : 'primaryWeapon'
@@ -100,6 +106,8 @@ export default function () {
 
       window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
 
+      ReloadGunWhenEmpty.call(this, currentWeaponId)
+
       // The sound effect is two seconds long so stop it once switching guns is complete.
       window.RS.switchingWeaponsFx.stop()
     }, switchDelay)
@@ -109,6 +117,7 @@ export default function () {
    * Self-kill
    */
   this.input.keyboard.addKey(store.getState().game.keyboardControls.selfkill).onUp.add(() => {
-    if (store.getState().room.state === 'active') KillCurrentPlayer.call(this)
+    if (store.getState().room.state !== 'active') return
+    KillCurrentPlayer.call(this)
   })
 }

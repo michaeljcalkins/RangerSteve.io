@@ -2,6 +2,8 @@
 
 const fs = require('fs')
 const moment = require('moment')
+const map = require('lodash/map')
+const kebabCase = require('lodash/kebabCase')
 const hri = require('human-readable-ids').hri
 
 const GameConsts = require('../../lib/GameConsts')
@@ -13,16 +15,29 @@ let MainController = {
     const rooms = require('../sockets').getRooms()
     const numberOfRooms = Object.keys(rooms).length
     const maxRoomSize = GameConsts.MAX_ROOM_SIZE
+    const maxIdleSeconds = GameConsts.MAX_IDLE_TIME_IN_MS / 1000
 
     res.render('home', {
       maxRoomSize: maxRoomSize,
+      maxIdleSeconds: maxIdleSeconds,
       numberOfRooms: numberOfRooms,
       rooms: rooms
     })
   },
 
-  buy: function (req, res) {
-    res.render('buy', {
+  store: function (req, res) {
+    const payments = map(GameConsts.STORE_PAYMENTS, (payment, price) => {
+      return Object.assign({}, payment, {
+        id: kebabCase(payment.title),
+        price: price,
+        stripeAmount: Math.round(price * 100)
+      })
+    })
+
+    res.render('store', {
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
+      payments: payments,
+      discount: GameConsts.STORE_DISCOUNT
     })
   },
 
@@ -38,8 +53,8 @@ let MainController = {
     })
   },
 
-  leaderboard: function (req, res) {
-    res.render('leaderboard')
+  leaderboards: function (req, res) {
+    res.render('leaderboards')
   },
 
   battleStats: function (req, res) {
@@ -79,9 +94,9 @@ let MainController = {
       error = 'Announcement cannot be empty.'
     } else {
       Server.send(
-                GameConsts.EVENT.ANNOUNCEMENT,
-                req.body.announcement
-            )
+        GameConsts.EVENT.ANNOUNCEMENT,
+        req.body.announcement
+      )
       success = true
     }
 

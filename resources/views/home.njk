@@ -1,0 +1,498 @@
+{% extends 'master.njk' %}
+
+{% block title %}RangerSteve.io{% endblock %}
+
+{% block content %}
+<span id="beta-label">Beta</span>
+
+<section class="main-section" id="home-container" v-cloak>
+  <div class="col-xs-12">
+    <div class="text-center">
+      <span class="main-header">
+        Ranger Steve
+      </span>
+    </div>
+
+    <div class="home-content">
+      <div id="browser-recommendation" class="alert alert-info text-center">
+        We recommend using Chrome browser for the best game performance
+      </div>
+
+      <div
+        class="alert alert-info text-center"
+        v-if="showIdlePlayerMessage"
+      >
+        You have been kicked for being idle for {{ maxIdleSeconds }} seconds.
+      </div>
+
+      <div class="well">
+        <form action="/game" method="GET">
+          <div class="row">
+            <div class="col-sm-6">
+              <span class="gold-button btn btn-default no-pointer-events" href="#">
+                <span>Ranger Steve</span>
+                <img src="/images/characters/RangerSteve.png" width="95" />
+              </span>
+            </div>
+            <div class="col-sm-6">
+              <button
+                class="btn btn-success btn-lg btn-block mb3"
+                id="play-button"
+                type="submit"
+              >
+                Play Now
+              </button>
+              <a
+                class="btn btn-primary btn-lg btn-block mb3"
+                href="/leaderboards"
+              >
+                Leaderboards
+              </a>
+              <a
+                class="btn btn-primary btn-lg btn-block mb3"
+                href="/how-to-play"
+              >
+                How To Play
+              </a>
+            </div>
+          </div>
+        </form>
+
+        <br />
+        <br />
+
+        <fieldset>
+          <legend>Rooms ( {{ numberOfRooms }} )</legend>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="btn-group btn-group-justified" id="servers-container">
+                <a href="https://rangersteve.io" class="server-option btn btn-sm">America</a>
+                <a href="https://eu.rangersteve.io" class="server-option btn btn-sm">Europe</a>
+              </div>
+            </div>
+          </div>
+
+          <br />
+
+          {% if numberOfRooms > 0 %}
+            <table class="table table-middle table-hover tcw mb0">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Game mode</th>
+                  <th>Map</th>
+                  <th>Players</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for id, room in rooms %}
+                  <tr class="room-link pointer" data-href="/game?roomId={{ id }}">
+                    <td class="dont-break-out">{{ id }}</td>
+                    <td>{{ room.gamemode }}</td>
+                    <td>{{ room.map }}</td>
+                    <td>{{ room.players | length }} / {{ maxRoomSize }}</td>
+                    <td class="text-right" >
+                      <button class="btn btn-sm btn-primary">Join Room</button>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            <br />
+          {% endif %}
+
+          <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+              <a
+                class="btn btn-primary btn-block"
+                href="/create-a-room"
+              >
+                Create a Room
+              </a>
+            </div>
+          </div>
+        </fieldset>
+
+        <div
+          class="alert alert-danger"
+          v-if="accountErrorMessage"
+        >
+          ${ accountErrorMessage }
+        </div>
+        <div
+          class="alert alert-success"
+          v-if="accountSuccessMessage"
+        >
+          ${ accountSuccessMessage }
+        </div>
+
+        <fieldset v-if="!auth">
+          <legend>Login With</legend>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <button
+                class="btn btn-primary btn-block"
+                style="background: #dd4b39;"
+                v-on:click="attemptLoginWithGoogle()"
+              >
+                Google
+              </button>
+            </div>
+            <div class="col-sm-4">
+              <button
+                class="btn btn-primary btn-block"
+                style="background: #3b5998;"
+                v-on:click="attemptLoginWithFacebook()"
+              >
+                Facebook
+              </button>
+            </div>
+            <div class="col-sm-4">
+              <button
+                class="btn btn-primary btn-block"
+                style="background: #1da1f2;"
+                v-on:click="attemptLoginWithTwitter()"
+              >
+                Twitter
+              </button>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset v-if="auth">
+          <legend>Your Account</legend>
+
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="form-group">
+                <input
+                  @keyup.13="claimUsername()"
+                  autofocus
+                  class="form-control"
+                  maxlength="25"
+                  placeholder="Enter your nickname..."
+                  style="margin-bottom: 15px"
+                  type="text"
+                  v-model.trim="newUsername"
+                />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <button
+                class="btn btn-primary btn-block"
+                :class="{ disabled: isEmptyUsername || isSameUsername }"
+                v-on:click="claimUsername()"
+              >
+                Claim Name
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <a
+                class="btn btn-primary btn-block"
+                v-if="user"
+                v-bind:href="'/battle-stats/' + user.username"
+              >
+                My Battle Stats
+              </a>
+            </div>
+            {#<div class="col-sm-4">
+              <a
+                class="btn btn-primary btn-block"
+                href="/store"
+              >
+                <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
+              </a>
+            </div>#}
+            <div class="col-sm-4 col-sm-offset-4">
+              <button
+                class="btn btn-warning btn-block"
+                v-on:click="logoutUser()"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="mb0 pb0">
+          <legend>Subscribe To Our Newsletter</legend>
+
+          <div id="mc_embed_signup" class="text-center">
+            <form action="//rangersteve.us6.list-manage.com/subscribe/post?u=ee7e3d14e2b1356adb186012a&amp;id=f4a249ec8b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+              <div id="mc_embed_signup_scroll">
+                <div id="mce-responses" class="clear">
+                  <div class="response alert alert-danger" id="mce-error-response" style="display:none"></div>
+                  <div class="response alert alert-success" id="mce-success-response" style="display:none"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-8">
+                    <input type="email" placeholder="Enter your email address" value="" name="EMAIL" class="required email form-control" required id="mce-EMAIL">
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-block btn-primary" style="height: auto;">
+                  </div>
+                </div>
+
+                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ee7e3d14e2b1356adb186012a_f4a249ec8b" tabindex="-1" value=""></div>
+              </div>
+            </form>
+          </div>
+          <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  var firstNames = ['Ranger', 'Real Estate', 'Slim', 'Tree Hugger', 'Mad', 'Sarcastic', 'Cactus', 'Deadeye', 'Pale Face', 'Texas', 'Horseface', 'Crazy', 'Cotton Mouth', 'Whiskey', '3 Fingers', 'Ace', 'Amarillo', 'Apache', 'Bearcat', 'Bitter Creek', 'Black', 'Black Rock', 'Blackjack', 'Bloody', 'Blueridge', 'Brawney', 'Bronco', 'Buck', 'Buckskin', 'Buffalo', 'Bull', 'Bushwack', 'Cajun', 'Captain', 'Cheerful', 'Cherokee', 'Cheyenne', 'Colonel', 'Coonskin', 'Dakota', 'Dead Eye', 'Deadwood', 'Digger', 'Dirty', 'Durango', 'Frontier', 'Gentleman', 'Gravedigger', 'Gunner', 'Hole Card', 'Hoodoo', 'Joker', 'Lawless', 'Lightning', 'Loco', 'Lucky', 'Major', 'Mustang', 'Natchez', 'Navajo', 'Nevada', 'Nightrider', 'One-Eyed', 'Pecos', 'Preacher', 'Rattlesnake', 'Rawhide', 'Red', 'Reno', 'Reverend', 'Riverboat', 'English', 'Insane', 'Shotgun', 'Sweaty', 'Sideways', 'Sidewinder', 'Six Gun', 'Skull', 'Slaughter', 'Slick', 'Slippery', 'Smiley', 'Smokey', 'Snake-bite', 'Snake-eyes', 'Stone River', 'Stumpy', 'Three Rivers', 'Tombstone', 'Trapper', 'Two Gun', 'Ugly', 'Waco', 'Whip', 'Whiskey', 'Whitey', 'Wichitaw', 'Wild', 'Trigger Finger', 'Lead Engineer', 'Waterfall', 'Black', 'Milktoast', 'Dogface', 'Grunt', 'Leatherneck', 'Rebel', 'Stealthy', 'Flasher', 'Nasty', 'Frantic', 'Armored', 'Noob', 'Commando', 'Ninja', 'Silver', 'Salty', 'Wrecker', 'Frenzied']
+  var lastNames = ['Rick', 'Steve', 'Andrew', 'Mike', 'Jim', 'James', 'Josh', 'Nick', 'Rob', 'John', 'Luke']
+
+  function getRandomName () {
+    return _.sample(firstNames) + ' ' + _.sample(lastNames)
+  }
+
+  new Vue({
+    el: '#home-container',
+    delimiters: ['${', '}'],
+    data: {
+      accountSuccessMessage: null,
+      accountErrorMessage: null,
+      showIdlePlayerMessage: localStorage.getItem('showIdlePlayerMessage'),
+      newUsername: null,
+      auth: null,
+      user: null,
+      transactions: null,
+    },
+    computed: {
+      totalGold: function () {
+        var self = this
+        if (!this.transactions) return 0
+        return Object.keys(this.transactions)
+          .map(function (key) {
+            return Number(self.transactions[key].gold)
+          })
+          .reduce(function (a, b) {
+            return a + b
+          })
+      },
+      isSameUsername: function () {
+        return this.user && this.user.username === this.newUsername
+      },
+      isEmptyUsername: function () {
+        return !this.newUsername || this.newUsername.length === 0
+      },
+    },
+    beforeMount: function() {
+      this.checkAuthStatus()
+    },
+    methods: {
+      addAccountSuccessMessage: function (msg) {
+        var self = this
+        this.accountSuccessMessage = msg
+        this.accountErrorMessage = null
+        setTimeout(function () {
+          self.accountSuccessMessage = null
+        }, 5000)
+      },
+      addAccountErrorMessage: function (msg) {
+        var self = this
+        this.accountErrorMessage = msg
+        this.accountSuccessMessage = null
+        setTimeout(function () {
+          self.accountErrorMessage = null
+        }, 5000)
+      },
+      checkAuthStatus: function () {
+        var self = this
+        // Check if the user is signed in
+        firebase.auth().onAuthStateChanged(function(auth) {
+          if (!auth) return
+          self.auth = auth
+          self.fetchUser()
+          self.fetchUserTransactions()
+        })
+      },
+      fetchUserTransactions: function() {
+        var self = this
+        firebase.database()
+          .ref('user_transactions/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.transactions = snapshot.val()
+            self.$forceUpdate()
+          })
+      },
+      fetchUser: function () {
+        var self = this
+        firebase.database()
+          .ref('users/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.user = snapshot.val()
+            if (!self.user) {
+              self.newUsername = getRandomName()
+              self.claimUsername()
+              return
+            }
+            self.newUsername = self.user.username
+          })
+      },
+      goToBattleStats: function () {
+        window.location.href = '/battle-stats/' + this.user.username
+      },
+      claimUsername: function () {
+        var self = this
+        if (!this.auth) {
+          self.addAccountErrorMessage('You must be signed in to claim a username.')
+          return
+        }
+
+        if (this.isEmptyUsername) {
+          self.addAccountErrorMessage('Username cannot be empty.')
+          return
+        }
+
+        if (this.isSameUsername) {
+          self.addAccountErrorMessage('Username is the same as your current one.')
+          return
+        }
+
+        if (this.user) {
+          /**
+           * Remove username from lookup before writing new username.
+           */
+          firebase.database()
+            .ref('username_lookup/' + this.user.username)
+            .remove(function(err) {
+              if (err) {
+                console.error(err)
+                self.addAccountErrorMessage('Username is taken, please try a different one.')
+                return
+              }
+
+              self.writeUsernameLookupData()
+            })
+          return
+        }
+        self.writeUsernameLookupData()
+      },
+      writeUsernameLookupData: function () {
+        var self = this
+        firebase.database()
+        .ref('username_lookup/' + self.newUsername)
+        .set(self.auth.uid, function(err) {
+          if (err) {
+            console.error(err)
+            self.addAccountErrorMessage('There was a problem changing your username.')
+            return
+          }
+
+          self.writeUserData()
+        })
+      },
+      writeUserData: function () {
+        var self = this
+        firebase.database()
+          .ref('users/' + self.auth.uid)
+          .set({
+            username: self.newUsername,
+          }, function (err) {
+            if (err) {
+              console.error(err)
+              self.addAccountErrorMessage('We were unable to update your user data.')
+            }
+          })
+
+        this.addAccountSuccessMessage('Changes saved!')
+        this.fetchUser()
+      },
+      logoutUser: function () {
+        var self = this
+        firebase.auth().signOut().then(function() {
+          // Sign-out successful.
+          self.auth = null
+          self.user = null
+        }, function(error) {
+          // An error happened.
+          console.error(error)
+        })
+      },
+      attemptLoginWithGoogle: function () {
+        var self = this
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          self.auth = result.user
+        }).catch(function(error) {
+          console.error(error)
+          self.addAccountErrorMessage(error.message)
+        })
+      },
+      attemptLoginWithFacebook: function () {
+        var self = this
+        var provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          self.auth = result.user
+        }).catch(function(error) {
+          console.error(error)
+          self.addAccountErrorMessage(error.message)
+        })
+      },
+      attemptLoginWithTwitter: function () {
+        var self = this
+        var provider = new firebase.auth.TwitterAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          self.auth = result.user
+        }).catch(function(error) {
+          console.log(error)
+          self.addAccountErrorMessage(error.message)
+        })
+      }
+    }
+  })
+
+  localStorage.removeItem('showIdlePlayerMessage')
+
+  if (! isChromeBrowser()) showBrowserRecommendation()
+
+  if (
+      window.location.href.indexOf('https://rangersteve.io') > -1 ||
+      window.location.href.indexOf('http://localhost') > -1
+  ) {
+      $('#servers-container').find('a:first-child').addClass('active')
+  } else if (window.location.href.indexOf('https://eu.rangersteve.io') > -1) {
+      $('#servers-container').find('a:last-child').addClass('active')
+  }
+
+  $('.room-link').click(function() {
+      window.location = $(this).data('href')
+  })
+
+  function isChromeBrowser() {
+      return navigator.userAgent.indexOf('Chrome') > -1
+  }
+
+  function showBrowserRecommendation() {
+      $('#browser-recommendation').show()
+  }
+
+  {% if isProduction %}
+    $('#play-button').on('click', function(evt) {
+      mixpanel.track('playButton:click')
+    })
+
+    $('#discord-button').on('click', function(evt) {
+      mixpanel.track('discordButton:click')
+    })
+  {% endif %}
+</script>
+{% endblock %}

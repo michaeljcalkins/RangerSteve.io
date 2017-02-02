@@ -1,0 +1,54 @@
+{% extends 'master.njk' %}
+
+{% block title %}Submit a Map | RangerSteve.io{% endblock %}
+
+{% block content %}
+<span id="beta-label">Beta</span>
+
+<section class="main-section">
+  <div class="col-xs-12">
+    <div class="text-center">
+      <span class="main-header">
+        Submit a Map
+      </span>
+    </div>
+
+    <div class="home-content">
+      <div id="browser-recommendation" class="alert alert-info text-center">
+        We recommend using Chrome browser for the best game performance
+      </div>
+      <div class="well">
+        <form action="/game" method="GET">
+          <div class="form-group">
+            <label>Name of Room</label>
+            <input name="roomId" type="text" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label>Starting Map</label>
+            <input name="map" type="text" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label>Starting Gamemode</label>
+            <input name="gamemode" type="text" class="form-control">
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-success btn-lg btn-block"
+            id="play-button"
+          >
+            Play Now
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+</script>
+{% endblock %}

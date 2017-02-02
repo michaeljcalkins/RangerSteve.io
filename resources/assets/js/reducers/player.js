@@ -1,33 +1,39 @@
 import storage from 'store'
-import NameGenerator from '../lib/NameGenerator'
+import getRandomName from '../lib/getRandomName'
 
 const initialState = {
+  canRespawnTime: null,
   currentWeapon: 'primaryWeapon',
   damageStats: {},
   facing: 'right',
   health: 100,
   isPrimaryReloading: false,
   isSecondaryReloading: false,
+  hasCanceledReloading: false,
   isSwitchingWeapon: false,
   jumping: false,
   jumpJetCounter: 0,
   nextSelectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
   nextSelectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
-  nickname: storage.get('nickname', NameGenerator()),
+  nickname: getRandomName(),
   primaryAmmoRemaining: 0,
   primaryWeapon: null,
-  canRespawnTimestamp: null,
   score: 0,
   secondaryAmmoRemaining: 0,
   secondaryWeapon: null,
   selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
-  selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle')
+  selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
+  uid: null
 }
-
-storage.set('nickname', initialState.nickname)
 
 const player = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_PLAYER':
+      return {
+        ...state,
+        ...action.value
+      }
+
     case 'SET_NEXT_SELECTED_PRIMARY_WEAPON_ID':
       return {
         ...state,
@@ -50,6 +56,12 @@ const player = (state = initialState, action) => {
       return {
         ...state,
         isSecondaryReloading: action.value
+      }
+
+    case 'SET_HAS_CANCELED_RELOADING':
+      return {
+        ...state,
+        hasCanceledReloading: action.value
       }
 
     case 'SET_IS_SWITCHING_WEAPON':
@@ -97,7 +109,7 @@ const player = (state = initialState, action) => {
     case 'SET_RESPAWN_TIME':
       return {
         ...state,
-        canRespawnTimestamp: action.value
+        canRespawnTime: action.value
       }
 
     case 'SET_KILLING_SPREE_COUNT':

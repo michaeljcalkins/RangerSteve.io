@@ -12,13 +12,12 @@
   },
   "watch": [
     "bin/",
-    "app/",
+    "app/**/*.js",
     "app.js",
-    "lib/GameConsts.js",
-    "lib/GameConsts.dev.js"
+    "lib/**/*.js"
   ],
   "env": {
     "NODE_ENV": "development"
   },
-  "ext": "js json nunjucks md"
+  "ext": "js json njk nunjucks md"
 }

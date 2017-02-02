@@ -38,19 +38,23 @@ export class RespawnModal extends PureComponent {
   }
 
   tick () {
-    const { canRespawnTimestamp } = this.props.player
+    const { canRespawnTime } = this.props.player
     const { currentTime } = this.props.room
-    const timeRemaining = canRespawnTimestamp - currentTime
-    let seconds = Number((timeRemaining / 1000).toFixed(1))
+    const timeRemaining = (canRespawnTime / 1000) - (currentTime / 1000)
+    let seconds = Number((timeRemaining).toFixed(1))
     if (seconds % 1 === 0) seconds = seconds + '.0'
 
-    if (isNaN(seconds) || seconds <= 0) {
+    // This allows you to have the auto respawn unchecked and then check it after
+    // you have waited the respawn wait time without being force respawned
+    if (isNaN(seconds) || seconds < -0.5) {
       this.setState({ elapsed: 0 })
       return
     }
 
-    if ((this.state.autoRespawn || this.state.oneTimeAutoRespawn) && seconds <= 0.1) {
+    // Respawn when the wait time has elapsed
+    if ((this.state.autoRespawn || this.state.oneTimeAutoRespawn) && seconds < 0) {
       this.handleRespawnButtonClick()
+      return
     }
 
     this.setState({ elapsed: seconds })
@@ -104,9 +108,9 @@ export class RespawnModal extends PureComponent {
         <button
           className='btn btn-primary btn-lg btn-block disabled'
           onClick={this.handleDisabledRespawnButtonClick}
-                >
-                    Respawning in { this.state.elapsed } seconds
-                </button>
+        >
+          Respawning in { this.state.elapsed } seconds
+        </button>
       )
     }
 
@@ -114,9 +118,9 @@ export class RespawnModal extends PureComponent {
       <button
         className='btn btn-primary btn-lg btn-block'
         onClick={this.handleRespawnButtonClick}
-            >
-                Respawn Now
-            </button>
+      >
+        Respawn Now
+      </button>
     )
   }
 
@@ -145,7 +149,7 @@ export class RespawnModal extends PureComponent {
             <img
               className='weapon-image'
               src={'/images/guns/large/' + selectedWeapon.image}
-                        />
+            />
           </div>
           <div className='col-sm-7 text-left'>
             <div style='margin-top: 60px;'>
@@ -160,7 +164,6 @@ export class RespawnModal extends PureComponent {
   }
 
   handleRespawnButtonClick () {
-        // var buffer: Uint8Array = emptyEventSchema.encode()
     Client.send(GameConsts.EVENT.PLAYER_RESPAWN, {})
   }
 
@@ -212,7 +215,7 @@ export class RespawnModal extends PureComponent {
                           onClick={this.handleRespawnChange}
                           type='checkbox'
                         />
-                          Auto respawn
+                        Auto respawn
                       </label>
                     </div>
                   </div>

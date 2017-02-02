@@ -16,7 +16,7 @@ const initialState = {
     fly: storage.get('keyboardControl.fly', window.Phaser.Keyboard.SHIFT),
     selfkill: storage.get('keyboardControl.selfkill', window.Phaser.Keyboard.TILDE)
   },
-  settingsModalIsOpen: !storage.has('nickname'),
+  settingsModalIsOpen: false,
   leaderboardModalIsOpen: false,
   settingsView: 'default',
   sfxVolume: storage.get('sfxVolume', GameConsts.STARTING_SFX_VOLUME),
@@ -26,7 +26,7 @@ const initialState = {
   autoRespawn: storage.get('autoRespawn', false),
   isFpsStatsVisible: storage.get('isFpsStatsVisible', false),
   isNetworkStatsVisible: storage.get('isNetworkStatsVisible', false),
-  useWebgl: storage.get('useWebgl', true)
+  useWebgl: storage.get('useWebgl', GameConsts.USE_WEBGL_BY_DEFAULT)
 }
 
 const player = (state = initialState, action) => {

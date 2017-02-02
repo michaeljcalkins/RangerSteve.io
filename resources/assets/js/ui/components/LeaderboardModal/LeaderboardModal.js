@@ -38,11 +38,11 @@ export default class LeaderboardModal extends PureComponent {
 
   tick () {
     const { currentTime, roundStartTime } = this.props.room
-    let timeRemaining = roundStartTime - currentTime / 1000
-    let minutes = Math.floor(timeRemaining / 60)
-    let seconds = (timeRemaining - minutes * 60).toFixed(1)
-
-    if (isNaN(minutes) || isNaN(seconds) || minutes < 0) return '0'
+    let timeRemaining = (roundStartTime / 1000) - (currentTime / 1000)
+    let seconds = Number((timeRemaining).toFixed(1))
+    seconds = seconds % 1 === 0
+      ? seconds + '.0'
+      : seconds
 
     this.setState({ elapsed: `${seconds}` })
   }

@@ -38,14 +38,14 @@ var Stats = function (opts) {
     mode = id
   }
 
-  var beginTime = (performance || Date).now()
+  var beginTime = (window.performance || Date).now()
   var prevTime = beginTime
   var frames = 0
 
   var fpsPanel = addPanel(new Stats.Panel('FPS', '#0ff', '#002'))
   var msPanel = addPanel(new Stats.Panel('MS', '#0f0', '#020'))
 
-  if (self.performance && self.performance.memory) {
+  if (window.performance && window.performance.memory) {
     var memPanel = addPanel(new Stats.Panel('MB', '#f08', '#201'))
   }
 
@@ -61,13 +61,13 @@ var Stats = function (opts) {
     showPanel: showPanel,
 
     begin: function () {
-      beginTime = (performance || Date).now()
+      beginTime = (window.performance || Date).now()
     },
 
     end: function () {
       frames++
 
-      var time = (performance || Date).now()
+      var time = (window.performance || Date).now()
 
       msPanel.update(time - beginTime, 200)
 
@@ -78,7 +78,7 @@ var Stats = function (opts) {
         frames = 0
 
         if (memPanel) {
-          var memory = performance.memory
+          var memory = window.performance.memory
           memPanel.update(memory.usedJSHeapSize / 1048576, memory.jsHeapSizeLimit / 1048576)
         }
       }
