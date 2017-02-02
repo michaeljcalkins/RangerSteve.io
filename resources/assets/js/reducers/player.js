@@ -2,7 +2,7 @@ import storage from 'store'
 import getRandomName from '../lib/getRandomName'
 
 const initialState = {
-  canRespawnTimestamp: null,
+  canRespawnTime: null,
   currentWeapon: 'primaryWeapon',
   damageStats: {},
   facing: 'right',
@@ -109,7 +109,7 @@ const player = (state = initialState, action) => {
     case 'SET_RESPAWN_TIME':
       return {
         ...state,
-        canRespawnTimestamp: action.value
+        canRespawnTime: action.value
       }
 
     case 'SET_KILLING_SPREE_COUNT':
