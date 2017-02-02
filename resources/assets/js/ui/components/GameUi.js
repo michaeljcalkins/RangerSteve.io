@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
 import cs from 'classnames'
+import toInteger from 'lodash/toInteger'
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudAnnouncement from './Hud/HudAnnouncement'
@@ -122,7 +123,9 @@ export default class GameUi extends Component {
       'is-electron': window.IS_ELECTRON
     })
 
-    const secondsRemaining = (room.currentTime) ? room.roundEndTime - Math.floor(room.currentTime / 1000) : 0
+    const secondsRemaining = room.currentTime
+      ? toInteger((room.roundEndTime - room.currentTime) / 1000)
+      : 0
 
     const fuelRemaining = RemainingFuelPercent(player.jumpJetCounter)
 
