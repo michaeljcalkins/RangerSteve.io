@@ -5,6 +5,7 @@ import * as HighRuleJungle from './HighRuleJungle'
 import * as PunkCity from './PunkCity'
 import * as PunkFallout from './PunkFallout'
 import * as PunkLoop from './PunkLoop'
+import * as Eclipse from './Eclipse'
 
 export default {
   DarkForest,
@@ -13,5 +14,6 @@ export default {
   HighRuleJungle,
   PunkCity,
   PunkFallout,
-  PunkLoop
+  PunkLoop,
+  Eclipse
 }
