@@ -355,11 +355,11 @@ function onNewPlayer (data) {
   util.log('New player has joined: ', this.id)
 
   // Check for duplicate players
-  var player = getPlayerById(rooms[data.roomId], this.id)
+  let player = getPlayerById(rooms[data.roomId], this.id)
   if (player) return util.log('Player already in room: ' + this.id)
 
   // Create a new player
-  var newPlayer = createPlayer(this.id, data.x, data.y)
+  let newPlayer = createPlayer(this.id, data.x, data.y)
   newPlayer.weaponId = data.weaponId
   newPlayer.nickname = data.nickname
   newPlayer.uid = data.uid
