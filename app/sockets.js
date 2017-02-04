@@ -406,8 +406,8 @@ function onNewPlayer (data) {
       roomIdPlayerWillJoin = newRoom.id
       util.log('No rooms available, creating new room to add player', newRoom.id)
     } else {
-      roomIdPlayerWillJoin = availableRooms[0]
-      util.log('Adding player to first available room', availableRooms[0])
+      roomIdPlayerWillJoin = _.sample(availableRooms)
+      util.log('Adding player to first available room', roomIdPlayerWillJoin)
     }
   }
 
