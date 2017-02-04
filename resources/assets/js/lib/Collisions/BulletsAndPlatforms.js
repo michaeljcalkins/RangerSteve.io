@@ -3,7 +3,7 @@ import BulletRicochet from '../BulletRicochet'
 import damagePlayersInBlastDamageRadius from '../damagePlayersInBlastDamageRadius'
 
 export default function () {
-  this.game.physics.arcade.overlap(window.RS.bullets, this.ground, function (bullet) {
+  this.game.physics.arcade.overlap(window.RS.bullets, window.RS.ground, function (bullet) {
     bullet.kill()
 
     if (bullet.weaponId === 'RPG') {

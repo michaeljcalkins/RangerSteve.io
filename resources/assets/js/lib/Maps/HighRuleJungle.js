@@ -14,49 +14,48 @@ export function preload () {
 }
 
 export function createOverlays () {
-  this.bridge = this.game.add.sprite(1313, 1240, 'bridge')
-  this.towerRail = this.game.add.sprite(4230, 1140, 'tower-rail')
+  window.RS.bridge = this.game.add.sprite(1313, 1240, 'bridge')
+  window.RS.towerRail = this.game.add.sprite(4230, 1140, 'tower-rail')
 }
 
 export function create () {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
   let background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
-    // FireFox allows a max width of 4000px for this image
-  background.scale.y = 1.5
-  background.scale.x = 1.5
+  // FireFox allows a max width of 4000px for this image
+  background.scale.setTo(1.5)
 
-  this.groundSprite = this.game.add.sprite(0, WORLD_HEIGHT - 10, 'ground')
-  this.groundSprite.alpha = 0
-  this.groundSprite.width = WORLD_WIDTH
-  this.groundSprite.height = 10
-  this.game.physics.arcade.enable(this.groundSprite)
-  this.game.physics.enable(this.groundSprite, window.Phaser.Physics.ARCADE)
-  this.groundSprite.enableBody = true
-  this.groundSprite.physicsBodyType = window.Phaser.Physics.ARCADE
-  this.groundSprite.body.immovable = true
-  this.groundSprite.body.allowGravity = false
+  window.RS.groundSprite = this.game.add.sprite(0, WORLD_HEIGHT - 10, 'ground')
+  window.RS.groundSprite.alpha = 0
+  window.RS.groundSprite.width = WORLD_WIDTH
+  window.RS.groundSprite.height = 10
+  this.game.physics.arcade.enable(window.RS.groundSprite)
+  this.game.physics.enable(window.RS.groundSprite, window.Phaser.Physics.ARCADE)
+  window.RS.groundSprite.enableBody = true
+  window.RS.groundSprite.physicsBodyType = window.Phaser.Physics.ARCADE
+  window.RS.groundSprite.body.immovable = true
+  window.RS.groundSprite.body.allowGravity = false
 
   // Add the demo tilemap and attach a tilesheet for its collision layer
-  this.map = this.game.add.tilemap('tilemap')
-  this.map.addTilesetImage('collision', 'ninja-tiles24')
+  window.RS.map = this.game.add.tilemap('tilemap')
+  window.RS.map.addTilesetImage('collision', 'ninja-tiles24')
 
   // Create a TilemapLayer object from the collision layer of the map
-  this.ground = this.map.createLayer('collision')
-  this.ground.renderSettings.enableScrollDelta = false
-  if (!GameConsts.DEBUG) this.ground.alpha = 0
+  window.RS.ground = window.RS.map.createLayer('collision')
+  window.RS.ground.renderSettings.enableScrollDelta = false
+  if (!GameConsts.DEBUG) window.RS.ground.alpha = 0
 
   // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
   // preparing slope data for each of tile in the layer
-  this.game.slopes.convertTilemapLayer(this.ground, GameConsts.SLOPE_TILES)
+  this.game.slopes.convertTilemapLayer(window.RS.ground, GameConsts.SLOPE_TILES)
 
   // Enable collision between tile indexes 2 and 34
-  this.map.setCollisionBetween(2, 34, true, 'collision')
+  window.RS.map.setCollisionBetween(2, 34, true, 'collision')
 
   if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, GameConsts.MAP_SPAWN_POINTS.HighRuleJungle)
 }
 
 export function update () {
-  this.game.physics.arcade.overlap(window.RS.player, this.groundSprite, () => {
+  this.game.physics.arcade.overlap(window.RS.player, window.RS.groundSprite, () => {
     KillCurrentPlayer.call(this)
   })
 }
