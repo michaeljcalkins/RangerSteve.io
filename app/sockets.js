@@ -82,8 +82,9 @@ function getRooms () {
 
 gameloop.setGameLoop(function () {
   Object.keys(rooms).forEach((roomId) => {
+    const now = Date.now()
     let roomData = {
-      currentTime: Date.now(),
+      currentTime: now,
       players: {}
     }
 
@@ -94,21 +95,19 @@ gameloop.setGameLoop(function () {
     }
 
     Object.keys(rooms[roomId].players).forEach(function (playerId) {
-      roomData.players[playerId] = {}
       lastPlayerData[playerId] = lastPlayerData[playerId] || {}
-      lastPlayerData[playerId].lastMessageTime = lastPlayerData[playerId].lastMessageTime || Date.now()
+      lastPlayerData[playerId].lastMessageTime = lastPlayerData[playerId].lastMessageTime || now
 
       // Find out how long it's been since this player sent us data
-      const messageTimeDiff = Date.now() - lastPlayerData[playerId].lastMessageTime
+      const messageTimeDiff = now - lastPlayerData[playerId].lastMessageTime
       if (messageTimeDiff > (GameConsts.MAX_IDLE_TIME_IN_MS)) {
         // Disconnect this player's socket and remove references to the player in game
         // The game loop on the client's end will remove this player's sprite when they are found to be missing
         io.spark(playerId).end()
-        delete lastPlayerData[playerId]
-        delete roomData.players[playerId]
         return
       }
 
+      roomData.players[playerId] = {}
       GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(function (playerProperty) {
         if (
           typeof lastPlayerData[playerId][playerProperty] === 'undefined' || // if the value has not been sent yet
