@@ -101,7 +101,7 @@ export default class LeaderboardModal extends PureComponent {
       )
     }
 
-    const score = playerMeta.score
+    const score = playerMeta.score ? playerMeta.score : 0
     const nickname = playerMeta.nickname ? playerMeta.nickname : 'Unnamed Ranger'
 
     return (

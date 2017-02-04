@@ -8,7 +8,7 @@ export default function (room) {
   let bestPlayer = false
   Object.keys(room.players).forEach(playerId => {
     const selectedPlayer = room.players[playerId]
-    if (selectedPlayer.secondsInRound < 60) return
+    if (!selectedPlayer.secondsInRound || selectedPlayer.secondsInRound < 60) return
 
     const minutesInRound = selectedPlayer.secondsInRound / 60
     selectedPlayer.killsPerMinute = (selectedPlayer.kills / minutesInRound).toFixed(1)

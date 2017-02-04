@@ -23,6 +23,13 @@ describe('getPlayerWithBestKillsPerMinute', function () {
     const room = {
       'roundEndTime': 1478015007,
       'players': {
+        '1n7Wyi0c5Q6UFOLIAAAW': {
+          'kills': 0, 'secondsInRound': 0, 'nickname': 'Just Joined'
+        },
+        '2n7Wyi0c5Q6UFOLIAAAW': {
+          'kills': 2, 'secondsInRound': 40, 'nickname': 'Quick Bill'
+        },
+        'undefined': {},
         'r5JuqGziUNxw5JOtAAAV': {
           'kills': 1, 'secondsInRound': 150, 'nickname': 'Lead Engineer John'
         },
