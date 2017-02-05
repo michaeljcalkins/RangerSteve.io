@@ -17,7 +17,7 @@ export default function () {
       targetPosition.millisRemaining < 0
     ) return
 
-    const weight = 1 - targetPosition.millisRemaining / GameConsts.TICK_RATE // between 0.0 and 1.0
+    const weight = 1 - targetPosition.millisRemaining / GameConsts.TICK_INTERVAL_MS // between 0.0 and 1.0
 
     enemy.x = this.game.math.linear(enemy.x || 0, targetPosition.x, weight)
     enemy.y = this.game.math.linear(enemy.y || 0, targetPosition.y, weight)

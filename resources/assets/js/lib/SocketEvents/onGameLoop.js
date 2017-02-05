@@ -88,7 +88,7 @@ export default function onGameLoop (data) {
     player.data.targetPosition = {
       x: player.data.x,
       y: player.data.y,
-      millisRemaining: GameConsts.TICK_RATE
+      millisRemaining: GameConsts.TICK_INTERVAL_MS
     }
 
     // Update player's name above their player in game
