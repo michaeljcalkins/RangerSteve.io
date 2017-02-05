@@ -57,7 +57,7 @@ export default function PlayerJumpHandler () {
     window.RS.player.leftJumpjet.visible = false
     if (store.getState().player.jumpJetCounter < 0) {
       store.dispatch(actions.player.decrementJumpJetCounter(GameConsts.JUMP_JET_SPEED_REGENERATION))
-    } else {
+    } else if (store.getState().player.jumpJetCounter > 0) {
       store.dispatch(actions.player.setJumpJetCounter(0))
     }
   }
