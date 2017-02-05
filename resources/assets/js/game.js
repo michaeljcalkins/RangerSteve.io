@@ -56,7 +56,7 @@ export default function (store) {
   // Make sure this game instance isn't exposed to clients via window.Phaser.GAMES
   window.Phaser.GAMES[0] = null
 
-  // Force unpausing the game after 1 second to prevent loading screen freeze bug
+  // Force unpausing the game after 5 seconds to prevent loading screen freeze bug
   // Wrap the arrow function to prevent returning an assignment
-  setTimeout(() => { game.paused = false }, 1000)
+  setTimeout(() => { game.paused = false }, 5000)
 }
