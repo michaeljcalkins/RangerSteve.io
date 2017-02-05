@@ -12,6 +12,7 @@ export default function () {
       !bullet.weaponId ||
       !window.SOCKET_ID ||
       state.player.health <= 0 ||
+      !enemy ||
       enemy.team === window.RS.player.team
     ) return
 
