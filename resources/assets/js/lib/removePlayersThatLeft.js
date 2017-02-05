@@ -1,26 +1,23 @@
 import get from 'lodash/get'
 
-import actions from 'actions'
-
 export default function removePlayersThatLeft (data) {
   if (!window.RS.enemies) return
 
   const store = this.game.store
-  const room = this.game.store.getState().room
+  const room = store.getState().room
 
-  window.RS.enemies.forEach((player, index) => {
-    const playerId = get(player, 'data.id', false)
+  window.RS.enemies.forEach((enemy) => {
+    const playerId = get(enemy, 'data.id', false)
 
-    // Does this enemy still exist in the data sent from the server
-    const enemy = data.players[playerId]
-
-    // Enemy not found so remove them from game
-    if (!enemy && playerId) {
-      window.RS.enemies.removeChildAt(index)
-      player.destroy(true)
-
-      delete room.players[playerId]
-      store.dispatch(actions.room.setRoom(room))
+    if (!playerId) {
+      enemy.destroy(true)
+      return
     }
+
+    if (data.players[playerId]) return
+
+    delete room.players[playerId]
+
+    enemy.destroy(true)
   })
 }
