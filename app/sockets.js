@@ -3,7 +3,7 @@
 const util = require('util')
 const _ = require('lodash')
 const Filter = require('bad-words')
-const gameloop = require('node-gameloop')
+const createGameloop = require('gameloop')
 
 const Server = require('./Server')
 
@@ -80,7 +80,11 @@ function getRooms () {
   return rooms
 }
 
-gameloop.setGameLoop(function () {
+const gameloop = createGameloop({
+  fps: GameConsts.TICK_RATE
+})
+
+gameloop.on('update', function () {
   Object.keys(rooms).forEach((roomId) => {
     const now = Date.now()
     let roomData = {
@@ -126,9 +130,15 @@ gameloop.setGameLoop(function () {
       roomData
     )
   })
-}, GameConsts.TICK_RATE)
+})
 
-gameloop.setGameLoop(function () {
+gameloop.start()
+
+const roomUpdateLoop = createGameloop({
+  fps: 1
+})
+
+roomUpdateLoop.on('update', function () {
   Object.keys(rooms).forEach((roomId) => {
     // Room was likely deleted when the last player left
     if (!rooms[roomId]) return
@@ -212,7 +222,9 @@ gameloop.setGameLoop(function () {
       rooms[roomId].players[playerId].secondsInRound++
     })
   })
-}, 1000)
+})
+
+roomUpdateLoop.start()
 
 function onRefreshRoom () {
   const roomId = getRoomIdByPlayerId(this.id, rooms)
