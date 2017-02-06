@@ -107,7 +107,7 @@ gameloop.on('update', function () {
       if (messageTimeDiff > (GameConsts.MAX_IDLE_TIME_IN_MS)) {
         // Disconnect this player's socket and remove references to the player in game
         // The game loop on the client's end will remove this player's sprite when they are found to be missing
-        io.spark(playerId).end()
+        io.spark(playerId) && io.spark(playerId).end()
         return
       }
 
