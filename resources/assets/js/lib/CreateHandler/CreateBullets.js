@@ -25,25 +25,15 @@ export default function () {
   this.game.physics.arcade.enable(window.RS.bullets)
   this.game.slopes.enable(window.RS.bullets)
   window.RS.bullets.forEach(function (bullet) {
-    bullet.body.height = 15
-    bullet.body.width = 15
     bullet.height = 2
     bullet.width = 40
-
-    // Define some shortcuts to some useful objects
-    var body = bullet.body
-
-    // Update player body properties
-    body.drag.x = 0
-    body.drag.y = 0
-    body.bounce.x = 0
-    body.bounce.y = 0
-    body.gravity.y = GameConsts.BULLET_GRAVITY
-
-        // Update player body Arcade Slopes properties
-    body.slopes.friction.x = 0
-    body.slopes.friction.y = 0
-    body.slopes.preferY = GameConsts.SLOPE_FEATURES.minimumOffsetY
+    bullet.body.height = 15
+    bullet.body.width = 15
+    bullet.body.drag.x = 0
+    bullet.body.drag.y = 0
+    bullet.body.bounce.x = 0
+    bullet.body.bounce.y = 0
+    bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
   }, this)
 
   window.RS.enemyBullets = this.game.add.group()
@@ -53,11 +43,11 @@ export default function () {
   window.RS.enemyBullets.setAll('outOfBoundsKill', true)
 
   this.game.physics.arcade.enable(window.RS.enemyBullets)
+  this.game.slopes.enable(window.RS.enemyBullets)
   window.RS.enemyBullets.forEach(function (bullet) {
-    bullet.body.height = 15
-    bullet.body.width = 15
     bullet.height = 2
     bullet.width = 40
+    bullet.body.height = 15
+    bullet.body.width = 15
   }, this)
-  this.game.slopes.enable(window.RS.enemyBullets)
 }
