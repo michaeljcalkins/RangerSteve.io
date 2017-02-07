@@ -2,7 +2,7 @@ import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
 import updatePlayerColor from './updatePlayerColor'
 
-export default function PlayerSpriteHandler () {
+export default function createLocalPlayer () {
   const state = this.game.store.getState()
 
   const primaryWeaponId = this.game.store.getState().player.selectedPrimaryWeaponId
@@ -14,7 +14,7 @@ export default function PlayerSpriteHandler () {
   this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
 
   // Player sprite
-  window.RS.player = this.game.add.sprite(0, 0, 'player-placeholder')
+  window.RS.player = this.game.add.sprite(-500, -500, 'player-placeholder')
   window.RS.player.anchor.setTo(GameConsts.PLAYER_ANCHOR)
 
   // Physics

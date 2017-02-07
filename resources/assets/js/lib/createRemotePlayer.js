@@ -3,9 +3,8 @@ import updatePlayerAngles from './updatePlayerAngles'
 
 export default function RemotePlayer (playerId, playerData) {
   const newRemotePlayer = this.game.add.sprite(playerData.x, playerData.y, 'player-placeholder')
-  newRemotePlayer.visible = false
   newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
-  newRemotePlayer.alive = true
+  newRemotePlayer.alive = false
   newRemotePlayer.data = {
     id: playerId,
     facing: 'right',
