@@ -1,7 +1,9 @@
+import GameConsts from 'lib/GameConsts'
+
 export default function (spawnPoints) {
   spawnPoints.forEach((pos) => {
-    var width = 70
-    var height = 80
+    var width = GameConsts.PLAYER_BODY_WIDTH
+    var height = GameConsts.PLAYER_BODY_HEIGHT
     var bmd = this.game.add.bitmapData(width, height)
 
     bmd.ctx.beginPath()
