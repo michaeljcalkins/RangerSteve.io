@@ -17,6 +17,7 @@
   "standard": {
     "parser": "babel-eslint",
     "globals": [
+      "Phaser",
       "nativeMax",
       "nativeMin",
       "onmessage",
