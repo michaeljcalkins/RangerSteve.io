@@ -25,8 +25,6 @@ export default function onBulletFired (data) {
   bullet.rotation = data.pointerAngle
   bullet.weaponId = data.weaponId
   bullet.body.gravity.y = GameConsts.BULLET_GRAVITY
-  bullet.enableBody = true
-  bullet.physicsBodyType = window.Phaser.Physics.ARCADE
 
   let newVelocity = this.game.physics.arcade.velocityFromRotation(data.pointerAngle, GameConsts.WEAPONS[data.weaponId].bulletSpeed)
   bullet.body.velocity.x += newVelocity.x
