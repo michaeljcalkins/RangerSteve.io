@@ -20,9 +20,6 @@ export function create () {
   window.RS.groundSprite.width = WORLD_WIDTH
   window.RS.groundSprite.height = 90
   this.game.physics.arcade.enable(window.RS.groundSprite)
-  this.game.physics.enable(window.RS.groundSprite, window.Phaser.Physics.ARCADE)
-  window.RS.groundSprite.enableBody = true
-  window.RS.groundSprite.physicsBodyType = window.Phaser.Physics.ARCADE
   window.RS.groundSprite.body.immovable = true
   window.RS.groundSprite.body.allowGravity = false
 
