@@ -5,15 +5,15 @@
 {% block content %}
 <span id="beta-label">Beta</span>
 
-<section class="main-section" id="home-container" v-cloak>
-  <div class="col-xs-12">
+<section class="main-section row" id="home-container" v-cloak>
+  <div>
     <div class="text-center">
       <span class="main-header">
         Ranger Steve
       </span>
     </div>
 
-    <div class="home-content">
+    <div class="home-content col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
       <div id="browser-recommendation" class="alert alert-info text-center">
         We recommend using Chrome browser for the best game performance
       </div>
@@ -28,13 +28,7 @@
       <div class="well">
         <form action="/game" method="GET">
           <div class="row">
-            <div class="col-sm-6">
-              <span class="gold-button btn btn-default no-pointer-events" href="#">
-                <span>Ranger Steve</span>
-                <img src="/images/characters/RangerSteve.png" width="95" />
-              </span>
-            </div>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
               <button
                 class="btn btn-success btn-lg btn-block mb3"
                 id="play-button"
@@ -58,7 +52,6 @@
           </div>
         </form>
 
-        <br />
         <br />
 
         <fieldset>
