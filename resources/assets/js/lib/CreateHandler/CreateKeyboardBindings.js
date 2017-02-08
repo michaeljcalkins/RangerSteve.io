@@ -72,7 +72,8 @@ export default function () {
   this.input.keyboard.addKey(store.getState().game.keyboardControls.switchWeapon).onUp.add(() => {
     if (
       store.getState().player.health <= 0 ||
-      store.getState().player.isSwitchingWeapon
+      store.getState().player.isSwitchingWeapon ||
+      store.getState().room.state !== 'active'
     ) return
 
     // cancel reload action
