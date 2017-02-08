@@ -1,7 +1,5 @@
-import storage from 'store'
 import get from 'lodash/get'
 
-import GameConsts from 'lib/GameConsts'
 import actions from './actions'
 import Boot from './states/Boot'
 import Preloader from './states/Preloader'
@@ -9,11 +7,7 @@ import Deathmatch from './states/Deathmatch'
 import TeamDeathmatch from './states/TeamDeathmatch'
 
 export default function (store) {
-  const useWebgl = storage.get('useWebgl', GameConsts.USE_WEBGL_BY_DEFAULT)
-  let renderer = window.Phaser.AUTO
-  if (!useWebgl) renderer = window.Phaser.CANVAS
-
-  const game = new window.Phaser.Game('100%', '100%', renderer, 'game')
+  const game = new window.Phaser.Game('100%', '100%', window.Phaser.CANVAS, 'game')
   game.store = store
 
   game.forceSingleUpdate = false

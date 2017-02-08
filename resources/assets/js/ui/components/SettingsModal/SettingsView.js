@@ -16,8 +16,7 @@ export class SettingsView extends PureComponent {
       autoRespawn: props.game.autoRespawn,
       sfxVolume: props.game.sfxVolume,
       isNetworkStatsVisible: props.game.isNetworkStatsVisible,
-      isFpsStatsVisible: props.game.isFpsStatsVisible,
-      useWebgl: storage.get('useWebgl', GameConsts.USE_WEBGL_BY_DEFAULT)
+      isFpsStatsVisible: props.game.isFpsStatsVisible
     }
   }
 
@@ -38,13 +37,6 @@ export class SettingsView extends PureComponent {
     this.setState({ isNetworkStatsVisible })
     storage.set('isNetworkStatsVisible', isNetworkStatsVisible)
     this.props.onNetworkStatsChange(isNetworkStatsVisible)
-    document.location.reload()
-  }
-
-  handleWebglChange (evt) {
-    const useWebgl = evt.target.checked
-    this.setState({ useWebgl })
-    storage.set('useWebgl', useWebgl)
     document.location.reload()
   }
 
@@ -105,16 +97,6 @@ export class SettingsView extends PureComponent {
                   type='checkbox'
                 />
                 Show Network stats <i>(Changing this will reload the game)</i>
-              </label>
-            </div>
-            <div className='checkbox'>
-              <label>
-                <input
-                  checked={this.state.useWebgl}
-                  onClick={this.handleWebglChange}
-                  type='checkbox'
-                />
-                Use WebGL renderer <i>(Changing this will reload the game)</i>
               </label>
             </div>
           </div>
