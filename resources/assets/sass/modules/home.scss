@@ -100,8 +100,11 @@ body.main:after {
   cursor: default;
 }
 
-.home-content {
+.main-content {
   font-weight: bold;
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
 
   .well {
     position: relative;
@@ -239,7 +242,7 @@ legend {
     font-size: 60px !important;
   }
 
-  .home-content {
+  .main-content {
     width: 100%;
   }
 }
