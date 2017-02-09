@@ -13,7 +13,7 @@
       </span>
     </div>
 
-    <div class="home-content col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+    <div class="main-content">
       <div id="browser-recommendation" class="alert alert-info text-center">
         We recommend using Chrome browser for the best game performance
       </div>
@@ -28,7 +28,7 @@
       <div class="well">
         <form action="/game" method="GET">
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-xs-12">
               <button
                 class="btn btn-success btn-lg btn-block mb3"
                 id="play-button"
@@ -98,7 +98,7 @@
           {% endif %}
 
           <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
+            <div class="col-xs-4 col-xs-offset-4">
               <a
                 class="btn btn-primary btn-block"
                 href="/create-a-room"
@@ -126,7 +126,7 @@
           <legend>Login With</legend>
 
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-xs-4">
               <button
                 class="btn btn-primary btn-block"
                 style="background: #dd4b39;"
@@ -135,7 +135,7 @@
                 Google
               </button>
             </div>
-            <div class="col-sm-4">
+            <div class="col-xs-4">
               <button
                 class="btn btn-primary btn-block"
                 style="background: #3b5998;"
@@ -144,7 +144,7 @@
                 Facebook
               </button>
             </div>
-            <div class="col-sm-4">
+            <div class="col-xs-4">
               <button
                 class="btn btn-primary btn-block"
                 style="background: #1da1f2;"
@@ -160,7 +160,7 @@
           <legend>Your Account</legend>
 
           <div class="row">
-            <div class="col-sm-8">
+            <div class="col-xs-8">
               <div class="form-group">
                 <input
                   @keyup.13="claimUsername()"
@@ -174,7 +174,7 @@
                 />
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-xs-4">
               <button
                 class="btn btn-primary btn-block"
                 :class="{ disabled: isEmptyUsername || isSameUsername }"
@@ -186,7 +186,7 @@
           </div>
 
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-xs-4">
               <a
                 class="btn btn-primary btn-block"
                 v-if="user"
@@ -203,7 +203,7 @@
                 <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
               </a>
             </div>#}
-            <div class="col-sm-4 col-sm-offset-4">
+            <div class="col-xs-4 col-xs-offset-4">
               <button
                 class="btn btn-warning btn-block"
                 v-on:click="logoutUser()"
@@ -226,10 +226,10 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-sm-8">
+                  <div class="col-xs-8">
                     <input type="email" placeholder="Enter your email address" value="" name="EMAIL" class="required email form-control" required id="mce-EMAIL">
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-xs-4">
                     <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-block btn-primary" style="height: auto;">
                   </div>
                 </div>
