@@ -127,20 +127,9 @@ export function create () {
   background.scale.y = 1.5
   background.scale.x = 1.5
 
-  const decomposedPolygonPoints = []
-  polygonPoints.forEach((polygon) => {
-    const decomposedPolygon = decomp.quickDecomp(polygon)
-    decomposedPolygon.forEach((p) => {
-      decomposedPolygonPoints.push(flatten(p))
-    })
-  })
-
-  console.log('* LOG * decomposedPolygonPoints', decomposedPolygonPoints)
-  console.log('* LOG * polygonPoints', polygonPoints)
-
   window.RS.groundPolygons = this.game.add.group()
   this.game.physics.arcade.enable(window.RS.groundPolygons)
-  this.game.arcadePolygons.enableGroup(window.RS.groundPolygons, decomposedPolygonPoints, this)
+  this.game.arcadePolygons.enableGroup(window.RS.groundPolygons, polygonPoints, this)
 
   // Render the polygons so that we can see them!
   for (var i in window.RS.groundPolygons.children) {
