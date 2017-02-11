@@ -46,8 +46,8 @@ Deathmatch.prototype = {
     CreateBullets.call(this)
     CreateKeyboardBindings.call(this)
 
-    window.onresize = UpdateGameScale.bind(this)
-    UpdateGameScale.call(this)
+    // window.onresize = UpdateGameScale.bind(this)
+    // UpdateGameScale.call(this)
     Client.send(GameConsts.EVENT.REFRESH_ROOM)
 
     this.game.paused = false

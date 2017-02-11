@@ -55,10 +55,11 @@
         <div id="ui-app"></div>
         <div id="game"></div>
 
-        <script src="/primus/primus.js"></script>
+        <scriptsrc="https://cdnjs.cloudflare.com/ajax/libs/sat/0.6.0/SAT.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+        <script src="/primus/primus.js"></script>
         <script src="/js/phaser{{ '.min' if isProduction }}.js"></script>
-        <script src="/js/phaser-arcade-slopes{{ '.min' if isProduction }}.js"></script>
+        <script src="https://rawgit.com/michaeljcalkins/arcade-polygons-plugin/master/dist/arcade-polygons-plugin.js"></script>
 
         <script>
           // Initialize Firebase

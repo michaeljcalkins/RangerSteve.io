@@ -23,7 +23,7 @@ export default function () {
   window.RS.bullets.setAll('outOfBoundsKill', true)
 
   this.game.physics.arcade.enable(window.RS.bullets)
-  this.game.slopes.enable(window.RS.bullets)
+  // this.game.slopes.enable(window.RS.bullets)
   window.RS.bullets.forEach(function (bullet) {
     bullet.height = 2
     bullet.width = 40
@@ -43,7 +43,7 @@ export default function () {
   window.RS.enemyBullets.setAll('outOfBoundsKill', true)
 
   this.game.physics.arcade.enable(window.RS.enemyBullets)
-  this.game.slopes.enable(window.RS.enemyBullets)
+  // this.game.slopes.enable(window.RS.enemyBullets)
   window.RS.enemyBullets.forEach(function (bullet) {
     bullet.height = 2
     bullet.width = 40

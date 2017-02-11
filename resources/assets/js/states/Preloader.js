@@ -56,9 +56,9 @@ Preloader.prototype = {
     // Enables advanced profiling features when debugging
     this.game.time.advancedTiming = true
 
-    // Start up Arcade Physics
-    this.game.physics.startSystem(window.Phaser.Physics.ARCADE)
-    this.game.plugins.add(window.Phaser.Plugin.ArcadeSlopes)
+    this.game.plugins.add(window.Phaser.Plugin.ArcadePolygons)
+    this.game.physics.startSystem(window.Phaser.Physics.Arcade)
+
     this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
     window.RS.jumpjetFx = this.game.add.audio('jumpjet')

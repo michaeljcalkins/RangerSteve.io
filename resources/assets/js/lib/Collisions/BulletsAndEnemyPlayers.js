@@ -7,6 +7,7 @@ import Client from '../Client'
 export default function () {
   const state = this.game.store.getState()
   const currentWeapon = state.player.currentWeapon
+  return
 
   this.game.physics.arcade.overlap(window.RS.bullets, window.RS.enemies, function (bullet, enemy) {
     if (

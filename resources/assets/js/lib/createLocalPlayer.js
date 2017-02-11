@@ -19,25 +19,26 @@ export default function createLocalPlayer () {
 
   // Physics
   this.game.physics.arcade.enable(window.RS.player)
-  this.game.slopes.enable(window.RS.player)
+  this.game.arcadePolygons.enableSpriteBody(window.RS.player)
+
   this.game.physics.arcade.gravity.y = GameConsts.SLOPE_FEATURES.gravity
 
   // Add a touch of tile padding for the collision detection
-  window.RS.player.body.tilePadding.x = 1
-  window.RS.player.body.tilePadding.y = 1
+  // window.RS.player.body.tilePadding.x = 1
+  // window.RS.player.body.tilePadding.y = 1
 
   // Set player minimum and maximum movement speed
-  window.RS.player.body.maxVelocity.x = GameConsts.MAX_VELOCITY_X
-  window.RS.player.body.maxVelocity.y = GameConsts.MAX_VELOCITY_Y
+  // window.RS.player.body.maxVelocity.x = GameConsts.MAX_VELOCITY_X
+  // window.RS.player.body.maxVelocity.y = GameConsts.MAX_VELOCITY_Y
 
   // Add drag to the player that slows them down when they are not accelerating
-  window.RS.player.body.drag.x = GameConsts.SLOPE_FEATURES.dragX
-  window.RS.player.body.drag.y = GameConsts.SLOPE_FEATURES.dragY
+  // window.RS.player.body.drag.x = GameConsts.SLOPE_FEATURES.dragX
+  // window.RS.player.body.drag.y = GameConsts.SLOPE_FEATURES.dragY
 
   // Update player body Arcade Slopes properties
-  window.RS.player.body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
-  window.RS.player.body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
-  window.RS.player.body.slopes.preferY = GameConsts.SLOPE_FEATURES.minimumOffsetY
+  // window.RS.player.body.slopes.friction.x = GameConsts.SLOPE_FEATURES.frictionX
+  // window.RS.player.body.slopes.friction.y = GameConsts.SLOPE_FEATURES.frictionY
+  // window.RS.player.body.slopes.preferY = GameConsts.SLOPE_FEATURES.minimumOffsetY
 
   // Make player collide with world boundaries so he doesn't leave the stage
   window.RS.player.body.collideWorldBounds = true

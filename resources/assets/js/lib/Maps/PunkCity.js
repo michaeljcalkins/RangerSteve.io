@@ -44,24 +44,6 @@ export function create () {
 
   this.background = this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
-    // Add the demo tilemap and attach a tilesheet for its collision layer
-  window.RS.map = this.game.add.tilemap('tilemap')
-  window.RS.map.addTilesetImage('tiles', 'tiles')
-  window.RS.map.addTilesetImage('collision', 'ninja-tiles24')
-
-    // Create a TilemapLayer object from the collision layer of the map
-  window.RS.tiles = window.RS.map.createLayer('tiles')
-  window.RS.ground = window.RS.map.createLayer('collision')
-  window.RS.ground.renderSettings.enableScrollDelta = false
-  if (!GameConsts.DEBUG) window.RS.ground.alpha = 0
-
-    // Map Arcade Slopes tile types to Ninja Physics debug tilesheets,
-    // preparing slope data for each of tile in the layer
-  this.game.slopes.convertTilemapLayer(window.RS.ground, GameConsts.SLOPE_TILES)
-
-    // Enable collision between tile indexes 2 and 34
-  window.RS.map.setCollisionBetween(2, 34, true, 'collision')
-
   if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, SPAWN_POINTS)
 }
 
