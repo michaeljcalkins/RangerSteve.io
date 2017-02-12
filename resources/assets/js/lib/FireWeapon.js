@@ -6,7 +6,7 @@ import FireRocket from '../lib/FireRocket'
 
 export default function FireWeapon (currentWeaponId) {
   if (GameConsts.DEBUG) {
-    logPointerWorldPosition.call(this)
+    // logPointerWorldPosition.call(this)
   }
 
   const player = this.game.store.getState().player

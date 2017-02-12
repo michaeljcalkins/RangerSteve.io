@@ -2,6 +2,7 @@
  * Load all base game assets and start the gamemode.
  */
 import GameConsts from 'lib/GameConsts'
+import ArcadePolygons from '../lib/ArcadePolygons/ArcadePolygons'
 
 function Preloader (game) {
   this.game = game
@@ -55,9 +56,8 @@ Preloader.prototype = {
 
     // Enables advanced profiling features when debugging
     this.game.time.advancedTiming = true
-
-    this.game.plugins.add(window.Phaser.Plugin.ArcadePolygons)
-    this.game.physics.startSystem(window.Phaser.Physics.Arcade)
+    this.game.plugins.add(Phaser.Plugin.ArcadePolygons)
+    this.game.physics.startSystem(Phaser.Physics.Arcade)
 
     this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
