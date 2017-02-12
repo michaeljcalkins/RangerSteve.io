@@ -22,5 +22,4 @@ export default function () {
 
   this.scale.scaleMode = window.Phaser.ScaleManager.EXACT_FIT
   this.game.scale.setGameSize(widthScaleFactor, heightScaleFactor)
-  window.RS.tiles && window.RS.tiles.resize(widthScaleFactor, heightScaleFactor)
 }
