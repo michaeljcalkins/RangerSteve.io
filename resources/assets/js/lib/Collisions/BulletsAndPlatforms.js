@@ -4,7 +4,6 @@ import damagePlayersInBlastDamageRadius from '../damagePlayersInBlastDamageRadiu
 
 export default function () {
   this.game.physics.arcade.collide(window.RS.bullets, window.RS.groundPolygons, function (bullet, polygon) {
-    console.log(bullet, polygon)
     bullet.kill()
 
     if (bullet.weaponId === 'RPG') {
@@ -20,5 +19,5 @@ export default function () {
       bulletY: bullet.y,
       bulletX: bullet.x
     })
-  }, null, null, true)
+  })
 }

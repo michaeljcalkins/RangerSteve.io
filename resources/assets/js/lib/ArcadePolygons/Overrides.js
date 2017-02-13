@@ -26,6 +26,7 @@ const Overrides = {}
  */
 Overrides.collideSpriteVsGroup = function (sprite, group, collideCallback, processCallback, callbackContext, overlapOnly) {
   if (!sprite.body) {
+    console.log('Sprite has no body.', sprite)
     return false
   }
 
@@ -68,12 +69,6 @@ Overrides.collideSpriteVsGroup = function (sprite, group, collideCallback, proce
 
     var response = new SAT.Response()
     var collision = SAT.testPolygonPolygon(body.sat.polygon, polygon.body.sat.polygon, response)
-
-    if (collision && overlapOnly) {
-      console.log(callbackContext)
-      collideCallback || callbackContext.call(this, sprite, group.children[i])
-      return true
-    }
 
     // Our collision test responded positive, so let's resolve it
     if (collision) {
