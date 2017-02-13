@@ -2,7 +2,6 @@ import PlayBloodSpray from '../PlayBloodSpray'
 import PlayRocketExplosion from '../PlayRocketExplosion'
 
 export default function () {
-  return
   const state = this.game.store.getState()
 
     // Did enemy bullets hit you

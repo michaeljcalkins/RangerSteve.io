@@ -2,7 +2,6 @@ import PlayRocketExplosion from '../PlayRocketExplosion'
 import BulletRicochet from '../BulletRicochet'
 
 export default function () {
-  return
   this.game.physics.arcade.overlap(window.RS.enemyBullets, window.RS.ground, function (bullet) {
     bullet.kill()
 
