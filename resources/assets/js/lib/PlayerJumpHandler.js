@@ -33,8 +33,7 @@ export default function PlayerJumpHandler () {
     ) &&
     store.getState().player.health > 0 &&
     this.game.store.getState().player.jumpJetCounter > GameConsts.JUMP_JET_STARTING_FUEL
-  )
-  {
+  ) {
     // This deadzone stops the rapid
     // sputtering of the sound
     // and animation

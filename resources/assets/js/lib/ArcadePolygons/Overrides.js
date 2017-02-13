@@ -81,6 +81,20 @@ Overrides.collideSpriteVsGroup = function (sprite, group, collideCallback, proce
       body.position.x += overlapV.x
       body.position.y += overlapV.y
 
+      if (overlapV.x > 0) {
+        body.touching.left = true
+      }
+      if (overlapV.x < 0) {
+        body.touching.right = true
+      }
+
+      if (overlapV.y > 0) {
+        body.touching.up = true
+      }
+      if (overlapV.y < 0) {
+        body.touching.down = true
+      }
+
       // Let's update the SAT polygon too for any further polygons
       body.sat.polygon.pos.x = body.position.x
       body.sat.polygon.pos.y = body.position.y
