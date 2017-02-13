@@ -114,10 +114,11 @@ Deathmatch.prototype = {
   render () {
     if (!GameConsts.DEBUG || !window.RS.player) return
 
-    this.game.debug.text('FPS: ' + (this.time.fps || '--'), 32, 80, '#ffffff')
+    this.game.debug.text('FPS: ' + (this.time.fps || '--'), 32, 50, '#ffffff')
     this.game.debug.body(window.RS.player)
-    this.game.debug.inputInfo(32, 200)
-    this.game.debug.cameraInfo(this.camera, 32, 110)
+    this.game.debug.cameraInfo(this.camera, 32, 90)
+    this.game.debug.inputInfo(32, 180)
+    this.game.debug.bodyInfo(window.RS.player, 32, 280)
     window.RS.bullets.forEach((bullet) => {
       this.game.debug.body(bullet)
     })
