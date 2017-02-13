@@ -15,7 +15,7 @@ export default function RemotePlayer (playerId, playerData) {
   }
 
   // Physics
-  // this.game.arcadePolygons.enableSpriteBody(newRemotePlayer, this)
+  this.game.arcadePolygons.enableSpriteBody(newRemotePlayer, this)
   newRemotePlayer.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
 
   // This stops the effect of gravity on remote players
