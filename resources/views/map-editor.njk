@@ -19,6 +19,19 @@
       color: #222;
       border-color: #d9d9d9;
     }
+
+    #map-editor {
+      position: relative;
+    }
+
+    #background-canvas {
+      position: absolute;
+    }
+
+    #foreground-canvas {
+      position: absolute;
+      cursor: crosshair;
+    }
   </style>
 {% endblock %}
 
@@ -43,44 +56,108 @@
             <label for="background-file">Background:</label> <input type="file" id="background-file">
           </div>
 
-          <button type="button" class="btn btn-default navbar-btn">Undo</button>
-          <button type="button" class="btn btn-danger navbar-btn">Clear</button>
+          <button type="button" class="btn btn-default navbar-btn" onclick="undo()">Undo</button>
+          <button type="button" class="btn btn-danger navbar-btn" onclick="clearForeground()">Clear</button>
         </form>
 
         <div class="navbar-form navbar-right">
-          <button type="button" class="btn btn-success navbar-btn">Import</button>
-          <button type="button" class="btn btn-primary navbar-btn">Export</button>
+          <button type="button" class="btn btn-success navbar-btn" onclick="import()">Import</button>
+          <button type="button" class="btn btn-primary navbar-btn" onclick="export()">Export</button>
         </div>
       </div>
     </div>
   </nav>
 
-  <canvas id="map-editor">
-    Your browser does not support the HTML5 canvas tag.
-  </canvas>
+  <div id="map-editor">
+    <canvas id="background-canvas">
+      Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <canvas id="foreground-canvas"></canvas>
+  </div>
+
 {% endblock %}
 
 {% block scripts %}
   <script>
-    var canvas = document.getElementById('map-editor')
+    var backgroundCanvas = document.getElementById('background-canvas')
+    var backgroundCanvasCtx = backgroundCanvas.getContext('2d')
+
+    var canvas = document.getElementById('foreground-canvas')
     var ctx = canvas.getContext('2d')
+
+    var polygons = []
+    var currentPolygon = []
 
     document.getElementById('background-file').onchange = function () {
       var reader = new FileReader()
 
-      reader.onload = function (e) {
+      reader.onload = function (event) {
         var img = new Image()
-        img.src = e.target.result
+        img.src = event.target.result
 
-        canvas.width = img.width
-        canvas.height = img.height
+        canvas.width = backgroundCanvas.width = img.width
+        canvas.height = backgroundCanvas.height = img.height
 
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-
-        canvas.style.display = 'initial'
+        backgroundCanvasCtx.drawImage(img, 0, 0, backgroundCanvas.width, backgroundCanvas.height)
       }
 
       reader.readAsDataURL(this.files[0])
+    }
+
+    function addPoint (event) {
+      var rect = canvas.getBoundingClientRect()
+      var x = event.clientX - rect.left
+      var y = event.clientY - rect.top
+
+      currentPolygon.push([x, y])
+      draw()
+    }
+
+    function draw () {
+      ctx.lineWidth = 1
+      ctx.strokeStyle = 'red'
+      ctx.lineCap = 'square'
+
+      ctx.beginPath()
+
+      console.log('* LOG * currentPolygon', JSON.stringify(currentPolygon))
+
+      for (var i = 0; i < currentPolygon.length; i++) {
+        var x = currentPolygon[i][0]
+        var y = currentPolygon[i][1]
+
+        if (i === 0) {
+          ctx.moveTo(x, y)
+        } else {
+          ctx.lineTo(x, y)
+        }
+      }
+
+      ctx.stroke()
+    }
+
+    function undo () {
+      console.log('* LOG * undo')
+      currentPolygon.pop()
+
+      refresh()
+    }
+
+    function clearForeground () {
+      console.log('* LOG * clearForeground')
+      currentPolygon = []
+
+      refresh()
+    }
+
+    function refresh () {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      draw()
+    }
+
+    canvas.onmousedown = addPoint
+    canvas.oncontextmenu = function () {
+      return false
     }
   </script>
 {% endblock %}
