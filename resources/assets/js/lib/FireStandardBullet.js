@@ -38,6 +38,7 @@ export default function FireStandardBullet (currentWeaponId) {
   bullet.bulletId = Math.round(Math.random() * 16000)
   bullet.damage = currentWeapon.damage
   bullet.weaponId = currentWeaponId
+  bullet.alive = true
   bullet.alpha = 0
   bullet.height = 2
   bullet.width = 40

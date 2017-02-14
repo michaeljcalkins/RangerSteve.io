@@ -67,6 +67,8 @@ Overrides.collideSpriteVsGroup = function (sprite, group, collideCallback, proce
   for (var i in group.children) {
     var polygon = group.children[i]
 
+    if (!polygon.alive) return
+
     polygon.body.sat.polygon.pos.x = polygon.body.x
     polygon.body.sat.polygon.pos.y = polygon.body.y
     var response = new SAT.Response()

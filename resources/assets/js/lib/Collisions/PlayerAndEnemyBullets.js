@@ -4,7 +4,7 @@ import PlayRocketExplosion from '../PlayRocketExplosion'
 export default function () {
   const state = this.game.store.getState()
 
-    // Did enemy bullets hit you
+  // Did enemy bullets hit you
   this.game.physics.arcade.overlap(window.RS.player, window.RS.enemyBullets, function (player, bullet) {
     if (
       !bullet.weaponId ||

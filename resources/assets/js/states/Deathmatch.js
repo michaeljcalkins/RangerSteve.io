@@ -119,13 +119,10 @@ Deathmatch.prototype = {
     this.game.debug.cameraInfo(this.camera, 32, 90)
     this.game.debug.inputInfo(32, 180)
     this.game.debug.bodyInfo(window.RS.player, 32, 280)
-    window.RS.bullets.forEach((bullet) => {
-      this.game.debug.body(bullet)
-    })
 
-    window.RS.enemies.forEach((bullet) => {
-      this.game.debug.body(bullet)
-    })
+    window.RS.enemies.forEach(enemy => this.game.debug.body(enemy))
+    window.RS.bullets.forEach(bullet => this.game.debug.body(bullet))
+    window.RS.enemyBullets.forEach(bullet => this.game.debug.body(bullet))
   }
 }
 
