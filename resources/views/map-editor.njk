@@ -1,0 +1,83 @@
+{% extends 'master-minimal.njk' %}
+
+{% block title %}Map Editor | RangerSteve.io{% endblock %}
+
+{% block head %}
+  <style>
+    body {
+      overflow: auto;
+      background: #333;
+      color: #FFF;
+      padding-top: 55px;
+    }
+
+    .btn-default,
+    .btn-default:hover {
+      color: #222;
+      border-color: #d9d9d9;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#rs-navbar-collapse"
+                aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">RangerSteve.io</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="rs-navbar-collapse">
+        <h4 class="navbar-text">Map Editor</h4>
+        <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <label for="background-file">Background:</label> <input type="file" id="background-file">
+          </div>
+
+          <button type="button" class="btn btn-default navbar-btn">Undo</button>
+          <button type="button" class="btn btn-danger navbar-btn">Clear</button>
+        </form>
+
+        <div class="navbar-form navbar-right">
+          <button type="button" class="btn btn-success navbar-btn">Import</button>
+          <button type="button" class="btn btn-primary navbar-btn">Export</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <canvas id="map-editor">
+    Your browser does not support the HTML5 canvas tag.
+  </canvas>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    var canvas = document.getElementById('map-editor')
+    var ctx = canvas.getContext('2d')
+
+    document.getElementById('background-file').onchange = function () {
+      var reader = new FileReader()
+
+      reader.onload = function (e) {
+        var img = new Image()
+        img.src = e.target.result
+
+        canvas.width = img.width
+        canvas.height = img.height
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+        canvas.style.display = 'initial'
+      }
+
+      reader.readAsDataURL(this.files[0])
+    }
+  </script>
+{% endblock %}
