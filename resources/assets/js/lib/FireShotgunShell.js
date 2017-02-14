@@ -43,6 +43,7 @@ export default function FireShotgunShell (currentWeaponId) {
     bullet.bulletId = Math.round(Math.random() * 16000)
     bullet.damage = currentWeapon.damage
     bullet.weaponId = currentWeaponId
+    bullet.alive = 1
     bullet.alpha = 0
     bullet.height = 2
     bullet.width = 40

@@ -37,6 +37,7 @@ export default function FireRocket (currentWeaponId) {
   bullet.bulletId = Math.round(Math.random() * 16000)
   bullet.damage = this.damage
   bullet.weaponId = currentWeaponId
+  bullet.alive = 1
   bullet.alpha = 0
   bullet.height = 10
   bullet.width = 40
