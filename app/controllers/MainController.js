@@ -53,6 +53,15 @@ let MainController = {
     })
   },
 
+  mapEditor: function (req, res) {
+    let fileStat = fs.statSync('public/css/app.css')
+    let lastModifiedTime = moment(fileStat.mtime).unix()
+
+    res.render('map-editor', {
+      lastModifiedTime: lastModifiedTime
+    })
+  },
+
   leaderboards: function (req, res) {
     res.render('leaderboards')
   },

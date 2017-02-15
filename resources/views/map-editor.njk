@@ -1,0 +1,232 @@
+{% extends 'master-minimal.njk' %}
+
+{% block title %}Map Editor | RangerSteve.io{% endblock %}
+
+{% block head %}
+  <style>
+    body {
+      overflow: auto;
+      background: #333;
+      color: #FFF;
+      padding-top: 55px;
+    }
+
+    .btn-default,
+    .btn-default:hover,
+    .btn-default:focus,
+    .btn-default:active:hover,
+    .btn-default:active:focus {
+      color: #222;
+      border-color: #d9d9d9;
+    }
+
+    #map-editor {
+      position: relative;
+    }
+
+    #background-canvas {
+      position: absolute;
+    }
+
+    #foreground-canvas {
+      position: absolute;
+      cursor: crosshair;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#rs-navbar-collapse"
+                aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand ff-bangers ft18 lh14" href="/">RangerSteve.io</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="rs-navbar-collapse">
+        <h4 class="navbar-text">Map Editor</h4>
+        <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <label for="background-file">Background:</label> <input type="file" id="background-file">
+          </div>
+
+          <button type="button" class="btn btn-primary navbar-btn" onclick="closeCurrentPolygon()">Close Polygon</button>
+          <button type="button" class="btn btn-default navbar-btn" onclick="undo()">Undo</button>
+          <button type="button" class="btn btn-danger navbar-btn" onclick="clearCurrentPolygon()">Clear</button>
+        </form>
+
+        <div class="navbar-form navbar-right">
+          <button type="button" class="btn btn-success navbar-btn" onclick="importPolygons()">Import</button>
+          <button type="button" class="btn btn-primary navbar-btn" onclick="exportPolygons()">Export</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="map-editor">
+    <canvas id="background-canvas">
+      Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <canvas id="foreground-canvas"></canvas>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    var backgroundCanvas = document.getElementById('background-canvas')
+    var backgroundCanvasCtx = backgroundCanvas.getContext('2d')
+
+    var canvas = document.getElementById('foreground-canvas')
+    var ctx = canvas.getContext('2d')
+
+    var polygons = []
+    var currentPolygon = []
+
+    document.getElementById('background-file').onchange = function () {
+      var reader = new FileReader()
+
+      reader.onload = function (event) {
+        var img = new Image()
+        img.src = event.target.result
+
+        canvas.width = backgroundCanvas.width = img.width
+        canvas.height = backgroundCanvas.height = img.height
+
+        backgroundCanvasCtx.drawImage(img, 0, 0, backgroundCanvas.width, backgroundCanvas.height)
+
+        refresh()
+      }
+
+      reader.readAsDataURL(this.files[0])
+    }
+
+    function closeCurrentPolygon () {
+      if (currentPolygon.length <= 2) {
+        console.error('Polygons must have three points or more.')
+        return
+      }
+      polygons.push(currentPolygon)
+      currentPolygon = []
+
+      refresh()
+    }
+
+    function addPoint (event) {
+      var rect = canvas.getBoundingClientRect()
+      var x = event.clientX - rect.left
+      var y = event.clientY - rect.top
+
+      currentPolygon.push([x, y])
+      refresh()
+    }
+
+    function draw () {
+      ctx.lineWidth = 1
+      ctx.strokeStyle = 'red'
+      ctx.lineCap = 'square'
+      ctx.fillStyle = 'rgba(255, 255, 0, 0.1)'
+
+      console.log('* LOG * polygons', JSON.stringify(polygons))
+
+      // Draw finished polygons
+      for (var j = 0; j < polygons.length; j++) {
+        var polygonPoints = polygons[j]
+
+        ctx.beginPath()
+
+        for (var i = 0; i < polygonPoints.length; i++) {
+          var isMoveOnly = i === 0
+          drawPoint(polygonPoints[i], isMoveOnly)
+        }
+
+        if (polygonPoints.length > 0) {
+          // Draws line to close polygon
+          drawPoint(polygonPoints[0])
+
+          ctx.fill()
+        }
+
+        ctx.stroke()
+      }
+
+      console.log('* LOG * currentPolygon', JSON.stringify(currentPolygon))
+
+      ctx.beginPath()
+
+      for (var i = 0; i < currentPolygon.length; i++) {
+        var isMoveOnly = i === 0
+        drawPoint(currentPolygon[i], isMoveOnly)
+      }
+
+      ctx.stroke()
+    }
+
+    function drawPoint (point, isMoveOnly) {
+      var x = point[0]
+      var y = point[1]
+
+      if (isMoveOnly) {
+        ctx.moveTo(x, y)
+      } else {
+        ctx.lineTo(x, y)
+      }
+    }
+
+    function undo () {
+      console.log('* LOG * undo')
+      currentPolygon.pop()
+
+      refresh()
+    }
+
+    function clearCurrentPolygon () {
+      console.log('* LOG * clear current polygon')
+      currentPolygon = []
+
+      refresh()
+    }
+
+    function refresh () {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      draw()
+    }
+
+    function importPolygons () {
+      var polygonsString = prompt('Paste polygon coordinates here')
+
+      if (polygonsString != null) {
+        var filteredString = polygonsString.replace(/\s|\r\n|\n|\r/gm, '')
+        console.log(filteredString)
+        polygons = JSON.parse(filteredString)
+        refresh()
+      }
+    }
+
+    function exportPolygons () {
+      console.log(JSON.stringify(polygons))
+      prompt('Copy this string', JSON.stringify(polygons))
+    }
+
+    document.onkeydown = function (e) {
+      if (e.metaKey && e.which === 90) undo()
+    }
+
+    canvas.onmousedown = function (e) {
+      e.preventDefault()
+      if (e.button === 0) addPoint(e)
+      return false
+    }
+
+    canvas.oncontextmenu = function (e) {
+      e.preventDefault()
+      closeCurrentPolygon()
+      return false
+    }
+  </script>
+{% endblock %}
