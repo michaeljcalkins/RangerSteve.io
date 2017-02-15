@@ -58,7 +58,7 @@
 
           <button type="button" class="btn btn-primary navbar-btn" onclick="closeCurrentPolygon()">Close Polygon</button>
           <button type="button" class="btn btn-default navbar-btn" onclick="undo()">Undo</button>
-          <button type="button" class="btn btn-danger navbar-btn" onclick="clearForeground()">Clear</button>
+          <button type="button" class="btn btn-danger navbar-btn" onclick="clearCurrentPolygon()">Clear</button>
         </form>
 
         <div class="navbar-form navbar-right">
@@ -184,8 +184,9 @@
       refresh()
     }
 
-    function clearForeground () {
-      console.log('* LOG * clearForeground')
+    function clearCurrentPolygon () {
+      console.log('* LOG * clear current polygon')
+      currentPolygon = []
 
       refresh()
     }
@@ -209,6 +210,10 @@
     function exportPolygons () {
       console.log(JSON.stringify(polygons))
       prompt('Copy this string', JSON.stringify(polygons))
+    }
+
+    document.onkeydown = function (e) {
+      if (e.metaKey && e.which === 90) undo()
     }
 
     canvas.onmousedown = function (e) {
