@@ -130,51 +130,52 @@
       ctx.lineWidth = 1
       ctx.strokeStyle = 'red'
       ctx.lineCap = 'square'
+      ctx.fillStyle = 'rgba(255, 255, 0, 0.1)'
 
-      ctx.beginPath()
-
-      console.log('* LOG * currentPolygon', JSON.stringify(currentPolygon))
       console.log('* LOG * polygons', JSON.stringify(polygons))
-
-      for (var i = 0; i < currentPolygon.length; i++) {
-        var x = currentPolygon[i][0]
-        var y = currentPolygon[i][1]
-
-        if (i === 0) {
-          ctx.moveTo(x, y)
-        } else {
-          ctx.lineTo(x, y)
-        }
-      }
 
       // Draw finished polygons
       for (var j = 0; j < polygons.length; j++) {
         var polygonPoints = polygons[j]
-        for (var i = 0; i < polygonPoints.length; i++) {
-          var x = polygonPoints[i][0]
-          var y = polygonPoints[i][1]
 
-          if (i === 0) {
-            ctx.moveTo(x, y)
-          } else {
-            ctx.lineTo(x, y)
-          }
+        ctx.beginPath()
+
+        for (var i = 0; i < polygonPoints.length; i++) {
+          var isMoveOnly = i === 0
+          drawPoint(polygonPoints[i], isMoveOnly)
         }
 
         if (polygonPoints.length > 0) {
           // Draws line to close polygon
-          var x = polygonPoints[0][0]
-          var y = polygonPoints[0][1]
+          drawPoint(polygonPoints[0])
 
-          if (i === 0) {
-            ctx.moveTo(x, y)
-          } else {
-            ctx.lineTo(x, y)
-          }
+          ctx.fill()
         }
+
+        ctx.stroke()
+      }
+
+      console.log('* LOG * currentPolygon', JSON.stringify(currentPolygon))
+
+      ctx.beginPath()
+
+      for (var i = 0; i < currentPolygon.length; i++) {
+        var isMoveOnly = i === 0
+        drawPoint(currentPolygon[i], isMoveOnly)
       }
 
       ctx.stroke()
+    }
+
+    function drawPoint (point, isMoveOnly) {
+      var x = point[0]
+      var y = point[1]
+
+      if (isMoveOnly) {
+        ctx.moveTo(x, y)
+      } else {
+        ctx.lineTo(x, y)
+      }
     }
 
     function undo () {
@@ -197,7 +198,7 @@
     }
 
     function importPolygons () {
-      var polygonsString = prompt("Paste polygon coordinates here")
+      var polygonsString = prompt('Paste polygon coordinates here')
 
       if (polygonsString != null) {
         var filteredString = polygonsString.replace(/\s|\r\n|\n|\r/gm, '')
