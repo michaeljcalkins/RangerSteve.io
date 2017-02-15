@@ -46,7 +46,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">RangerSteve.io</a>
+        <a class="navbar-brand" href="/" style="font-family: Bangers, Arial; font-size: 36px; line-height: 28px;">RangerSteve.io</a>
       </div>
 
       <div class="collapse navbar-collapse" id="rs-navbar-collapse">
@@ -56,13 +56,14 @@
             <label for="background-file">Background:</label> <input type="file" id="background-file">
           </div>
 
+          <button type="button" class="btn btn-primary navbar-btn" onclick="closeCurrentPolygon()">Close Polygon</button>
           <button type="button" class="btn btn-default navbar-btn" onclick="undo()">Undo</button>
           <button type="button" class="btn btn-danger navbar-btn" onclick="clearForeground()">Clear</button>
         </form>
 
         <div class="navbar-form navbar-right">
-          <button type="button" class="btn btn-success navbar-btn" onclick="import()">Import</button>
-          <button type="button" class="btn btn-primary navbar-btn" onclick="export()">Export</button>
+          <button type="button" class="btn btn-success navbar-btn" onclick="importPolygons()">Import</button>
+          <button type="button" class="btn btn-primary navbar-btn" onclick="exportPolygons()">Export</button>
         </div>
       </div>
     </div>
@@ -99,9 +100,18 @@
         canvas.height = backgroundCanvas.height = img.height
 
         backgroundCanvasCtx.drawImage(img, 0, 0, backgroundCanvas.width, backgroundCanvas.height)
+
+        refresh()
       }
 
       reader.readAsDataURL(this.files[0])
+    }
+
+    function closeCurrentPolygon () {
+      polygons.push(currentPolygon)
+      currentPolygon = []
+
+      refresh()
     }
 
     function addPoint (event) {
@@ -110,7 +120,7 @@
       var y = event.clientY - rect.top
 
       currentPolygon.push([x, y])
-      draw()
+      refresh()
     }
 
     function draw () {
@@ -121,6 +131,7 @@
       ctx.beginPath()
 
       console.log('* LOG * currentPolygon', JSON.stringify(currentPolygon))
+      console.log('* LOG * polygons', JSON.stringify(polygons))
 
       for (var i = 0; i < currentPolygon.length; i++) {
         var x = currentPolygon[i][0]
@@ -130,6 +141,33 @@
           ctx.moveTo(x, y)
         } else {
           ctx.lineTo(x, y)
+        }
+      }
+
+      // Draw finished polygons
+      for (var j = 0; j < polygons.length; j++) {
+        var polygonPoints = polygons[j]
+        for (var i = 0; i < polygonPoints.length; i++) {
+          var x = polygonPoints[i][0]
+          var y = polygonPoints[i][1]
+
+          if (i === 0) {
+            ctx.moveTo(x, y)
+          } else {
+            ctx.lineTo(x, y)
+          }
+        }
+
+        if (polygonPoints.length > 0) {
+          // Draws line to close polygon
+          var x = polygonPoints[0][0]
+          var y = polygonPoints[0][1]
+
+          if (i === 0) {
+            ctx.moveTo(x, y)
+          } else {
+            ctx.lineTo(x, y)
+          }
         }
       }
 
@@ -145,7 +183,6 @@
 
     function clearForeground () {
       console.log('* LOG * clearForeground')
-      currentPolygon = []
 
       refresh()
     }
@@ -153,6 +190,20 @@
     function refresh () {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       draw()
+    }
+
+    function importPolygons () {
+      var polygonsString = prompt("Paste polygon coordinates here")
+
+      if (polygonsString != null) {
+        polygons = JSON.parse(polygonsString)
+        refresh()
+      }
+    }
+
+    function exportPolygons () {
+      console.log(JSON.stringify(polygons))
+      prompt('Copy this string', JSON.stringify(polygons))
     }
 
     canvas.onmousedown = addPoint
