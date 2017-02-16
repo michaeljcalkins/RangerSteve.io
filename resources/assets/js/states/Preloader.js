@@ -11,7 +11,6 @@ function Preloader (game) {
 Preloader.prototype = {
 
   preload: function () {
-    this.game.load.image('ground', '/images/platform.png')
     this.game.load.image('bullet', '/images/bullet.png')
     this.game.load.image('left-arm', '/images/body/left-arm.png')
     this.game.load.image('player-placeholder', '/images/player-placeholder.png')
