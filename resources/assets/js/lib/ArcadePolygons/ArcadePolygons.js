@@ -78,3 +78,5 @@ Phaser.Plugin.ArcadePolygons.Overrides = Overrides
 Phaser.Plugin.ArcadePolygons.Facade = Facade
 
 window.Phaser.Plugin.ArcadePolygons = Phaser.Plugin.ArcadePolygons
+
+module.exports = Phaser.Plugin.ArcadePolygons
