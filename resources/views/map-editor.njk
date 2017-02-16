@@ -71,7 +71,7 @@
 
           <div class="form-group input-group-sm">
             <label for="grid-size">Grid size:</label>
-            <input type="number" class="form-control" id="grid-size" value="24" min="0" max="999" />
+            <input type="number" class="form-control" id="grid-size" value="0" min="0" max="999" />
           </div>
 
           <button type="button" class="btn btn-primary navbar-btn" onclick="closeCurrentPolygon()">Close Polygon</button>
@@ -81,6 +81,7 @@
         </form>
 
         <div class="navbar-form navbar-right">
+          <button type="button" class="btn btn-danger navbar-btn" onclick="removeAllPolygons()">Remove All Polygons</button>
           <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#import-modal">Import</button>
           <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#export-modal">Export</button>
         </div>
@@ -153,7 +154,7 @@
     var canvas = document.getElementById('foreground-canvas')
     var ctx = canvas.getContext('2d')
 
-    var gridSize = false
+    var gridSize = 0
     updateGridSize()
 
     var polygonsFromLocalStorage = localStorage.getItem('polygons')
@@ -186,7 +187,7 @@
       var x = event.clientX - rect.left
       var y = event.clientY - rect.top
 
-      if (gridSize) {
+      if (gridSize > 0) {
         x = Math.round(x / gridSize) * gridSize
         y = Math.round(y / gridSize) * gridSize
       }
