@@ -2,7 +2,6 @@
  * Load all base game assets and start the gamemode.
  */
 import GameConsts from 'lib/GameConsts'
-import ArcadePolygons from '../lib/ArcadePolygons/ArcadePolygons'
 
 function Preloader (game) {
   this.game = game
