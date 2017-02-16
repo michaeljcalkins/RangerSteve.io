@@ -33,6 +33,10 @@
       cursor: crosshair;
     }
 
+    #grid-size {
+      width: 60px;
+    }
+
     #import-text,
     #export-text {
       height: 400px;
@@ -60,9 +64,14 @@
       </div>
 
       <div class="collapse navbar-collapse" id="rs-navbar-collapse">
-        <form class="navbar-form navbar-left">
+        <form id="map-form" class="navbar-form navbar-left">
           <div class="form-group">
             <label for="background-file">Background:</label> <input type="file" id="background-file">
+          </div>
+
+          <div class="form-group input-group-sm">
+            <label for="grid-size">Grid size:</label>
+            <input type="number" class="form-control" id="grid-size" value="24" min="0" max="999" />
           </div>
 
           <button type="button" class="btn btn-primary navbar-btn" onclick="closeCurrentPolygon()">Close Polygon</button>
@@ -144,6 +153,9 @@
     var canvas = document.getElementById('foreground-canvas')
     var ctx = canvas.getContext('2d')
 
+    var gridSize = false
+    updateGridSize()
+
     var polygonsFromLocalStorage = localStorage.getItem('polygons')
 
     var polygons = polygonsFromLocalStorage && typeof JSON.parse(polygonsFromLocalStorage) === 'object'
@@ -173,6 +185,11 @@
       var rect = canvas.getBoundingClientRect()
       var x = event.clientX - rect.left
       var y = event.clientY - rect.top
+
+      if (gridSize) {
+        x = Math.round(x / gridSize) * gridSize
+        y = Math.round(y / gridSize) * gridSize
+      }
 
       var lastPoint = currentPolygon[currentPolygon.length - 1]
 
@@ -276,6 +293,11 @@
       draw()
     }
 
+    function updateGridSize () {
+      gridSize = $('#grid-size').val()
+      console.log('* LOG * gridSize', gridSize)
+    }
+
     function importPolygons () {
       var polygonsString = $('#import-text').val()
 
@@ -314,6 +336,19 @@
       closeCurrentPolygon()
       return false
     }
+
+    $('#map-form')
+      .on('submit', function (e) {
+        e.preventDefault()
+      })
+
+    $('#grid-size')
+      .on('mousewheel', function () {
+        setTimeout(updateGridSize, 10)
+      })
+      .on('keyup mouseup', function () {
+        updateGridSize()
+      })
 
     $('#export-modal')
       .on('show.bs.modal', function () {
