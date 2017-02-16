@@ -257,6 +257,13 @@
       }
     }
 
+    function removeAllPolygons () {
+      if (confirm('Remove all polygons?')) {
+        polygons = []
+        refresh()
+      }
+    }
+
     function closeCurrentPolygon () {
       if (currentPolygon.length <= 2) {
         alert('Polygons must have three points or more.')
