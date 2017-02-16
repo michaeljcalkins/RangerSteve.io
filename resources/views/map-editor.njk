@@ -322,7 +322,11 @@
     }
 
     document.onkeydown = function (e) {
-      if (e.metaKey && e.which === 90) undo()
+      if (e.metaKey && e.which === 90) {
+        e.preventDefault()
+        undo()
+        return false
+      }
     }
 
     canvas.onmousedown = function (e) {
