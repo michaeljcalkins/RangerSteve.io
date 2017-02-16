@@ -22,6 +22,7 @@ export default function onBulletFired (data) {
     damage: GameConsts.WEAPONS[data.weaponId].damage,
     playerId: data.playerId
   }
+  bullet.alive = true
   bullet.rotation = data.pointerAngle
   bullet.weaponId = data.weaponId
   bullet.body.gravity.y = GameConsts.BULLET_GRAVITY

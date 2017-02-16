@@ -73,12 +73,12 @@ export default function PlayerMovementHandler () {
 
   // If the LEFT key is down, set the player velocity to move left
   if (isMovingLeft) {
-    window.RS.player.body.acceleration.x = -GameConsts.SLOPE_FEATURES.acceleration
+    window.RS.player.body.acceleration.x = -GameConsts.PLAYER_PHYSICS.ACCELERATION
   }
 
   // If the RIGHT key is down, set the player velocity to move right
   if (isMovingRight) {
-    window.RS.player.body.acceleration.x = GameConsts.SLOPE_FEATURES.acceleration
+    window.RS.player.body.acceleration.x = GameConsts.PLAYER_PHYSICS.ACCELERATION
   }
 
   // Stand still

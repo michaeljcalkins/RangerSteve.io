@@ -21,24 +21,24 @@ export default function PlayerJumpHandler () {
 
     // Jump!
   if (isJumpInputActive.call(this) && onTheGround) {
-    window.RS.player.body.velocity.y = -GameConsts.SLOPE_FEATURES.jump
+    window.RS.player.body.velocity.y = -GameConsts.PLAYER_PHYSICS.JUMP
     store.dispatch(actions.player.setJumping(true))
   }
 
     // Jump Jet!
   if (
-        (
-            this.game.input.activePointer.rightButton.isDown ||
-            isJumpJetInputActive.call(this)
-        ) &&
-        store.getState().player.health > 0 &&
-        this.game.store.getState().player.jumpJetCounter > GameConsts.JUMP_JET_STARTING_FUEL
-    ) {
-        // This deadzone stops the rapid
-        // sputtering of the sound
-        // and animation
+    (
+      this.game.input.activePointer.rightButton.isDown ||
+      isJumpJetInputActive.call(this)
+    ) &&
+    store.getState().player.health > 0 &&
+    this.game.store.getState().player.jumpJetCounter > GameConsts.JUMP_JET_STARTING_FUEL
+  ) {
+    // This deadzone stops the rapid
+    // sputtering of the sound
+    // and animation
     if (!jumpjetFxHandle && this.game.store.getState().player.jumpJetCounter > GameConsts.JUMP_JET_DEAD_ZONE_FUEL) {
-            // Limits the sound to only be started once
+      // Limits the sound to only be started once
       jumpjetFxHandle = true
       window.RS.jumpjetFx.volume = store.getState().game.sfxVolume
       window.RS.jumpjetFx.loopFull()

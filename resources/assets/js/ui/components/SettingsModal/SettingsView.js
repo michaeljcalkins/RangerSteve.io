@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import autobind from 'react-autobind'
 import storage from 'store'
 
-import GameConsts from 'lib/GameConsts'
 import actions from 'actions'
 
 export class SettingsView extends PureComponent {

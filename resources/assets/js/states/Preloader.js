@@ -2,6 +2,7 @@
  * Load all base game assets and start the gamemode.
  */
 import GameConsts from 'lib/GameConsts'
+import ArcadePolygons from '../lib/ArcadePolygons/ArcadePolygons'
 
 function Preloader (game) {
   this.game = game
@@ -10,7 +11,6 @@ function Preloader (game) {
 Preloader.prototype = {
 
   preload: function () {
-    this.game.load.image('ground', '/images/platform.png')
     this.game.load.image('bullet', '/images/bullet.png')
     this.game.load.image('left-arm', '/images/body/left-arm.png')
     this.game.load.image('player-placeholder', '/images/player-placeholder.png')
@@ -55,10 +55,9 @@ Preloader.prototype = {
 
     // Enables advanced profiling features when debugging
     this.game.time.advancedTiming = true
+    this.game.plugins.add(ArcadePolygons)
+    this.game.physics.startSystem(Phaser.Physics.Arcade)
 
-    // Start up Arcade Physics
-    this.game.physics.startSystem(window.Phaser.Physics.ARCADE)
-    this.game.plugins.add(window.Phaser.Plugin.ArcadeSlopes)
     this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
 
     window.RS.jumpjetFx = this.game.add.audio('jumpjet')

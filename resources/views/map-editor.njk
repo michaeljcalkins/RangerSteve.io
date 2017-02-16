@@ -32,6 +32,20 @@
       position: absolute;
       cursor: crosshair;
     }
+
+    #grid-size {
+      width: 60px;
+    }
+
+    #import-text,
+    #export-text {
+      height: 400px;
+      font-family: monospace;
+    }
+
+    .modal-footer {
+      padding-top: 10px;
+    }
   </style>
 {% endblock %}
 
@@ -46,28 +60,83 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand ff-bangers ft18 lh14" href="/">RangerSteve.io</a>
+        <a class="navbar-brand ff-bangers ft10 lh12" href="/">RangerSteve.io</a>
       </div>
 
       <div class="collapse navbar-collapse" id="rs-navbar-collapse">
-        <h4 class="navbar-text">Map Editor</h4>
-        <form class="navbar-form navbar-left">
+        <form id="map-form" class="navbar-form navbar-left">
           <div class="form-group">
             <label for="background-file">Background:</label> <input type="file" id="background-file">
           </div>
 
+          <div class="form-group input-group-sm">
+            <label for="grid-size">Grid size:</label>
+            <input type="number" class="form-control" id="grid-size" value="0" min="0" max="999" />
+          </div>
+
           <button type="button" class="btn btn-primary navbar-btn" onclick="closeCurrentPolygon()">Close Polygon</button>
           <button type="button" class="btn btn-default navbar-btn" onclick="undo()">Undo</button>
-          <button type="button" class="btn btn-danger navbar-btn" onclick="clearCurrentPolygon()">Clear</button>
+          <button type="button" class="btn btn-warning navbar-btn" onclick="clearCurrentPolygon()">Clear</button>
+          <button type="button" class="btn btn-danger navbar-btn" onclick="removeLastPolygon()">Remove Last Polygon</button>
         </form>
 
         <div class="navbar-form navbar-right">
-          <button type="button" class="btn btn-success navbar-btn" onclick="importPolygons()">Import</button>
-          <button type="button" class="btn btn-primary navbar-btn" onclick="exportPolygons()">Export</button>
+          <button type="button" class="btn btn-danger navbar-btn" onclick="removeAllPolygons()">Remove All Polygons</button>
+          <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#import-modal">Import</button>
+          <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#export-modal">Export</button>
         </div>
       </div>
     </div>
   </nav>
+
+  <div class="modal fade" id="import-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Import</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <textarea class="form-control" id="import-text"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Close</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="btn btn-primary btn-block" onclick="importPolygons()">Import</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="export-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Export</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <textarea class="form-control" id="export-text" readonly></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="map-editor">
     <canvas id="background-canvas">
@@ -85,7 +154,14 @@
     var canvas = document.getElementById('foreground-canvas')
     var ctx = canvas.getContext('2d')
 
-    var polygons = []
+    var gridSize = 0
+    updateGridSize()
+
+    var polygonsFromLocalStorage = localStorage.getItem('polygons')
+
+    var polygons = polygonsFromLocalStorage && typeof JSON.parse(polygonsFromLocalStorage) === 'object'
+      ? JSON.parse(polygonsFromLocalStorage)
+      : []
     var currentPolygon = []
 
     document.getElementById('background-file').onchange = function () {
@@ -106,21 +182,23 @@
       reader.readAsDataURL(this.files[0])
     }
 
-    function closeCurrentPolygon () {
-      if (currentPolygon.length <= 2) {
-        console.error('Polygons must have three points or more.')
-        return
-      }
-      polygons.push(currentPolygon)
-      currentPolygon = []
-
-      refresh()
-    }
-
     function addPoint (event) {
       var rect = canvas.getBoundingClientRect()
       var x = event.clientX - rect.left
       var y = event.clientY - rect.top
+
+      if (gridSize > 0) {
+        x = Math.round(x / gridSize) * gridSize
+        y = Math.round(y / gridSize) * gridSize
+      }
+
+      var lastPoint = currentPolygon[currentPolygon.length - 1]
+
+      if (
+        currentPolygon.length > 0 &&
+        x === lastPoint[0] &&
+        y === lastPoint[1]
+      ) return
 
       currentPolygon.push([x, y])
       refresh()
@@ -132,7 +210,7 @@
       ctx.lineCap = 'square'
       ctx.fillStyle = 'rgba(255, 255, 0, 0.1)'
 
-      console.log('* LOG * polygons', JSON.stringify(polygons))
+      console.log(JSON.stringify(polygons))
 
       // Draw finished polygons
       for (var j = 0; j < polygons.length; j++) {
@@ -154,6 +232,8 @@
 
         ctx.stroke()
       }
+
+      localStorage.setItem('polygons', JSON.stringify(polygons))
 
       console.log('* LOG * currentPolygon', JSON.stringify(currentPolygon))
 
@@ -178,6 +258,24 @@
       }
     }
 
+    function removeAllPolygons () {
+      if (confirm('Remove all polygons?')) {
+        polygons = []
+        refresh()
+      }
+    }
+
+    function closeCurrentPolygon () {
+      if (currentPolygon.length <= 2) {
+        alert('Polygons must have three points or more.')
+        return
+      }
+      polygons.push(currentPolygon)
+      currentPolygon = []
+
+      refresh()
+    }
+
     function undo () {
       console.log('* LOG * undo')
       currentPolygon.pop()
@@ -192,29 +290,51 @@
       refresh()
     }
 
+    function removeLastPolygon() {
+      polygons.pop()
+
+      refresh()
+    }
+
     function refresh () {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       draw()
     }
 
-    function importPolygons () {
-      var polygonsString = prompt('Paste polygon coordinates here')
-
-      if (polygonsString != null) {
-        var filteredString = polygonsString.replace(/\s|\r\n|\n|\r/gm, '')
-        console.log(filteredString)
-        polygons = JSON.parse(filteredString)
-        refresh()
-      }
+    function updateGridSize () {
+      gridSize = $('#grid-size').val()
+      console.log('* LOG * gridSize', gridSize)
     }
 
-    function exportPolygons () {
-      console.log(JSON.stringify(polygons))
-      prompt('Copy this string', JSON.stringify(polygons))
+    function importPolygons () {
+      var polygonsString = $('#import-text').val()
+
+      if (!polygonsString.trim()) {
+        alert('No polygons array')
+        return false
+      }
+
+      try {
+        JSON.parse(polygonsString)
+      } catch (e) {
+        alert('Invalid polygons array')
+        return false
+      }
+
+      var filteredString = polygonsString.replace(/\s|\r\n|\n|\r/gm, '')
+      console.log(filteredString)
+      polygons = JSON.parse(filteredString)
+      refresh()
+
+      $('#import-modal').modal('hide')
     }
 
     document.onkeydown = function (e) {
-      if (e.metaKey && e.which === 90) undo()
+      if (e.metaKey && e.which === 90) {
+        e.preventDefault()
+        undo()
+        return false
+      }
     }
 
     canvas.onmousedown = function (e) {
@@ -228,5 +348,32 @@
       closeCurrentPolygon()
       return false
     }
+
+    $('#map-form')
+      .on('submit', function (e) {
+        e.preventDefault()
+      })
+
+    $('#grid-size')
+      .on('mousewheel', function () {
+        setTimeout(updateGridSize, 10)
+      })
+      .on('keyup mouseup', function () {
+        updateGridSize()
+      })
+
+    $('#export-modal')
+      .on('show.bs.modal', function () {
+        var polygonsString = JSON.stringify(polygons)
+        var formattedString = polygonsString.replace(/,/g, ', ')
+                                            .replace(/\[\[\[/g, '[\n  [\n    [')
+                                            .replace(/]]]/g, ']\n  ]\n]')
+                                            .replace(/]], \[\[/g, ']\n  ],\n  [\n    [')
+                                            .replace(/], \[/g, '],\n    [')
+        $('#export-text').text(formattedString).select()
+      })
+      .on('shown.bs.modal', function () {
+        $('#export-text').select()
+      })
   </script>
 {% endblock %}

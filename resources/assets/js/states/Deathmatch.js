@@ -51,6 +51,18 @@ Deathmatch.prototype = {
     Client.send(GameConsts.EVENT.REFRESH_ROOM)
 
     this.game.paused = false
+
+    if (GameConsts.DEBUG) {
+      // Render the polygons so that we can see them!
+      for (var i in window.RS.groundPolygons.children) {
+        var polygon = window.RS.groundPolygons.children[i]
+        var graphics = this.game.add.graphics(polygon.body.sat.polygon.pos.x, polygon.body.sat.polygon.pos.y)
+        graphics.beginFill(Phaser.Color.getRandomColor(100, 200))
+        graphics.drawPolygon(polygon.body.sat.polygon.points)
+        graphics.endFill()
+        graphics.alpha = 0.5
+      }
+    }
   },
 
   update: function () {
@@ -102,17 +114,15 @@ Deathmatch.prototype = {
   render () {
     if (!GameConsts.DEBUG || !window.RS.player) return
 
-    this.game.debug.text('FPS: ' + (this.time.fps || '--'), 10, 20, '#ffffff')
+    this.game.debug.text('FPS: ' + (this.time.fps || '--'), 32, 50, '#ffffff')
     this.game.debug.body(window.RS.player)
-    this.game.debug.inputInfo(32, 200)
-    this.game.debug.cameraInfo(this.camera, 32, 110)
-    window.RS.bullets.forEach((bullet) => {
-      this.game.debug.body(bullet)
-    })
+    this.game.debug.cameraInfo(this.camera, 32, 90)
+    this.game.debug.inputInfo(32, 180)
+    this.game.debug.bodyInfo(window.RS.player, 32, 280)
 
-    window.RS.enemies.forEach((bullet) => {
-      this.game.debug.body(bullet)
-    })
+    window.RS.enemies.forEach(enemy => this.game.debug.body(enemy))
+    window.RS.bullets.forEach(bullet => this.game.debug.body(bullet))
+    window.RS.enemyBullets.forEach(bullet => this.game.debug.body(bullet))
   }
 }
 
