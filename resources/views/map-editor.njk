@@ -32,6 +32,16 @@
       position: absolute;
       cursor: crosshair;
     }
+
+    #import-text,
+    #export-text {
+      height: 400px;
+      font-family: monospace;
+    }
+
+    .modal-footer {
+      padding-top: 10px;
+    }
   </style>
 {% endblock %}
 
@@ -46,11 +56,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand ff-bangers ft18 lh14" href="/">RangerSteve.io</a>
+        <a class="navbar-brand ff-bangers ft10 lh12" href="/">RangerSteve.io</a>
       </div>
 
       <div class="collapse navbar-collapse" id="rs-navbar-collapse">
-        <h4 class="navbar-text">Map Editor</h4>
         <form class="navbar-form navbar-left">
           <div class="form-group">
             <label for="background-file">Background:</label> <input type="file" id="background-file">
@@ -58,17 +67,66 @@
 
           <button type="button" class="btn btn-primary navbar-btn" onclick="closeCurrentPolygon()">Close Polygon</button>
           <button type="button" class="btn btn-default navbar-btn" onclick="undo()">Undo</button>
-          <button type="button" class="btn btn-danger navbar-btn" onclick="clearCurrentPolygon()">Clear</button>
+          <button type="button" class="btn btn-warning navbar-btn" onclick="clearCurrentPolygon()">Clear</button>
           <button type="button" class="btn btn-danger navbar-btn" onclick="removeLastPolygon()">Remove Last Polygon</button>
         </form>
 
         <div class="navbar-form navbar-right">
-          <button type="button" class="btn btn-success navbar-btn" onclick="importPolygons()">Import</button>
-          <button type="button" class="btn btn-primary navbar-btn" onclick="exportPolygons()">Export</button>
+          <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#import-modal">Import</button>
+          <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#export-modal">Export</button>
         </div>
       </div>
     </div>
   </nav>
+
+  <div class="modal fade" id="import-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Import</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <textarea class="form-control" id="import-text"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Close</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="btn btn-primary btn-block" onclick="importPolygons()">Import</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="export-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Export</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <textarea class="form-control" id="export-text" readonly></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="map-editor">
     <canvas id="background-canvas">
@@ -86,8 +144,10 @@
     var canvas = document.getElementById('foreground-canvas')
     var ctx = canvas.getContext('2d')
 
-    var polygons = localStorage.getItem('polygons') && typeof JSON.parse(localStorage.getItem('polygons')) === 'object'
-      ? JSON.parse(localStorage.getItem('polygons'))
+    var polygonsFromLocalStorage = localStorage.getItem('polygons')
+
+    var polygons = polygonsFromLocalStorage && typeof JSON.parse(polygonsFromLocalStorage) === 'object'
+      ? JSON.parse(polygonsFromLocalStorage)
       : []
     var currentPolygon = []
 
@@ -107,23 +167,6 @@
       }
 
       reader.readAsDataURL(this.files[0])
-    }
-
-    function removeLastPolygon() {
-      polygons.pop()
-
-      refresh()
-    }
-
-    function closeCurrentPolygon () {
-      if (currentPolygon.length <= 2) {
-        console.error('Polygons must have three points or more.')
-        return
-      }
-      polygons.push(currentPolygon)
-      currentPolygon = []
-
-      refresh()
     }
 
     function addPoint (event) {
@@ -189,6 +232,17 @@
       }
     }
 
+    function closeCurrentPolygon () {
+      if (currentPolygon.length <= 2) {
+        alert('Polygons must have three points or more.')
+        return
+      }
+      polygons.push(currentPolygon)
+      currentPolygon = []
+
+      refresh()
+    }
+
     function undo () {
       console.log('* LOG * undo')
       currentPolygon.pop()
@@ -203,25 +257,38 @@
       refresh()
     }
 
+    function removeLastPolygon() {
+      polygons.pop()
+
+      refresh()
+    }
+
     function refresh () {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       draw()
     }
 
     function importPolygons () {
-      var polygonsString = prompt('Paste polygon coordinates here')
+      var polygonsString = $('#import-text').val()
 
-      if (polygonsString != null) {
-        var filteredString = polygonsString.replace(/\s|\r\n|\n|\r/gm, '')
-        console.log(filteredString)
-        polygons = JSON.parse(filteredString)
-        refresh()
+      if (!polygonsString.trim()) {
+        alert('No polygons array')
+        return false
       }
-    }
 
-    function exportPolygons () {
-      console.log(JSON.stringify(polygons))
-      prompt('Copy this string', JSON.stringify(polygons))
+      try {
+        JSON.parse(polygonsString)
+      } catch (e) {
+        alert('Invalid polygons array')
+        return false
+      }
+
+      var filteredString = polygonsString.replace(/\s|\r\n|\n|\r/gm, '')
+      console.log(filteredString)
+      polygons = JSON.parse(filteredString)
+      refresh()
+
+      $('#import-modal').modal('hide')
     }
 
     document.onkeydown = function (e) {
@@ -239,5 +306,19 @@
       closeCurrentPolygon()
       return false
     }
+
+    $('#export-modal')
+      .on('show.bs.modal', function () {
+        var polygonsString = JSON.stringify(polygons)
+        var formattedString = polygonsString.replace(/,/g, ', ')
+                                            .replace(/\[\[\[/g, '[\n  [\n    [')
+                                            .replace(/]]]/g, ']\n  ]\n]')
+                                            .replace(/]], \[\[/g, ']\n  ],\n  [\n    [')
+                                            .replace(/], \[/g, '],\n    [')
+        $('#export-text').text(formattedString).select()
+      })
+      .on('shown.bs.modal', function () {
+        $('#export-text').select()
+      })
   </script>
 {% endblock %}
