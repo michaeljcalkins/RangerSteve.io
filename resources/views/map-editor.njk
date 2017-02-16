@@ -59,6 +59,7 @@
           <button type="button" class="btn btn-primary navbar-btn" onclick="closeCurrentPolygon()">Close Polygon</button>
           <button type="button" class="btn btn-default navbar-btn" onclick="undo()">Undo</button>
           <button type="button" class="btn btn-danger navbar-btn" onclick="clearCurrentPolygon()">Clear</button>
+          <button type="button" class="btn btn-danger navbar-btn" onclick="removeLastPolygon()">Remove Last Polygon</button>
         </form>
 
         <div class="navbar-form navbar-right">
@@ -85,7 +86,9 @@
     var canvas = document.getElementById('foreground-canvas')
     var ctx = canvas.getContext('2d')
 
-    var polygons = []
+    var polygons = localStorage.getItem('polygons') && typeof JSON.parse(localStorage.getItem('polygons')) === 'object'
+      ? JSON.parse(localStorage.getItem('polygons'))
+      : []
     var currentPolygon = []
 
     document.getElementById('background-file').onchange = function () {
@@ -104,6 +107,12 @@
       }
 
       reader.readAsDataURL(this.files[0])
+    }
+
+    function removeLastPolygon() {
+      polygons.pop()
+
+      refresh()
     }
 
     function closeCurrentPolygon () {
@@ -132,7 +141,7 @@
       ctx.lineCap = 'square'
       ctx.fillStyle = 'rgba(255, 255, 0, 0.1)'
 
-      console.log('* LOG * polygons', JSON.stringify(polygons))
+      console.log(JSON.stringify(polygons))
 
       // Draw finished polygons
       for (var j = 0; j < polygons.length; j++) {
@@ -154,6 +163,8 @@
 
         ctx.stroke()
       }
+
+      localStorage.setItem('polygons', JSON.stringify(polygons))
 
       console.log('* LOG * currentPolygon', JSON.stringify(currentPolygon))
 

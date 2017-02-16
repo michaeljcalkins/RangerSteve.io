@@ -5,7 +5,7 @@ import CreateSpawnPointVisuals from '../CreateSpawnPointVisuals'
 const WORLD_WIDTH = 6000
 const WORLD_HEIGHT = 2975
 
-const polygonPoints = [
+const POLYGON_POINTS = [
   [
     [2740, 2585],
     [3147, 2586],
@@ -402,12 +402,10 @@ export function createOverlays () {
 
 export function create () {
   this.game.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-
-  // FireFox allows a max width of 4000px for this image
   this.game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background')
 
   window.RS.groundPolygons = this.game.add.group()
-  this.game.arcadePolygons.enableGroup(window.RS.groundPolygons, polygonPoints, this)
+  this.game.arcadePolygons.enableGroup(window.RS.groundPolygons, POLYGON_POINTS, this)
 
   if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, GameConsts.MAP_SPAWN_POINTS.HighRuleJungle)
 }
