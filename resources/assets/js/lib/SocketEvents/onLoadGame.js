@@ -16,5 +16,7 @@ export default function onLoadGame (data) {
   const newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomId=' + data.room.id
   window.history.pushState({ path: newurl }, '', newurl)
 
+  document.getElementById('loading-screen').style.display = 'flex'
+
   this.game.state.start('Preloader', true, true)
 }

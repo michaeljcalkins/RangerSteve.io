@@ -63,6 +63,8 @@ Deathmatch.prototype = {
         graphics.alpha = 0.5
       }
     }
+
+    document.getElementById('loading-screen').style.display = 'none'
   },
 
   update: function () {

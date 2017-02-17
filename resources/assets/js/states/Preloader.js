@@ -48,13 +48,15 @@ Preloader.prototype = {
     this.game.load.audio('rampagekill', '/audio/killingSpree/rampage_ultimate.mp3')
     this.game.load.audio('monsterkill', '/audio/killingSpree/monsterkill_ultimate.mp3')
     this.game.load.audio('headshot', '/audio/headshot.mp3')
+
+    this.game.load.onLoadComplete.add(this.loadComplete, this)
   },
 
   create: function () {
-    const state = this.game.store.getState()
-
     // Enables advanced profiling features when debugging
     this.game.time.advancedTiming = true
+
+    // Enable physics system
     this.game.plugins.add(ArcadePolygons)
     this.game.physics.startSystem(Phaser.Physics.Arcade)
 
@@ -64,7 +66,19 @@ Preloader.prototype = {
     window.RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
     window.RS.headshotSound = this.game.add.audio('headshot')
 
-    this.game.state.start(state.room.gamemode)
+    // You can listen for each of these events from Phaser.Loader
+    this.game.load.onLoadComplete.add(this.loadComplete, this)
+  },
+
+  loadComplete: function () {
+    this.ready = true
+  },
+
+  update: function () {
+    const state = this.game.store.getState()
+    if (this.ready === true && state.room.state === 'active') {
+      this.game.state.start(state.room.gamemode)
+    }
   }
 
 }
