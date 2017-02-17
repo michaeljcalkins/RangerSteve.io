@@ -1,5 +1,19 @@
 import storage from 'store'
+import has from 'lodash/has'
+
+import GameConsts from 'lib/GameConsts'
 import getRandomName from '../lib/getRandomName'
+
+const storedPrimaryWeaponId = storage.get('selectedPrimaryWeaponId', 'AK47')
+const storedSecondaryWeaponId = storage.get('selectedSecondaryWeaponId', 'DesertEagle')
+
+const initialPrimaryWeaponId = has(GameConsts, `WEAPONS.${storedPrimaryWeaponId}`)
+  ? storedPrimaryWeaponId
+  : GameConsts.STARTING_PRIMARY_ID
+
+const initialSecondaryWeaponId = has(GameConsts, `WEAPONS.${storedSecondaryWeaponId}`)
+  ? storedSecondaryWeaponId
+  : GameConsts.STARTING_SECONDARY_ID
 
 const initialState = {
   canRespawnTime: null,
@@ -13,16 +27,16 @@ const initialState = {
   isSwitchingWeapon: false,
   jumping: false,
   jumpJetCounter: 0,
-  nextSelectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
-  nextSelectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
+  nextSelectedPrimaryWeaponId: initialPrimaryWeaponId,
+  nextSelectedSecondaryWeaponId: initialSecondaryWeaponId,
   nickname: getRandomName(),
   primaryAmmoRemaining: 0,
   primaryWeapon: null,
   score: 0,
   secondaryAmmoRemaining: 0,
   secondaryWeapon: null,
-  selectedPrimaryWeaponId: storage.get('selectedPrimaryWeaponId', 'AK47'),
-  selectedSecondaryWeaponId: storage.get('selectedSecondaryWeaponId', 'DesertEagle'),
+  selectedPrimaryWeaponId: initialPrimaryWeaponId,
+  selectedSecondaryWeaponId: initialSecondaryWeaponId,
   uid: null
 }
 
