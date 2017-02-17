@@ -44,6 +44,8 @@ export default class LeaderboardModal extends PureComponent {
       ? seconds + '.0'
       : seconds
 
+    if (Number(seconds) < 0) seconds = '0.0'
+
     this.setState({ elapsed: `${seconds}` })
   }
 

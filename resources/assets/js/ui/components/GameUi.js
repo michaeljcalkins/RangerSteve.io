@@ -210,7 +210,6 @@ export default class GameUi extends Component {
         { game.showKillConfirmed &&
           <HudKillConfirmed />
         }
-
       </div>
     )
   }
