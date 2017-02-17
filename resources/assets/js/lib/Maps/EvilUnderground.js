@@ -21,7 +21,7 @@ export function create () {
 }
 
 export function update () {
-  if (window.RS.player.y > 2300) {
+  if (window.RS.player.y > 2285) {
     KillCurrentPlayer.call(this)
   }
 }
