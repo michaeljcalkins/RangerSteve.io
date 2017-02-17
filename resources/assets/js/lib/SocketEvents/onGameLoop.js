@@ -47,6 +47,7 @@ export default function onGameLoop (data) {
         this.game.input.enabled = false
         this.game.input.reset()
         window.RS.player.visible = false
+        window.RS.player.alive = false
         window.RS.player.body.acceleration.x = 0
         window.RS.player.body.acceleration.y = 0
         window.RS.player.body.velocity.x = 0

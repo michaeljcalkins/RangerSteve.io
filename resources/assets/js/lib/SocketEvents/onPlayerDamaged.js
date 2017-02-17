@@ -13,6 +13,7 @@ export default function onPlayerDamaged (data) {
   if (data.damagedPlayerId !== window.SOCKET_ID && data.health <= 0) {
     const movePlayer = PlayerById.call(this, data.damagedPlayerId)
     movePlayer.visible = false
+    movePlayer.alive = false
 
     PlayPlayerDeathAnimation.call(this, {
       x: movePlayer.x,
@@ -66,6 +67,7 @@ export default function onPlayerDamaged (data) {
     // Player has died
   if (store.getState().player.health <= 0) {
     window.RS.player.visible = false
+    window.RS.player.alive = false
     PlayPlayerDeathAnimation.call(this, {
       x: window.RS.player.x,
       y: window.RS.player.y

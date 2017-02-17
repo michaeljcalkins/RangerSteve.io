@@ -22,6 +22,7 @@ export default function createNewPlayersThatDontExist (room, playerId, playerDat
 
   if (playerData.health <= 0) {
     newCreateRemotePlayer.visible = false
+    newCreateRemotePlayer.alive = false
   }
 
   window.RS.enemies.add(newCreateRemotePlayer)

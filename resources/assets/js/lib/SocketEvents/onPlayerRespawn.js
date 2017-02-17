@@ -20,6 +20,7 @@ export default function onPlayerRespawn (data) {
   window.RS.player.x = data.x
   window.RS.player.y = data.y
   window.RS.player.visible = true
+  window.RS.player.alive = true
 }
 
 function resetPlayerWeapons () {
