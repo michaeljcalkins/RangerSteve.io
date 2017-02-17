@@ -65,9 +65,6 @@ Preloader.prototype = {
     window.RS.jumpjetFx = this.game.add.audio('jumpjet')
     window.RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')
     window.RS.headshotSound = this.game.add.audio('headshot')
-
-    // You can listen for each of these events from Phaser.Loader
-    this.game.load.onLoadComplete.add(this.loadComplete, this)
   },
 
   loadComplete: function () {
