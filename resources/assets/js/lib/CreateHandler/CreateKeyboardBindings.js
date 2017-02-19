@@ -4,6 +4,7 @@ import KillCurrentPlayer from '../KillCurrentPlayer'
 import ReloadGunWhenEmpty from '../ReloadGunWhenEmpty'
 
 let lastSwitchWeaponKey = null
+let reloadHandle = null
 
 export default function () {
   const store = this.game.store
@@ -52,7 +53,7 @@ export default function () {
       ? store.dispatch(actions.player.setPrimaryIsReloading(true))
       : store.dispatch(actions.player.setSecondaryIsReloading(true))
 
-    setTimeout(() => {
+    reloadHandle = setTimeout(() => {
       if (isPrimarySelected) {
         store.dispatch(actions.player.setPrimaryIsReloading(false))
         store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[store.getState().player.selectedPrimaryWeaponId].ammo))
@@ -76,7 +77,10 @@ export default function () {
       store.getState().room.state !== 'active'
     ) return
 
-    // cancel reload action
+    // When you switch weapons stop the reloading process
+    clearTimeout(reloadHandle)
+
+    // Cancel reload action
     store.dispatch(actions.player.setHasCanceledReloading(true))
     store.dispatch(actions.player.setPrimaryIsReloading(false))
     store.dispatch(actions.player.setSecondaryIsReloading(false))
