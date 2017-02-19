@@ -10,10 +10,12 @@ export default class HudNewChatMessage extends Component {
   }
 
   componentDidMount () {
+    this.refs.messageInput.value = ''
     this.refs.messageInput.focus()
   }
 
   componentDidUpdate () {
+    this.refs.messageInput.value = ''
     this.refs.messageInput.focus()
   }
 
