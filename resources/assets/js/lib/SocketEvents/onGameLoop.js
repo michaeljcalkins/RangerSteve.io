@@ -34,6 +34,12 @@ export default function onGameLoop (data) {
   // Players should only be allowed to move when the room state is active
   this.game.paused = room.state !== 'active'
 
+  // Prevents keys from being bound while trying to type in chat or other things
+  if (room.state !== 'active') {
+    this.game.input.enabled = false
+    this.game.input.reset()
+  }
+
   // 1. Check for players that do not exist anymore and destroy their sprites
   removePlayersThatLeft.call(this, data)
 
