@@ -13,7 +13,8 @@ export default function () {
       !window.SOCKET_ID ||
       state.player.health <= 0 ||
       !enemy ||
-      enemy.team === window.RS.player.team
+      enemy.team === window.RS.player.team ||
+      player.data.isProtected
     ) return
 
     bullet.kill()

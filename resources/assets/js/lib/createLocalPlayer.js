@@ -107,6 +107,7 @@ export default function createLocalPlayer () {
   if (playerState && playerState.team) updatePlayerColor(window.RS.player, playerState.team)
   window.RS.player.data = {
     facing: 'left',
+    isProtected: true,
     ...playerState
   }
 

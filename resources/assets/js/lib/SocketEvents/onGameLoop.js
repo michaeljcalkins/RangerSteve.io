@@ -11,6 +11,10 @@ import updatePlayerColor from '../updatePlayerColor'
 const lastPlayerHealth = {}
 const lastPlayerNickname = {}
 
+function updatePlayerProtection (player, isProtected) {
+  player.alpha = isProtected ? 0.3 : 1
+}
+
 export default function onGameLoop (data) {
   const store = this.game.store
   const room = store.getState().room
@@ -54,6 +58,7 @@ export default function onGameLoop (data) {
         this.game.input.reset()
         window.RS.player.visible = false
         window.RS.player.alive = false
+        window.RS.player.data.isProtected = true
         window.RS.player.body.acceleration.x = 0
         window.RS.player.body.acceleration.y = 0
         window.RS.player.body.velocity.x = 0
@@ -69,6 +74,11 @@ export default function onGameLoop (data) {
         roomData[playerId] = {
           nickname: playerData.nickname
         }
+      }
+
+      if (typeof playerData.isProtected !== 'undefined') {
+        window.RS.player.data.isProtected = playerData.isProtected
+        updatePlayerProtection(window.RS.player, playerData.isProtected)
       }
 
       return
@@ -90,6 +100,10 @@ export default function onGameLoop (data) {
     GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(propName => {
       if (typeof playerData[propName] !== 'undefined') player.data[propName] = playerData[propName]
     })
+
+    if (typeof player.data.isProtected !== 'undefined') {
+      updatePlayerProtection(player, player.data.isProtected)
+    }
 
     // Prepare player data for interpolation
     player.data.targetPosition = {

@@ -9,7 +9,8 @@ export default function () {
     if (
       !bullet.weaponId ||
       !window.SOCKET_ID ||
-      state.player.health <= 0
+      state.player.health <= 0 ||
+      player.data.isProtected
     ) return
 
     bullet.kill()
