@@ -111,6 +111,13 @@ gameloop.on('update', function () {
         return
       }
 
+      let noDamageUntilTime = rooms[roomId].players[playerId].noDamageUntilTime
+
+      if (noDamageUntilTime > 0 && noDamageUntilTime <= Date.now()) {
+        rooms[roomId].players[playerId].noDamageUntilTime = 0
+        rooms[roomId].players[playerId].isProtected = false
+      }
+
       roomData.players[playerId] = {}
       GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(function (playerProperty) {
         if (
@@ -248,6 +255,7 @@ function onRefreshRoom () {
       shooting: rooms[roomId].players[playerId].shooting || false,
       team: rooms[roomId].players[playerId].team,
       weaponId: rooms[roomId].players[playerId].weaponId,
+      isProtected: rooms[roomId].players[playerId].isProtected || false,
       x: rooms[roomId].players[playerId].x,
       y: rooms[roomId].players[playerId].y
     }
@@ -437,6 +445,9 @@ function onNewPlayer (data) {
   newPlayer.x = spawnPoint.x
   newPlayer.y = spawnPoint.y
 
+  newPlayer.noDamageUntilTime = Date.now() + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
+  newPlayer.isProtected = true
+
   // User to the room
   rooms[roomIdPlayerWillJoin].players[this.id] = newPlayer
   rooms[roomIdPlayerWillJoin].messages = _.get(rooms, '[' + roomIdPlayerWillJoin + '].messages') || []
@@ -572,7 +583,8 @@ function onPlayerDamaged (data) {
     player.health = 0
     player.killingSpree = 0
     player.deaths++
-    player.noDamageUntilTime = Date.now() + (GameConsts.RESPAWN_TIME_IN_MS) + (GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS)
+    player.noDamageUntilTime = Date.now() + GameConsts.RESPAWN_TIME_IN_MS + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
+    player.isProtected = true
 
     // player is dead so tell everyone to hide this player in game
     player.canRespawnTime = Date.now() + GameConsts.RESPAWN_TIME_IN_MS

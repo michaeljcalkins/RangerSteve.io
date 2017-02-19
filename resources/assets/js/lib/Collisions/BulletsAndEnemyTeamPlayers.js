@@ -14,7 +14,8 @@ export default function () {
       state.player.health <= 0 ||
       state.room.state !== 'active' ||
       enemy.data.health <= 0 ||
-      enemy.data.team === window.RS.player.data.team
+      enemy.data.team === window.RS.player.data.team ||
+      enemy.data.isProtected
     ) return
 
     const yDiff = enemy.y - bullet.y

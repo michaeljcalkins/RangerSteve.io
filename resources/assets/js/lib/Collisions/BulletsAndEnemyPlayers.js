@@ -12,7 +12,8 @@ export default function () {
     if (
       !state.room.id ||
       state.player.health <= 0 ||
-      state.room.state !== 'active'
+      state.room.state !== 'active' ||
+      enemy.data.isProtected
     ) return
 
     const yDiff = enemy.y - bullet.y
