@@ -10,6 +10,7 @@ import updatePlayerColor from '../updatePlayerColor'
 
 const lastPlayerHealth = {}
 const lastPlayerNickname = {}
+const maxPositionBufferLength = 20
 
 function updatePlayerProtection (player, isProtected) {
   player.alpha = isProtected ? 0.3 : 1
@@ -94,10 +95,18 @@ export default function onGameLoop (data) {
     }
 
     // Prepare player data for interpolation
-    player.data.targetPosition = {
+    if (typeof player.data.positionBuffer === 'undefined') {
+      player.data.positionBuffer = []
+    }
+
+    player.data.positionBuffer.unshift({
       x: player.data.x,
       y: player.data.y,
-      millisRemaining: GameConsts.TICK_INTERVAL_MS
+      time: data.currentTime
+    })
+
+    if (player.data.positionBuffer.length > maxPositionBufferLength) {
+      player.data.positionBuffer.splice(maxPositionBufferLength)
     }
 
     // Update player's name above their player in game
