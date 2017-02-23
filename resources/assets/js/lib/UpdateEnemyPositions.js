@@ -11,8 +11,8 @@ export default function () {
     !window.RS.enemies
   ) return
 
-  const currentTime = Date.now()
-  // const currentTime = state.room.currentTime
+  // const currentTime = Date.now()
+  const currentTime = state.room.currentTime
   const interpolationTime = currentTime - interpolationBackTimeMs
 
   window.RS.enemies.forEach((enemy) => {
