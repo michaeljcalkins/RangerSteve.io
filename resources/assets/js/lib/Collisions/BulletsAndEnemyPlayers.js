@@ -11,7 +11,6 @@ export default function () {
   this.game.physics.arcade.overlap(window.RS.bullets, window.RS.enemies, function (bullet, enemy) {
     if (
       !state.room.id ||
-      state.player.health <= 0 ||
       state.room.state !== 'active' ||
       enemy.data.isProtected
     ) return
