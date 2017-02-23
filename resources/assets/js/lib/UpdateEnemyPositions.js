@@ -1,5 +1,3 @@
-import GameConsts from 'lib/GameConsts'
-
 const interpolationBackTimeMs = 100
 
 export default function () {
@@ -11,8 +9,7 @@ export default function () {
     !window.RS.enemies
   ) return
 
-  // const currentTime = Date.now()
-  const currentTime = state.room.currentTime
+  const currentTime = Date.now()
   const interpolationTime = currentTime - interpolationBackTimeMs
 
   window.RS.enemies.forEach((enemy) => {
@@ -37,7 +34,7 @@ export default function () {
 
           let t = 0
           if (length > 0.0001) {
-            t = Math.max(0, (interpolationTime - closestState.time) / length)
+            t = (interpolationTime - closestState.time) / length
           }
 
           enemy.x = this.game.math.linear(closestState.x, nextClosestState.x, t)
