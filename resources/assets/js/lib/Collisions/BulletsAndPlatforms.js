@@ -19,5 +19,5 @@ export default function () {
       bulletY: bullet.y,
       bulletX: bullet.x
     })
-  })
+  }, null, this)
 }

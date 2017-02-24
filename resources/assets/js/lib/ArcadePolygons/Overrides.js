@@ -51,7 +51,7 @@ Overrides.collideSpriteVsGroup = function (sprite, group, collideCallback, proce
 
     // Our collision test responded positive, so let's resolve it
     if (collision) {
-      if (collideCallback || overlapOnly) {
+      if (collideCallback) {
         return collideCallback.call(callbackContext, sprite, polygon)
       }
 

@@ -2,13 +2,6 @@ const Facade = require('./Facade')
 const Overrides = require('./Overrides')
 
 /**
- * @author Chris Andrew <chris@hexus.io>
- * @author Michael J. Calkins <michaeljamescalkins@gmail.com>
- * @copyright 2017 Michael J. Calkins
- * @license MIT
- */
-
-/**
  * Arcade Polygons provides sloped tile functionality for tilemaps that use
  * Phaser's Arcade physics engine.
  *
