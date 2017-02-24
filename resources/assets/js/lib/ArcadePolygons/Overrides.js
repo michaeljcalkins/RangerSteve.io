@@ -25,33 +25,8 @@ const Overrides = {}
  * @return {boolean}                              - Whether a collision occurred.
  */
 Overrides.collideSpriteVsGroup = function (sprite, group, collideCallback, processCallback, callbackContext, overlapOnly) {
-  if (!sprite.body) {
-    console.log('Sprite has no body.', sprite)
-    return false
-  }
-
-  if (!sprite.body.sat) {
-    console.error('Non polygon object!')
-  }
-
-  /**
-  * Some data populated by the update() method for use in the render()
-  * method.
-  *
-  * @type {object<array>}
-  */
-  this.debug = {
-    vectors: [],
-    normals: []
-  }
-
-  /**
-   * Some feature values we can use throughout our game state.
-   *
-   * @type {object}
-   */
-  this.features = {
-    debug: 0
+  if (group.length === 0 || !sprite.body || !sprite.body.sat) {
+    return
   }
 
   var body = sprite.body
@@ -76,7 +51,7 @@ Overrides.collideSpriteVsGroup = function (sprite, group, collideCallback, proce
 
     // Our collision test responded positive, so let's resolve it
     if (collision) {
-      if (collideCallback) {
+      if (collideCallback || overlapOnly) {
         return collideCallback.call(callbackContext, sprite, polygon)
       }
 
@@ -135,46 +110,6 @@ Overrides.collideSpriteVsGroup = function (sprite, group, collideCallback, proce
       // Set the new velocity on our physics body
       body.velocity.x = newVelocity.x
       body.velocity.y = newVelocity.y
-
-      // If debugging is enabled, let's store some of our vectors.
-      // This is why we've declared so many variables above.
-      // Otherwise, we wouldn't need to.
-      if (this.features.debug) {
-        velocity.name = 'velocity'
-        overlapV.name = 'overlapV'
-        overlapN.name = 'overlapN'
-        velocityN.name = 'velocityN'
-        velocityT.name = 'velocityT'
-        bounce.name = 'bounce'
-        friction.name = 'friction'
-        newVelocity.name = 'newVelocity'
-
-        this.debug.vectors.push(
-          velocity,
-          overlapN,
-          velocityN,
-          velocityT,
-          bounce,
-          friction,
-          newVelocity
-        )
-
-        // If detailed debugging is enabled, let's print the
-        // vectors as lines on the screen!
-        if (this.features.debug > 1) {
-          overlapN.colour = '#333'
-          bounce.colour = '#25f'
-          friction.colour = '#f55'
-          newVelocity.colour = '#5f5'
-
-          //
-          overlapN.scale(50)
-
-          this.debug.normals.push(
-            overlapN, bounce, friction, newVelocity
-          )
-        }
-      }
     }
   }
 }
