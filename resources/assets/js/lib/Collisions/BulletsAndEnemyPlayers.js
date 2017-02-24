@@ -8,7 +8,7 @@ export default function () {
   const state = this.game.store.getState()
   const currentWeapon = state.player.currentWeapon
 
-  this.game.physics.arcade.overlap(window.RS.bullets, window.RS.enemies, function (bullet, enemy) {
+  this.game.physics.arcade.collide(window.RS.bullets, window.RS.enemies, function (bullet, enemy) {
     if (
       !state.room.id ||
       state.room.state !== 'active' ||

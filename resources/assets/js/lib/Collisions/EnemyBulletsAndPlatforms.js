@@ -2,7 +2,7 @@ import PlayRocketExplosion from '../PlayRocketExplosion'
 import BulletRicochet from '../BulletRicochet'
 
 export default function () {
-  this.game.physics.arcade.overlap(window.RS.enemyBullets, window.RS.groundPolygons, function (bullet) {
+  this.game.physics.arcade.collide(window.RS.enemyBullets, window.RS.groundPolygons, function (bullet) {
     bullet.kill()
 
     if (bullet.weaponId === 'RPG') {
@@ -16,7 +16,5 @@ export default function () {
       bulletY: bullet.y,
       bulletX: bullet.x
     })
-  }, function (bullet, tile) {
-    return tile.collides
-  }, this)
+  }, null, this)
 }
