@@ -1,4 +1,6 @@
-const interpolationBackTimeMs = 100
+import storage from 'store'
+
+const interpolationBackTimeMs = storage.get('interpolationMs', 100)
 
 export default function () {
   const state = this.game.store.getState()
