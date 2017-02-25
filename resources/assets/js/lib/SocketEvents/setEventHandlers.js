@@ -22,6 +22,7 @@ const events = {
   [GameConsts.EVENT.PLAYER_HEALTH_UPDATE]: onPlayerHealthUpdate,
   [GameConsts.EVENT.PLAYER_KILL_LOG]: onPlayerKillLog,
   [GameConsts.EVENT.MESSAGE_RECEIVED]: onMessageReceived,
+  [GameConsts.EVENT.NTP_SYNC]: onNtpSync,
   [GameConsts.EVENT.GAME_LOOP]: onGameLoop,
   [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
   [GameConsts.EVENT.ANNOUNCEMENT]: onAnnouncement,
@@ -29,6 +30,18 @@ const events = {
 }
 
 let dataReceived = 0
+
+function syncNetworkTime () {
+  Client.send(GameConsts.EVENT.NTP_SYNC, { tc: Date.now() / 1000 })
+}
+
+function onNtpSync (data) {
+  const serverTime = data.ts * 1000
+  const requestTime = data.tc * 1000
+  const responseTime = Date.now()
+  window.socket.offset = serverTime - (requestTime + responseTime) / 2
+  window.socket.ping = responseTime - requestTime
+}
 
 function onData (data) {
   dataReceived += sizeOf(data)
@@ -44,6 +57,8 @@ export default function () {
 
   window.socket.on('open', onSocketConnected.bind(this))
   window.socket.on('end', onSocketDisconnect.bind(this))
+
+  setInterval(syncNetworkTime, 2000)
 
   if (storage.get('isNetworkStatsVisible', false)) {
     NetworkStats.loop(() => {

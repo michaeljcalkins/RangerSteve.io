@@ -36,7 +36,10 @@ const Server = {
     const sizeOfData = sizeOf(data)
     _stats.dataSent += sizeOfData
 
-    if (GameConsts.ENABLE_NETWORK_EVENT_LOGS) {
+    if (
+      GameConsts.ENABLE_NETWORK_EVENT_LOGS
+      && type !== GameConsts.EVENT.GAME_LOOP
+    ) {
       console.log('* LOG * Server._prepareData', type, GameConsts.EVENTS[type], payload, formatByteSize(sizeOfData))
     }
 

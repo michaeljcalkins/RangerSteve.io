@@ -1,4 +1,6 @@
-const interpolationBackTimeMs = 100
+import storage from 'store'
+
+const interpolationBackTimeMs = storage.get('interpolationMs', 100)
 
 export default function () {
   const state = this.game.store.getState()
@@ -9,7 +11,7 @@ export default function () {
     !window.RS.enemies
   ) return
 
-  const currentTime = Date.now()
+  const currentTime = Date.now() + window.socket.offset
   const interpolationTime = currentTime - interpolationBackTimeMs
 
   window.RS.enemies.forEach((enemy) => {
