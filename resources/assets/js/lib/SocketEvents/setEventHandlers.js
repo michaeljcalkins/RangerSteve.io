@@ -30,7 +30,6 @@ const events = {
 }
 
 let dataReceived = 0
-let offsetCount = 0
 
 function syncNetworkTime () {
   Client.send(GameConsts.EVENT.NTP_SYNC, { tc: Date.now() / 1000 })
@@ -40,9 +39,7 @@ function onNtpSync (data) {
   const serverTime = data.ts * 1000
   const requestTime = data.tc * 1000
   const responseTime = Date.now()
-  const offset = serverTime - (requestTime + responseTime) / 2
-  offsetCount++
-  window.socket.offset += offset / offsetCount
+  window.socket.offset = serverTime - (requestTime + responseTime) / 2
   window.socket.ping = responseTime - requestTime
 }
 
@@ -61,7 +58,6 @@ export default function () {
   window.socket.on('open', onSocketConnected.bind(this))
   window.socket.on('end', onSocketDisconnect.bind(this))
 
-  window.socket.offset = 0
   setInterval(syncNetworkTime, 2000)
 
   if (storage.get('isNetworkStatsVisible', false)) {
