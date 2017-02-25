@@ -34,7 +34,7 @@ const events = {
   [GameConsts.EVENT.MESSAGE_SEND]: onMessageSend,
   [GameConsts.EVENT.MOVE_PLAYER]: onMovePlayer,
   [GameConsts.EVENT.NEW_PLAYER]: onNewPlayer,
-  [GameConsts.EVENT.PLAYER_ADJUST_SCORE]: onPlayerAdjustScore,
+  [GameConsts.EVENT.NTP_SYNC]: onNtpSync,
   [GameConsts.EVENT.PLAYER_DAMAGED]: onPlayerDamaged,
   [GameConsts.EVENT.PLAYER_FULL_HEALTH]: onPlayerFullHealth,
   [GameConsts.EVENT.PLAYER_HEALING]: onPlayerHealing,
@@ -466,6 +466,11 @@ function onNewPlayer (data) {
       }
     }
   )
+}
+
+function onNtpSync (data) {
+  data.ts = Date.now() / 1000
+  Server.sendToSocket(this.id, GameConsts.EVENT.NTP_SYNC, data)
 }
 
 // Player has moved

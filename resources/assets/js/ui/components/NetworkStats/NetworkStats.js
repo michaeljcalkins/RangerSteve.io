@@ -3,14 +3,19 @@ import React from 'react'
 export default function ({
   stats
 }) {
-  const latency = window.socket.latency
+  const ping = window.socket.ping
+  const offset = window.socket.offset
 
   return (
     <div className='hud-network-stats no-pointer-events'>
       <table>
         <tr>
           <td>Ping:</td>
-          <td>{ latency }</td>
+          <td>{ ping || '--' }</td>
+        </tr>
+        <tr>
+          <td>Offset:</td>
+          <td>{ offset || '--' }</td>
         </tr>
         <tr>
           <td>Data Sent:</td>
