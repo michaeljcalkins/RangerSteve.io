@@ -14,7 +14,7 @@ export default function ({
           <td>{ ping || '--' }</td>
         </tr>
         <tr>
-          <td>Offset:</td>
+          <td>Server Time Offset:</td>
           <td>{ Math.round(offset) || '0' }</td>
         </tr>
         <tr>
