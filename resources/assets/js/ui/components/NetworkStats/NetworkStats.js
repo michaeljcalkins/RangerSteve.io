@@ -15,7 +15,7 @@ export default function ({
         </tr>
         <tr>
           <td>Offset:</td>
-          <td>{ offset || '--' }</td>
+          <td>{ Math.round(offset) || '--' }</td>
         </tr>
         <tr>
           <td>Data Sent:</td>
