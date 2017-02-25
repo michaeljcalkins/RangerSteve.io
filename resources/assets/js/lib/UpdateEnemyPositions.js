@@ -11,7 +11,7 @@ export default function () {
     !window.RS.enemies
   ) return
 
-  const currentTime = Date.now()
+  const currentTime = Date.now() + window.socket.offset
   const interpolationTime = currentTime - interpolationBackTimeMs
 
   window.RS.enemies.forEach((enemy) => {
