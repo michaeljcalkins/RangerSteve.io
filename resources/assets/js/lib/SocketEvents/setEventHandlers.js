@@ -39,7 +39,13 @@ function onNtpSync (data) {
   const serverTime = data.ts * 1000
   const requestTime = data.tc * 1000
   const responseTime = Date.now()
-  window.socket.offset = serverTime - (requestTime + responseTime) / 2
+  const offset = serverTime - (requestTime + responseTime) / 2
+
+  if (typeof window.socket.offset === 'undefined') {
+    window.socket.offset = offset
+  } else {
+    window.socket.offset = window.socket.offset * 0.95 + offset * 0.05
+  }
   window.socket.ping = responseTime - requestTime
 }
 
