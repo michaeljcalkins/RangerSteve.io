@@ -190,8 +190,8 @@ roomUpdateLoop.on('update', function () {
         player.secondsInRound = 0
 
         // Reset player posisitions so we can create new respawn points
-        player.x = 0
-        player.y = 0
+        player.x = -500
+        player.y = -500
       })
 
       // Now that player positions are reset we can spread players throughout the map
