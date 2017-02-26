@@ -358,18 +358,6 @@ function onMessageSend (data) {
   )
 }
 
-function onPlayerAdjustScore (data) {
-  const player = getPlayerById(rooms[data.roomId], this.id)
-
-  if (!player) {
-    util.log('Player not found when adjust score', data)
-    return
-  }
-
-  player.score += data.amount
-  player.score = player.score <= 0 ? 0 : player.score
-}
-
 // New player has joined
 function onNewPlayer (data) {
   util.log('New player has joined: ', this.id)
