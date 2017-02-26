@@ -113,7 +113,7 @@ gameloop.on('update', function () {
 
       let noDamageUntilTime = rooms[roomId].players[playerId].noDamageUntilTime
 
-      if (noDamageUntilTime > 0 && noDamageUntilTime <= Date.now()) {
+      if (noDamageUntilTime <= Date.now()) {
         rooms[roomId].players[playerId].noDamageUntilTime = 0
         rooms[roomId].players[playerId].isProtected = false
       }
@@ -176,6 +176,7 @@ roomUpdateLoop.on('update', function () {
       Object.keys(rooms[roomId].players).forEach((playerId) => {
         const player = rooms[roomId].players[playerId]
         player.health = GameConsts.PLAYER_FULL_HEALTH
+        player.isProtected = false
 
         // Reset player scores
         player.deaths = 0
