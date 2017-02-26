@@ -37,8 +37,6 @@ export default function () {
           let t = 0
           if (length > 0.0001) {
             t = Math.max((interpolationTime - closestState.time) / length, 0)
-          } else {
-            console.log('* LOG * length', length)
           }
 
           enemy.x = this.game.math.linear(closestState.x, nextClosestState.x, t)
