@@ -15,11 +15,11 @@ export default function () {
   const interpolationTime = currentTime - interpolationBackTimeMs
 
   window.RS.enemies.forEach((enemy) => {
-    const { positionBuffer } = enemy.data
-
-    if (!positionBuffer || !positionBuffer.length) {
+    if (!enemy.data.positionBuffer || !enemy.data.positionBuffer.length) {
       return
     }
+
+    const positionBuffer = JSON.parse(JSON.stringify(enemy.data.positionBuffer))
 
     if (positionBuffer[0].time > interpolationTime) {
       let i = 0
@@ -36,7 +36,7 @@ export default function () {
 
           let t = 0
           if (length > 0.0001) {
-            t = (interpolationTime - closestState.time) / length
+            t = Math.max((interpolationTime - closestState.time) / length, 0)
           }
 
           enemy.x = this.game.math.linear(closestState.x, nextClosestState.x, t)
