@@ -9,7 +9,6 @@ export default function () {
   const currentWeapon = state.player.currentWeapon
 
   this.game.physics.arcade.collide(window.RS.bullets, window.RS.enemies, function (bullet, enemy) {
-    console.log(state.room.id, state.room.state, enemy.data.isProtected)
     if (
       !state.room.id ||
       state.room.state !== 'active' ||
