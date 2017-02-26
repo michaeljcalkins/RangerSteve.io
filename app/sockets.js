@@ -113,7 +113,7 @@ gameloop.on('update', function () {
 
       let noDamageUntilTime = rooms[roomId].players[playerId].noDamageUntilTime
 
-      if (noDamageUntilTime > 0 && noDamageUntilTime <= Date.now()) {
+      if (noDamageUntilTime <= Date.now()) {
         rooms[roomId].players[playerId].noDamageUntilTime = 0
         rooms[roomId].players[playerId].isProtected = false
       }
@@ -176,6 +176,7 @@ roomUpdateLoop.on('update', function () {
       Object.keys(rooms[roomId].players).forEach((playerId) => {
         const player = rooms[roomId].players[playerId]
         player.health = GameConsts.PLAYER_FULL_HEALTH
+        player.isProtected = false
 
         // Reset player scores
         player.deaths = 0
@@ -190,8 +191,8 @@ roomUpdateLoop.on('update', function () {
         player.secondsInRound = 0
 
         // Reset player posisitions so we can create new respawn points
-        player.x = 0
-        player.y = 0
+        player.x = -500
+        player.y = -500
       })
 
       // Now that player positions are reset we can spread players throughout the map
@@ -356,18 +357,6 @@ function onMessageSend (data) {
       newMessage
     ]
   )
-}
-
-function onPlayerAdjustScore (data) {
-  const player = getPlayerById(rooms[data.roomId], this.id)
-
-  if (!player) {
-    util.log('Player not found when adjust score', data)
-    return
-  }
-
-  player.score += data.amount
-  player.score = player.score <= 0 ? 0 : player.score
 }
 
 // New player has joined
