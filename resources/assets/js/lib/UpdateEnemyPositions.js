@@ -15,11 +15,11 @@ export default function () {
   const interpolationTime = currentTime - interpolationBackTimeMs
 
   window.RS.enemies.forEach((enemy) => {
-    const { positionBuffer } = enemy.data
-
-    if (!positionBuffer || !positionBuffer.length) {
+    if (!enemy.data.positionBuffer || !enemy.data.positionBuffer.length) {
       return
     }
+
+    const positionBuffer = JSON.parse(JSON.stringify(enemy.data.positionBuffer))
 
     if (positionBuffer[0].time > interpolationTime) {
       let i = 0
