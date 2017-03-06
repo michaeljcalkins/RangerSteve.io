@@ -102,17 +102,6 @@ h1, h2, h3, h4, h5, h6 {
   vertical-align: middle;
 }
 
-.electron-drag-region {
-  -webkit-app-region: drag;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
-  opacity: 0;
-}
-
 .col-xs-15,
 .col-sm-15,
 .col-md-15,
@@ -146,11 +135,14 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-footer {
-  background: rgba(255, 255, 255, .8);
+header {
+  background: rgba(255, 255, 255, 1);
   border: 0;
   clear: both;
   float: left;
   padding: 0;
   width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 2;
 }

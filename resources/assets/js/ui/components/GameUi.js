@@ -119,10 +119,6 @@ export default class GameUi extends Component {
       onCloseChatModal
     } = this.props
 
-    const mainMenuButtonClasses = cs('hud-main-menu-button hud-item', {
-      'is-electron': window.IS_ELECTRON
-    })
-
     const secondsRemaining = room.currentTime
       ? toInteger((room.roundEndTime - room.currentTime) / 1000)
       : 0
@@ -140,7 +136,7 @@ export default class GameUi extends Component {
 
     return (
       <div>
-        <a className={mainMenuButtonClasses} href='/'>Back to Main Menu</a>
+        <a className='hud-main-menu-button hud-item' href='/'>Back to Main Menu</a>
         <HudKillLog messages={game.killLogMessages} />
         <HudKillingSpree killingSpreeCount={player.killingSpreeCount} />
         <HudTimer secondsRemaining={secondsRemaining} />

@@ -1,11 +1,9 @@
-{% extends 'master.njk' %}
+{% extends 'layouts/master.njk' %}
 
 {% block title %}RangerSteve.io{% endblock %}
 
 {% block content %}
-<span id="beta-label">Beta</span>
-
-<section class="main-section" id="home-container" v-cloak>
+<section class="main-section align-center" id="home-container" v-cloak>
   <div>
     <div class="text-center">
       <span class="main-header">
@@ -178,6 +176,7 @@
               <button
                 class="btn btn-primary btn-block"
                 :class="{ disabled: isEmptyUsername || isSameUsername }"
+                :disabled="{ disabled: isEmptyUsername || isSameUsername }"
                 v-on:click="claimUsername()"
               >
                 Claim Name
