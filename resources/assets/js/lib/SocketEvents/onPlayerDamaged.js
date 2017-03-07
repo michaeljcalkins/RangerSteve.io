@@ -11,13 +11,13 @@ let lastKnownHealth = null
 export default function onPlayerDamaged (data) {
   // When an enemy is killed play the death animation where they were.
   if (data.damagedPlayerId !== window.SOCKET_ID && data.health <= 0) {
-    const movePlayer = PlayerById.call(this, data.damagedPlayerId)
-    movePlayer.visible = false
-    movePlayer.alive = false
+    const damagedPlayer = PlayerById.call(this, data.damagedPlayerId)
+    damagedPlayer.visible = false
+    damagedPlayer.alive = false
 
     PlayPlayerDeathAnimation.call(this, {
-      x: movePlayer.x,
-      y: movePlayer.y
+      x: damagedPlayer.x,
+      y: damagedPlayer.y
     })
     return
   }

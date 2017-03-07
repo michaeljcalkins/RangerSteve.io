@@ -23,6 +23,8 @@ import createEnemyGroup from '../lib/createEnemyGroup'
 import FireWeapon from '../lib/FireWeapon'
 import ReloadGunWhenEmpty from '../lib/ReloadGunWhenEmpty'
 
+let polygonsHaveBeenDrawn = false
+
 /**
  * Collisions and all game mode related interactions.
  */
@@ -51,18 +53,6 @@ Deathmatch.prototype = {
     Client.send(GameConsts.EVENT.REFRESH_ROOM)
 
     this.game.paused = false
-
-    if (GameConsts.DEBUG) {
-      // Render the polygons so that we can see them!
-      for (var i in window.RS.groundPolygons.children) {
-        var polygon = window.RS.groundPolygons.children[i]
-        var graphics = this.game.add.graphics(polygon.body.sat.polygon.pos.x, polygon.body.sat.polygon.pos.y)
-        graphics.beginFill(Phaser.Color.getRandomColor(100, 200))
-        graphics.drawPolygon(polygon.body.sat.polygon.points)
-        graphics.endFill()
-        graphics.alpha = 0.5
-      }
-    }
 
     document.getElementById('loading-screen').style.display = 'none'
   },
@@ -105,6 +95,19 @@ Deathmatch.prototype = {
       FireWeapon.call(this, currentWeaponId)
     }
 
+    if ((GameConsts.DEBUG || window.DEBUG) && !polygonsHaveBeenDrawn) {
+      // Render the polygons so that we can see them!
+      for (var i in window.RS.groundPolygons.children) {
+        var polygon = window.RS.groundPolygons.children[i]
+        var graphics = this.game.add.graphics(polygon.body.sat.polygon.pos.x, polygon.body.sat.polygon.pos.y)
+        graphics.beginFill(Phaser.Color.getRandomColor(100, 200))
+        graphics.drawPolygon(polygon.body.sat.polygon.points)
+        graphics.endFill()
+        graphics.alpha = 0.5
+      }
+      polygonsHaveBeenDrawn = true
+    }
+
     ReloadGunWhenEmpty.call(this, currentWeaponId)
 
     RotateBulletsToTrajectory.call(this)
@@ -114,7 +117,7 @@ Deathmatch.prototype = {
   },
 
   render () {
-    if (!GameConsts.DEBUG || !window.RS.player) return
+    if (!GameConsts.DEBUG && !window.DEBUG) return
 
     this.game.debug.text('FPS: ' + (this.time.fps || '--'), 32, 50, '#ffffff')
     this.game.debug.body(window.RS.player)

@@ -24,7 +24,7 @@ export function create () {
   window.RS.groundPolygons = this.game.add.group()
   this.game.arcadePolygons.enableGroup(window.RS.groundPolygons, collisions.HighRuleJungle, this)
 
-  if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, GameConsts.MAP_SPAWN_POINTS.HighRuleJungle)
+  if (GameConsts.DEBUG || window.DEBUG) CreateSpawnPointVisuals.call(this, GameConsts.MAP_SPAWN_POINTS.HighRuleJungle)
 }
 
 export function update () {

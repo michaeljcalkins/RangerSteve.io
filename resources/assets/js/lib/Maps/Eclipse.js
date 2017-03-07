@@ -16,5 +16,5 @@ export function create () {
   window.RS.groundPolygons = this.game.add.group()
   this.game.arcadePolygons.enableGroup(window.RS.groundPolygons, collisions.Eclipse, this)
 
-  if (GameConsts.DEBUG) CreateSpawnPointVisuals.call(this, GameConsts.MAP_SPAWN_POINTS.Eclipse)
+  if (GameConsts.DEBUG || window.DEBUG) CreateSpawnPointVisuals.call(this, GameConsts.MAP_SPAWN_POINTS.Eclipse)
 }
