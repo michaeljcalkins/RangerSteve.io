@@ -16,11 +16,11 @@ const Server = {
   },
 
   sendToRoom (roomId, type, payload) {
-    return this.io.room(roomId).write(this._prepareData(type, payload))
+    return this.io.room(roomId) && this.io.room(roomId).write(this._prepareData(type, payload))
   },
 
   sendToSocket (socketId, type, payload) {
-    return this.io.spark(socketId).write(this._prepareData(type, payload))
+    return this.io.spark(socketId) && this.io.spark(socketId).write(this._prepareData(type, payload))
   },
 
   send (type, payload) {
