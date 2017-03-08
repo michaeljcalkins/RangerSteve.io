@@ -376,70 +376,78 @@
     }
 }
 
-.hud-chat {
-    background: -webkit-linear-gradient(left, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* Standard syntax (must be last) */
-    width: 300px;
-    position: absolute;
-    left: 0;
-    bottom: 60px;
-    z-index: 10000;
+.hud-chat,
+.hud-new-chat-message {
+  background: -webkit-linear-gradient(left, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)); /* Standard syntax (must be last) */
+  width: 300px;
+  position: absolute;
+  left: 0;
+  bottom: 79px;
+  z-index: 10000;
 
-    ul {
-        margin: 0;
-        padding: 0;
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  & > div, li {
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 10px;
+    margin: 0;
+
+    strong {
+      color: #bbb;
     }
+  }
+}
 
-    li {
-        color: #fff;
-        font-size: 12px;
-        padding: 6px 10px;
-        margin: 0;
-
-        strong {
-            color: #bbb;
-        }
-    }
+.hud-new-chat-message {
+  height: 29px;
+  bottom: 50px;
 }
 
 .hud-chat-message {
-    cursor: pointer;
-    left: 0;
-    bottom: 53px;
-    font-family: 'Open Sans', Arial;
-    width: 300px;
-    padding: 0px 10px !important;
-    font-size: inherit;
-    z-index: 10000;
+  display: block;
+  cursor: pointer;
+  left: 0;
+  bottom: 53px;
+  font-family: 'Open Sans', Arial;
+  width: 300px;
+  padding: 5px 10px !important;
+  font-size: inherit;
+  z-index: 10000;
 
-    input {
-        background: none;
-        box-shadow: none;
-        border: 0;
-        border-radius: 0;
-        color: white;
-        padding: 6px 0px;
-        font-size: 12px;
-        width: 80%;
-        float: left;
+  input {
+    background: none;
+    box-shadow: none;
+    border: 0;
+    border-radius: 0;
+    color: white;
+    padding: 6px 0px;
+    margin-top: -6px;
+    font-size: 12px;
+    width: 80%;
+    float: left;
 
-        &:focus {
-            outline: none;
-        }
+    &:focus {
+      outline: none;
     }
+  }
 
-    button {
-        border-radius: 0;
-        color: white;
-        border: 0;
-        width: 17%;
-        float: right;
+  button {
+    border-radius: 0;
+    color: white;
+    border: 0;
+    width: 17%;
+    float: right;
 
-        &:hover {
-            text-decoration: none;
-            color: white;
-        }
+    &:hover {
+      text-decoration: none;
+      color: white;
     }
+  }
 }

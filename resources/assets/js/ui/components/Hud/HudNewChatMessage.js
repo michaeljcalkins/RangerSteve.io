@@ -9,14 +9,9 @@ export default class HudNewChatMessage extends Component {
     autobind(this)
   }
 
-  componentDidMount () {
-    this.refs.messageInput.value = ''
-    this.refs.messageInput.focus()
-  }
-
-  componentDidUpdate () {
-    this.refs.messageInput.value = ''
-    this.refs.messageInput.focus()
+  componentWillReceiveProps () {
+    const { isOpen } = this.props
+    if (isOpen) this.refs.messageInput.focus()
   }
 
   handleKeypressSendMessage (evt) {
@@ -30,22 +25,38 @@ export default class HudNewChatMessage extends Component {
   }
 
   render () {
+    const { isOpen, newChatMessageCharacter } = this.props
+
+    if (!isOpen) {
+      return (
+        <div className='hud-new-chat-message no-pointer-events'>
+          <div className='hud-chat-message'>
+            Press { String.fromCharCode(newChatMessageCharacter) } to chat
+          </div>
+        </div>
+      )
+    }
+
     return (
-      <li className='hud-chat-message'>
-        <input
-          maxLength={GameConsts.MAX_CHAT_MESSAGE_LENGTH}
-          onKeyPress={this.handleKeypressSendMessage}
-          onBlur={this.props.onBlur}
-          placeholder='Push enter to send...'
-          ref='messageInput'
-          type='text'
-        />
-      </li>
+      <div className='hud-new-chat-message'>
+        <div className='hud-chat-message'>
+          <input
+            maxLength={GameConsts.MAX_CHAT_MESSAGE_LENGTH}
+            onKeyPress={this.handleKeypressSendMessage}
+            onBlur={this.props.onBlur}
+            placeholder='Push enter to send...'
+            ref='messageInput'
+            type='text'
+          />
+        </div>
+      </div>
     )
   }
 }
 
 HudNewChatMessage.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   onSendMessage: PropTypes.func.isRequired,
+  newChatMessageCharacter: PropTypes.string.isRequired,
   onBlur: PropTypes.func.isRequired
 }

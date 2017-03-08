@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
-import cs from 'classnames'
 import toInteger from 'lodash/toInteger'
 
 import HudChatHistory from './Hud/HudChatHistory'
@@ -25,6 +24,7 @@ import RespawnModal from './RespawnModal/RespawnModal'
 import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import RemainingFuelPercent from '../../lib/RemainingFuelPercent'
 import NetworkStats from './NetworkStats/NetworkStats'
+import HudNewChatMessage from './Hud/HudNewChatMessage'
 
 export default class GameUi extends Component {
   constructor (props) {
@@ -161,11 +161,13 @@ export default class GameUi extends Component {
           <HudAnnouncement announcement={room.announcement} />
         }
         <HudChatHistory
-          isOpen={game.chatModalIsOpen}
           messages={game.chatMessages}
-          newChatMessageCharacter={+game.keyboardControls.newChatMessage}
+        />
+        <HudNewChatMessage
+          isOpen={game.chatModalIsOpen}
+          newChatMessageCharacter={this.props.game.keyboardControls.newChatMessage}
           onSendMessage={this.handleSendMessage}
-          onNewChatMessageBlur={onCloseChatModal}
+          onBlur={onCloseChatModal}
         />
 
         { this.isLeaderboardModalOpen() &&
