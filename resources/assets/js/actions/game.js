@@ -143,3 +143,10 @@ export const setIsNetworkStatsVisible = (value) => {
     value
   }
 }
+
+export const setEntityInterpolationType = (value) => {
+  return {
+    type: 'SET_ENTITY_INTERPOLATION_TYPE',
+    value
+  }
+}

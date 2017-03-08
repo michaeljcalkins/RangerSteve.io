@@ -19,6 +19,8 @@ function updatePlayerProtection (player, isProtected) {
 export default function onGameLoop (data) {
   const store = this.game.store
   const room = store.getState().room
+  const entityInterpolationType = store.getState().game.entityInterpolationType
+
   if (data.currentTime) {
     room.currentTime = data.currentTime
   }
@@ -94,19 +96,31 @@ export default function onGameLoop (data) {
       updatePlayerProtection(player, player.data.isProtected)
     }
 
-    // Prepare player data for interpolation
-    if (typeof player.data.positionBuffer === 'undefined') {
-      player.data.positionBuffer = []
-    }
+    if (entityInterpolationType === GameConsts.ENTITY_INTERPOLATION_TYPE.BASIC) {
+      player.data.targetPosition = {
+        x: player.data.x,
+        y: player.data.y,
+        millisRemaining: GameConsts.TICK_RATE
+      }
+    } else if (entityInterpolationType === GameConsts.ENTITY_INTERPOLATION_TYPE.ADVANCED) {
+      // Prepare player data for interpolation
+      if (typeof player.data.positionBuffer === 'undefined') {
+        player.data.positionBuffer = []
+      }
 
-    player.data.positionBuffer.unshift({
-      x: player.data.x,
-      y: player.data.y,
-      time: data.currentTime
-    })
+      player.data.positionBuffer.unshift({
+        x: player.data.x,
+        y: player.data.y,
+        time: data.currentTime
+      })
 
-    if (player.data.positionBuffer.length > maxPositionBufferLength) {
-      player.data.positionBuffer.splice(maxPositionBufferLength)
+      if (player.data.positionBuffer.length > maxPositionBufferLength) {
+        player.data.positionBuffer.splice(maxPositionBufferLength)
+      }
+    } else {
+      // Update player position in the arena
+      player.x = player.data.x
+      player.y = player.data.y
     }
 
     // Update player's name above their player in game

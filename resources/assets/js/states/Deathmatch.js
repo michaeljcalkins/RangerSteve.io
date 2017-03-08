@@ -113,7 +113,10 @@ Deathmatch.prototype = {
     RotateBulletsToTrajectory.call(this)
     UpdateHurtBorder.call(this)
     UpdatePlayerPosition.call(this)
-    UpdateEnemyPositions.call(this)
+
+    if (state.game.entityInterpolationType !== GameConsts.ENTITY_INTERPOLATION_TYPE.DISABLED) {
+      UpdateEnemyPositions.call(this)
+    }
   },
 
   render () {
