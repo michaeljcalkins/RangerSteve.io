@@ -176,7 +176,7 @@
               <button
                 class="btn btn-primary btn-block"
                 :class="{ disabled: isEmptyUsername || isSameUsername }"
-                :disabled="{ disabled: isEmptyUsername || isSameUsername }"
+                :disabled="isEmptyUsername || isSameUsername"
                 v-on:click="claimUsername()"
               >
                 Claim Name
@@ -233,7 +233,7 @@
                   </div>
                 </div>
 
-                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <!-- Helps prevents bots from signing up -->
                 <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ee7e3d14e2b1356adb186012a_f4a249ec8b" tabindex="-1" value=""></div>
               </div>
             </form>
