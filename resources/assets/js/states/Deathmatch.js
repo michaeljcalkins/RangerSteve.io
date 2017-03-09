@@ -55,6 +55,7 @@ Deathmatch.prototype = {
     this.game.paused = false
 
     document.getElementById('loading-screen').style.display = 'none'
+    Client.send(GameConsts.EVENT.LOAD_COMPLETE)
   },
 
   update: function () {

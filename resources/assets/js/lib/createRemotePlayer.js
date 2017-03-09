@@ -8,6 +8,11 @@ export default function RemotePlayer (playerId, playerData) {
   newRemotePlayer.data = {
     id: playerId,
     facing: 'right',
+
+    // Set for interpolation type BASIC and ADVANCED
+    x: playerData.x,
+    y: playerData.y,
+
     lastPosition: {
       x: playerData.x,
       y: playerData.y

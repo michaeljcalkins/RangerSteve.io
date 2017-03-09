@@ -10,20 +10,17 @@ import updatePlayerColor from '../updatePlayerColor'
 
 const lastPlayerHealth = {}
 const lastPlayerNickname = {}
-const maxPositionBufferLength = 20
+const lastRemotePlayerData = {}
 
-function updatePlayerProtection (player, isProtected) {
-  player.alpha = isProtected ? 0.3 : 1
-}
+const updatePlayerProtection = (player, isProtected) => { player.alpha = isProtected ? 0.3 : 1 }
 
 export default function onGameLoop (data) {
   const store = this.game.store
   const room = store.getState().room
   const entityInterpolationType = store.getState().game.entityInterpolationType
 
-  if (data.currentTime) {
-    room.currentTime = data.currentTime
-  }
+  if (data.currentTime) room.currentTime = data.currentTime
+
   let roomData = {}
 
   if (
@@ -63,7 +60,8 @@ export default function onGameLoop (data) {
 
       if (lastPlayerNickname[playerId] !== playerData.nickname && typeof playerData.nickname !== 'undefined') {
         roomData[playerId] = {
-          nickname: playerData.nickname
+          nickname: playerData.nickname,
+          state: 1
         }
       }
 
@@ -72,19 +70,29 @@ export default function onGameLoop (data) {
         updatePlayerProtection(window.RS.player, playerData.isProtected)
       }
 
+      GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(propName => {
+        if (typeof playerData[propName] !== 'undefined') window.RS.player.data[propName] = playerData[propName]
+      })
+
       return
     }
+
+    GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(propName => {
+      lastRemotePlayerData[playerId] = lastRemotePlayerData[playerId] || {}
+      if (typeof playerData[propName] !== 'undefined') lastRemotePlayerData[playerId][propName] = playerData[propName]
+    })
 
     // 2. Find the player by their playerId
     let player = PlayerById.call(this, playerId)
 
     // 3. if player is not found create them and continue
-    if (!player) {
-      player = createNewPlayersThatDontExist.call(this, room, playerId, playerData)
+    if (!player && playerData.state === 1) {
+      room.players[playerId] = lastRemotePlayerData[playerId]
+      player = createNewPlayersThatDontExist.call(this, room, playerId, lastRemotePlayerData[playerId])
     }
 
     // Stop updating players if the round is over
-    if (!player) return console.error('Player not found or created.')
+    if (!player) return
 
     // 4. Update player data
     player.data.id = playerId
@@ -114,8 +122,8 @@ export default function onGameLoop (data) {
         time: data.currentTime
       })
 
-      if (player.data.positionBuffer.length > maxPositionBufferLength) {
-        player.data.positionBuffer.splice(maxPositionBufferLength)
+      if (player.data.positionBuffer.length > GameConsts.MAX_POSITION_BUFFER_LENGTH) {
+        player.data.positionBuffer.splice(GameConsts.MAX_POSITION_BUFFER_LENGTH)
       }
     } else {
       // Update player position in the arena
