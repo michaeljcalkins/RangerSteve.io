@@ -12,6 +12,10 @@ export default function onPlayerDamaged (data) {
   // When an enemy is killed play the death animation where they were.
   if (data.damagedPlayerId !== window.SOCKET_ID && data.health <= 0) {
     const damagedPlayer = PlayerById.call(this, data.damagedPlayerId)
+
+    // In cases where the local user hasn't loaded all players yet
+    if (!damagedPlayer) return
+
     damagedPlayer.visible = false
     damagedPlayer.alive = false
 
