@@ -23,20 +23,20 @@
     display: inline-block;
     text-align: left;
     vertical-align: middle;
+    max-width: 850px;
+    width: 100%;
 }
 
 /**
- * Standard Modal
+ * Standard Modal: ;
  */
 .modal-content {
     background: url(/images/ui/panel/6.png) no-repeat top center;
     background-size: cover;
     border: 0;
     box-shadow: none !important;
-    width: 850px;
-    height: 576px;
     cursor: default;
-    margin-left: -150px;
+    height: 576px;
 
     .nav-pills > li.active > a,
     .nav-pills > li.active > a:focus,
