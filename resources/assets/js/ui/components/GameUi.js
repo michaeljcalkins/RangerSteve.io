@@ -37,18 +37,25 @@ export default class GameUi extends Component {
   }
 
   startEventHandler () {
-    document.addEventListener('keyup', (e) => {
+    document.addEventListener('keydown', (e) => {
       const game = this.props.game
+
+      if (
+        (
+          e.keyCode === parseInt(this.props.game.keyboardControls.newChatMessage) ||
+          e.keyCode === window.Phaser.Keyboard.ENTER
+        ) &&
+        !game.chatModalIsOpen &&
+        !game.settingsModalIsOpen
+      ) {
+        e.preventDefault()
+        this.props.onOpenChatModal()
+      }
 
       if (e.keyCode === window.Phaser.Keyboard.ESC) {
         e.preventDefault()
         this.props.onCloseSettingsModal()
         this.props.onCloseChatModal()
-      }
-
-      if (e.keyCode === parseInt(this.props.game.keyboardControls.newChatMessage) && !game.chatModalIsOpen && !game.settingsModalIsOpen) {
-        e.preventDefault()
-        this.props.onOpenChatModal()
       }
     })
   }
