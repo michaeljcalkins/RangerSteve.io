@@ -1,10 +1,20 @@
 import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from './updatePlayerAngles'
 
+const usernameTextStyle = {
+  align: 'center',
+  fill: '#fff',
+  font: '10px Arial',
+  stroke: 'black',
+  strokeThickness: 2
+}
+
 export default function RemotePlayer (playerId, playerData) {
   const newRemotePlayer = this.game.add.sprite(playerData.x, playerData.y, 'player-placeholder')
   newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
-  newRemotePlayer.alive = false
+  newRemotePlayer.alive = playerData.health > 0
+  newRemotePlayer.visible = playerData.health > 0
+
   newRemotePlayer.data = {
     id: playerId,
     facing: 'right',
@@ -89,6 +99,7 @@ export default function RemotePlayer (playerId, playerData) {
   newRemotePlayer.rightArmSprite.scale.y *= -1
   newRemotePlayer.rightArmGroup.angle = 87.67
   newRemotePlayer.rightArmGroup.add(newRemotePlayer.rightArmSprite)
+  newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.weaponId].frame
 
   // Add right arm to player as child then offset it
   newRemotePlayer.addChild(newRemotePlayer.rightArmGroup)
@@ -100,6 +111,15 @@ export default function RemotePlayer (playerId, playerData) {
   newRemotePlayer.anchor.set(0.5)
   updatePlayerAngles(newRemotePlayer, 200)
   newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_LEFT_FRAME
+
+  const enemyPlayerName = playerData.nickname
+    ? playerData.nickname
+    : 'Unnamed Ranger'
+
+  newRemotePlayer.usernameText = this.game.add.text(0, -50, enemyPlayerName, usernameTextStyle)
+  newRemotePlayer.addChild(newRemotePlayer.usernameText)
+  newRemotePlayer.usernameText.x = (newRemotePlayer.usernameText.width / 2) * -1
+  newRemotePlayer.usernameText.smoothed = true
 
   return newRemotePlayer
 }

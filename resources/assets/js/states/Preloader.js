@@ -3,6 +3,7 @@
  */
 import GameConsts from 'lib/GameConsts'
 import ArcadePolygons from '../lib/ArcadePolygons/ArcadePolygons'
+import createRemotePlayer from '../lib/createRemotePlayer'
 
 function Preloader (game) {
   this.game = game

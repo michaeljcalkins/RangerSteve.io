@@ -22,6 +22,7 @@ import UpdateGameScale from '../lib/UpdateGameScale'
 import createEnemyGroup from '../lib/createEnemyGroup'
 import FireWeapon from '../lib/FireWeapon'
 import ReloadGunWhenEmpty from '../lib/ReloadGunWhenEmpty'
+import createEnemyPlayers from '../lib/createEnemyPlayers'
 
 let polygonsHaveBeenDrawn = false
 
@@ -50,7 +51,8 @@ Deathmatch.prototype = {
 
     window.onresize = UpdateGameScale.bind(this)
     UpdateGameScale.call(this)
-    Client.send(GameConsts.EVENT.REFRESH_ROOM)
+
+    createEnemyPlayers.call(this)
 
     this.game.paused = false
 

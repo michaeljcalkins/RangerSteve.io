@@ -48,7 +48,6 @@ TeamDeathmatch.prototype = {
 
     window.onresize = UpdateGameScale.bind(this)
     UpdateGameScale.call(this)
-    Client.send(GameConsts.EVENT.REFRESH_ROOM)
 
     this.game.paused = false
   },

@@ -9,7 +9,6 @@ export class HudLeaderboard extends Component {
     if (!room.players) return null
 
     return values(room.players)
-      .filter(player => player.state === 1)
       .sort((a, b) => a.score < b.score)
       .map(function (player) {
         let playerNickname = player.nickname
