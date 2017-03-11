@@ -9,7 +9,7 @@ export default function RemotePlayer (playerId, playerData) {
     id: playerId,
     facing: 'right',
 
-    // Set for interpolation type BASIC and ADVANCED
+    // Set for basic entity interpolation
     x: playerData.x,
     y: playerData.y,
 

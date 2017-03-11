@@ -25,8 +25,7 @@ const initialState = {
   resetEventsFlag: false,
   autoRespawn: storage.get('autoRespawn', false),
   isFpsStatsVisible: storage.get('isFpsStatsVisible', false),
-  isNetworkStatsVisible: storage.get('isNetworkStatsVisible', false),
-  entityInterpolationType: storage.get('entityInterpolationType', GameConsts.ENTITY_INTERPOLATION_TYPE.BASIC)
+  isNetworkStatsVisible: storage.get('isNetworkStatsVisible', false)
 }
 
 const player = (state = initialState, action) => {
@@ -166,12 +165,6 @@ const player = (state = initialState, action) => {
       return {
         ...state,
         isFpsStatsVisible: action.value
-      }
-
-    case 'SET_ENTITY_INTERPOLATION_TYPE':
-      return {
-        ...state,
-        entityInterpolationType: action.value
       }
 
     default:
