@@ -25,7 +25,7 @@ import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import RemainingFuelPercent from '../../lib/RemainingFuelPercent'
 import NetworkStats from './NetworkStats/NetworkStats'
 import HudNewChatMessage from './Hud/HudNewChatMessage'
-import GoogleAd from './GoogleAd/GoogleAd'
+// import GoogleAd from './GoogleAd/GoogleAd'
 
 export default class GameUi extends Component {
   constructor (props) {
@@ -220,7 +220,7 @@ export default class GameUi extends Component {
         }
 
         <div style={{opacity: isRespawnModalOpen && !game.settingsModalIsOpen ? '1' : '0'}}>
-          <GoogleAd
+          {/* <GoogleAd
             client='ca-pub-2986206357433139'
             slot='8388123205'
             style={{
@@ -233,7 +233,7 @@ export default class GameUi extends Component {
               marginTop: '-282px',
               zIndex: 1000000003
             }}
-          />
+          /> */}
         </div>
       </div>
     )

@@ -88,7 +88,6 @@
     "preact-compat": "^3.9.1",
     "primus": "^6.0.7",
     "primus-rooms": "^3.4.1",
-    "react-adsense": "^0.0.1",
     "react-autobind": "^1.0.6",
     "react-redux": "^4.4.5",
     "react-select": "^1.0.0-rc.2",
