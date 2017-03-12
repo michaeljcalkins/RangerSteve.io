@@ -1,5 +1,3 @@
-import includes from 'lodash/includes'
-
 import GameConsts from 'lib/GameConsts'
 
 import { upInputIsActive, upInputReleased, isJumpJetInputActive } from './InputHelpers'
@@ -14,7 +12,7 @@ function isJumpInputActive () {
 }
 
 export default function PlayerJumpHandler () {
-  if (includes(['Boot', 'Preloader'], this.game.state.current)) return
+  if (this.game.state.current === 'Boot') return
 
   const store = this.game.store
   const onTheGround = window.RS.player.body.touching.down

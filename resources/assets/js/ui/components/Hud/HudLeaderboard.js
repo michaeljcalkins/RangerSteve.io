@@ -19,7 +19,7 @@ export class HudLeaderboard extends Component {
           ? `${player.killingSpree}x `
           : null
 
-        const classes = cs({
+        const playerNameClasses = cs({
           'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
           'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch'
         })
@@ -27,22 +27,22 @@ export class HudLeaderboard extends Component {
         return (
           <tr key={player.id}>
             <td
-              className={classes}
+              className={playerNameClasses}
               style={{ width: '120px', overflow: 'hidden' }}
               title="Player's nickname"
-                  >
+            >
               { playerNickname }
             </td>
             <td
               style={{ width: '20px' }}
               title="Player's current killing spree"
-                  >
+            >
               <strong>{ killingSpreeCount }</strong>
             </td>
             <td
               style={{ width: '20px' }}
               title="Player's current score"
-                  >
+            >
               { player.score || 0 }
             </td>
           </tr>

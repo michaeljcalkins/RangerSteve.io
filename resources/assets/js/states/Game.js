@@ -1,44 +1,44 @@
+import Maps from '../lib/Maps'
+import GameModes from '../lib/GameModes'
+import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
+import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
+import CreateBullets from '../lib/CreateHandler/CreateBullets'
+import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
+import createEnemyGroup from '../lib/createEnemyGroup'
+import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
+import UpdateGameScale from '../lib/UpdateGameScale'
+import createEnemyPlayers from '../lib/createEnemyPlayers'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import RotateBulletsToTrajectory from '../lib/RotateBulletsToTrajectory'
-import Maps from '../lib/Maps'
 import Client from '../lib/Client'
 import actions from '../actions'
 import GameConsts from 'lib/GameConsts'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
 import UpdateEnemyPositions from '../lib/UpdateEnemyPositions'
-import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
-import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
-import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
-import CreateBullets from '../lib/CreateHandler/CreateBullets'
-import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
 import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
-import PlayerAndEnemyBullets from '../lib/Collisions/PlayerAndEnemyBullets'
-import BulletsAndEnemyPlayers from '../lib/Collisions/BulletsAndEnemyPlayers'
 import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
 import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
-import UpdateGameScale from '../lib/UpdateGameScale'
-import createEnemyGroup from '../lib/createEnemyGroup'
 import FireWeapon from '../lib/FireWeapon'
 import ReloadGunWhenEmpty from '../lib/ReloadGunWhenEmpty'
-import createEnemyPlayers from '../lib/createEnemyPlayers'
 
 let polygonsHaveBeenDrawn = false
 
 /**
- * Collisions and all game mode related interactions.
+ * Load all base game assets and start the gamemode.
  */
-function Deathmatch (game) {
+function Game (game) {
   this.game = game
 }
 
-Deathmatch.prototype = {
-
+Game.prototype = {
   preload: function () {
     const store = this.game.store
     const mapName = store.getState().room.map
     Maps[mapName].preload.call(this)
+
+    this.game.load.onLoadComplete.add(this.loadComplete, this)
   },
 
   create: function () {
@@ -60,6 +60,10 @@ Deathmatch.prototype = {
     Client.send(GameConsts.EVENT.LOAD_COMPLETE)
   },
 
+  loadComplete: function () {
+    this.ready = true
+  },
+
   update: function () {
     if (this.game.store.getState().game.resetEventsFlag) {
       this.game.store.dispatch(actions.game.setResetEventsFlag(false))
@@ -67,21 +71,24 @@ Deathmatch.prototype = {
     }
 
     const state = this.game.store.getState()
+    const mapName = state.room.map
+    const gamemode = state.room.gamemode
+
     const player = state.player
     const currentWeaponId = player.currentWeapon === 'primaryWeapon'
       ? player.selectedPrimaryWeaponId
       : player.selectedSecondaryWeaponId
 
-    // Pause controls so user can't do anything in the background accidentally
+      // Pause controls so user can't do anything in the background accidentally
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
     this.game.input.enabled = !isPaused
 
     PlayerAndPlatforms.call(this)
-    PlayerAndEnemyBullets.call(this)
-    BulletsAndEnemyPlayers.call(this)
     EnemyBulletsAndPlatforms.call(this)
     BulletsAndPlatforms.call(this)
-    Maps[state.room.map].update && Maps[state.room.map].update.call(this)
+
+    Maps[mapName].update && Maps[mapName].update.call(this)
+    GameModes[gamemode].update && GameModes[gamemode].update.call(this)
 
     /**
      * User related movement and sprite angles
@@ -91,15 +98,15 @@ Deathmatch.prototype = {
       PlayerJumpHandler.call(this)
     }
 
-    /**
-     * Fire current weapon
-     */
+      /**
+       * Fire current weapon
+       */
     if (this.game.input.activePointer.leftButton.isDown) {
       FireWeapon.call(this, currentWeaponId)
     }
 
     if ((GameConsts.DEBUG || window.DEBUG) && !polygonsHaveBeenDrawn) {
-      // Render the polygons so that we can see them!
+        // Render the polygons so that we can see them!
       for (var i in window.RS.groundPolygons.children) {
         var polygon = window.RS.groundPolygons.children[i]
         var graphics = this.game.add.graphics(polygon.body.sat.polygon.pos.x, polygon.body.sat.polygon.pos.y)
@@ -134,4 +141,4 @@ Deathmatch.prototype = {
   }
 }
 
-export default Deathmatch
+export default Game

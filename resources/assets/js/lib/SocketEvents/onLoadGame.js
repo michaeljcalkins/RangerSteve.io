@@ -1,10 +1,10 @@
 import get from 'lodash/get'
 
 import actions from 'actions'
-import createRemotePlayer from '../createRemotePlayer'
 
 export default function onLoadGame (data) {
   const store = this.game.store
+
   store.dispatch(actions.room.setRoom(data.room))
   store.dispatch(actions.game.setChatMessages(get(data.room, 'messages', []).slice(-5)))
   store.dispatch(actions.player.setPlayer({
@@ -19,5 +19,5 @@ export default function onLoadGame (data) {
 
   document.getElementById('loading-screen').style.display = 'flex'
 
-  this.game.state.start('Preloader', true, true)
+  this.game.state.start('Game')
 }

@@ -1,5 +1,3 @@
-import includes from 'lodash/includes'
-
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from '../updatePlayerAngles'
@@ -28,7 +26,7 @@ export default function onGameLoop (data) {
   }
 
   if (
-    includes(['Boot', 'Preloader'], this.game.state.current) ||
+    this.game.state.current === 'Boot' ||
     !window.RS.enemies
   ) return
 

@@ -291,15 +291,8 @@ function onLoadComplete () {
   player.y = spawnPoint.y
 
   // Tell everyone this player has loaded the game
-  player.state = 1
   player.noDamageUntilTime = Date.now() + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
   player.isProtected = true
-
-  Server.sendToRoom(
-    roomId,
-    GameConsts.EVENT.PLAYER_JOINED,
-    player
-  )
 }
 
 function onPlayerScores () {
@@ -490,6 +483,12 @@ function onNewPlayer (data) {
       }
     }
   )
+
+  Server.sendToRoom(
+    roomIdPlayerWillJoin,
+    GameConsts.EVENT.PLAYER_JOINED,
+    newPlayer
+  )
 }
 
 function onNtpSync (data) {
@@ -510,7 +509,6 @@ function onMovePlayer (buffer) {
   // Update player position
   player.x = data.x
   player.y = data.y
-  player.state = 1
   player.angle = data.angle
   player.flying = data.flying
   player.shooting = data.shooting
