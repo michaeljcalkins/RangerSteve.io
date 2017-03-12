@@ -10,6 +10,7 @@ import actions from 'actions'
 import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
 import Client from '../../../lib/Client'
+import AdSense from 'react-adsense'
 
 export class RespawnModal extends PureComponent {
   constructor (props) {
@@ -221,6 +222,19 @@ export class RespawnModal extends PureComponent {
                   </div>
                 </div>
               </div>
+              <AdSense.Google
+                client='ca-pub-2986206357433139'
+                slot='8388123205'
+                style={{
+                  width: 728,
+                  height: 90,
+                  position: 'absolute',
+                  top: '-100px',
+                  left: '50%',
+                  marginLeft: '-364px',
+                  background: 'blue'
+                }}
+              />
             </div>
           </div>
         </div>
