@@ -22,9 +22,9 @@ export default class WeaponsView extends PureComponent {
 
   render () {
     const {
-            nextSelectedPrimaryWeaponId,
-            nextSelectedSecondaryWeaponId
-        } = this.props.player
+      nextSelectedPrimaryWeaponId,
+      nextSelectedSecondaryWeaponId
+    } = this.props.player
 
     const primaryWeapon = GameConsts.WEAPONS[nextSelectedPrimaryWeaponId]
     const secondaryWeapon = GameConsts.WEAPONS[nextSelectedSecondaryWeaponId]
@@ -32,24 +32,24 @@ export default class WeaponsView extends PureComponent {
     return (
       <div>
         <div className='row'>
-          <div className='col-sm-6'>
+          <div className='col-xs-6'>
             <label>Primary Weapon</label>
             <WeaponButton
               onClick={this.handlePrimaryViewClick}
               weapon={primaryWeapon}
-                        />
+            />
           </div>
-          <div className='col-sm-6'>
+          <div className='col-xs-6'>
             <label>Secondary Weapon</label>
             <WeaponButton
               onClick={this.handleSecondaryViewClick}
               weapon={secondaryWeapon}
-                        />
+            />
           </div>
         </div>
 
         <div className='row' style={{ marginBottom: '15px' }}>
-          <div className='col-sm-12'>
+          <div className='col-xs-12'>
             <em>Fire rate calculated in rounds per second.</em>
           </div>
         </div>

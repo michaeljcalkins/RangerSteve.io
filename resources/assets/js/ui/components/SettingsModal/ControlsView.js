@@ -101,9 +101,9 @@ export default function ControlsView ({
 
   return (
     <div className='row'>
-      <div className='col-sm-12'>
+      <div className='col-xs-12'>
         <div className='row'>
-          <div className='col-sm-6'>
+          <div className='col-xs-6'>
             <button
               className='btn btn-block btn-default'
               onClick={handleSetQwerty}
@@ -111,7 +111,7 @@ export default function ControlsView ({
               QWERTY
             </button>
           </div>
-          <div className='col-sm-6'>
+          <div className='col-xs-6'>
             <button
               className='btn btn-block btn-default'
               onClick={handleSetAzerty}
@@ -124,7 +124,7 @@ export default function ControlsView ({
           <table className='table'>
             <thead>
               <tr>
-                <th className='col-sm-4'>Action</th>
+                <th className='col-xs-4'>Action</th>
                 <th>Control</th>
                 <th>Alt. Control</th>
               </tr>

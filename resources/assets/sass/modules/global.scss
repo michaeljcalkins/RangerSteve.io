@@ -107,7 +107,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .col-xs-15,
-.col-sm-15,
+.col-xs-15,
 .col-md-15,
 .col-lg-15 {
     position: relative;
@@ -121,7 +121,7 @@ h1, h2, h3, h4, h5, h6 {
     float: left;
 }
 @media (min-width: 768px) {
-    .col-sm-15 {
+    .col-xs-15 {
         width: 20%;
         float: left;
     }

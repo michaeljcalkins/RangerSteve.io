@@ -60,7 +60,7 @@ export class SettingsView extends PureComponent {
     return (
       <div>
         <div className='row'>
-          <div className='col-sm-8 col-sm-offset-2'>
+          <div className='col-xs-8 col-xs-offset-2'>
             <div className='form-group'>
               <label>Sound Effects Volume</label>
               <input

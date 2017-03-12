@@ -54,10 +54,6 @@ body.game {
         background: #555;
     }
 
-    &:nth-child(2n + 2) {
-        // margin-right: 0;
-    }
-
     img {
         -moz-transform: scaleX(-1);
         -o-transform: scaleX(-1);
@@ -107,7 +103,7 @@ body.game {
         margin: 5px 0;
     }
 
-    .col-sm-4 {
+    .col-xs-4 {
         margin: 0;
         padding: 0;
     }

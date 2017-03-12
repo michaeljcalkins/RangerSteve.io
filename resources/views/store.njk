@@ -21,7 +21,7 @@
         </p>
       </div>
       <div class="row gold-container mb3">
-        <div class="col-sm-15" v-for="(payment, price) in payments">
+        <div class="col-xs-15" v-for="(payment, price) in payments">
           <form action="/charge" method="POST">
             <input type="hidden" v-bind:value="uid" name="uid" />
             <stripe-checkout
@@ -66,28 +66,28 @@
         <fieldset class="mb0">
           <legend>Characters</legend>
           <div class="row no-pointer-events">
-            <div class="col-sm-3">
+            <div class="col-xs-3">
               <a class="gold-button btn btn-default" href="/store">
                 <span>Ranger Steve</span>
                 <img src="/images/characters/RangerSteve.png" width="95" />
                 <span>Free</span>
               </a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-xs-3">
               <a class="gold-button btn btn-default" href="/store">
                 <span>Commando Mike</span>
                 <img src="/images/characters/CommandoMike.png" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-xs-3">
               <a class="gold-button btn btn-default" href="/store">
                 <span>GI John</span>
                 <img src="/images/characters/GIJohn.png" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-xs-3">
               <a class="gold-button btn btn-default" href="/store">
                 <span>Real Estate Rob</span>
                 <img src="/images/characters/RealEstateRob.png" height="166" />
@@ -96,28 +96,28 @@
             </div>
           </div>
           <div class="row no-pointer-events">
-            <div class="col-sm-3">
+            <div class="col-xs-3">
               <a class="gold-button btn btn-default mb0" href="/store">
                 <span>Terrorist Jack</span>
                 <img src="/images/characters/TerroristJim.png" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-xs-3">
               <a class="gold-button btn btn-default mb0" href="/store">
                 <span>Secret Agent Sam</span>
                 <img src="/images/characters/KGBViktor.png" width="125" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-xs-3">
               <a class="gold-button btn btn-default mb0" href="/store">
                 <span>Scuba Steve</span>
                 <img src="/images/characters/Scooba.png" width="125" height="166" />
                 <span><img src="/images/icons/gold-16.png"> 300</span>
               </a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-xs-3">
               <a class="gold-button btn btn-default mb0" href="/store">
                 <span>Redneck Jim</span>
                 <img src="/images/characters/RedneckJim.png" width="125" height="166" />

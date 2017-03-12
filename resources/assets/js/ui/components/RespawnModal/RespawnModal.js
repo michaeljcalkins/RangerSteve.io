@@ -10,7 +10,6 @@ import actions from 'actions'
 import WeaponsView from '../SettingsModal/WeaponsView'
 import GameConsts from 'lib/GameConsts'
 import Client from '../../../lib/Client'
-import AdSense from 'react-adsense'
 
 export class RespawnModal extends PureComponent {
   constructor (props) {
@@ -135,29 +134,23 @@ export class RespawnModal extends PureComponent {
     if (!attackingPlayerId) {
       return (
         <div className='row'>
-          <div className='col-sm-6 text-right'>
-            <img height='150' src='/images/ui/panel/suicide.png' />
-          </div>
-          <div className='col-sm-6 text-left'>
-            <h4 style='margin-top: 60px;'>You killed yourself...</h4>
+          <div className='col-xs-12 text-center'>
+            <img height='100' src='/images/ui/panel/suicide.png' />
+            <h4>You killed yourself...</h4>
           </div>
         </div>
       )
     } else {
       return (
         <div className='row'>
-          <div className='col-sm-5 text-right'>
+          <div className='col-xs-12 text-center'>
             <img
               className='weapon-image'
               src={'/images/guns/large/' + selectedWeapon.image}
             />
-          </div>
-          <div className='col-sm-7 text-left'>
-            <div style='margin-top: 60px;'>
-              <h4><strong>{ attackingPlayerName }</strong> killed you with their <strong>{ selectedWeapon.name }</strong></h4>
-              { this.renderDamageTaken() }
-              { this.renderDamageGiven() }
-            </div>
+            <h4><strong>{ attackingPlayerName }</strong> killed you with their <strong>{ selectedWeapon.name }</strong></h4>
+            { this.renderDamageTaken() }
+            { this.renderDamageGiven() }
           </div>
         </div>
       )
@@ -192,23 +185,21 @@ export class RespawnModal extends PureComponent {
         <div className='modal modal-respawn show'>
           <div className='modal-dialog'>
             <div className={modalContentClasses}>
-              <div className='modal-header'>
-                <h4 className='modal-title'>Respawn</h4>
-              </div>
               <div className='modal-body'>
-                { this.renderCauseOfDeath() }
-
-                <WeaponsView
-                  game={game}
-                  onViewChange={this.handleWeaponsViewClick}
-                  player={player}
-                />
-
                 <div className='row'>
-                  <div className='col-sm-4 col-sm-offset-4'>
-                    { this.renderRespawnButton() }
+                  <div className='col-xs-12 text-center'>
+                    <div style={{ width: '100%', height: '100px' }} />
                   </div>
-                  <div className='col-sm-4 text-left'>
+                </div>
+
+                <div className='row' style='margin: 20px 0;'>
+                  <div className='col-xs-6'>
+                    { this.renderCauseOfDeath() }
+                  </div>
+                  <div className='col-xs-6 text-center'>
+                    <div style='margin-top: 30px;'>
+                      { this.renderRespawnButton() }
+                    </div>
                     <div className='checkbox' style='margin-top: 15px;'>
                       <label>
                         <input
@@ -221,19 +212,17 @@ export class RespawnModal extends PureComponent {
                     </div>
                   </div>
                 </div>
+
+                <div className='row'>
+                  <div className='col-xs-12'>
+                    <WeaponsView
+                      game={game}
+                      onViewChange={this.handleWeaponsViewClick}
+                      player={player}
+                    />
+                  </div>
+                </div>
               </div>
-              <AdSense.Google
-                client='ca-pub-2986206357433139'
-                slot='8388123205'
-                style={{
-                  width: 728,
-                  height: 90,
-                  position: 'absolute',
-                  top: '-100px',
-                  left: '50%',
-                  marginLeft: '-364px'
-                }}
-              />
             </div>
           </div>
         </div>

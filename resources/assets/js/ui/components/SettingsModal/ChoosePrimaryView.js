@@ -43,20 +43,20 @@ export function ChoosePrimaryMenu ({
   return (
     <div>
       <div className='row'>
-        <div className='col-sm-12'>
+        <div className='col-xs-12'>
           <label>Choose Your Primary Weapon</label>
           <em className='pull-right'>(Changes take effect when you respawn)</em>
         </div>
       </div>
       <div className='row'>
-        <div className='col-sm-12'>
+        <div className='col-xs-12'>
           <div className='options-menu'>
             { renderWeapons() }
           </div>
         </div>
       </div>
       <div className='row'>
-        <div className='col-sm-12'>
+        <div className='col-xs-12'>
           <em>Fire rate calculated in rounds per second.</em>
         </div>
       </div>

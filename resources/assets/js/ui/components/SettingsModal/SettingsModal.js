@@ -109,7 +109,7 @@ export default class SettingsModal extends PureComponent {
               </div>
               <div className='modal-body'>
                 <div className='row'>
-                  <div className='col-sm-12 text-center'>
+                  <div className='col-xs-12 text-center'>
                     <ul className='nav nav-pills'
                       style={{ marginBottom: '15px', display: 'inline-block' }}>
                       <li

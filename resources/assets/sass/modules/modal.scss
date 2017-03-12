@@ -117,17 +117,22 @@
  * Respawn Modal
  */
 .modal-respawn {
+    color: #E3DED3;
+
+    .modal-content {
+      background: none;
+      height: 600px;
+    }
+
     .modal-body {
-        overflow: hidden;
+        overflow: visible;
     }
 
     .weapon-image {
-        -webkit-transform: rotate(-25deg);
-        transform: rotate(-25deg);
-        margin-top: 60px;
-        margin-bottom: 60px;
-        max-width: 200px;
-        max-height: 200px;
+        -webkit-transform: rotate(-10deg);
+        transform: rotate(-10deg);
+        max-width: 100%;
+        max-height: 80px;
     }
 }
 
