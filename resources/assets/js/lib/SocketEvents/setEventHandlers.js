@@ -8,6 +8,8 @@ import onPlayerRespawn from './onPlayerRespawn'
 import onPlayerHealthUpdate from './onPlayerHealthUpdate'
 import onMessageReceived from './onMessageReceived'
 import onPlayerKillLog from './onPlayerKillLog'
+import onPlayerJoined from './onPlayerJoined'
+import onPlayerLeft from './onPlayerLeft'
 import onLoadGame from './onLoadGame'
 import onAnnouncement from './onAnnouncement'
 import onPlayerScores from './onPlayerScores'
@@ -26,7 +28,9 @@ const events = {
   [GameConsts.EVENT.GAME_LOOP]: onGameLoop,
   [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
   [GameConsts.EVENT.ANNOUNCEMENT]: onAnnouncement,
-  [GameConsts.EVENT.PLAYER_SCORES]: onPlayerScores
+  [GameConsts.EVENT.PLAYER_SCORES]: onPlayerScores,
+  [GameConsts.EVENT.PLAYER_JOINED]: onPlayerJoined,
+  [GameConsts.EVENT.PLAYER_LEFT]: onPlayerLeft
 }
 
 let dataReceived = 0
@@ -54,6 +58,14 @@ function onData (data) {
   if (!data || data.type === undefined) return
 
   if (!events[data.type]) return
+
+  if (
+    GameConsts.ENABLE_NETWORK_EVENT_LOGS &&
+    data.type !== GameConsts.EVENT.GAME_LOOP &&
+    data.type !== GameConsts.EVENT.NTP_SYNC
+  ) {
+    console.log('* LOG * Server.send', GameConsts.EVENTS[data.type], data.payload)
+  }
 
   events[data.type].call(this, data.payload)
 }

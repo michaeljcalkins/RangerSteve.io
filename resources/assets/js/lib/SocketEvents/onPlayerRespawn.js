@@ -1,12 +1,10 @@
-import includes from 'lodash/includes'
-
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
 
 export default function onPlayerRespawn (data) {
   const store = this.game.store
 
-  if (includes(['Boot', 'Preloader'], this.game.state.current)) return
+  if (this.game.state.current === 'Boot') return
 
   resetPlayerMovement.call(this)
   resetPlayerWeapons.call(this)

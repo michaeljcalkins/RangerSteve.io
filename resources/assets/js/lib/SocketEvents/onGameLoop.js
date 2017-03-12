@@ -1,29 +1,21 @@
-import includes from 'lodash/includes'
-
 import actions from 'actions'
 import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from '../updatePlayerAngles'
-import removePlayersThatLeft from '../removePlayersThatLeft'
-import createNewPlayersThatDontExist from '../createNewPlayersThatDontExist'
 import PlayerById from '../PlayerById'
 import updatePlayerColor from '../updatePlayerColor'
 
 const lastPlayerHealth = {}
 const lastPlayerNickname = {}
-const maxPositionBufferLength = 20
 
-function updatePlayerProtection (player, isProtected) {
-  player.alpha = isProtected ? 0.3 : 1
-}
+const updatePlayerProtection = (player, isProtected) => { player.alpha = isProtected ? 0.3 : 1 }
 
 export default function onGameLoop (data) {
   const store = this.game.store
   const room = store.getState().room
-  const entityInterpolationType = store.getState().game.entityInterpolationType
 
-  if (data.currentTime) {
-    room.currentTime = data.currentTime
-  }
+  if (data.currentTime) room.currentTime = data.currentTime
+
+  // Is a copy of `room` but is mutated with the changes from `data`.
   let roomData = {}
 
   if (
@@ -34,7 +26,7 @@ export default function onGameLoop (data) {
   }
 
   if (
-    includes(['Boot', 'Preloader'], this.game.state.current) ||
+    this.game.state.current === 'Boot' ||
     !window.RS.enemies
   ) return
 
@@ -47,23 +39,25 @@ export default function onGameLoop (data) {
     this.game.input.reset()
   }
 
-  // 1. Check for players that do not exist anymore and destroy their sprites
-  removePlayersThatLeft.call(this, data)
-
   // Update all players that we received with new data
-  Object.keys(data.players).forEach(playerId => {
+  let playerKeys = Object.keys(data.players)
+  let playerKeysLength = playerKeys.length
+  while (playerKeysLength--) {
+    const playerId = playerKeys[playerKeysLength]
     const playerData = data.players[playerId]
 
-    // Update local player's health if there is a change
     if (playerId === window.SOCKET_ID) {
+      // Update local player's health if there is a change
       if (lastPlayerHealth[playerId] !== playerData.health && typeof playerData.health !== 'undefined') {
         store.dispatch(actions.player.setHealth(playerData.health))
         lastPlayerHealth[playerId] = playerData.health
       }
 
+      // Update local player's nickname if there is a change
       if (lastPlayerNickname[playerId] !== playerData.nickname && typeof playerData.nickname !== 'undefined') {
         roomData[playerId] = {
-          nickname: playerData.nickname
+          nickname: playerData.nickname,
+          state: 1
         }
       }
 
@@ -72,19 +66,19 @@ export default function onGameLoop (data) {
         updatePlayerProtection(window.RS.player, playerData.isProtected)
       }
 
-      return
+      // Update the local player with updates for them
+      GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(propName => {
+        if (typeof playerData[propName] !== 'undefined') window.RS.player.data[propName] = playerData[propName]
+      })
+
+      continue
     }
 
     // 2. Find the player by their playerId
     let player = PlayerById.call(this, playerId)
 
-    // 3. if player is not found create them and continue
-    if (!player) {
-      player = createNewPlayersThatDontExist.call(this, room, playerId, playerData)
-    }
-
     // Stop updating players if the round is over
-    if (!player) return console.error('Player not found or created.')
+    if (!player) continue
 
     // 4. Update player data
     player.data.id = playerId
@@ -96,31 +90,11 @@ export default function onGameLoop (data) {
       updatePlayerProtection(player, player.data.isProtected)
     }
 
-    if (entityInterpolationType === GameConsts.ENTITY_INTERPOLATION_TYPE.BASIC) {
-      player.data.targetPosition = {
-        x: player.data.x,
-        y: player.data.y,
-        millisRemaining: GameConsts.TICK_RATE
-      }
-    } else if (entityInterpolationType === GameConsts.ENTITY_INTERPOLATION_TYPE.ADVANCED) {
-      // Prepare player data for interpolation
-      if (typeof player.data.positionBuffer === 'undefined') {
-        player.data.positionBuffer = []
-      }
-
-      player.data.positionBuffer.unshift({
-        x: player.data.x,
-        y: player.data.y,
-        time: data.currentTime
-      })
-
-      if (player.data.positionBuffer.length > maxPositionBufferLength) {
-        player.data.positionBuffer.splice(maxPositionBufferLength)
-      }
-    } else {
-      // Update player position in the arena
-      player.x = player.data.x
-      player.y = player.data.y
+    // Basic entity interpolation
+    player.data.targetPosition = {
+      x: player.data.x,
+      y: player.data.y,
+      millisRemaining: GameConsts.TICK_RATE
     }
 
     // Update player's name above their player in game
@@ -182,7 +156,7 @@ export default function onGameLoop (data) {
     roomData[playerId] = player.data
 
     player.alive = player.visible = player.data.isVisibleAfterTime < room.currentTime || !player.data.isVisibleAfterTime
-  })
+  }
 
   // Merge the differences from the server to client's room state
   Object.keys(data.players).forEach(playerId => {

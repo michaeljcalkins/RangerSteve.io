@@ -1,5 +1,3 @@
-import includes from 'lodash/includes'
-
 import GameConsts from 'lib/GameConsts'
 let soundThrottle = false
 
@@ -7,7 +5,7 @@ export default function onBulletFired (data) {
   const store = this.game.store
 
   if (
-    includes(['Boot', 'Preloader'], this.game.state.current) ||
+    this.game.state.current === 'Boot' ||
     !window.RS.enemyBullets ||
     store.getState().room.state === 'ended'
   ) return

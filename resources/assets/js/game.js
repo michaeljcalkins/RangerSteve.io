@@ -2,9 +2,7 @@ import get from 'lodash/get'
 
 import actions from './actions'
 import Boot from './states/Boot'
-import Preloader from './states/Preloader'
-import Deathmatch from './states/Deathmatch'
-import TeamDeathmatch from './states/TeamDeathmatch'
+import Game from './states/Game'
 
 export default function (store) {
   const game = new window.Phaser.Game('100%', '100%', window.Phaser.CANVAS, 'game')
@@ -14,15 +12,11 @@ export default function (store) {
 
   window.RS = {
     Boot,
-    Preloader,
-    Deathmatch,
-    TeamDeathmatch
+    Game
   }
 
   game.state.add('Boot', window.RS.Boot)
-  game.state.add('Preloader', window.RS.Preloader)
-  game.state.add('Deathmatch', window.RS.Deathmatch)
-  game.state.add('TeamDeathmatch', window.RS.TeamDeathmatch)
+  game.state.add('Game', window.RS.Game)
 
   // Check if the user is signed in
   window.firebase.auth().onAuthStateChanged(function (auth) {

@@ -15,8 +15,7 @@ export class SettingsView extends PureComponent {
       autoRespawn: props.game.autoRespawn,
       sfxVolume: props.game.sfxVolume,
       isNetworkStatsVisible: props.game.isNetworkStatsVisible,
-      isFpsStatsVisible: props.game.isFpsStatsVisible,
-      entityInterpolationType: props.game.entityInterpolationType,
+      isFpsStatsVisible: props.game.isFpsStatsVisible
     }
   }
 
@@ -55,13 +54,6 @@ export class SettingsView extends PureComponent {
     const volume = Number(evt.currentTarget.value)
     storage.set('sfxVolume', volume)
     this.props.onSetSfxVolume(volume)
-  }
-
-  handleEntityInterpolationTypeChange (evt) {
-    const entityInterpolationType = Number(evt.currentTarget.value)
-    this.setState({ entityInterpolationType })
-    storage.set('entityInterpolationType', entityInterpolationType)
-    this.props.onEntityInterpolationTypeChange(entityInterpolationType)
   }
 
   render () {
@@ -110,18 +102,6 @@ export class SettingsView extends PureComponent {
                 Show Network stats <i>(Changing this will reload the game)</i>
               </label>
             </div>
-            <div className="form-group">
-              <label>Entity interpolation</label>
-              <select
-                className="form-control"
-                value={this.state.entityInterpolationType}
-                onChange={this.handleEntityInterpolationTypeChange}
-              >
-                <option value="0">Disabled</option>
-                <option value="1">Basic (no buffer)</option>
-                <option value="2">Advanced (with buffer)</option>
-              </select>
-            </div>
           </div>
         </div>
       </div>
@@ -144,8 +124,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetSfxVolume: gameActions.setSfxVolume,
     onAutoRespawnChange: gameActions.setAutoRespawn,
     onNetworkStatsChange: gameActions.setIsNetworkStatsVisible,
-    onFpsStatsChange: gameActions.setIsFpsStatsVisible,
-    onEntityInterpolationTypeChange: gameActions.setEntityInterpolationType
+    onFpsStatsChange: gameActions.setIsFpsStatsVisible
   }
 }
 

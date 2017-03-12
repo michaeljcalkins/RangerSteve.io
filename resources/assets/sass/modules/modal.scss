@@ -23,6 +23,8 @@
     display: inline-block;
     text-align: left;
     vertical-align: middle;
+    max-width: 850px;
+    width: 100%;
 }
 
 /**
@@ -33,10 +35,8 @@
     background-size: cover;
     border: 0;
     box-shadow: none !important;
-    width: 850px;
-    height: 576px;
     cursor: default;
-    margin-left: -150px;
+    height: 576px;
 
     .nav-pills > li.active > a,
     .nav-pills > li.active > a:focus,

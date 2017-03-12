@@ -1,43 +1,44 @@
-import PlayerMovementHandler from '../lib/PlayerMovementHandler'
-import PlayerJumpHandler from '../lib/PlayerJumpHandler'
-import RotateBulletsToTrajectory from '../lib/RotateBulletsToTrajectory'
-import Maps from '../lib/Maps'
-import Client from '../lib/Client'
 import actions from '../actions'
+import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
+import Client from '../lib/Client'
+import CreateBullets from '../lib/CreateHandler/CreateBullets'
+import createEnemyGroup from '../lib/createEnemyGroup'
+import createEnemyPlayers from '../lib/createEnemyPlayers'
+import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
+import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
+import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
+import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
+import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
+import FireWeapon from '../lib/FireWeapon'
 import GameConsts from 'lib/GameConsts'
+import GameModes from '../lib/GameModes'
+import Maps from '../lib/Maps'
+import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
+import PlayerJumpHandler from '../lib/PlayerJumpHandler'
+import PlayerMovementHandler from '../lib/PlayerMovementHandler'
+import ReloadGunWhenEmpty from '../lib/ReloadGunWhenEmpty'
+import RotateBulletsToTrajectory from '../lib/RotateBulletsToTrajectory'
+import UpdateEnemyPositions from '../lib/UpdateEnemyPositions'
+import UpdateGameScale from '../lib/UpdateGameScale'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
-import UpdateEnemyPositions from '../lib/UpdateEnemyPositions'
-import CreateKeyboardBindings from '../lib/CreateHandler/CreateKeyboardBindings'
-import CreateHurtBorder from '../lib/CreateHandler/CreateHurtBorder'
-import CreateMapAndPlayer from '../lib/CreateHandler/CreateMapAndPlayer'
-import CreateBullets from '../lib/CreateHandler/CreateBullets'
-import CreateKillingSpreeAudio from '../lib/CreateHandler/CreateKillingSpreeAudio'
-import PlayerAndPlatforms from '../lib/Collisions/PlayerAndPlatforms'
-import PlayerAndEnemyBullets from '../lib/Collisions/PlayerAndEnemyBullets'
-import BulletsAndEnemyPlayers from '../lib/Collisions/BulletsAndEnemyPlayers'
-import BulletsAndPlatforms from '../lib/Collisions/BulletsAndPlatforms'
-import EnemyBulletsAndPlatforms from '../lib/Collisions/EnemyBulletsAndPlatforms'
-import UpdateGameScale from '../lib/UpdateGameScale'
-import createEnemyGroup from '../lib/createEnemyGroup'
-import FireWeapon from '../lib/FireWeapon'
-import ReloadGunWhenEmpty from '../lib/ReloadGunWhenEmpty'
 
 let polygonsHaveBeenDrawn = false
 
 /**
- * Collisions and all game mode related interactions.
+ * Load all base game assets and start the gamemode.
  */
-function Deathmatch (game) {
+function Game (game) {
   this.game = game
 }
 
-Deathmatch.prototype = {
-
+Game.prototype = {
   preload: function () {
     const store = this.game.store
     const mapName = store.getState().room.map
     Maps[mapName].preload.call(this)
+
+    this.game.load.onLoadComplete.add(this.loadComplete, this)
   },
 
   create: function () {
@@ -50,11 +51,17 @@ Deathmatch.prototype = {
 
     window.onresize = UpdateGameScale.bind(this)
     UpdateGameScale.call(this)
-    Client.send(GameConsts.EVENT.REFRESH_ROOM)
+
+    createEnemyPlayers.call(this)
 
     this.game.paused = false
 
     document.getElementById('loading-screen').style.display = 'none'
+    Client.send(GameConsts.EVENT.LOAD_COMPLETE)
+  },
+
+  loadComplete: function () {
+    this.ready = true
   },
 
   update: function () {
@@ -64,21 +71,24 @@ Deathmatch.prototype = {
     }
 
     const state = this.game.store.getState()
+    const mapName = state.room.map
+    const gamemode = state.room.gamemode
+
     const player = state.player
     const currentWeaponId = player.currentWeapon === 'primaryWeapon'
       ? player.selectedPrimaryWeaponId
       : player.selectedSecondaryWeaponId
 
-    // Pause controls so user can't do anything in the background accidentally
+      // Pause controls so user can't do anything in the background accidentally
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
     this.game.input.enabled = !isPaused
 
     PlayerAndPlatforms.call(this)
-    PlayerAndEnemyBullets.call(this)
-    BulletsAndEnemyPlayers.call(this)
     EnemyBulletsAndPlatforms.call(this)
     BulletsAndPlatforms.call(this)
-    Maps[state.room.map].update && Maps[state.room.map].update.call(this)
+
+    Maps[mapName].update && Maps[mapName].update.call(this)
+    GameModes[gamemode].update && GameModes[gamemode].update.call(this)
 
     /**
      * User related movement and sprite angles
@@ -113,10 +123,7 @@ Deathmatch.prototype = {
     RotateBulletsToTrajectory.call(this)
     UpdateHurtBorder.call(this)
     UpdatePlayerPosition.call(this)
-
-    if (state.game.entityInterpolationType !== GameConsts.ENTITY_INTERPOLATION_TYPE.DISABLED) {
-      UpdateEnemyPositions.call(this)
-    }
+    UpdateEnemyPositions.call(this)
   },
 
   render () {
@@ -134,4 +141,4 @@ Deathmatch.prototype = {
   }
 }
 
-export default Deathmatch
+export default Game

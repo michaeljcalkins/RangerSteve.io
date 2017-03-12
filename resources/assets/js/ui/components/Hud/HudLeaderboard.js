@@ -9,45 +9,45 @@ export class HudLeaderboard extends Component {
     if (!room.players) return null
 
     return values(room.players)
-            .sort((a, b) => a.score < b.score)
-            .map(function (player) {
-              let playerNickname = player.nickname
-                    ? player.nickname
-                    : 'Unnamed Ranger'
+      .sort((a, b) => a.score < b.score)
+      .map(function (player) {
+        let playerNickname = player.nickname
+          ? player.nickname
+          : 'Unnamed Ranger'
 
-              const killingSpreeCount = player.killingSpree > 1
-                    ? `${player.killingSpree}x `
-                    : null
+        const killingSpreeCount = player.killingSpree > 1
+          ? `${player.killingSpree}x `
+          : null
 
-              const classes = cs({
-                'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
-                'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch'
-              })
+        const playerRowClasses = cs({
+          'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
+          'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch',
+          'active': player.id === window.SOCKET_ID
+        })
 
-              return (
-                <tr key={player.id}>
-                  <td
-                    className={classes}
-                    style={{ width: '120px', overflow: 'hidden' }}
-                    title="Player's nickname"
-                        >
-                    { playerNickname }
-                  </td>
-                  <td
-                    style={{ width: '20px' }}
-                    title="Player's current killing spree"
-                        >
-                    <strong>{ killingSpreeCount }</strong>
-                  </td>
-                  <td
-                    style={{ width: '20px' }}
-                    title="Player's current score"
-                        >
-                    { player.score || 0 }
-                  </td>
-                </tr>
-              )
-            })
+        return (
+          <tr key={player.id} className={playerRowClasses}>
+            <td
+              style={{ width: '120px', overflow: 'hidden' }}
+              title="Player's nickname"
+            >
+              { playerNickname }
+            </td>
+            <td
+              style={{ width: '20px' }}
+              title="Player's current killing spree"
+            >
+              <strong>{ killingSpreeCount }</strong>
+            </td>
+            <td
+              style={{ width: '20px' }}
+              title="Player's current score"
+            >
+              { player.score || 0 }
+            </td>
+          </tr>
+        )
+      })
   }
 
   render () {

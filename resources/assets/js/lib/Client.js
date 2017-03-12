@@ -24,8 +24,9 @@ const Client = {
     _stats.dataSent += sizeOfData
 
     if (
-      GameConsts.ENABLE_NETWORK_EVENT_LOGS
-      && type !== GameConsts.EVENT.MOVE_PLAYER
+      GameConsts.ENABLE_NETWORK_EVENT_LOGS &&
+      type !== GameConsts.EVENT.MOVE_PLAYER &&
+      type !== GameConsts.EVENT.NTP_SYNC
     ) {
       console.log('* LOG * Client.send', type, GameConsts.EVENTS[type], payload, formatByteSize(sizeOfData))
     }

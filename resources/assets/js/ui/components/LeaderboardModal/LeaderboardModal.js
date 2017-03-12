@@ -177,10 +177,10 @@ export default class LeaderboardModal extends PureComponent {
               </div>
               <div className='modal-body'>
                 <div className='row' style={{ marginBottom: '15px' }}>
-                  <div className='col-sm-5'>
+                  <div className='col-xs-5'>
                     { this.renderWinningPlayerOrTeam() }
                   </div>
-                  <div className='col-sm-7'>
+                  <div className='col-xs-7'>
                     { this.renderPlayerAchievement(playerWithBestHeadshots, 'Most headshots') }
                     { this.renderPlayerAchievement(playerWithBestAccuracy, 'Most accurate') }
                     { this.renderPlayerAchievement(playerWithKillingSpree, 'Longest kill streak') }
@@ -205,7 +205,7 @@ export default class LeaderboardModal extends PureComponent {
                 </table>
                 { room.state === 'ended' &&
                   <div className='row'>
-                    <div className='col-sm-12 text-center'>
+                    <div className='col-xs-12 text-center'>
                       <h5>Next round starting in { elapsed } seconds...</h5>
                     </div>
                   </div>
