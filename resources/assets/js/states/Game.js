@@ -98,15 +98,15 @@ Game.prototype = {
       PlayerJumpHandler.call(this)
     }
 
-      /**
-       * Fire current weapon
-       */
+    /**
+     * Fire current weapon
+     */
     if (this.game.input.activePointer.leftButton.isDown) {
       FireWeapon.call(this, currentWeaponId)
     }
 
     if ((GameConsts.DEBUG || window.DEBUG) && !polygonsHaveBeenDrawn) {
-        // Render the polygons so that we can see them!
+      // Render the polygons so that we can see them!
       for (var i in window.RS.groundPolygons.children) {
         var polygon = window.RS.groundPolygons.children[i]
         var graphics = this.game.add.graphics(polygon.body.sat.polygon.pos.x, polygon.body.sat.polygon.pos.y)
