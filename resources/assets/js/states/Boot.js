@@ -1,6 +1,6 @@
-import setEventHandlers from '../lib/SocketEvents/setEventHandlers'
-import GameConsts from 'lib/GameConsts'
 import ArcadePolygons from '../lib/ArcadePolygons/ArcadePolygons'
+import GameConsts from 'lib/GameConsts'
+import setEventHandlers from '../lib/SocketEvents/setEventHandlers'
 
 /**
  * Connect to the server and start Game.

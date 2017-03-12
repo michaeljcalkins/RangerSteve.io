@@ -9,6 +9,6 @@ export default function (store) {
     <Provider store={store}>
       <GameUiContainer />
     </Provider>,
-        document.getElementById('ui-app')
-    )
+    document.getElementById('ui-app')
+  )
 }

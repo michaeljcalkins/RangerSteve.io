@@ -21,7 +21,8 @@ export class HudLeaderboard extends Component {
 
         const playerNameClasses = cs({
           'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
-          'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch'
+          'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch',
+          'text-strong': player.id === window.SOCKET_ID
         })
 
         return (
@@ -34,12 +35,14 @@ export class HudLeaderboard extends Component {
               { playerNickname }
             </td>
             <td
+              className={playerNameClasses}
               style={{ width: '20px' }}
               title="Player's current killing spree"
             >
               <strong>{ killingSpreeCount }</strong>
             </td>
             <td
+              className={playerNameClasses}
               style={{ width: '20px' }}
               title="Player's current score"
             >
