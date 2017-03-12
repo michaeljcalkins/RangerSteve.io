@@ -228,7 +228,7 @@ roomUpdateLoop.on('update', function () {
 roomUpdateLoop.start()
 
 function onConnect (socket) {
-  console.log('New connection: ' + socket.id + ', ' + JSON.stringify(socket.address))
+  console.log('* LOG * onConnect, ' + socket.id)
   socket.on('data', onData)
 }
 
