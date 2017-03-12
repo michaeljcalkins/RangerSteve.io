@@ -231,8 +231,7 @@ export class RespawnModal extends PureComponent {
                   position: 'absolute',
                   top: '-100px',
                   left: '50%',
-                  marginLeft: '-364px',
-                  background: 'blue'
+                  marginLeft: '-364px'
                 }}
               />
             </div>
