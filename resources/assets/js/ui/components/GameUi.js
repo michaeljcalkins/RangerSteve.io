@@ -172,7 +172,7 @@ export default class GameUi extends Component {
         />
         <HudNewChatMessage
           isOpen={game.chatModalIsOpen}
-          newChatMessageCharacter={this.props.game.keyboardControls.newChatMessage}
+          newChatMessageCharacter={+this.props.game.keyboardControls.newChatMessage}
           onSendMessage={this.handleSendMessage}
           onBlur={onCloseChatModal}
         />
