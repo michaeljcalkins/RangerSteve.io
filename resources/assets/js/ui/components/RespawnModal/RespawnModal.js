@@ -176,22 +176,22 @@ export class RespawnModal extends PureComponent {
   render () {
     const { player, game } = this.props
     const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
+    const modalClasses = cs('modal', 'modal-respawn', {
+      'show': !game.settingsModalIsOpen
+    })
     const modalContentClasses = cs('modal-content', {
       'modal-content-suicide': !attackingPlayerId
     })
 
     return (
       <div>
-        <div className='modal modal-respawn show'>
+        <div className={modalClasses}>
           <div className='modal-dialog'>
             <div className={modalContentClasses}>
+              <div className='modal-header'>
+                <h4 className='modal-title'>Respawn</h4>
+              </div>
               <div className='modal-body'>
-                <div className='row'>
-                  <div className='col-xs-12 text-center'>
-                    <div style={{ width: '100%', height: '100px' }} />
-                  </div>
-                </div>
-
                 <div className='row' style='margin: 20px 0;'>
                   <div className='col-xs-6'>
                     { this.renderCauseOfDeath() }

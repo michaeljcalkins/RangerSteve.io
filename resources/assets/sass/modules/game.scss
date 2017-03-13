@@ -75,7 +75,7 @@ body.game {
     left: 0;
     position: absolute;
     top: 0;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     padding: 4px 8px;
     width: 100%;
 }
@@ -87,7 +87,7 @@ body.game {
     left: 0;
     position: absolute;
     bottom: 0;
-    border-top: 1px solid #444;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     padding: 4px 8px;
     width: 100%;
     text-align: center;
