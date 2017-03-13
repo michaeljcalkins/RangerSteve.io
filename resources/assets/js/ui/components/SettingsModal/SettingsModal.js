@@ -105,13 +105,12 @@ export default class SettingsModal extends PureComponent {
                                 >
                   <span>&times;</span>
                 </button>
+
                 <h4 className='modal-title'>Settings</h4>
-              </div>
-              <div className='modal-body'>
+
                 <div className='row'>
                   <div className='col-xs-12 text-center'>
-                    <ul className='nav nav-pills'
-                      style={{ marginBottom: '15px', display: 'inline-block' }}>
+                    <ul className='nav nav-pills' style={{ marginTop: '10px', display: 'inline-block' }}>
                       <li
                         className={cs({
                           pointer: true,
@@ -145,6 +144,9 @@ export default class SettingsModal extends PureComponent {
                     </ul>
                   </div>
                 </div>
+
+              </div>
+              <div className='modal-body'>
                 { this.renderModalView() }
               </div>
             </div>

@@ -96,19 +96,19 @@
         letter-spacing: 2px;
         text-transform: uppercase;
         text-align: center;
-        margin: 0 auto 5px;
+        margin: 0 auto 7px;
     }
 
     table {
         margin-bottom: 0;
 
         tr.active td {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         td {
             border: 0 !important;
-            padding: 2px !important;
+            padding: 2px 5px !important
         }
 
         td:first-child {
