@@ -105,7 +105,8 @@ h1, h2, h3, h4, h5, h6 {
   vertical-align: middle;
 }
 
-input {
+input[type="text"],
+input[type="number"] {
   border: 0 !important;
   border-radius: 3px !important;
   height: 39px !important;
