@@ -145,7 +145,7 @@ export class RespawnModal extends PureComponent {
         <div className='row'>
           <div className='col-xs-12 text-center'>
             <img
-              className='weapon-image'
+              className='weapon-image mb3'
               src={'/images/guns/large/' + selectedWeapon.image}
             />
             <h4><strong>{ attackingPlayerName }</strong> killed you with their <strong>{ selectedWeapon.name }</strong></h4>

@@ -57,11 +57,13 @@ export default class LeaderboardModal extends PureComponent {
     return values(room.players)
       .sort((a, b) => a.score < b.score)
       .map((player, key) => {
-        const { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger', id } = player
+        const { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger', id, team } = player
         const kdRatio = deaths > 0 ? (kills / deaths) : kills
         const headshotsPerKill = kills > 0 ? (headshots / kills).toFixed(1) : 0
         const classes = cs({
-          'active-player': id === window.SOCKET_ID
+          'text-red': team === 'red' && room.gamemode === 'TeamDeathmatch',
+          'text-blue': team === 'blue' && room.gamemode === 'TeamDeathmatch',
+          'active': id === window.SOCKET_ID
         })
 
         return (
@@ -187,7 +189,7 @@ export default class LeaderboardModal extends PureComponent {
                     { this.renderPlayerAchievement(playerWithBestKillsPerMinute, 'Best kills per minute') }
                   </div>
                 </div>
-                <table className='table table-condensed tcw table-hover'>
+                <table className='table table-condensed tcw'>
                   <thead>
                     <tr>
                       <th />

@@ -101,13 +101,14 @@
 
     table {
         margin-bottom: 0;
+        border-collapse: separate;
 
         tr.active td {
             background: rgba(255, 255, 255, 0.1);
         }
 
         td {
-            border: 0 !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
             padding: 2px 5px !important
         }
 

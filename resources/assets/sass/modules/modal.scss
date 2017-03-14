@@ -179,7 +179,7 @@
 
         .player-name {
             bottom: 0;
-            color: #504F4D;
+            color: #aaa;
             font-family: "Keep Calm", Arial, sans-serif;
             font-size: 14px;
             left: 0;
@@ -235,13 +235,9 @@
         font-family: 'Open Sans', Arial;
     }
 
-    tr {
-        color: white;
-    }
-
-    tr.active-player {
+    tr.active {
         td {
-            color: #f1c40f;
+            background: rgba(255, 255, 255, 0.1) !important;
         }
     }
 
