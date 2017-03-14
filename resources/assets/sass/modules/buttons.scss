@@ -10,23 +10,10 @@ $danger:  #d9534f;
 .btn {
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
-  font-size: 1em;
   border: none;
   border-bottom: .15em solid black;
   border-radius: 3px;
-  padding: 0.65em 1.3em;}
-
-.btn-lg {
-  padding: 1em 2em;}
-
-.btn-sm,
-.btn-xs {
-  font-size: .85em;
-  padding: .5em 1em;}
-
-.btn-xs {
-  font-size: .85em;
-  padding: .25em .75em;}
+}
 
 // Colors
 @mixin btn($btncolor){

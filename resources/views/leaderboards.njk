@@ -5,53 +5,38 @@
 {% block content %}
 
 <section class="main-section" id="leaderboards-container" v-cloak>
-  <div class="col-xs-12">
-    <div class="text-center">
-      <span class="main-header">
-        Leaderboards
-      </span>
-    </div>
+  <h1 class="text-center ff-bangers tcw text-stroke ft60 mb4">Leaderboards</h1>
 
-    <div class="container">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="well">
-          <div class="row navigation-header">
-            <div class="col-xs-6">
-              <a class="btn btn-primary btn-lg btn-block" href="/">Back to Menu</a>
-            </div>
-            <div class="col-xs-6">
-              <a class="btn btn-success btn-lg btn-block" href="/game">Play Now</a>
-            </div>
-          </div>
-
-          <div class="table-responsive">
-            <table class="table table-condensed table-hover tcw mb0 table-text-right">
-              <thead>
-                <tr>
-                  <th>&nbsp;</th>
-                  <th class="text-left">Name</th>
-                  <th class="pointer" v-on:click="setSortColumn('score')">Score <span v-if="sortColumn === 'score'">▼</span></th>
-                  <th class="pointer" v-on:click="setSortColumn('secondsInRound')">Time In Game <span v-if="sortColumn === 'secondsInRound'">▼</span></th>
-                  <th class="pointer" v-on:click="setSortColumn('kdr')">KDR <span v-if="sortColumn === 'kdr'">▼</span></th>
-                  <th class="pointer" v-on:click="setSortColumn('killsPerMinute')">Kills / Min <span v-if="sortColumn === 'killsPerMinute'">▼</span></th>
-                  <th class="pointer" v-on:click="setSortColumn('scorePerMinute')">Score / Min <span v-if="sortColumn === 'scorePerMinute'">▼</span></th>
-                  <th class="pointer" v-on:click="setSortColumn('winPercentage')">Win Percentage <span v-if="sortColumn === 'winPercentage'">▼</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(playerScore, index) in playerScores" class="pointer" v-on:click="openBattleStats(playerScore.name)">
-                  <td>${ index + 1 }</td>
-                  <td class="fwbold text-left">${ playerScore.name }</td>
-                  <td>${ playerScore.score }</td>
-                  <td>${ playerScore.timeInGame }</td>
-                  <td>${ playerScore.kdr }</td>
-                  <td>${ playerScore.killsPerMinute }</td>
-                  <td>${ playerScore.scorePerMinute }</td>
-                  <td>${ playerScore.winPercentage }%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="well">
+        <div class="table-responsive">
+          <table class="table table-hover tcw mb0 table-text-right">
+            <thead>
+              <tr>
+                <th>&nbsp;</th>
+                <th class="text-left">Name</th>
+                <th class="pointer" v-on:click="setSortColumn('score')">Score <span v-if="sortColumn === 'score'">▼</span></th>
+                <th class="pointer" v-on:click="setSortColumn('secondsInRound')">Time In Game <span v-if="sortColumn === 'secondsInRound'">▼</span></th>
+                <th class="pointer" v-on:click="setSortColumn('kdr')">KDR <span v-if="sortColumn === 'kdr'">▼</span></th>
+                <th class="pointer" v-on:click="setSortColumn('killsPerMinute')">Kills / Min <span v-if="sortColumn === 'killsPerMinute'">▼</span></th>
+                <th class="pointer" v-on:click="setSortColumn('scorePerMinute')">Score / Min <span v-if="sortColumn === 'scorePerMinute'">▼</span></th>
+                <th class="pointer" v-on:click="setSortColumn('winPercentage')">Win Percentage <span v-if="sortColumn === 'winPercentage'">▼</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(playerScore, index) in playerScores" class="pointer" v-on:click="openBattleStats(playerScore.name)">
+                <td>${ index + 1 }</td>
+                <td class="fwbold text-left">${ playerScore.name }</td>
+                <td>${ playerScore.score }</td>
+                <td>${ playerScore.timeInGame }</td>
+                <td>${ playerScore.kdr }</td>
+                <td>${ playerScore.killsPerMinute }</td>
+                <td>${ playerScore.scorePerMinute }</td>
+                <td>${ playerScore.winPercentage }%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
