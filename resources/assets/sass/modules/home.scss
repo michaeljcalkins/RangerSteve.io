@@ -1,7 +1,8 @@
 body.main {
   height: 100%;
-  background: url(/images/home/bg1.png) no-repeat center center;
+  background: url('/images/home/background.jpg') no-repeat center center;
   background-size: cover;
+  padding-bottom: 50px;
 }
 
 body.main:after {
@@ -15,10 +16,28 @@ body.main:after {
   z-index: -1;
 }
 
+.navbar-sm {
+  min-height: 30px;
+
+  .navbar-nav>li>a {
+    line-height: 14px;
+  }
+}
+
+.navbar-default {
+  background: rgba(0, 0, 0, 0.8);
+}
+
 .align-middle {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#home-container {
+  #play-button {
+    font-size: 2em;
+  }
 }
 
 .main-section {
@@ -48,7 +67,7 @@ body.main:after {
   }
 
   .well {
-    background: rgba(51, 46, 44, 0.8);
+    background: rgba(0, 0, 0, 0.8);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     border-radius: 3px;
     border: 0;
@@ -67,6 +86,14 @@ body.main:after {
 
   p {
     margin: 0;
+  }
+
+  .navigation-header {
+    margin-bottom: 30px;
+  }
+
+  .table > tbody > tr > td {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
   }
 }
 
@@ -103,7 +130,7 @@ body.main:after {
 .main-content {
   font-weight: bold;
   width: 90%;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
 
   .well {
@@ -122,7 +149,7 @@ body.main:after {
 }
 
 fieldset {
-  border-top: 1px solid rgba(255, 255, 255, .3);
+  border-top: 1px solid rgba(255, 255, 255, .2);
   margin-bottom: 15px;
   padding: 25px 0 15px;
 }

@@ -187,7 +187,7 @@ export default class LeaderboardModal extends PureComponent {
                     { this.renderPlayerAchievement(playerWithBestKillsPerMinute, 'Best kills per minute') }
                   </div>
                 </div>
-                <table className='table table-condensed'>
+                <table className='table table-condensed tcw table-hover'>
                   <thead>
                     <tr>
                       <th />

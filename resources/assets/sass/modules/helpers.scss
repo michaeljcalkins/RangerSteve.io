@@ -1,5 +1,13 @@
-.tcw, .tcw-hover:hover, .tcb.table-hover > tbody > tr:hover { color: white }
-.tcb, .tcb-hover:hover, .tcw.table-hover > tbody > tr:hover { color: #333 }
+.tcw, .tcw-hover:hover { color: #eee; }
+.tcb, .tcb-hover:hover { color: #333; }
+
+.tcw.table-hover > tbody > tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tcb.table-hover > tbody > tr:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
 
 .table-text-right {
   th, td {
