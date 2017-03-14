@@ -7,13 +7,13 @@
 }
 
 @font-face {
-    font-family: 'Keep Calm';
-    src: url('/fonts/KeepCalm-Medium.eot');
-    src: url('/fonts/KeepCalm-Medium#iefix') format('embedded-opentype'),
-         url('/fonts/KeepCalm-Medium.woff') format('woff'),
-         url('/fonts/KeepCalm-Medium.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Keep Calm';
+  src: url('/fonts/KeepCalm-Medium.eot');
+  src: url('/fonts/KeepCalm-Medium#iefix') format('embedded-opentype'),
+       url('/fonts/KeepCalm-Medium.woff') format('woff'),
+       url('/fonts/KeepCalm-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 html, body {
@@ -30,7 +30,6 @@ body {
   font: 14px Arial, sans-serif;
   font-weight: 400;
   margin: 0;
-  padding: 0;
 }
 
 a {
@@ -106,6 +105,39 @@ h1, h2, h3, h4, h5, h6 {
   vertical-align: middle;
 }
 
+input[type="text"],
+input[type="number"] {
+  border: 0 !important;
+  border-radius: 3px !important;
+  height: 39px !important;
+}
+
+.well {
+  background: rgba(31, 26, 24, .8);
+  border-radius: 3px;
+  border: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,.4);
+  padding: 15px !important;
+  overflow-y: auto;
+}
+
+fieldset {
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  margin-bottom: 0;
+  padding: 0;
+}
+
+legend {
+  color: #eee;
+  font-size: 16px;
+  width: auto;
+  margin: 0;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px 10px;
+  border: 0;
+}
+
 .col-xs-15,
 .col-xs-15,
 .col-md-15,
@@ -120,33 +152,24 @@ h1, h2, h3, h4, h5, h6 {
     width: 20%;
     float: left;
 }
+
 @media (min-width: 768px) {
     .col-xs-15 {
         width: 20%;
         float: left;
     }
 }
+
 @media (min-width: 992px) {
     .col-md-15 {
         width: 20%;
         float: left;
     }
 }
-@media (min-width: 1200px) {
-    .col-lg-15 {
-        width: 20%;
-        float: left;
-    }
-}
 
-header {
-  background: rgba(255, 255, 255, 1);
-  border: 0;
-  clear: both;
-  float: left;
-  padding: 0;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  z-index: 2;
+@media (min-width: 1200px) {
+  .col-lg-15 {
+    width: 20%;
+    float: left;
+  }
 }

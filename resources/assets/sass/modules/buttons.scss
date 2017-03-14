@@ -10,23 +10,10 @@ $danger:  #d9534f;
 .btn {
   font-family: "Open Sans", sans-serif;
   font-weight: 700;
-  font-size: 1em;
   border: none;
   border-bottom: .15em solid black;
   border-radius: 3px;
-  padding: 0.65em 1.3em;}
-
-.btn-lg {
-  padding: 1em 2em;}
-
-.btn-sm,
-.btn-xs {
-  font-size: .85em;
-  padding: .5em 1em;}
-
-.btn-xs {
-  font-size: .85em;
-  padding: .25em .75em;}
+}
 
 // Colors
 @mixin btn($btncolor){
@@ -37,8 +24,21 @@ $danger:  #d9534f;
   }
 }
 
-.btn-link {
-  border: 0;
+.navbar-default {
+  .navbar-nav {
+    .btn-link {
+      color: #bbb;
+
+      &:hover {
+        color: #eee;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &:active {
+        color: #fff;
+      }
+    }
+  }
 }
 
 .btn-default { @include btn($default);}
@@ -47,3 +47,37 @@ $danger:  #d9534f;
 .btn-info    { @include btn($info);}
 .btn-warning { @include btn($warning);}
 .btn-danger  { @include btn($danger);}
+
+.btn-google,
+.btn-facebook,
+.btn-twitter {
+  color: #eee;
+
+  i {
+    padding-right: 0.5em;
+  }
+}
+
+.btn-google {
+  @include btn(#dd4b39);
+}
+
+.btn-facebook {
+  @include btn(#3b5998);
+}
+
+.btn-twitter {
+  @include btn(#1da1f2);
+}
+
+.btn-outline {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  color: #eee;
+
+  &:hover,
+  &:focus {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+}

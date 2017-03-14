@@ -105,7 +105,7 @@ export default function ControlsView ({
         <div className='row'>
           <div className='col-xs-6'>
             <button
-              className='btn btn-block btn-default'
+              className='btn btn-block btn-outline'
               onClick={handleSetQwerty}
             >
               QWERTY
@@ -113,7 +113,7 @@ export default function ControlsView ({
           </div>
           <div className='col-xs-6'>
             <button
-              className='btn btn-block btn-default'
+              className='btn btn-block btn-outline'
               onClick={handleSetAzerty}
             >
               AZERTY

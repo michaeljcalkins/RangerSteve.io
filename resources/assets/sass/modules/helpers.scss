@@ -1,5 +1,13 @@
-.tcw, .tcw-hover:hover, .tcb.table-hover > tbody > tr:hover { color: white }
-.tcb, .tcb-hover:hover, .tcw.table-hover > tbody > tr:hover { color: #333 }
+.tcw, .tcw-hover:hover { color: #eee; }
+.tcb, .tcb-hover:hover { color: #333; }
+
+.tcw.table-hover > tbody > tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tcb.table-hover > tbody > tr:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
 
 .table-text-right {
   th, td {
@@ -10,34 +18,10 @@
   }
 }
 
-$i: 6;
-@while $i > -1 {
-    .mt#{$i} { margin-top: 5px * $i; }
-    .mr#{$i} { margin-right: 5px * $i; }
-    .mb#{$i} { margin-bottom: 5px * $i; }
-    .ml#{$i} { margin-left: 5px * $i; }
-    $i: $i - 1;
-}
-
-$i: 6;
-@while $i > -1 {
-    .pt#{$i} { padding-top: 5px * $i; }
-    .pr#{$i} { padding-right: 5px * $i; }
-    .pb#{$i} { padding-bottom: 5px * $i; }
-    .pl#{$i} { padding-left: 5px * $i; }
-    $i: $i - 1;
-}
-
-$i: 40;
-@while $i > -1 {
-    .ft#{$i} { font-size: 2px * $i; }
-    $i: $i - 1;
-}
-
-$i: 40;
-@while $i > -1 {
-    .lh#{$i} { line-height: 2px * $i; }
-    $i: $i - 1;
+.align-middle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pointer { cursor: pointer }
@@ -49,3 +33,47 @@ $i: 40;
 .fwlight { font-weight: light }
 
 .ff-bangers { font-family: Bangers, Arial; }
+
+.text-stroke { text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D; }
+
+.db { display: block }
+
+.h100 { height: 100%; }
+
+$i: 20;
+@while $i > -1 {
+  .mt#{$i} { margin-top: 5px * $i; }
+  .mr#{$i} { margin-right: 5px * $i; }
+  .mb#{$i} { margin-bottom: 5px * $i; }
+  .ml#{$i} { margin-left: 5px * $i; }
+  $i: $i - 1;
+}
+
+$i: 12;
+@while $i > -1 {
+  .pt#{$i} { padding-top: 5px * $i; }
+  .pr#{$i} { padding-right: 5px * $i; }
+  .pb#{$i} { padding-bottom: 5px * $i; }
+  .pl#{$i} { padding-left: 5px * $i; }
+  .pv#{$i} { padding-top: 5px * $i; padding-bottom: 5px * $i; }
+  .ph#{$i} { padding-left: 5px * $i; padding-right: 5px * $i; }
+  $i: $i - 1;
+}
+
+$i: 60;
+@while $i > -1 {
+  .ft#{$i} { font-size: 2px * $i; }
+  $i: $i - 1;
+}
+
+$i: 40;
+@while $i > -1 {
+  .lh#{$i} { line-height: 2px * $i; }
+  $i: $i - 1;
+}
+
+$i: 5;
+@while $i > -1 {
+  .ls#{$i} { letter-spacing: 1px * $i; }
+  $i: $i - 1;
+}

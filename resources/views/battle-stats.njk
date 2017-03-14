@@ -3,172 +3,155 @@
 {% block title %}Battle Stats for {{ username }} | RangerSteve.io{% endblock %}
 
 {% block content %}
-<span id="beta-label">Beta</span>
-
 <section class="main-section" id="battle-stats-container" v-cloak>
-  <div class="col-xs-12">
-    <div class="text-center">
-      <span class="main-header">
-        Battle Stats
-      </span>
-    </div>
+  <h1 class="text-center ff-bangers tcw text-stroke ft60 mb4">Battle Stats</h1>
 
-    <div class="container">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="well tcw">
-          <div class="row mb3">
-            <div class="col-xs-4">
-              <a class="btn btn-primary btn-lg btn-block" href="/">Back to Menu</a>
-            </div>
-            <div class="col-xs-4">
-              <a class="btn btn-primary btn-lg btn-block" href="/leaderboards">Leaderboards</a>
-            </div>
-            <div class="col-xs-4">
-              <a class="btn btn-success btn-lg btn-block" href="/game">Play Now</a>
-            </div>
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="well tcw">
+        <div class="row">
+          <div class="col-xs-12">
+            <a class="btn btn-outline btn-block" href="/leaderboards">Back to Leaderboards</a>
           </div>
+          <div class="col-xs-12">
+            <h2 class="fwbold text-center mt6 mb6">{{ username }}</h2>
 
-          <div class="row">
-            <div class="col-xs-12">
-              <h1 class="fwbold text-center mt3 mb6">{{ username }}</h1>
+            <fieldset class="text-center">
+              <legend>Overview</legend>
 
-              <fieldset class="text-center">
-                <legend>Overview</legend>
-
-                <div class="row">
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Time In Game</h4>
-                      <h2 class="fwbold">${ timeInGame }</h2>
-                    </div>
-                  </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>KDR</h4>
-                      <h2 class="fwbold">${ kdr }</h2>
-                    </div>
-                  </div>
-
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Accuracy</h4>
-                      <h2 class="fwbold">${ accuracy }%</h2>
-                    </div>
-                  </div>
-
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Win Percentage</h4>
-                      <h2 class="fwbold">${ winPercentage }%</h2>
-                    </div>
-                  </div>
-
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Score / Min</h4>
-                      <h2 class="fwbold">${ scorePerMinute }</h2>
-                    </div>
-                  </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Kills / Min</h4>
-                      <h2 class="fwbold">${ killsPerMinute }</h2>
-                    </div>
-                  </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Deaths / Min</h4>
-                      <h2 class="fwbold">${ deathsPerMin }</h2>
-                    </div>
-                  </div>
-                  <div class="col-xs-3">
-                    <div className="player-achievement">
-                      <h4>Damage / Min</h4>
-                      <h2 class="fwbold">${ damagePerMinute }</h2>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-
-              <fieldset class="text-center mb0">
-                <legend>Statistics</legend>
-
+              <div class="row">
                 <div class="col-xs-3">
                   <div className="player-achievement">
-                    <h4>Score</h4>
-                    <h4 class="fwbold">${ stats.score }</h4>
+                    <h4>Time In Game</h4>
+                    <h2 class="fwbold">${ timeInGame }</h2>
                   </div>
                 </div>
                 <div class="col-xs-3">
                   <div className="player-achievement">
-                    <h4>Kills</h4>
-                    <h4 class="fwbold">${ stats.kills }</h4>
-                  </div>
-                </div>
-                <div class="col-xs-3">
-                  <div className="player-achievement">
-                    <h4>Deaths</h4>
-                    <h4 class="fwbold">${ stats.deaths }</h4>
-                  </div>
-                </div>
-                <div class="col-xs-3">
-                  <div className="player-achievement">
-                    <h4>Damage Inlicted</h4>
-                    <h4 class="fwbold">${ stats.damageInflicted }</h4>
+                    <h4>KDR</h4>
+                    <h2 class="fwbold">${ kdr }</h2>
                   </div>
                 </div>
 
                 <div class="col-xs-3">
                   <div className="player-achievement">
-                    <h4>Shots Fired</h4>
-                    <h4 class="fwbold">${ stats.bulletsFired }</h4>
-                  </div>
-                </div>
-                <div class="col-xs-3">
-                  <div className="player-achievement">
-                    <h4>Shots Hit</h4>
-                    <h4 class="fwbold">${ stats.bulletsHit }</h4>
-                  </div>
-                </div>
-                <div class="col-xs-3">
-                  <div className="player-achievement">
-                    <h4>Headshots</h4>
-                    <h4 class="fwbold">${ stats.headshots }</h4>
-                  </div>
-                </div>
-                <div class="col-xs-3">
-                  <div className="player-achievement">
-                    <h4>HS Accuracy</h4>
-                    <h4 class="fwbold">${ hsAccuracy }%</h4>
+                    <h4>Accuracy</h4>
+                    <h2 class="fwbold">${ accuracy }%</h2>
                   </div>
                 </div>
 
                 <div class="col-xs-3">
                   <div className="player-achievement">
-                    <h4>Rounds Won</h4>
-                    <h4 class="fwbold">${ stats.roundsWon }</h4>
+                    <h4>Win Percentage</h4>
+                    <h2 class="fwbold">${ winPercentage }%</h2>
+                  </div>
+                </div>
+
+                <div class="col-xs-3">
+                  <div className="player-achievement">
+                    <h4>Score / Min</h4>
+                    <h2 class="fwbold">${ scorePerMinute }</h2>
                   </div>
                 </div>
                 <div class="col-xs-3">
                   <div className="player-achievement">
-                    <h4>Rounds Lost</h4>
-                    <h4 class="fwbold">${ stats.roundsLost }</h4>
+                    <h4>Kills / Min</h4>
+                    <h2 class="fwbold">${ killsPerMinute }</h2>
                   </div>
                 </div>
                 <div class="col-xs-3">
                   <div className="player-achievement">
-                    <h4>Best Killing Spree</h4>
-                    <h4 class="fwbold">${ stats.bestKillingSpree }</h4>
+                    <h4>Deaths / Min</h4>
+                    <h2 class="fwbold">${ deathsPerMin }</h2>
                   </div>
                 </div>
                 <div class="col-xs-3">
                   <div className="player-achievement">
-                    <h4>Times Hit</h4>
-                    <h4 class="fwbold">${ stats.timesHit }</h4>
+                    <h4>Damage / Min</h4>
+                    <h2 class="fwbold">${ damagePerMinute }</h2>
                   </div>
                 </div>
-              </fieldset>
-            </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="text-center mb0">
+              <legend>Statistics</legend>
+
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Score</h4>
+                  <h4 class="fwbold">${ stats.score }</h4>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Kills</h4>
+                  <h4 class="fwbold">${ stats.kills }</h4>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Deaths</h4>
+                  <h4 class="fwbold">${ stats.deaths }</h4>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Damage Inlicted</h4>
+                  <h4 class="fwbold">${ stats.damageInflicted }</h4>
+                </div>
+              </div>
+
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Shots Fired</h4>
+                  <h4 class="fwbold">${ stats.bulletsFired }</h4>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Shots Hit</h4>
+                  <h4 class="fwbold">${ stats.bulletsHit }</h4>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Headshots</h4>
+                  <h4 class="fwbold">${ stats.headshots }</h4>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>HS Accuracy</h4>
+                  <h4 class="fwbold">${ hsAccuracy }%</h4>
+                </div>
+              </div>
+
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Rounds Won</h4>
+                  <h4 class="fwbold">${ stats.roundsWon }</h4>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Rounds Lost</h4>
+                  <h4 class="fwbold">${ stats.roundsLost }</h4>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Best Killing Spree</h4>
+                  <h4 class="fwbold">${ stats.bestKillingSpree }</h4>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div className="player-achievement">
+                  <h4>Times Hit</h4>
+                  <h4 class="fwbold">${ stats.timesHit }</h4>
+                </div>
+              </div>
+            </fieldset>
           </div>
         </div>
       </div>

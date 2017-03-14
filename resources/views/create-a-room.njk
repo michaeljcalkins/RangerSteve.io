@@ -3,21 +3,29 @@
 {% block title %}Create a Room | RangerSteve.io{% endblock %}
 
 {% block content %}
-<span id="beta-label">Beta</span>
+  <section class="main-section">
+    <h1 class="text-center ff-bangers tcw text-stroke ft60 mb4">Create a Room</h1>
 
-<section class="main-section">
-  <div class="col-xs-12">
-    <div class="text-center">
-      <span class="main-header">
-        Create a Room
-      </span>
-    </div>
+    <div class="container">
+      <div class="col-md-10 col-md-offset-1">
+        <form class="well" action="/game" method="GET">
+          <div class="row navigation-header mb3">
+            <div class="col-xs-6">
+              <a class="btn btn-primary btn-block" href="/">Back to Menu</a>
+            </div>
+            <div class="col-xs-6">
+              <button
+                type="submit"
+                class="btn btn-success btn-block"
+                id="play-button"
+              >
+                Play Now
+              </button>
+            </div>
+          </div>
 
-    <div class="map-content">
-      <div class="well">
-        <form action="/game" method="GET">
-          <input type="hidden" name="map" />
-          <input type="hidden" name="gamemode" />
+          <input type="hidden" name="map"/>
+          <input type="hidden" name="gamemode"/>
           <div class="row">
             <div class="col-xs-4">
               <div class="form-group">
@@ -70,26 +78,6 @@
               </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-xs-3">
-              <a
-                class="btn btn-primary btn-block btn-lg"
-                href="/"
-              >
-                Back to Menu
-              </a>
-            </div>
-            <div class="col-xs-3 col-xs-offset-6">
-              <button
-                type="submit"
-                class="btn btn-success btn-lg btn-block"
-                id="play-button"
-              >
-                Play Now
-              </button>
-            </div>
-          </div>
         </form>
       </div>
     </div>
@@ -98,17 +86,17 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-  function selectMap (map) {
-    $('input[name="map"]').val(map)
-    $('.map-button').removeClass('active')
-    $('#map-button-' + map).addClass('active')
-  }
+  <script>
+    function selectMap (map) {
+      $('input[name="map"]').val(map)
+      $('.map-button').removeClass('active')
+      $('#map-button-' + map).addClass('active')
+    }
 
-  function selectGamemode (gamemode) {
-    $('input[name="gamemode"]').val(gamemode)
-    $('.gamemode-button').removeClass('active')
-    $('#gamemode-button-' + gamemode).addClass('active')
-  }
-</script>
+    function selectGamemode (gamemode) {
+      $('input[name="gamemode"]').val(gamemode)
+      $('.gamemode-button').removeClass('active')
+      $('#gamemode-button-' + gamemode).addClass('active')
+    }
+  </script>
 {% endblock %}

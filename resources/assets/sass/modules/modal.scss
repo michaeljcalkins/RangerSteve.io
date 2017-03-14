@@ -164,7 +164,7 @@
  */
 .modal-leaderboard {
     .winning-player {
-        background: url(/images/ui/panel/dark-sword.png) no-repeat center top;
+        background: url(/images/ui/panel/light-sword.png) no-repeat center top;
         background-size: 55%;
         height: 190px;
         width: 100%;
@@ -179,7 +179,7 @@
 
         .player-name {
             bottom: 0;
-            color: #504F4D;
+            color: #aaa;
             font-family: "Keep Calm", Arial, sans-serif;
             font-size: 14px;
             left: 0;
@@ -226,7 +226,6 @@
     }
 
     table {
-        background: #444;
         margin-top: 10px;
     }
 
@@ -236,13 +235,9 @@
         font-family: 'Open Sans', Arial;
     }
 
-    tr {
-        color: white;
-    }
-
-    tr.active-player {
+    tr.active {
         td {
-            color: #f1c40f;
+            background: rgba(255, 255, 255, 0.1) !important;
         }
     }
 
