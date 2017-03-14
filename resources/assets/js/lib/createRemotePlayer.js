@@ -109,6 +109,7 @@ export default function RemotePlayer (playerId, playerData) {
   newRemotePlayer.rightArmGroup.x = GameConsts.PLAYER_BODY.RIGHT_ARM_X
   newRemotePlayer.rightArmGroup.y = GameConsts.PLAYER_BODY.RIGHT_ARM_Y
   if (playerData.team) updatePlayerColor(newRemotePlayer, playerData.team)
+  newRemotePlayer.data.team = playerData.team
 
   newRemotePlayer.anchor.set(0.5)
   updatePlayerAngles(newRemotePlayer, 200)
