@@ -17,114 +17,11 @@
 
   <div class="row h100">
     <div class="col-xs-6 text-center align-middle h100">
-      <div class="mb4">
-        <h1 class="ff-bangers tcw text-stroke ft60 mb5">Ranger Steve</h1>
+      <div class="mb4 col-xs-12 col-sm-12 col-md-12 col-lg-8">
+        <h1 class="ff-bangers tcw text-stroke ft35 mb1">Ranger Steve</h1>
         <div class="well">
-          <a class="btn btn-success btn-lg btn-block mb3" href="/game" id="play-button">Play Now</a>
-          <a class="btn btn-primary btn-block" href="/create-a-room">Create a Room</a>
-
-          <div
-            class="alert alert-danger"
-            v-if="accountErrorMessage"
-          >
-            ${ accountErrorMessage }
-          </div>
-          <div
-            class="alert alert-success"
-            v-if="accountSuccessMessage"
-          >
-            ${ accountSuccessMessage }
-          </div>
-
-          <fieldset v-if="auth">
-            <legend>Your Account</legend>
-
-            <div class="row">
-              <div class="col-xs-8">
-                <div class="form-group">
-                  <input
-                    @keyup.13="claimUsername()"
-                    autofocus
-                    class="form-control"
-                    maxlength="25"
-                    placeholder="Enter your nickname..."
-                    style="margin-bottom: 15px"
-                    type="text"
-                    v-model.trim="newUsername"
-                  />
-                </div>
-              </div>
-              <div class="col-xs-4">
-                <button
-                  class="btn btn-primary btn-block"
-                  :class="{ disabled: isEmptyUsername || isSameUsername }"
-                  :disabled="isEmptyUsername || isSameUsername"
-                  v-on:click="claimUsername()"
-                >
-                  Claim Name
-                </button>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-xs-4">
-                <a
-                  class="btn btn-primary btn-block"
-                  v-if="user"
-                  v-bind:href="'/battle-stats/' + user.username"
-                >
-                  My Battle Stats
-                </a>
-              </div>
-              <div class="col-xs-4">
-                <a
-                  class="btn btn-primary btn-block"
-                  href="/store"
-                >
-                  <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
-                </a>
-              </div>
-              <div class="col-xs-4">
-                <button
-                  class="btn btn-warning btn-block"
-                  v-on:click="logoutUser()"
-                >
-                  Logout
-                </button>
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset v-if="!auth">
-            <legend>Login With</legend>
-
-            <div class="row">
-              <div class="col-xs-4">
-                <button
-                  class="btn btn-block btn-google"
-                  v-on:click="attemptLoginWithGoogle()"
-                >
-                  <i class="fa fa-google" aria-hidden="true"></i> Google
-                </button>
-              </div>
-              <div class="col-xs-4">
-                <button
-                  class="btn btn-block btn-facebook"
-                  v-on:click="attemptLoginWithFacebook()"
-                >
-                  <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
-                </button>
-              </div>
-              <div class="col-xs-4">
-                <button
-                  class="btn btn-block btn-twitter"
-                  v-on:click="attemptLoginWithTwitter()"
-                >
-                  <i class="fa fa-twitter" aria-hidden="true"></i> Twitter
-                </button>
-              </div>
-            </div>
-          </fieldset>
+          <a class="btn btn-success btn-block mb3" href="/game" id="play-button">Play Now</a>
+          <a class="btn btn-primary btn-sm btn-block" href="/create-a-room">Create a Room</a>
 
           <fieldset class="mb0 pb0">
             <legend>Subscribe To Our Newsletter</legend>
@@ -138,10 +35,10 @@
 
                   <div class="row">
                     <div class="col-xs-8">
-                      <input type="email" placeholder="Enter your email address" value="" name="EMAIL" class="required email form-control" required id="mce-EMAIL">
+                      <input type="email" placeholder="Enter your email address" value="" name="EMAIL" class="required email form-control" required id="mce-EMAIL" style="height: 29px; border-radius: 2px; border: 0;">
                     </div>
                     <div class="col-xs-4">
-                      <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-block btn-primary" style="height: auto;">
+                      <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-sm btn-block btn-primary" >
                     </div>
                   </div>
 
@@ -153,10 +50,126 @@
             <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
           </fieldset>
         </div>
+        <div style="width: 336px; height: 280px; margin: 0 auto;">
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- Home Page Large Ad -->
+          <ins class="adsbygoogle"
+              style="display:inline-block;width:336px;height:280px"
+              data-ad-client="ca-pub-2986206357433139"
+              data-ad-test="on"
+              data-adtest="on"
+              data-ad-slot="3064456400"></ins>
+          <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
       </div>
     </div>
     <div class="col-xs-6 h100">
       <div class="well h100">
+        <div
+          class="alert alert-danger"
+          v-if="accountErrorMessage"
+        >
+          ${ accountErrorMessage }
+        </div>
+        <div
+          class="alert alert-success"
+          v-if="accountSuccessMessage"
+        >
+          ${ accountSuccessMessage }
+        </div>
+
+        <fieldset v-if="auth">
+          <legend>Your Account</legend>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-8">
+              <div class="form-group">
+                <input
+                  @keyup.13="claimUsername()"
+                  autofocus
+                  class="form-control"
+                  maxlength="25"
+                  placeholder="Enter your nickname..."
+                  style="height: 29px !important; border-radius: 2px !important; border: 0 !important; margin-bottom: 15px !important"
+                  type="text"
+                  v-model.trim="newUsername"
+                />
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <button
+                class="btn btn-sm btn-primary btn-block"
+                :class="{ disabled: isEmptyUsername || isSameUsername }"
+                :disabled="isEmptyUsername || isSameUsername"
+                v-on:click="claimUsername()"
+              >
+                Claim Name
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-4">
+              <a
+                class="btn btn-sm btn-primary btn-block"
+                v-if="user"
+                v-bind:href="'/battle-stats/' + user.username"
+              >
+                My Battle Stats
+              </a>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <a
+                class="btn btn-sm btn-primary btn-block"
+                href="/store"
+              >
+                <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
+              </a>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <button
+                class="btn btn-sm btn-warning btn-block"
+                v-on:click="logoutUser()"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset v-if="!auth">
+          <legend>Login With</legend>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <button
+                class="btn btn-sm btn-block btn-google"
+                v-on:click="attemptLoginWithGoogle()"
+              >
+                <i class="fa fa-google" aria-hidden="true"></i> Google
+              </button>
+            </div>
+            <div class="col-xs-4">
+              <button
+                class="btn btn-sm btn-block btn-facebook"
+                v-on:click="attemptLoginWithFacebook()"
+              >
+                <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
+              </button>
+            </div>
+            <div class="col-xs-4">
+              <button
+                class="btn btn-sm btn-block btn-twitter"
+                v-on:click="attemptLoginWithTwitter()"
+              >
+                <i class="fa fa-twitter" aria-hidden="true"></i> Twitter
+              </button>
+            </div>
+          </div>
+        </fieldset>
+
         <fieldset>
           <legend>Rooms ( {{ numberOfRooms }} )</legend>
 
