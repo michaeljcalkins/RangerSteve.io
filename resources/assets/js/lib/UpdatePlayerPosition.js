@@ -35,7 +35,9 @@ export default function () {
     shooting: isPlayerShooting(currentWeaponId, window.RS.player.rightArmSprite),
     weaponId: currentWeaponId,
     x: Math.round(Math.max(0, window.RS.player.x)),
-    y: Math.round(Math.max(0, window.RS.player.y))
+    y: Math.round(Math.max(0, window.RS.player.y)),
+    velocityX: window.RS.player.body.velocity.x,
+    velocityY: window.RS.player.body.velocity.y
   }
 
   if (isEqual(newPlayerData, lastPlayerData)) return

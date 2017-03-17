@@ -120,8 +120,6 @@ gameloop.on('update', function () {
           roomData.players[playerId][playerProperty] = lastPlayerData[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
         }
       })
-
-      roomData.players[playerId].state = rooms[roomId].players[playerId].state
     })
 
     Server.sendToRoom(
@@ -283,12 +281,6 @@ function onLoadComplete () {
     console.log('Player not found when they were done loading.', this.id)
     return
   }
-
-  // Get initial spawn point
-  const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
-  const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
-  player.x = spawnPoint.x
-  player.y = spawnPoint.y
 
   // Tell everyone this player has loaded the game
   player.noDamageUntilTime = Date.now() + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
@@ -509,6 +501,8 @@ function onMovePlayer (buffer) {
   // Update player position
   player.x = data.x
   player.y = data.y
+  player.velocityX = data.velocityX
+  player.velocityY = data.velocityY
   player.angle = data.angle
   player.flying = data.flying
   player.shooting = data.shooting

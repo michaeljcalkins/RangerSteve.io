@@ -13,6 +13,11 @@ function Boot (game) {
 
 Boot.prototype = {
   preload: function () {
+    this.game.stage.backgroundColor = '#85b5e1'
+
+    this.game.load.baseURL = window.CLOUDFRONT_URL
+    this.game.load.crossOrigin = 'anonymous'
+
     this.game.load.image('bullet', '/images/bullet.png')
     this.game.load.image('left-arm', '/images/body/left-arm.png')
     this.game.load.image('player-placeholder', '/images/player-placeholder.png')
@@ -73,7 +78,7 @@ Boot.prototype = {
     this.game.plugins.add(ArcadePolygons)
     this.game.physics.startSystem(Phaser.Physics.Arcade)
 
-    this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
+    this.game.physics.arcade.gravity.y = GameConsts.PLAYER_PHYSICS.GRAVITY
 
     window.RS.jumpjetFx = this.game.add.audio('jumpjet')
     window.RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')

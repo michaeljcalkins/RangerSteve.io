@@ -1,5 +1,5 @@
 body.game {
-    background: #000 !important;
+    background: #2B2825 !important;
     cursor: url(/images/crosshair.png) 15 15, auto;
     font-size: 'Keep Calm', cursive;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -10,24 +10,6 @@ body.game {
     user-select: none;           /* Non-prefixed version, currently
                                     not supported by any browser */
     overflow: hidden;
-}
-
-#loading-screen {
-  background: url(/images/ranger-steve.png) #2B2825 no-repeat 51% 36%;
-  color: white;
-  font-family: Bangers, arial;
-  font-size: 38px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000000002;
-  text-shadow: -1px -1px 0 #504F4D, 1px -1px 0 #504F4D, -1px 1px 0 #504F4D, 1px 1px 0 #504F4D;
-  letter-spacing: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .option-heading {
