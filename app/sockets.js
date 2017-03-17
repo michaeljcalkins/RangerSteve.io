@@ -282,12 +282,6 @@ function onLoadComplete () {
     return
   }
 
-  // Get initial spawn point
-  const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
-  const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
-  player.x = spawnPoint.x
-  player.y = spawnPoint.y
-
   // Tell everyone this player has loaded the game
   player.noDamageUntilTime = Date.now() + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
   player.isProtected = true
