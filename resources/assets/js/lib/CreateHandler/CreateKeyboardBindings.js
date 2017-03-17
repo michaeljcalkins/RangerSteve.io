@@ -109,7 +109,7 @@ export default function () {
         ? store.getState().player.selectedPrimaryWeaponId
         : store.getState().player.selectedSecondaryWeaponId
 
-      window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[currentWeaponId].frame
+      window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].frame
 
       ReloadGunWhenEmpty.call(this, currentWeaponId)
 

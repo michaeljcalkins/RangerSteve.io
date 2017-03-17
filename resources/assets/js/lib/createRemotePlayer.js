@@ -78,7 +78,7 @@ export default function RemotePlayer (playerId, playerData) {
   // Player sprite
   newRemotePlayer.playerSprite = this.game.add.sprite(0, 0, 'player')
   newRemotePlayer.playerSprite.anchor.setTo(0.5)
-  newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_RIGHT_FRAME
+  newRemotePlayer.playerSprite.frame = GameConsts.STANDING_RIGHT_FRAME
 
   //  Our two animations, walking left and right.
   newRemotePlayer.playerSprite.animations.add('runRight-faceRight', [0, 1, 2, 3, 4, 5], GameConsts.ANIMATION_FRAMERATE, true)
@@ -111,7 +111,7 @@ export default function RemotePlayer (playerId, playerData) {
   newRemotePlayer.rightArmSprite.scale.y *= -1
   newRemotePlayer.rightArmGroup.angle = 87.67
   newRemotePlayer.rightArmGroup.add(newRemotePlayer.rightArmSprite)
-  newRemotePlayer.rightArmSprite.animations.frame = GameConsts.WEAPONS[playerData.weaponId].frame
+  newRemotePlayer.rightArmSprite.frame = GameConsts.WEAPONS[playerData.weaponId].frame
 
   // Add right arm to player as child then offset it
   newRemotePlayer.addChild(newRemotePlayer.rightArmGroup)
@@ -124,7 +124,7 @@ export default function RemotePlayer (playerId, playerData) {
 
   newRemotePlayer.anchor.set(0.5)
   updatePlayerAngles(newRemotePlayer, 200)
-  newRemotePlayer.playerSprite.animations.frame = GameConsts.STANDING_LEFT_FRAME
+  newRemotePlayer.playerSprite.frame = GameConsts.STANDING_LEFT_FRAME
 
   const enemyPlayerName = playerData.nickname
     ? playerData.nickname

@@ -44,7 +44,7 @@ function resetPlayerWeapons () {
   store.dispatch(actions.player.setIsSwitchingWeapon(false))
 
   // Show non firing primary weapon frame
-  window.RS.player.rightArmSprite.animations.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
+  window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
 }
 
 function resetPlayerMovement () {

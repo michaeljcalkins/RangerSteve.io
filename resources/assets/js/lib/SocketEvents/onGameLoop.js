@@ -128,7 +128,7 @@ export default function onGameLoop (data) {
 
     // Control muzzle flash visibility
     if (GameConsts.WEAPONS[player.data.weaponId]) {
-      player.rightArmSprite.animations.frame = player.data.shooting
+      player.rightArmSprite.frame = player.data.shooting
         ? GameConsts.WEAPONS[player.data.weaponId].shootingFrame
         : GameConsts.WEAPONS[player.data.weaponId].frame
     }
