@@ -45,7 +45,6 @@ export default function onGameLoop (data) {
   while (playerKeysLength--) {
     const playerId = playerKeys[playerKeysLength]
     const playerData = data.players[playerId]
-    console.log(playerData)
 
     if (playerId === window.SOCKET_ID) {
       // Update local player's health if there is a change

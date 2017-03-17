@@ -13,6 +13,11 @@ function Boot (game) {
 
 Boot.prototype = {
   preload: function () {
+    this.game.stage.backgroundColor = '#85b5e1'
+
+    this.game.load.baseURL = 'https://d3banvqa7actu5.cloudfront.net'
+    this.game.load.crossOrigin = 'anonymous'
+
     this.game.load.image('bullet', '/images/bullet.png')
     this.game.load.image('left-arm', '/images/body/left-arm.png')
     this.game.load.image('player-placeholder', '/images/player-placeholder.png')
