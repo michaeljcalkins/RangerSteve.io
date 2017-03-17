@@ -60,6 +60,8 @@
         <script src="/js/phaser{{ '.min' if isProduction }}.js"></script>
 
         <script>
+          window.CLOUDFRONT_URL = '{{ cloudfrontUrl }}'
+
           // Initialize Firebase
           var config = {
             apiKey: "AIzaSyCUB7iZ5M_UizQ3Y4uXKsV18cm_ISr5-Nk",

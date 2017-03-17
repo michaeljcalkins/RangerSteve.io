@@ -15,7 +15,7 @@ Boot.prototype = {
   preload: function () {
     this.game.stage.backgroundColor = '#85b5e1'
 
-    this.game.load.baseURL = 'https://d3banvqa7actu5.cloudfront.net'
+    this.game.load.baseURL = window.CLOUDFRONT_URL
     this.game.load.crossOrigin = 'anonymous'
 
     this.game.load.image('bullet', '/images/bullet.png')

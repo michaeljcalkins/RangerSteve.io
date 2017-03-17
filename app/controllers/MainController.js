@@ -75,6 +75,7 @@ let MainController = {
     let lastModifiedTime = moment(fileStat.mtime).unix()
 
     res.render('game', {
+      CLOUDFRONT_URL: process.env.CLOUDFRONT_URL,
       lastModifiedTime: lastModifiedTime,
       isProduction: process.env.NODE_ENV === 'production'
     })
