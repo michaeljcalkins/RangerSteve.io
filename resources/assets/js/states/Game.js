@@ -123,7 +123,7 @@ Game.prototype = {
     RotateBulletsToTrajectory.call(this)
     UpdateHurtBorder.call(this)
     UpdatePlayerPosition.call(this)
-    UpdateEnemyPositions.call(this)
+    // UpdateEnemyPositions.call(this)
   },
 
   render () {
