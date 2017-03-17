@@ -20,8 +20,6 @@ export default function createLocalPlayer () {
   // Physics
   this.game.arcadePolygons.enableSpriteBody(window.RS.player, this)
 
-  this.game.physics.arcade.gravity.y = GameConsts.PLAYER_PHYSICS.GRAVITY
-
   // Set player minimum and maximum movement speed
   window.RS.player.body.maxVelocity.x = GameConsts.PLAYER_PHYSICS.MAX_VELOCITY_X
   window.RS.player.body.maxVelocity.y = GameConsts.PLAYER_PHYSICS.MAX_VELOCITY_Y

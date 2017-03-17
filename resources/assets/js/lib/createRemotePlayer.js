@@ -24,6 +24,9 @@ export default function RemotePlayer (playerId, playerData) {
     x: playerData.x,
     y: playerData.y,
 
+    velocityX: playerData.velocityX,
+    velocityY: playerData.velocityY,
+
     lastPosition: {
       x: playerData.x,
       y: playerData.y
@@ -32,10 +35,18 @@ export default function RemotePlayer (playerId, playerData) {
 
   // Physics
   this.game.arcadePolygons.enableSpriteBody(newRemotePlayer, this)
-  newRemotePlayer.body.setSize(GameConsts.PLAYER_BODY_WIDTH, GameConsts.PLAYER_BODY_HEIGHT)
 
-  // This stops the effect of gravity on remote players
-  newRemotePlayer.body.gravity.y = undefined
+  // Set player minimum and maximum movement speed
+  newRemotePlayer.body.maxVelocity.x = GameConsts.PLAYER_PHYSICS.MAX_VELOCITY_X
+  newRemotePlayer.body.maxVelocity.y = GameConsts.PLAYER_PHYSICS.MAX_VELOCITY_Y
+
+  // Add drag to the player that slows them down when they are not accelerating
+  newRemotePlayer.body.drag.x = GameConsts.PLAYER_PHYSICS.DRAG_X
+  newRemotePlayer.body.drag.y = GameConsts.PLAYER_PHYSICS.DRAG_Y
+
+  // Update player body Arcade Slopes properties
+  newRemotePlayer.body.sat.friction = GameConsts.PLAYER_PHYSICS.FRICTION
+  newRemotePlayer.body.sat.bounce = GameConsts.PLAYER_PHYSICS.BOUNCE
 
   // Make player collide with world boundaries so he doesn't leave the stage
   newRemotePlayer.body.collideWorldBounds = true

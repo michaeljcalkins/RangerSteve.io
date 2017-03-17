@@ -45,6 +45,7 @@ export default function onGameLoop (data) {
   while (playerKeysLength--) {
     const playerId = playerKeys[playerKeysLength]
     const playerData = data.players[playerId]
+    console.log(playerData)
 
     if (playerId === window.SOCKET_ID) {
       // Update local player's health if there is a change
@@ -96,6 +97,11 @@ export default function onGameLoop (data) {
       y: player.data.y,
       millisRemaining: GameConsts.TICK_RATE
     }
+
+    player.body.velocity.x = player.data.velocityX
+    player.body.velocity.y = player.data.velocityY
+    // player.x = player.data.x
+    // player.y = player.data.y
 
     // Update player's name above their player in game
     if (lastPlayerNickname[playerId] !== player.data.nickname) {

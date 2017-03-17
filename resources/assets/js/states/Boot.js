@@ -73,7 +73,7 @@ Boot.prototype = {
     this.game.plugins.add(ArcadePolygons)
     this.game.physics.startSystem(Phaser.Physics.Arcade)
 
-    this.game.physics.arcade.gravity.y = GameConsts.GRAVITY
+    this.game.physics.arcade.gravity.y = GameConsts.PLAYER_PHYSICS.GRAVITY
 
     window.RS.jumpjetFx = this.game.add.audio('jumpjet')
     window.RS.switchingWeaponsFx = this.game.add.audio('switching-weapons')

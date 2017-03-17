@@ -120,8 +120,6 @@ gameloop.on('update', function () {
           roomData.players[playerId][playerProperty] = lastPlayerData[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
         }
       })
-
-      roomData.players[playerId].state = rooms[roomId].players[playerId].state
     })
 
     Server.sendToRoom(
@@ -509,6 +507,8 @@ function onMovePlayer (buffer) {
   // Update player position
   player.x = data.x
   player.y = data.y
+  player.velocityX = data.velocityX
+  player.velocityY = data.velocityY
   player.angle = data.angle
   player.flying = data.flying
   player.shooting = data.shooting
