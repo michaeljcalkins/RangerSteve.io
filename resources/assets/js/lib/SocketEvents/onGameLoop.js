@@ -99,8 +99,6 @@ export default function onGameLoop (data) {
 
     player.body.velocity.x = player.data.velocityX
     player.body.velocity.y = player.data.velocityY
-    player.x = player.data.x
-    player.y = player.data.y
 
     // Update player's name above their player in game
     if (lastPlayerNickname[playerId] !== player.data.nickname) {
