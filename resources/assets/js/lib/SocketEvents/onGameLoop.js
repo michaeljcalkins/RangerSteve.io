@@ -9,6 +9,21 @@ const lastPlayerNickname = {}
 
 const updatePlayerProtection = (player, isProtected) => { player.alpha = isProtected ? 0.3 : 1 }
 
+function mapPlayerData (data) {
+  const playerData = {}
+
+  Object.keys(data).forEach(function(prop) {
+    const propName = mapPlayerProp(prop)
+    playerData[propName] = data[prop]
+  })
+
+  return playerData
+}
+
+function mapPlayerProp(prop) {
+  return (typeof GameConsts.PROPERTY_MAP[prop] !== 'undefined') ? GameConsts.PROPERTY_MAP[prop] : prop
+}
+
 export default function onGameLoop (data) {
   const store = this.game.store
   const room = store.getState().room
@@ -44,7 +59,8 @@ export default function onGameLoop (data) {
   let playerKeysLength = playerKeys.length
   while (playerKeysLength--) {
     const playerId = playerKeys[playerKeysLength]
-    const playerData = data.players[playerId]
+
+    const playerData = mapPlayerData(data.players[playerId])
 
     if (playerId === window.SOCKET_ID) {
       // Update local player's health if there is a change
@@ -67,7 +83,8 @@ export default function onGameLoop (data) {
       }
 
       // Update the local player with updates for them
-      GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(propName => {
+      GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(prop => {
+        const propName = mapPlayerProp(prop)
         if (typeof playerData[propName] !== 'undefined') window.RS.player.data[propName] = playerData[propName]
       })
 
@@ -82,7 +99,8 @@ export default function onGameLoop (data) {
 
     // 4. Update player data
     player.data.id = playerId
-    GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(propName => {
+    GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(prop => {
+      const propName = mapPlayerProp(prop)
       if (typeof playerData[propName] !== 'undefined') player.data[propName] = playerData[propName]
     })
 
