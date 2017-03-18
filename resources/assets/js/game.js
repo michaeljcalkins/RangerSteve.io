@@ -46,5 +46,5 @@ export default function (store) {
 
   // Force unpausing the game after 5 seconds to prevent loading screen freeze bug
   // Wrap the arrow function to prevent returning an assignment
-  setTimeout(() => { game.paused = false }, 15 * 1000)
+  setTimeout(() => { game.paused = false }, 5000)
 }
