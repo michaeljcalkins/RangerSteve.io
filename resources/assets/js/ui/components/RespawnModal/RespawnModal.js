@@ -18,6 +18,7 @@ export class RespawnModal extends PureComponent {
   }
 
   state = {
+    isRespawning: false,
     autoRespawn: this.props.game.autoRespawn,
     oneTimeAutoRespawn: false,
     elapsed: 0,
@@ -30,6 +31,7 @@ export class RespawnModal extends PureComponent {
 
   componentWillUnmount () {
     clearInterval(this.timer)
+    this.setState({ isRespawning: false })
   }
 
   props: {
@@ -38,9 +40,9 @@ export class RespawnModal extends PureComponent {
   }
 
   tick () {
-    const { canRespawnTime } = this.props.player
-    const { currentTime } = this.props.room
-    const timeRemaining = (canRespawnTime / 1000) - (currentTime / 1000)
+    const { player, room } = this.props
+    const { isRespawning } = this.state
+    const timeRemaining = (player.canRespawnTime / 1000) - (room.currentTime / 1000)
     let seconds = Number((timeRemaining).toFixed(1))
     if (seconds % 1 === 0) seconds = seconds + '.0'
 
@@ -52,7 +54,12 @@ export class RespawnModal extends PureComponent {
     }
 
     // Respawn when the wait time has elapsed
-    if ((this.state.autoRespawn || this.state.oneTimeAutoRespawn) && seconds < 0) {
+    if (
+      (this.state.autoRespawn || this.state.oneTimeAutoRespawn) &&
+      seconds <= 0 &&
+      !isRespawning
+    ) {
+      this.setState({ isRespawning: true })
       this.handleRespawnButtonClick()
       return
     }
@@ -158,7 +165,7 @@ export class RespawnModal extends PureComponent {
   }
 
   handleRespawnButtonClick () {
-    Client.send(GameConsts.EVENT.PLAYER_RESPAWN, {})
+    Client.send(GameConsts.EVENT.PLAYER_RESPAWN)
   }
 
   handleWeaponsViewClick (view) {
