@@ -189,6 +189,7 @@ roomUpdateLoop.on('update', function () {
 
       // Now that player positions are reset we can spread players throughout the map
       Object.keys(rooms[roomId].players).forEach((playerId) => {
+        // You are alive and the round has ended
         const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
         const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
 
@@ -250,7 +251,7 @@ function removePlayer (id, roomId) {
 
   // Player not found
   if (!player) {
-    console.log('Player not found when disconnecting: ' + id)
+    console.log('* LOG * Player not found when disconnecting: ' + id)
     return
   }
 
@@ -262,7 +263,7 @@ function removePlayer (id, roomId) {
 
   // If this was the last player in this room delete the whole room
   if (Object.keys(rooms[roomId].players).length === 0) {
-    console.log('Removing room: ', roomId)
+    console.log('* LOG * Removing room: ', roomId)
     delete rooms[roomId]
     delete lastRoomData[roomId]
   }
@@ -279,15 +280,9 @@ function onLoadComplete () {
   const player = getPlayerById(rooms[roomId], this.id)
 
   if (!player) {
-    console.log('Player not found when they were done loading.', this.id)
+    console.log('* LOG * Player not found when they were done loading.', this.id)
     return
   }
-
-  // Get initial spawn point
-  const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
-  const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
-  player.x = spawnPoint.x
-  player.y = spawnPoint.y
 
   // Tell everyone this player has loaded the game
   player.noDamageUntilTime = Date.now() + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
@@ -347,6 +342,7 @@ function onPlayerRespawn () {
 
   lastPlayerData[this.id] = {}
 
+  // Player has died and is requesting a spawn point after waiting the respawn timeout
   const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
   const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
 
@@ -455,7 +451,7 @@ function onNewPlayer (data) {
     newPlayer.team = getTeam(players, redTeamScore, blueTeamScore)
   }
 
-  // Get initial spawn point
+  // Get spawn point for a player who has just joined the game
   const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomIdPlayerWillJoin].map]
   const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomIdPlayerWillJoin].players)
   newPlayer.x = spawnPoint.x
@@ -558,20 +554,25 @@ function onPlayerDamaged (data) {
 
   if (player.noDamageUntilTime > Date.now()) return
 
+  // Apply damage to player's health
   player.health -= Number(data.damage)
+
   player.damageStats = player.damageStats || {}
 
+  // Change the attached damage stats to the new attacker if there is one
   if (player.damageStats.attackingPlayerId !== data.attackingPlayerId) {
     player.damageStats.attackingPlayerId = data.attackingPlayerId
     player.damageStats.attackingDamage = 0
     player.damageStats.attackingHits = 0
   }
 
+  // Update damage stats for respawn modal when player dies
   player.damageStats.attackingDamage += data.damage
   player.damageStats.attackingHits++
   player.damageStats.weaponId = data.weaponId
   player.timesHit++
 
+  // Update attacking player's stats for leaderboard if the player was not killed
   const attackingPlayer = getPlayerById(rooms[roomId], data.attackingPlayerId)
   if (attackingPlayer) {
     attackingPlayer.bulletsHit++
@@ -590,11 +591,7 @@ function onPlayerDamaged (data) {
     player.canRespawnTime = Date.now() + GameConsts.RESPAWN_TIME_IN_MS
     player.isVisibleAfterTime = Date.now() + GameConsts.RESPAWN_TIME_IN_MS + 1000
 
-    const spawnPoints = GameConsts.MAP_SPAWN_POINTS[rooms[roomId].map]
-    const spawnPoint = getSpawnPoint(spawnPoints, rooms[roomId].players)
-    player.x = spawnPoint.x
-    player.y = spawnPoint.y
-
+    // Update attacking player's stats for leaderboard with additional info if the player was killed
     if (attackingPlayer) {
       attackingPlayer.score += 10
       attackingPlayer.kills++
@@ -604,6 +601,9 @@ function onPlayerDamaged (data) {
       if (player.team === 'red') rooms[roomId].blueTeamScore += 10
       if (player.team === 'blue') rooms[roomId].redTeamScore += 10
 
+      // If after killing this player the attacker has a
+      // longer killing spree we update the best
+      // killing spree to the current number.
       if (attackingPlayer.killingSpree > attackingPlayer.bestKillingSpree) {
         attackingPlayer.bestKillingSpree = attackingPlayer.killingSpree
       }
