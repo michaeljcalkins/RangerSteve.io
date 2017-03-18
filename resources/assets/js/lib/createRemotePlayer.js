@@ -1,3 +1,5 @@
+import get from 'lodash/get'
+
 import GameConsts from 'lib/GameConsts'
 import updatePlayerAngles from './updatePlayerAngles'
 import updatePlayerColor from './updatePlayerColor'
@@ -111,7 +113,7 @@ export default function RemotePlayer (playerId, playerData) {
   newRemotePlayer.rightArmSprite.scale.y *= -1
   newRemotePlayer.rightArmGroup.angle = 87.67
   newRemotePlayer.rightArmGroup.add(newRemotePlayer.rightArmSprite)
-  newRemotePlayer.rightArmSprite.frame = GameConsts.WEAPONS[playerData.weaponId].frame
+  newRemotePlayer.rightArmSprite.frame = get(GameConsts, `WEAPONS[${playerData.weaponId}].frame`, 6) // default to AK47
 
   // Add right arm to player as child then offset it
   newRemotePlayer.addChild(newRemotePlayer.rightArmGroup)
