@@ -112,12 +112,13 @@ gameloop.on('update', function () {
       }
 
       roomData.players[playerId] = {}
-      GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(function (playerProperty) {
+      GameConsts.GAME_LOOP_PLAYER_PROPERTIES.forEach(function (prop) {
+        const propName = (typeof GameConsts.PROPERTY_MAP[prop] !== 'undefined') ? GameConsts.PROPERTY_MAP[prop] : prop
         if (
-          typeof lastPlayerData[playerId][playerProperty] === 'undefined' || // if the value has not been sent yet
-          lastPlayerData[playerId][playerProperty] !== rooms[roomId].players[playerId][playerProperty] // if the value is now different
+          typeof lastPlayerData[playerId][propName] === 'undefined' || // if the value has not been sent yet
+          lastPlayerData[playerId][propName] !== rooms[roomId].players[playerId][propName] // if the value is now different
         ) {
-          roomData.players[playerId][playerProperty] = lastPlayerData[playerId][playerProperty] = rooms[roomId].players[playerId][playerProperty]
+          roomData.players[playerId][prop] = lastPlayerData[playerId][propName] = rooms[roomId].players[playerId][propName]
         }
       })
     })
