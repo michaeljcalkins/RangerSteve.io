@@ -92,101 +92,108 @@
   {% block head %}{% endblock %}
 </head>
 <body class="main">
+  <header class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand ff-bangers ft18" href="/">RangerSteve.io</a>
+      </div>
 
-<header class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand ff-bangers ft18" href="/">RangerSteve.io</a>
+      <nav>
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/how-to-play" class="btn btn-link">How To Play</a>
+          </li>
+          <li>
+            <a href="/leaderboards" class="btn btn-link">Leaderboards</a>
+          </li>
+          <li>
+            <a href="/store" class="btn btn-link">Store</a>
+          </li>
+          <li>
+            <a href="/map-editor" class="btn btn-link">Map Editor</a>
+          </li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <nav>
-      <ul class="nav navbar-nav">
-        <li>
-          <a href="/how-to-play" class="btn btn-link">How To Play</a>
-        </li>
-        <li>
-          <a href="/leaderboards" class="btn btn-link">Leaderboards</a>
-        </li>
-        <li>
-          <a href="/store" class="btn btn-link">Store</a>
-        </li>
-        <li>
-          <a href="/map-editor" class="btn btn-link">Map Editor</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header>
+  {% block content %}{% endblock %}
 
-{% block content %}{% endblock %}
+  <footer class="navbar navbar-sm navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+      <nav>
+        <ul class="nav navbar-nav">
+          <li>
+            <a style="color: #7289DA;" href="https://discord.gg/GqKgsmy" class="btn btn-link" target="_blank">
+              <i class="fa fa-commenting"></i> Discord
+            </a>
+          </li>
+          <li>
+            <a style="color: #4267b2;" href="https://www.facebook.com/rangersteveio/" class="btn btn-link"
+              target="_blank">
+              <i class="fa fa-facebook"></i> Facebook
+            </a>
+          </li>
+          <li>
+            <a style="color: #1da1f2;" href="https://twitter.com/michaeljcalkins" class="btn btn-link" target="_blank">
+              <i class="fa fa-twitter"></i> Twitter
+            </a>
+          </li>
+          <li>
+            <a class="btn btn-link" href="https://rangersteve.userecho.com/" target="_blank">
+              Give Feedback or Report Bugs
+            </a>
+          </li>
+          <li>
+            <a class="btn btn-link" target="_blank" href="/credits">
+              Credits
+            </a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a style="color: #AAA;" href="http://iogames.space" class="btn btn-link pull-right" target="_blank"
+              title="IO Games">IO Games</a>
+          </li>
+          <li>
+            <a style="color: #AAA;" href="http://poki.com/" class="btn btn-link pull-right" target="_blank"
+              title="Poki">Poki</a>
+          </li>
+          <li>
+            <a style="color: #AAA;" href="http://game.wtf/" class="btn btn-link pull-right" target="_blank"
+              title="GAME.WTF">GAME.WTF</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
 
-<footer class="navbar navbar-sm navbar-default navbar-fixed-bottom">
-  <div class="container-fluid">
-    <nav>
-      <ul class="nav navbar-nav">
-        <li>
-          <a style="color: #7289DA;" href="https://discord.gg/GqKgsmy" class="btn btn-link" target="_blank">
-            <i class="fa fa-commenting"></i> Discord
-          </a>
-        </li>
-        <li>
-          <a style="color: #4267b2;" href="https://www.facebook.com/rangersteveio/" class="btn btn-link"
-             target="_blank">
-            <i class="fa fa-facebook"></i> Facebook
-          </a>
-        </li>
-        <li>
-          <a style="color: #1da1f2;" href="https://twitter.com/michaeljcalkins" class="btn btn-link" target="_blank">
-            <i class="fa fa-twitter"></i> Twitter
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-link" href="https://rangersteve.userecho.com/" target="_blank">
-            Give Feedback or Report Bugs
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-link" target="_blank" href="/credits">
-            Credits
-          </a>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a style="color: #AAA;" href="http://iogames.space" class="btn btn-link pull-right" target="_blank"
-             title="IO Games">IO Games</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</footer>
+  <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: 'AIzaSyCUB7iZ5M_UizQ3Y4uXKsV18cm_ISr5-Nk',
+      authDomain: 'rangersteve-5d1fc.firebaseapp.com',
+      databaseURL: 'https://rangersteve-5d1fc.firebaseio.com',
+      storageBucket: 'rangersteve-5d1fc.appspot.com',
+      messagingSenderId: '452510793270'
+    }
+    firebase.initializeApp(config)
+  </script>
 
-<script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: 'AIzaSyCUB7iZ5M_UizQ3Y4uXKsV18cm_ISr5-Nk',
-    authDomain: 'rangersteve-5d1fc.firebaseapp.com',
-    databaseURL: 'https://rangersteve-5d1fc.firebaseio.com',
-    storageBucket: 'rangersteve-5d1fc.appspot.com',
-    messagingSenderId: '452510793270'
-  }
-  firebase.initializeApp(config)
-</script>
-
-<script>if (typeof module === 'object') {
-    window.module = module
-    module = undefined
-  }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
-{% block scripts %}{% endblock %}
+  <script>if (typeof module === 'object') {
+      window.module = module
+      module = undefined
+    }</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>
