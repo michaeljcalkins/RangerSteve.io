@@ -51,7 +51,10 @@ function onData (data) {
   events[data.type].call(this, data.payload)
 
   lastPlayerData[this.id] = lastPlayerData[this.id] || {}
-  lastPlayerData[this.id].lastMessageTime = Date.now()
+
+  if (!_.includes(GameConsts.IGNORED_EVENTS_FOR_IDLE_DETECTION, GameConsts.EVENTS[data.type])) {
+    lastPlayerData[this.id].lastMessageTime = Date.now()
+  }
 }
 
 function init (primusInstance) {
@@ -97,7 +100,7 @@ gameloop.on('update', function () {
 
       // Find out how long it's been since this player sent us data
       const messageTimeDiff = now - lastPlayerData[playerId].lastMessageTime
-      if (messageTimeDiff > (GameConsts.MAX_IDLE_TIME_IN_MS)) {
+      if (messageTimeDiff > GameConsts.MAX_IDLE_TIME_IN_MS) {
         // Disconnect this player's socket and remove references to the player in game
         // The game loop on the client's end will remove this player's sprite when they are found to be missing
         io.spark(playerId) && io.spark(playerId).end()
