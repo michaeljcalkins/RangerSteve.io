@@ -38,6 +38,8 @@ export default function RemotePlayer (playerId, playerData) {
   // Physics
   this.game.arcadePolygons.enableSpriteBody(newRemotePlayer, this)
 
+  newRemotePlayer.body.allowGravity = false
+
   // Set player minimum and maximum movement speed
   newRemotePlayer.body.maxVelocity.x = GameConsts.PLAYER_PHYSICS.MAX_VELOCITY_X
   newRemotePlayer.body.maxVelocity.y = GameConsts.PLAYER_PHYSICS.MAX_VELOCITY_Y
