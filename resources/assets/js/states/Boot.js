@@ -13,7 +13,7 @@ function Boot (game) {
 
 Boot.prototype = {
   preload: function () {
-    this.game.stage.backgroundColor = '#85b5e1'
+    this.game.stage.backgroundColor = '#2B2825'
 
     this.game.load.baseURL = window.CLOUDFRONT_URL
     this.game.load.crossOrigin = 'anonymous'
