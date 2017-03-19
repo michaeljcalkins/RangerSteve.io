@@ -4,21 +4,22 @@
 
 {% block content %}
 <section class="container-fluid pv8 ph8 h100" id="home-container" v-cloak>
-  <div id="browser-recommendation" class="alert alert-info text-center">
-    We recommend using Chrome browser for the best game performance
-  </div>
-
-  <div
-    class="alert alert-info text-center"
-    v-if="showIdlePlayerMessage"
-  >
-    You have been kicked for being idle for {{ maxIdleSeconds }} seconds.
-  </div>
-
   <div class="row h100">
     <div class="col-xs-6 text-center align-middle h100">
       <div class="mb4 col-xs-12 col-sm-12 col-md-12 col-lg-8">
         <h1 class="ff-bangers tcw text-stroke ft35 mb1">Ranger Steve</h1>
+
+        <div id="browser-recommendation" class="alert alert-info text-center">
+          We recommend using Chrome browser for the best game performance
+        </div>
+
+        <div
+          class="alert alert-info text-center"
+          v-if="showIdlePlayerMessage"
+        >
+          You have been kicked for being idle for {{ maxIdleSeconds }} seconds.
+        </div>
+
         <div class="well">
           <a class="btn btn-success btn-block mb3" href="/game" id="play-button">Play Now</a>
           <a class="btn btn-primary btn-sm btn-block" href="/create-a-room">Create a Room</a>
