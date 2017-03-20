@@ -2,7 +2,7 @@ import GameConsts from 'lib/GameConsts'
 import { NetworkStats, formatByteSize, sizeOf } from 'lib/helpers'
 import onSocketConnected from './onSocketConnected'
 import onSocketDisconnect from './onSocketDisconnect'
-import onBulletFired from './onBulletFired'
+import onBulletsFired from './onBulletsFired'
 import onPlayerDamaged from './onPlayerDamaged'
 import onPlayerRespawn from './onPlayerRespawn'
 import onPlayerHealthUpdate from './onPlayerHealthUpdate'
@@ -26,7 +26,7 @@ const events = {
   [GameConsts.EVENT.MESSAGE_RECEIVED]: onMessageReceived,
   [GameConsts.EVENT.NTP_SYNC]: onNtpSync,
   [GameConsts.EVENT.GAME_LOOP]: onGameLoop,
-  [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
+  [GameConsts.EVENT.BULLETS_FIRED]: onBulletsFired,
   [GameConsts.EVENT.ANNOUNCEMENT]: onAnnouncement,
   [GameConsts.EVENT.PLAYER_SCORES]: onPlayerScores,
   [GameConsts.EVENT.PLAYER_JOINED]: onPlayerJoined,
