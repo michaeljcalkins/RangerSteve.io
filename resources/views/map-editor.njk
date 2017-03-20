@@ -163,17 +163,22 @@
 
       reader.onload = function (event) {
         var img = new Image()
+        img.onload = drawBackground
         img.src = event.target.result
-
-        canvas.width = backgroundCanvas.width = img.width
-        canvas.height = backgroundCanvas.height = img.height
-
-        backgroundCanvasCtx.drawImage(img, 0, 0, backgroundCanvas.width, backgroundCanvas.height)
-
-        refresh()
       }
 
       reader.readAsDataURL(this.files[0])
+    }
+
+    function drawBackground(event) {
+      var img = event.path[0]
+
+      canvas.width = backgroundCanvas.width = img.width
+      canvas.height = backgroundCanvas.height = img.height
+
+      backgroundCanvasCtx.drawImage(img, 0, 0, backgroundCanvas.width, backgroundCanvas.height)
+
+      refresh()
     }
 
     function addPoint (event) {
