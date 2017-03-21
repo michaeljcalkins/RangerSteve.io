@@ -1,10 +1,9 @@
-import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
 import range from 'lodash/range'
 import sample from 'lodash/sample'
 
-const rangeOfVariance = range(-0.12, 0.12, 0.01)
+const rangeOfVariance = range(-7, 7, 1)
 let muzzleFlashHandler = null
 let nextFire = null
 let lastWeaponId = null
@@ -36,7 +35,8 @@ export default function FireShotgunShell (currentWeaponId) {
   let y = window.RS.player.y - 10
 
   let pointerAngle = null
-  for (var i = 0; i < 4; i++) {
+  let pointerAngleDeg = null
+  for (let i = 0; i < 4; i++) {
     let bullet = window.RS.bullets.getFirstDead()
     if (!bullet) return console.error('No bullet sprite available.')
 
@@ -49,40 +49,32 @@ export default function FireShotgunShell (currentWeaponId) {
     bullet.width = 40
     bullet.reset(x, y)
 
-    let socketPointerAngle = null
     if (pointerAngle === null) {
       pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
       bullet.rotation = pointerAngle
-      socketPointerAngle = pointerAngle
+      pointerAngleDeg = pointerAngle * 180 / Math.PI
     } else {
-      let randomPointerAngle = sample(rangeOfVariance) + pointerAngle
-      let newVelocity = this.game.physics.arcade.velocityFromRotation(randomPointerAngle, currentWeapon.bulletSpeed)
+      const randomPointerAngleDeg = sample(rangeOfVariance) + pointerAngleDeg
+      const newVelocity = this.game.physics.arcade.velocityFromAngle(randomPointerAngleDeg, currentWeapon.bulletSpeed)
       bullet.body.velocity.x += newVelocity.x
       bullet.body.velocity.y += newVelocity.y
-      bullet.rotation = randomPointerAngle
-      socketPointerAngle = randomPointerAngle
+      bullet.rotation = this.game.math.wrapAngle(randomPointerAngleDeg) * Math.PI / 180
     }
 
     // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
     setTimeout(function () {
       bullet.alpha = 1
     }, 40)
-
-    emitBulletFired.call(this, {
-      bulletId: bullet.bulletId,
-      pointerAngle: socketPointerAngle,
-      weaponId: currentWeaponId,
-      x: Math.round(Math.max(0, x)),
-      y: Math.round(Math.max(0, y))
-    })
   }
 
   // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
   window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+  window.RS.player.isShooting = true
+
   clearTimeout(muzzleFlashHandler)
   muzzleFlashHandler = setTimeout(() => {
     window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].frame
-  }, 60)
+  }, 30)
 
   // Shake camera for gun recoil
   this.camera.shake(0.0015, 100, true)

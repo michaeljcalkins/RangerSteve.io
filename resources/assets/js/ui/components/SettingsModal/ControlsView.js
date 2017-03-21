@@ -138,12 +138,12 @@ export default function ControlsView ({
               <tr>
                 <td>Shoot</td>
                 <td>Left click</td>
-                <td></td>
+                <td />
               </tr>
               <tr>
                 <td>Aim</td>
                 <td>Move your mouse</td>
-                <td></td>
+                <td />
               </tr>
               <tr>
                 <td>Jump</td>
@@ -155,7 +155,7 @@ export default function ControlsView ({
                     value={game.keyboardControls['up']}
                   />
                 </td>
-                <td></td>
+                <td />
               </tr>
               <tr>
                 <td>Move left</td>
@@ -167,7 +167,7 @@ export default function ControlsView ({
                     value={game.keyboardControls['left']}
                   />
                 </td>
-                <td></td>
+                <td />
               </tr>
               <tr>
                 <td>Move right</td>
@@ -179,7 +179,7 @@ export default function ControlsView ({
                     value={game.keyboardControls['right']}
                   />
                 </td>
-                <td></td>
+                <td />
               </tr>
               <tr>
                 <td>Reload</td>
@@ -191,7 +191,7 @@ export default function ControlsView ({
                     value={game.keyboardControls['reload']}
                   />
                 </td>
-                <td></td>
+                <td />
               </tr>
               <tr>
                 <td>Switch weapons</td>
@@ -203,7 +203,7 @@ export default function ControlsView ({
                     value={game.keyboardControls['switchWeapon']}
                   />
                 </td>
-                <td></td>
+                <td />
               </tr>
               <tr>
                 <td>Write chat message</td>
@@ -215,7 +215,7 @@ export default function ControlsView ({
                     value={game.keyboardControls['newChatMessage']}
                   />
                 </td>
-                <td></td>
+                <td />
               </tr>
             </tbody>
           </table>

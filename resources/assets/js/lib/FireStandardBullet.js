@@ -1,4 +1,3 @@
-import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
 
@@ -43,11 +42,12 @@ export default function FireStandardBullet (currentWeaponId) {
   bullet.height = 2
   bullet.width = 40
   bullet.reset(x, y)
-  let pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
+  const pointerAngle = this.game.physics.arcade.moveToPointer(bullet, currentWeapon.bulletSpeed)
   bullet.rotation = pointerAngle
 
   // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
   window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+  window.RS.player.isShooting = true
 
   clearTimeout(muzzleFlashHandler)
   muzzleFlashHandler = setTimeout(() => {
@@ -60,7 +60,7 @@ export default function FireStandardBullet (currentWeaponId) {
   // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
   setTimeout(() => {
     bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
-  }, 40)
+  }, 20)
 
   window.RS.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
   window.RS.weaponSoundEffects[currentWeaponId].play()
@@ -70,12 +70,4 @@ export default function FireStandardBullet (currentWeaponId) {
   } else {
     store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
   }
-
-  emitBulletFired.call(this, {
-    bulletId: bullet.bulletId,
-    pointerAngle,
-    weaponId: currentWeaponId,
-    x: Math.round(Math.max(0, x)),
-    y: Math.round(Math.max(0, y))
-  })
 }

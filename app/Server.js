@@ -15,8 +15,9 @@ const Server = {
     return _stats
   },
 
-  sendToRoom (roomId, type, payload) {
-    return this.io.room(roomId) && this.io.room(roomId).write(this._prepareData(type, payload))
+  sendToRoom (roomId, type, payload, excludedIds = []) {
+    const excludedIdsString = excludedIds.join(' ')
+    return this.io.room(roomId) && this.io.room(roomId).except(excludedIdsString).write(this._prepareData(type, payload))
   },
 
   sendToSocket (socketId, type, payload) {
@@ -38,7 +39,8 @@ const Server = {
 
     if (
       GameConsts.ENABLE_NETWORK_EVENT_LOGS &&
-      type !== GameConsts.EVENT.GAME_LOOP
+      type !== GameConsts.EVENT.GAME_LOOP &&
+      type !== GameConsts.EVENT.NTP_SYNC
     ) {
       console.log('* LOG * Server._prepareData', type, GameConsts.EVENTS[type], payload, formatByteSize(sizeOfData))
     }

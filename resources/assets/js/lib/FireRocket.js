@@ -1,4 +1,3 @@
-import emitBulletFired from './SocketEvents/emitBulletFired'
 import GameConsts from 'lib/GameConsts'
 import actions from '../actions'
 
@@ -47,6 +46,8 @@ export default function FireRocket (currentWeaponId) {
 
   // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
   window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+  window.RS.player.isShooting = true
+
   clearTimeout(muzzleFlashHandler)
   muzzleFlashHandler = setTimeout(() => {
     window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].frame
@@ -58,7 +59,7 @@ export default function FireRocket (currentWeaponId) {
   // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
   setTimeout(() => {
     bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
-  }, 60)
+  }, 30)
 
   window.RS.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
   window.RS.weaponSoundEffects[currentWeaponId].play()
@@ -68,12 +69,4 @@ export default function FireRocket (currentWeaponId) {
   } else {
     store.dispatch(actions.player.decrementSecondaryAmmoRemaining())
   }
-
-  emitBulletFired.call(this, {
-    bulletId: bullet.bulletId,
-    pointerAngle,
-    weaponId: currentWeaponId,
-    x: Math.round(Math.max(0, x)),
-    y: Math.round(Math.max(0, y))
-  })
 }

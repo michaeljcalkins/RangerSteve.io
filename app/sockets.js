@@ -29,7 +29,6 @@ let lastPlayerData = {}
 let lastRoomData = {}
 
 const events = {
-  [GameConsts.EVENT.BULLET_FIRED]: onBulletFired,
   [GameConsts.EVENT.MESSAGE_SEND]: onMessageSend,
   [GameConsts.EVENT.MOVE_PLAYER]: onMovePlayer,
   [GameConsts.EVENT.NEW_PLAYER]: onNewPlayer,
@@ -513,6 +512,10 @@ function onMovePlayer (buffer) {
   player.flying = data.flying
   player.shooting = data.shooting
   player.weaponId = data.weaponId
+
+  if (!data.shooting) return
+
+  onShooting.call(this, player, roomId)
 }
 
 function onPlayerFullHealth () {
@@ -724,20 +727,32 @@ function onPlayerDamaged (data) {
   )
 }
 
-function onBulletFired (data) {
-  const roomId = getRoomIdByPlayerId(this.id, rooms)
-  if (!rooms[roomId]) return
+const rangeOfVariance = _.range(-7, 7, 1)
 
-  const player = getPlayerById(rooms[roomId], this.id)
-  data.playerId = this.id
+function onShooting (player, roomId) {
+  const data = {
+    bullets: [],
+    playerId: this.id,
+    weaponId: player.weaponId,
+    x: player.x,
+    y: player.y - 10
+  }
 
-  if (!player || player.health <= 0) return
-  player.bulletsFired++
+  const bulletAnglesVariance = player.weaponId === 'M500' ? _.sampleSize(rangeOfVariance, 4) : [0]
+
+  bulletAnglesVariance.forEach((bulletAngleVariance) => {
+    data.bullets.push({
+      id: Math.round(Math.random() * 16000),
+      angle: Math.round(player.angle + bulletAngleVariance - 90),
+    })
+    player.bulletsFired++
+  })
 
   Server.sendToRoom(
     roomId,
-    GameConsts.EVENT.BULLET_FIRED,
-    data
+    GameConsts.EVENT.BULLETS_FIRED,
+    data,
+    [this.id]
   )
 }
 

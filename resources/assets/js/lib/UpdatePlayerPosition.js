@@ -6,10 +6,6 @@ import movePlayerSchema from 'lib/schemas/movePlayerSchema'
 
 let lastPlayerData = {}
 
-function isPlayerShooting (weaponId, rightArmSprite) {
-  return GameConsts.WEAPONS[weaponId].shootingFrame === rightArmSprite.frame
-}
-
 export default function () {
   const state = this.game.store.getState()
 
@@ -32,7 +28,7 @@ export default function () {
   let newPlayerData = {
     angle: Math.round(angle),
     flying: window.RS.player.rightJumpjet.visible && window.RS.player.leftJumpjet.visible,
-    shooting: isPlayerShooting(currentWeaponId, window.RS.player.rightArmSprite),
+    shooting: window.RS.player.isShooting,
     weaponId: currentWeaponId,
     x: Math.round(Math.max(0, window.RS.player.x)),
     y: Math.round(Math.max(0, window.RS.player.y)),

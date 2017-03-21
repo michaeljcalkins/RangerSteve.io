@@ -18,7 +18,6 @@ import PlayerJumpHandler from '../lib/PlayerJumpHandler'
 import PlayerMovementHandler from '../lib/PlayerMovementHandler'
 import ReloadGunWhenEmpty from '../lib/ReloadGunWhenEmpty'
 import RotateBulletsToTrajectory from '../lib/RotateBulletsToTrajectory'
-import UpdateEnemyPositions from '../lib/UpdateEnemyPositions'
 import UpdateGameScale from '../lib/UpdateGameScale'
 import UpdateHurtBorder from '../lib/UpdateHurtBorder'
 import UpdatePlayerPosition from '../lib/UpdatePlayerPosition'
@@ -79,9 +78,11 @@ Game.prototype = {
       ? player.selectedPrimaryWeaponId
       : player.selectedSecondaryWeaponId
 
-      // Pause controls so user can't do anything in the background accidentally
+    // Pause controls so user can't do anything in the background accidentally
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
     this.game.input.enabled = !isPaused
+
+    window.RS.player.isShooting = false
 
     PlayerAndPlatforms.call(this)
     EnemyBulletsAndPlatforms.call(this)
@@ -123,7 +124,6 @@ Game.prototype = {
     RotateBulletsToTrajectory.call(this)
     UpdateHurtBorder.call(this)
     UpdatePlayerPosition.call(this)
-    // UpdateEnemyPositions.call(this)
   },
 
   render () {
