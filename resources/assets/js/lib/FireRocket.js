@@ -37,7 +37,7 @@ export default function FireRocket (currentWeaponId) {
   bullet.damage = this.damage
   bullet.weaponId = currentWeaponId
   bullet.alive = 1
-  bullet.alpha = 1
+  bullet.alpha = 0
   bullet.height = 10
   bullet.width = 40
   bullet.reset(x, y)
@@ -46,6 +46,8 @@ export default function FireRocket (currentWeaponId) {
 
   // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
   window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+  window.RS.player.isShooting = true
+
   clearTimeout(muzzleFlashHandler)
   muzzleFlashHandler = setTimeout(() => {
     window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].frame
@@ -53,6 +55,11 @@ export default function FireRocket (currentWeaponId) {
 
   // Shake camera for gun recoil
   this.camera.shake(0.01, 150, true)
+
+  // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
+  setTimeout(() => {
+    bullet.alpha = this.bulletAlpha !== undefined ? this.bulletAlpha : 1
+  }, 30)
 
   window.RS.weaponSoundEffects[currentWeaponId].volume = state.game.sfxVolume
   window.RS.weaponSoundEffects[currentWeaponId].play()

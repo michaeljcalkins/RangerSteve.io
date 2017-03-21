@@ -82,6 +82,8 @@ Game.prototype = {
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
     this.game.input.enabled = !isPaused
 
+    window.RS.player.isShooting = false
+
     PlayerAndPlatforms.call(this)
     EnemyBulletsAndPlatforms.call(this)
     BulletsAndPlatforms.call(this)

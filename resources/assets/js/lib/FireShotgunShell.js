@@ -44,7 +44,7 @@ export default function FireShotgunShell (currentWeaponId) {
     bullet.damage = currentWeapon.damage
     bullet.weaponId = currentWeaponId
     bullet.alive = 1
-    bullet.alpha = 1
+    bullet.alpha = 0
     bullet.height = 2
     bullet.width = 40
     bullet.reset(x, y)
@@ -60,14 +60,21 @@ export default function FireShotgunShell (currentWeaponId) {
       bullet.body.velocity.y += newVelocity.y
       bullet.rotation = this.game.math.wrapAngle(randomPointerAngleDeg) * Math.PI / 180
     }
+
+    // Shows the bullet after it has left the barrel so you don't have to line up the bullet with the barrel.
+    setTimeout(function () {
+      bullet.alpha = 1
+    }, 40)
   }
 
   // Show the muzzle flash for a short period of time and hide it unless the user is holding down fire.
   window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].shootingFrame
+  window.RS.player.isShooting = true
+
   clearTimeout(muzzleFlashHandler)
   muzzleFlashHandler = setTimeout(() => {
     window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[currentWeaponId].frame
-  }, 60)
+  }, 30)
 
   // Shake camera for gun recoil
   this.camera.shake(0.0015, 100, true)

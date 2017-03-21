@@ -23,6 +23,7 @@ export default function onBulletsFired (data) {
 
     bullet.reset(data.x, data.y)
     bulletData.bulletId = bulletInfo.id
+    bullet.height = data.weaponId === 'RPG' ? 10 : 2
     bullet.data = bulletData
     bullet.alive = true
     bullet.rotation = this.game.math.wrapAngle(bulletInfo.angle) * Math.PI / 180
