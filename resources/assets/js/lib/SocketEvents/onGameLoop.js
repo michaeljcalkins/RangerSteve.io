@@ -12,7 +12,7 @@ const updatePlayerProtection = (player, isProtected) => { player.alpha = isProte
 function mapPlayerData (data) {
   const playerData = {}
 
-  Object.keys(data).forEach(function(prop) {
+  Object.keys(data).forEach(function (prop) {
     const propName = mapPlayerProp(prop)
     playerData[propName] = data[prop]
   })
@@ -20,7 +20,7 @@ function mapPlayerData (data) {
   return playerData
 }
 
-function mapPlayerProp(prop) {
+function mapPlayerProp (prop) {
   return (typeof GameConsts.PROPERTY_MAP[prop] !== 'undefined') ? GameConsts.PROPERTY_MAP[prop] : prop
 }
 
