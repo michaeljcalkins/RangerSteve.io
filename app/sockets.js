@@ -214,7 +214,18 @@ roomUpdateLoop.on('update', function () {
     }
 
     // Round has ended and setting the time the next round will start at
-    if (rooms[roomId].roundEndTime <= Date.now() && rooms[roomId].state === 'active') {
+    if (
+      (
+        rooms[roomId].roundEndTime <= Date.now() &&
+        rooms[roomId].state === 'active'
+      ) ||
+      // Round has ended for this Pointmatch game because someone got the required score.
+      (
+        rooms[roomId].gamemode === 'Pointmatch' &&
+        getHighscorePlayer(rooms[roomId].players).score >= GameConsts.POINTMATCH_END_ROUND_ON_SCORE &&
+        rooms[roomId].state === 'active'
+      )
+    ) {
       console.log('Round has ended for', roomId)
       rooms[roomId].state = 'ended'
       rooms[roomId].roundStartTime = Date.now() + GameConsts.END_OF_ROUND_BREAK_IN_MS
@@ -229,6 +240,16 @@ roomUpdateLoop.on('update', function () {
 })
 
 roomUpdateLoop.start()
+
+function getHighscorePlayer (players) {
+  const defaultValue = { nickname: '--', score: 0 }
+  const sortedPlayers = _.values(players)
+    .sort((a, b) => a.score < b.score)
+
+  return _.get(sortedPlayers, '[0].score', 0) > 0
+    ? _.get(sortedPlayers, '[0]', defaultValue)
+    : defaultValue
+}
 
 function onConnect (socket) {
   console.log('* LOG * onConnect, ' + socket.id)

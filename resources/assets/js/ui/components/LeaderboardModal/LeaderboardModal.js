@@ -126,6 +126,7 @@ export default class LeaderboardModal extends PureComponent {
 
     switch (room.gamemode) {
       case 'Deathmatch':
+      case 'Pointmatch':
         return (
           <div className='winning-player'>
             <div className='player-name'>{ this.renderFirstPlacePlayerName() } { winningPhrase }</div>

@@ -25,6 +25,7 @@ import emitMessageSend from '../../lib/SocketEvents/emitMessageSend'
 import RemainingFuelPercent from '../../lib/RemainingFuelPercent'
 import NetworkStats from './NetworkStats/NetworkStats'
 import HudNewChatMessage from './Hud/HudNewChatMessage'
+import HudPointmatchScore from './Hud/HudPointmatchScore'
 
 export default class GameUi extends Component {
   constructor (props) {
@@ -154,6 +155,11 @@ export default class GameUi extends Component {
           <HudTeamScore
             score1={room.redTeamScore}
             score2={room.blueTeamScore}
+          />
+        }
+        { room.gamemode === 'Pointmatch' &&
+          <HudPointmatchScore
+            players={room.players}
           />
         }
         <HudHealth health={player.health} />
