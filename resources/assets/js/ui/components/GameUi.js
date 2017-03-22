@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
 import toInteger from 'lodash/toInteger'
-import values from 'lodash/values'
 import get from 'lodash/get'
+
+const getSortedPlayers = require('lib/getSortedPlayers')
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudAnnouncement from './Hud/HudAnnouncement'
@@ -115,13 +116,6 @@ export default class GameUi extends Component {
     onSettingsViewChange('default')
   }
 
-  getPlayersSortedByScore () {
-    const { room } = this.props
-
-    return values(room.players)
-      .sort((a, b) => a.score < b.score)
-  }
-
   render () {
     const {
       player,
@@ -136,9 +130,9 @@ export default class GameUi extends Component {
       onCloseChatModal
     } = this.props
 
-    const playersSortedByScore = this.getPlayersSortedByScore(room.players)
-    const playerWithHighScore = get(playersSortedByScore, '[0].score', 0) > 0
-      ? playersSortedByScore[0]
+    const sortedPlayers = getSortedPlayers(room.players)
+    const bestPlayer = get(sortedPlayers, '[0].score', 0) > 0
+      ? sortedPlayers[0]
       : { nickname: '--', score: 0 }
 
     const isRespawnModalOpen = player.health <= 0 && room.state !== 'ended'
@@ -173,7 +167,7 @@ export default class GameUi extends Component {
         }
         { room.gamemode === 'Pointmatch' &&
           <HudPointmatchScore
-            player={playerWithHighScore}
+            player={bestPlayer}
           />
         }
         <HudHealth health={player.health} />
@@ -186,7 +180,7 @@ export default class GameUi extends Component {
         <HudChangeWeaponsButton onButtonClick={this.handleChangeWeaponsButton} />
         <HudSettingsButton onButtonClick={this.handleOpenSettingsButton} />
         <HudLeaderboard
-          players={playersSortedByScore}
+          players={sortedPlayers}
           room={room}
         />
         { room.announcement &&
@@ -204,7 +198,7 @@ export default class GameUi extends Component {
 
         { this.isLeaderboardModalOpen() &&
           <LeaderboardModal
-            players={playersSortedByScore}
+            players={sortedPlayers}
             room={room}
           />
         }
