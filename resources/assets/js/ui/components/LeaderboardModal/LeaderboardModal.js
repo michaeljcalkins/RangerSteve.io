@@ -1,6 +1,5 @@
 import autobind from 'react-autobind'
 import React, { PureComponent, PropTypes } from 'react'
-import values from 'lodash/values'
 import get from 'lodash/get'
 import cs from 'classnames'
 
@@ -50,12 +49,9 @@ export default class LeaderboardModal extends PureComponent {
   }
 
   renderPlayers () {
-    const { room } = this.props
+    const { players, room } = this.props
 
-    if (!room.players) return null
-
-    return values(room.players)
-      .sort((a, b) => a.score < b.score)
+    return players
       .map((player, key) => {
         const { headshots, deaths, kills, score, nickname: playerNickname = 'Unnamed Ranger', id, team } = player
         const kdRatio = deaths > 0 ? (kills / deaths) : kills
@@ -84,12 +80,7 @@ export default class LeaderboardModal extends PureComponent {
   }
 
   renderFirstPlacePlayerName () {
-    const { room } = this.props
-
-    if (!room.players) return null
-
-    const players = values(room.players)
-      .sort((a, b) => a.score < b.score)
+    const { players } = this.props
 
     return get(players, '[0].nickname')
   }
@@ -105,8 +96,8 @@ export default class LeaderboardModal extends PureComponent {
       )
     }
 
-    const score = playerMeta.score ? playerMeta.score : 0
-    const nickname = playerMeta.nickname ? playerMeta.nickname : 'Unnamed Ranger'
+    const score = get(playerMeta, 'score', 0)
+    const nickname = get(playerMeta, 'nickname', 'Unnamed Ranger')
 
     return (
       <div className='player-achievement'>

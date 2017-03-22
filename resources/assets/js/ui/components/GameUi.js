@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import storage from 'store'
 import autobind from 'react-autobind'
 import toInteger from 'lodash/toInteger'
+import values from 'lodash/values'
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudAnnouncement from './Hud/HudAnnouncement'
@@ -113,6 +114,13 @@ export default class GameUi extends Component {
     onSettingsViewChange('default')
   }
 
+  getPlayersSortedByScore () {
+    const { room } = this.props
+
+    return values(room.players)
+      .sort((a, b) => a.score < b.score)
+  }
+
   render () {
     const {
       player,
@@ -126,6 +134,8 @@ export default class GameUi extends Component {
       onSetResetEventsFlag,
       onCloseChatModal
     } = this.props
+
+    const playersSortedByScore = this.getPlayersSortedByScore(room.players)
 
     const isRespawnModalOpen = player.health <= 0 && room.state !== 'ended'
 
@@ -159,7 +169,7 @@ export default class GameUi extends Component {
         }
         { room.gamemode === 'Pointmatch' &&
           <HudPointmatchScore
-            players={room.players}
+            players={playersSortedByScore}
           />
         }
         <HudHealth health={player.health} />
@@ -171,7 +181,10 @@ export default class GameUi extends Component {
         />
         <HudChangeWeaponsButton onButtonClick={this.handleChangeWeaponsButton} />
         <HudSettingsButton onButtonClick={this.handleOpenSettingsButton} />
-        <HudLeaderboard room={room} />
+        <HudLeaderboard
+          players={playersSortedByScore}
+          room={room}
+        />
         { room.announcement &&
           <HudAnnouncement announcement={room.announcement} />
         }
@@ -186,7 +199,10 @@ export default class GameUi extends Component {
         />
 
         { this.isLeaderboardModalOpen() &&
-          <LeaderboardModal room={room} />
+          <LeaderboardModal
+            players={playersSortedByScore}
+            room={room}
+          />
         }
 
         { isRespawnModalOpen &&

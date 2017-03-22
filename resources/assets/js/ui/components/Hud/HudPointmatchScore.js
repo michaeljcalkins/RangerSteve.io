@@ -1,36 +1,29 @@
 import React, { Component, PropTypes } from 'react'
 import autobind from 'react-autobind'
-import { values, get } from 'lodash'
+import get from 'lodash/get'
 
 import GameConsts from 'lib/GameConsts'
 
-export default class HudHighScore extends Component {
+export default class HudPointmatchScore extends Component {
   constructor (props) {
     super(props)
     autobind(this)
   }
 
   static propTypes = {
-    players: PropTypes.object.isRequired
+    players: PropTypes.array.isRequired
   }
 
   static defaultProps = {
-    players: {}
-  }
-
-  getHighscorePlayer () {
-    const { players } = this.props
-
-    const sortedPlayers = values(players)
-      .sort((a, b) => a.score < b.score)
-
-    return get(sortedPlayers, '[0].score', 0) > 0
-      ? sortedPlayers[0]
-      : { nickname: '--', score: 0 }
+    players: []
   }
 
   render () {
-    const highscorePlayer = this.getHighscorePlayer()
+    const { players } = this.props
+
+    const highscorePlayer = get(players, '[0].score', 0) > 0
+      ? players[0]
+      : { nickname: '--', score: 0 }
 
     return (
       <div className='hud-pointmatch hud-item'>
