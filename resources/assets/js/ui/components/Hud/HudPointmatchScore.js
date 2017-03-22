@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import autobind from 'react-autobind'
-import get from 'lodash/get'
 
 import GameConsts from 'lib/GameConsts'
 
@@ -11,23 +10,19 @@ export default class HudPointmatchScore extends Component {
   }
 
   static propTypes = {
-    players: PropTypes.array.isRequired
+    player: PropTypes.object.isRequired
   }
 
   static defaultProps = {
-    players: []
+    player: {}
   }
 
   render () {
-    const { players } = this.props
-
-    const highscorePlayer = get(players, '[0].score', 0) > 0
-      ? players[0]
-      : { nickname: '--', score: 0 }
+    const { player } = this.props
 
     return (
       <div className='hud-pointmatch hud-item'>
-        { highscorePlayer.nickname } - { highscorePlayer.score }/{ GameConsts.POINTMATCH_END_ROUND_ON_SCORE }
+        { player.nickname } - { player.score }/{ GameConsts.POINTMATCH_END_ROUND_ON_SCORE }
       </div>
     )
   }

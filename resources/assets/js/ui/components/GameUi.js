@@ -3,6 +3,7 @@ import storage from 'store'
 import autobind from 'react-autobind'
 import toInteger from 'lodash/toInteger'
 import values from 'lodash/values'
+import get from 'lodash/get'
 
 import HudChatHistory from './Hud/HudChatHistory'
 import HudAnnouncement from './Hud/HudAnnouncement'
@@ -136,6 +137,9 @@ export default class GameUi extends Component {
     } = this.props
 
     const playersSortedByScore = this.getPlayersSortedByScore(room.players)
+    const playerWithHighScore = get(playersSortedByScore, '[0].score', 0) > 0
+      ? playersSortedByScore[0]
+      : { nickname: '--', score: 0 }
 
     const isRespawnModalOpen = player.health <= 0 && room.state !== 'ended'
 
@@ -169,7 +173,7 @@ export default class GameUi extends Component {
         }
         { room.gamemode === 'Pointmatch' &&
           <HudPointmatchScore
-            players={playersSortedByScore}
+            player={playerWithHighScore}
           />
         }
         <HudHealth health={player.health} />
