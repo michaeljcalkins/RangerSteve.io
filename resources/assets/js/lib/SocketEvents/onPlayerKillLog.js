@@ -61,6 +61,7 @@ export default function onPlayerKillLog (data) {
 
   room.blueTeamScore = data.blueTeamScore
   room.redTeamScore = data.redTeamScore
+  room.highscore = data.highscore
 
   store.dispatch(actions.room.setRoom(room))
 }

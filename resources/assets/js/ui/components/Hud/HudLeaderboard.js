@@ -1,59 +1,55 @@
 import React, { Component, PropTypes } from 'react'
-import values from 'lodash/values'
 import cs from 'classnames'
 import { connect } from 'react-redux'
 
 export class HudLeaderboard extends Component {
   renderPlayers () {
-    const { room } = this.props
-    if (!room.players) return null
+    const { room, players } = this.props
 
-    return values(room.players)
-      .sort((a, b) => a.score < b.score)
-      .map(function (player) {
-        let playerNickname = player.nickname
-          ? player.nickname
-          : 'Unnamed Ranger'
+    return players.map(player => {
+      let playerNickname = player.nickname
+        ? player.nickname
+        : 'Unnamed Ranger'
 
-        const killingSpreeCount = player.killingSpree > 1
-          ? `${player.killingSpree}x `
-          : null
+      const killingSpreeCount = player.killingSpree > 1
+        ? `${player.killingSpree}x `
+        : null
 
-        const playerRowClasses = cs({
-          'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
-          'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch',
-          'active': player.id === window.SOCKET_ID
-        })
-
-        return (
-          <tr key={player.id} className={playerRowClasses}>
-            <td
-              style={{ width: '120px', overflow: 'hidden' }}
-              title="Player's nickname"
-            >
-              { playerNickname }
-            </td>
-            <td
-              style={{ width: '20px' }}
-              title="Player's current killing spree"
-            >
-              <strong>{ killingSpreeCount }</strong>
-            </td>
-            <td
-              style={{ width: '20px' }}
-              title="Player's current score"
-            >
-              { player.score || 0 }
-            </td>
-          </tr>
-        )
+      const playerRowClasses = cs({
+        'text-red': player.team === 'red' && room.gamemode === 'TeamDeathmatch',
+        'text-blue': player.team === 'blue' && room.gamemode === 'TeamDeathmatch',
+        'active': player.id === window.SOCKET_ID
       })
+
+      return (
+        <tr key={player.id} className={playerRowClasses}>
+          <td
+            style={{ width: '120px', overflow: 'hidden' }}
+            title="Player's nickname"
+          >
+            { playerNickname }
+          </td>
+          <td
+            style={{ width: '20px' }}
+            title="Player's current killing spree"
+          >
+            <strong>{ killingSpreeCount }</strong>
+          </td>
+          <td
+            style={{ width: '20px' }}
+            title="Player's current score"
+          >
+            { player.score || 0 }
+          </td>
+        </tr>
+      )
+    })
   }
 
   render () {
     return (
       <div className='hud-leaderboard hud-item no-pointer-events'>
-        <h1>Scoreboard</h1>
+        <h1>Leaderboard</h1>
         <table className='table table-condensed'>
           <tbody>
             { this.renderPlayers() }

@@ -183,6 +183,23 @@
   height: 22px;
 }
 
+.hud-pointmatch {
+  background: none;
+  box-shadow: none;
+  color: #fff;
+  font-size: 12px;
+  float: left;
+  left: 50%;
+  padding: 0;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  text-shadow: #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
+  top: 65px;
+  transform: translateX(-50%);
+  width: 350px;
+}
+
 .hud-team-score {
   pointer-events: none;
   position: absolute;
