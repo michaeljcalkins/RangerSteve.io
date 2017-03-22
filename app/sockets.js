@@ -16,6 +16,7 @@ const createRoom = require('../lib/createRoom')
 const getRoomIdByPlayerId = require('../lib/getRoomIdByPlayerId')
 const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
 const savePlayerScoresToFirebase = require('../lib/savePlayerScoresToFirebase')
+const getSortedPlayers = require('../lib/getSortedPlayers')
 
 const filter = new Filter()
 
@@ -242,8 +243,7 @@ roomUpdateLoop.start()
 
 function getHighscorePlayer (players) {
   const defaultValue = { nickname: '--', score: 0 }
-  const sortedPlayers = _.values(players)
-    .sort((a, b) => a.score < b.score)
+  const sortedPlayers = getSortedPlayers(players)
 
   return _.get(sortedPlayers, '[0].score', 0) > 0
     ? _.get(sortedPlayers, '[0]', defaultValue)
