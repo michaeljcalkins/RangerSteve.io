@@ -155,7 +155,7 @@ roomUpdateLoop.on('update', function () {
       // Randomly select a map that was not the previous map
       const potentialNextMaps = GameConsts.MAPS.filter(map => map !== previousMap)
       const potentialNextGamemodes = GameConsts.GAMEMODES.filter(gamemode => gamemode !== previousGamemode)
-      const potentialNextMods = GameConsts.MODS.filter(mod => mod !== previousMod)
+      const potentialNextMods = _.keys(GameConsts.MODS).filter(mod => mod !== previousMod)
 
       const nextMap = _.sample(potentialNextMaps)
       const nextGamemode = _.sample(potentialNextGamemodes)
