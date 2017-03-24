@@ -25,6 +25,25 @@ let MainController = {
     })
   },
 
+  rooms: function (req, res) {
+    // Room table
+    const rooms = require('../sockets').getRooms()
+    const numberOfRooms = Object.keys(rooms).length
+    const maxRoomSize = GameConsts.MAX_ROOM_SIZE
+    const maxIdleSeconds = GameConsts.MAX_IDLE_TIME_IN_MS / 1000
+
+    res.render('rooms', {
+      maxRoomSize: maxRoomSize,
+      maxIdleSeconds: maxIdleSeconds,
+      numberOfRooms: numberOfRooms,
+      rooms: rooms
+    })
+  },
+
+  whatsNew: function (req, res) {
+    res.render('whats-new')
+  },
+
   store: function (req, res) {
     const payments = map(GameConsts.STORE_PAYMENTS, (payment, price) => {
       return Object.assign({}, payment, {
@@ -43,6 +62,10 @@ let MainController = {
 
   howToPlay: function (req, res) {
     res.render('how-to-play')
+  },
+
+  privacy: function (req, res) {
+    res.render('privacy')
   },
 
   createARoom: function (req, res) {
