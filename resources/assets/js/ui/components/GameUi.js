@@ -158,7 +158,7 @@ export default class GameUi extends Component {
         <HudKillLog messages={game.killLogMessages} />
         <HudKillingSpree killingSpreeCount={player.killingSpreeCount} />
         <HudTimer secondsRemaining={secondsRemaining} />
-        <HudGamemode gamemode={room.gamemode} />
+        <HudGamemode gamemode={room.gamemode} mod={room.mod} />
         { room.gamemode === 'TeamDeathmatch' &&
           <HudTeamScore
             score1={room.redTeamScore}
@@ -214,6 +214,7 @@ export default class GameUi extends Component {
         { game.settingsModalIsOpen &&
           <SettingsModal
             game={game}
+            mod={room.mod}
             onClose={onCloseSettingsModal}
             onKeyboardControlChange={onKeyboardControlChange}
             onPrimaryGunClick={this.handlePrimaryGunClick}

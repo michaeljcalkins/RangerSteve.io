@@ -34,6 +34,11 @@ export default function onSocketConnected () {
       data.gamemode = getParameterByName('gamemode')
     }
 
+    // Only specify mod if specified in url
+    if (getParameterByName('mod')) {
+      data.mod = getParameterByName('mod')
+    }
+
     Client.send(GameConsts.EVENT.NEW_PLAYER, data)
   })
 }

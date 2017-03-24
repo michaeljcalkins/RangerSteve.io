@@ -71,6 +71,7 @@ let MainController = {
   createARoom: function (req, res) {
     res.render('create-a-room', {
       gamemodes: GameConsts.GAMEMODES,
+      mods: GameConsts.MODS,
       maps: GameConsts.MAPS,
       randomRoomName: hri.random().replace(/[^a-zA-Z0-9 -]/g, '')
     })

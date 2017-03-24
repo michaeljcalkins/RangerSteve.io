@@ -150,20 +150,24 @@ roomUpdateLoop.on('update', function () {
       console.log('Restarting round for', roomId)
       const previousMap = rooms[roomId].map
       const previousGamemode = rooms[roomId].gamemode
+      const previousMod = rooms[roomId].mod
 
       // Randomly select a map that was not the previous map
       const potentialNextMaps = GameConsts.MAPS.filter(map => map !== previousMap)
       const potentialNextGamemodes = GameConsts.GAMEMODES.filter(gamemode => gamemode !== previousGamemode)
+      const potentialNextMods = GameConsts.MODS.filter(mod => mod !== previousMod)
 
       const nextMap = _.sample(potentialNextMaps)
       const nextGamemode = _.sample(potentialNextGamemodes)
+      const nextMod = _.sample(potentialNextMods)
 
       rooms[roomId] = createRoom({
         id: roomId,
         players: rooms[roomId].players,
         messages: rooms[roomId].messages,
         map: nextMap,
-        gamemode: nextGamemode
+        gamemode: nextGamemode,
+        mod: nextMod
       })
 
       console.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} for room ${roomId}`)
@@ -415,7 +419,7 @@ function onNewPlayer (data) {
 
   // Create a new player
   let newPlayer = createPlayer(this.id, data.x, data.y)
-  newPlayer.weaponId = data.weaponId
+  newPlayer.weaponId = data.mod ? data.mod : data.weaponId
   newPlayer.nickname = data.nickname
   newPlayer.uid = data.uid
 
@@ -427,7 +431,8 @@ function onNewPlayer (data) {
       id: data.roomId,
       player: newPlayer,
       map: data.map,
-      gamemode: data.gamemode
+      gamemode: data.gamemode,
+      mod: data.mod
     })
 
     rooms[newRoom.id] = newRoom
@@ -453,6 +458,7 @@ function onNewPlayer (data) {
     if (availableRooms.length <= 0) {
       const newRoom = createRoom({
         gamemode: data.gamemode,
+        mod: data.mod,
         map: data.map,
         player: newPlayer
       })
@@ -532,7 +538,10 @@ function onMovePlayer (buffer) {
   player.angle = data.angle
   player.flying = data.flying
   player.shooting = data.shooting
-  player.weaponId = data.weaponId
+
+  if (!rooms[roomId].mod) {
+    player.weaponId = data.weaponId
+  }
 
   if (!data.shooting) return
 

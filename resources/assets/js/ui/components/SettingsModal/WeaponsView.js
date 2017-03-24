@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import autobind from 'react-autobind'
+import upperCase from 'lodash/upperCase'
 
 import GameConsts from 'lib/GameConsts'
 import WeaponButton from './WeaponButton'
@@ -20,23 +21,35 @@ export default class WeaponsView extends PureComponent {
     this.props.onViewChange('chooseSecondary')
   }
 
+  renderMod(mod) {
+    if (!mod) return
+
+    const modName = upperCase(GameConsts.MODS[mod])
+
+    return <div className="alert alert-outline">Changing weapons is disabled in the { modName } mod</div>
+  }
+
   render () {
     const {
       nextSelectedPrimaryWeaponId,
       nextSelectedSecondaryWeaponId
     } = this.props.player
 
+    const mod = this.props.mod
     const primaryWeapon = GameConsts.WEAPONS[nextSelectedPrimaryWeaponId]
     const secondaryWeapon = GameConsts.WEAPONS[nextSelectedSecondaryWeaponId]
+    const disabled = !!mod
 
     return (
       <div>
+        {this.renderMod(mod)}
         <div className='row'>
           <div className='col-xs-6'>
             <label>Primary Weapon</label>
             <WeaponButton
               onClick={this.handlePrimaryViewClick}
               weapon={primaryWeapon}
+              disabled={disabled}
             />
           </div>
           <div className='col-xs-6'>
@@ -44,6 +57,7 @@ export default class WeaponsView extends PureComponent {
             <WeaponButton
               onClick={this.handleSecondaryViewClick}
               weapon={secondaryWeapon}
+              disabled={disabled}
             />
           </div>
         </div>
@@ -60,6 +74,7 @@ export default class WeaponsView extends PureComponent {
 
 type Props = {
     game: Object,
+    mod: String,
     onViewChange: Function,
     player: Object,
 }
