@@ -13,7 +13,6 @@ export function ChoosePrimaryMenu ({
     player
 }) {
   function handleSelectPrimaryClick (weapon) {
-    window.mixpanel.track('primaryWeapon:selected:' + weapon.id)
     onPrimaryGunClick(weapon)
     player.health <= 0
             ? onCloseSettingsModal()

@@ -21,7 +21,6 @@ export default function onSocketConnected () {
 
     // Only specify roomId if specified in url
     if (getParameterByName('roomId')) {
-      window.mixpanel.track('player:joinedByRoomId')
       data.roomId = getParameterByName('roomId')
     }
 
