@@ -66,7 +66,7 @@
                       id="mode-button-{{ key }}"
                       href="#"
                       class="list-group-item mode-button"
-                      onClick="selectMod('{{ key }}')"
+                      onClick="selectMode('{{ key }}')"
                     >
                       {{ mode }}
                     </a>
@@ -117,7 +117,7 @@
       $('#gamemode-button-' + gamemode).addClass('active')
     }
 
-    function selectMod (mode) {
+    function selectMode (mode) {
       $('input[name="mode"]').val(mode)
       $('.mode-button').removeClass('active')
       $('#mode-button-' + mode).addClass('active')
