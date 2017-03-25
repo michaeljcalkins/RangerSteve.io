@@ -12,7 +12,7 @@ const usernameTextStyle = {
   strokeThickness: 2
 }
 
-export default function RemotePlayer (playerId, playerData) {
+export default function createRemotePlayer (playerId, playerData) {
   const newRemotePlayer = this.game.add.sprite(playerData.x, playerData.y, 'player-placeholder')
   newRemotePlayer.anchor.setTo(GameConsts.PLAYER_ANCHOR)
   newRemotePlayer.alive = playerData.health > 0
