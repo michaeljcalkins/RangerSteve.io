@@ -168,7 +168,7 @@
 .hud-gamemode {
   pointer-events: none;
   position: absolute;
-  top: 44px;
+  top: 45px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -179,7 +179,7 @@
                #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px, #000 0px 0px 1px;
   background: none;
   box-shadow: none;
-  width: 200px;
+  width: 350px;
   height: 22px;
 }
 
@@ -203,7 +203,7 @@
 .hud-team-score {
   pointer-events: none;
   position: absolute;
-  top: 30px;
+  top: 17px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;

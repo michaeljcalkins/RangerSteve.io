@@ -12,6 +12,7 @@ const helpers = require('../lib/helpers')
 const createPlayer = require('../lib/createPlayer')
 const getPlayerById = require('../lib/getPlayerById')
 const getTeam = require('../lib/getTeam')
+const getModeWithChance = require('../lib/getModeWithChance')
 const createRoom = require('../lib/createRoom')
 const getRoomIdByPlayerId = require('../lib/getRoomIdByPlayerId')
 const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
@@ -157,16 +158,18 @@ roomUpdateLoop.on('update', function () {
 
       const nextMap = _.sample(potentialNextMaps)
       const nextGamemode = _.sample(potentialNextGamemodes)
+      const nextMode = getModeWithChance(_.keys(GameConsts.MODES), GameConsts.CHANCE_OF_GUN_MODE_IN_PERCENT)
 
       rooms[roomId] = createRoom({
         id: roomId,
         players: rooms[roomId].players,
         messages: rooms[roomId].messages,
         map: nextMap,
-        gamemode: nextGamemode
+        gamemode: nextGamemode,
+        mode: nextMode
       })
 
-      console.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} for room ${roomId}`)
+      console.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} with ${GameConsts.MODES[rooms[roomId].mode]} for room ${roomId}`)
 
       Object.keys(rooms[roomId].players).forEach((playerId) => {
         const player = rooms[roomId].players[playerId]
@@ -185,9 +188,13 @@ roomUpdateLoop.on('update', function () {
         player.headshots = 0
         player.secondsInRound = 0
 
-        // Reset player posisitions so we can create new respawn points
+        // Reset player positions so we can create new respawn points
         player.x = -500
         player.y = -500
+
+        if (rooms[roomId].mode) {
+          player.weaponId = rooms[roomId].mode
+        }
       })
 
       // Now that player positions are reset we can spread players throughout the map
@@ -415,7 +422,6 @@ function onNewPlayer (data) {
 
   // Create a new player
   let newPlayer = createPlayer(this.id, data.x, data.y)
-  newPlayer.weaponId = data.weaponId
   newPlayer.nickname = data.nickname
   newPlayer.uid = data.uid
 
@@ -427,7 +433,8 @@ function onNewPlayer (data) {
       id: data.roomId,
       player: newPlayer,
       map: data.map,
-      gamemode: data.gamemode
+      gamemode: data.gamemode,
+      mode: data.mode
     })
 
     rooms[newRoom.id] = newRoom
@@ -453,6 +460,7 @@ function onNewPlayer (data) {
     if (availableRooms.length <= 0) {
       const newRoom = createRoom({
         gamemode: data.gamemode,
+        mode: data.mode,
         map: data.map,
         player: newPlayer
       })
@@ -488,6 +496,9 @@ function onNewPlayer (data) {
   rooms[roomIdPlayerWillJoin].messages = _.get(rooms, '[' + roomIdPlayerWillJoin + '].messages') || []
   rooms[roomIdPlayerWillJoin].id = roomIdPlayerWillJoin
   this.join(roomIdPlayerWillJoin)
+
+  const mode = rooms[roomIdPlayerWillJoin].mode
+  newPlayer.weaponId = mode ? mode : data.weaponId
 
   // Tell the user's client to load the game
   Server.sendToSocket(
@@ -764,7 +775,7 @@ function onShooting (player, roomId) {
   bulletAnglesVariance.forEach((bulletAngleVariance) => {
     data.bullets.push({
       id: Math.round(Math.random() * 16000),
-      angle: Math.round(player.angle + bulletAngleVariance - 90),
+      angle: Math.round(player.angle + bulletAngleVariance - 90)
     })
     player.bulletsFired++
   })

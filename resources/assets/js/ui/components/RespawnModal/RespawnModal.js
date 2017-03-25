@@ -181,7 +181,7 @@ export class RespawnModal extends PureComponent {
   }
 
   render () {
-    const { player, game } = this.props
+    const { player, game, room } = this.props
     const attackingPlayerId = get(player, 'damageStats.attackingPlayerId', false)
     const modalClasses = cs('modal', 'modal-respawn', {
       'show': !game.settingsModalIsOpen
@@ -224,6 +224,7 @@ export class RespawnModal extends PureComponent {
                   <div className='col-xs-12'>
                     <WeaponsView
                       game={game}
+                      mode={room.mode}
                       onViewChange={this.handleWeaponsViewClick}
                       player={player}
                     />

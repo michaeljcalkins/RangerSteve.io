@@ -79,8 +79,24 @@ h1, h2, h3, h4, h5, h6 {
   color: #2578FF;
 }
 
+.text-yellow {
+  color: #FF0;
+}
+
 .text-strong {
   font-weight: bold;
+}
+
+.option-disabled {
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
+.alert-outline {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 0, 0.9);
+  border: 1px solid rgba(255, 255, 0, 0.5);
 }
 
 .dont-break-out {

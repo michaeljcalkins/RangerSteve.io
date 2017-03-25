@@ -23,28 +23,43 @@ export default function onPlayerRespawn (data) {
 }
 
 function resetPlayerWeapons () {
-  const state = this.game.store.getState()
   const store = this.game.store
+  const state = store.getState()
 
-  store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
-  store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
-  store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId]))
-  store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
+  let nextSelectedPrimaryWeaponId = state.player.nextSelectedPrimaryWeaponId
+  let nextSelectedSecondaryWeaponId = state.player.nextSelectedSecondaryWeaponId
+  let nextWeaponId = nextSelectedPrimaryWeaponId
+
+  if (!state.room.mode) {
+    store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
+    store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
+    store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId]))
+    store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
+
+    // If player dies with secondary we reset player to use primary
+    store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
+  } else {
+    nextWeaponId = state.room.mode
+
+    if (GameConsts.PRIMARY_WEAPON_IDS.indexOf(state.room.mode) >= 0) {
+      nextSelectedPrimaryWeaponId = state.room.mode
+    } else if (GameConsts.SECONDARY_WEAPON_IDS.indexOf(state.room.mode) >= 0) {
+      nextSelectedSecondaryWeaponId = state.room.mode
+    }
+  }
+
+  // Show non firing primary weapon frame
+  window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[nextWeaponId].frame
 
   // Reset primary weapon to defaults
   store.dispatch(actions.player.setPrimaryIsReloading(false))
-  store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))
+  store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[nextSelectedPrimaryWeaponId].ammo))
 
   // Reset secondary weapon to defaults
   store.dispatch(actions.player.setSecondaryIsReloading(false))
-  store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].ammo))
+  store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[nextSelectedSecondaryWeaponId].ammo))
 
-  // If player dies with secondary we reset player to use primary
-  store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
   store.dispatch(actions.player.setIsSwitchingWeapon(false))
-
-  // Show non firing primary weapon frame
-  window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
 }
 
 function resetPlayerMovement () {

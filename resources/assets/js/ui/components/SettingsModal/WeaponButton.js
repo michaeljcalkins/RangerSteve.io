@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react'
+import cs from 'classnames'
+
 import WeaponStats from './WeaponStats'
 
 export default function WeaponButton ({
-    onClick,
-    weapon
+  onClick,
+  weapon,
+  disabled
 }) {
   function renderWeaponImage () {
     if (!weapon) return null
@@ -12,12 +15,19 @@ export default function WeaponButton ({
 
   if (!weapon) return null
 
+  const classes = cs({
+    'option-group option-group-lg option-character-group align-middle': true,
+    'option-disabled': disabled
+  })
+
+  const onClickHandler = disabled ? false : onClick
+
   return (
     <div
-      className='option-group option-group-lg option-character-group align-middle'
+      className={classes}
       id='open-primary-weapon-menu-button'
-      onClick={onClick}
-        >
+      onClick={onClickHandler}
+    >
       <div>
         { renderWeaponImage() }
       </div>
@@ -29,5 +39,6 @@ export default function WeaponButton ({
 
 WeaponButton.propTypes = {
   onClick: PropTypes.func.isRequired,
-  weapon: PropTypes.object.isRequired
+  weapon: PropTypes.object.isRequired,
+  disabled: PropTypes.boolean
 }
