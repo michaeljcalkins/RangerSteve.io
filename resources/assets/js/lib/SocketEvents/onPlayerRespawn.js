@@ -26,6 +26,10 @@ function resetPlayerWeapons () {
   const store = this.game.store
   const state = store.getState()
 
+  let nextSelectedPrimaryWeaponId = state.player.nextSelectedPrimaryWeaponId
+  let nextSelectedSecondaryWeaponId = state.player.nextSelectedSecondaryWeaponId
+  let nextWeaponId = nextSelectedPrimaryWeaponId
+
   if (!state.room.mod) {
     store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
     store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
@@ -34,18 +38,26 @@ function resetPlayerWeapons () {
 
     // If player dies with secondary we reset player to use primary
     store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
+  } else {
+    nextWeaponId = state.room.mod
 
-    // Show non firing primary weapon frame
-    window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
+    if (GameConsts.PRIMARY_WEAPON_IDS.indexOf(state.room.mod) >= 0) {
+      nextSelectedPrimaryWeaponId = state.room.mod
+    } else if (GameConsts.SECONDARY_WEAPON_IDS.indexOf(state.room.mod) >= 0) {
+      nextSelectedSecondaryWeaponId = state.room.mod
+    }
   }
+
+  // Show non firing primary weapon frame
+  window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[nextWeaponId].frame
 
   // Reset primary weapon to defaults
   store.dispatch(actions.player.setPrimaryIsReloading(false))
-  store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].ammo))
+  store.dispatch(actions.player.setPrimaryAmmoRemaining(GameConsts.WEAPONS[nextSelectedPrimaryWeaponId].ammo))
 
   // Reset secondary weapon to defaults
   store.dispatch(actions.player.setSecondaryIsReloading(false))
-  store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].ammo))
+  store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[nextSelectedSecondaryWeaponId].ammo))
 
   store.dispatch(actions.player.setIsSwitchingWeapon(false))
 }
