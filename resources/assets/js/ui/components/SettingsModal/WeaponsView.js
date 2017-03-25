@@ -21,12 +21,12 @@ export default class WeaponsView extends PureComponent {
     this.props.onViewChange('chooseSecondary')
   }
 
-  renderMod(mod) {
+  renderMod (mod) {
     if (!mod) return
 
     const modName = upperCase(GameConsts.MODS[mod])
 
-    return <div className="alert alert-outline">Changing weapons is disabled in the { modName } mod</div>
+    return <div className='alert alert-outline'>Changing weapons is disabled in the { modName } mod.</div>
   }
 
   render () {

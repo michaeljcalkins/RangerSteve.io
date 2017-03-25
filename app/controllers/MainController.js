@@ -36,6 +36,7 @@ let MainController = {
       maxRoomSize: maxRoomSize,
       maxIdleSeconds: maxIdleSeconds,
       numberOfRooms: numberOfRooms,
+      mods: GameConsts.MODS,
       rooms: rooms
     })
   },
