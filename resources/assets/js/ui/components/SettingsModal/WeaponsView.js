@@ -26,7 +26,7 @@ export default class WeaponsView extends PureComponent {
 
     const modName = upperCase(GameConsts.MODS[mod])
 
-    return <div className='alert alert-outline'>Changing weapons is disabled in the { modName } mod.</div>
+    return <div className='alert alert-outline'>Changing weapons is disabled in the { modName } mode.</div>
   }
 
   render () {
