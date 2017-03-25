@@ -12,6 +12,7 @@ const helpers = require('../lib/helpers')
 const createPlayer = require('../lib/createPlayer')
 const getPlayerById = require('../lib/getPlayerById')
 const getTeam = require('../lib/getTeam')
+const getModWithChance = require('../lib/getModWithChance')
 const createRoom = require('../lib/createRoom')
 const getRoomIdByPlayerId = require('../lib/getRoomIdByPlayerId')
 const movePlayerSchema = require('../lib/schemas/movePlayerSchema')
@@ -150,16 +151,14 @@ roomUpdateLoop.on('update', function () {
       console.log('Restarting round for', roomId)
       const previousMap = rooms[roomId].map
       const previousGamemode = rooms[roomId].gamemode
-      const previousMod = rooms[roomId].mod
 
       // Randomly select a map that was not the previous map
       const potentialNextMaps = GameConsts.MAPS.filter(map => map !== previousMap)
       const potentialNextGamemodes = GameConsts.GAMEMODES.filter(gamemode => gamemode !== previousGamemode)
-      const potentialNextMods = _.keys(GameConsts.MODS).filter(mod => mod !== previousMod)
 
       const nextMap = _.sample(potentialNextMaps)
       const nextGamemode = _.sample(potentialNextGamemodes)
-      const nextMod = _.sample(potentialNextMods)
+      const nextMod = getModWithChance(_.keys(GameConsts.MODS), GameConsts.CHANCE_OF_GUN_MOD_IN_PERCENT)
 
       rooms[roomId] = createRoom({
         id: roomId,
@@ -170,7 +169,7 @@ roomUpdateLoop.on('update', function () {
         mod: nextMod
       })
 
-      console.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} for room ${roomId}`)
+      console.log(`${rooms[roomId].map} has been selected to play ${rooms[roomId].gamemode} with ${GameConsts.MODS[rooms[roomId].mod]} for room ${roomId}`)
 
       Object.keys(rooms[roomId].players).forEach((playerId) => {
         const player = rooms[roomId].players[playerId]
@@ -189,9 +188,13 @@ roomUpdateLoop.on('update', function () {
         player.headshots = 0
         player.secondsInRound = 0
 
-        // Reset player posisitions so we can create new respawn points
+        // Reset player positions so we can create new respawn points
         player.x = -500
         player.y = -500
+
+        if (rooms[roomId].mod) {
+          player.weaponId = rooms[roomId].mod
+        }
       })
 
       // Now that player positions are reset we can spread players throughout the map
@@ -419,7 +422,6 @@ function onNewPlayer (data) {
 
   // Create a new player
   let newPlayer = createPlayer(this.id, data.x, data.y)
-  newPlayer.weaponId = data.mod ? data.mod : data.weaponId
   newPlayer.nickname = data.nickname
   newPlayer.uid = data.uid
 
@@ -495,6 +497,9 @@ function onNewPlayer (data) {
   rooms[roomIdPlayerWillJoin].id = roomIdPlayerWillJoin
   this.join(roomIdPlayerWillJoin)
 
+  const mod = rooms[roomIdPlayerWillJoin].mod
+  newPlayer.weaponId = mod ? mod : data.weaponId
+
   // Tell the user's client to load the game
   Server.sendToSocket(
     this.id,
@@ -538,10 +543,7 @@ function onMovePlayer (buffer) {
   player.angle = data.angle
   player.flying = data.flying
   player.shooting = data.shooting
-
-  if (!rooms[roomId].mod) {
-    player.weaponId = data.weaponId
-  }
+  player.weaponId = data.weaponId
 
   if (!data.shooting) return
 

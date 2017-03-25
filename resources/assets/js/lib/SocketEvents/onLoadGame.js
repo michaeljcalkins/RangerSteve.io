@@ -1,27 +1,40 @@
 import get from 'lodash/get'
 
 import actions from 'actions'
+import GameConsts from 'lib/GameConsts'
 
 export default function onLoadGame (data) {
   const store = this.game.store
 
+  const playerState = store.getState().player
+  let primaryWeaponId = playerState.nextSelectedPrimaryWeaponId
+  let secondaryWeaponId = playerState.nextSelectedSecondaryWeaponId
+  let currentWeapon = 'primaryWeapon'
+
   if (data.room.mod) {
-    const weaponId = data.room.mod
-    store.dispatch(actions.player.setSelectedPrimaryWeaponId(weaponId))
-    store.dispatch(actions.player.setSelectedSecondaryWeaponId(weaponId))
-    store.dispatch(actions.player.setPrimaryWeapon(weaponId))
-    store.dispatch(actions.player.setSecondaryWeapon(weaponId))
-    store.dispatch(actions.player.setNextSelectedPrimaryWeaponId(weaponId))
-    store.dispatch(actions.player.setNextSelectedSecondaryWeaponId(weaponId))
+    if (GameConsts.PRIMARY_WEAPON_IDS.indexOf(data.room.mod) >= 0) {
+      primaryWeaponId = data.room.mod
+    } else if (GameConsts.SECONDARY_WEAPON_IDS.indexOf(data.room.mod) >= 0) {
+      secondaryWeaponId = data.room.mod
+      currentWeapon ='secondaryWeapon'
+    }
   }
-  store.dispatch(actions.room.setRoom(data.room))
-  store.dispatch(actions.game.setChatMessages(get(data.room, 'messages', []).slice(-5)))
-  store.dispatch(actions.player.setPlayer({
+
+  const newPlayerState = {
     initialPosition: {
       x: data.player.x,
       y: data.player.y
-    }
-  }))
+    },
+    currentWeapon,
+    primaryWeapon: GameConsts.WEAPONS[primaryWeaponId],
+    secondaryWeapon: GameConsts.WEAPONS[secondaryWeaponId],
+    selectedPrimaryWeaponId: primaryWeaponId,
+    selectedSecondaryWeaponId: secondaryWeaponId
+  }
+
+  store.dispatch(actions.player.setPlayer(newPlayerState))
+  store.dispatch(actions.room.setRoom(data.room))
+  store.dispatch(actions.game.setChatMessages(get(data.room, 'messages', []).slice(-5)))
 
   const newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomId=' + data.room.id
   window.history.pushState({ path: newurl }, '', newurl)

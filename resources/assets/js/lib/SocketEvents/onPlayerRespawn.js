@@ -23,13 +23,21 @@ export default function onPlayerRespawn (data) {
 }
 
 function resetPlayerWeapons () {
-  const state = this.game.store.getState()
   const store = this.game.store
+  const state = store.getState()
 
-  store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
-  store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
-  store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId]))
-  store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
+  if (!state.room.mod) {
+    store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
+    store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
+    store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId]))
+    store.dispatch(actions.player.setSelectedSecondaryWeaponId(state.player.nextSelectedSecondaryWeaponId))
+
+    // If player dies with secondary we reset player to use primary
+    store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
+
+    // Show non firing primary weapon frame
+    window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
+  }
 
   // Reset primary weapon to defaults
   store.dispatch(actions.player.setPrimaryIsReloading(false))
@@ -39,12 +47,7 @@ function resetPlayerWeapons () {
   store.dispatch(actions.player.setSecondaryIsReloading(false))
   store.dispatch(actions.player.setSecondaryAmmoRemaining(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId].ammo))
 
-  // If player dies with secondary we reset player to use primary
-  store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
   store.dispatch(actions.player.setIsSwitchingWeapon(false))
-
-  // Show non firing primary weapon frame
-  window.RS.player.rightArmSprite.frame = GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId].frame
 }
 
 function resetPlayerMovement () {

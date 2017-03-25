@@ -9,6 +9,7 @@ export default function createLocalPlayer () {
   const selectedPrimaryWeapon = GameConsts.WEAPONS[primaryWeaponId]
   const secondaryWeaponId = this.game.store.getState().player.selectedSecondaryWeaponId
   const selectedSecondaryWeapon = GameConsts.WEAPONS[secondaryWeaponId]
+  const currentWeapon = state.player.currentWeapon === 'primaryWeapon' ? selectedPrimaryWeapon : selectedSecondaryWeapon
 
   this.game.store.dispatch(actions.player.setPrimaryAmmoRemaining(selectedPrimaryWeapon.ammo))
   this.game.store.dispatch(actions.player.setSecondaryAmmoRemaining(selectedSecondaryWeapon.ammo))
@@ -88,7 +89,7 @@ export default function createLocalPlayer () {
   // Right arm
   window.RS.player.rightArmGroup = this.game.add.group()
   window.RS.player.rightArmSprite = this.game.add.sprite(0, 0, 'right-arm-and-weapons')
-  window.RS.player.rightArmSprite.frame = selectedPrimaryWeapon.frame
+  window.RS.player.rightArmSprite.frame = currentWeapon.frame
   window.RS.player.rightArmSprite.anchor.setTo(0.62, 0.4)
   window.RS.player.rightArmSprite.rotation = 83.4
   window.RS.player.rightArmGroup.add(window.RS.player.rightArmSprite)
