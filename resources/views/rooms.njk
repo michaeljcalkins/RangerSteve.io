@@ -38,7 +38,7 @@
                   <tr class="room-link pointer" data-href="/game?roomId={{ id }}">
                     <td class="dont-break-out">{{ id }}</td>
                     <td>{{ room.gamemode }}</td>
-                    <td>{{ mods[room.mode] if room.mode else '-' }}</td>
+                    <td>{{ modes[room.mode] if room.mode else '-' }}</td>
                     <td>{{ room.map }}</td>
                     <td>{{ room.players | length }} / {{ maxRoomSize }}</td>
                     <td class="text-right" >
