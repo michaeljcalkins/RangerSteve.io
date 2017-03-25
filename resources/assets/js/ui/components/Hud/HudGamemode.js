@@ -6,27 +6,27 @@ import GameConsts from 'lib/GameConsts'
 export default class HudGamemode extends PureComponent {
   static propTypes = {
     gamemode: PropTypes.string.isRequired,
-    mod: PropTypes.string
+    mode: PropTypes.string
   }
 
   static defaultProps = {
     gamemode: '',
-    mod: ''
+    mode: ''
   }
 
-  renderMod(mod) {
-    if (!mod) return
+  renderMode (mode) {
+    if (!mode) return
 
-    const modName = upperCase(GameConsts.MODS[mod])
+    const modName = upperCase(GameConsts.MODES[mode])
 
-    return <span className="text-yellow"> - { modName }</span>
+    return <span className='text-yellow'> - { modName }</span>
   }
 
   render () {
-    const { gamemode, mod } = this.props
+    const { gamemode, mode } = this.props
 
     return (
-      <div className='hud-gamemode hud-item'>{ upperCase(gamemode) }{ this.renderMod(mod) }</div>
+      <div className='hud-gamemode hud-item'>{ upperCase(gamemode) }{ this.renderMode(mode) }</div>
     )
   }
 }

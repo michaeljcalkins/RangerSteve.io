@@ -224,7 +224,7 @@ export class RespawnModal extends PureComponent {
                   <div className='col-xs-12'>
                     <WeaponsView
                       game={game}
-                      mod={room.mod}
+                      mode={room.mode}
                       onViewChange={this.handleWeaponsViewClick}
                       player={player}
                     />

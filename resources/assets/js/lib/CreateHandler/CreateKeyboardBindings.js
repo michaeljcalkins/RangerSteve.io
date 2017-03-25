@@ -75,7 +75,7 @@ export default function () {
       store.getState().player.health <= 0 ||
       store.getState().player.isSwitchingWeapon ||
       store.getState().room.state !== 'active' ||
-      store.getState().room.mod
+      store.getState().room.mode
     ) return
 
     // When you switch weapons stop the reloading process

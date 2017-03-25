@@ -36,7 +36,7 @@ let MainController = {
       maxRoomSize: maxRoomSize,
       maxIdleSeconds: maxIdleSeconds,
       numberOfRooms: numberOfRooms,
-      mods: GameConsts.MODS,
+      modes: GameConsts.MODES,
       rooms: rooms
     })
   },
@@ -72,7 +72,7 @@ let MainController = {
   createARoom: function (req, res) {
     res.render('create-a-room', {
       gamemodes: GameConsts.GAMEMODES,
-      mods: GameConsts.MODS,
+      modes: GameConsts.MODES,
       maps: GameConsts.MAPS,
       randomRoomName: hri.random().replace(/[^a-zA-Z0-9 -]/g, '')
     })

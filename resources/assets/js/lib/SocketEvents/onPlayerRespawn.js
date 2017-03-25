@@ -30,7 +30,7 @@ function resetPlayerWeapons () {
   let nextSelectedSecondaryWeaponId = state.player.nextSelectedSecondaryWeaponId
   let nextWeaponId = nextSelectedPrimaryWeaponId
 
-  if (!state.room.mod) {
+  if (!state.room.mode) {
     store.dispatch(actions.player.setPrimaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedPrimaryWeaponId]))
     store.dispatch(actions.player.setSelectedPrimaryWeaponId(state.player.nextSelectedPrimaryWeaponId))
     store.dispatch(actions.player.setSecondaryWeapon(GameConsts.WEAPONS[state.player.nextSelectedSecondaryWeaponId]))
@@ -39,12 +39,12 @@ function resetPlayerWeapons () {
     // If player dies with secondary we reset player to use primary
     store.dispatch(actions.player.setCurrentWeapon('primaryWeapon'))
   } else {
-    nextWeaponId = state.room.mod
+    nextWeaponId = state.room.mode
 
-    if (GameConsts.PRIMARY_WEAPON_IDS.indexOf(state.room.mod) >= 0) {
-      nextSelectedPrimaryWeaponId = state.room.mod
-    } else if (GameConsts.SECONDARY_WEAPON_IDS.indexOf(state.room.mod) >= 0) {
-      nextSelectedSecondaryWeaponId = state.room.mod
+    if (GameConsts.PRIMARY_WEAPON_IDS.indexOf(state.room.mode) >= 0) {
+      nextSelectedPrimaryWeaponId = state.room.mode
+    } else if (GameConsts.SECONDARY_WEAPON_IDS.indexOf(state.room.mode) >= 0) {
+      nextSelectedSecondaryWeaponId = state.room.mode
     }
   }
 

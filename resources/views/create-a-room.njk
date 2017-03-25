@@ -26,7 +26,7 @@
 
           <input type="hidden" name="map"/>
           <input type="hidden" name="gamemode"/>
-          <input type="hidden" name="mod"/>
+          <input type="hidden" name="mode"/>
           <div class="row">
             <div class="col-xs-4">
               <div class="form-group">
@@ -61,14 +61,14 @@
                 <label class="tcw">Starting Gun Mode</label>
 
                 <div class="list-group">
-                  {% for key, mod in mods %}
+                  {% for key, mode in modes %}
                     <a
-                      id="mod-button-{{ key }}"
+                      id="mode-button-{{ key }}"
                       href="#"
-                      class="list-group-item mod-button"
+                      class="list-group-item mode-button"
                       onClick="selectMod('{{ key }}')"
                     >
-                      {{ mod }}
+                      {{ mode }}
                     </a>
                   {% endfor %}
                 </div>
@@ -117,10 +117,10 @@
       $('#gamemode-button-' + gamemode).addClass('active')
     }
 
-    function selectMod (mod) {
-      $('input[name="mod"]').val(mod)
-      $('.mod-button').removeClass('active')
-      $('#mod-button-' + mod).addClass('active')
+    function selectMod (mode) {
+      $('input[name="mode"]').val(mode)
+      $('.mode-button').removeClass('active')
+      $('#mode-button-' + mode).addClass('active')
     }
   </script>
 {% endblock %}

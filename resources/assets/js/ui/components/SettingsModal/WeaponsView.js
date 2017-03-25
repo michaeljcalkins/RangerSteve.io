@@ -21,12 +21,12 @@ export default class WeaponsView extends PureComponent {
     this.props.onViewChange('chooseSecondary')
   }
 
-  renderMod (mod) {
-    if (!mod) return
+  renderMode (mode) {
+    if (!mode) return
 
-    const modName = upperCase(GameConsts.MODS[mod])
+    const modeName = upperCase(GameConsts.MODES[mode])
 
-    return <div className='alert alert-outline'>Changing weapons is disabled in the { modName } mode.</div>
+    return <div className='alert alert-outline'>Changing weapons is disabled in the { modeName } mode.</div>
   }
 
   render () {
@@ -35,14 +35,14 @@ export default class WeaponsView extends PureComponent {
       nextSelectedSecondaryWeaponId
     } = this.props.player
 
-    const mod = this.props.mod
+    const mode = this.props.mode
     const primaryWeapon = GameConsts.WEAPONS[nextSelectedPrimaryWeaponId]
     const secondaryWeapon = GameConsts.WEAPONS[nextSelectedSecondaryWeaponId]
-    const disabled = !!mod
+    const disabled = !!mode
 
     return (
       <div>
-        {this.renderMod(mod)}
+        {this.renderMode(mode)}
         <div className='row'>
           <div className='col-xs-6'>
             <label>Primary Weapon</label>
@@ -74,7 +74,7 @@ export default class WeaponsView extends PureComponent {
 
 type Props = {
     game: Object,
-    mod: String,
+    mode: String,
     onViewChange: Function,
     player: Object,
 }

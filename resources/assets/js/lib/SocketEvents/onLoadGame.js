@@ -11,12 +11,12 @@ export default function onLoadGame (data) {
   let secondaryWeaponId = playerState.nextSelectedSecondaryWeaponId
   let currentWeapon = 'primaryWeapon'
 
-  if (data.room.mod) {
-    if (GameConsts.PRIMARY_WEAPON_IDS.indexOf(data.room.mod) >= 0) {
-      primaryWeaponId = data.room.mod
-    } else if (GameConsts.SECONDARY_WEAPON_IDS.indexOf(data.room.mod) >= 0) {
-      secondaryWeaponId = data.room.mod
-      currentWeapon ='secondaryWeapon'
+  if (data.room.mode) {
+    if (GameConsts.PRIMARY_WEAPON_IDS.indexOf(data.room.mode) >= 0) {
+      primaryWeaponId = data.room.mode
+    } else if (GameConsts.SECONDARY_WEAPON_IDS.indexOf(data.room.mode) >= 0) {
+      secondaryWeaponId = data.room.mode
+      currentWeapon = 'secondaryWeapon'
     }
   }
 

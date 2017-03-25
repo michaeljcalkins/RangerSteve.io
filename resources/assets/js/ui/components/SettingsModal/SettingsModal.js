@@ -25,7 +25,7 @@ export default class SettingsModal extends PureComponent {
   renderModalView () {
     const {
       game,
-      mod,
+      mode,
       onKeyboardControlChange,
       onPrimaryGunClick,
       onRespawnChange,
@@ -81,7 +81,7 @@ export default class SettingsModal extends PureComponent {
             game,
             onViewChange,
             player,
-            mod
+            mode
           }} />
         )
     }
