@@ -1,0 +1,211 @@
+{% extends 'layouts/master.njk' %}
+
+{% block title %}Buy | RangerSteve.io{% endblock %}
+
+{% block content %}
+<section class="container pv8 ph8 text-center main-section" id="store-container" v-cloak>
+  {% if gameDiscount > 0 %}
+    <div class="alert alert-info text-center pr5 pl5">
+      <h3 class="mt0 mb1 fwbold">Pre-Order Now, 40% Discount!</h3>
+      <p class="ft8 lh13">
+        This game will always be free to play, but early purchases help us add features like game modes, guns, maps, and character skins much faster. <br />
+        As <strong>Elite</strong> features are completed you will automatically have access to them.
+      </p>
+    </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="well">
+        <h1 class="ff-bangers tcw text-stroke ft35 mb1">Elite</h1>
+        <form action="/charge" method="POST">
+          <input type="hidden" v-bind:value="uid" name="uid" />
+          <stripe-checkout
+            form-id="buy-button"
+            stripe-key="{{ stripePublicKey }}"
+            stripe-name="RangerSteve.io"
+            stripe-description="Elite RangerSteve.io"
+            stripe-amount="{{ gameTotalPrice * 100 }}"
+            stripe-image="/images/tile-logo.png"
+          >
+            <button class="btn btn-warning btn-block mb4 ft15">Buy Now For ${{ gameTotalPrice }}</button>
+          </stripe-checkout>
+        </form>
+        <table class="table tcw ft8 mb0">
+          <tr><td>7+ Characters</td></tr>
+          <tr><td>In Game Elite Status</td></tr>
+          <tr><td><strong>Flamethrower</strong> Weapon</td></tr>
+          <tr><td><strong>Ricochet Laser Rifle</strong> Weapon</td></tr>
+          <tr><td><strong>Grenade Launcher</strong> Weapon</td></tr>
+          <tr><td><strong>Needler</strong> Weapon</td></tr>
+          <tr><td>All Future Weapons</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="well">
+        <h1 class="ff-bangers tcw text-stroke ft35 mb1">Free</h1>
+        <table class="table tcw ft8 mb0">
+          <tr><td>All Maps</td></tr>
+          <tr><td>All Game Modes</td></tr>
+          <tr><td>All Gun Modes</td></tr>
+          <tr><td>1 Character</td></tr>
+          <tr><td>8 Weapons</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="ff-bangers tcw text-stroke ft25 mb1">7+ Characters</h2>
+  <div class="well mb0">
+    <div class="row no-pointer-events">
+      <div class="col-xs-3">
+        <a class="gold-button btn btn-default" href="/store">
+          <span>Commando Mike</span>
+          <img src="/images/characters/CommandoMike.png" />
+        </a>
+      </div>
+      <div class="col-xs-3">
+        <a class="gold-button btn btn-default" href="/store">
+          <span>GI John</span>
+          <img src="/images/characters/GIJohn.png" />
+        </a>
+      </div>
+      <div class="col-xs-3">
+        <a class="gold-button btn btn-default mb0" href="/store">
+          <span>Terrorist Jack</span>
+          <img src="/images/characters/TerroristJim.png" height="166" />
+        </a>
+      </div>
+      <div class="col-xs-3">
+        <a class="gold-button btn btn-default" href="/store">
+          <span>Real Estate Rob</span>
+          <img src="/images/characters/RealEstateRob.png" height="166" />
+        </a>
+      </div>
+    </div>
+    <div class="row no-pointer-events">
+      <div class="col-xs-3">
+        <a class="gold-button btn btn-default mb0" href="/store">
+          <span>Secret Agent Sam</span>
+          <img src="/images/characters/KGBViktor.png" width="125" height="166" />
+        </a>
+      </div>
+      <div class="col-xs-3">
+        <a class="gold-button btn btn-default mb0" href="/store">
+          <span>Scuba Dave</span>
+          <img src="/images/characters/Scooba.png" width="125" height="166" />
+        </a>
+      </div>
+      <div class="col-xs-3">
+        <a class="gold-button btn btn-default mb0" href="/store">
+          <span>Redneck Jim</span>
+          <img src="/images/characters/RedneckJim.png" width="120" height="166" />
+        </a>
+      </div>
+      <div class="col-xs-3">
+        <a class="gold-button btn btn-default mb0" href="/store">
+          <span>More to come...</span>
+          <img src="/images/characters/Placeholder.png" width="100" height="166" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/merge@1.2.0"></script>
+<script src="https://js.stripe.com/v2/"></script>
+<script src="/js/stripe-checkout.js"></script>
+<script>
+  Stripe.setPublishableKey('{{ stripePublicKey }}')
+
+  var gamePrice = {{ gamePrice }}
+  var gameDiscount = {{ gameDiscount }}
+  var isDiscount = {{ gameDiscount }} > 0
+
+  new Vue({
+    el: '#store-container',
+    delimiters: ['${', '}'],
+    data: {
+      accountSuccessMessage: null,
+      accountErrorMessage: null,
+      auth: null,
+      user: null,
+      transactions: null,
+      uid: null,
+      gamePrice: gamePrice,
+      gameDiscount: gameDiscount,
+      isDiscount: isDiscount,
+    },
+    filters: {
+      currency: function (value) {
+        return '$' + parseFloat(value).toFixed(2)
+      }
+    },
+    computed: {
+      totalGold: function () {
+        var self = this
+        if (!this.transactions) return 0
+        return Object.keys(this.transactions)
+          .map(function (key) {
+            return Number(self.transactions[key].gold)
+          })
+          .reduce(function (a, b) {
+            return a + b
+          })
+      }
+    },
+    beforeMount: function() {
+      this.checkAuthStatus()
+    },
+    methods: {
+      addAccountSuccessMessage: function (msg) {
+        var self = this
+        this.accountSuccessMessage = msg
+        this.accountErrorMessage = null
+        setTimeout(function () {
+          self.accountSuccessMessage = null
+        }, 5000)
+      },
+      addAccountErrorMessage: function (msg) {
+        var self = this
+        this.accountErrorMessage = msg
+        this.accountSuccessMessage = null
+        setTimeout(function () {
+          self.accountErrorMessage = null
+        }, 5000)
+      },
+      checkAuthStatus: function () {
+        var self = this
+        // Check if the user is signed in
+        firebase.auth().onAuthStateChanged(function(auth) {
+          if (!auth) return
+          self.auth = auth
+          self.uid = auth.uid
+          self.fetchUser()
+          self.fetchUserTransactions()
+        })
+      },
+      fetchUserTransactions: function() {
+        var self = this
+        firebase.database()
+          .ref('user_transactions/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.transactions = snapshot.val()
+            self.$forceUpdate()
+          })
+      },
+      fetchUser: function () {
+        var self = this
+        firebase.database()
+          .ref('users/' + self.auth.uid)
+          .once('value', function(snapshot) {
+            self.user = snapshot.val()
+          })
+      }
+    }
+  })
+</script>
+{% endblock %}

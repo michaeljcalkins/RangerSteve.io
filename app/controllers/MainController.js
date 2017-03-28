@@ -43,19 +43,12 @@ let MainController = {
     res.render('whats-new')
   },
 
-  store: function (req, res) {
-    const payments = map(GameConsts.STORE_PAYMENTS, (payment, price) => {
-      return Object.assign({}, payment, {
-        id: kebabCase(payment.title),
-        price: price,
-        stripeAmount: Math.round(price * 100)
-      })
-    })
-
-    res.render('store', {
+  buy: function (req, res) {
+    res.render('buy', {
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
-      payments: payments,
-      discount: GameConsts.STORE_DISCOUNT
+      gamePrice: GameConsts.GAME_PRICE,
+      gameDiscount: GameConsts.GAME_DISCOUNT,
+      gameTotalPrice: GameConsts.GAME_TOTAL_PRICE
     })
   },
 
