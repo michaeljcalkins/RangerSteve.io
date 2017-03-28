@@ -41,6 +41,15 @@ export default function onPlayerDamaged (data) {
   if (data.health <= 0) {
     const newRespawnTime = data.canRespawnTime
     store.dispatch(actions.player.setRespawnTime(newRespawnTime))
+
+    window.RS.player.visible = false
+    window.RS.player.alive = false
+    PlayPlayerDeathAnimation.call(this, {
+      x: window.RS.player.x,
+      y: window.RS.player.y
+    })
+
+    return
   }
 
   if (store.getState().player.health > 55 && store.getState().player.health < 100) {
@@ -66,15 +75,5 @@ export default function onPlayerDamaged (data) {
         Client.send(GameConsts.EVENT.PLAYER_HEALING)
       }, 500)
     }, 5000)
-  }
-
-    // Player has died
-  if (store.getState().player.health <= 0) {
-    window.RS.player.visible = false
-    window.RS.player.alive = false
-    PlayPlayerDeathAnimation.call(this, {
-      x: window.RS.player.x,
-      y: window.RS.player.y
-    })
   }
 }
