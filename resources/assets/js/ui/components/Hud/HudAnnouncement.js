@@ -20,5 +20,5 @@ HudAnnouncement.defaultProps = {
 }
 
 HudAnnouncement.propTypes = {
-  onSendMessage: PropTypes.string
+  announcement: PropTypes.string
 }

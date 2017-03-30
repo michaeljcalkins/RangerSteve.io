@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react'
 
-export default function HudSettingsButton ({
-    onButtonClick
+export default function HudChangeWeaponsButton ({
+  onButtonClick
 }) {
   return (
     <div
       className='hud-change-weapons-button hud-item'
       onClick={onButtonClick}
-        >
-            Weapons
-        </div>
+    >
+      Weapons
+    </div>
   )
 }
 
-HudSettingsButton.propTypes = {
+HudChangeWeaponsButton.propTypes = {
   onButtonClick: PropTypes.func.isRequired
 }
