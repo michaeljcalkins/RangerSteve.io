@@ -142,7 +142,7 @@ export class RespawnModal extends PureComponent {
       return (
         <div className='row'>
           <div className='col-xs-12 text-center'>
-            <img height='100' src='/images/ui/panel/suicide.png' />
+            <img height='100' src='/images/ui/suicide.png' />
             <h4>You killed yourself...</h4>
           </div>
         </div>

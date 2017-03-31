@@ -12,11 +12,16 @@ let ApiStripeController = {
     // Get the payment token submitted by the form:
     var token = req.body.stripeToken // Using Express
 
+    if (parseInt(req.body.amount) !== parseInt(GameConsts.GAME_TOTAL_PRICE * 100)) {
+      console.error('Charge amount does not equal game total price.', req.body.amount, (GameConsts.GAME_TOTAL_PRICE * 100))
+      return res.redirect('/buy?success=false')
+    }
+
     // Charge the user's card:
     stripe.charges.create({
       amount: req.body.amount,
       currency: 'usd',
-      description: 'Example charge',
+      description: 'Premium RangerSteve.io',
       source: token
     }, function (err, charge) {
       // asynchronously called
@@ -25,23 +30,20 @@ let ApiStripeController = {
         return
       }
 
-      var price = charge.amount / 100
-      var gold = GameConsts.STORE_PAYMENTS[price] && GameConsts.STORE_PAYMENTS[price].gold || 0
-
       firebaseDb.database()
         .ref('user_transactions/' + req.body.uid)
         .push({
           amount: charge.amount,
-          gold: gold,
+          type: 'premium',
           method: 'stripe',
           created_at: Date.now()
         }, function (err) {
           if (err) {
             // The card has been declined.
             console.error(err)
-            return res.redirect('/store?success=false')
+            return res.redirect('/buy?success=false')
           }
-          res.redirect('/store?success=true')
+          res.redirect('/buy?success=true')
         })
     })
   }

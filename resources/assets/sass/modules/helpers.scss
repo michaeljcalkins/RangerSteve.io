@@ -1,5 +1,10 @@
 .bgw { background-color: white; }
 
+.bra0 { border-radius: 0 }
+.db { display: block }
+
+.uppercase { text-transform: uppercase }
+
 .tcw, .tcw-hover:hover { color: #eee; }
 .tcb, .tcb-hover:hover { color: #333; }
 
@@ -42,6 +47,11 @@
 
 .h100 { height: 100%; }
 
+.mauto {
+  margin-left: auto;
+  margin-right: auto
+}
+
 $i: 20;
 @while $i > -1 {
   .mt#{$i} { margin-top: 5px * $i; }
@@ -78,4 +88,12 @@ $i: 5;
 @while $i > -1 {
   .ls#{$i} { letter-spacing: 1px * $i; }
   $i: $i - 1;
+}
+
+.bg-lily-meadow {
+  background-image: linear-gradient(-225deg, #65379B 0%, #886AEA 53%, #6457C6 100%);
+}
+
+.bg-dusty-grass {
+  background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
 }
