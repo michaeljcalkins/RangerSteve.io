@@ -202,7 +202,6 @@
     computed: {
       isPremium: function () {
         var self = this
-        console.log(this.transactions)
         if (!this.transactions) return false
 
         var premiumTransactions = Object.keys(this.transactions)
