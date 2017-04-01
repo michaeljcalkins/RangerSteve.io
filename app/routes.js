@@ -21,8 +21,10 @@ router.get('/credits', MainController.credits)
 router.get('/whats-new', MainController.whatsNew)
 router.get('/privacy', MainController.privacy)
 router.get('/admin', auth, MainController.admin)
+router.get('/admin/create-key', auth, MainController.adminCreateKey)
 router.post('/admin', auth, MainController.adminAnnouncement)
 
+router.post('/charge/key', StripeController.chargeKey)
 router.post('/charge', StripeController.charge)
 
 module.exports = router

@@ -204,7 +204,7 @@ export class RespawnModal extends PureComponent {
                     { this.renderCauseOfDeath() }
                   </div>
                   <div className='col-xs-6 text-center'>
-                    <div style='margin-top: 30px;'>
+                    <div class='mt6'>
                       { this.renderRespawnButton() }
                     </div>
                     <div className='checkbox' style='margin-top: 15px;'>

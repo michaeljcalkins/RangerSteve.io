@@ -160,7 +160,7 @@ export default class LeaderboardModal extends PureComponent {
   render () {
     const {
       state: { elapsed },
-      props: { room }
+      props: { room, player }
     } = this
 
     const playerWithBestAccuracy = getPlayerWithBestAccuracy(room)
@@ -188,6 +188,21 @@ export default class LeaderboardModal extends PureComponent {
                     { this.renderPlayerAchievement(playerWithBestKillsPerMinute, 'Best kills per minute') }
                   </div>
                 </div>
+                { !player.isPremium &&
+                  <a
+                    class='btn btn-success btn-block mb3 btn-lg'
+                    href='/buy'
+                    v-if='!isPremium'
+                  >
+                    <img
+                      src='/images/icons/gold-crown.png'
+                      width='30'
+                      class='mr1'
+                      style='margin-top: -4px'
+                    />
+                    Buy Premium For Access To All Guns!
+                  </a>
+                }
                 <table className='table table-condensed tcw'>
                   <thead>
                     <tr>

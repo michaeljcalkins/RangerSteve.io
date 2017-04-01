@@ -198,6 +198,7 @@ export default class GameUi extends Component {
 
         { this.isLeaderboardModalOpen() &&
           <LeaderboardModal
+            player={player}
             players={sortedPlayers}
             room={room}
           />

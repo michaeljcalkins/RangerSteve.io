@@ -4,6 +4,17 @@
 
 {% block content %}
 <section class="container pv8 ph8 text-center main-section" id="store-container" v-cloak>
+  {% if(isSuccessMessage) %}
+    <div class="alert alert-success">
+      {{ message }}
+    </div>
+  {% endif %}
+  {% if (isErrorMessage) %}
+    <div class="alert alert-danger">
+      {{ message }}
+    </div>
+  {% endif %}
+
   {% if gameDiscount > 0 %}
     <div class="well mb0 bra0 text-center pr5 pl5 mb0 bra0 pv5 tcw bg-lily-meadow" v-if="!isPremium">
       <h3 class="mt4 mb1 fwbold">Pre-Order Now, 40% Discount!</h3>
@@ -60,29 +71,35 @@
       </div>
     </div>
 
-    <div class="mt5 mb5 db mauto" style="width: 430px;" v-if="!isPremium && !auth">
-      <button class="btn btn-success uppercase ph5 mb4 ft15" disabled>
+    <div class="mt5 mb7 db mauto" style="width: 430px;" v-if="!isPremium && !auth">
+      <button class="btn btn-success uppercase ph5 mb2 ft15" disabled>
         Buy Premium Access<br />
         <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
       </button>
+
+      <span class="tcw pointer">Use a key to get premium access</span>
     </div>
 
-    <form class="mt5 mb5 db mauto" action="/charge" method="POST" style="width: 430px;" v-if="!isPremium && auth">
-      <input type="hidden" v-bind:value="uid" name="uid" />
-      <stripe-checkout
-        form-id="buy-button"
-        stripe-key="{{ stripePublicKey }}"
-        stripe-name="RangerSteve.io"
-        stripe-description="Premium RangerSteve.io"
-        stripe-amount="{{ gameTotalPrice * 100 }}"
-        stripe-image="/images/tile-logo.png"
-      >
-        <button class="btn btn-success uppercase ph5 mb4 ft15">
-          Buy Premium Access<br />
-          <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
-        </button>
-      </stripe-checkout>
-    </form>
+    <div class="mt5 mb7 db" v-if="!isPremium && auth">
+      <form class="mauto" action="/charge" method="POST" style="width: 430px;">
+        <input type="hidden" v-bind:value="uid" name="uid" />
+        <stripe-checkout
+          form-id="buy-button"
+          stripe-key="{{ stripePublicKey }}"
+          stripe-name="RangerSteve.io"
+          stripe-description="Premium RangerSteve.io"
+          stripe-amount="{{ gameTotalPrice * 100 }}"
+          stripe-image="/images/tile-logo.png"
+        >
+          <button class="btn btn-success uppercase ph5 mb2 ft15">
+            Buy Premium Access<br />
+            <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
+          </button>
+        </stripe-checkout>
+      </form>
+
+      <span class="tcw pointer" data-toggle="modal" data-target="#use-premium-key">Use a key to get premium access</span>
+    </div>
 
     <div class="row mb6 mt5" v-if="isPremium">
       <div class="col-sm-12">
@@ -207,24 +224,39 @@
         Buy Premium Access<br />
         <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
       </button>
+
+      <span class="tcw pointer">Use a key to get premium access</span>
     </div>
 
-    <form class="mt7 db mauto" action="/charge" method="POST" style="width: 430px;" v-if="!isPremium && auth">
-      <input type="hidden" v-bind:value="uid" name="uid" />
-      <stripe-checkout
-        form-id="buy-button"
-        stripe-key="{{ stripePublicKey }}"
-        stripe-name="RangerSteve.io"
-        stripe-description="Premium RangerSteve.io"
-        stripe-amount="{{ gameTotalPrice * 100 }}"
-        stripe-image="/images/tile-logo.png"
-      >
-        <button class="btn btn-success uppercase ph5 mb4 ft15">
-          Buy Premium Access<br />
-          <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
-        </button>
-      </stripe-checkout>
-    </form>
+    <div class="mt5 mb5 db mauto" style="width: 430px;" v-if="!isPremium && !auth">
+      <button class="btn btn-success uppercase ph5 mb2 ft15" disabled>
+        Buy Premium Access<br />
+        <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
+      </button>
+
+      <span class="tcw pointer">Use a key to get premium access</span>
+    </div>
+
+    <div class="mt5 mb5 db" v-if="!isPremium && auth">
+      <form class="mauto" action="/charge" method="POST" style="width: 430px;">
+        <input type="hidden" v-bind:value="uid" name="uid" />
+        <stripe-checkout
+          form-id="buy-button"
+          stripe-key="{{ stripePublicKey }}"
+          stripe-name="RangerSteve.io"
+          stripe-description="Premium RangerSteve.io"
+          stripe-amount="{{ gameTotalPrice * 100 }}"
+          stripe-image="/images/tile-logo.png"
+        >
+          <button class="btn btn-success uppercase ph5 mb2 ft15">
+            Buy Premium Access<br />
+            <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
+          </button>
+        </stripe-checkout>
+      </form>
+
+      <span class="tcw pointer" data-toggle="modal" data-target="#use-premium-key">Use a key to get premium access</span>
+    </div>
   </div>
 
   <div class="well mb0 bra0 bg-lily-meadow">
@@ -253,6 +285,30 @@
         </form>
       </div>
       <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+    </div>
+  </div>
+
+  <div class="modal fade bg-lily-meadow" id="use-premium-key" tabindex="-1" role="dialog" v-if="auth">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="min-height: 220px; height: auto">
+        <form action="/charge/key" method="post">
+          <input type="hidden" name="uid" v-model="auth.uid">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Use Your Key To Get Premium Access</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Your Key</label>
+              <input type="text" class="form-control" name="key">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="tcb btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </section>

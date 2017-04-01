@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, PropTypes } from 'react'
 import autobind from 'react-autobind'
 import upperCase from 'lodash/upperCase'
 
@@ -11,7 +11,12 @@ export default class WeaponsView extends PureComponent {
     autobind(this)
   }
 
-  props: Props
+  static props = {
+    game: PropTypes.object,
+    mode: PropTypes.string,
+    onViewChange: PropTypes.func,
+    player: PropTypes.object
+  }
 
   handlePrimaryViewClick () {
     this.props.onViewChange('choosePrimary')
@@ -35,13 +40,29 @@ export default class WeaponsView extends PureComponent {
       nextSelectedSecondaryWeaponId
     } = this.props.player
 
-    const mode = this.props.mode
+    const { player, mode } = this.props
+
     const primaryWeapon = GameConsts.WEAPONS[nextSelectedPrimaryWeaponId]
     const secondaryWeapon = GameConsts.WEAPONS[nextSelectedSecondaryWeaponId]
     const disabled = !!mode
 
     return (
       <div>
+        { !player.isPremium &&
+          <a
+            class='btn btn-success btn-block mb3 btn-lg'
+            href='/buy'
+            v-if='!isPremium'
+          >
+            <img
+              src='/images/icons/gold-crown.png'
+              width='30'
+              class='mr1'
+              style='margin-top: -4px'
+            />
+            Buy Premium For Access To All Guns!
+          </a>
+        }
         {this.renderMode(mode)}
         <div className='row'>
           <div className='col-xs-6'>
@@ -70,11 +91,4 @@ export default class WeaponsView extends PureComponent {
       </div>
     )
   }
-}
-
-type Props = {
-    game: Object,
-    mode: String,
-    onViewChange: Function,
-    player: Object,
 }

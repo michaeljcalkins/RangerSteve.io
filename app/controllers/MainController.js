@@ -6,6 +6,8 @@ const hri = require('human-readable-ids').hri
 
 const GameConsts = require('../../lib/GameConsts')
 const Server = require('../Server')
+const firebaseDb = require('../../lib/firebaseDb')
+const guid = require('../../lib/helpers').guid
 
 let MainController = {
   home: function (req, res) {
@@ -46,6 +48,9 @@ let MainController = {
 
   buy: function (req, res) {
     res.render('buy', {
+      isErrorMessage: req.uri.query.error,
+      isSuccessMessage: req.uri.query.success,
+      message: req.uri.query.message,
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
       gamePrice: GameConsts.GAME_PRICE,
       gameDiscount: GameConsts.GAME_DISCOUNT,
@@ -109,8 +114,23 @@ let MainController = {
 
   admin: function (req, res) {
     res.render('admin', {
-      announcement: 'A new version of the game will be deployed in a moment...'
+      announcement: 'A new version of the game will be deployed in a moment...',
+      newKey: req.uri.query['new-key']
     })
+  },
+
+  adminCreateKey: function (req, res) {
+    var randomId = guid()
+
+    firebaseDb.database()
+      .ref('keys/' + randomId)
+      .set(false, function (err) {
+        if (err) {
+          console.error(err)
+          return res.redirect('/admin')
+        }
+        res.redirect('/admin?new-key=' + randomId)
+      })
   },
 
   adminAnnouncement: function (req, res) {
