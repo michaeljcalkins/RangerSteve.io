@@ -8,6 +8,8 @@ const GameConsts = require('../../lib/GameConsts')
 
 let ApiStripeController = {
   charge: function (req, res) {
+    if (!req.body.uid) return res.redirect('/buy?success=false')
+
     // Token is created using Stripe.js or Checkout!
     // Get the payment token submitted by the form:
     var token = req.body.stripeToken // Using Express
@@ -33,6 +35,7 @@ let ApiStripeController = {
       firebaseDb.database()
         .ref('user_transactions/' + req.body.uid)
         .push({
+          charge_id: charge.id,
           amount: charge.amount,
           type: 'premium',
           method: 'stripe',

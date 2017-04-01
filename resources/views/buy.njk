@@ -15,7 +15,59 @@
   {% endif %}
 
   <div class="well mb0 bra0">
-    <form class="mt5 mb5 db mauto" action="/charge" method="POST" style="width: 400px;" v-if="!isPremium">
+    <div
+      class="alert alert-danger"
+      v-if="accountErrorMessage"
+    >
+      ${ accountErrorMessage }
+    </div>
+    <div
+      class="alert alert-success"
+      v-if="accountSuccessMessage"
+    >
+      ${ accountSuccessMessage }
+    </div>
+
+    <div class="row" v-if="!auth">
+      <div class="col-sm-6 col-sm-offset-3 mt3">
+        <h3 class="mt0 ft10 fwbold tcw">Login To Buy Premium Access</h3>
+        <div class="row">
+          <div class="col-xs-4">
+            <button
+              class="btn btn-sm btn-block btn-google"
+              v-on:click="attemptLoginWithGoogle()"
+            >
+              <i class="fa fa-google" aria-hidden="true"></i> Google
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button
+              class="btn btn-sm btn-block btn-facebook"
+              v-on:click="attemptLoginWithFacebook()"
+            >
+              <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
+            </button>
+          </div>
+          <div class="col-xs-4">
+            <button
+              class="btn btn-sm btn-block btn-twitter"
+              v-on:click="attemptLoginWithTwitter()"
+            >
+              <i class="fa fa-twitter" aria-hidden="true"></i> Twitter
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt5 mb5 db mauto" style="width: 430px;" v-if="!isPremium && !auth">
+      <button class="btn btn-success uppercase ph5 mb4 ft15" disabled>
+        Buy Premium Access<br />
+        <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
+      </button>
+    </div>
+
+    <form class="mt5 mb5 db mauto" action="/charge" method="POST" style="width: 430px;" v-if="!isPremium && auth">
       <input type="hidden" v-bind:value="uid" name="uid" />
       <stripe-checkout
         form-id="buy-button"
@@ -26,8 +78,8 @@
         stripe-image="/images/tile-logo.png"
       >
         <button class="btn btn-success uppercase ph5 mb4 ft15">
-          Buy Premium <br />
-          <span class="ft10">One Time Purchase For ${{ gameTotalPrice }}</span>
+          Buy Premium Access<br />
+          <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
         </button>
       </stripe-checkout>
     </form>
@@ -35,7 +87,8 @@
     <div class="row mb6 mt5" v-if="isPremium">
       <div class="col-sm-12">
         <h1 class="ff-bangers tcw ft35 mb0 mt0">Congratulations!</h1>
-        <h2 class="tcw mt0">You have Premium access to all of the features in RangerSteve.io!</h2>
+        <h2 class="tcw mt0 mb4">You have Premium access to all of the features in RangerSteve.io!</h2>
+        <a href="/game" class="btn btn-lg btn-success">Play Now</a>
       </div>
     </div>
 
@@ -149,7 +202,14 @@
       </div>
     </div>
 
-    <form class="mt7 db mauto" action="/charge" method="POST" style="width: 400px;" v-if="!isPremium">
+    <div class="mt5 mb5 db mauto" style="width: 430px;" v-if="!isPremium && !auth">
+      <button class="btn btn-success uppercase ph5 mb4 ft15" disabled>
+        Buy Premium Access<br />
+        <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
+      </button>
+    </div>
+
+    <form class="mt7 db mauto" action="/charge" method="POST" style="width: 430px;" v-if="!isPremium && auth">
       <input type="hidden" v-bind:value="uid" name="uid" />
       <stripe-checkout
         form-id="buy-button"
@@ -160,11 +220,40 @@
         stripe-image="/images/tile-logo.png"
       >
         <button class="btn btn-success uppercase ph5 mb4 ft15">
-          Buy Premium <br />
-          <span class="ft10">One Time Purchase For ${{ gameTotalPrice }}</span>
+          Buy Premium Access<br />
+          <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
         </button>
       </stripe-checkout>
     </form>
+  </div>
+
+  <div class="well mb0 bra0 bg-lily-meadow">
+    <div class="pv5">
+      <h2 class="ff-bangers tcw text-stroke ft25 mb6 mt3">Subscribe To Our Newsletter</h2>
+      <div id="mc_embed_signup" class="ph7 mb3 text-center">
+        <form action="//rangersteve.us6.list-manage.com/subscribe/post?u=ee7e3d14e2b1356adb186012a&amp;id=f4a249ec8b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+          <div id="mc_embed_signup_scroll">
+            <div id="mce-responses" class="clear">
+              <div class="response alert alert-danger" id="mce-error-response" style="display:none"></div>
+              <div class="response alert alert-success" id="mce-success-response" style="display:none"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-8">
+                <input type="email" placeholder="Enter your email address" value="" name="EMAIL" class="required email form-control" required id="mce-EMAIL" style="border-radius: 2px; border: 0;">
+              </div>
+              <div class="col-xs-4">
+                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-block btn-success" >
+              </div>
+            </div>
+
+            <!-- Helps prevents bots from signing up -->
+            <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ee7e3d14e2b1356adb186012a_f4a249ec8b" tabindex="-1" value=""></div>
+          </div>
+        </form>
+      </div>
+      <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+    </div>
   </div>
 </section>
 {% endblock %}
@@ -243,6 +332,36 @@
           .once('value', function(snapshot) {
             self.user = snapshot.val()
           })
+      },
+      attemptLoginWithGoogle: function () {
+        var self = this
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          self.auth = result.user
+        }).catch(function(error) {
+          console.error(error)
+          self.addAccountErrorMessage(error.message)
+        })
+      },
+      attemptLoginWithFacebook: function () {
+        var self = this
+        var provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          self.auth = result.user
+        }).catch(function(error) {
+          console.error(error)
+          self.addAccountErrorMessage(error.message)
+        })
+      },
+      attemptLoginWithTwitter: function () {
+        var self = this
+        var provider = new firebase.auth.TwitterAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          self.auth = result.user
+        }).catch(function(error) {
+          console.log(error)
+          self.addAccountErrorMessage(error.message)
+        })
       }
     }
   })

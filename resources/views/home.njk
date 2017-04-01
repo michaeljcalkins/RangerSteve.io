@@ -3,56 +3,68 @@
 {% block title %}RangerSteve.io{% endblock %}
 
 {% block content %}
-<section class="container pv8 ph8 text-center" id="home-container" v-cloak>
-  <h1 class="ff-bangers tcw text-stroke ft45 mb1">Ranger Steve</h1>
+<section class="container tcw pv8 ph8 text-center" id="home-container" v-cloak>
+  <h1 class="ff-bangers tcw text-stroke ft45 mb1">R<small class="tcw">anger</small>S<small class="tcw">teve.io</small></h1>
   <div class="row h100">
-    <div class="col-xs-6 text-center">
-      <div class="mb4 col-xs-12">
-        <div id="browser-recommendation" class="alert alert-info text-center">
-          We recommend using Chrome browser for the best game performance
+    <div class="col-xs-6 col-xs-offset-3">
+      <div id="browser-recommendation" class="alert alert-info text-center">
+        We recommend using Chrome browser for the best game performance
+      </div>
+
+      <div
+        class="alert alert-info text-center"
+        v-if="showIdlePlayerMessage"
+      >
+        You have been kicked for being idle for {{ maxIdleSeconds }} seconds.
+      </div>
+
+      <div
+        class="alert alert-danger"
+        v-if="accountErrorMessage"
+      >
+        ${ accountErrorMessage }
+      </div>
+      <div
+        class="alert alert-success"
+        v-if="accountSuccessMessage"
+      >
+        ${ accountSuccessMessage }
+      </div>
+
+      <div class="well mb0 bra0">
+        <div class="row">
+          <div class="col-sm-6">
+            <a class="btn btn-success btn-block mb3" href="/game">Play Now</a>
+          </div>
+          <div class="col-sm-6">
+            <a class="btn btn-primary btn-block mb3" href="/rooms">Rooms {{ '(' + numberOfRooms + ')' if numberOfRooms > 0 }}</a>
+          </div>
         </div>
 
-        <div
-          class="alert alert-info text-center"
-          v-if="showIdlePlayerMessage"
-        >
-          You have been kicked for being idle for {{ maxIdleSeconds }} seconds.
-        </div>
+        <a class="btn btn-warning btn-block mb3 btn-lg" href="/buy" v-if="!isPremium">Buy Premium Access Now!</a>
 
-        <div
-          class="alert alert-danger"
-          v-if="accountErrorMessage"
-        >
-          ${ accountErrorMessage }
-        </div>
-        <div
-          class="alert alert-success"
-          v-if="accountSuccessMessage"
-        >
-          ${ accountSuccessMessage }
-        </div>
+        <div class="row mb0">
+          <div class="col-xs-12">
+            <h3 class="mt0 ft10 fwbold">
+              Choose Your Region
+            </h3>
 
-        <div class="well">
-          <div class="row">
-            <div class="col-sm-6">
-              <a class="btn btn-success btn-block mb3" href="/game" id="play-button">Play Now</a>
-            </div>
-            <div class="col-sm-6">
-              <a class="btn btn-primary btn-block" href="/rooms">Rooms {{ '(' + numberOfRooms + ')' if numberOfRooms > 0 }} </a>
+            <div class="btn-group btn-group-justified" id="servers-container">
+              <a href="https://rangersteve.io" class="server-option btn btn-sm">America</a>
+              <a href="https://eu.rangersteve.io" class="server-option btn btn-sm">Europe</a>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="row mb4">
-            <div class="col-xs-12">
-              <div class="btn-group btn-group-justified" id="servers-container">
-                <a href="https://rangersteve.io" class="server-option btn btn-sm">America</a>
-                <a href="https://eu.rangersteve.io" class="server-option btn btn-sm">Europe</a>
-              </div>
-            </div>
-          </div>
-
-          <fieldset class="mb4" v-if="auth">
-            <legend>Your Account</legend>
+      <div class="well mb0 bra0 bg-lily-meadow">
+        <div class="pv2">
+          <div v-if="auth">
+            <h3 class="mt0 ft10 fwbold">
+              <span v-if="isPremium"><img src="/images/icons/gold-crown.png" height="18px" style="margin-top: -4px;" /> Premium</span>
+              <span v-if="!isPremium">Your</span>
+              Account
+            </h3>
 
             <div class="row">
               <div class="col-sm-12 col-md-8">
@@ -82,7 +94,7 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-12 col-md-4">
+              <div class="col-sm-12 col-md-6">
                 <a
                   class="btn btn-sm btn-primary btn-block"
                   v-if="user"
@@ -91,28 +103,19 @@
                   My Battle Stats
                 </a>
               </div>
-              <div class="col-sm-12 col-md-4">
-                {#<a
-                  class="btn btn-sm btn-primary btn-block"
-                  href="/store"
-                >
-                  <img src="/images/icons/gold-16.png" /> ${ totalGold } Gold
-                </a>#}
-              </div>
-              <div class="col-sm-12 col-md-4">
+              <div class="col-sm-12 col-md-6 text-right">
                 <button
-                  class="btn btn-sm btn-warning btn-block"
+                  class="btn btn-sm btn-outline"
                   v-on:click="logoutUser()"
                 >
                   Logout
                 </button>
               </div>
             </div>
-          </fieldset>
+          </div>
 
-          <fieldset class="mb4" v-if="!auth">
-            <legend>Login With</legend>
-
+          <div v-if="!auth">
+            <h3 class="mt0 ft10 fwbold">Login With</h3>
             <div class="row">
               <div class="col-xs-4">
                 <button
@@ -139,96 +142,36 @@
                 </button>
               </div>
             </div>
-          </fieldset>
-
-          <fieldset class="pb0 mb0">
-            <legend>Subscribe To Our Newsletter</legend>
-            <div id="mc_embed_signup" class="text-center">
-              <form action="//rangersteve.us6.list-manage.com/subscribe/post?u=ee7e3d14e2b1356adb186012a&amp;id=f4a249ec8b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                <div id="mc_embed_signup_scroll">
-                  <div id="mce-responses" class="clear">
-                    <div class="response alert alert-danger" id="mce-error-response" style="display:none"></div>
-                    <div class="response alert alert-success" id="mce-success-response" style="display:none"></div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-xs-8">
-                      <input type="email" placeholder="Enter your email address" value="" name="EMAIL" class="required email form-control" required id="mce-EMAIL" style="border-radius: 2px; border: 0;">
-                    </div>
-                    <div class="col-xs-4">
-                      <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-block btn-primary" >
-                    </div>
-                  </div>
-
-                  <!-- Helps prevents bots from signing up -->
-                  <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ee7e3d14e2b1356adb186012a_f4a249ec8b" tabindex="-1" value=""></div>
-                </div>
-              </form>
-            </div>
-            <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-          </fieldset>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-xs-6">
-      <div class="well">
-        <div class="row">
-          <div class="col-sm-12 text-left tcw">
-            <h3 class="fwbold mt0">How To Play</h3>
-            <p>
-              This game is about flying around the map and killing as many enemies as you can in highly intensive battles.
-            </p>
-            <p>
-              To play with your friends join a game and then share the link in your address bar with your friends.
-            </p>
-            <h3 class="fwbold">Controls</h3>
-            <table class="table table-condensed tcw">
-              <tbody>
-                <tr>
-                  <td><strong>Fly</strong></td>
-                  <td>Right click and hold</td>
-                  <td>Press and hold SHIFT</td>
-                </tr>
-                <tr>
-                  <td><strong>Shoot</strong></td>
-                  <td>Left click</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><strong>Aim</strong></td>
-                  <td>Move your mouse</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><strong>Jump</strong></td>
-                  <td>Press W</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><strong>Move left and right</strong></td>
-                  <td>Press A and D</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><strong>Reload</strong></td>
-                  <td>Press R</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><strong>Switch weapons</strong></td>
-                  <td>Press Q</td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
 
-            <h3 class="fwbold">Tips</h3>
-            <ul>
-              <li>Keep moving, flying, and firing on people as quickly as you can.</li>
-              <li>Aim for people's heads because you do the most damage there.</li>
-              <li>Try different weapons, some are better against others.</li>
-            </ul>
+      <div class="well mb0 bra0">
+        <div class="pv2">
+          <h3 class="mt0 ft10 fwbold">Subscribe To Our Newsletter</h3>
+          <div id="mc_embed_signup" class="text-center">
+            <form action="//rangersteve.us6.list-manage.com/subscribe/post?u=ee7e3d14e2b1356adb186012a&amp;id=f4a249ec8b" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+              <div id="mc_embed_signup_scroll">
+                <div id="mce-responses" class="clear">
+                  <div class="response alert alert-danger" id="mce-error-response" style="display:none"></div>
+                  <div class="response alert alert-success" id="mce-success-response" style="display:none"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-8">
+                    <input type="email" placeholder="Enter your email address" value="" name="EMAIL" class="required email form-control" required id="mce-EMAIL" style="border-radius: 2px; border: 0;">
+                  </div>
+                  <div class="col-xs-4">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-block btn-primary" >
+                  </div>
+                </div>
+
+                <!-- Helps prevents bots from signing up -->
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_ee7e3d14e2b1356adb186012a_f4a249ec8b" tabindex="-1" value=""></div>
+              </div>
+            </form>
           </div>
+          <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
         </div>
       </div>
     </div>
@@ -258,16 +201,16 @@
       transactions: null,
     },
     computed: {
-      totalGold: function () {
+      isPremium: function () {
         var self = this
-        if (!this.transactions) return 0
-        return Object.keys(this.transactions)
-          .map(function (key) {
-            return Number(self.transactions[key].gold)
+        if (!this.transactions) return false
+
+        var premiumTransactions = Object.keys(this.transactions)
+          .filter(function (key) {
+            return self.transactions[key].type === 'premium'
           })
-          .reduce(function (a, b) {
-            return a + b
-          })
+
+        return premiumTransactions.length > 0 || !this.auth.uid
       },
       isSameUsername: function () {
         return this.user && this.user.username === this.newUsername

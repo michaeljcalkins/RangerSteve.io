@@ -68,7 +68,14 @@ export default class LeaderboardModal extends PureComponent {
             key={'leaderboard-' + key + playerNickname}
           >
             <td className='text-right'>{ key + 1 }</td>
-            <td>{ playerNickname }</td>
+            <td>
+              { player.isPremium &&
+                <a href='/buy' target='_blank' title='Premium Player'>
+                  <img src='/images/icons/gold-crown.png' width='15' class='mr1' style='margin-top: -4px' />
+                </a>
+              }
+              { playerNickname }
+            </td>
             <td>{ score || 0 }</td>
             <td>{ kills || 0 }</td>
             <td>{ deaths || 0 }</td>

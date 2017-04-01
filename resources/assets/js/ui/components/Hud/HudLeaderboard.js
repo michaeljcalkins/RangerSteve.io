@@ -28,7 +28,9 @@ export class HudLeaderboard extends Component {
             title="Player's nickname"
           >
             { player.isPremium &&
-              <img src='http://i.imgur.com/MjYQMJF.png' width='15' class='mr1' style='margin-top: -3px' />
+              <a href='/buy' target='_blank' title='Premium Player'>
+                <img src='/images/icons/gold-crown.png' width='15' class='mr1' style='margin-top: -4px' />
+              </a>
             }
             { playerNickname }
           </td>

@@ -2,8 +2,6 @@
 
 const fs = require('fs')
 const moment = require('moment')
-const map = require('lodash/map')
-const kebabCase = require('lodash/kebabCase')
 const hri = require('human-readable-ids').hri
 
 const GameConsts = require('../../lib/GameConsts')
@@ -19,7 +17,10 @@ let MainController = {
     res.render('home', {
       maxIdleSeconds: maxIdleSeconds,
       numberOfRooms: numberOfRooms,
-      rooms: rooms
+      rooms: rooms,
+      gamePrice: GameConsts.GAME_PRICE,
+      gameDiscount: GameConsts.GAME_DISCOUNT,
+      gameTotalPrice: GameConsts.GAME_TOTAL_PRICE
     })
   },
 
