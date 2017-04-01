@@ -71,7 +71,7 @@ export default class LeaderboardModal extends PureComponent {
             <td>
               { player.isPremium &&
                 <a href='/buy' target='_blank' title='Premium Player'>
-                  <img src='/images/icons/gold-crown.png' width='15' class='mr1' style='margin-top: -4px' />
+                  <img src='/images/icons/gold-crown.png' width='15' className='mr1' style='margin-top: -4px' />
                 </a>
               }
               { playerNickname }
@@ -190,14 +190,14 @@ export default class LeaderboardModal extends PureComponent {
                 </div>
                 { !player.isPremium &&
                   <a
-                    class='btn btn-success btn-block mb3 btn-lg'
+                    className='btn btn-success btn-block mb3 btn-lg'
                     href='/buy'
                     v-if='!isPremium'
                   >
                     <img
                       src='/images/icons/gold-crown.png'
                       width='30'
-                      class='mr1'
+                      className='mr1'
                       style='margin-top: -4px'
                     />
                     Buy Premium For Access To All Guns!

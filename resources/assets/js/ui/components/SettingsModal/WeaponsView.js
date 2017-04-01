@@ -50,14 +50,14 @@ export default class WeaponsView extends PureComponent {
       <div>
         { !player.isPremium &&
           <a
-            class='btn btn-success btn-block mb3 btn-lg'
+            className='btn btn-success btn-block mb3 btn-lg'
             href='/buy'
             v-if='!isPremium'
           >
             <img
               src='/images/icons/gold-crown.png'
               width='30'
-              class='mr1'
+              className='mr1'
               style='margin-top: -4px'
             />
             Buy Premium For Access To All Guns!

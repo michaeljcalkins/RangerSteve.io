@@ -31,7 +31,7 @@ export class HudLeaderboard extends Component {
               <img
                 src='/images/icons/gold-crown.png'
                 width='15'
-                class='mr1'
+                className='mr1'
                 style='margin-top: -4px'
               />
             }
