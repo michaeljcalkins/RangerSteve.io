@@ -44,7 +44,7 @@
         <a
           class="btn btn-warning btn-block mb3 btn-lg"
           href="/buy"
-          v-if="!isPremium"
+          v-if="!isUserPremium"
         >
           Buy Premium Access Now!
         </a>
@@ -67,8 +67,8 @@
         <div class="pv2">
           <div v-if="auth">
             <h3 class="mt0 ft10 fwbold">
-              <span v-if="isPremium"><img src="/images/icons/gold-crown.png" height="18px" style="margin-top: -4px;" /> Premium</span>
-              <span v-if="!isPremium">Your</span>
+              <span v-if="isUserPremium"><img src="/images/icons/gold-crown.png" height="18px" style="margin-top: -4px;" /> Premium</span>
+              <span v-if="!isUserPremium">Your</span>
               Account
             </h3>
 
@@ -204,19 +204,11 @@
       newUsername: null,
       auth: null,
       user: null,
-      transactions: null,
+      premiumUserLookup: {}
     },
     computed: {
-      isPremium: function () {
-        var self = this
-        if (!this.transactions) return false
-
-        var premiumTransactions = Object.keys(this.transactions)
-          .filter(function (key) {
-            return self.transactions[key].type === 'premium'
-          })
-
-        return premiumTransactions.length > 0 || !this.auth.uid
+      isUserPremium: function () {
+        return this.auth && this.premiumUserLookup && this.premiumUserLookup[this.auth.uid]
       },
       isSameUsername: function () {
         return this.user && this.user.username === this.newUsername
@@ -227,6 +219,7 @@
     },
     beforeMount: function() {
       this.checkAuthStatus()
+      this.fetchPremiumUserLookup()
     },
     methods: {
       addAccountSuccessMessage: function (msg) {
@@ -246,22 +239,22 @@
         }, 5000)
       },
       checkAuthStatus: function () {
-        var self = this
         // Check if the user is signed in
-        firebase.auth().onAuthStateChanged(function(auth) {
-          if (!auth) return
-          self.auth = auth
-          self.fetchUser()
-          self.fetchUserTransactions()
-        })
+        var self = this
+        firebase
+          .auth()
+          .onAuthStateChanged(function(auth) {
+            if (!auth) return
+            self.auth = auth
+            self.fetchUser()
+          })
       },
-      fetchUserTransactions: function() {
+      fetchPremiumUserLookup: function() {
         var self = this
         firebase.database()
-          .ref('user_transactions/' + self.auth.uid)
+          .ref('premium_user_lookup')
           .once('value', function(snapshot) {
-            self.transactions = snapshot.val()
-            self.$forceUpdate()
+            self.premiumUserLookup = snapshot.val()
           })
       },
       fetchUser: function () {

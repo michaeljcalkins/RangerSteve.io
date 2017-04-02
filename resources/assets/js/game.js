@@ -38,18 +38,11 @@ export default function (store) {
         }))
 
         window.firebase.database()
-          .ref('user_transactions/' + auth.uid)
+          .ref('premium_user_lookup/' + auth.uid)
           .once('value', function (snapshot) {
-            let transactions = snapshot.val()
-
-            if (transactions) {
-              var premiumTransactions = Object.keys(transactions)
-                .filter(function (key) {
-                  return transactions[key].type === 'premium'
-                })
-
+            if (snapshot.val()) {
               store.dispatch(actions.player.setPlayer({
-                isPremium: premiumTransactions.length > 0
+                isPremium: snapshot.val()
               }))
             }
 

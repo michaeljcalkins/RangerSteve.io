@@ -28,6 +28,10 @@ let ApiStripeController = {
           .set(uid)
 
         firebaseDb.database()
+          .ref('premium_user_lookup/' + uid)
+          .set(true)
+
+        firebaseDb.database()
           .ref('user_transactions/' + uid)
           .push({
             amount: 0,
@@ -46,20 +50,22 @@ let ApiStripeController = {
       })
   },
   charge: function (req, res) {
-    if (!req.body.uid) return res.redirect('/buy?success=false')
-
     // Token is created using Stripe.js or Checkout!
     // Get the payment token submitted by the form:
-    var token = req.body.stripeToken // Using Express
+    const token = req.body.stripeToken
+    const uid = req.body.uid
+    const amount = req.body.amount
 
-    if (parseInt(req.body.amount) !== parseInt(GameConsts.GAME_TOTAL_PRICE * 100)) {
-      console.error('Charge amount does not equal game total price.', req.body.amount, (GameConsts.GAME_TOTAL_PRICE * 100))
+    if (!uid || !token) return res.redirect('/buy?error=true&message=' + encodeURIComponent('There was an issue processing your payment.'))
+
+    if (parseInt(amount) !== parseInt(GameConsts.GAME_TOTAL_PRICE * 100)) {
+      console.error('Charge amount does not equal game total price.', amount, (GameConsts.GAME_TOTAL_PRICE * 100))
       return res.redirect('/buy?error=true&message=' + encodeURIComponent('We were unable to process your transaction, please try again.'))
     }
 
     // Charge the user's card:
     stripe.charges.create({
-      amount: req.body.amount,
+      amount: amount,
       currency: 'usd',
       description: 'Premium RangerSteve.io',
       source: token
@@ -71,7 +77,11 @@ let ApiStripeController = {
       }
 
       firebaseDb.database()
-        .ref('user_transactions/' + req.body.uid)
+        .ref('premium_user_lookup/' + uid)
+        .set(true)
+
+      firebaseDb.database()
+        .ref('user_transactions/' + uid)
         .push({
           charge_id: charge.id,
           amount: charge.amount,

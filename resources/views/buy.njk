@@ -16,7 +16,7 @@
   {% endif %}
 
   {% if gameDiscount > 0 %}
-    <div class="well mb0 bra0 text-center pr5 pl5 mb0 bra0 pv5 tcw bg-lily-meadow" v-if="!isPremium">
+    <div class="well mb0 bra0 text-center pr5 pl5 mb0 bra0 pv5 tcw bg-lily-meadow" v-if="!isUserPremium">
       <h3 class="mt4 mb1 fwbold">Pre-Order Now, 40% Discount!</h3>
       <p class="ft8 lh13 mb4">
         This game will always be free to play, but <strong>early purchases help us add features</strong> faster. <br />
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <div class="mt5 mb7 db mauto" style="width: 430px;" v-if="!isPremium && !auth">
+    <div class="mt5 mb7 db mauto" style="width: 430px;" v-if="!isUserPremium && !auth">
       <button class="btn btn-success uppercase ph5 mb2 ft15" disabled>
         Buy Premium Access<br />
         <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
@@ -80,7 +80,7 @@
       <span class="tcw pointer">Use a key to get premium access</span>
     </div>
 
-    <div class="mt5 mb7 db" v-if="!isPremium && auth">
+    <div class="mt5 mb7 db" v-if="!isUserPremium && auth">
       <form class="mauto" action="/charge" method="POST" style="width: 430px;">
         <input type="hidden" v-bind:value="uid" name="uid" />
         <stripe-checkout
@@ -101,7 +101,7 @@
       <span class="tcw pointer" data-toggle="modal" data-target="#use-premium-key">Use a key to get premium access</span>
     </div>
 
-    <div class="row mb6 mt5" v-if="isPremium">
+    <div class="row mb6 mt5" v-if="isUserPremium">
       <div class="col-sm-12">
         <h1 class="ff-bangers tcw ft35 mb0 mt0">Congratulations!</h1>
         <h2 class="tcw mt0 mb4">You have Premium access to all of the features in RangerSteve.io!</h2>
@@ -219,7 +219,7 @@
       </div>
     </div>
 
-    <div class="mt5 mb5 db mauto" style="width: 430px;" v-if="!isPremium && !auth">
+    <div class="mt5 mb5 db mauto" style="width: 430px;" v-if="!isUserPremium && !auth">
       <button class="btn btn-success uppercase ph5 mb4 ft15" disabled>
         Buy Premium Access<br />
         <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
@@ -228,7 +228,7 @@
       <span class="tcw pointer">Use a key to get premium access</span>
     </div>
 
-    <div class="mt5 mb5 db mauto" style="width: 430px;" v-if="!isPremium && !auth">
+    <div class="mt5 mb5 db mauto" style="width: 430px;" v-if="!isUserPremium && !auth">
       <button class="btn btn-success uppercase ph5 mb2 ft15" disabled>
         Buy Premium Access<br />
         <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
@@ -237,7 +237,7 @@
       <span class="tcw pointer">Use a key to get premium access</span>
     </div>
 
-    <div class="mt5 mb5 db" v-if="!isPremium && auth">
+    <div class="mt5 mb5 db" v-if="!isUserPremium && auth">
       <form class="mauto" action="/charge" method="POST" style="width: 430px;">
         <input type="hidden" v-bind:value="uid" name="uid" />
         <stripe-checkout
@@ -338,6 +338,7 @@
       gamePrice: gamePrice,
       gameDiscount: gameDiscount,
       isDiscount: isDiscount,
+      premiumUserLookup: {}
     },
     filters: {
       currency: function (value) {
@@ -345,40 +346,33 @@
       }
     },
     computed: {
-      isPremium: function () {
-        var self = this
-        if (!this.transactions) return false
-
-        var premiumTransactions = Object.keys(this.transactions)
-          .filter(function (key) {
-            return self.transactions[key].type === 'premium'
-          })
-
-        return premiumTransactions.length > 0
+      isUserPremium: function () {
+        return this.auth && this.premiumUserLookup && this.premiumUserLookup[this.auth.uid]
       }
     },
     beforeMount: function() {
       this.checkAuthStatus()
+      this.fetchPremiumUserLookup()
     },
     methods: {
       checkAuthStatus: function () {
-        var self = this
         // Check if the user is signed in
-        firebase.auth().onAuthStateChanged(function(auth) {
-          if (!auth) return
-          self.auth = auth
-          self.uid = auth.uid
-          self.fetchUser()
-          self.fetchUserTransactions()
-        })
+        var self = this
+        firebase
+          .auth()
+          .onAuthStateChanged(function(auth) {
+            if (!auth) return
+            self.auth = auth
+            self.uid = auth.uid
+            self.fetchUser()
+          })
       },
-      fetchUserTransactions: function() {
+      fetchPremiumUserLookup: function() {
         var self = this
         firebase.database()
-          .ref('user_transactions/' + self.auth.uid)
+          .ref('premium_user_lookup')
           .once('value', function(snapshot) {
-            self.transactions = snapshot.val()
-            self.$forceUpdate()
+            self.premiumUserLookup = snapshot.val()
           })
       },
       fetchUser: function () {

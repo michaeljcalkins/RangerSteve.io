@@ -60,7 +60,7 @@ export default class WeaponsView extends PureComponent {
               className='mr1'
               style='margin-top: -4px'
             />
-            Buy Premium For Access To All Guns!
+            Buy Premium For Access To All Features!
           </a>
         }
         {this.renderMode(mode)}
