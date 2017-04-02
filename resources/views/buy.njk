@@ -125,7 +125,7 @@
       <div class="col-xs-4">
         <a class="gold-button btn btn-default mb0" href="/store">
           <span>In Game Premium Status</span>
-          <img src="/images/ui/dark-sword.png" style="max-height: 166px;" />
+          <img src="/images/ui/gold-crown.png" style="max-height: 166px;" />
         </a>
       </div>
     </div>
@@ -228,15 +228,6 @@
       <span class="tcw pointer">Use a key to get premium access</span>
     </div>
 
-    <div class="mt5 mb5 db mauto" style="width: 430px;" v-if="!isUserPremium && !auth">
-      <button class="btn btn-success uppercase ph5 mb2 ft15" disabled>
-        Buy Premium Access<br />
-        <span class="ft10">One Time Purchase For <strike>${{ gamePrice }}</strike> ${{ gameTotalPrice }}</span>
-      </button>
-
-      <span class="tcw pointer">Use a key to get premium access</span>
-    </div>
-
     <div class="mt5 mb5 db" v-if="!isUserPremium && auth">
       <form class="mauto" action="/charge" method="POST" style="width: 430px;">
         <input type="hidden" v-bind:value="uid" name="uid" />
@@ -288,9 +279,9 @@
     </div>
   </div>
 
-  <div class="modal fade bg-lily-meadow" id="use-premium-key" tabindex="-1" role="dialog" v-if="auth">
+  <div class="modal fade" id="use-premium-key" tabindex="-1" role="dialog" v-if="auth">
     <div class="modal-dialog" role="document">
-      <div class="modal-content" style="min-height: 220px; height: auto">
+      <div class="modal-content bg-lily-meadow" style="min-height: 220px; height: auto">
         <form action="/charge/key" method="post">
           <input type="hidden" name="uid" v-model="auth.uid">
           <div class="modal-header">

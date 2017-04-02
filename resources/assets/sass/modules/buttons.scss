@@ -17,10 +17,11 @@ $danger:  #d9534f;
 
 // Colors
 @mixin btn($btncolor){
-  border-color: darken($btncolor,15%);
-  background-image: linear-gradient($btncolor, darken($btncolor,5%));
+  border-color: darken($btncolor, 15%);
+  background-image: linear-gradient($btncolor, darken($btncolor, 5%));
   &:hover {
-    background: linear-gradient(darken($btncolor,5%), darken($btncolor,10%));
+    border-color: darken($btncolor, 20%);
+    background: linear-gradient(darken($btncolor,5%), darken($btncolor, 10%));
   }
 }
 
@@ -58,17 +59,18 @@ $danger:  #d9534f;
   }
 }
 
-.btn-default { @include btn($default);}
-.btn-primary { @include btn($primary);}
-.btn-success { @include btn($success);}
-.btn-info    { @include btn($info);}
-.btn-warning { @include btn($warning);}
-.btn-danger  { @include btn($danger);}
+.btn-default { @include btn($default); color: #222 !important; }
+.btn-primary { @include btn($primary); }
+.btn-success { @include btn($success); }
+.btn-info    { @include btn($info); }
+.btn-warning { @include btn($warning); }
+.btn-danger  { @include btn($danger); }
 
 .btn-google,
 .btn-facebook,
 .btn-twitter {
   color: #eee;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 
   i {
     padding-right: 0.5em;
@@ -96,5 +98,66 @@ $danger:  #d9534f;
   &:focus {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
+  }
+}
+
+section,
+.main-section {
+  .btn {
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.gold-button {
+  background: rgba(255, 255, 255, 0.5);
+  border: 5px solid #F9BF3B;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  margin-bottom: 30px;
+  margin-top: 10px;
+  width: 100%;
+  padding: 15px 0;
+
+  &:hover {
+    border: 5px solid #F9BF3B;
+  }
+
+  span:first-child {
+    background: #F9BF3B;
+    border-bottom :0;
+    font-size: 16px;
+    color: #333;
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: -15px 0 10px;
+    padding: 4px 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  & > img {
+    margin-right: -15px;
+  }
+
+  span:last-child {
+    border-bottom: 0;
+    border-radius: 0 0 3px 3px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #FFF;
+    background: rgba(0, 0, 0, 0.6);
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 4px 0;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+
+    img {
+      margin-top: -3px;
+    }
   }
 }

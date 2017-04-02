@@ -98,57 +98,6 @@ strike:after {
   border-radius: 3px 3px 0 0;
 }
 
-.gold-button {
-  border: 5px solid #F9BF3B;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  margin-bottom: 30px;
-  margin-top: 10px;
-  position: relative;
-  width: 100%;
-
-  &:hover {
-    border: 5px solid #F9BF3B;
-  }
-
-  span:first-child {
-    background: #F9BF3B;
-    border-bottom :0;
-    border-radius: 3px;
-    font-size: 16px;
-    color: #333;
-    display: block;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-top: -28px;
-    margin-bottom: 10px;
-    padding: 4px 0;
-    text-align: center;
-    width: 100%;
-  }
-
-  & > img {
-    margin-right: -15px;
-  }
-
-  span:last-child {
-    border-bottom: 0;
-    border-radius: 0 0 3px 3px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    color: #FFF;
-    background: rgba(0, 0, 0, 0.6);
-    display: block;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 4px 0;
-    margin: 0;
-    text-align: center;
-    text-transform: uppercase;
-
-    img {
-      margin-top: -3px;
-    }
-  }
+#use-premium-key {
+  background: rgba(0, 0, 0, 0.8);
 }
