@@ -39,6 +39,23 @@ $danger:  #d9534f;
       }
     }
   }
+  .nav-pills {
+    margin-bottom: 0;
+    margin-left: 15px;
+    margin-top: 0;
+
+    &.navbar-nav > li > a.btn {
+      line-height: 30px;
+
+      @media (min-width: 768px) {
+        line-height: 20px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      margin-left: 0;
+    }
+  }
 }
 
 .btn-default { @include btn($default);}

@@ -6,7 +6,7 @@
 <section class="container tcw pv8 ph8 text-center" id="home-container" v-cloak>
   <h1 class="ff-bangers tcw text-stroke ft45 mb1">R<small class="tcw">anger</small>S<small class="tcw">teve.io</small></h1>
   <div class="row h100">
-    <div class="col-xs-6 col-xs-offset-3">
+    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
       <div id="browser-recommendation" class="alert alert-info text-center">
         We recommend using Chrome browser for the best game performance
       </div>
@@ -73,7 +73,7 @@
             </h3>
 
             <div class="row">
-              <div class="col-sm-12 col-md-8">
+              <div class="col-sm-8">
                 <div class="form-group">
                   <input
                     @keyup.13="claimUsername()"
@@ -87,7 +87,7 @@
                   />
                 </div>
               </div>
-              <div class="col-sm-12 col-md-4">
+              <div class="col-sm-4">
                 <button
                   class="btn btn-sm btn-primary btn-block"
                   :class="{ disabled: isEmptyUsername || isSameUsername }"
@@ -100,7 +100,7 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-12 col-md-6">
+              <div class="col-sm-6">
                 <a
                   class="btn btn-sm btn-primary btn-block"
                   v-if="user"
@@ -109,9 +109,9 @@
                   My Battle Stats
                 </a>
               </div>
-              <div class="col-sm-12 col-md-6 text-right">
+              <div class="col-sm-6">
                 <button
-                  class="btn btn-sm btn-outline"
+                  class="btn btn-sm btn-block btn-outline"
                   v-on:click="logoutUser()"
                 >
                   Logout
@@ -123,7 +123,7 @@
           <div v-if="!auth">
             <h3 class="mt0 ft10 fwbold">Login With</h3>
             <div class="row">
-              <div class="col-xs-4">
+              <div class="col-sm-4">
                 <button
                   class="btn btn-sm btn-block btn-google"
                   v-on:click="attemptLoginWithGoogle()"
@@ -131,7 +131,7 @@
                   <i class="fa fa-google" aria-hidden="true"></i> Google
                 </button>
               </div>
-              <div class="col-xs-4">
+              <div class="col-sm-4">
                 <button
                   class="btn btn-sm btn-block btn-facebook"
                   v-on:click="attemptLoginWithFacebook()"
@@ -139,7 +139,7 @@
                   <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
                 </button>
               </div>
-              <div class="col-xs-4">
+              <div class="col-sm-4">
                 <button
                   class="btn btn-sm btn-block btn-twitter"
                   v-on:click="attemptLoginWithTwitter()"
@@ -164,10 +164,10 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-xs-8">
+                  <div class="col-sm-8">
                     <input type="email" placeholder="Enter your email address" value="" name="EMAIL" class="required email form-control" required id="mce-EMAIL" style="border-radius: 2px; border: 0;">
                   </div>
-                  <div class="col-xs-4">
+                  <div class="col-sm-4">
                     <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-block btn-primary" >
                   </div>
                 </div>
