@@ -25,12 +25,12 @@ export default class HudKillLog extends PureComponent {
         <li key={index}>
           { attackingPlayerNickname } <img src={'/images/guns/' + selectedWeapon.image} />
           { message.wasHeadshot &&
-          <img
-            height='38'
-            src='/images/icons/headshot.png'
-            style={{ marginLeft: 0 }}
-                        />
-                    }
+            <img
+              height='38'
+              src='/images/icons/headshot.png'
+              style={{ marginLeft: 0 }}
+            />
+          }
           { deadPlayerNickname }
         </li>
       )
