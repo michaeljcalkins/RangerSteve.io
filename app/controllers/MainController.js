@@ -19,10 +19,7 @@ let MainController = {
     res.render('home', {
       maxIdleSeconds: maxIdleSeconds,
       numberOfRooms: numberOfRooms,
-      rooms: rooms,
-      gamePrice: GameConsts.GAME_PRICE,
-      gameDiscount: GameConsts.GAME_DISCOUNT,
-      gameTotalPrice: GameConsts.GAME_TOTAL_PRICE
+      rooms: rooms
     })
   },
 

@@ -190,7 +190,6 @@ export default class LeaderboardModal extends PureComponent {
                   <a
                     className='btn btn-success btn-block mb3 btn-lg'
                     href='/buy'
-                    v-if='!isPremium'
                   >
                     <img
                       src='/images/icons/gold-crown.png'

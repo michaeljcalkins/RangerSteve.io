@@ -4,12 +4,12 @@
 
 {% block content %}
 <section class="container pv8 ph8 text-center main-section" id="store-container" v-cloak>
-  {% if(isSuccessMessage) %}
+  {% if isSuccessMessage %}
     <div class="alert alert-success">
       {{ message }}
     </div>
   {% endif %}
-  {% if (isErrorMessage) %}
+  {% if isErrorMessage %}
     <div class="alert alert-danger">
       {{ message }}
     </div>
