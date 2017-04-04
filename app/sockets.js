@@ -503,7 +503,7 @@ function onNewPlayer (data) {
   this.join(roomIdPlayerWillJoin)
 
   const mode = rooms[roomIdPlayerWillJoin].mode
-  newPlayer.weaponId = mode ? mode : data.weaponId
+  newPlayer.weaponId = _.isString(mode) ? mode : data.weaponId
 
   // Tell the user's client to load the game
   Server.sendToSocket(
