@@ -110,7 +110,7 @@ gameloop.on('update', function () {
 
       let noDamageUntilTime = rooms[roomId].players[playerId].noDamageUntilTime
 
-      if (noDamageUntilTime <= Date.now()) {
+      if (noDamageUntilTime <= now) {
         rooms[roomId].players[playerId].noDamageUntilTime = 0
         rooms[roomId].players[playerId].isProtected = false
       }
@@ -146,8 +146,10 @@ roomUpdateLoop.on('update', function () {
     // Room was likely deleted when the last player left
     if (!rooms[roomId]) return
 
+    const now = Date.now()
+
     // Round has ended and is restarting now
-    if (rooms[roomId].roundStartTime <= Date.now() && rooms[roomId].state === 'ended') {
+    if (rooms[roomId].roundStartTime <= now && rooms[roomId].state === 'ended') {
       console.log('Restarting round for', roomId)
       const previousMap = rooms[roomId].map
       const previousGamemode = rooms[roomId].gamemode
@@ -223,7 +225,7 @@ roomUpdateLoop.on('update', function () {
     // Round has ended and setting the time the next round will start at
     if (
       (
-        rooms[roomId].roundEndTime <= Date.now() &&
+        rooms[roomId].roundEndTime <= now &&
         rooms[roomId].state === 'active'
       ) ||
       // Round has ended for this Pointmatch game because someone got the required score.
@@ -235,7 +237,7 @@ roomUpdateLoop.on('update', function () {
     ) {
       console.log('Round has ended for', roomId)
       rooms[roomId].state = 'ended'
-      rooms[roomId].roundStartTime = Date.now() + GameConsts.END_OF_ROUND_BREAK_IN_MS
+      rooms[roomId].roundStartTime = now + GameConsts.END_OF_ROUND_BREAK_IN_MS
       savePlayerScoresToFirebase(rooms[roomId])
       return
     }
@@ -369,6 +371,7 @@ function onPlayerRespawn () {
   }
 
   player.health = GameConsts.PLAYER_FULL_HEALTH
+  player.isVisibleAfterTime = Date.now()
 
   lastPlayerData[this.id] = {}
 
@@ -488,7 +491,9 @@ function onNewPlayer (data) {
   newPlayer.x = spawnPoint.x
   newPlayer.y = spawnPoint.y
 
-  newPlayer.noDamageUntilTime = Date.now() + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
+  const now = Date.now()
+  newPlayer.isVisibleAfterTime = now
+  newPlayer.noDamageUntilTime = now + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
   newPlayer.isProtected = true
 
   // User to the room
@@ -590,7 +595,9 @@ function onPlayerDamaged (data) {
   let player = getPlayerById(rooms[roomId], data.damagedPlayerId)
   if (!player || player.health <= 0) return
 
-  if (player.noDamageUntilTime > Date.now()) return
+  const now = Date.now()
+
+  if (player.noDamageUntilTime > now) return
 
   // Apply damage to player's health
   player.health -= Number(data.damage)
@@ -622,12 +629,12 @@ function onPlayerDamaged (data) {
     player.health = 0
     player.killingSpree = 0
     player.deaths++
-    player.noDamageUntilTime = Date.now() + GameConsts.RESPAWN_TIME_IN_MS + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
+    player.noDamageUntilTime = now + GameConsts.RESPAWN_TIME_IN_MS + GameConsts.NO_DAMAGE_TIME_BUFFER_IN_MS
     player.isProtected = true
 
     // player is dead so tell everyone to hide this player in game
-    player.canRespawnTime = Date.now() + GameConsts.RESPAWN_TIME_IN_MS
-    player.isVisibleAfterTime = Date.now() + GameConsts.RESPAWN_TIME_IN_MS + 1000
+    player.canRespawnTime = now + GameConsts.RESPAWN_TIME_IN_MS
+    player.isVisibleAfterTime = rooms[roomId].roundEndTime
 
     // Update attacking player's stats for leaderboard with additional info if the player was killed
     if (attackingPlayer) {
