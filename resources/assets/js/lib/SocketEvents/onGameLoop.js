@@ -178,7 +178,7 @@ export default function onGameLoop (data) {
     lastPlayerNickname[playerId] = playerData.nickname
     roomData[playerId] = player.data
 
-    player.alive = player.visible = player.data.isVisibleAfterTime < room.currentTime || !player.data.isVisibleAfterTime
+    player.alive = player.visible = player.data.isVisibleAfterTime && player.data.isVisibleAfterTime < room.currentTime
   }
 
   // Merge the differences from the server to client's room state

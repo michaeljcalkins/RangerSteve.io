@@ -29,6 +29,8 @@ export default function createRemotePlayer (playerId, playerData) {
     velocityX: playerData.velocityX,
     velocityY: playerData.velocityY,
 
+    isVisibleAfterTime: playerData.isVisibleAfterTime,
+
     lastPosition: {
       x: playerData.x,
       y: playerData.y
