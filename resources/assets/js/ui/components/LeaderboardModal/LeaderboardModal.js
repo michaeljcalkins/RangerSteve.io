@@ -68,7 +68,12 @@ export default class LeaderboardModal extends PureComponent {
             key={'leaderboard-' + key + playerNickname}
           >
             <td className='text-right'>{ key + 1 }</td>
-            <td>{ playerNickname }</td>
+            <td>
+              { player.isPremium &&
+                <img src='/images/icons/gold-crown.png' width='15' className='mr1' style='margin-top: -4px' />
+              }
+              { playerNickname }
+            </td>
             <td>{ score || 0 }</td>
             <td>{ kills || 0 }</td>
             <td>{ deaths || 0 }</td>
@@ -153,7 +158,7 @@ export default class LeaderboardModal extends PureComponent {
   render () {
     const {
       state: { elapsed },
-      props: { room }
+      props: { room, player }
     } = this
 
     const playerWithBestAccuracy = getPlayerWithBestAccuracy(room)
@@ -181,6 +186,20 @@ export default class LeaderboardModal extends PureComponent {
                     { this.renderPlayerAchievement(playerWithBestKillsPerMinute, 'Best kills per minute') }
                   </div>
                 </div>
+                { !player.isPremium &&
+                  <a
+                    className='btn btn-success btn-block mb3 btn-lg'
+                    href='/buy'
+                  >
+                    <img
+                      src='/images/icons/gold-crown.png'
+                      width='30'
+                      className='mr1'
+                      style='margin-top: -4px'
+                    />
+                    Buy Premium For Access To All Features!
+                  </a>
+                }
                 <table className='table table-condensed tcw'>
                   <thead>
                     <tr>

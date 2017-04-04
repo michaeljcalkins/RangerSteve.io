@@ -427,6 +427,7 @@ function onNewPlayer (data) {
   let newPlayer = createPlayer(this.id, data.x, data.y)
   newPlayer.nickname = data.nickname
   newPlayer.uid = data.uid
+  newPlayer.isPremium = data.isPremium
 
   let roomIdPlayerWillJoin = null
 

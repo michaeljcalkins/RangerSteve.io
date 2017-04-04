@@ -37,7 +37,17 @@ export default function (store) {
           nickname: get(user, 'username', 'Unnamed Ranger')
         }))
 
-        game.state.start('Boot')
+        window.firebase.database()
+          .ref('premium_user_lookup/' + auth.uid)
+          .once('value', function (snapshot) {
+            if (snapshot.val()) {
+              store.dispatch(actions.player.setPlayer({
+                isPremium: snapshot.val()
+              }))
+            }
+
+            game.state.start('Boot')
+          })
       })
   })
 

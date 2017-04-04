@@ -25,6 +25,7 @@ const initialState = {
   isSecondaryReloading: false,
   hasCanceledReloading: false,
   isSwitchingWeapon: false,
+  isPremium: false,
   jumping: false,
   jumpJetCounter: 0,
   nextSelectedPrimaryWeaponId: initialPrimaryWeaponId,

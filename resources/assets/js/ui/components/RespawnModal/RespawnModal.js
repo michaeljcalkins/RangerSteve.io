@@ -142,7 +142,7 @@ export class RespawnModal extends PureComponent {
       return (
         <div className='row'>
           <div className='col-xs-12 text-center'>
-            <img height='100' src='/images/ui/panel/suicide.png' />
+            <img height='100' src='/images/ui/suicide.png' />
             <h4>You killed yourself...</h4>
           </div>
         </div>
@@ -204,7 +204,7 @@ export class RespawnModal extends PureComponent {
                     { this.renderCauseOfDeath() }
                   </div>
                   <div className='col-xs-6 text-center'>
-                    <div style='margin-top: 30px;'>
+                    <div className='mt6'>
                       { this.renderRespawnButton() }
                     </div>
                     <div className='checkbox' style='margin-top: 15px;'>

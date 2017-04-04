@@ -3,54 +3,66 @@
 {% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
-<section class="main-section">
-    <div class="col-xs-12">
-        <div class="text-center">
-            <a class="main-header" href="/">
-                Ranger Steve
-            </a>
-        </div>
+<section class="container pv8 ph8 h100">
+  <h1 class="ff-bangers tcw text-stroke ft35 mb1 text-center">Admin</h1>
 
-        <div class="container">
-            <div class="well">
-                <form action="" method="POST">
-                    <h1 class="text-warning">Add Announcement</h1>
-                    <div class="row">
-                        <div class="col-xs-9">
-                            <div class="form-group">
-                                <input
-                                    name="announcement"
-                                    class="form-control"
-                                    placeholder="Enter your announcement..."
-                                    autofocus
-                                    style="margin-bottom: 15px"
-                                    type="text"
-                                    value="{{ announcement }}"
-                                />
-                            </div>
-                            {% if error %}
-                                <p class="alert alert-danger">
-                                    Oh snap! {{ error }}
-                                </p>
-                            {% endif %}
-                            {% if success %}
-                                <p class="alert alert-success">
-                                    Well done! Announcement sent successfully.
-                                </p>
-                            {% endif %}
-                        </div>
-                        <div class="col-xs-3">
-                            <button
-                                type="submit"
-                                class="btn btn-success btn-lg btn-block"
-                            >
-                                Send
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+  {% if newKey %}
+    <div class="alert alert-success">
+      <div class="form-group mb0">
+        <label>New Key</label>
+        <input class="form-control" type="text" value="{{ newKey }}" />
+      </div>
     </div>
+  {% endif %}
+
+  <div class="well">
+    <a
+      href="/admin/create-key"
+      class="btn btn-primary"
+    >
+      Create Key
+    </a>
+  </div>
+
+  <div class="well">
+    <form action="" method="POST">
+      <h1 class="text-warning">Add Announcement</h1>
+
+      <div class="row">
+        <div class="col-xs-9">
+          <div class="form-group">
+            <input
+              name="announcement"
+              class="form-control"
+              placeholder="Enter your announcement..."
+              autofocus
+              style="margin-bottom: 15px"
+              type="text"
+              value="{{ announcement }}"
+            />
+          </div>
+
+          {% if error %}
+            <p class="alert alert-danger">
+              Oh snap! {{ error }}
+            </p>
+          {% endif %}
+          {% if success %}
+            <p class="alert alert-success">
+              Well done! Announcement sent successfully.
+            </p>
+          {% endif %}
+        </div>
+        <div class="col-xs-3">
+          <button
+            type="submit"
+            class="btn btn-success btn-block"
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </section>
 {% endblock %}

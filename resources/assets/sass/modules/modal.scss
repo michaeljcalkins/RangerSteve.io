@@ -91,7 +91,6 @@
     font-weight: 400;
     font-family: "Keep Calm", Arial, sans-serif;
     font-size: 20px;
-    letter-spacing: 2px;
     margin: 0;
 }
 
@@ -164,17 +163,17 @@
  */
 .modal-leaderboard {
     .winning-player {
-        background: url(/images/ui/panel/light-sword.png) no-repeat center top;
+        background: url(/images/ui/light-sword.png) no-repeat center top;
         background-size: 55%;
         height: 190px;
         width: 100%;
 
         &.red-winning {
-            background-image: url(/images/ui/panel/red-sword.png);
+            background-image: url(/images/ui/red-sword.png);
         }
 
         &.blue-winning {
-            background-image: url(/images/ui/panel/blue-sword.png);
+            background-image: url(/images/ui/blue-sword.png);
         }
 
         .player-name {

@@ -26,7 +26,12 @@
             <tbody>
               <tr v-for="(playerScore, index) in playerScores" class="pointer" v-on:click="openBattleStats(playerScore.name)">
                 <td>${ index + 1 }</td>
-                <td class="fwbold text-left">${ playerScore.name }</td>
+                <td class="fwbold text-left">
+                  <a href='/buy' title='Premium Player' v-if="isUserPremium(playerScore.uid)">
+                    <img src='/images/icons/gold-crown.png' width='15' style='margin-top: -4px' />
+                  </a>
+                  ${ playerScore.name }
+                </td>
                 <td>${ playerScore.score }</td>
                 <td>${ playerScore.timeInGame }</td>
                 <td>${ playerScore.kdr }</td>
@@ -52,12 +57,17 @@
       leaderboards: {},
       usernameLookup: {},
       playerScores: {},
-      sortColumn: 'score'
+      sortColumn: 'score',
+      premiumUserLookup: {}
     },
     beforeMount: function() {
       this.fetchLeaderboards()
+      this.fetchPremiumUserLookup()
     },
     methods: {
+      isUserPremium: function (uid) {
+        return this.premiumUserLookup && this.premiumUserLookup[uid]
+      },
       setSortColumn: function (column) {
         this.sortColumn = column
         this.fetchLeaderboards()
@@ -65,9 +75,17 @@
       openBattleStats: function (playerName) {
         window.location = '/battle-stats/' + playerName
       },
+      fetchPremiumUserLookup: function() {
+        var self = this
+        firebase.database()
+          .ref('premium_user_lookup')
+          .once('value', function(snapshot) {
+            self.premiumUserLookup = snapshot.val()
+          })
+      },
       fetchLeaderboards: function () {
         var self = this
-        var ref = firebase.database()
+        firebase.database()
           .ref('leaderboards')
           .once('value', function(snapshot) {
             self.leaderboards = snapshot.val()
@@ -76,7 +94,7 @@
       },
       fetchUsernameLookup: function () {
         var self = this
-        var ref = firebase.database()
+        firebase.database()
           .ref('username_lookup')
           .once('value', function(snapshot) {
             self.usernameLookup = snapshot.val()
@@ -106,11 +124,12 @@
         // containing their name and leaderboard
         // record stats
         this.playerScores = Object.keys(this.leaderboards)
-          .map(function (id) {
-            var newPlayerObj = self.leaderboards[id]
-            if (!newUsernameLookup[id]) console.error(id, 'not found in username lookup.')
-            newPlayerObj.name = newUsernameLookup[id]
-            return self.leaderboards[id]
+          .map(function (uid) {
+            var newPlayerObj = self.leaderboards[uid]
+            if (!newUsernameLookup[uid]) console.error(uid, 'not found in username lookup.')
+            newPlayerObj.name = newUsernameLookup[uid]
+            newPlayerObj.uid = uid
+            return self.leaderboards[uid]
           })
 
         // Calculate special stats for each player

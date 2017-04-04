@@ -27,6 +27,14 @@ export class HudLeaderboard extends Component {
             style={{ width: '120px', overflow: 'hidden' }}
             title="Player's nickname"
           >
+            { player.isPremium &&
+              <img
+                src='/images/icons/gold-crown.png'
+                width='15'
+                className='mr1'
+                style='margin-top: -4px'
+              />
+            }
             { playerNickname }
           </td>
           <td

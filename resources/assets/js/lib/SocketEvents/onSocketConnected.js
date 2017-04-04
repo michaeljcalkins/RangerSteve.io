@@ -16,7 +16,8 @@ export default function onSocketConnected () {
         ? state.player.selectedPrimaryWeaponId
         : state.player.selectedSecondaryWeaponId,
       nickname: state.player.nickname,
-      uid: state.player.uid
+      uid: state.player.uid,
+      isPremium: state.player.isPremium
     }
 
     // Only specify roomId if specified in url
