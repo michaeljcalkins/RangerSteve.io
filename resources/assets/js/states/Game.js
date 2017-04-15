@@ -37,6 +37,9 @@ Game.prototype = {
     const mapName = store.getState().room.map
     Maps[mapName].preload.call(this)
 
+    this.game.onFocus.add(this.resetAllKeys, this)
+    this.game.onBlur.add(this.resetAllKeys, this)
+
     this.game.load.onLoadComplete.add(this.loadComplete, this)
   },
 
@@ -63,6 +66,10 @@ Game.prototype = {
     this.ready = true
   },
 
+  resetAllKeys: function () {
+    this.game.input.keyboard.reset(false)
+  },
+
   update: function () {
     if (this.game.store.getState().game.resetEventsFlag) {
       this.game.store.dispatch(actions.game.setResetEventsFlag(false))
@@ -80,6 +87,7 @@ Game.prototype = {
 
     // Pause controls so user can't do anything in the background accidentally
     const isPaused = state.game.settingsModalIsOpen || state.game.chatModalIsOpen || state.player.health <= 0
+    if (this.game.input.enabled && isPaused) this.resetAllKeys()
     this.game.input.enabled = !isPaused
 
     window.RS.player.isShooting = false
