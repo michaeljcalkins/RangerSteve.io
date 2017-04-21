@@ -65,11 +65,12 @@ export default function onPlayerDamaged (data) {
     clearTimeout(damageTimeout)
     clearInterval(healingInterval)
     damageTimeout = setTimeout(() => {
-      lastKnownHealth = store.getState().player.health
       healingInterval = setInterval(() => {
-        if (lastKnownHealth >= 100) clearInterval(healingInterval)
-
-        lastKnownHealth += 10
+        lastKnownHealth = store.getState().player.health
+        if (lastKnownHealth <= 0 || lastKnownHealth >= 100) {
+          clearInterval(healingInterval)
+          return
+        }
 
         // Increase player health by 10 every 1/2 a second
         Client.send(GameConsts.EVENT.PLAYER_HEALING)
