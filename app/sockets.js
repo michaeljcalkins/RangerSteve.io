@@ -576,6 +576,9 @@ function onPlayerHealing () {
   if (!rooms[roomId]) return
 
   let player = getPlayerById(rooms[roomId], this.id)
+
+  if (player.health <= 0) return
+
   player.health += 10
 
   if (player.health > GameConsts.PLAYER_FULL_HEALTH) {
