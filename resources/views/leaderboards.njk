@@ -3,19 +3,20 @@
 {% block title %}Leaderboards | RangerSteve.io{% endblock %}
 
 {% block content %}
-<section class="container pv8 ph8 h100" id="leaderboards-container" v-cloak>
+<section class="container-fluid pv8 h100" id="leaderboards-container" v-cloak>
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-lg-10 col-lg-offset-1">
       <h1 class="ff-bangers tcw text-stroke ft35 mb1 text-center">Leaderboards</h1>
 
       <div class="well">
         <div class="table-responsive">
-          <table class="table table-hover tcw mb0 table-text-right">
+          <table class="table table-condensed table-hover tcw mb0 table-text-right">
             <thead>
               <tr>
                 <th>&nbsp;</th>
                 <th class="text-left">Name</th>
                 <th class="pointer" v-on:click="setSortColumn('score')">Score <span v-if="sortColumn === 'score'">▼</span></th>
+                <th class="text-left">Rank</th>
                 <th class="pointer" v-on:click="setSortColumn('secondsInRound')">Time In Game <span v-if="sortColumn === 'secondsInRound'">▼</span></th>
                 <th class="pointer" v-on:click="setSortColumn('kdr')">KDR <span v-if="sortColumn === 'kdr'">▼</span></th>
                 <th class="pointer" v-on:click="setSortColumn('killsPerMinute')">Kills / Min <span v-if="sortColumn === 'killsPerMinute'">▼</span></th>
@@ -33,6 +34,7 @@
                   ${ playerScore.name }
                 </td>
                 <td>${ playerScore.score }</td>
+                <td class="text-left text-yellow">${ playerScore.rank }</td>
                 <td>${ playerScore.timeInGame }</td>
                 <td>${ playerScore.kdr }</td>
                 <td>${ playerScore.killsPerMinute }</td>
@@ -50,6 +52,8 @@
 
 {% block scripts %}
 <script>
+  var ranks = {{ ranks | dump | safe }}
+
   new Vue({
     el: '#leaderboards-container',
     delimiters: ['${', '}'],
@@ -108,6 +112,16 @@
 
         return `${hours}:${minutes}:${seconds}`
       },
+      getRank: function(score) {
+        var rank = ranks[0]
+
+        for (var minScore in ranks) {
+          if (score >= minScore) rank = ranks[minScore]
+          else return rank
+        }
+
+        return rank
+      },
       renderLeaderboards: function () {
         var self = this
         if (! this.leaderboards) return
@@ -159,6 +173,8 @@
             : 0
 
           playerScore.timeInGame = self.timeInGame(playerScore.secondsInRound)
+
+          playerScore.rank = self.getRank(playerScore.score)
         })
 
         this.playerScores = this.playerScores.sort(function (a, b) {

@@ -82,7 +82,9 @@ let MainController = {
   },
 
   leaderboards: function (req, res) {
-    res.render('leaderboards')
+    res.render('leaderboards', {
+      ranks: GameConsts.RANKS
+    })
   },
 
   battleStats: function (req, res) {
