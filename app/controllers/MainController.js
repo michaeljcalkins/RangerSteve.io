@@ -17,6 +17,7 @@ let MainController = {
     const maxIdleSeconds = GameConsts.MAX_IDLE_TIME_IN_MS / 1000
 
     res.render('home', {
+      ranks: GameConsts.RANKS,
       maxIdleSeconds: maxIdleSeconds,
       numberOfRooms: numberOfRooms,
       rooms: rooms
