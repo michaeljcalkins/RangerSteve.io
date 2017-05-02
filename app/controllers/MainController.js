@@ -88,7 +88,10 @@ let MainController = {
   },
 
   battleStats: function (req, res) {
-    res.render('battle-stats', req.params)
+    res.render('battle-stats', {
+      username: req.params.username,
+      ranks: GameConsts.RANKS
+    })
   },
 
   game: function (req, res) {

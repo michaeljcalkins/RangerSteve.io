@@ -21,6 +21,7 @@
               </a>
               {{ username }}
             </h2>
+            <h3 class="text-center text-yellow">${ rank }</h3>
 
             <fieldset class="text-center">
               <legend>Overview</legend>
@@ -168,6 +169,8 @@
 
 {% block scripts %}
 <script>
+  var ranks = {{ ranks | dump | safe }}
+
   new Vue({
     el: '#battle-stats-container',
     delimiters: ['${', '}'],
@@ -202,6 +205,16 @@
       this.fetchUsernameLookup()
     },
     computed: {
+      rank: function() {
+        var rank = ranks[0]
+
+        for (var minScore in ranks) {
+          if (this.stats.score >= minScore) rank = ranks[minScore]
+          else return rank
+        }
+
+        return rank
+      },
       kdr: function() {
         return this.ratio(this.stats.kills, this.stats.deaths, 1)
       },
