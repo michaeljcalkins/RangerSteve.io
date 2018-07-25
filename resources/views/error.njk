@@ -1,0 +1,13 @@
+{% extends 'layouts/master.njk' %}
+
+{% block title %}{{ error.status }} | RangerSteve.io{% endblock %}
+
+{% block content %}
+<section class="main-section">
+    <div class="col-xs-12">
+        <div class="main-header text-center">
+            {{ error.status }}
+        </div>
+    </div>
+</section>
+{% endblock %}

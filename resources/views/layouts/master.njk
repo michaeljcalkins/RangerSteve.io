@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+
+  <meta name="description" lang="en-us" content="{% block description %}Explosive multiplayer shooter em' up that lets you instantly play with your friends.{% endblock %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta itemprop="name" content="RangerSteve.io">
+  <meta property="og:title" content="RangerSteve.io">
+  <meta property="og:site_name" content="RangerSteve.io">
+  <meta property="og:description" content="Explosive multiplayer shooter em' up that lets you instantly play with your friends.">
+  <meta property="og:image" content="https://rangersteve.io/images/ogimage.png">
+  <meta property="og:image:type" content="image/png"/>
+  <meta property="og:image:width" content="810"/>
+  <meta property="og:image:height" content="450"/>
+  <meta property="og:url" content="https://rangersteve.io"/>
+  <meta property="og:type" content="website"/>
+
+  <link rel="shortcut icon" href="/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/app.css?v={{ lastModifiedTime }}">
+  {% if isProduction %}
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+          }, i[r].l = 1 * new Date()
+        a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0]
+        a.async = 1
+        a.src = g
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
+      ga('create', 'UA-53112500-7', 'auto')
+      ga('send', 'pageview')
+    </script>
+
+    <!-- start Mixpanel -->
+    <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+    0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+    for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+    mixpanel.init("9a3caa3ce107d5e648874ff167b4d090");</script>
+    <!-- end Mixpanel -->
+  {% endif %}
+
+  {% block head %}{% endblock %}
+</head>
+<body class="main">
+  <header class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand ff-bangers ft18" href="/">RangerSteve.io</a>
+      </div>
+
+      <nav id="main-nav" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/leaderboards" class="btn btn-link">
+              Leaderboards
+            </a>
+          </li>
+          <li>
+            <a href="/how-to-play" class="btn btn-link">
+              How To Play
+            </a>
+          </li>
+          <li>
+            <a class="btn btn-link" href="/rooms">
+              Rooms
+            </a>
+          </li>
+          <li>
+            <a class="btn btn-link" href="/create-a-room">
+              Create a Room
+            </a>
+          </li>
+          <li>
+            <a class="btn btn-link" target="_blank" href="https://github.com/michaeljcalkins/rangersteve">
+              Contribute Code
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  <footer class="navbar navbar-sm navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#secondary-nav" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <ul class="nav navbar-nav nav-pills">
+          <li>
+            <a style="color: #7289DA;" href="https://discord.gg/GqKgsmy" class="btn btn-link" target="_blank">
+              <i class="fa fa-commenting"></i> Discord
+            </a>
+          </li>
+          <li>
+            <a style="color: #4267b2;" href="https://www.facebook.com/rangersteveio/" class="btn btn-link"
+               target="_blank">
+              <i class="fa fa-facebook"></i> Facebook
+            </a>
+          </li>
+          <li>
+            <a style="color: #1da1f2;" href="https://twitter.com/michaeljcalkins" class="btn btn-link" target="_blank">
+              <i class="fa fa-twitter"></i> Twitter
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <nav id="secondary-nav" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li>
+            <a class="btn btn-link" href="https://rangersteve.userecho.com/" target="_blank">
+              Give Feedback or Report Bugs
+            </a>
+          </li>
+          <li>
+            <a class="btn btn-link" href="/privacy">
+              Privacy
+            </a>
+          </li>
+          <li>
+            <a style="color: #AAA;" href="http://iogames.space" class="btn btn-link" target="_blank" title="IO Games">IO Games</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: 'AIzaSyCUB7iZ5M_UizQ3Y4uXKsV18cm_ISr5-Nk',
+      authDomain: 'rangersteve-5d1fc.firebaseapp.com',
+      databaseURL: 'https://rangersteve-5d1fc.firebaseio.com',
+      storageBucket: 'rangersteve-5d1fc.appspot.com',
+      messagingSenderId: '452510793270'
+    }
+    firebase.initializeApp(config)
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

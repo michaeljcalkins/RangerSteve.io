@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RangerSteve.io</title>
+
+  <meta name="description" lang="en-us" content="Explosive multiplayer shooter em' up that lets you instantly play with your friends.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta itemprop="name" content="RangerSteve.io">
+  <meta property="og:title" content="RangerSteve.io">
+  <meta property="og:site_name" content="RangerSteve.io">
+  <meta property="og:description" content="Explosive multiplayer shooter em' up that lets you instantly play with your friends.">
+  <meta property="og:image" content="https://rangersteve.io/images/ogimage.png">
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="810" />
+  <meta property="og:image:height" content="450" />
+  <meta property="og:url" content="https://rangersteve.io" />
+  <meta property="og:type" content="website" />
+
+  <link rel="canonical" href="https://rangersteve.io/game">
+
+  <link rel="shortcut icon" href="/images/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Black+Ops+One">
+  <link rel="stylesheet" href="https://unpkg.com/react-select/dist/react-select.css">
+  <link rel="stylesheet" href="/css/app.css?v={{ lastModifiedTime }}">
+
+  {% if isProduction %}
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+          }, i[r].l = 1 * new Date()
+        a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0]
+        a.async = 1
+        a.src = g
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
+      ga('create', 'UA-53112500-7', 'auto')
+      ga('send', 'pageview')
+    </script>
+  {% endif %}
+</head>
+<body class="game" oncontextmenu="return false">
+  <div id="loading-screen" class="align-middle">
+    <div>
+      <div class="row">
+        <div class="col-sm-12">
+          <img src="/images/loading.gif" />
+          <h1>RangerSteve.io</h1>
+        </div>
+      </div>
+      <fieldset>
+        <legend>Controls</legend>
+        <table class="table tcw">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Control</th>
+              <th>Alt. Control</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Fly</strong></td>
+              <td>Right click and hold</td>
+              <td>Press and hold SHIFT</td>
+            </tr>
+            <tr>
+              <td><strong>Shoot</strong></td>
+              <td>Left click</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Aim</strong></td>
+              <td>Move your mouse</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Jump</strong></td>
+              <td>Press W</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Move left and right</strong></td>
+              <td>Press A and D</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Reload</strong></td>
+              <td>Press R</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Switch weapons</strong></td>
+              <td>Press Q</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Write chat message</strong></td>
+              <td>Press T</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </fieldset>
+    </div>
+  </div>
+  <div id="ui-app"></div>
+  <div id="game"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+  <script src="/primus/primus.js"></script>
+  <script src="/js/phaser{{ '.min' if isProduction }}.js"></script>
+
+  <script>
+    window.CLOUDFRONT_URL = '{{ cloudfrontUrl }}'
+
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCUB7iZ5M_UizQ3Y4uXKsV18cm_ISr5-Nk",
+      authDomain: "rangersteve-5d1fc.firebaseapp.com",
+      databaseURL: "https://rangersteve-5d1fc.firebaseio.com",
+      storageBucket: "rangersteve-5d1fc.appspot.com",
+      messagingSenderId: "452510793270"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+  <script src="/js/app.js?v={{ lastModifiedTime }}"></script>
+</body>
+</html>

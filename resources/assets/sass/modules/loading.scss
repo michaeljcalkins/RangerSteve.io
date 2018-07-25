@@ -1,0 +1,22 @@
+#loading-screen {
+  -webkit-font-smoothing: antialiased;
+  background: #2B2825;
+  bottom: 0;
+  color: #eee;
+  font-family: Bangers, arial;
+  height: 100vh;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: center;
+  z-index: 1000000002;
+
+  fieldset {
+    font-family: 'Keep Calm', arial;
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+    text-align: left;
+  }
+}

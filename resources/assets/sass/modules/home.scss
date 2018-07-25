@@ -1,0 +1,99 @@
+body.main {
+  height: 100%;
+  background: url('/images/home/background1.jpg') no-repeat center center;
+  background-size: cover;
+  padding: 50px 0;
+}
+
+body.main:after {
+  background: rgba(0, 0, 0, 0.1);
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.room-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.navbar {
+  .navbar-nav>li>a.btn {
+    line-height: 20px;
+    border-radius: 0;
+    border: 0;
+  }
+}
+
+.navbar-default {
+  background: rgba(31, 26, 24, 0.8);
+  border: 0;
+}
+
+.server-option {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  color: #aaa;
+}
+
+.server-option.active {
+  background-image: linear-gradient(#428bca, #357ebd);
+  border-color: #2a6496;
+  color: #fff;
+  cursor: default;
+}
+
+.main-content {
+  font-weight: bold;
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+
+  .gold-button {
+    padding-bottom: 10px;
+    margin: 0;
+  }
+
+  hr {
+    border-width: 2px;
+    border-color: #ddd;
+  }
+}
+
+#browser-recommendation {
+  border-radius: 3px;
+  display: none;
+}
+
+.rooms-content {
+  margin: 0 auto;
+  width: 660px;
+}
+
+#views {
+  margin-top: 1em;
+
+  .nav {
+    font-weight: bold;
+
+    a {
+      background: transparent;
+      border-color: transparent;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .active a {
+      background: #fff;
+      border-bottom: 1px dashed #EEE;
+    }
+  }
+}
+
+.view-container {
+  border-top-width: 0;
+}
+

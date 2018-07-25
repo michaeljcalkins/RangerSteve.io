@@ -1,0 +1,92 @@
+body.game {
+    background: #2B2825 !important;
+    cursor: url(/images/crosshair.png) 15 15, auto;
+    font-size: 'Keep Calm', cursive;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                    not supported by any browser */
+    overflow: hidden;
+}
+
+.option-heading {
+    font-size: 22px;
+    font-family: Bangers;
+    margin: 0 0 15px 0;
+}
+
+.option-group {
+    background: #4D4D4D;
+    cursor: pointer;
+    margin-bottom: 3px;
+    position: relative;
+    margin-right: 3px;
+    float: left;
+    width: 270px;
+    height: 160px;
+
+    &.option-group-lg {
+        width: 100%;
+    }
+
+    &:hover {
+        background: #555;
+    }
+
+    img {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: translate(-50%, 0) scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+        left: 50%;
+        top: 50px;
+        position: absolute;
+        max-height: 40px;
+    }
+}
+
+.option-name {
+    color: #E3DED3;
+    font-family: "Keep Calm", Arial, sans-serif;
+    font-size: 14px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 4px 8px;
+    width: 100%;
+}
+
+.option-stats {
+    color: #E3DED3;
+    font-family: "Keep Calm", Arial, sans-serif;
+    font-size: 10px;
+    left: 0;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 4px 8px;
+    width: 100%;
+    text-align: center;
+
+    h2 {
+        font-size: 15px;
+        margin: 0 0 5px;
+    }
+
+    h5 {
+        font-size: 10px;
+        text-transform: uppercase;
+        margin: 5px 0;
+    }
+
+    .col-xs-4 {
+        margin: 0;
+        padding: 0;
+    }
+}

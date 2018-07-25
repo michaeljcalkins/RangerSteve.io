@@ -1,0 +1,378 @@
+{% extends 'layouts/master-minimal.njk' %}
+
+{% block title %}Map Editor | RangerSteve.io{% endblock %}
+
+{% block head %}
+  <style>
+    body {
+      overflow: auto;
+      background: #333;
+      color: #FFF;
+      padding-top: 55px;
+    }
+
+    .btn-default,
+    .btn-default:hover,
+    .btn-default:focus,
+    .btn-default:active:hover,
+    .btn-default:active:focus {
+      color: #222;
+      border-color: #d9d9d9;
+    }
+
+    #map-editor {
+      position: relative;
+    }
+
+    #background-canvas {
+      position: absolute;
+    }
+
+    #foreground-canvas {
+      position: absolute;
+      cursor: crosshair;
+    }
+
+    #grid-size {
+      width: 60px;
+    }
+
+    #import-text,
+    #export-text {
+      height: 400px;
+      font-family: monospace;
+    }
+
+    .modal-footer {
+      padding-top: 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand ff-bangers ft18 lh12" href="/">RangerSteve.io</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="rs-navbar-collapse">
+        <form id="map-form" class="navbar-form navbar-left">
+          <div class="form-group">
+            <label for="background-file">Background:</label>
+            <input style="height: 18px !important" type="file" id="background-file">
+          </div>
+
+          <div class="form-group input-group-sm">
+            <label for="grid-size">Grid size:</label>
+            <input type="number" class="form-control" id="grid-size" value="0" min="0" max="999" />
+          </div>
+
+          <button type="button" class="btn btn-primary navbar-btn" onclick="closeCurrentPolygon()">Close Polygon</button>
+          <button type="button" class="btn btn-default navbar-btn" onclick="undo()">Undo</button>
+          <button type="button" class="btn btn-warning navbar-btn" onclick="clearCurrentPolygon()">Clear</button>
+          <button type="button" class="btn btn-danger navbar-btn" onclick="removeLastPolygon()">Remove Last Polygon</button>
+        </form>
+
+        <div class="navbar-form navbar-right">
+          <button type="button" class="btn btn-danger navbar-btn" onclick="removeAllPolygons()">Remove All Polygons</button>
+          <button type="button" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#import-modal">Import</button>
+          <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#export-modal">Export</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="modal fade" id="import-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Import</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <textarea class="form-control" id="import-text"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-xs-6">
+              <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Close</button>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="btn btn-primary btn-block" onclick="importPolygons()">Import</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="export-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Export</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <textarea class="form-control" id="export-text" readonly></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="map-editor">
+    <canvas id="background-canvas">
+      Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <canvas id="foreground-canvas"></canvas>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    var backgroundCanvas = document.getElementById('background-canvas')
+    var backgroundCanvasCtx = backgroundCanvas.getContext('2d')
+
+    var canvas = document.getElementById('foreground-canvas')
+    var ctx = canvas.getContext('2d')
+
+    var gridSize = 0
+    updateGridSize()
+
+    var polygonsFromLocalStorage = localStorage.getItem('polygons')
+
+    var polygons = polygonsFromLocalStorage && typeof JSON.parse(polygonsFromLocalStorage) === 'object'
+      ? JSON.parse(polygonsFromLocalStorage)
+      : []
+    var currentPolygon = []
+
+    document.getElementById('background-file').onchange = function () {
+      var reader = new FileReader()
+
+      reader.onload = function (event) {
+        var img = new Image()
+        img.onload = drawBackground
+        img.src = event.target.result
+      }
+
+      reader.readAsDataURL(this.files[0])
+    }
+
+    function drawBackground(event) {
+      var img = event.path[0]
+
+      canvas.width = backgroundCanvas.width = img.width
+      canvas.height = backgroundCanvas.height = img.height
+
+      backgroundCanvasCtx.drawImage(img, 0, 0, backgroundCanvas.width, backgroundCanvas.height)
+
+      refresh()
+    }
+
+    function addPoint (event) {
+      var rect = canvas.getBoundingClientRect()
+      var x = event.clientX - rect.left
+      var y = event.clientY - rect.top
+
+      if (gridSize > 0) {
+        x = Math.round(x / gridSize) * gridSize
+        y = Math.round(y / gridSize) * gridSize
+      }
+
+      var lastPoint = currentPolygon[currentPolygon.length - 1]
+
+      if (
+        currentPolygon.length > 0 &&
+        x === lastPoint[0] &&
+        y === lastPoint[1]
+      ) return
+
+      currentPolygon.push([x, y])
+      refresh()
+    }
+
+    function draw () {
+      ctx.lineWidth = 1
+      ctx.strokeStyle = 'red'
+      ctx.lineCap = 'square'
+      ctx.fillStyle = 'rgba(255, 255, 0, 0.1)'
+
+      console.log(JSON.stringify(polygons))
+
+      // Draw finished polygons
+      for (var j = 0; j < polygons.length; j++) {
+        var polygonPoints = polygons[j]
+
+        ctx.beginPath()
+
+        for (var i = 0; i < polygonPoints.length; i++) {
+          var isMoveOnly = i === 0
+          drawPoint(polygonPoints[i], isMoveOnly)
+        }
+
+        if (polygonPoints.length > 0) {
+          // Draws line to close polygon
+          drawPoint(polygonPoints[0])
+
+          ctx.fill()
+        }
+
+        ctx.stroke()
+      }
+
+      localStorage.setItem('polygons', JSON.stringify(polygons))
+
+      console.log('* LOG * currentPolygon', JSON.stringify(currentPolygon))
+
+      ctx.beginPath()
+
+      for (var i = 0; i < currentPolygon.length; i++) {
+        var isMoveOnly = i === 0
+        drawPoint(currentPolygon[i], isMoveOnly)
+      }
+
+      ctx.stroke()
+    }
+
+    function drawPoint (point, isMoveOnly) {
+      var x = point[0]
+      var y = point[1]
+
+      if (isMoveOnly) {
+        ctx.moveTo(x, y)
+      } else {
+        ctx.lineTo(x, y)
+      }
+    }
+
+    function removeAllPolygons () {
+      if (confirm('Remove all polygons?')) {
+        polygons = []
+        refresh()
+      }
+    }
+
+    function closeCurrentPolygon () {
+      if (currentPolygon.length <= 2) {
+        alert('Polygons must have three points or more.')
+        return
+      }
+      polygons.push(currentPolygon)
+      currentPolygon = []
+
+      refresh()
+    }
+
+    function undo () {
+      console.log('* LOG * undo')
+      currentPolygon.pop()
+
+      refresh()
+    }
+
+    function clearCurrentPolygon () {
+      console.log('* LOG * clear current polygon')
+      currentPolygon = []
+
+      refresh()
+    }
+
+    function removeLastPolygon() {
+      polygons.pop()
+
+      refresh()
+    }
+
+    function refresh () {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      draw()
+    }
+
+    function updateGridSize () {
+      gridSize = $('#grid-size').val()
+      console.log('* LOG * gridSize', gridSize)
+    }
+
+    function importPolygons () {
+      var polygonsString = $('#import-text').val()
+
+      if (!polygonsString.trim()) {
+        alert('No polygons array')
+        return false
+      }
+
+      try {
+        JSON.parse(polygonsString)
+      } catch (e) {
+        alert('Invalid polygons array')
+        return false
+      }
+
+      var filteredString = polygonsString.replace(/\s|\r\n|\n|\r/gm, '')
+      console.log(filteredString)
+      polygons = JSON.parse(filteredString)
+      refresh()
+
+      $('#import-modal').modal('hide')
+    }
+
+    document.onkeydown = function (e) {
+      if (e.metaKey && e.which === 90) {
+        e.preventDefault()
+        undo()
+        return false
+      }
+    }
+
+    canvas.onmousedown = function (e) {
+      e.preventDefault()
+      if (e.button === 0) addPoint(e)
+      return false
+    }
+
+    canvas.oncontextmenu = function (e) {
+      e.preventDefault()
+      closeCurrentPolygon()
+      return false
+    }
+
+    $('#map-form')
+      .on('submit', function (e) {
+        e.preventDefault()
+      })
+
+    $('#grid-size')
+      .on('mousewheel', function () {
+        setTimeout(updateGridSize, 10)
+      })
+      .on('keyup mouseup', function () {
+        updateGridSize()
+      })
+
+    $('#export-modal')
+      .on('show.bs.modal', function () {
+        var polygonsString = JSON.stringify(polygons)
+        var formattedString = polygonsString.replace(/,/g, ', ')
+                                            .replace(/\[\[\[/g, '[\n  [\n    [')
+                                            .replace(/]]]/g, ']\n  ]\n]')
+                                            .replace(/]], \[\[/g, ']\n  ],\n  [\n    [')
+                                            .replace(/], \[/g, '],\n    [')
+        $('#export-text').text(formattedString).select()
+      })
+      .on('shown.bs.modal', function () {
+        $('#export-text').select()
+      })
+  </script>
+{% endblock %}

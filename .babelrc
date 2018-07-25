@@ -1,0 +1,15 @@
+{
+    "presets": [
+        [
+          'latest',
+          { modules: false }
+        ],
+        "react",
+        "stage-3"
+    ],
+    "plugins": [
+        "transform-class-properties",
+        "transform-es2015-classes",
+        "transform-runtime"
+    ]
+}

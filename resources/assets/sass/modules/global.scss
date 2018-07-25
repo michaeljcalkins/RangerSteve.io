@@ -1,0 +1,196 @@
+@font-face {
+  font-family: 'Bangers';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Bangers'), local('Bangers-Regular'), url(https://fonts.gstatic.com/s/bangers/v8/TgZv8lHkUbWVEqUOt_7mAALUuEpTyoUstqEm5AMlJo4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@font-face {
+  font-family: 'Keep Calm';
+  src: url('/fonts/KeepCalm-Medium.eot');
+  src: url('/fonts/KeepCalm-Medium#iefix') format('embedded-opentype'),
+       url('/fonts/KeepCalm-Medium.woff') format('woff'),
+       url('/fonts/KeepCalm-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+  font: 14px Arial, sans-serif;
+  font-weight: 400;
+  margin: 0;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+section {
+  position: relative;
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+}
+
+[v-cloak] { display:none; }
+
+.progress .progress-bar {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.no-pointer-events {
+  pointer-events: none;
+}
+
+#game {
+  height: 100%;
+}
+
+.alert {
+  border-radius: 3px;
+}
+
+.text-red {
+  color: #FF2525;
+}
+
+.text-blue {
+  color: #2578FF;
+}
+
+.text-yellow {
+  color: #FF0;
+}
+
+.text-strong {
+  font-weight: bold;
+}
+
+.option-disabled {
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
+.alert-outline {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 0, 0.9);
+  border: 1px solid rgba(255, 255, 0, 0.5);
+}
+
+.dont-break-out {
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.table-middle > tbody > tr > td {
+  vertical-align: middle;
+}
+
+input[type="text"],
+input[type="number"] {
+  border: 0 !important;
+  border-radius: 3px !important;
+  height: 39px !important;
+}
+
+.well {
+  background: rgba(31, 26, 24, .8);
+  border-radius: 3px;
+  border: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,.4);
+  padding: 15px !important;
+  overflow-y: auto;
+}
+
+fieldset {
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  margin-bottom: 0;
+  padding: 0;
+}
+
+legend {
+  color: #eee;
+  font-size: 16px;
+  width: auto;
+  margin: 0;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px 10px;
+  border: 0;
+}
+
+.col-xs-15,
+.col-xs-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-xs-15 {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-xs-15 {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+  .col-lg-15 {
+    width: 20%;
+    float: left;
+  }
+}
+
+#leaderboards-container {
+  max-width: 1170px;
+}
+
