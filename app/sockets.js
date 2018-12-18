@@ -16,7 +16,6 @@ const getModeWithChance = require("../lib/getModeWithChance");
 const createRoom = require("../lib/createRoom");
 const getRoomIdByPlayerId = require("../lib/getRoomIdByPlayerId");
 const movePlayerSchema = require("../lib/schemas/movePlayerSchema");
-const savePlayerScoresToFirebase = require("../lib/savePlayerScoresToFirebase");
 const getSortedPlayers = require("../lib/getSortedPlayers");
 
 const filter = new Filter();
@@ -230,7 +229,6 @@ roomUpdateLoop.on("update", function() {
       console.log("Round has ended for", roomId);
       rooms[roomId].state = "ended";
       rooms[roomId].roundStartTime = now + GameConsts.END_OF_ROUND_BREAK_IN_MS;
-      savePlayerScoresToFirebase(rooms[roomId]);
       return;
     }
 

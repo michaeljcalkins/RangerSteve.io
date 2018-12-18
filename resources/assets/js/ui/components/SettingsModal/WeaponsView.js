@@ -1,6 +1,7 @@
-import React, { PureComponent, PropTypes } from "react";
+import React, { PureComponent } from "react";
 import autobind from "react-autobind";
 import upperCase from "lodash/upperCase";
+import PropTypes from "prop-types";
 
 import GameConsts from "lib/GameConsts";
 import WeaponButton from "./WeaponButton";

@@ -1,11 +1,12 @@
-import React, { PropTypes, PureComponent } from 'react'
-import cs from 'classnames'
+import React, { PureComponent } from "react";
+import cs from "classnames";
+import PropTypes from "prop-types";
 
-import ChoosePrimaryView from './ChoosePrimaryView'
-import ChooseSecondaryView from './ChooseSecondaryView'
-import ControlsView from './ControlsView'
-import WeaponsView from './WeaponsView'
-import SettingsView from './SettingsView'
+import ChoosePrimaryView from "./ChoosePrimaryView";
+import ChooseSecondaryView from "./ChooseSecondaryView";
+import ControlsView from "./ControlsView";
+import WeaponsView from "./WeaponsView";
+import SettingsView from "./SettingsView";
 
 export default class SettingsModal extends PureComponent {
   static props = {
@@ -20,9 +21,9 @@ export default class SettingsModal extends PureComponent {
     selectedPrimaryWeapon: PropTypes.string,
     selectedSecondaryWeapon: PropTypes.string,
     settingsView: PropTypes.string
-  }
+  };
 
-  renderModalView () {
+  renderModalView() {
     const {
       game,
       mode,
@@ -34,128 +35,120 @@ export default class SettingsModal extends PureComponent {
       onSfxVolumeChange,
       onViewChange,
       player
-    } = this.props
+    } = this.props;
 
     switch (game.settingsView) {
-      case 'choosePrimary':
+      case "choosePrimary":
         return (
-          <ChoosePrimaryView {...{
-            onPrimaryGunClick,
-            onViewChange
-          }} />
-        )
+          <ChoosePrimaryView
+            {...{
+              onPrimaryGunClick,
+              onViewChange
+            }}
+          />
+        );
 
-      case 'chooseSecondary':
+      case "chooseSecondary":
         return (
-          <ChooseSecondaryView {...{
-            onSecondaryGunClick,
-            onViewChange
-          }}
-                />
-        )
+          <ChooseSecondaryView
+            {...{
+              onSecondaryGunClick,
+              onViewChange
+            }}
+          />
+        );
 
-      case 'settings':
+      case "settings":
         return (
-          <SettingsView {...{
-            game,
-            onSfxVolumeChange,
-            onViewChange,
-            onRespawnChange,
-            player
-          }} />
-        )
+          <SettingsView
+            {...{
+              game,
+              onSfxVolumeChange,
+              onViewChange,
+              onRespawnChange,
+              player
+            }}
+          />
+        );
 
-      case 'controls':
+      case "controls":
         return (
-          <ControlsView {...{
-            game,
-            onKeyboardControlChange,
-            onSetResetEventsFlag,
-            onViewChange
-          }} />
-        )
+          <ControlsView
+            {...{
+              game,
+              onKeyboardControlChange,
+              onSetResetEventsFlag,
+              onViewChange
+            }}
+          />
+        );
 
       default:
         return (
-          <WeaponsView {...{
-            game,
-            onViewChange,
-            player,
-            mode
-          }} />
-        )
+          <WeaponsView
+            {...{
+              game,
+              onViewChange,
+              player,
+              mode
+            }}
+          />
+        );
     }
   }
 
-  render () {
-    const {
-      game,
-      onClose,
-      onViewChange
-    } = this.props
+  render() {
+    const { game, onClose, onViewChange } = this.props;
 
     return (
-      <div className='show'>
-        <div className='modal modal-settings show'>
-          <div className='modal-dialog'>
-            <div className='modal-content'>
-              <div className='modal-header'>
-                <button
-                  className='close'
-                  onClick={onClose}
-                  type='button'
-                                >
+      <div className="show">
+        <div className="modal modal-settings show">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button className="close" onClick={onClose} type="button">
                   <span>&times;</span>
                 </button>
 
-                <h4 className='modal-title'>Settings</h4>
+                <h4 className="modal-title">Settings</h4>
 
-                <div className='row'>
-                  <div className='col-xs-12 text-center'>
-                    <ul className='nav nav-pills' style={{ marginTop: '10px', display: 'inline-block' }}>
+                <div className="row">
+                  <div className="col-xs-12 text-center">
+                    <ul className="nav nav-pills" style={{ marginTop: "10px", display: "inline-block" }}>
                       <li
                         className={cs({
                           pointer: true,
-                          active: game.settingsView === 'default'
+                          active: game.settingsView === "default"
                         })}
                       >
-                        <a onClick={onViewChange.bind(this, 'default')}>
-                          Weapons
-                        </a>
+                        <a onClick={onViewChange.bind(this, "default")}>Weapons</a>
                       </li>
                       <li
                         className={cs({
                           pointer: true,
-                          active: game.settingsView === 'settings'
+                          active: game.settingsView === "settings"
                         })}
                       >
-                        <a onClick={onViewChange.bind(this, 'settings')}>
-                          Settings
-                        </a>
+                        <a onClick={onViewChange.bind(this, "settings")}>Settings</a>
                       </li>
                       <li
                         className={cs({
                           pointer: true,
-                          active: game.settingsView === 'controls'
+                          active: game.settingsView === "controls"
                         })}
                       >
-                        <a onClick={onViewChange.bind(this, 'controls')}>
-                          Controls
-                        </a>
+                        <a onClick={onViewChange.bind(this, "controls")}>Controls</a>
                       </li>
                     </ul>
                   </div>
                 </div>
-
               </div>
-              <div className='modal-body'>
-                { this.renderModalView() }
-              </div>
+              <div className="modal-body">{this.renderModalView()}</div>
             </div>
           </div>
         </div>
-        <div className='modal-backdrop show' />
+        <div className="modal-backdrop show" />
       </div>
-    )
+    );
   }
 }

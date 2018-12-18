@@ -1,35 +1,29 @@
-import React, { PureComponent } from 'react'
-import autobind from 'react-autobind'
+import React, { PureComponent } from "react";
+import autobind from "react-autobind";
 
-import Stats from '../../../lib/Stats'
+import Stats from "../../../lib/Stats";
 
 export default class HudStatsGraph extends PureComponent {
-  constructor (props) {
-    super(props)
-    autobind(this)
+  constructor(props) {
+    super(props);
+    autobind(this);
   }
 
-  shouldComponentUpdate () {
-    return false
-  }
-
-  componentDidMount () {
+  componentDidMount() {
     this._stats = new Stats({
       container: this.refs.statsContainer,
-      cssText: ''
-    })
+      cssText: ""
+    });
 
-    window.requestAnimationFrame(this.loop)
+    window.requestAnimationFrame(this.loop);
   }
 
-  loop () {
-    this._stats.update()
-    window.requestAnimationFrame(this.loop)
+  loop() {
+    this._stats.update();
+    window.requestAnimationFrame(this.loop);
   }
 
-  render () {
-    return (
-      <div ref='statsContainer' {...this.props} />
-    )
+  render() {
+    return <div ref="statsContainer" {...this.props} />;
   }
 }

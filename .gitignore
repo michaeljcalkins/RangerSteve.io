@@ -30,10 +30,10 @@ bower_components
 # other
 .sass-cache
 .idea
-public/js/app.js
-public/js/app.js.map
-public/css/app.css
-public/css/app.css.map
+public/main.js
+public/main.js.map
+public/main.css
+public/main.css.map
 lib/GameConsts.dev.js
 /.vscode
 /lib/GameConsts.dev.js

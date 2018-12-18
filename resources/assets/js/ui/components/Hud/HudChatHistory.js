@@ -1,36 +1,35 @@
-import React, { PureComponent, PropTypes } from 'react'
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 
 export default class HudChatHistory extends PureComponent {
-  renderMessages () {
-    const { messages } = this.props
+  renderMessages() {
+    const { messages } = this.props;
 
     // Array: [nickname, message]
     const formattedMessages = messages.map((message, index) => {
       return (
-        <li className='hud-chat-message dont-break-out' key={'chat-message' + index}>
-          <strong>{ message[0] }:</strong> { message[1] }
+        <li className="hud-chat-message dont-break-out" key={"chat-message" + index}>
+          <strong>{message[0]}:</strong> {message[1]}
         </li>
-      )
-    })
+      );
+    });
 
-    return formattedMessages
+    return formattedMessages;
   }
 
-  render () {
+  render() {
     return (
-      <div className='hud-chat no-pointer-events'>
-        <ul className='list-unstyled'>
-          { this.renderMessages() }
-        </ul>
+      <div className="hud-chat no-pointer-events">
+        <ul className="list-unstyled">{this.renderMessages()}</ul>
       </div>
-    )
+    );
   }
 }
 
 HudChatHistory.defaultProps = {
   messages: []
-}
+};
 
 HudChatHistory.propTypes = {
   messages: PropTypes.array.isRequired
-}
+};

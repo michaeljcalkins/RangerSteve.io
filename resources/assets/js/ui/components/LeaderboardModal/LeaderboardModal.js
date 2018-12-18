@@ -1,7 +1,8 @@
 import autobind from "react-autobind";
-import React, { PureComponent, PropTypes } from "react";
+import React, { PureComponent } from "react";
 import get from "lodash/get";
 import cs from "classnames";
+import PropTypes from "prop-types";
 
 import GameConsts from "lib/GameConsts";
 import Client from "../../../lib/Client";
@@ -64,7 +65,7 @@ export default class LeaderboardModal extends PureComponent {
           <td className="text-right">{key + 1}</td>
           <td>
             {player.isPremium && (
-              <img src="/images/icons/gold-crown.png" width="15" className="mr1" style="margin-top: -4px" />
+              <img src="/images/icons/gold-crown.png" width="15" className="mr1" style={{ marginTop: "-4px" }} />
             )}
             {playerNickname}
           </td>
@@ -150,7 +151,10 @@ export default class LeaderboardModal extends PureComponent {
   }
 
   render() {
-    const { state: { elapsed }, props: { room, player } } = this;
+    const {
+      state: { elapsed },
+      props: { room, player }
+    } = this;
 
     const playerWithBestAccuracy = getPlayerWithBestAccuracy(room);
     const playerWithBestHeadshots = getPlayerWithBestHeadshots(room);
