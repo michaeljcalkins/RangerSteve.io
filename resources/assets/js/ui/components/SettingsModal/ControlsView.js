@@ -1,5 +1,4 @@
 import React from "react";
-import Select from "react-select";
 import storage from "store";
 import PropTypes from "prop-types";
 
