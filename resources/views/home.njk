@@ -35,14 +35,25 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mb3">
           <div class="col-sm-12">
-            <a class="btn btn-success btn-block" style="margin-bottom: 15px;" @click="handleTrackPlayClick()" href="/game">Play Now</a>
+            <a class="btn btn-success btn-block" @click="handleTrackPlayClick()" href="/game">
+              Play Now
+            </a>
+          </div>
+        </div>
+        <div class="row mb3">
+          <div class="col-sm-12">
+            <a class="btn btn-primary btn-block" href="/rooms">
+              Rooms {{ '(' + numberOfRooms + ')' if numberOfRooms > 0 }}
+            </a>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <a class="btn btn-primary btn-block" href="/rooms">Rooms {{ '(' + numberOfRooms + ')' if numberOfRooms > 0 }}</a>
+            <a style="color: #AAA;" href="http://www.addictinggames.com/" target="_blank" title="Addicting Games">
+              <img src="/images/addicting-games-horizontal_rev-sponsor@2x.png" style="max-width: 50%; box-shadow: none;" />
+            </a>
           </div>
         </div>
       </div>
