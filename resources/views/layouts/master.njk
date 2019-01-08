@@ -21,9 +21,15 @@
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/main.css?v={{ lastModifiedTime }}">
 
-  {% if isProduction %}
-    <!-- Google Analytics or whatever -->
-  {% endif %}
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-53112500-7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-53112500-7');
+  </script>
 
   {% block head %}{% endblock %}
 </head>
