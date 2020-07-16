@@ -54,7 +54,7 @@
     "human-readable-ids": "^1.0.1",
     "install": "^0.8.1",
     "json-loader": "^0.5.4",
-    "lodash": "^4.16.4",
+    "lodash": "^4.17.19",
     "mini-css-extract-plugin": "^0.4.5",
     "mocha": "^3.1.2",
     "moment": "^2.15.2",
